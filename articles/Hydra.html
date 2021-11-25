@@ -1,0 +1,1133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+<!-- SEO Meta Tags -->
+<meta name="description" content="Your description">
+<meta name="author" content="Your name">
+
+<!-- OG Meta Tags to improve the way the post looks when you share the page on Facebook, Twitter, LinkedIn -->
+<meta property="og:site_name" content="" /> <!-- website name -->
+<meta property="og:site" content="" /> <!-- website link -->
+<meta property="og:title" content="" /> <!-- title shown in the actual shared post -->
+<meta property="og:description" content="" /> <!-- description shown in the actual shared post -->
+<meta property="og:image" content="" /> <!-- image link, make sure it's jpg -->
+<meta property="og:url" content="" /> <!-- where do you want your post to link to -->
+<meta name="twitter:card" content="summary_large_image"> <!-- to have large image post format in Twitter -->
+
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+
+<meta name="description" content="How to build a ASPNetCore site that hosts Multiple Blazor Server and WASM SPA sites." >
+<meta name="author" content="Shaun Curtis" >
+
+
+
+<title>Blazor Hydra - Hosting Multiple Blazor SPAs on a single Site</title>
+
+
+<!-- Custom fonts for this template-->
+<link href="/assets/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+<link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+      rel="stylesheet">
+
+<!-- Custom styles for this template-->
+<link href="/assets/css/sb-admin-2.css" rel="stylesheet" type="text/css">
+<link href="/assets/css/site.css" rel="stylesheet" type="text/css">
+
+<!-- Favicon  -->
+<link rel="icon" href="/assets/images/favicon.png">
+
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/highlight.css">
+    <link rel="stylesheet" href="/assets/css/article.css" type="text/css">
+</head>
+<body id="page-top">
+    <!--topbar-->
+    <div id="topbar">
+        
+<!-- Topbar -->
+<nav class="navbar navbar-expand navbar-light topbar mb-4 static-top">
+    
+<ul class="navbar-nav" >
+<li class="nav-item" >
+<a class="nav-link " href="/index.html" role="button"  >
+<span class="mr-2 d-none d-lg-inline text-gray-100">Index</span>
+</a>
+</li>
+<li class="nav-item dropdown no-arrow mx-1" >
+<a class="nav-link dropdown-toggle" href="#" id="baad4181-3c30-4dbb-95b4-73a7927d0008" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"  >
+<span class="mr-2 d-none d-lg-inline text-gray-100">Articles</span>
+</a>
+<div class=" dropdown-list dropdown-menu shadow animated--grow-in" aria-labelledby="baad4181-3c30-4dbb-95b4-73a7927d0008" >
+<a class="dropdown-item" href="/articles/A-Flexible-app.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+A Flexible App
+</a>
+<a class="dropdown-item" href="/articles/Async-Programming-in-DotNetCore.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Async Programming In Dotnetcore
+</a>
+<a class="dropdown-item" href="/articles/Blazor-AllinOne.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Blazor Allinone
+</a>
+<a class="dropdown-item" href="/articles/Blazor-Async-Programming.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Blazor Async Programming
+</a>
+<a class="dropdown-item" href="/articles/Blazor-Components.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Blazor Components
+</a>
+<a class="dropdown-item" href="/articles/Blazor-CSS.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Blazor CSS
+</a>
+<a class="dropdown-item" href="/articles/Blazor-DataList-Control.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Blazor Datalist Control
+</a>
+<a class="dropdown-item" href="/articles/Blazor-Form-Validation.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Blazor Form Validation
+</a>
+<a class="dropdown-item" href="/articles/Building-Edit-Forms.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Building Edit Forms
+</a>
+<a class="dropdown-item" href="/articles/Hydra.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Hydra
+</a>
+<a class="dropdown-item" href="/articles/Inline-Dialog.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Inline Dialog
+</a>
+<a class="dropdown-item" href="/articles/Modal-Dialog.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Modal Dialog
+</a>
+</div>
+</li>
+<li class="nav-item dropdown no-arrow mx-1" >
+<a class="nav-link dropdown-toggle" href="#" id="6d9e529e-4800-476d-873d-14508f6f3947" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"  >
+<span class="mr-2 d-none d-lg-inline text-gray-100">Blazor Database Application</span>
+</a>
+<div class=" dropdown-list dropdown-menu shadow animated--grow-in" aria-labelledby="6d9e529e-4800-476d-873d-14508f6f3947" >
+<a class="dropdown-item" href="/Building-a-Database-Application-in-Blazor/Building-a-Database-Application-in-Blazor-Part-1.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Building A Database Application In Blazor Part 1
+</a>
+<a class="dropdown-item" href="/Building-a-Database-Application-in-Blazor/Building-a-Database-Application-in-Blazor-Part-2.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Building A Database Application In Blazor Part 2
+</a>
+<a class="dropdown-item" href="/Building-a-Database-Application-in-Blazor/Building-a-Database-Application-in-Blazor-Part-3.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Building A Database Application In Blazor Part 3
+</a>
+<a class="dropdown-item" href="/Building-a-Database-Application-in-Blazor/Building-a-Database-Application-in-Blazor-Part-4.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Building A Database Application In Blazor Part 4
+</a>
+<a class="dropdown-item" href="/Building-a-Database-Application-in-Blazor/Building-a-Database-Application-in-Blazor-Part-5.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Building A Database Application In Blazor Part 5
+</a>
+<a class="dropdown-item" href="/Building-a-Database-Application-in-Blazor/Building-a-Database-Application-in-Blazor-Part-6.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Building A Database Application In Blazor Part 6
+</a>
+<a class="dropdown-item" href="/Building-a-Database-Application-in-Blazor/index.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Index
+</a>
+</div>
+</li>
+<li class="nav-item dropdown no-arrow mx-1" >
+<a class="nav-link dropdown-toggle" href="#" id="6784eb6f-d111-4f1e-ab16-b258686fa719" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"  >
+<span class="mr-2 d-none d-lg-inline text-gray-100">Posts</span>
+</a>
+<div class=" dropdown-list dropdown-menu shadow animated--grow-in" aria-labelledby="6784eb6f-d111-4f1e-ab16-b258686fa719" >
+<a class="dropdown-item" href="/posts/Blazor-Async-UI-Events.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Blazor Async UI Events
+</a>
+<a class="dropdown-item" href="/posts/DBContexts-In-Transient-Services.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Dbcontexts In Transient Services
+</a>
+<a class="dropdown-item" href="/posts/DynamicCss.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Dynamiccss
+</a>
+<a class="dropdown-item" href="/posts/For-ForEach-in-Blazor.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+For Foreach In Blazor
+</a>
+<a class="dropdown-item" href="/posts/Notification-Service-Pattern.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Notification Service Pattern
+</a>
+<a class="dropdown-item" href="/posts/XML-XSD-Serialization.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+XML XSD Serialization
+</a>
+</div>
+</li>
+</ul>
+
+    <div class="ms-5 me-5 ml-auto">
+        <h1>Cold Elm Coders</h1>
+    </div>
+</nav>
+
+
+    </div>
+    <!--End topbar-->
+    <!--Sidebar-->
+    <div id="sidebar">
+        
+<div class="article-info p-2" Published: 26-02-2021 >
+<div>Published: 26-02-2021</div>
+<div>Last Updated: 26-02-2021</div>
+<div>Author: Shaun Curtis</div>
+</div>
+
+        
+<h4 class="p-2">Table of Contents</h4>
+<ul class="TOC" >
+<li class="TOC-item TOC-item-0" >
+<a class="TOC-link" href="#">Top</a>
+<ul class="TOC TOC-0" >
+<li class="TOC-item TOC-item-1" >
+<ul class="TOC TOC-1" >
+<li class="TOC-item TOC-item-2" >
+<a class="TOC-link" href="#code-repository">Code Repository</a>
+</li>
+<li class="TOC-item TOC-item-2" >
+<a class="TOC-link" href="#misconceptions">Misconceptions</a>
+</li>
+<li class="TOC-item TOC-item-2" >
+<a class="TOC-link" href="#the-web-server">The Web Server</a>
+</li>
+<li class="TOC-item TOC-item-2" >
+<a class="TOC-link" href="#blazor-wasm">Blazor WASM</a>
+</li>
+<li class="TOC-item TOC-item-2" >
+<a class="TOC-link" href="#blazor-server">Blazor Server</a>
+</li>
+<li class="TOC-item TOC-item-2" >
+<a class="TOC-link" href="#building-the-hydra-site">Building the Hydra Site</a>
+</li>
+<li class="TOC-item TOC-item-2" >
+<a class="TOC-link" href="#hydrared">Hydra.Red</a>
+</li>
+<li class="TOC-item TOC-item-2" >
+<a class="TOC-link" href="#hydrasteel">Hydra.Steel</a>
+</li>
+<li class="TOC-item TOC-item-2" >
+<a class="TOC-link" href="#hydraweb"><a href="http://Hydra.Web">Hydra.Web</a></a>
+</li>
+<li class="TOC-item TOC-item-2" >
+<a class="TOC-link" href="#hydrablue">Hydra.Blue</a>
+</li>
+<li class="TOC-item TOC-item-2" >
+<a class="TOC-link" href="#hydragrey">Hydra.Grey</a>
+</li>
+<li class="TOC-item TOC-item-2" >
+<a class="TOC-link" href="#hydraweb-1"><a href="http://Hydra.Web">Hydra.Web</a></a>
+</li>
+<li class="TOC-item TOC-item-2" >
+<a class="TOC-link" href="#wrap-up">Wrap Up</a>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+    </div>
+    <!--End Sidebar-->
+    <!-- Page Wrapper -->
+    <div id="wrapper">
+        <!-- Content Wrapper -->
+        <div id="content-wrapper" class="d-flex flex-column">
+            <!-- Main Content -->
+            <div id="content">
+                <!-- Topbar -->
+                <div id="article">
+                    <!-- Article -->
+                    
+<!-- Header -->
+<header class="ex-header-article">
+    <div class="container">
+        <div class="row pt-3 pb-3 border-bottom">
+            <div class="col">
+                
+<h1>Blazor Hydra - Hosting Multiple Blazor SPAs on a single Site</h1>
+<div>How to build a ASPNetCore site that hosts Multiple Blazor Server and WASM SPA sites.</div>
+
+            </div> <!-- end of col -->
+        </div> <!-- end of row -->
+    </div> <!-- end of container -->
+</header> <!-- end of ex-header -->
+<!-- end of header -->
+
+
+                    
+<!-- Article Container -->
+<div class="ex-basic-1 pt-4">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                
+
+        <p>Building a green field site with a new framework is great, but we don't all get that luxury. What about those with a classic Razor/Server Page ASPNetCore site wanting to migrate where the Big Bang isn't feasible.  You want to run most of your site in classic mode and migrate sections over in bite sized chunks.  Maybe run a pilot on a small section first.</p>
+<p>This article shows you how to do just that.  I'll describe how Blazor Server, WASM and Razor sites/applications interact, and how you can run them together on a single AspNetCore web site.</p>
+<p>The first half of this article examines the technical challenges, looking in depth at how some key bits of Blazor work.  In the second half we'll look at a simple practical deployment using the out-of-the-box project templates.</p>
+<p><img src="\articles\assets\Hydra\Hydra.png" alt="Hydra"></p>
+<h2 id="code-repository">Code Repository</h2>
+<p><strong>Hydra</strong> is an implementation of the concepts discussed here and the code will be used extensively in the discussions.</p>
+<p>The code is in two repositories</p>
+<ul>
+<li><a href="https://github.com/ShaunCurtis/Examples">CEC.Blazor.Examples</a> is the main repository.  It contains the code for several articles including this one and is the source code repo for the <a href="https://cec-blazor-examples.azurewebsites.net/">Demo Site on Azure</a>.  It uses the methods discussed in this article to host multiple WASM and Server SPAs on one web site.  Mongrel is the specific site for this article.</li>
+<li><a href="https://github.com/ShaunCurtis/Hydra">Hydra</a> contains the code for the second half of this article.  A version of Hydra runs on the Demo Site.</li>
+</ul>
+<h2 id="misconceptions">Misconceptions</h2>
+<p>Before we start, we need to get one key concept straight.  Blazor Server and Blazor WASM are <strong>APPLICATIONS</strong>: they are not web sites.  Throughout this articles I'll refer to the as SPAs [Single Page Applications].  The Razor site is the only conventional <strong>Web Site</strong>.</p>
+<p>The only true web page in a Blazor SPA is the startup page.  Once started it's an application.  It doesn't do posts and gets for pages.</p>
+<p><strong>Blazor Pages</strong> aren't web pages, they're components.</p>
+<h2 id="the-web-server">The Web Server</h2>
+<p>If you look at the code repository and the test site you'll see a project call <em>Hydra</em>.  This is the host web site.  It's an out-of-the-box AspNetCore Pages template web site.</p>
+<p>Lets look at <em>Startup.cs</em>.</p>
+<p>AspNetCore has an Inversion Of Control/Dependancy Injection <em>Services</em> container defined by <code>IServiceCollection</code>.  If you are unsure what an IOC/DI container is, then do some background reading.  We configure this in <code>ConfigureServices</code>.</p>
+<pre><code class="language-csharp"><div>    <span class="hljs-comment">// This method gets called by the runtime. Use this method to add services to the container.</span>
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">ConfigureServices</span>(<span class="hljs-params">IServiceCollection services</span>)</span>
+    {
+        services.AddRazorPages();
+        services.AddControllersWithViews();
+        services.AddServerSideBlazor();
+        services.AddServerSideHttpClient();
+        services.AddSingleton&lt;IWeatherForecastService, WeatherForecastService&gt;();
+        services.AddCECRouting();
+    }
+</div></code></pre>
+<p>What you see are a set of services configured directly - such as the <code>WeatherForecastService</code> and calls to a set of ServiceCollectionExtensions like <code>AddServerSideBlazor</code> and <code>AddCECRouting</code>.</p>
+<p>To de-mystify these, the code for <code>AddCECRouting</code> is shown below.</p>
+<pre><code class="language-csharp"><div><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">class</span> <span class="hljs-title">ServiceCollectionExtensions</span>
+{
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> IServiceCollection <span class="hljs-title">AddCECRouting</span>(<span class="hljs-params"><span class="hljs-keyword">this</span> IServiceCollection services</span>)</span>
+    {
+        services.AddScoped&lt;RouterSessionService&gt;();
+        <span class="hljs-keyword">return</span> services;
+    }
+}
+</div></code></pre>
+<p>ServiceCollectionExtensions are just ways to configure all the services for a specific function under one roof.  They are Extension methods for <code>IServiceCollection</code>.  <code>AddServerSideBlazor</code> just adds all the necessary services for Blazor Server, such as <code>NavigationManager</code> and <code>IJSRuntime</code>.</p>
+<p><code>AddServerSideHttpClient</code> is defined in CEC.Blazor.Hydra/Extensions if you want to see a ServiceCollectionExtension implementation.</p>
+<p><code>Configure</code> sets up the <em>Middleware</em> run by the web server.  We'll break this down into sections.</p>
+<p>The first section is ASPNetCore web server standard implementation.</p>
+<pre><code class="language-csharp"><div><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">Configure</span>(<span class="hljs-params">IApplicationBuilder app, IWebHostEnvironment env</span>)</span>
+{
+    <span class="hljs-keyword">if</span> (env.IsDevelopment())
+    {
+        app.UseDeveloperExceptionPage();
+    }
+    <span class="hljs-keyword">else</span>
+    {
+        app.UseExceptionHandler(<span class="hljs-string">&quot;/Error&quot;</span>);
+        <span class="hljs-comment">// The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.</span>
+        app.UseHsts();
+    }
+    app.UseHttpsRedirection();
+    app.UseStaticFiles();
+
+</div></code></pre>
+<p>Next we define a <code>IApplicationBuilder.MapWhen</code> for each WASM SPA.  I've shown the one for <em>red</em> here.  These define the middleware to run for specific site segments - defined by the Url.  This is for the Red WASM.  Note:</p>
+<ol>
+<li>We configure <code>UseBlazorFrameworkFiles</code> to a specific Url segment- we'll look at the significance of this in the WASM section below. It means the frameworks file path will be <em>wwwroot/red/_framework/</em>, providing a unique path for this WASM SPA.</li>
+<li>The fallback Page for the segment is <code>/_Red.cshtml</code>.</li>
+</ol>
+<pre><code class="language-csharp"><div>
+    app.MapWhen(ctx =&gt; ctx.Request.Path.StartsWithSegments(<span class="hljs-string">&quot;/red&quot;</span>), app1 =&gt;
+    {
+        app1.UseBlazorFrameworkFiles(<span class="hljs-string">&quot;/red&quot;</span>);
+        app1.UseRouting();
+        app1.UseEndpoints(endpoints =&gt;
+        {
+            endpoints.MapFallbackToPage(<span class="hljs-string">&quot;/red/{*path:nonfile}&quot;</span>, <span class="hljs-string">&quot;/_Red&quot;</span>);
+        });
+    });
+
+</div></code></pre>
+<p>Finally we define the default segment middleware.  Note:</p>
+<ol>
+<li>We define <code>MapBlazorHub</code> to map all SignalR traffic to the Blazor Hub.</li>
+<li>We define a set of segment specific fallback pages for each Blazor Server SPA with the specific startup page for the SPA.</li>
+</ol>
+<pre><code class="language-csharp"><div>    app.UseRouting();
+    app.UseBlazorFrameworkFiles();
+    app.UseEndpoints(endpoints =&gt;
+    {
+        endpoints.MapBlazorHub();
+        endpoints.MapRazorPages();
+        endpoints.MapFallbackToPage(<span class="hljs-string">&quot;/examplesserver/{*path:nonfile}&quot;</span>, <span class="hljs-string">&quot;/_ExamplesServer&quot;</span>);
+        endpoints.MapFallbackToPage(<span class="hljs-string">&quot;/grey/{*path:nonfile}&quot;</span>, <span class="hljs-string">&quot;/_Grey&quot;</span>);
+        endpoints.MapFallbackToPage(<span class="hljs-string">&quot;/blue/{*path:nonfile}&quot;</span>, <span class="hljs-string">&quot;/_Blue&quot;</span>);
+        endpoints.MapFallbackToPage(<span class="hljs-string">&quot;/routing/{*path:nonfile}&quot;</span>, <span class="hljs-string">&quot;/_Routing&quot;</span>);
+        endpoints.MapFallbackToPage(<span class="hljs-string">&quot;/Index&quot;</span>);
+    });
+}
+</div></code></pre>
+<h2 id="blazor-wasm">Blazor WASM</h2>
+<p>Each WASM SPA must have a separate project. <code>&lt;Project Sdk=&quot;Microsoft.NET.Sdk.BlazorWebAssembly&quot;&gt;</code>
+declares the project as a WASM SPA and instructs the compiler to build the project as a WASM SPA.  There's a single <code>RootComponent</code> defined in <code>Program</code>.</p>
+<pre><code class="language-csharp"><div><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title">Program</span>
+{
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">async</span> Task <span class="hljs-title">Main</span>(<span class="hljs-params"><span class="hljs-keyword">string</span>[] args</span>)</span>
+    {
+        <span class="hljs-keyword">var</span> builder = WebAssemblyHostBuilder.CreateDefault(args);
+        builder.RootComponents.Add&lt;WASMRedApp&gt;(<span class="hljs-string">&quot;#app&quot;</span>);
+
+        builder.Services.AddScoped(sp =&gt; <span class="hljs-keyword">new</span> HttpClient { BaseAddress = <span class="hljs-keyword">new</span> Uri(builder.HostEnvironment.BaseAddress) });
+
+        <span class="hljs-keyword">await</span> builder.Build().RunAsync();
+    }
+}
+</div></code></pre>
+<p>You don't need to stick with <code>app</code>.  This declaration defines a different class to <code>App</code>.  It basically says render the component of <code>TComponent</code> in the HTML tag with <code>id</code> of <code>app</code>.  Don't be misled by <code>RootComponents</code> and <code>Add</code>.  Declare one.  You can declare more than one, but they must all be present on the rendered page, so it's fairly pointless: Layouts achieve the same result with far more flexibility.</p>
+<p>The key to multi SPA hosting is specifying a unique <code>StaticWebAssetBasePath</code> in the project definition file.</p>
+<pre><code class="language-xml"><div>  <span class="hljs-tag">&lt;<span class="hljs-name">PropertyGroup</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">StaticWebAssetBasePath</span>&gt;</span>red<span class="hljs-tag">&lt;/<span class="hljs-name">StaticWebAssetBasePath</span>&gt;</span>
+  <span class="hljs-tag">&lt;/<span class="hljs-name">PropertyGroup</span>&gt;</span>
+</div></code></pre>
+<p>Remember we used <code>UseBlazorFrameworkFiles(&quot;/red&quot;)</code> in the middleware map in <code>Startup,cs</code>.  This is where things tie together.  This is case sensitive!</p>
+<p><img src="\articles\assets\Hydra\Mongrel-Red-Project.png" alt="Mongrel Red Project"></p>
+<p>The project view above shows all the files in the project.</p>
+<ol>
+<li>The Layout and navigation are common to all the Mongrel projects so have moved up to the shared library.</li>
+<li><code>App.razor</code> has moved into <em>Components</em> and been renamed to make it unique.  I don't like <code>Apps</code> all over the place.</li>
+<li><em>wwwroot</em> has gone as the startup <code>index.html</code> has moved up to Hydra, as has the CSS.</li>
+</ol>
+<p>Once compiled the <em>bin</em> looks like this:</p>
+<p><img src="\articles\assets\Hydra\Mongrel-Red-bin.png" alt="Mongrel Red Project"></p>
+<p>Note the <em>_framework</em> directory containing <code>blazor.webaseembly.js</code> and <code>blazor.boot.json</code>.  When this project is referenced by Hydra this directory will be available as <em>red/_framework</em>.  Without unique <code>StaticWebAssetBasePath</code>s all SPA's would be mappsed to <em>_framework</em>.</p>
+<p>The &quot;Startup&quot; page for the SPA is on Hydra. <em>_Red.cshtml</em></p>
+<pre><code class="language-html"><div>@page &quot;/spared&quot;
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@{
+    Layout = null;
+}
+
+<span class="hljs-meta">&lt;!DOCTYPE <span class="hljs-meta-keyword">html</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">html</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">head</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">meta</span> <span class="hljs-attr">charset</span>=<span class="hljs-string">&quot;utf-8&quot;</span> /&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">meta</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;viewport&quot;</span> <span class="hljs-attr">content</span>=<span class="hljs-string">&quot;width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no&quot;</span> /&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">title</span>&gt;</span>Mongrel.WASM.RED<span class="hljs-tag">&lt;/<span class="hljs-name">title</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">base</span> <span class="hljs-attr">href</span>=<span class="hljs-string">&quot;/red/&quot;</span> /&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">link</span> <span class="hljs-attr">href</span>=<span class="hljs-string">&quot;/css/site.css&quot;</span> <span class="hljs-attr">rel</span>=<span class="hljs-string">&quot;stylesheet&quot;</span> /&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">link</span> <span class="hljs-attr">href</span>=<span class="hljs-string">&quot;/CEC.Blazor.Hydra.styles.css&quot;</span> <span class="hljs-attr">rel</span>=<span class="hljs-string">&quot;stylesheet&quot;</span> /&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">head</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">body</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;app&quot;</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;mt-4&quot;</span> <span class="hljs-attr">style</span>=<span class="hljs-string">&quot;margin-right:auto; margin-left:auto; width:100%;&quot;</span>&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;loader&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">style</span>=<span class="hljs-string">&quot;width:100%; text-align:center;&quot;</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-name">h4</span>&gt;</span>Web Application Loading<span class="hljs-tag">&lt;/<span class="hljs-name">h4</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+        <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+
+    <span class="hljs-tag">&lt;<span class="hljs-name">script</span> <span class="hljs-attr">src</span>=<span class="hljs-string">&quot;/red/_framework/blazor.webassembly.js&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">body</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">html</span>&gt;</span>
+</div></code></pre>
+<p>Note:</p>
+<ol>
+<li>The <code>base</code> is set to <code>&quot;/red/&quot;</code>.  <strong>Important</strong> - You need to leading and trailing slashes.</li>
+<li><code>site.css</code> is a SASS built CSS file.</li>
+<li><code>CEC.Blazor.Hydra.styles.css</code> is the system SASS built CSS incorporating all the reference projects component styles.</li>
+<li>We define the specific webassembly script <code>src=&quot;/red/_framework/blazor.webassembly.js&quot;</code>.  It looks for it's configuration file in <em>{base}/_framework/blazor.boot.json</em>, where <em>{base}</em> is defined in <code>&lt;base href=&quot;&quot;&gt;</code>. <em>./blazor.boot.json</em> is the configuration file for loading the WASM executables.  It's important to realise that <em>base</em> needs to have a trailing &quot;/&quot; for this to work.</li>
+</ol>
+<p>The final bit of the jigsaw is the mapping in Hydra's <code>Startup.cs</code>.  The middleware is configured with the correct <em>BlazorFrameworkFiles</em> and any get requests to <em>/red/</em> are directed to <em>/_Red.cshtml</em>.</p>
+<p>Once the SPA starts, any navigation to known Urls within the application are routed by the SPA.  Any external Urls are Http gets.  In Hydra and Urls to <em>/red/</em>* are directed to <em>/_Red.cshtml</em>.  So <em>/red/counter</em> will start the SPA on the counter page, while  <em>/red/nopage</em> will load the SPA but you will see the &quot;Nothing at this Address&quot; message.</p>
+<p>You need to be a little careful with the route &quot;/&quot;.  I prefer to set the SPA home page up with a route &quot;/index&quot; and always reference it that way.</p>
+<h2 id="blazor-server">Blazor Server</h2>
+<p>A Blazor Server SPA is configured a little differently.  We don't need a <code>Program.cs</code> with a single entry point.  We configure the startup page to load any class implementing <code>IComponent</code>, so our entry point can come from anywhere.  For code and route management define a Razor Library project per SPA: keep everything compartmentalized.</p>
+<p>We've already seen the configuration of the main site's <code>Startup.cs</code>, I included the Blazor bit in the discussion above.  It:</p>
+<ol>
+<li>Adds the specific Blazor Services by calling <code>services.AddServerSideBlazor()</code> in <code>ConfigureServices</code>.</li>
+<li>Adds the Blazor Hub Middleware by calling <code>endpoints.MapBlazorHub()</code> in <code>Configure</code>.</li>
+</ol>
+<p>The key bot to understand here is there's one Blazor hub for all the SPAs.  Load all the services for each SPA in <code>ConfigureServices</code>.  This does place some restrictions and controls on what you can and can't run together, but for most instances this won't be an issue.  Remember Services are only loaded as needed, and cleaned up as they are disposed.  Make sure you get the scope of your service right.</p>
+<p>Each Server SPA has an <em>endpoint</em>.  You don't need to configure these with <code>MapWhen</code> as they all use the same middleware train.Thet're all defined in the default <code>UseEndpoints</code>.  You've seen these already in <code>Startup.cs</code>.</p>
+<p>The client side of the Server SPA is again defined as a single page.  Unlike the WASM page, which is static Html wrapped in a Razor page, the Server SPA page is a razor page.  It has a <code>Component</code> entry point that is read by the TagHelper and processed by the server.  What Razor does with the page is dictated by <code>rendermode</code>.</p>
+<pre><code class="language-html"><div>@page &quot;/spagrey&quot;
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@{
+    Layout = null;
+}
+<span class="hljs-meta">&lt;!DOCTYPE <span class="hljs-meta-keyword">html</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">html</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">head</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">meta</span> <span class="hljs-attr">charset</span>=<span class="hljs-string">&quot;utf-8&quot;</span> /&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">meta</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;viewport&quot;</span> <span class="hljs-attr">content</span>=<span class="hljs-string">&quot;width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no&quot;</span> /&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">title</span>&gt;</span>Mongrel.Server.GREY<span class="hljs-tag">&lt;/<span class="hljs-name">title</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">base</span> <span class="hljs-attr">href</span>=<span class="hljs-string">&quot;/grey&quot;</span> /&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">link</span> <span class="hljs-attr">href</span>=<span class="hljs-string">&quot;/css/site.css&quot;</span> <span class="hljs-attr">rel</span>=<span class="hljs-string">&quot;stylesheet&quot;</span> /&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">link</span> <span class="hljs-attr">href</span>=<span class="hljs-string">&quot;/CEC.Blazor.Hydra.styles.css&quot;</span> <span class="hljs-attr">rel</span>=<span class="hljs-string">&quot;stylesheet&quot;</span> /&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">head</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">body</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">component</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;typeof(Mongrel.Server.Grey.Components.ServerGreyApp)&quot;</span> <span class="hljs-attr">render-mode</span>=<span class="hljs-string">&quot;ServerPrerendered&quot;</span> /&gt;</span>
+
+    <span class="hljs-tag">&lt;<span class="hljs-name">script</span> <span class="hljs-attr">src</span>=<span class="hljs-string">&quot;_framework/blazor.server.js&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">body</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">html</span>&gt;</span>
+</div></code></pre>
+<p>Once the browser receives what got produced by the server, it renders the initial static DOM provided and then calls the loaded Javascript.  This where the magic starts.  <code>blazor.server.js</code> loads, reads configuration data incorporated in the page and establishes a session with the BlazorHub over SignalR and requests the root <code>IComponent</code> defined on the page by <code>&lt;component&gt;</code> - normally <code>App</code> defined by <code>App.Razor</code>.  The Blazor middleware, configured on the server by <code>endpoints.MapBlazorHub()</code> receives the request and establishes the session.  The Blazor Hub renders the requested <code>IComponent</code> component tree and passes the changes back over SignalR to the client: on initial re-render this is the whole DOM.  The SPA is now live.  Events happen on the page, get passed back to the Hub Session.  It handles the events and passes any DOM changes back to the client.  Navigation events to known routes get handled by the SPA router: the SPA session persists.  A URL outside known routes causes the SPA Router to submit a full http get for the URL: the SPA session ends.  I watch the page tab in the browser to see if a request is routed or causes a page refresh.</p>
+<p>So what's going on in the SignalR session.  The AspNetCore compiled code library for the website contains all the Blazor component code - they're just standard classes.  The Service container runs the services, again standard classes within the compiled code library.  The heart of the signalR session is the Renderer for the specific SPA session.  It builds and rebuilds the DOM from the ComponentTree.  Consider a Blazor Server SPA as two entities: one running in the Blazor Hub on the Server doing most of the work; the other bit on the client, intercepting events and passing them back to the server, then re-rendering the page with the DOM changes returned. Events client-to-Server, DOM changes Server-to-Client.</p>
+<h2 id="building-the-hydra-site">Building the Hydra Site</h2>
+<p>I've tried to keep this as simple as possible, basing the sites on the out-of-the-box templates.  I've made no attempt to consolidate code into shared libraries.</p>
+<p>Build the starting solution as follows (all are built from the standard VS 2019 templates):</p>
+<ol>
+<li><strong><a href="http://Hydra.Web">Hydra.Web</a></strong> - A Razor MVC project.  This is the start up project.</li>
+<li><strong>Hydra.Grey</strong> - A Razor library project</li>
+<li><strong>Hydra.Blue</strong> - Another Razor library project</li>
+<li><strong>Hydra.Steel</strong> - A Blazor WASM project (standalone - not NetCore hosted)</li>
+<li><strong>Hydra.Red</strong> - A Blazor WASM project (standalone - not NetCore hosted)</li>
+</ol>
+<p><img src="\articles\assets\Hydra\Hydra-Solution.png" alt="Initial Project View"></p>
+<p>Set <em><a href="http://Hydra.Web">Hydra.Web</a></em> as the startup project.  If you're working along with me run the project to check the Razor project compiles and runs.</p>
+<h4 id="clear-out-the-two-libraries">Clear Out the Two Libraries</h4>
+<p>Clear the following files from the two libraries</p>
+<ul>
+<li><em>wwwroot</em> and contents</li>
+<li><em>Component1.razor</em></li>
+<li><em>ExampleJsInterop.cs</em></li>
+</ul>
+<p>Start with the WASM Projects</p>
+<h2 id="hydrared">Hydra.Red</h2>
+<p><img src="\articles\assets\Hydra\Hydra-Red.png" alt="Initial Project View"></p>
+<p>Update the project file.  Note <code>StaticWebAssetBasePath</code> is set to <em>red</em>.</p>
+<pre><code class="language-xml"><div><span class="hljs-tag">&lt;<span class="hljs-name">Project</span> <span class="hljs-attr">Sdk</span>=<span class="hljs-string">&quot;Microsoft.NET.Sdk.BlazorWebAssembly&quot;</span>&gt;</span>
+
+  <span class="hljs-tag">&lt;<span class="hljs-name">PropertyGroup</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">TargetFramework</span>&gt;</span>net5.0<span class="hljs-tag">&lt;/<span class="hljs-name">TargetFramework</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">StaticWebAssetBasePath</span>&gt;</span>red<span class="hljs-tag">&lt;/<span class="hljs-name">StaticWebAssetBasePath</span>&gt;</span>
+  <span class="hljs-tag">&lt;/<span class="hljs-name">PropertyGroup</span>&gt;</span>
+
+  <span class="hljs-tag">&lt;<span class="hljs-name">ItemGroup</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">PackageReference</span> <span class="hljs-attr">Include</span>=<span class="hljs-string">&quot;Microsoft.AspNetCore.Components.WebAssembly&quot;</span> <span class="hljs-attr">Version</span>=<span class="hljs-string">&quot;5.0.3&quot;</span> /&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">PackageReference</span> <span class="hljs-attr">Include</span>=<span class="hljs-string">&quot;Microsoft.AspNetCore.Components.WebAssembly.DevServer&quot;</span> <span class="hljs-attr">Version</span>=<span class="hljs-string">&quot;5.0.3&quot;</span> <span class="hljs-attr">PrivateAssets</span>=<span class="hljs-string">&quot;all&quot;</span> /&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">PackageReference</span> <span class="hljs-attr">Include</span>=<span class="hljs-string">&quot;System.Net.Http.Json&quot;</span> <span class="hljs-attr">Version</span>=<span class="hljs-string">&quot;5.0.0&quot;</span> /&gt;</span>
+  <span class="hljs-tag">&lt;/<span class="hljs-name">ItemGroup</span>&gt;</span>
+
+<span class="hljs-tag">&lt;/<span class="hljs-name">Project</span>&gt;</span>
+</div></code></pre>
+<p>Update <em>NavMenu.razor</em> by adding the following link at the top of the links.</p>
+<pre><code class="language-html"><div><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;@NavMenuCssClass&quot;</span> @<span class="hljs-attr">onclick</span>=<span class="hljs-string">&quot;ToggleNavMenu&quot;</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">ul</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;nav flex-column&quot;</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">li</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;nav-item px-3&quot;</span>&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-name">NavLink</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;nav-link&quot;</span> <span class="hljs-attr">href</span>=<span class="hljs-string">&quot;/Hydra&quot;</span> <span class="hljs-attr">Match</span>=<span class="hljs-string">&quot;NavLinkMatch.All&quot;</span>&gt;</span>
+                <span class="hljs-tag">&lt;<span class="hljs-name">span</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;oi oi-home&quot;</span> <span class="hljs-attr">aria-hidden</span>=<span class="hljs-string">&quot;true&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">span</span>&gt;</span> Hydra
+            <span class="hljs-tag">&lt;/<span class="hljs-name">NavLink</span>&gt;</span>
+        <span class="hljs-tag">&lt;/<span class="hljs-name">li</span>&gt;</span>
+......
+</div></code></pre>
+<p>Update <em>MainLayout.razor.css</em> by changing the <code>.sidebar</code> background.</p>
+<pre><code class="language-css"><div><span class="hljs-selector-class">.sidebar</span> {
+    <span class="hljs-attribute">background-image</span>: <span class="hljs-built_in">linear-gradient</span>(<span class="hljs-number">180deg</span>, #<span class="hljs-number">400</span> <span class="hljs-number">0%</span>, #<span class="hljs-number">800</span> <span class="hljs-number">70%</span>);
+}
+</div></code></pre>
+<h2 id="hydrasteel">Hydra.Steel</h2>
+<p><img src="\articles\assets\Hydra\Hydra-Steel.png" alt="Initial Project View"></p>
+<p>Update the project file.  Note the added <code>StaticWebAssetBasePath</code> set to <em>steel</em>.</p>
+<pre><code class="language-xml"><div><span class="hljs-tag">&lt;<span class="hljs-name">Project</span> <span class="hljs-attr">Sdk</span>=<span class="hljs-string">&quot;Microsoft.NET.Sdk.BlazorWebAssembly&quot;</span>&gt;</span>
+
+  <span class="hljs-tag">&lt;<span class="hljs-name">PropertyGroup</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">TargetFramework</span>&gt;</span>net5.0<span class="hljs-tag">&lt;/<span class="hljs-name">TargetFramework</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">StaticWebAssetBasePath</span>&gt;</span>steel<span class="hljs-tag">&lt;/<span class="hljs-name">StaticWebAssetBasePath</span>&gt;</span>
+  <span class="hljs-tag">&lt;/<span class="hljs-name">PropertyGroup</span>&gt;</span>
+
+  <span class="hljs-tag">&lt;<span class="hljs-name">ItemGroup</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">PackageReference</span> <span class="hljs-attr">Include</span>=<span class="hljs-string">&quot;Microsoft.AspNetCore.Components.WebAssembly&quot;</span> <span class="hljs-attr">Version</span>=<span class="hljs-string">&quot;5.0.3&quot;</span> /&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">PackageReference</span> <span class="hljs-attr">Include</span>=<span class="hljs-string">&quot;Microsoft.AspNetCore.Components.WebAssembly.DevServer&quot;</span> <span class="hljs-attr">Version</span>=<span class="hljs-string">&quot;5.0.3&quot;</span> <span class="hljs-attr">PrivateAssets</span>=<span class="hljs-string">&quot;all&quot;</span> /&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">PackageReference</span> <span class="hljs-attr">Include</span>=<span class="hljs-string">&quot;System.Net.Http.Json&quot;</span> <span class="hljs-attr">Version</span>=<span class="hljs-string">&quot;5.0.0&quot;</span> /&gt;</span>
+  <span class="hljs-tag">&lt;/<span class="hljs-name">ItemGroup</span>&gt;</span>
+
+<span class="hljs-tag">&lt;/<span class="hljs-name">Project</span>&gt;</span>
+</div></code></pre>
+<p>Update <code>NavMenu.razor</code> by adding the following link at the top of the links.</p>
+<pre><code class="language-html"><div><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;@NavMenuCssClass&quot;</span> @<span class="hljs-attr">onclick</span>=<span class="hljs-string">&quot;ToggleNavMenu&quot;</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">ul</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;nav flex-column&quot;</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">li</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;nav-item px-3&quot;</span>&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-name">NavLink</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;nav-link&quot;</span> <span class="hljs-attr">href</span>=<span class="hljs-string">&quot;/Hydra&quot;</span> <span class="hljs-attr">Match</span>=<span class="hljs-string">&quot;NavLinkMatch.All&quot;</span>&gt;</span>
+                <span class="hljs-tag">&lt;<span class="hljs-name">span</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;oi oi-home&quot;</span> <span class="hljs-attr">aria-hidden</span>=<span class="hljs-string">&quot;true&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">span</span>&gt;</span> Hydra
+            <span class="hljs-tag">&lt;/<span class="hljs-name">NavLink</span>&gt;</span>
+        <span class="hljs-tag">&lt;/<span class="hljs-name">li</span>&gt;</span>
+......
+</div></code></pre>
+<p>Update the <em>sidebar</em> in <code>MainLayout</code>.</p>
+<pre><code class="language-html"><div>    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;sidebar sidebar-steel&quot;</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">NavMenu</span> /&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+</div></code></pre>
+<pre><code class="language-html"><div>// Hydra.Steel/Pages/FetchData.razor
+....
+
+    protected override async Task OnInitializedAsync()
+    {
+// Note /sample-data
+        forecasts = await Http.GetFromJsonAsync<span class="hljs-tag">&lt;<span class="hljs-name">WeatherForecast[]</span>&gt;</span>(&quot;/sample-data/weather.json&quot;);
+    }
+....
+</div></code></pre>
+<p>We will use CSS from <em><a href="http://Hydra.Web">Hydra.Web</a></em> for this SPA.</p>
+<p>Delete:</p>
+<ol>
+<li>The <em>wwwroot</em> folder structure</li>
+<li><em>/Shared/MainLayout.razor.css</em></li>
+<li><em>/Shared/NavMenu.razor.css</em></li>
+</ol>
+<h2 id="hydraweb"><a href="http://Hydra.Web">Hydra.Web</a></h2>
+<p><img src="\articles\assets\Hydra\Hydra-Web.png" alt="Initial Project View"></p>
+<p>Update the project file.  We add in all projects and a package reference to the Blazor WASM Server library.</p>
+<pre><code class="language-xml"><div><span class="hljs-tag">&lt;<span class="hljs-name">Project</span> <span class="hljs-attr">Sdk</span>=<span class="hljs-string">&quot;Microsoft.NET.Sdk.Web&quot;</span>&gt;</span>
+
+  <span class="hljs-tag">&lt;<span class="hljs-name">PropertyGroup</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">TargetFramework</span>&gt;</span>net5.0<span class="hljs-tag">&lt;/<span class="hljs-name">TargetFramework</span>&gt;</span>
+  <span class="hljs-tag">&lt;/<span class="hljs-name">PropertyGroup</span>&gt;</span>
+
+  <span class="hljs-tag">&lt;<span class="hljs-name">ItemGroup</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">PackageReference</span> <span class="hljs-attr">Include</span>=<span class="hljs-string">&quot;Microsoft.AspNetCore.Components.WebAssembly.Server&quot;</span> <span class="hljs-attr">Version</span>=<span class="hljs-string">&quot;5.0.3&quot;</span> /&gt;</span>
+  <span class="hljs-tag">&lt;/<span class="hljs-name">ItemGroup</span>&gt;</span>
+
+  <span class="hljs-tag">&lt;<span class="hljs-name">ItemGroup</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">ProjectReference</span> <span class="hljs-attr">Include</span>=<span class="hljs-string">&quot;..\Hydra.Blue\Hydra.Blue.csproj&quot;</span> /&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">ProjectReference</span> <span class="hljs-attr">Include</span>=<span class="hljs-string">&quot;..\Hydra.Red\Hydra.Red.csproj&quot;</span> /&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">ProjectReference</span> <span class="hljs-attr">Include</span>=<span class="hljs-string">&quot;..\Hydra.Steel\Hydra.Steel.csproj&quot;</span> /&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">ProjectReference</span> <span class="hljs-attr">Include</span>=<span class="hljs-string">&quot;..\Razor.Grey\Hydra.Grey.csproj&quot;</span> /&gt;</span>
+  <span class="hljs-tag">&lt;/<span class="hljs-name">ItemGroup</span>&gt;</span>
+
+<span class="hljs-tag">&lt;/<span class="hljs-name">Project</span>&gt;</span>
+</div></code></pre>
+<p>Pull the following folders with files from the Repo:</p>
+<ol>
+<li><em>wwwroot/css</em></li>
+<li><em>wwwroot/sample-data</em></li>
+</ol>
+<p><em>wwwroot/css/app.css</em> is a custom built BootStrap distribution.</p>
+<p>Add two Razor Pages to the Pages folder:</p>
+<ol>
+<li><em>_Blue.cshtml</em></li>
+<li><em>_Red.cshtml</em></li>
+<li><em>_Steel.cshtml</em></li>
+<li><em>_Grey.cshtml</em></li>
+</ol>
+<p>Delete the associated model cs files assocated with these.</p>
+<pre><code class="language-html"><div>// Hydra.Web/Pages/_Red.cshtml
+@page &quot;/spared&quot;
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@{
+    Layout = null;
+}
+
+<span class="hljs-meta">&lt;!DOCTYPE <span class="hljs-meta-keyword">html</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">html</span>&gt;</span>
+
+<span class="hljs-tag">&lt;<span class="hljs-name">head</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">meta</span> <span class="hljs-attr">charset</span>=<span class="hljs-string">&quot;utf-8&quot;</span> /&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">meta</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;viewport&quot;</span> <span class="hljs-attr">content</span>=<span class="hljs-string">&quot;width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no&quot;</span> /&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">title</span>&gt;</span>Hydra.RED<span class="hljs-tag">&lt;/<span class="hljs-name">title</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">base</span> <span class="hljs-attr">href</span>=<span class="hljs-string">&quot;/red/&quot;</span> /&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">link</span> <span class="hljs-attr">href</span>=<span class="hljs-string">&quot;/red/css/bootstrap/bootstrap.min.css&quot;</span> <span class="hljs-attr">rel</span>=<span class="hljs-string">&quot;stylesheet&quot;</span> /&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">link</span> <span class="hljs-attr">href</span>=<span class="hljs-string">&quot;/red/css/app.css&quot;</span> <span class="hljs-attr">rel</span>=<span class="hljs-string">&quot;stylesheet&quot;</span> /&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">link</span> <span class="hljs-attr">href</span>=<span class="hljs-string">&quot;/red/Hydra.Red.styles.css&quot;</span> <span class="hljs-attr">rel</span>=<span class="hljs-string">&quot;stylesheet&quot;</span> /&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">head</span>&gt;</span>
+
+<span class="hljs-tag">&lt;<span class="hljs-name">body</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;app&quot;</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;mt-4&quot;</span> <span class="hljs-attr">style</span>=<span class="hljs-string">&quot;margin-right:auto; margin-left:auto; width:100%;&quot;</span>&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;loader&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">style</span>=<span class="hljs-string">&quot;width:100%; text-align:center;&quot;</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-name">h4</span>&gt;</span>Web Application Loading<span class="hljs-tag">&lt;/<span class="hljs-name">h4</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+        <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+
+    <span class="hljs-tag">&lt;<span class="hljs-name">script</span> <span class="hljs-attr">src</span>=<span class="hljs-string">&quot;/red/_framework/blazor.webassembly.js&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">body</span>&gt;</span>
+
+<span class="hljs-tag">&lt;/<span class="hljs-name">html</span>&gt;</span>
+</div></code></pre>
+<pre><code class="language-html"><div>// Hydra.Web/Pages/_Steel.cshtml
+@page &quot;/spasteel&quot;
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@{
+    Layout = null;
+}
+
+<span class="hljs-meta">&lt;!DOCTYPE <span class="hljs-meta-keyword">html</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">html</span>&gt;</span>
+
+<span class="hljs-tag">&lt;<span class="hljs-name">head</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">meta</span> <span class="hljs-attr">charset</span>=<span class="hljs-string">&quot;utf-8&quot;</span> /&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">meta</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;viewport&quot;</span> <span class="hljs-attr">content</span>=<span class="hljs-string">&quot;width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no&quot;</span> /&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">title</span>&gt;</span>Hydra.Steel<span class="hljs-tag">&lt;/<span class="hljs-name">title</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">base</span> <span class="hljs-attr">href</span>=<span class="hljs-string">&quot;/steel/&quot;</span> /&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">link</span> <span class="hljs-attr">href</span>=<span class="hljs-string">&quot;/css/app.css&quot;</span> <span class="hljs-attr">rel</span>=<span class="hljs-string">&quot;stylesheet&quot;</span> /&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">link</span> <span class="hljs-attr">href</span>=<span class="hljs-string">&quot;Hydra.Web.styles.css&quot;</span> <span class="hljs-attr">rel</span>=<span class="hljs-string">&quot;stylesheet&quot;</span> /&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">head</span>&gt;</span>
+
+<span class="hljs-tag">&lt;<span class="hljs-name">body</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;app&quot;</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;mt-4&quot;</span> <span class="hljs-attr">style</span>=<span class="hljs-string">&quot;margin-right:auto; margin-left:auto; width:100%;&quot;</span>&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;loader&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">style</span>=<span class="hljs-string">&quot;width:100%; text-align:center;&quot;</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-name">h4</span>&gt;</span>Web Application Loading<span class="hljs-tag">&lt;/<span class="hljs-name">h4</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+        <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+
+    <span class="hljs-tag">&lt;<span class="hljs-name">script</span> <span class="hljs-attr">src</span>=<span class="hljs-string">&quot;/steel/_framework/blazor.webassembly.js&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">body</span>&gt;</span>
+
+<span class="hljs-tag">&lt;/<span class="hljs-name">html</span>&gt;</span>
+</div></code></pre>
+<pre><code class="language-html"><div>// Hydra.Web/Pages/_Grey.cshtml &amp; _Blue.cshtml_
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@{
+    Layout = null;
+}
+<span class="hljs-meta">&lt;!DOCTYPE <span class="hljs-meta-keyword">html</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">html</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">head</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">head</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">body</span>&gt;</span>
+Holding page
+<span class="hljs-tag">&lt;/<span class="hljs-name">body</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">html</span>&gt;</span>
+</div></code></pre>
+<h4 id="startupcs">Startup.cs</h4>
+<p>We're:</p>
+<ol>
+<li>Adding in Support for Razor Pages to the Services.</li>
+<li>Add a specific <code>Endpoint</code> configuration for the Red and Steel SPAs.
+i. Mounts the <em>_framework</em> files associated with the SPA <code>&lt;StaticWebAssetBasePath&gt;</code>.
+ii. Sets a Fallback to <em>_Colour.cshtml</em> for all /purple/* URLs</li>
+<li>Add Blazor Support at the same time.
+i.  Add the Blazor Services.
+ii. Add the Blazor Hub.
+iii. Add the Endpoints for the Blazor Server SPAs.</li>
+</ol>
+<pre><code class="language-csharp"><div><span class="hljs-comment">// Hydra.Web/StartUp.cs</span>
+<span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">ConfigureServices</span>(<span class="hljs-params">IServiceCollection services</span>)</span>
+{
+    services.AddRazorPages();
+    services.AddServerSideBlazor();
+    <span class="hljs-comment">// Server Side Blazor doesn&#x27;t register HttpClient by default</span>
+    <span class="hljs-comment">// Thanks to Robin Sue - Suchiman https://github.com/Suchiman/BlazorDualMode</span>
+    <span class="hljs-keyword">if</span> (!services.Any(x =&gt; x.ServiceType == <span class="hljs-keyword">typeof</span>(HttpClient)))
+    {
+        <span class="hljs-comment">// Setup HttpClient for server side in a client side compatible fashion</span>
+        services.AddScoped&lt;HttpClient&gt;(s =&gt;
+        {
+            <span class="hljs-comment">// Creating the URI helper needs to wait until the JS Runtime is initialized, so defer it.</span>
+            <span class="hljs-keyword">var</span> uriHelper = s.GetRequiredService&lt;NavigationManager&gt;();
+            <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> HttpClient
+            {
+                BaseAddress = <span class="hljs-keyword">new</span> Uri(uriHelper.BaseUri)
+            };
+        });
+    }
+}
+
+<span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">Configure</span>(<span class="hljs-params">IApplicationBuilder app, IWebHostEnvironment env</span>)</span>
+{
+    ....
+    app.UseStaticFiles();
+
+    app.MapWhen(ctx =&gt; ctx.Request.Path.StartsWithSegments(<span class="hljs-string">&quot;/red&quot;</span>), app1 =&gt;
+    {
+        app1.UseBlazorFrameworkFiles(<span class="hljs-string">&quot;/red&quot;</span>);
+        app1.UseRouting();
+        app1.UseEndpoints(endpoints =&gt;
+        {
+            endpoints.MapFallbackToPage(<span class="hljs-string">&quot;/red/{*path:nonfile}&quot;</span>, <span class="hljs-string">&quot;/_Red&quot;</span>);
+        });
+
+    });
+
+    app.MapWhen(ctx =&gt; ctx.Request.Path.StartsWithSegments(<span class="hljs-string">&quot;/steel&quot;</span>), app1 =&gt;
+    {
+        app1.UseBlazorFrameworkFiles(<span class="hljs-string">&quot;/steel&quot;</span>);
+        app1.UseRouting();
+        app1.UseEndpoints(endpoints =&gt;
+        {
+            endpoints.MapFallbackToPage(<span class="hljs-string">&quot;/steel/{*path:nonfile}&quot;</span>, <span class="hljs-string">&quot;/_Steel&quot;</span>);
+        });
+
+    });
+
+    app.UseRouting();
+
+    <span class="hljs-comment">// default EndPoint Configuration</span>
+    app.UseEndpoints(endpoints =&gt;
+    {
+        endpoints.MapBlazorHub();
+        endpoints.MapRazorPages();
+        endpoints.MapFallbackToPage(<span class="hljs-string">&quot;/grey/{*path:nonfile}&quot;</span>, <span class="hljs-string">&quot;/_Grey&quot;</span>);
+        endpoints.MapFallbackToPage(<span class="hljs-string">&quot;/blue/{*path:nonfile}&quot;</span>, <span class="hljs-string">&quot;/_Blue&quot;</span>);
+        endpoints.MapFallbackToPage(<span class="hljs-string">&quot;/Index&quot;</span>);
+    });
+}
+</div></code></pre>
+<h4 id="indexcshtml">Index.cshtml</h4>
+<p>Update the <code>@page</code> directive and add some buttons for navigation.</p>
+<pre><code class="language-html"><div>@page &quot;/&quot;
+....
+<span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;text-center&quot;</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">h1</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;display-4&quot;</span>&gt;</span>Welcome<span class="hljs-tag">&lt;/<span class="hljs-name">h1</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span>Learn about <span class="hljs-tag">&lt;<span class="hljs-name">a</span> <span class="hljs-attr">href</span>=<span class="hljs-string">&quot;https://docs.microsoft.com/aspnet/core&quot;</span>&gt;</span>building Web apps with ASP.NET Core<span class="hljs-tag">&lt;/<span class="hljs-name">a</span>&gt;</span>.<span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;container&quot;</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">a</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;btn btn-danger&quot;</span> <span class="hljs-attr">href</span>=<span class="hljs-string">&quot;/red&quot;</span>&gt;</span>Hydra Red<span class="hljs-tag">&lt;/<span class="hljs-name">a</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">a</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;btn btn-dark&quot;</span> <span class="hljs-attr">href</span>=<span class="hljs-string">&quot;/steel&quot;</span>&gt;</span>Hydra Steel<span class="hljs-tag">&lt;/<span class="hljs-name">a</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">a</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;btn btn-primary&quot;</span> <span class="hljs-attr">href</span>=<span class="hljs-string">&quot;/blue&quot;</span>&gt;</span>Hydra Blue<span class="hljs-tag">&lt;/<span class="hljs-name">a</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">a</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;btn btn-secondary&quot;</span> <span class="hljs-attr">href</span>=<span class="hljs-string">&quot;/grey&quot;</span>&gt;</span>Hydra Grey<span class="hljs-tag">&lt;/<span class="hljs-name">a</span>&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+</div></code></pre>
+<p>This should all now compile and run.</p>
+<h2 id="hydrablue">Hydra.Blue</h2>
+<p><img src="\articles\assets\Hydra\Hydra-Blue.png" alt="Initial Project View"></p>
+<p>This is the library were we'll use to build one of the Blazor Server SPAs.</p>
+<h4 id="project-file">Project File</h4>
+<p>Include the following Packages and projects.</p>
+<pre><code class="language-xml"><div><span class="hljs-tag">&lt;<span class="hljs-name">Project</span> <span class="hljs-attr">Sdk</span>=<span class="hljs-string">&quot;Microsoft.NET.Sdk.Razor&quot;</span>&gt;</span>
+
+  <span class="hljs-tag">&lt;<span class="hljs-name">PropertyGroup</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">TargetFramework</span>&gt;</span>net5.0<span class="hljs-tag">&lt;/<span class="hljs-name">TargetFramework</span>&gt;</span>
+  <span class="hljs-tag">&lt;/<span class="hljs-name">PropertyGroup</span>&gt;</span>
+
+  <span class="hljs-tag">&lt;<span class="hljs-name">ItemGroup</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">PackageReference</span> <span class="hljs-attr">Include</span>=<span class="hljs-string">&quot;Microsoft.AspNetCore.Components.Web&quot;</span> <span class="hljs-attr">Version</span>=<span class="hljs-string">&quot;5.0.3&quot;</span> /&gt;</span>
+  <span class="hljs-tag">&lt;/<span class="hljs-name">ItemGroup</span>&gt;</span>
+
+<span class="hljs-tag">&lt;/<span class="hljs-name">Project</span>&gt;</span>
+</div></code></pre>
+<h4 id="file-moves-and-renames">File Moves and Renames</h4>
+<p>Copy the <em>Pages</em> and <em>Shared</em> folders from <em>Hydra.Red</em>.</p>
+<ol>
+<li><em>Pages</em> folder.</li>
+<li><em>Shared</em> folder.</li>
+<li><em>App.razor</em>.</li>
+<li><em>_Imports.razor</em>.</li>
+</ol>
+<h4 id="_importsrazor">_Imports.razor</h4>
+<pre><code class="language-html"><div>@using System.Net.Http
+@using System.Net.Http.Json
+@using Microsoft.AspNetCore.Components.Forms
+@using Microsoft.AspNetCore.Components.Routing
+@using Microsoft.AspNetCore.Components.Web
+@using Microsoft.AspNetCore.Components.Web.Virtualization
+@using Microsoft.JSInterop
+@using Hydra.Blue
+@using Hydra.Blue.Shared
+</div></code></pre>
+<pre><code class="language-html"><div>// Hydra.Blue/Pages/Index.razor
+@page &quot;/&quot;
+@page &quot;/blue&quot;
+@page &quot;/blue/index&quot;
+....
+</div></code></pre>
+<pre><code class="language-html"><div>// Hydra.Blue/Pages/Counter.razor
+@page &quot;/counter&quot;
+@page &quot;/blue/counter&quot;
+....
+</div></code></pre>
+<pre><code class="language-html"><div>// Hydra.Blue/Pages/FetchData.razor
+@page &quot;/fetchdata&quot;
+@page &quot;/blue/fetchdata&quot;
+....
+
+    protected override async Task OnInitializedAsync()
+    {
+// Note /sample-data
+        forecasts = await Http.GetFromJsonAsync<span class="hljs-tag">&lt;<span class="hljs-name">WeatherForecast[]</span>&gt;</span>(&quot;/sample-data/weather.json&quot;);
+    }
+....
+</div></code></pre>
+<p>Update the <em>sidebar</em> in <code>MainLayout</code>.</p>
+<pre><code class="language-html"><div>    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;sidebar sidebar-blue&quot;</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">NavMenu</span> /&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+</div></code></pre>
+<p>Update <code>NavMenu.razor</code></p>
+<pre><code class="language-html"><div><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;@NavMenuCssClass&quot;</span> @<span class="hljs-attr">onclick</span>=<span class="hljs-string">&quot;ToggleNavMenu&quot;</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">ul</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;nav flex-column&quot;</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">li</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;nav-item px-3&quot;</span>&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-name">NavLink</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;nav-link&quot;</span> <span class="hljs-attr">href</span>=<span class="hljs-string">&quot;/Hydra&quot;</span> <span class="hljs-attr">Match</span>=<span class="hljs-string">&quot;NavLinkMatch.All&quot;</span>&gt;</span>
+                <span class="hljs-tag">&lt;<span class="hljs-name">span</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;oi oi-home&quot;</span> <span class="hljs-attr">aria-hidden</span>=<span class="hljs-string">&quot;true&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">span</span>&gt;</span> Hydra
+            <span class="hljs-tag">&lt;/<span class="hljs-name">NavLink</span>&gt;</span>
+        <span class="hljs-tag">&lt;/<span class="hljs-name">li</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">li</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;nav-item px-3&quot;</span>&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-name">NavLink</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;nav-link&quot;</span> <span class="hljs-attr">href</span>=<span class="hljs-string">&quot;blue/index&quot;</span> <span class="hljs-attr">Match</span>=<span class="hljs-string">&quot;NavLinkMatch.All&quot;</span>&gt;</span>
+                <span class="hljs-tag">&lt;<span class="hljs-name">span</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;oi oi-home&quot;</span> <span class="hljs-attr">aria-hidden</span>=<span class="hljs-string">&quot;true&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">span</span>&gt;</span> Home
+            <span class="hljs-tag">&lt;/<span class="hljs-name">NavLink</span>&gt;</span>
+        <span class="hljs-tag">&lt;/<span class="hljs-name">li</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">li</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;nav-item px-3&quot;</span>&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-name">NavLink</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;nav-link&quot;</span> <span class="hljs-attr">href</span>=<span class="hljs-string">&quot;blue/counter&quot;</span>&gt;</span>
+                <span class="hljs-tag">&lt;<span class="hljs-name">span</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;oi oi-plus&quot;</span> <span class="hljs-attr">aria-hidden</span>=<span class="hljs-string">&quot;true&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">span</span>&gt;</span> Counter
+            <span class="hljs-tag">&lt;/<span class="hljs-name">NavLink</span>&gt;</span>
+        <span class="hljs-tag">&lt;/<span class="hljs-name">li</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">li</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;nav-item px-3&quot;</span>&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-name">NavLink</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;nav-link&quot;</span> <span class="hljs-attr">href</span>=<span class="hljs-string">&quot;blue/fetchdata&quot;</span>&gt;</span>
+                <span class="hljs-tag">&lt;<span class="hljs-name">span</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;oi oi-list-rich&quot;</span> <span class="hljs-attr">aria-hidden</span>=<span class="hljs-string">&quot;true&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">span</span>&gt;</span> Fetch data
+            <span class="hljs-tag">&lt;/<span class="hljs-name">NavLink</span>&gt;</span>
+        <span class="hljs-tag">&lt;/<span class="hljs-name">li</span>&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-name">ul</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+</div></code></pre>
+<p>Update <em>App.razor</em>, changing <code>AppAssembly</code>, which is set to <em>Hydra.Blue.App</em>, so it finds the routes in this assembly.</p>
+<pre><code class="language-html"><div>// Hydra.Blue/App.razor
+<span class="hljs-tag">&lt;<span class="hljs-name">Router</span> <span class="hljs-attr">AppAssembly</span>=<span class="hljs-string">&quot;@typeof(Hydra.Blue.App).Assembly&quot;</span> <span class="hljs-attr">PreferExactMatches</span>=<span class="hljs-string">&quot;@true&quot;</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">Found</span> <span class="hljs-attr">Context</span>=<span class="hljs-string">&quot;routeData&quot;</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">RouteView</span> <span class="hljs-attr">RouteData</span>=<span class="hljs-string">&quot;@routeData&quot;</span> <span class="hljs-attr">DefaultLayout</span>=<span class="hljs-string">&quot;@typeof(MainLayout)&quot;</span> /&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-name">Found</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">NotFound</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">LayoutView</span> <span class="hljs-attr">Layout</span>=<span class="hljs-string">&quot;@typeof(MainLayout)&quot;</span>&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span>Sorry, there&#x27;s nothing at this address.<span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span>
+        <span class="hljs-tag">&lt;/<span class="hljs-name">LayoutView</span>&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-name">NotFound</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">Router</span>&gt;</span>
+</div></code></pre>
+<h2 id="hydragrey">Hydra.Grey</h2>
+<p><img src="\articles\assets\Hydra\Hydra-Grey.png" alt="Initial Project View"></p>
+<h4 id="project-file-1">Project File</h4>
+<p>Include the following Packages and projects.</p>
+<pre><code class="language-xml"><div><span class="hljs-tag">&lt;<span class="hljs-name">Project</span> <span class="hljs-attr">Sdk</span>=<span class="hljs-string">&quot;Microsoft.NET.Sdk.Razor&quot;</span>&gt;</span>
+
+  <span class="hljs-tag">&lt;<span class="hljs-name">PropertyGroup</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">TargetFramework</span>&gt;</span>net5.0<span class="hljs-tag">&lt;/<span class="hljs-name">TargetFramework</span>&gt;</span>
+  <span class="hljs-tag">&lt;/<span class="hljs-name">PropertyGroup</span>&gt;</span>
+
+  <span class="hljs-tag">&lt;<span class="hljs-name">ItemGroup</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">PackageReference</span> <span class="hljs-attr">Include</span>=<span class="hljs-string">&quot;Microsoft.AspNetCore.Components.Web&quot;</span> <span class="hljs-attr">Version</span>=<span class="hljs-string">&quot;5.0.3&quot;</span> /&gt;</span>
+  <span class="hljs-tag">&lt;/<span class="hljs-name">ItemGroup</span>&gt;</span>
+
+<span class="hljs-tag">&lt;/<span class="hljs-name">Project</span>&gt;</span>
+</div></code></pre>
+<h4 id="file-moves-and-renames-1">File Moves and Renames</h4>
+<p>Copy the <em>Pages</em> and <em>Shared</em> folders from <em>Hydra.Blue</em>.</p>
+<ol>
+<li><em>Pages</em> folder.</li>
+<li><em>Shared</em> folder.</li>
+<li><em>App.razor</em>.</li>
+<li><em>_Imports.razor</em>.</li>
+</ol>
+<h4 id="_importsrazor-1">_Imports.razor</h4>
+<pre><code class="language-html"><div>@using System.Net.Http
+@using System.Net.Http.Json
+@using Microsoft.AspNetCore.Components.Forms
+@using Microsoft.AspNetCore.Components.Routing
+@using Microsoft.AspNetCore.Components.Web
+@using Microsoft.AspNetCore.Components.Web.Virtualization
+@using Microsoft.JSInterop
+@using Hydra.Grey
+@using Hydra.Grey.Shared
+</div></code></pre>
+<pre><code class="language-html"><div>// Hydra.Grey/Pages/Index.razor
+@page &quot;/&quot;
+@page &quot;/Grey&quot;
+@page &quot;/Grey/index&quot;
+....
+</div></code></pre>
+<pre><code class="language-html"><div>// Hydra.Grey/Pages/Counter.razor
+@page &quot;/Grey/counter&quot;
+....
+</div></code></pre>
+<pre><code class="language-html"><div>// Hydra.Grey/Pages/FetchData.razor
+@page &quot;/fetchdata&quot;
+@page &quot;/Grey/fetchdata&quot;
+....
+
+    protected override async Task OnInitializedAsync()
+    {
+// Note /sample-data
+        forecasts = await Http.GetFromJsonAsync<span class="hljs-tag">&lt;<span class="hljs-name">WeatherForecast[]</span>&gt;</span>(&quot;/sample-data/weather.json&quot;);
+    }
+....
+</div></code></pre>
+<pre><code><code><div>Update the *sidebar* in `MainLayout`.
+```html
+    &lt;div class=&quot;sidebar sidebar-grey&quot;&gt;
+        &lt;NavMenu /&gt;
+    &lt;/div&gt;
+</div></code></code></pre>
+<p>Update <code>NavMenu.razor</code></p>
+<pre><code class="language-html"><div><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;top-row pl-4 navbar navbar-dark&quot;</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">a</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;navbar-brand&quot;</span> <span class="hljs-attr">href</span>=<span class="hljs-string">&quot;&quot;</span>&gt;</span>Hydra.Grey<span class="hljs-tag">&lt;/<span class="hljs-name">a</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;navbar-toggler&quot;</span> @<span class="hljs-attr">onclick</span>=<span class="hljs-string">&quot;ToggleNavMenu&quot;</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">span</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;navbar-toggler-icon&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">span</span>&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+
+<span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;@NavMenuCssClass&quot;</span> @<span class="hljs-attr">onclick</span>=<span class="hljs-string">&quot;ToggleNavMenu&quot;</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">ul</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;nav flex-column&quot;</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">li</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;nav-item px-3&quot;</span>&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-name">NavLink</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;nav-link&quot;</span> <span class="hljs-attr">href</span>=<span class="hljs-string">&quot;/Hydra&quot;</span> <span class="hljs-attr">Match</span>=<span class="hljs-string">&quot;NavLinkMatch.All&quot;</span>&gt;</span>
+                <span class="hljs-tag">&lt;<span class="hljs-name">span</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;oi oi-home&quot;</span> <span class="hljs-attr">aria-hidden</span>=<span class="hljs-string">&quot;true&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">span</span>&gt;</span> Hydra
+            <span class="hljs-tag">&lt;/<span class="hljs-name">NavLink</span>&gt;</span>
+        <span class="hljs-tag">&lt;/<span class="hljs-name">li</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">li</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;nav-item px-3&quot;</span>&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-name">NavLink</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;nav-link&quot;</span> <span class="hljs-attr">href</span>=<span class="hljs-string">&quot;grey/index&quot;</span> <span class="hljs-attr">Match</span>=<span class="hljs-string">&quot;NavLinkMatch.All&quot;</span>&gt;</span>
+                <span class="hljs-tag">&lt;<span class="hljs-name">span</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;oi oi-home&quot;</span> <span class="hljs-attr">aria-hidden</span>=<span class="hljs-string">&quot;true&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">span</span>&gt;</span> Home
+            <span class="hljs-tag">&lt;/<span class="hljs-name">NavLink</span>&gt;</span>
+        <span class="hljs-tag">&lt;/<span class="hljs-name">li</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">li</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;nav-item px-3&quot;</span>&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-name">NavLink</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;nav-link&quot;</span> <span class="hljs-attr">href</span>=<span class="hljs-string">&quot;grey/counter&quot;</span>&gt;</span>
+                <span class="hljs-tag">&lt;<span class="hljs-name">span</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;oi oi-plus&quot;</span> <span class="hljs-attr">aria-hidden</span>=<span class="hljs-string">&quot;true&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">span</span>&gt;</span> Counter
+            <span class="hljs-tag">&lt;/<span class="hljs-name">NavLink</span>&gt;</span>
+        <span class="hljs-tag">&lt;/<span class="hljs-name">li</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">li</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;nav-item px-3&quot;</span>&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-name">NavLink</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;nav-link&quot;</span> <span class="hljs-attr">href</span>=<span class="hljs-string">&quot;grey/fetchdata&quot;</span>&gt;</span>
+                <span class="hljs-tag">&lt;<span class="hljs-name">span</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;oi oi-list-rich&quot;</span> <span class="hljs-attr">aria-hidden</span>=<span class="hljs-string">&quot;true&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">span</span>&gt;</span> Fetch data
+            <span class="hljs-tag">&lt;/<span class="hljs-name">NavLink</span>&gt;</span>
+        <span class="hljs-tag">&lt;/<span class="hljs-name">li</span>&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-name">ul</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+</div></code></pre>
+<p>Update <em>App.razor</em>, changing <code>AppAssembly</code>, which is set to <em>Hydra.Grey.App</em>, so it finds the routes in this assembly.</p>
+<pre><code class="language-html"><div>// Hydra.Grey/App.razor
+<span class="hljs-tag">&lt;<span class="hljs-name">Router</span> <span class="hljs-attr">AppAssembly</span>=<span class="hljs-string">&quot;@typeof(Hydra.Grey.App).Assembly&quot;</span> <span class="hljs-attr">PreferExactMatches</span>=<span class="hljs-string">&quot;@true&quot;</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">Found</span> <span class="hljs-attr">Context</span>=<span class="hljs-string">&quot;routeData&quot;</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">RouteView</span> <span class="hljs-attr">RouteData</span>=<span class="hljs-string">&quot;@routeData&quot;</span> <span class="hljs-attr">DefaultLayout</span>=<span class="hljs-string">&quot;@typeof(MainLayout)&quot;</span> /&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-name">Found</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">NotFound</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">LayoutView</span> <span class="hljs-attr">Layout</span>=<span class="hljs-string">&quot;@typeof(MainLayout)&quot;</span>&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span>Sorry, there&#x27;s nothing at this address.<span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span>
+        <span class="hljs-tag">&lt;/<span class="hljs-name">LayoutView</span>&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-name">NotFound</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">Router</span>&gt;</span>
+</div></code></pre>
+<h2 id="hydraweb-1"><a href="http://Hydra.Web">Hydra.Web</a></h2>
+<pre><code class="language-html"><div>// Hydra.Web/Pages/_Blue.html
+@page &quot;/spablue&quot;
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@{
+    Layout = null;
+}
+
+<span class="hljs-meta">&lt;!DOCTYPE <span class="hljs-meta-keyword">html</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">html</span>&gt;</span>
+
+<span class="hljs-tag">&lt;<span class="hljs-name">head</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">meta</span> <span class="hljs-attr">charset</span>=<span class="hljs-string">&quot;utf-8&quot;</span> /&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">meta</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;viewport&quot;</span> <span class="hljs-attr">content</span>=<span class="hljs-string">&quot;width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no&quot;</span> /&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">title</span>&gt;</span>Hydra.Blue<span class="hljs-tag">&lt;/<span class="hljs-name">title</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">base</span> <span class="hljs-attr">href</span>=<span class="hljs-string">&quot;/blue&quot;</span> /&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">link</span> <span class="hljs-attr">href</span>=<span class="hljs-string">&quot;/css/app.css&quot;</span> <span class="hljs-attr">rel</span>=<span class="hljs-string">&quot;stylesheet&quot;</span> /&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">link</span> <span class="hljs-attr">href</span>=<span class="hljs-string">&quot;/CEC.Blazor.Hydra.styles.css&quot;</span> <span class="hljs-attr">rel</span>=<span class="hljs-string">&quot;stylesheet&quot;</span> /&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">head</span>&gt;</span>
+
+<span class="hljs-tag">&lt;<span class="hljs-name">body</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">component</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;typeof(Hydra.Blue.App)&quot;</span> <span class="hljs-attr">render-mode</span>=<span class="hljs-string">&quot;ServerPrerendered&quot;</span> /&gt;</span>
+
+    <span class="hljs-tag">&lt;<span class="hljs-name">script</span> <span class="hljs-attr">src</span>=<span class="hljs-string">&quot;_framework/blazor.server.js&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">body</span>&gt;</span>
+
+<span class="hljs-tag">&lt;/<span class="hljs-name">html</span>&gt;</span>
+</div></code></pre>
+<pre><code class="language-html"><div>// Hydra.Web/Pages/_Grey.html
+@page &quot;/spagrey&quot;
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@{
+    Layout = null;
+}
+
+<span class="hljs-meta">&lt;!DOCTYPE <span class="hljs-meta-keyword">html</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">html</span>&gt;</span>
+
+<span class="hljs-tag">&lt;<span class="hljs-name">head</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">meta</span> <span class="hljs-attr">charset</span>=<span class="hljs-string">&quot;utf-8&quot;</span> /&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">meta</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;viewport&quot;</span> <span class="hljs-attr">content</span>=<span class="hljs-string">&quot;width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no&quot;</span> /&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">title</span>&gt;</span>Hydra.Grey<span class="hljs-tag">&lt;/<span class="hljs-name">title</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">base</span> <span class="hljs-attr">href</span>=<span class="hljs-string">&quot;/grey&quot;</span> /&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">link</span> <span class="hljs-attr">href</span>=<span class="hljs-string">&quot;/css/app.css&quot;</span> <span class="hljs-attr">rel</span>=<span class="hljs-string">&quot;stylesheet&quot;</span> /&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">link</span> <span class="hljs-attr">href</span>=<span class="hljs-string">&quot;/CEC.Blazor.Hydra.styles.css&quot;</span> <span class="hljs-attr">rel</span>=<span class="hljs-string">&quot;stylesheet&quot;</span> /&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">head</span>&gt;</span>
+
+<span class="hljs-tag">&lt;<span class="hljs-name">body</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">component</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;typeof(Hydra.Grey.App)&quot;</span> <span class="hljs-attr">render-mode</span>=<span class="hljs-string">&quot;ServerPrerendered&quot;</span> /&gt;</span>
+
+    <span class="hljs-tag">&lt;<span class="hljs-name">script</span> <span class="hljs-attr">src</span>=<span class="hljs-string">&quot;_framework/blazor.server.js&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">body</span>&gt;</span>
+
+<span class="hljs-tag">&lt;/<span class="hljs-name">html</span>&gt;</span>
+</div></code></pre>
+<p>This should all now compile and run.</p>
+<h2 id="wrap-up">Wrap Up</h2>
+<p>There's a lot to take in in this article.  It took me a while to pull this article together once I'd proven the concepts.  Som important concepts to understand:</p>
+<ol>
+<li>To write Blazor SPA's you need to get out of the &quot;Web&quot; paradigm.  Think old-school desktop application.  A bit retro!  If you don't, you SPA could be a bit of a dogs breakfast.  Version x will bear little resemblance to version 1.</li>
+<li>A WASM SPA is a compiled executable - just like a desktop application.  The startup page is a shortcut.</li>
+<li>A Server SPA is a pointer to a class in the library running on the web site.  The startup page is a server-side shortcut to get it up and running.  Once started, the SPA is a two part affair: one half is the browser SPA, the other a session on the Blazor Hub on the server, inexorably joined by a SignalR session.</li>
+<li>You need to be very careful in your Url referencing: a missing &quot;/&quot; or a capital letter can blow you out of the water!  Stick to the rule that all urls and things that define bits of Urls only used small letters.  It's pretty easy to start digging holes  I've been there!</li>
+</ol>
+
+    
+
+            </div>
+        </div>
+    </div>
+</div>
+<!-- end of Article Container -->
+
+
+                </div>
+                <!-- End of Main Content -->
+            </div>
+            <!-- Footer -->
+            
+<!-- Copyright -->
+<footer class="sticky-footer bg-white">
+    <div class="container my-auto">
+        <div class="copyright text-center my-auto">
+            
+<span>Copyright &copy; Cold Elm Coders - 2021</span>
+
+        </div>
+    </div>
+</footer>
+<!-- end of copyright -->
+
+
+            <!-- End of Footer -->
+        </div>
+        <!-- End of Content Wrapper -->
+        
+<a class="scroll-to-top rounded" href="#page-top">
+    <i class="fas fa-angle-up"></i>
+</a>
+
+
+    </div>
+    <!-- End of Page Wrapper -->
+    <!-- Scripts -->
+    
+<!-- Scripts -->
+<!-- Bootstrap core JavaScript-->
+<script src="/assets/vendor/jquery/jquery.min.js"></script>
+<script src="/assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+<!-- Core plugin JavaScript-->
+<script src="/assets/vendor/jquery-easing/jquery.easing.min.js"></script>
+
+<!-- Custom scripts for all pages-->
+<script src="/assets/js/sb-admin-2.min.js"></script>
+
+
+</body>
+</html>

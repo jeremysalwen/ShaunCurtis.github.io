@@ -1,415 +1,869 @@
 <!DOCTYPE html>
-<html lang="en-US">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>Adding Dynamic Routing, Layouts and RouteViews to the Blazor App Component | Cold Elm Coders</title>
-    <meta name="generator" content="VuePress 1.8.2">
+<html lang="en">
+<head>
     
-    <meta name="description" content="">
-    <meta name="theme-color" content="#3eaf7c">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+<!-- SEO Meta Tags -->
+<meta name="description" content="Your description">
+<meta name="author" content="Your name">
+
+<!-- OG Meta Tags to improve the way the post looks when you share the page on Facebook, Twitter, LinkedIn -->
+<meta property="og:site_name" content="" /> <!-- website name -->
+<meta property="og:site" content="" /> <!-- website link -->
+<meta property="og:title" content="" /> <!-- title shown in the actual shared post -->
+<meta property="og:description" content="" /> <!-- description shown in the actual shared post -->
+<meta property="og:image" content="" /> <!-- image link, make sure it's jpg -->
+<meta property="og:url" content="" /> <!-- where do you want your post to link to -->
+<meta name="twitter:card" content="summary_large_image"> <!-- to have large image post format in Twitter -->
+
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+
+<meta name="description" content="This article shows how to add Dynamic Routing, Layouts and RouteViews to the Blazor App Component." >
+<meta name="author" content="Shaun Curtis" >
+
+
+
+<title>Adding Dynamic Routing, Layouts and RouteViews to the Blazor App Component</title>
+
+
+<!-- Custom fonts for this template-->
+<link href="/assets/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+<link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+      rel="stylesheet">
+
+<!-- Custom styles for this template-->
+<link href="/assets/css/sb-admin-2.css" rel="stylesheet" type="text/css">
+<link href="/assets/css/site.css" rel="stylesheet" type="text/css">
+
+<!-- Favicon  -->
+<link rel="icon" href="/assets/images/favicon.png">
+
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/highlight.css">
+    <link rel="stylesheet" href="/assets/css/article.css" type="text/css">
+</head>
+<body id="page-top">
+    <!--topbar-->
+    <div id="topbar">
+        
+<!-- Topbar -->
+<nav class="navbar navbar-expand navbar-light topbar mb-4 static-top">
     
-    <link rel="preload" href="/assets/css/0.styles.757cca11.css" as="style"><link rel="preload" href="/assets/js/app.e7504274.js" as="script"><link rel="preload" href="/assets/js/3.f3d70fce.js" as="script"><link rel="preload" href="/assets/js/42.046bbbbf.js" as="script"><link rel="prefetch" href="/assets/js/1.dd2e798d.js"><link rel="prefetch" href="/assets/js/10.62cd9054.js"><link rel="prefetch" href="/assets/js/11.7ef2f0cc.js"><link rel="prefetch" href="/assets/js/12.571448aa.js"><link rel="prefetch" href="/assets/js/13.e5a600e9.js"><link rel="prefetch" href="/assets/js/14.4ed01dd2.js"><link rel="prefetch" href="/assets/js/15.d0a813d8.js"><link rel="prefetch" href="/assets/js/16.3d701298.js"><link rel="prefetch" href="/assets/js/17.dd96adea.js"><link rel="prefetch" href="/assets/js/18.f6955aa8.js"><link rel="prefetch" href="/assets/js/19.bb1f166c.js"><link rel="prefetch" href="/assets/js/20.440b537e.js"><link rel="prefetch" href="/assets/js/21.1e192f13.js"><link rel="prefetch" href="/assets/js/22.0f3db856.js"><link rel="prefetch" href="/assets/js/23.9a2edb75.js"><link rel="prefetch" href="/assets/js/24.3d8317a7.js"><link rel="prefetch" href="/assets/js/25.e6e973f9.js"><link rel="prefetch" href="/assets/js/26.2f4dce51.js"><link rel="prefetch" href="/assets/js/27.eddfbfe3.js"><link rel="prefetch" href="/assets/js/28.1a753628.js"><link rel="prefetch" href="/assets/js/29.dd0c2751.js"><link rel="prefetch" href="/assets/js/30.049ba17e.js"><link rel="prefetch" href="/assets/js/31.ec7a699c.js"><link rel="prefetch" href="/assets/js/32.128041a3.js"><link rel="prefetch" href="/assets/js/33.90a80a82.js"><link rel="prefetch" href="/assets/js/34.640d5210.js"><link rel="prefetch" href="/assets/js/35.dd6a5277.js"><link rel="prefetch" href="/assets/js/36.af0fb7fb.js"><link rel="prefetch" href="/assets/js/37.6282d3d3.js"><link rel="prefetch" href="/assets/js/38.09c22a9c.js"><link rel="prefetch" href="/assets/js/39.34118569.js"><link rel="prefetch" href="/assets/js/4.004aaf89.js"><link rel="prefetch" href="/assets/js/40.42fb5da5.js"><link rel="prefetch" href="/assets/js/41.d1ac92f4.js"><link rel="prefetch" href="/assets/js/43.86ac5d2f.js"><link rel="prefetch" href="/assets/js/44.1393eed1.js"><link rel="prefetch" href="/assets/js/45.a4121f00.js"><link rel="prefetch" href="/assets/js/46.f78d075f.js"><link rel="prefetch" href="/assets/js/47.02e428da.js"><link rel="prefetch" href="/assets/js/48.3f9d12a6.js"><link rel="prefetch" href="/assets/js/49.bb9c3fab.js"><link rel="prefetch" href="/assets/js/5.8a61fa12.js"><link rel="prefetch" href="/assets/js/50.ebb028fd.js"><link rel="prefetch" href="/assets/js/51.a2b343de.js"><link rel="prefetch" href="/assets/js/52.2a464137.js"><link rel="prefetch" href="/assets/js/53.54a07d54.js"><link rel="prefetch" href="/assets/js/54.72acf66d.js"><link rel="prefetch" href="/assets/js/55.6168cc1a.js"><link rel="prefetch" href="/assets/js/56.0653a59a.js"><link rel="prefetch" href="/assets/js/57.df56ec02.js"><link rel="prefetch" href="/assets/js/58.fc8f11bc.js"><link rel="prefetch" href="/assets/js/59.158abf7b.js"><link rel="prefetch" href="/assets/js/6.1fda51af.js"><link rel="prefetch" href="/assets/js/60.10f7e3a6.js"><link rel="prefetch" href="/assets/js/61.844ecd3b.js"><link rel="prefetch" href="/assets/js/62.da039f8c.js"><link rel="prefetch" href="/assets/js/63.f2fe69a7.js"><link rel="prefetch" href="/assets/js/64.b9085bd9.js"><link rel="prefetch" href="/assets/js/65.6c182c91.js"><link rel="prefetch" href="/assets/js/66.e0d48b84.js"><link rel="prefetch" href="/assets/js/7.eca4725c.js"><link rel="prefetch" href="/assets/js/8.2504867c.js"><link rel="prefetch" href="/assets/js/9.64046c51.js">
-    <link rel="stylesheet" href="/assets/css/0.styles.757cca11.css">
-  </head>
-  <body>
-    <div id="app" data-server-rendered="true"><div class="theme-container"><header class="navbar"><div class="sidebar-button"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon"><path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path></svg></div> <a href="/" class="home-link router-link-active"><!----> <span class="site-name">Cold Elm Coders</span></a> <div class="links"><div class="search-box"><input aria-label="Search" autocomplete="off" spellcheck="false" value=""> <!----></div> <nav class="nav-links can-hide"><div class="nav-item"><a href="/articles/" class="nav-link router-link-active">
-  Articles
-</a></div><div class="nav-item"><a href="/posts/" class="nav-link">
-  Posts
-</a></div><div class="nav-item"><a href="/ArchivedArticles/" class="nav-link">
-  Old Articles
-</a></div><div class="nav-item"><a href="/Building-a-Database-Application-in-Blazor/" class="nav-link">
-  Database Application
-</a></div><div class="nav-item"><a href="https://cec-blazor-examples.azurewebsites.net/" target="_blank" rel="noopener noreferrer" class="nav-link external">
-  Demo Site
-  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></div> <!----></nav></div></header> <div class="sidebar-mask"></div> <aside class="sidebar"><nav class="nav-links"><div class="nav-item"><a href="/articles/" class="nav-link router-link-active">
-  Articles
-</a></div><div class="nav-item"><a href="/posts/" class="nav-link">
-  Posts
-</a></div><div class="nav-item"><a href="/ArchivedArticles/" class="nav-link">
-  Old Articles
-</a></div><div class="nav-item"><a href="/Building-a-Database-Application-in-Blazor/" class="nav-link">
-  Database Application
-</a></div><div class="nav-item"><a href="https://cec-blazor-examples.azurewebsites.net/" target="_blank" rel="noopener noreferrer" class="nav-link external">
-  Demo Site
-  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></div> <!----></nav>  <ul class="sidebar-links"><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading open"><span>My Articles</span> <span class="arrow down"></span></p> <ul class="sidebar-links sidebar-group-items"><li><a href="/articles/" aria-current="page" class="sidebar-link">Articles</a></li><li><a href="/articles/A-Flexible-App.html" aria-current="page" class="active sidebar-link">Adding Dynamic Routing, Layouts and RouteViews to the Blazor App Component</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header"><a href="/articles/A-Flexible-App.html#overview" class="sidebar-link">Overview</a></li><li class="sidebar-sub-header"><a href="/articles/A-Flexible-App.html#code-and-examples" class="sidebar-link">Code and Examples</a></li><li class="sidebar-sub-header"><a href="/articles/A-Flexible-App.html#the-blazor-application" class="sidebar-link">The Blazor Application</a></li><li class="sidebar-sub-header"><a href="/articles/A-Flexible-App.html#the-app-component" class="sidebar-link">The App Component</a></li><li class="sidebar-sub-header"><a href="/articles/A-Flexible-App.html#routeviewservice" class="sidebar-link">RouteViewService</a></li><li class="sidebar-sub-header"><a href="/articles/A-Flexible-App.html#dynamic-layouts" class="sidebar-link">Dynamic Layouts</a></li><li class="sidebar-sub-header"><a href="/articles/A-Flexible-App.html#dynamic-routing" class="sidebar-link">Dynamic Routing</a></li><li class="sidebar-sub-header"><a href="/articles/A-Flexible-App.html#updates-to-the-routeviewservice" class="sidebar-link">Updates to the RouteViewService</a></li><li class="sidebar-sub-header"><a href="/articles/A-Flexible-App.html#the-routenotfoundmanager-component" class="sidebar-link">The RouteNotFoundManager Component</a></li><li class="sidebar-sub-header"><a href="/articles/A-Flexible-App.html#switching-the-routeview-without-routing" class="sidebar-link">Switching the RouteView Without Routing</a></li><li class="sidebar-sub-header"><a href="/articles/A-Flexible-App.html#example-pages" class="sidebar-link">Example Pages</a></li><li class="sidebar-sub-header"><a href="/articles/A-Flexible-App.html#wrap-up" class="sidebar-link">Wrap Up</a></li></ul></li><li><a href="/articles/Async-Programming-in-DotNetCore.html" class="sidebar-link">Async Programming in DotNetCore</a></li><li><a href="/articles/Blazor-AllinOne.html" class="sidebar-link">Blazor AllinOne - Multi SPA Hosting</a></li><li><a href="/articles/Blazor-CSS.html" class="sidebar-link">CSS in Blazor</a></li><li><a href="/articles/Blazor-Components.html" class="sidebar-link">A Deep Dive into Blazor Components</a></li><li><a href="/articles/Blazor-DataList-Control.html" class="sidebar-link">A Blazor DataList Control</a></li><li><a href="/articles/BlazorAsyncProgramming.html" class="sidebar-link">Async Programming in Blazor</a></li><li><a href="/articles/Building-Edit-Forms.html" class="sidebar-link">Building Blazor Edit Forms</a></li><li><a href="/articles/EditFormState.html" class="sidebar-link">The Blazor EditFormState Control</a></li><li><a href="/articles/Hydra Full Article.html" class="sidebar-link">Blazor Hydra - Multi SPA Hosting</a></li><li><a href="/articles/Inline-Dialog.html" class="sidebar-link">The Blazor Inline Dialog Control</a></li><li><a href="/articles/Modal-Dialog.html" class="sidebar-link">A Blazor Modal Dialog</a></li><li><a href="/articles/ValidationFormState.html" class="sidebar-link">A Blazor Validation Control</a></li></ul></section></li></ul> </aside> <main class="page"> <div class="theme-default-content content__default"><h1 id="adding-dynamic-routing-layouts-and-routeviews-to-the-blazor-app-component"><a href="#adding-dynamic-routing-layouts-and-routeviews-to-the-blazor-app-component" class="header-anchor">#</a> Adding Dynamic Routing, Layouts and RouteViews to the Blazor App Component</h1> <p>Publish Date: 2021-04-13
-Last Updated: 2021-04-13</p> <h2 id="overview"><a href="#overview" class="header-anchor">#</a> Overview</h2> <p><code>App</code> is the Blazor UI root component.  This article looks at how it works and demonstrates how to:</p> <ol><li>Add Dynamic Layouts - change the default layout at runtime.</li> <li>Add Dynamic Routes - add and remove extra routes at runtime.</li> <li>Add Dynamic RouteViews - change the RouteView component directly without Routing.</li></ol> <p><img src="https://shauncurtis.github.io/siteimages/Articles/App/Screenshot.png" alt="EditForm"></p> <h2 id="code-and-examples"><a href="#code-and-examples" class="header-anchor">#</a> Code and Examples</h2> <p><a href="https://github.com/ShaunCurtis/CEC.Blazor.RouteView" target="_blank" rel="noopener noreferrer">The repository for this project is here<span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a>, and is based on my <a href="https://github.com/ShaunCurtis/AllinOne" target="_blank" rel="noopener noreferrer">Blazor AllInOne Template<span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a>.</p> <p>You can view a demo of the components running on my Blazor.Database site here <a href="https://cec-blazor-database.azurewebsites.net/" target="_blank" rel="noopener noreferrer">https://cec-blazor-database.azurewebsites.net/<span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a> from the highlighted links.</p> <h2 id="the-blazor-application"><a href="#the-blazor-application" class="header-anchor">#</a> The Blazor Application</h2> <p><code>App</code> is normally defined in <em>App.razor</em>.  The same component is used in both Web Assembly and Server contexts.</p> <p>In the Web Assembly context the SPA startup page contains an element placeholder which is replaced when <code>Program</code> starts in the Web Assembly context.</p> <div class="language-html extra-class"><pre class="language-html"><code>....
-<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>body</span><span class="token punctuation">&gt;</span></span>
-    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span> <span class="token attr-name">id</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">&quot;</span>app<span class="token punctuation">&quot;</span></span><span class="token punctuation">&gt;</span></span>Loading...<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">&gt;</span></span>
+<ul class="navbar-nav" >
+<li class="nav-item" >
+<a class="nav-link " href="/index.html" role="button"  >
+<span class="mr-2 d-none d-lg-inline text-gray-100">Index</span>
+</a>
+</li>
+<li class="nav-item dropdown no-arrow mx-1" >
+<a class="nav-link dropdown-toggle" href="#" id="7cc2a9f5-4319-4c6d-a096-ad71edac7ff0" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"  >
+<span class="mr-2 d-none d-lg-inline text-gray-100">Articles</span>
+</a>
+<div class=" dropdown-list dropdown-menu shadow animated--grow-in" aria-labelledby="7cc2a9f5-4319-4c6d-a096-ad71edac7ff0" >
+<a class="dropdown-item" href="/articles/A-Flexible-app.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+A Flexible App
+</a>
+<a class="dropdown-item" href="/articles/Async-Programming-in-DotNetCore.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Async Programming In Dotnetcore
+</a>
+<a class="dropdown-item" href="/articles/Blazor-AllinOne.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Blazor Allinone
+</a>
+<a class="dropdown-item" href="/articles/Blazor-Async-Programming.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Blazor Async Programming
+</a>
+<a class="dropdown-item" href="/articles/Blazor-Components.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Blazor Components
+</a>
+<a class="dropdown-item" href="/articles/Blazor-CSS.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Blazor CSS
+</a>
+<a class="dropdown-item" href="/articles/Blazor-DataList-Control.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Blazor Datalist Control
+</a>
+<a class="dropdown-item" href="/articles/Blazor-Form-Validation.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Blazor Form Validation
+</a>
+<a class="dropdown-item" href="/articles/Building-Edit-Forms.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Building Edit Forms
+</a>
+<a class="dropdown-item" href="/articles/Hydra.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Hydra
+</a>
+<a class="dropdown-item" href="/articles/Inline-Dialog.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Inline Dialog
+</a>
+<a class="dropdown-item" href="/articles/Modal-Dialog.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Modal Dialog
+</a>
+</div>
+</li>
+<li class="nav-item dropdown no-arrow mx-1" >
+<a class="nav-link dropdown-toggle" href="#" id="8578f8a4-6d58-4c9d-ae0d-826be9f86fbd" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"  >
+<span class="mr-2 d-none d-lg-inline text-gray-100">Blazor Database Application</span>
+</a>
+<div class=" dropdown-list dropdown-menu shadow animated--grow-in" aria-labelledby="8578f8a4-6d58-4c9d-ae0d-826be9f86fbd" >
+<a class="dropdown-item" href="/Building-a-Database-Application-in-Blazor/Building-a-Database-Application-in-Blazor-Part-1.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Building A Database Application In Blazor Part 1
+</a>
+<a class="dropdown-item" href="/Building-a-Database-Application-in-Blazor/Building-a-Database-Application-in-Blazor-Part-2.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Building A Database Application In Blazor Part 2
+</a>
+<a class="dropdown-item" href="/Building-a-Database-Application-in-Blazor/Building-a-Database-Application-in-Blazor-Part-3.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Building A Database Application In Blazor Part 3
+</a>
+<a class="dropdown-item" href="/Building-a-Database-Application-in-Blazor/Building-a-Database-Application-in-Blazor-Part-4.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Building A Database Application In Blazor Part 4
+</a>
+<a class="dropdown-item" href="/Building-a-Database-Application-in-Blazor/Building-a-Database-Application-in-Blazor-Part-5.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Building A Database Application In Blazor Part 5
+</a>
+<a class="dropdown-item" href="/Building-a-Database-Application-in-Blazor/Building-a-Database-Application-in-Blazor-Part-6.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Building A Database Application In Blazor Part 6
+</a>
+<a class="dropdown-item" href="/Building-a-Database-Application-in-Blazor/index.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Index
+</a>
+</div>
+</li>
+<li class="nav-item dropdown no-arrow mx-1" >
+<a class="nav-link dropdown-toggle" href="#" id="896dd49b-ae49-49cf-a572-c9c22b701383" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"  >
+<span class="mr-2 d-none d-lg-inline text-gray-100">Posts</span>
+</a>
+<div class=" dropdown-list dropdown-menu shadow animated--grow-in" aria-labelledby="896dd49b-ae49-49cf-a572-c9c22b701383" >
+<a class="dropdown-item" href="/posts/Blazor-Async-UI-Events.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Blazor Async UI Events
+</a>
+<a class="dropdown-item" href="/posts/DBContexts-In-Transient-Services.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Dbcontexts In Transient Services
+</a>
+<a class="dropdown-item" href="/posts/DynamicCss.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Dynamiccss
+</a>
+<a class="dropdown-item" href="/posts/For-ForEach-in-Blazor.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+For Foreach In Blazor
+</a>
+<a class="dropdown-item" href="/posts/Notification-Service-Pattern.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Notification Service Pattern
+</a>
+<a class="dropdown-item" href="/posts/XML-XSD-Serialization.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+XML XSD Serialization
+</a>
+</div>
+</li>
+</ul>
+
+    <div class="ms-5 me-5 ml-auto">
+        <h1>Cold Elm Coders</h1>
+    </div>
+</nav>
+
+
+    </div>
+    <!--End topbar-->
+    <!--Sidebar-->
+    <div id="sidebar">
+        
+<div class="article-info p-2" Published: 09-04-2021 >
+<div>Published: 09-04-2021</div>
+<div>Last Updated: 13-04-2021</div>
+<div>Author: Shaun Curtis</div>
+</div>
+
+        
+<h4 class="p-2">Table of Contents</h4>
+<ul class="TOC" >
+<li class="TOC-item TOC-item-0" >
+<a class="TOC-link" href="#">Top</a>
+<ul class="TOC TOC-0" >
+<li class="TOC-item TOC-item-1" >
+<ul class="TOC TOC-1" >
+<li class="TOC-item TOC-item-2" >
+<a class="TOC-link" href="#overview">Overview</a>
+</li>
+<li class="TOC-item TOC-item-2" >
+<a class="TOC-link" href="#code-and-examples">Code and Examples</a>
+</li>
+<li class="TOC-item TOC-item-2" >
+<a class="TOC-link" href="#the-blazor-application">The Blazor Application</a>
+</li>
+<li class="TOC-item TOC-item-2" >
+<a class="TOC-link" href="#the-app-component">The App Component</a>
+</li>
+<li class="TOC-item TOC-item-2" >
+<a class="TOC-link" href="#routeviewservice">RouteViewService</a>
+<ul class="TOC TOC-2" >
+<li class="TOC-item TOC-item-3" >
+<a class="TOC-link" href="#routeviewmanager">RouteViewManager</a>
+</li>
+</ul>
+</li>
+<li class="TOC-item TOC-item-2" >
+<a class="TOC-link" href="#dynamic-layouts">Dynamic Layouts</a>
+</li>
+<li class="TOC-item TOC-item-2" >
+<a class="TOC-link" href="#dynamic-routing">Dynamic Routing</a>
+<ul class="TOC TOC-2" >
+<li class="TOC-item TOC-item-3" >
+<a class="TOC-link" href="#customroutedata">CustomRouteData</a>
+</li>
+</ul>
+</li>
+<li class="TOC-item TOC-item-2" >
+<a class="TOC-link" href="#updates-to-the-routeviewservice">Updates to the RouteViewService</a>
+</li>
+<li class="TOC-item TOC-item-2" >
+<a class="TOC-link" href="#the-routenotfoundmanager-component">The RouteNotFoundManager Component</a>
+</li>
+<li class="TOC-item TOC-item-2" >
+<a class="TOC-link" href="#switching-the-routeview-without-routing">Switching the RouteView Without Routing</a>
+<ul class="TOC TOC-2" >
+<li class="TOC-item TOC-item-3" >
+<a class="TOC-link" href="#viewdata">ViewData</a>
+</li>
+<li class="TOC-item TOC-item-3" >
+<a class="TOC-link" href="#routeviewmanager-1">RouteViewManager</a>
+</li>
+<li class="TOC-item TOC-item-3" >
+<a class="TOC-link" href="#routenavlink">RouteNavLink</a>
+</li>
+</ul>
+</li>
+<li class="TOC-item TOC-item-2" >
+<a class="TOC-link" href="#example-pages">Example Pages</a>
+<ul class="TOC TOC-2" >
+<li class="TOC-item TOC-item-3" >
+<a class="TOC-link" href="#routeviewerrazor">RouteViewer.razor</a>
+</li>
+<li class="TOC-item TOC-item-3" >
+<a class="TOC-link" href="#formrazor">Form.Razor</a>
+</li>
+</ul>
+</li>
+<li class="TOC-item TOC-item-2" >
+<a class="TOC-link" href="#wrap-up">Wrap Up</a>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+    </div>
+    <!--End Sidebar-->
+    <!-- Page Wrapper -->
+    <div id="wrapper">
+        <!-- Content Wrapper -->
+        <div id="content-wrapper" class="d-flex flex-column">
+            <!-- Main Content -->
+            <div id="content">
+                <!-- Topbar -->
+                <div id="article">
+                    <!-- Article -->
+                    
+<!-- Header -->
+<header class="ex-header-article">
+    <div class="container">
+        <div class="row pt-3 pb-3 border-bottom">
+            <div class="col">
+                
+<h1>Adding Dynamic Routing, Layouts and RouteViews to the Blazor App Component</h1>
+<div>This article shows how to add Dynamic Routing, Layouts and RouteViews to the Blazor App Component.</div>
+
+            </div> <!-- end of col -->
+        </div> <!-- end of row -->
+    </div> <!-- end of container -->
+</header> <!-- end of ex-header -->
+<!-- end of header -->
+
+
+                    
+<!-- Article Container -->
+<div class="ex-basic-1 pt-4">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                
+
+        <h2 id="overview">Overview</h2>
+<p><code>App</code> is the Blazor UI root component.  This article looks at how it works and demonstrates how to:</p>
+<ol>
+<li>Add Dynamic Layouts - change the default layout at runtime.</li>
+<li>Add Dynamic Routes - add and remove extra routes at runtime.</li>
+<li>Add Dynamic RouteViews - change the RouteView component directly without Routing.</li>
+</ol>
+<p><img src="\articles\assets\A-Flexible-App\Screenshot.png" alt="EditForm"></p>
+<h2 id="code-and-examples">Code and Examples</h2>
+<p><a href="https://github.com/ShaunCurtis/CEC.Blazor.RouteView">The repository for this project is here</a>, and is based on my <a href="https://github.com/ShaunCurtis/AllinOne">Blazor AllInOne Template</a>.</p>
+<p>You can view a demo of the components running on my Blazor.Database site here <a href="https://cec-blazor-database.azurewebsites.net/">https://cec-blazor-database.azurewebsites.net/</a> from the highlighted links.</p>
+<h2 id="the-blazor-application">The Blazor Application</h2>
+<p><code>App</code> is normally defined in <em>App.razor</em>.  The same component is used in both Web Assembly and Server contexts.</p>
+<p>In the Web Assembly context the SPA startup page contains an element placeholder which is replaced when <code>Program</code> starts in the Web Assembly context.</p>
+<pre><code class="language-html"><div>....
+<span class="hljs-tag">&lt;<span class="hljs-name">body</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;app&quot;</span>&gt;</span>Loading...<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
     ...
-<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>body</span><span class="token punctuation">&gt;</span></span>
-</code></pre></div><p>The code line that defines the replacement in <code>Program</code> is:</p> <div class="language-csharp extra-class"><pre class="language-csharp"><code>    <span class="token comment">// Replace the app id element with the component App</span>
-    builder<span class="token punctuation">.</span>RootComponents<span class="token punctuation">.</span><span class="token generic-method"><span class="token function">Add</span><span class="token generic class-name"><span class="token punctuation">&lt;</span>App<span class="token punctuation">&gt;</span></span></span><span class="token punctuation">(</span><span class="token string">&quot;#app&quot;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-</code></pre></div><p>In the Server context <code>App</code> is declared directly as a Razor component in the Razor markup.  It gets pre-rendered by the server and then updated by the Blazor Server client in the browser.</p> <div class="language-html extra-class"><pre class="language-html"><code>...
-<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>body</span><span class="token punctuation">&gt;</span></span>
-    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>component</span> <span class="token attr-name">type</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">&quot;</span>typeof(Blazor.App)<span class="token punctuation">&quot;</span></span> <span class="token attr-name">render-mode</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">&quot;</span>ServerPrerendered<span class="token punctuation">&quot;</span></span> <span class="token punctuation">/&gt;</span></span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">body</span>&gt;</span>
+</div></code></pre>
+<p>The code line that defines the replacement in <code>Program</code> is:</p>
+<pre><code class="language-csharp"><div>    <span class="hljs-comment">// Replace the app id element with the component App</span>
+    builder.RootComponents.Add&lt;App&gt;(<span class="hljs-string">&quot;#app&quot;</span>);
+</div></code></pre>
+<p>In the Server context <code>App</code> is declared directly as a Razor component in the Razor markup.  It gets pre-rendered by the server and then updated by the Blazor Server client in the browser.</p>
+<pre><code class="language-html"><div>...
+<span class="hljs-tag">&lt;<span class="hljs-name">body</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">component</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;typeof(Blazor.App)&quot;</span> <span class="hljs-attr">render-mode</span>=<span class="hljs-string">&quot;ServerPrerendered&quot;</span> /&gt;</span>
 ...
-<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>body</span><span class="token punctuation">&gt;</span></span>
-</code></pre></div><h2 id="the-app-component"><a href="#the-app-component" class="header-anchor">#</a> The App Component</h2> <p>The <code>App</code> code is shown below.  It's a standard Razor component, inheriting from <code>ComponentBase</code>.</p> <p><code>Router</code> is the local root component and sets <code>AppAssembly</code> to the assembly containing <code>Program</code>.  On initialization it trawls <code>Assembly</code> for all classes with a Route attribute and registers with the <code>NavigationChanged</code> event on the NavigationManager Service.  On a navigation event it tries to match the navigation Url to a route.  If it finds one, it renders the <code>Found</code> render fragment, otherwise it renders <code>NotFound</code>.</p> <div class="language-html extra-class"><pre class="language-html"><code><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>Router</span> <span class="token attr-name">AppAssembly</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">&quot;</span>@typeof(Program).Assembly<span class="token punctuation">&quot;</span></span> <span class="token attr-name">PreferExactMatches</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">&quot;</span>@true<span class="token punctuation">&quot;</span></span><span class="token punctuation">&gt;</span></span>
-    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>Found</span> <span class="token attr-name">Context</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">&quot;</span>routeData<span class="token punctuation">&quot;</span></span><span class="token punctuation">&gt;</span></span>
-        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>RouteView</span> <span class="token attr-name">RouteData</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">&quot;</span>@routeData<span class="token punctuation">&quot;</span></span> <span class="token attr-name">DefaultLayout</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">&quot;</span>@typeof(MainLayout)<span class="token punctuation">&quot;</span></span> <span class="token punctuation">/&gt;</span></span>
-    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>Found</span><span class="token punctuation">&gt;</span></span>
-    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>NotFound</span><span class="token punctuation">&gt;</span></span>
-        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>LayoutView</span> <span class="token attr-name">Layout</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">&quot;</span>@typeof(MainLayout)<span class="token punctuation">&quot;</span></span><span class="token punctuation">&gt;</span></span>
-            <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>p</span><span class="token punctuation">&gt;</span></span>Sorry, there's nothing at this address.<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>p</span><span class="token punctuation">&gt;</span></span>
-        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>LayoutView</span><span class="token punctuation">&gt;</span></span>
-    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>NotFound</span><span class="token punctuation">&gt;</span></span>
-<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>Router</span><span class="token punctuation">&gt;</span></span>
-</code></pre></div><p><code>RouteView</code> is declared within <code>Found</code>.  <code>RouteData</code> is set to the router's current <code>routeData</code> object and <code>DefaultLayout</code> set to an application Layout <code>Type</code>.  <code>RouteView</code> renders an instance of <code>RouteData.Type</code> as a component within either the a page specific layout or the default layout, and applies any parameters in <code>RouteData.RouteValues</code>.</p> <p><code>NotFound</code> contains a <code>LayoutView</code> component, specifying a layout to render any child content in.</p> <h2 id="routeviewservice"><a href="#routeviewservice" class="header-anchor">#</a> RouteViewService</h2> <p><code>RouteViewService</code> is the state management service for the new components.  It's registered in the WASM and Server Services.  The Server version can be either a Singleton or Scoped, depending on the application needs.  You could have two separate services to manage application and user contexts separately.</p> <div class="language-csharp extra-class"><pre class="language-csharp"><code><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">RouteViewService</span> 
-<span class="token punctuation">{</span>
-  <span class="token range operator">..</span><span class="token range operator">..</span>
-<span class="token punctuation">}</span>
-</code></pre></div><p>In the Server it's added to <code>Startup</code> in <code>ConfigServices</code>.</p> <div class="language-csharp extra-class"><pre class="language-csharp"><code>services<span class="token punctuation">.</span><span class="token generic-method"><span class="token function">AddSingleton</span><span class="token generic class-name"><span class="token punctuation">&lt;</span>RouteViewService<span class="token punctuation">&gt;</span></span></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-</code></pre></div><p>In the Web Assembly context it's added to <code>Program</code>.</p> <div class="language-csharp extra-class"><pre class="language-csharp"><code>builder<span class="token punctuation">.</span>Services<span class="token punctuation">.</span><span class="token generic-method"><span class="token function">AddScoped</span><span class="token generic class-name"><span class="token punctuation">&lt;</span>RouteViewService<span class="token punctuation">&gt;</span></span></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-</code></pre></div><h3 id="routeviewmanager"><a href="#routeviewmanager" class="header-anchor">#</a> RouteViewManager</h3> <p><code>RouteViewManager</code> replaces <code>RouteView</code>.</p> <p>It's implements <code>RouteView</code>'s functionality.  It's too large to show in it's entirety so We'll look at the key functionality in sections.</p> <p>When a routing event occurs, <code>RouteViewManager.RouteData</code> is updated and <code>Router</code> re-rendered.  The <code>Renderer</code> calls <code>SetParametersAsync</code> on  <code>RouteViewManager</code>, passing the updated <em>Parameters</em>.  <code>SetParametersAsync</code> checks it has a valid <code>RouteData</code>, sets <code>_ViewData</code> to null and renders the component.  <code>_ViewData</code> is set to null to ensure the component loads the route. A valid <code>ViewData</code> object has precedence over a valid <code>RouteData</code> object in the render process.</p> <div class="language-csharp extra-class"><pre class="language-csharp"><code><span class="token keyword">public</span> <span class="token keyword">await</span> <span class="token return-type class-name">Task</span> <span class="token function">SetParametersAsync</span><span class="token punctuation">(</span><span class="token class-name">ParameterView</span> parameters<span class="token punctuation">)</span>
-<span class="token punctuation">{</span>
-    <span class="token comment">// Sets the component parameters</span>
-    parameters<span class="token punctuation">.</span><span class="token function">SetParameterProperties</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token comment">// Check if we have either RouteData or ViewData</span>
-    <span class="token keyword">if</span> <span class="token punctuation">(</span>RouteData <span class="token operator">==</span> <span class="token keyword">null</span><span class="token punctuation">)</span>
-    <span class="token punctuation">{</span>
-        <span class="token keyword">throw</span> <span class="token keyword">new</span> <span class="token constructor-invocation class-name">InvalidOperationException</span><span class="token punctuation">(</span><span class="token interpolation-string"><span class="token string">$&quot;The </span><span class="token interpolation"><span class="token punctuation">{</span><span class="token expression language-csharp"><span class="token keyword">nameof</span><span class="token punctuation">(</span>RouteView<span class="token punctuation">)</span></span><span class="token punctuation">}</span></span><span class="token string"> component requires a non-null value for the parameter </span><span class="token interpolation"><span class="token punctuation">{</span><span class="token expression language-csharp"><span class="token keyword">nameof</span><span class="token punctuation">(</span>RouteData<span class="token punctuation">)</span></span><span class="token punctuation">}</span></span><span class="token string">.&quot;</span></span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token punctuation">}</span>
-    <span class="token comment">// we've routed and need to clear the ViewData</span>
-    <span class="token keyword">this</span><span class="token punctuation">.</span>_ViewData <span class="token operator">=</span> <span class="token keyword">null</span><span class="token punctuation">;</span>
-    <span class="token comment">// Render the component</span>
-    <span class="token keyword">await</span> <span class="token keyword">this</span><span class="token punctuation">.</span><span class="token function">RenderAsync</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token punctuation">}</span>
-</code></pre></div><p><code>Render</code> uses InvokeAsync to ensure the render event is run on the correct thread context. <code>_RenderEventQueued</code> ensures there's only only one render event in the Renderer's queue.</p> <div class="language-csharp extra-class"><pre class="language-csharp"><code><span class="token keyword">public</span> <span class="token keyword">async</span> <span class="token return-type class-name">Task</span> <span class="token function">RenderAsync</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token keyword">await</span> <span class="token function">InvokeAsync</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span>
-    <span class="token punctuation">{</span>
-        <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span><span class="token keyword">this</span><span class="token punctuation">.</span>_RenderEventQueued<span class="token punctuation">)</span>
-        <span class="token punctuation">{</span>
-            <span class="token keyword">this</span><span class="token punctuation">.</span>_RenderEventQueued <span class="token operator">=</span> <span class="token boolean">true</span><span class="token punctuation">;</span>
-            _renderHandle<span class="token punctuation">.</span><span class="token function">Render</span><span class="token punctuation">(</span>_renderDelegate<span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token punctuation">}</span>
-    <span class="token punctuation">}</span>
-<span class="token punctuation">)</span><span class="token punctuation">;</span>
-</code></pre></div><p>For those curious, <code>InvokeAsync</code> looks like this.</p> <div class="language-csharp extra-class"><pre class="language-csharp"><code><span class="token keyword">protected</span> <span class="token return-type class-name">Task</span> <span class="token function">InvokeAsync</span><span class="token punctuation">(</span><span class="token class-name">Action</span> workItem<span class="token punctuation">)</span> <span class="token operator">=&gt;</span> _renderHandle<span class="token punctuation">.</span>Dispatcher<span class="token punctuation">.</span><span class="token function">InvokeAsync</span><span class="token punctuation">(</span>workItem<span class="token punctuation">)</span><span class="token punctuation">;</span>
-</code></pre></div><p><code>RouteViewManager</code>s content is built as a set of components, each defined within a <code>RenderFragment</code>.</p> <p><code>_renderDelegate</code> defines the local root component, cascading itself and adding the <code>_layoutViewFragment</code> fragment as it's <code>ChildContent</code>.</p> <div class="language-csharp extra-class"><pre class="language-csharp"><code><span class="token keyword">private</span> <span class="token return-type class-name">RenderFragment</span> _renderDelegate <span class="token operator">=&gt;</span> builder <span class="token operator">=&gt;</span>
-<span class="token punctuation">{</span>
-    <span class="token comment">// We're being executed so no longer queued</span>
-    _RenderEventQueued <span class="token operator">=</span> <span class="token boolean">false</span><span class="token punctuation">;</span>
-    <span class="token comment">// Adds cascadingvalue for the ViewManager</span>
-    builder<span class="token punctuation">.</span><span class="token generic-method"><span class="token function">OpenComponent</span><span class="token generic class-name"><span class="token punctuation">&lt;</span>CascadingValue<span class="token punctuation">&lt;</span>RouteViewManager<span class="token punctuation">&gt;</span><span class="token punctuation">&gt;</span></span></span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    builder<span class="token punctuation">.</span><span class="token function">AddAttribute</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token string">&quot;Value&quot;</span><span class="token punctuation">,</span> <span class="token keyword">this</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token comment">// Get the layout render fragment</span>
-    builder<span class="token punctuation">.</span><span class="token function">AddAttribute</span><span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">,</span> <span class="token string">&quot;ChildContent&quot;</span><span class="token punctuation">,</span> <span class="token keyword">this</span><span class="token punctuation">.</span>_layoutViewFragment<span class="token punctuation">)</span><span class="token punctuation">;</span>
-    builder<span class="token punctuation">.</span><span class="token function">CloseComponent</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token punctuation">}</span><span class="token punctuation">;</span>
-</code></pre></div><p><code>_layoutViewFragment</code> selects the layout, adds it and sets <code>_renderComponentWithParameters</code> as it's <code>ChildContent</code>.</p> <div class="language-csharp extra-class"><pre class="language-csharp"><code><span class="token keyword">private</span> <span class="token return-type class-name">RenderFragment</span> _layoutViewFragment <span class="token operator">=&gt;</span> builder <span class="token operator">=&gt;</span>
-<span class="token punctuation">{</span>
-    <span class="token class-name">Type</span> _pageLayoutType <span class="token operator">=</span> RouteData<span class="token punctuation">?.</span>PageType<span class="token punctuation">.</span><span class="token generic-method"><span class="token function">GetCustomAttribute</span><span class="token generic class-name"><span class="token punctuation">&lt;</span>LayoutAttribute<span class="token punctuation">&gt;</span></span></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">?.</span>LayoutType
-        <span class="token operator">??</span> RouteViewService<span class="token punctuation">.</span>Layout
-        <span class="token operator">??</span> DefaultLayout<span class="token punctuation">;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">body</span>&gt;</span>
+</div></code></pre>
+<h2 id="the-app-component">The App Component</h2>
+<p>The <code>App</code> code is shown below.  It's a standard Razor component, inheriting from <code>ComponentBase</code>.</p>
+<p><code>Router</code> is the local root component and sets <code>AppAssembly</code> to the assembly containing <code>Program</code>.  On initialization it trawls <code>Assembly</code> for all classes with a Route attribute and registers with the <code>NavigationChanged</code> event on the NavigationManager Service.  On a navigation event it tries to match the navigation Url to a route.  If it finds one, it renders the <code>Found</code> render fragment, otherwise it renders <code>NotFound</code>.</p>
+<pre><code class="language-html"><div><span class="hljs-tag">&lt;<span class="hljs-name">Router</span> <span class="hljs-attr">AppAssembly</span>=<span class="hljs-string">&quot;@typeof(Program).Assembly&quot;</span> <span class="hljs-attr">PreferExactMatches</span>=<span class="hljs-string">&quot;@true&quot;</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">Found</span> <span class="hljs-attr">Context</span>=<span class="hljs-string">&quot;routeData&quot;</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">RouteView</span> <span class="hljs-attr">RouteData</span>=<span class="hljs-string">&quot;@routeData&quot;</span> <span class="hljs-attr">DefaultLayout</span>=<span class="hljs-string">&quot;@typeof(MainLayout)&quot;</span> /&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-name">Found</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">NotFound</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">LayoutView</span> <span class="hljs-attr">Layout</span>=<span class="hljs-string">&quot;@typeof(MainLayout)&quot;</span>&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span>Sorry, there&#x27;s nothing at this address.<span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span>
+        <span class="hljs-tag">&lt;/<span class="hljs-name">LayoutView</span>&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-name">NotFound</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">Router</span>&gt;</span>
+</div></code></pre>
+<p><code>RouteView</code> is declared within <code>Found</code>.  <code>RouteData</code> is set to the router's current <code>routeData</code> object and <code>DefaultLayout</code> set to an application Layout <code>Type</code>.  <code>RouteView</code> renders an instance of <code>RouteData.Type</code> as a component within either the a page specific layout or the default layout, and applies any parameters in <code>RouteData.RouteValues</code>.</p>
+<p><code>NotFound</code> contains a <code>LayoutView</code> component, specifying a layout to render any child content in.</p>
+<h2 id="routeviewservice">RouteViewService</h2>
+<p><code>RouteViewService</code> is the state management service for the new components.  It's registered in the WASM and Server Services.  The Server version can be either a Singleton or Scoped, depending on the application needs.  You could have two separate services to manage application and user contexts separately.</p>
+<pre><code class="language-csharp"><div><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title">RouteViewService</span> 
+{
+  ....
+}
+</div></code></pre>
+<p>In the Server it's added to <code>Startup</code> in <code>ConfigServices</code>.</p>
+<pre><code class="language-csharp"><div>services.AddSingleton&lt;RouteViewService&gt;();
+</div></code></pre>
+<p>In the Web Assembly context it's added to <code>Program</code>.</p>
+<pre><code class="language-csharp"><div>builder.Services.AddScoped&lt;RouteViewService&gt;();
+</div></code></pre>
+<h3 id="routeviewmanager">RouteViewManager</h3>
+<p><code>RouteViewManager</code> replaces <code>RouteView</code>.</p>
+<p>It's implements <code>RouteView</code>'s functionality.  It's too large to show in it's entirety so We'll look at the key functionality in sections.</p>
+<p>When a routing event occurs, <code>RouteViewManager.RouteData</code> is updated and <code>Router</code> re-rendered.  The <code>Renderer</code> calls <code>SetParametersAsync</code> on  <code>RouteViewManager</code>, passing the updated <em>Parameters</em>.  <code>SetParametersAsync</code> checks it has a valid <code>RouteData</code>, sets <code>_ViewData</code> to null and renders the component.  <code>_ViewData</code> is set to null to ensure the component loads the route. A valid <code>ViewData</code> object has precedence over a valid <code>RouteData</code> object in the render process.</p>
+<pre><code class="language-csharp"><div><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">await</span> Task <span class="hljs-title">SetParametersAsync</span>(<span class="hljs-params">ParameterView parameters</span>)</span>
+{
+    <span class="hljs-comment">// Sets the component parameters</span>
+    parameters.SetParameterProperties(<span class="hljs-keyword">this</span>);
+    <span class="hljs-comment">// Check if we have either RouteData or ViewData</span>
+    <span class="hljs-keyword">if</span> (RouteData == <span class="hljs-literal">null</span>)
+    {
+        <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> InvalidOperationException(<span class="hljs-string">$&quot;The <span class="hljs-subst">{<span class="hljs-keyword">nameof</span>(RouteView)}</span> component requires a non-null value for the parameter <span class="hljs-subst">{<span class="hljs-keyword">nameof</span>(RouteData)}</span>.&quot;</span>);
+    }
+    <span class="hljs-comment">// we&#x27;ve routed and need to clear the ViewData</span>
+    <span class="hljs-keyword">this</span>._ViewData = <span class="hljs-literal">null</span>;
+    <span class="hljs-comment">// Render the component</span>
+    <span class="hljs-keyword">await</span> <span class="hljs-keyword">this</span>.RenderAsync();
+}
+</div></code></pre>
+<p><code>Render</code> uses InvokeAsync to ensure the render event is run on the correct thread context. <code>_RenderEventQueued</code> ensures there's only only one render event in the Renderer's queue.</p>
+<pre><code class="language-csharp"><div><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">async</span> Task <span class="hljs-title">RenderAsync</span>(<span class="hljs-params"></span>)</span> =&gt; <span class="hljs-keyword">await</span> InvokeAsync(() =&gt;
+    {
+        <span class="hljs-keyword">if</span> (!<span class="hljs-keyword">this</span>._RenderEventQueued)
+        {
+            <span class="hljs-keyword">this</span>._RenderEventQueued = <span class="hljs-literal">true</span>;
+            _renderHandle.Render(_renderDelegate);
+        }
+    }
+);
+</div></code></pre>
+<p>For those curious, <code>InvokeAsync</code> looks like this.</p>
+<pre><code class="language-csharp"><div><span class="hljs-function"><span class="hljs-keyword">protected</span> Task <span class="hljs-title">InvokeAsync</span>(<span class="hljs-params">Action workItem</span>)</span> =&gt; _renderHandle.Dispatcher.InvokeAsync(workItem);
+</div></code></pre>
+<p><code>RouteViewManager</code>s content is built as a set of components, each defined within a <code>RenderFragment</code>.</p>
+<p><code>_renderDelegate</code> defines the local root component, cascading itself and adding the <code>_layoutViewFragment</code> fragment as it's <code>ChildContent</code>.</p>
+<pre><code class="language-csharp"><div><span class="hljs-keyword">private</span> RenderFragment _renderDelegate =&gt; builder =&gt;
+{
+    <span class="hljs-comment">// We&#x27;re being executed so no longer queued</span>
+    _RenderEventQueued = <span class="hljs-literal">false</span>;
+    <span class="hljs-comment">// Adds cascadingvalue for the ViewManager</span>
+    builder.OpenComponent&lt;CascadingValue&lt;RouteViewManager&gt;&gt;(<span class="hljs-number">0</span>);
+    builder.AddAttribute(<span class="hljs-number">1</span>, <span class="hljs-string">&quot;Value&quot;</span>, <span class="hljs-keyword">this</span>);
+    <span class="hljs-comment">// Get the layout render fragment</span>
+    builder.AddAttribute(<span class="hljs-number">2</span>, <span class="hljs-string">&quot;ChildContent&quot;</span>, <span class="hljs-keyword">this</span>._layoutViewFragment);
+    builder.CloseComponent();
+};
+</div></code></pre>
+<p><code>_layoutViewFragment</code> selects the layout, adds it and sets <code>_renderComponentWithParameters</code> as it's <code>ChildContent</code>.</p>
+<pre><code class="language-csharp"><div><span class="hljs-keyword">private</span> RenderFragment _layoutViewFragment =&gt; builder =&gt;
+{
+    Type _pageLayoutType = RouteData?.PageType.GetCustomAttribute&lt;LayoutAttribute&gt;()?.LayoutType
+        ?? RouteViewService.Layout
+        ?? DefaultLayout;
 
-    builder<span class="token punctuation">.</span><span class="token generic-method"><span class="token function">OpenComponent</span><span class="token generic class-name"><span class="token punctuation">&lt;</span>LayoutView<span class="token punctuation">&gt;</span></span></span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    builder<span class="token punctuation">.</span><span class="token function">AddAttribute</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token keyword">nameof</span><span class="token punctuation">(</span>LayoutView<span class="token punctuation">.</span>Layout<span class="token punctuation">)</span><span class="token punctuation">,</span> _pageLayoutType<span class="token punctuation">)</span><span class="token punctuation">;</span>
-    builder<span class="token punctuation">.</span><span class="token function">AddAttribute</span><span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">,</span> <span class="token keyword">nameof</span><span class="token punctuation">(</span>LayoutView<span class="token punctuation">.</span>ChildContent<span class="token punctuation">)</span><span class="token punctuation">,</span> _renderComponentWithParameters<span class="token punctuation">)</span><span class="token punctuation">;</span>
-    builder<span class="token punctuation">.</span><span class="token function">CloseComponent</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token punctuation">}</span><span class="token punctuation">;</span>
-</code></pre></div><p><code>_renderComponentWithParameters</code> selects the view/route component to render and adds it with the supplied parameters.  A valid view take precedence over a valid route.</p> <div class="language-csharp extra-class"><pre class="language-csharp"><code><span class="token keyword">private</span> <span class="token return-type class-name">RenderFragment</span> _renderComponentWithParameters <span class="token operator">=&gt;</span> builder <span class="token operator">=&gt;</span>
-<span class="token punctuation">{</span>
-    <span class="token class-name">Type</span> componentType <span class="token operator">=</span> <span class="token keyword">null</span><span class="token punctuation">;</span>
-    <span class="token class-name">IReadOnlyDictionary<span class="token punctuation">&lt;</span><span class="token keyword">string</span><span class="token punctuation">,</span> <span class="token keyword">object</span><span class="token punctuation">&gt;</span></span> parameters <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token constructor-invocation class-name">Dictionary<span class="token punctuation">&lt;</span><span class="token keyword">string</span><span class="token punctuation">,</span> <span class="token keyword">object</span><span class="token punctuation">&gt;</span></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    builder.OpenComponent&lt;LayoutView&gt;(<span class="hljs-number">0</span>);
+    builder.AddAttribute(<span class="hljs-number">1</span>, <span class="hljs-keyword">nameof</span>(LayoutView.Layout), _pageLayoutType);
+    builder.AddAttribute(<span class="hljs-number">2</span>, <span class="hljs-keyword">nameof</span>(LayoutView.ChildContent), _renderComponentWithParameters);
+    builder.CloseComponent();
+};
+</div></code></pre>
+<p><code>_renderComponentWithParameters</code> selects the view/route component to render and adds it with the supplied parameters.  A valid view take precedence over a valid route.</p>
+<pre><code class="language-csharp"><div><span class="hljs-keyword">private</span> RenderFragment _renderComponentWithParameters =&gt; builder =&gt;
+{
+    Type componentType = <span class="hljs-literal">null</span>;
+    IReadOnlyDictionary&lt;<span class="hljs-keyword">string</span>, <span class="hljs-keyword">object</span>&gt; parameters = <span class="hljs-keyword">new</span> Dictionary&lt;<span class="hljs-keyword">string</span>, <span class="hljs-keyword">object</span>&gt;();
 
-    <span class="token keyword">if</span> <span class="token punctuation">(</span>_ViewData <span class="token operator">!=</span> <span class="token keyword">null</span><span class="token punctuation">)</span>
-    <span class="token punctuation">{</span>
-        componentType <span class="token operator">=</span> _ViewData<span class="token punctuation">.</span>ViewType<span class="token punctuation">;</span>
-        parameters <span class="token operator">=</span> _ViewData<span class="token punctuation">.</span>ViewParameters<span class="token punctuation">;</span>
-    <span class="token punctuation">}</span>
-    <span class="token keyword">else</span> <span class="token keyword">if</span> <span class="token punctuation">(</span>RouteData <span class="token operator">!=</span> <span class="token keyword">null</span><span class="token punctuation">)</span>
-    <span class="token punctuation">{</span>
-        componentType <span class="token operator">=</span> RouteData<span class="token punctuation">.</span>PageType<span class="token punctuation">;</span>
-        parameters <span class="token operator">=</span> RouteData<span class="token punctuation">.</span>RouteValues<span class="token punctuation">;</span>
-    <span class="token punctuation">}</span>
+    <span class="hljs-keyword">if</span> (_ViewData != <span class="hljs-literal">null</span>)
+    {
+        componentType = _ViewData.ViewType;
+        parameters = _ViewData.ViewParameters;
+    }
+    <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (RouteData != <span class="hljs-literal">null</span>)
+    {
+        componentType = RouteData.PageType;
+        parameters = RouteData.RouteValues;
+    }
 
-    <span class="token keyword">if</span> <span class="token punctuation">(</span>componentType <span class="token operator">!=</span> <span class="token keyword">null</span><span class="token punctuation">)</span>
-    <span class="token punctuation">{</span>
-        builder<span class="token punctuation">.</span><span class="token function">OpenComponent</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">,</span> componentType<span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token keyword">foreach</span> <span class="token punctuation">(</span><span class="token class-name"><span class="token keyword">var</span></span> kvp <span class="token keyword">in</span> parameters<span class="token punctuation">)</span>
-        <span class="token punctuation">{</span>
-            builder<span class="token punctuation">.</span><span class="token function">AddAttribute</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span> kvp<span class="token punctuation">.</span>Key<span class="token punctuation">,</span> kvp<span class="token punctuation">.</span>Value<span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token punctuation">}</span>
-        builder<span class="token punctuation">.</span><span class="token function">CloseComponent</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token punctuation">}</span>
-    <span class="token keyword">else</span>
-    <span class="token punctuation">{</span>
-        builder<span class="token punctuation">.</span><span class="token function">OpenElement</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">,</span> <span class="token string">&quot;div&quot;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        builder<span class="token punctuation">.</span><span class="token function">AddContent</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token string">&quot;No Route or View Configured to Display&quot;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        builder<span class="token punctuation">.</span><span class="token function">CloseElement</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token punctuation">}</span>
-<span class="token punctuation">}</span><span class="token punctuation">;</span>
-</code></pre></div><h2 id="dynamic-layouts"><a href="#dynamic-layouts" class="header-anchor">#</a> Dynamic Layouts</h2> <p>Out-of-the-box, Blazor layouts are defined and fixed at compile time.  <code>@Layout</code> is Razor talk that gets transposed when the Razor is pre-compiled to:</p> <div class="language-csharp extra-class"><pre class="language-csharp"><code><span class="token punctuation">[</span><span class="token attribute"><span class="token class-name">Microsoft<span class="token punctuation">.</span>AspNetCore<span class="token punctuation">.</span>Components<span class="token punctuation">.</span>LayoutAttribute</span><span class="token attribute-arguments"><span class="token punctuation">(</span><span class="token keyword">typeof</span><span class="token punctuation">(</span><span class="token type-expression class-name">MainLayout</span><span class="token punctuation">)</span><span class="token punctuation">)</span></span></span><span class="token punctuation">]</span>
-<span class="token punctuation">[</span><span class="token attribute"><span class="token class-name">Microsoft<span class="token punctuation">.</span>AspNetCore<span class="token punctuation">.</span>Components<span class="token punctuation">.</span>RouteAttribute</span><span class="token attribute-arguments"><span class="token punctuation">(</span><span class="token string">&quot;/&quot;</span><span class="token punctuation">)</span></span></span><span class="token punctuation">]</span>
-<span class="token punctuation">[</span><span class="token attribute"><span class="token class-name">Microsoft<span class="token punctuation">.</span>AspNetCore<span class="token punctuation">.</span>Components<span class="token punctuation">.</span>RouteAttribute</span><span class="token attribute-arguments"><span class="token punctuation">(</span><span class="token string">&quot;/index&quot;</span><span class="token punctuation">)</span></span></span><span class="token punctuation">]</span>
-<span class="token keyword">public</span> <span class="token keyword">partial</span> <span class="token keyword">class</span> <span class="token class-name">Index</span> <span class="token punctuation">:</span> Microsoft<span class="token punctuation">.</span>AspNetCore<span class="token punctuation">.</span>Components<span class="token punctuation">.</span>ComponentBase
-<span class="token range operator">..</span><span class="token range operator">..</span>
-</code></pre></div><p>To change Layouts dynamically we use <code>RouteViewService</code> to store the layout. It can be set from any component that injects the service.</p> <div class="language-csharp extra-class"><pre class="language-csharp"><code><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">RouteViewService</span>
-<span class="token punctuation">{</span>
-    <span class="token keyword">public</span> <span class="token return-type class-name">Type</span> Layout <span class="token punctuation">{</span> <span class="token keyword">get</span><span class="token punctuation">;</span> <span class="token keyword">set</span><span class="token punctuation">;</span> <span class="token punctuation">}</span>
-    <span class="token range operator">..</span><span class="token range operator">..</span>
-<span class="token punctuation">}</span>
-</code></pre></div><p><code>_layoutViewFragment</code> in <code>RouteViewManager</code> chooses the layout - <code>RouteViewService.Layout</code> is set above the default layout in precedence.</p> <div class="language-csharp extra-class"><pre class="language-csharp"><code><span class="token keyword">private</span> <span class="token return-type class-name">RenderFragment</span> _layoutViewFragment <span class="token operator">=&gt;</span> builder <span class="token operator">=&gt;</span>
-<span class="token punctuation">{</span>
-    <span class="token class-name">Type</span> _pageLayoutType <span class="token operator">=</span> RouteData<span class="token punctuation">?.</span>PageType<span class="token punctuation">.</span><span class="token generic-method"><span class="token function">GetCustomAttribute</span><span class="token generic class-name"><span class="token punctuation">&lt;</span>LayoutAttribute<span class="token punctuation">&gt;</span></span></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">?.</span>LayoutType
-        <span class="token operator">??</span> RouteViewService<span class="token punctuation">.</span>Layout
-        <span class="token operator">??</span> DefaultLayout<span class="token punctuation">;</span>
+    <span class="hljs-keyword">if</span> (componentType != <span class="hljs-literal">null</span>)
+    {
+        builder.OpenComponent(<span class="hljs-number">0</span>, componentType);
+        <span class="hljs-keyword">foreach</span> (<span class="hljs-keyword">var</span> kvp <span class="hljs-keyword">in</span> parameters)
+        {
+            builder.AddAttribute(<span class="hljs-number">1</span>, kvp.Key, kvp.Value);
+        }
+        builder.CloseComponent();
+    }
+    <span class="hljs-keyword">else</span>
+    {
+        builder.OpenElement(<span class="hljs-number">0</span>, <span class="hljs-string">&quot;div&quot;</span>);
+        builder.AddContent(<span class="hljs-number">1</span>, <span class="hljs-string">&quot;No Route or View Configured to Display&quot;</span>);
+        builder.CloseElement();
+    }
+};
+</div></code></pre>
+<h2 id="dynamic-layouts">Dynamic Layouts</h2>
+<p>Out-of-the-box, Blazor layouts are defined and fixed at compile time.  <code>@Layout</code> is Razor talk that gets transposed when the Razor is pre-compiled to:</p>
+<pre><code class="language-csharp"><div>[<span class="hljs-meta">Microsoft.AspNetCore.Components.LayoutAttribute(typeof(MainLayout))</span>]
+[<span class="hljs-meta">Microsoft.AspNetCore.Components.RouteAttribute(<span class="hljs-meta-string">&quot;/&quot;</span>)</span>]
+[<span class="hljs-meta">Microsoft.AspNetCore.Components.RouteAttribute(<span class="hljs-meta-string">&quot;/index&quot;</span>)</span>]
+<span class="hljs-keyword">public</span> <span class="hljs-keyword">partial</span> <span class="hljs-keyword">class</span> <span class="hljs-title">Index</span> : <span class="hljs-title">Microsoft.AspNetCore.Components.ComponentBase</span>
+....
+</div></code></pre>
+<p>To change Layouts dynamically we use <code>RouteViewService</code> to store the layout. It can be set from any component that injects the service.</p>
+<pre><code class="language-csharp"><div><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title">RouteViewService</span>
+{
+    <span class="hljs-keyword">public</span> Type Layout { <span class="hljs-keyword">get</span>; <span class="hljs-keyword">set</span>; }
+    ....
+}
+</div></code></pre>
+<p><code>_layoutViewFragment</code> in <code>RouteViewManager</code> chooses the layout - <code>RouteViewService.Layout</code> is set above the default layout in precedence.</p>
+<pre><code class="language-csharp"><div><span class="hljs-keyword">private</span> RenderFragment _layoutViewFragment =&gt; builder =&gt;
+{
+    Type _pageLayoutType = RouteData?.PageType.GetCustomAttribute&lt;LayoutAttribute&gt;()?.LayoutType
+        ?? RouteViewService.Layout
+        ?? DefaultLayout;
 
-    builder<span class="token punctuation">.</span><span class="token generic-method"><span class="token function">OpenComponent</span><span class="token generic class-name"><span class="token punctuation">&lt;</span>LayoutView<span class="token punctuation">&gt;</span></span></span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    builder<span class="token punctuation">.</span><span class="token function">AddAttribute</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token keyword">nameof</span><span class="token punctuation">(</span>LayoutView<span class="token punctuation">.</span>Layout<span class="token punctuation">)</span><span class="token punctuation">,</span> _pageLayoutType<span class="token punctuation">)</span><span class="token punctuation">;</span>
-    builder<span class="token punctuation">.</span><span class="token function">AddAttribute</span><span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">,</span> <span class="token keyword">nameof</span><span class="token punctuation">(</span>LayoutView<span class="token punctuation">.</span>ChildContent<span class="token punctuation">)</span><span class="token punctuation">,</span> _renderComponentWithParameters<span class="token punctuation">)</span><span class="token punctuation">;</span>
-    builder<span class="token punctuation">.</span><span class="token function">CloseComponent</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token punctuation">}</span><span class="token punctuation">;</span>
-</code></pre></div><p>Changing in the layout is demonstrated in the demo pages.</p> <h2 id="dynamic-routing"><a href="#dynamic-routing" class="header-anchor">#</a> Dynamic Routing</h2> <p>Dynamic Routing is a little more complicated.  <code>Router</code> is a sealed box, so it's take it or re-write it.  Unless you must, don't re-write it.  We're not looking to change existing routes, just add and remove new dynamic routes.</p> <p>Routes are defined at compile time and are used internally within the <code>Router</code> Component.</p> <p>RouteView Razor Pages are labelled like this:</p> <div class="language-html extra-class"><pre class="language-html"><code>@page &quot;/&quot;
+    builder.OpenComponent&lt;LayoutView&gt;(<span class="hljs-number">0</span>);
+    builder.AddAttribute(<span class="hljs-number">1</span>, <span class="hljs-keyword">nameof</span>(LayoutView.Layout), _pageLayoutType);
+    builder.AddAttribute(<span class="hljs-number">2</span>, <span class="hljs-keyword">nameof</span>(LayoutView.ChildContent), _renderComponentWithParameters);
+    builder.CloseComponent();
+};
+</div></code></pre>
+<p>Changing in the layout is demonstrated in the demo pages.</p>
+<h2 id="dynamic-routing">Dynamic Routing</h2>
+<p>Dynamic Routing is a little more complicated.  <code>Router</code> is a sealed box, so it's take it or re-write it.  Unless you must, don't re-write it.  We're not looking to change existing routes, just add and remove new dynamic routes.</p>
+<p>Routes are defined at compile time and are used internally within the <code>Router</code> Component.</p>
+<p>RouteView Razor Pages are labelled like this:</p>
+<pre><code class="language-html"><div>@page &quot;/&quot;
 @page &quot;/index&quot;
-</code></pre></div><p>This is Razor talk, and gets transposed into the following in the C# class when pre-compiled.</p> <div class="language-csharp extra-class"><pre class="language-csharp"><code><span class="token punctuation">[</span><span class="token attribute"><span class="token class-name">Microsoft<span class="token punctuation">.</span>AspNetCore<span class="token punctuation">.</span>Components<span class="token punctuation">.</span>RouteAttribute</span><span class="token attribute-arguments"><span class="token punctuation">(</span><span class="token string">&quot;/&quot;</span><span class="token punctuation">)</span></span></span><span class="token punctuation">]</span>
-<span class="token punctuation">[</span><span class="token attribute"><span class="token class-name">Microsoft<span class="token punctuation">.</span>AspNetCore<span class="token punctuation">.</span>Components<span class="token punctuation">.</span>RouteAttribute</span><span class="token attribute-arguments"><span class="token punctuation">(</span><span class="token string">&quot;/index&quot;</span><span class="token punctuation">)</span></span></span><span class="token punctuation">]</span>
-<span class="token keyword">public</span> <span class="token keyword">partial</span> <span class="token keyword">class</span> <span class="token class-name">Index</span> <span class="token punctuation">:</span> Microsoft<span class="token punctuation">.</span>AspNetCore<span class="token punctuation">.</span>Components<span class="token punctuation">.</span>ComponentBase
-<span class="token range operator">..</span><span class="token range operator">..</span><span class="token punctuation">.</span>
-</code></pre></div><p>When <code>Router</code> initializes it trawls any assemblies provided and builds a route dictionary of component/route pairs.</p> <p>You can get a list of route attribute components like this:</p> <div class="language-csharp extra-class"><pre class="language-csharp"><code><span class="token keyword">static</span> <span class="token keyword">public</span> <span class="token return-type class-name">IEnumerable<span class="token punctuation">&lt;</span>Type<span class="token punctuation">&gt;</span></span> <span class="token function">GetTypeListWithCustomAttribute</span><span class="token punctuation">(</span><span class="token class-name">Assembly</span> assembly<span class="token punctuation">,</span> <span class="token class-name">Type</span> attribute<span class="token punctuation">)</span>
-    <span class="token operator">=&gt;</span> assembly<span class="token punctuation">.</span><span class="token function">GetTypes</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">Where</span><span class="token punctuation">(</span>item <span class="token operator">=&gt;</span> <span class="token punctuation">(</span>item<span class="token punctuation">.</span><span class="token function">GetCustomAttributes</span><span class="token punctuation">(</span>attribute<span class="token punctuation">,</span> <span class="token boolean">true</span><span class="token punctuation">)</span><span class="token punctuation">.</span>Length <span class="token operator">&gt;</span> <span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-</code></pre></div><p>On initial render the Router register a delegate with the <code>NavigationManager.LocationChanged</code> event.  This delegate looks up routes and triggers render events on the <code>Router</code>. If it finds a route it renders <code>Found</code> which renders our new <code>RouteViewManager</code>.  <code>RouteViewManager</code> builds out the Layout and adds a new instance of the component defined in <code>RouteData</code>.</p> <p>When it doesn't find a route, what happens depends on the <code>IsNavigationIntercepted</code> property of the <code>LocationChangedEventArgs</code> provided by the event:</p> <ol><li>True if it intercepts navigation in the DOM - anchors, etc.</li> <li>True if a UI component calls it's <code>NavigateTo</code> method and sets <code>ForceLoad</code>.</li> <li>False if a UI component calls it's <code>NavigateTo</code> method and sets <code>ForceLoad</code>.</li></ol> <p>If we can avoid causing a hard navigation events in <code>Router</code>, we can add a component in <code>NotFound</code> to handle additional dynamic routing.  Not too difficult, it is our code!  There's an enhanced <code>NavLink</code> control to help control navigation - covered later.  In the event of a hard navigation event, routing will still work, but the application reloads.  Any rogue navigation events should be detected and fixed during testing.</p> <h3 id="customroutedata"><a href="#customroutedata" class="header-anchor">#</a> CustomRouteData</h3> <p><code>CustomRouteData</code> holds the information needed to make routing decisions.  The class looks like this with inline detailed explanations.</p> <div class="language-csharp extra-class"><pre class="language-csharp"><code>    <span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">CustomRouteData</span>
-    <span class="token punctuation">{</span>
-        <span class="token comment">/// The standard RouteData.</span>
-        <span class="token keyword">public</span> <span class="token return-type class-name">RouteData</span> RouteData <span class="token punctuation">{</span> <span class="token keyword">get</span><span class="token punctuation">;</span> <span class="token keyword">private</span> <span class="token keyword">set</span><span class="token punctuation">;</span> <span class="token punctuation">}</span>
-        <span class="token comment">/// The PageType to load on a match </span>
-        <span class="token keyword">public</span> <span class="token return-type class-name">Type</span> PageType <span class="token punctuation">{</span> <span class="token keyword">get</span><span class="token punctuation">;</span> <span class="token keyword">set</span><span class="token punctuation">;</span> <span class="token punctuation">}</span>
-        <span class="token comment">/// The Regex String to define the route</span>
-        <span class="token keyword">public</span> <span class="token return-type class-name"><span class="token keyword">string</span></span> RouteMatch <span class="token punctuation">{</span> <span class="token keyword">get</span><span class="token punctuation">;</span> <span class="token keyword">set</span><span class="token punctuation">;</span> <span class="token punctuation">}</span>
-        <span class="token comment">/// Parameter values to add to the Route when created name/defaultvalue</span>
-        <span class="token keyword">public</span> <span class="token return-type class-name">SortedDictionary<span class="token punctuation">&lt;</span><span class="token keyword">string</span><span class="token punctuation">,</span> <span class="token keyword">object</span><span class="token punctuation">&gt;</span></span> ComponentParameters <span class="token punctuation">{</span> <span class="token keyword">get</span><span class="token punctuation">;</span> <span class="token keyword">set</span><span class="token punctuation">;</span> <span class="token punctuation">}</span> <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token constructor-invocation class-name">SortedDictionary<span class="token punctuation">&lt;</span><span class="token keyword">string</span><span class="token punctuation">,</span> <span class="token keyword">object</span><span class="token punctuation">&gt;</span></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</div></code></pre>
+<p>This is Razor talk, and gets transposed into the following in the C# class when pre-compiled.</p>
+<pre><code class="language-csharp"><div>[<span class="hljs-meta">Microsoft.AspNetCore.Components.RouteAttribute(<span class="hljs-meta-string">&quot;/&quot;</span>)</span>]
+[<span class="hljs-meta">Microsoft.AspNetCore.Components.RouteAttribute(<span class="hljs-meta-string">&quot;/index&quot;</span>)</span>]
+<span class="hljs-keyword">public</span> <span class="hljs-keyword">partial</span> <span class="hljs-keyword">class</span> <span class="hljs-title">Index</span> : <span class="hljs-title">Microsoft.AspNetCore.Components.ComponentBase</span>
+.....
+</div></code></pre>
+<p>When <code>Router</code> initializes it trawls any assemblies provided and builds a route dictionary of component/route pairs.</p>
+<p>You can get a list of route attribute components like this:</p>
+<pre><code class="language-csharp"><div><span class="hljs-function"><span class="hljs-keyword">static</span> <span class="hljs-keyword">public</span> IEnumerable&lt;Type&gt; <span class="hljs-title">GetTypeListWithCustomAttribute</span>(<span class="hljs-params">Assembly assembly, Type attribute</span>)</span>
+    =&gt; assembly.GetTypes().Where(item =&gt; (item.GetCustomAttributes(attribute, <span class="hljs-literal">true</span>).Length &gt; <span class="hljs-number">0</span>));
+</div></code></pre>
+<p>On initial render the Router register a delegate with the <code>NavigationManager.LocationChanged</code> event.  This delegate looks up routes and triggers render events on the <code>Router</code>. If it finds a route it renders <code>Found</code> which renders our new <code>RouteViewManager</code>.  <code>RouteViewManager</code> builds out the Layout and adds a new instance of the component defined in <code>RouteData</code>.</p>
+<p>When it doesn't find a route, what happens depends on the <code>IsNavigationIntercepted</code> property of the <code>LocationChangedEventArgs</code> provided by the event:</p>
+<ol>
+<li>True if it intercepts navigation in the DOM - anchors, etc.</li>
+<li>True if a UI component calls it's <code>NavigateTo</code> method and sets <code>ForceLoad</code>.</li>
+<li>False if a UI component calls it's <code>NavigateTo</code> method and sets <code>ForceLoad</code>.</li>
+</ol>
+<p>If we can avoid causing a hard navigation events in <code>Router</code>, we can add a component in <code>NotFound</code> to handle additional dynamic routing.  Not too difficult, it is our code!  There's an enhanced <code>NavLink</code> control to help control navigation - covered later.  In the event of a hard navigation event, routing will still work, but the application reloads.  Any rogue navigation events should be detected and fixed during testing.</p>
+<h3 id="customroutedata">CustomRouteData</h3>
+<p><code>CustomRouteData</code> holds the information needed to make routing decisions.  The class looks like this with inline detailed explanations.</p>
+<pre><code class="language-csharp"><div>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title">CustomRouteData</span>
+    {
+        <span class="hljs-comment"><span class="hljs-doctag">///</span> The standard RouteData.</span>
+        <span class="hljs-keyword">public</span> RouteData RouteData { <span class="hljs-keyword">get</span>; <span class="hljs-keyword">private</span> <span class="hljs-keyword">set</span>; }
+        <span class="hljs-comment"><span class="hljs-doctag">///</span> The PageType to load on a match </span>
+        <span class="hljs-keyword">public</span> Type PageType { <span class="hljs-keyword">get</span>; <span class="hljs-keyword">set</span>; }
+        <span class="hljs-comment"><span class="hljs-doctag">///</span> The Regex String to define the route</span>
+        <span class="hljs-keyword">public</span> <span class="hljs-keyword">string</span> RouteMatch { <span class="hljs-keyword">get</span>; <span class="hljs-keyword">set</span>; }
+        <span class="hljs-comment"><span class="hljs-doctag">///</span> Parameter values to add to the Route when created name/defaultvalue</span>
+        <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">SortedDictionary</span>&lt;<span class="hljs-title">string</span>, <span class="hljs-title">object</span>&gt; ComponentParameters</span> { <span class="hljs-keyword">get</span>; <span class="hljs-keyword">set</span>; } = <span class="hljs-keyword">new</span> SortedDictionary&lt;<span class="hljs-keyword">string</span>, <span class="hljs-keyword">object</span>&gt;();
 
-        <span class="token comment">/// Method to check if we have a route match</span>
-        <span class="token keyword">public</span> <span class="token return-type class-name"><span class="token keyword">bool</span></span> <span class="token function">IsMatch</span><span class="token punctuation">(</span><span class="token class-name"><span class="token keyword">string</span></span> url<span class="token punctuation">)</span>
-        <span class="token punctuation">{</span>
-            <span class="token comment">// get the match</span>
-            <span class="token class-name"><span class="token keyword">var</span></span> match <span class="token operator">=</span> Regex<span class="token punctuation">.</span><span class="token function">Match</span><span class="token punctuation">(</span>url<span class="token punctuation">,</span> <span class="token keyword">this</span><span class="token punctuation">.</span>RouteMatch<span class="token punctuation">,</span>RegexOptions<span class="token punctuation">.</span>IgnoreCase<span class="token punctuation">)</span><span class="token punctuation">;</span>
-            <span class="token keyword">if</span> <span class="token punctuation">(</span>match<span class="token punctuation">.</span>Success<span class="token punctuation">)</span>
-            <span class="token punctuation">{</span>
-                <span class="token comment">// create new dictionary object to add to the RouteData</span>
-                <span class="token class-name"><span class="token keyword">var</span></span> dict <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token constructor-invocation class-name">Dictionary<span class="token punctuation">&lt;</span><span class="token keyword">string</span><span class="token punctuation">,</span> <span class="token keyword">object</span><span class="token punctuation">&gt;</span></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-                <span class="token comment">//  check we have the same or fewer groups as parameters to map the to</span>
-                <span class="token keyword">if</span> <span class="token punctuation">(</span>match<span class="token punctuation">.</span>Groups<span class="token punctuation">.</span>Count <span class="token operator">&gt;=</span> ComponentParameters<span class="token punctuation">.</span>Count<span class="token punctuation">)</span>
-                <span class="token punctuation">{</span>
-                    <span class="token class-name"><span class="token keyword">var</span></span> i <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span>
-                    <span class="token comment">// iterate through the parameters and add the next match</span>
-                    <span class="token keyword">foreach</span> <span class="token punctuation">(</span><span class="token class-name"><span class="token keyword">var</span></span> pars <span class="token keyword">in</span> ComponentParameters<span class="token punctuation">)</span>
-                    <span class="token punctuation">{</span>
-                        <span class="token class-name"><span class="token keyword">string</span></span> matchValue <span class="token operator">=</span> <span class="token keyword">string</span><span class="token punctuation">.</span>Empty<span class="token punctuation">;</span>
-                        <span class="token keyword">if</span> <span class="token punctuation">(</span>i <span class="token operator">&lt;</span> match<span class="token punctuation">.</span>Groups<span class="token punctuation">.</span>Count<span class="token punctuation">)</span>
-                            matchValue <span class="token operator">=</span> match<span class="token punctuation">.</span>Groups<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">.</span>Value<span class="token punctuation">;</span>
-                        <span class="token comment">//  Use a StypeSwitch object to do the Type Matching and create the dictionary pair </span>
-                        <span class="token class-name"><span class="token keyword">var</span></span> ts <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token constructor-invocation class-name">TypeSwitch</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
-                            <span class="token punctuation">.</span><span class="token function">Case</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token class-name"><span class="token keyword">int</span></span> x<span class="token punctuation">)</span> <span class="token operator">=&gt;</span>
-                            <span class="token punctuation">{</span>
-                                <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token keyword">int</span><span class="token punctuation">.</span><span class="token function">TryParse</span><span class="token punctuation">(</span>matchValue<span class="token punctuation">,</span> <span class="token keyword">out</span> <span class="token class-name"><span class="token keyword">int</span></span> <span class="token keyword">value</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
-                                    dict<span class="token punctuation">.</span><span class="token function">Add</span><span class="token punctuation">(</span>pars<span class="token punctuation">.</span>Key<span class="token punctuation">,</span> <span class="token keyword">value</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-                                <span class="token keyword">else</span>
-                                    dict<span class="token punctuation">.</span><span class="token function">Add</span><span class="token punctuation">(</span>pars<span class="token punctuation">.</span>Key<span class="token punctuation">,</span> pars<span class="token punctuation">.</span>Value<span class="token punctuation">)</span><span class="token punctuation">;</span>
-                            <span class="token punctuation">}</span><span class="token punctuation">)</span>
-                            <span class="token punctuation">.</span><span class="token function">Case</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token class-name"><span class="token keyword">float</span></span> x<span class="token punctuation">)</span> <span class="token operator">=&gt;</span>
-                            <span class="token punctuation">{</span>
-                                <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token keyword">float</span><span class="token punctuation">.</span><span class="token function">TryParse</span><span class="token punctuation">(</span>matchValue<span class="token punctuation">,</span> <span class="token keyword">out</span> <span class="token class-name"><span class="token keyword">float</span></span> <span class="token keyword">value</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
-                                    dict<span class="token punctuation">.</span><span class="token function">Add</span><span class="token punctuation">(</span>pars<span class="token punctuation">.</span>Key<span class="token punctuation">,</span> <span class="token keyword">value</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-                                <span class="token keyword">else</span>
-                                    dict<span class="token punctuation">.</span><span class="token function">Add</span><span class="token punctuation">(</span>pars<span class="token punctuation">.</span>Key<span class="token punctuation">,</span> pars<span class="token punctuation">.</span>Value<span class="token punctuation">)</span><span class="token punctuation">;</span>
-                            <span class="token punctuation">}</span><span class="token punctuation">)</span>
-                            <span class="token punctuation">.</span><span class="token function">Case</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token class-name"><span class="token keyword">decimal</span></span> x<span class="token punctuation">)</span> <span class="token operator">=&gt;</span>
-                            <span class="token punctuation">{</span>
-                                <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token keyword">decimal</span><span class="token punctuation">.</span><span class="token function">TryParse</span><span class="token punctuation">(</span>matchValue<span class="token punctuation">,</span> <span class="token keyword">out</span> <span class="token class-name"><span class="token keyword">decimal</span></span> <span class="token keyword">value</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
-                                    dict<span class="token punctuation">.</span><span class="token function">Add</span><span class="token punctuation">(</span>pars<span class="token punctuation">.</span>Key<span class="token punctuation">,</span> <span class="token keyword">value</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-                                <span class="token keyword">else</span>
-                                    dict<span class="token punctuation">.</span><span class="token function">Add</span><span class="token punctuation">(</span>pars<span class="token punctuation">.</span>Key<span class="token punctuation">,</span> pars<span class="token punctuation">.</span>Value<span class="token punctuation">)</span><span class="token punctuation">;</span>
-                            <span class="token punctuation">}</span><span class="token punctuation">)</span>
-                            <span class="token punctuation">.</span><span class="token function">Case</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token class-name"><span class="token keyword">string</span></span> x<span class="token punctuation">)</span> <span class="token operator">=&gt;</span>
-                            <span class="token punctuation">{</span>
-                                dict<span class="token punctuation">.</span><span class="token function">Add</span><span class="token punctuation">(</span>pars<span class="token punctuation">.</span>Key<span class="token punctuation">,</span> matchValue<span class="token punctuation">)</span><span class="token punctuation">;</span>
-                            <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="hljs-comment"><span class="hljs-doctag">///</span> Method to check if we have a route match</span>
+        <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">bool</span> <span class="hljs-title">IsMatch</span>(<span class="hljs-params"><span class="hljs-keyword">string</span> url</span>)</span>
+        {
+            <span class="hljs-comment">// get the match</span>
+            <span class="hljs-keyword">var</span> match = Regex.Match(url, <span class="hljs-keyword">this</span>.RouteMatch,RegexOptions.IgnoreCase);
+            <span class="hljs-keyword">if</span> (match.Success)
+            {
+                <span class="hljs-comment">// create new dictionary object to add to the RouteData</span>
+                <span class="hljs-keyword">var</span> dict = <span class="hljs-keyword">new</span> Dictionary&lt;<span class="hljs-keyword">string</span>, <span class="hljs-keyword">object</span>&gt;();
+                <span class="hljs-comment">//  check we have the same or fewer groups as parameters to map the to</span>
+                <span class="hljs-keyword">if</span> (match.Groups.Count &gt;= ComponentParameters.Count)
+                {
+                    <span class="hljs-keyword">var</span> i = <span class="hljs-number">1</span>;
+                    <span class="hljs-comment">// iterate through the parameters and add the next match</span>
+                    <span class="hljs-keyword">foreach</span> (<span class="hljs-keyword">var</span> pars <span class="hljs-keyword">in</span> ComponentParameters)
+                    {
+                        <span class="hljs-keyword">string</span> matchValue = <span class="hljs-keyword">string</span>.Empty;
+                        <span class="hljs-keyword">if</span> (i &lt; match.Groups.Count)
+                            matchValue = match.Groups[i].Value;
+                        <span class="hljs-comment">//  Use a StypeSwitch object to do the Type Matching and create the dictionary pair </span>
+                        <span class="hljs-keyword">var</span> ts = <span class="hljs-keyword">new</span> TypeSwitch()
+                            .Case((<span class="hljs-keyword">int</span> x) =&gt;
+                            {
+                                <span class="hljs-keyword">if</span> (<span class="hljs-keyword">int</span>.TryParse(matchValue, <span class="hljs-keyword">out</span> <span class="hljs-keyword">int</span> <span class="hljs-keyword">value</span>))
+                                    dict.Add(pars.Key, <span class="hljs-keyword">value</span>);
+                                <span class="hljs-keyword">else</span>
+                                    dict.Add(pars.Key, pars.Value);
+                            })
+                            .Case((<span class="hljs-keyword">float</span> x) =&gt;
+                            {
+                                <span class="hljs-keyword">if</span> (<span class="hljs-keyword">float</span>.TryParse(matchValue, <span class="hljs-keyword">out</span> <span class="hljs-keyword">float</span> <span class="hljs-keyword">value</span>))
+                                    dict.Add(pars.Key, <span class="hljs-keyword">value</span>);
+                                <span class="hljs-keyword">else</span>
+                                    dict.Add(pars.Key, pars.Value);
+                            })
+                            .Case((<span class="hljs-keyword">decimal</span> x) =&gt;
+                            {
+                                <span class="hljs-keyword">if</span> (<span class="hljs-keyword">decimal</span>.TryParse(matchValue, <span class="hljs-keyword">out</span> <span class="hljs-keyword">decimal</span> <span class="hljs-keyword">value</span>))
+                                    dict.Add(pars.Key, <span class="hljs-keyword">value</span>);
+                                <span class="hljs-keyword">else</span>
+                                    dict.Add(pars.Key, pars.Value);
+                            })
+                            .Case((<span class="hljs-keyword">string</span> x) =&gt;
+                            {
+                                dict.Add(pars.Key, matchValue);
+                            });
 
-                        ts<span class="token punctuation">.</span><span class="token function">Switch</span><span class="token punctuation">(</span>pars<span class="token punctuation">.</span>Value<span class="token punctuation">)</span><span class="token punctuation">;</span>
-                        i<span class="token operator">++</span><span class="token punctuation">;</span>
-                    <span class="token punctuation">}</span>
-                <span class="token punctuation">}</span>
-                <span class="token comment">// create a new RouteData object and assign it to the RouteData property. </span>
-                <span class="token keyword">this</span><span class="token punctuation">.</span>RouteData <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token constructor-invocation class-name">RouteData</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">.</span>PageType<span class="token punctuation">,</span> dict<span class="token punctuation">)</span><span class="token punctuation">;</span>
-            <span class="token punctuation">}</span>
-            <span class="token keyword">return</span> match<span class="token punctuation">.</span>Success<span class="token punctuation">;</span>
-        <span class="token punctuation">}</span>
+                        ts.Switch(pars.Value);
+                        i++;
+                    }
+                }
+                <span class="hljs-comment">// create a new RouteData object and assign it to the RouteData property. </span>
+                <span class="hljs-keyword">this</span>.RouteData = <span class="hljs-keyword">new</span> RouteData(<span class="hljs-keyword">this</span>.PageType, dict);
+            }
+            <span class="hljs-keyword">return</span> match.Success;
+        }
 
-        <span class="token comment">/// Method to check if we have a route match and return the RouteData</span>
-        <span class="token keyword">public</span> <span class="token return-type class-name"><span class="token keyword">bool</span></span> <span class="token function">IsMatch</span><span class="token punctuation">(</span><span class="token class-name"><span class="token keyword">string</span></span> url<span class="token punctuation">,</span> <span class="token keyword">out</span> <span class="token class-name">RouteData</span> routeData<span class="token punctuation">)</span>
-        <span class="token punctuation">{</span>
-            routeData <span class="token operator">=</span> <span class="token keyword">this</span><span class="token punctuation">.</span>RouteData<span class="token punctuation">;</span>
-            <span class="token keyword">return</span> <span class="token function">IsMatch</span><span class="token punctuation">(</span>url<span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token punctuation">}</span>
-    <span class="token punctuation">}</span>
-</code></pre></div><p>For those interested, <code>TypeSwitch</code> looks like this (thanks to <em>cdiggins</em> on StackOverflow for the code):</p> <div class="language-csharp extra-class"><pre class="language-csharp"><code><span class="token comment">/// =================================</span>
-<span class="token comment">/// Author: stackoverflow: cdiggins</span>
-<span class="token comment">/// ==================================</span>
-    <span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">TypeSwitch</span>
-    <span class="token punctuation">{</span>
-        <span class="token keyword">public</span> <span class="token return-type class-name">TypeSwitch</span> <span class="token generic-method"><span class="token function">Case</span><span class="token generic class-name"><span class="token punctuation">&lt;</span>T<span class="token punctuation">&gt;</span></span></span><span class="token punctuation">(</span><span class="token class-name">Action<span class="token punctuation">&lt;</span>T<span class="token punctuation">&gt;</span></span> action<span class="token punctuation">)</span> <span class="token punctuation">{</span> matches<span class="token punctuation">.</span><span class="token function">Add</span><span class="token punctuation">(</span><span class="token keyword">typeof</span><span class="token punctuation">(</span><span class="token type-expression class-name">T</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token punctuation">(</span>x<span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token function">action</span><span class="token punctuation">(</span><span class="token punctuation">(</span>T<span class="token punctuation">)</span>x<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token keyword">return</span> <span class="token keyword">this</span><span class="token punctuation">;</span> <span class="token punctuation">}</span>
-        <span class="token keyword">private</span> <span class="token class-name">Dictionary<span class="token punctuation">&lt;</span>Type<span class="token punctuation">,</span> Action<span class="token punctuation">&lt;</span><span class="token keyword">object</span><span class="token punctuation">&gt;</span><span class="token punctuation">&gt;</span></span> matches <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token constructor-invocation class-name">Dictionary<span class="token punctuation">&lt;</span>Type<span class="token punctuation">,</span> Action<span class="token punctuation">&lt;</span><span class="token keyword">object</span><span class="token punctuation">&gt;</span><span class="token punctuation">&gt;</span></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token keyword">public</span> <span class="token return-type class-name"><span class="token keyword">void</span></span> <span class="token function">Switch</span><span class="token punctuation">(</span><span class="token class-name"><span class="token keyword">object</span></span> x<span class="token punctuation">)</span> <span class="token punctuation">{</span> matches<span class="token punctuation">[</span>x<span class="token punctuation">.</span><span class="token function">GetType</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">]</span><span class="token punctuation">(</span>x<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token punctuation">}</span>
-    <span class="token punctuation">}</span>
-</code></pre></div><h2 id="updates-to-the-routeviewservice"><a href="#updates-to-the-routeviewservice" class="header-anchor">#</a> Updates to the RouteViewService</h2> <p>The updated sections in <code>RouteViewService</code> are shown below. <code>Routes</code> holds the list of custom routes - it's deliberately left open for customization.</p> <div class="language-csharp extra-class"><pre class="language-csharp"><code><span class="token keyword">public</span> <span class="token return-type class-name">List<span class="token punctuation">&lt;</span>CustomRouteData<span class="token punctuation">&gt;</span></span> Routes <span class="token punctuation">{</span> <span class="token keyword">get</span><span class="token punctuation">;</span> <span class="token keyword">private</span> <span class="token keyword">set</span><span class="token punctuation">;</span> <span class="token punctuation">}</span> <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token constructor-invocation class-name">List<span class="token punctuation">&lt;</span>CustomRouteData<span class="token punctuation">&gt;</span></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="hljs-comment"><span class="hljs-doctag">///</span> Method to check if we have a route match and return the RouteData</span>
+        <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">bool</span> <span class="hljs-title">IsMatch</span>(<span class="hljs-params"><span class="hljs-keyword">string</span> url, <span class="hljs-keyword">out</span> RouteData routeData</span>)</span>
+        {
+            routeData = <span class="hljs-keyword">this</span>.RouteData;
+            <span class="hljs-keyword">return</span> IsMatch(url);
+        }
+    }
+</div></code></pre>
+<p>For those interested, <code>TypeSwitch</code> looks like this (thanks to <em>cdiggins</em> on StackOverflow for the code):</p>
+<pre><code class="language-csharp"><div><span class="hljs-comment"><span class="hljs-doctag">///</span> =================================</span>
+<span class="hljs-comment"><span class="hljs-doctag">///</span> Author: stackoverflow: cdiggins</span>
+<span class="hljs-comment"><span class="hljs-doctag">///</span> ==================================</span>
+    <span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title">TypeSwitch</span>
+    {
+        <span class="hljs-function"><span class="hljs-keyword">public</span> TypeSwitch <span class="hljs-title">Case</span>&lt;<span class="hljs-title">T</span>&gt;(<span class="hljs-params">Action&lt;T&gt; action</span>)</span> { matches.Add(<span class="hljs-keyword">typeof</span>(T), (x) =&gt; action((T)x)); <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>; }
+        <span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-title">Dictionary</span>&lt;<span class="hljs-title">Type</span>, <span class="hljs-title">Action</span>&lt;<span class="hljs-title">object</span>&gt;&gt; matches</span> = <span class="hljs-keyword">new</span> Dictionary&lt;Type, Action&lt;<span class="hljs-keyword">object</span>&gt;&gt;();
+        <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">Switch</span>(<span class="hljs-params"><span class="hljs-keyword">object</span> x</span>)</span> { matches[x.GetType()](x); }
+    }
+</div></code></pre>
+<h2 id="updates-to-the-routeviewservice">Updates to the RouteViewService</h2>
+<p>The updated sections in <code>RouteViewService</code> are shown below. <code>Routes</code> holds the list of custom routes - it's deliberately left open for customization.</p>
+<pre><code class="language-csharp"><div><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">List</span>&lt;<span class="hljs-title">CustomRouteData</span>&gt; Routes</span> { <span class="hljs-keyword">get</span>; <span class="hljs-keyword">private</span> <span class="hljs-keyword">set</span>; } = <span class="hljs-keyword">new</span> List&lt;CustomRouteData&gt;();
 
-<span class="token keyword">public</span> <span class="token return-type class-name"><span class="token keyword">bool</span></span> <span class="token function">GetRouteMatch</span><span class="token punctuation">(</span><span class="token class-name"><span class="token keyword">string</span></span> url<span class="token punctuation">,</span> <span class="token keyword">out</span> <span class="token class-name">RouteData</span> routeData<span class="token punctuation">)</span>
-<span class="token punctuation">{</span>
-    <span class="token class-name"><span class="token keyword">var</span></span> route <span class="token operator">=</span> Routes<span class="token punctuation">?.</span><span class="token function">FirstOrDefault</span><span class="token punctuation">(</span>item <span class="token operator">=&gt;</span> item<span class="token punctuation">.</span><span class="token function">IsMatch</span><span class="token punctuation">(</span>url<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token operator">??</span> <span class="token keyword">null</span><span class="token punctuation">;</span>
-    routeData <span class="token operator">=</span> route<span class="token punctuation">?.</span>RouteData <span class="token operator">??</span> <span class="token keyword">null</span><span class="token punctuation">;</span>
-    <span class="token keyword">return</span> route <span class="token operator">!=</span> <span class="token keyword">null</span><span class="token punctuation">;</span>
-<span class="token punctuation">}</span>
-</code></pre></div><h2 id="the-routenotfoundmanager-component"><a href="#the-routenotfoundmanager-component" class="header-anchor">#</a> The RouteNotFoundManager Component</h2> <p><code>RouteNotFoundManager</code> is a simple version of <code>RouteViewManager</code>.</p> <p><code>SetParametersAsync</code> is called when the component loads.  It gets the local Url, calls <code>GetRouteMatch</code> on <code>RouteViewService</code>, and renders the component.  If there's no layout, it just renders the <code>ChildContent</code>.</p> <div class="language-csharp extra-class"><pre class="language-csharp"><code><span class="token keyword">public</span> <span class="token return-type class-name">Task</span> <span class="token function">SetParametersAsync</span><span class="token punctuation">(</span><span class="token class-name">ParameterView</span> parameters<span class="token punctuation">)</span>
-<span class="token punctuation">{</span>
-    parameters<span class="token punctuation">.</span><span class="token function">SetParameterProperties</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token comment">// Get the route url</span>
-    <span class="token class-name"><span class="token keyword">var</span></span> url <span class="token operator">=</span> <span class="token interpolation-string"><span class="token string">$&quot;/</span><span class="token interpolation"><span class="token punctuation">{</span><span class="token expression language-csharp">NavManager<span class="token punctuation">.</span>Uri<span class="token punctuation">.</span><span class="token function">Replace</span><span class="token punctuation">(</span>NavManager<span class="token punctuation">.</span>BaseUri<span class="token punctuation">,</span> <span class="token string">&quot;&quot;</span><span class="token punctuation">)</span></span><span class="token punctuation">}</span></span><span class="token string">&quot;</span></span><span class="token punctuation">;</span>
-    <span class="token comment">// check if we have a custom route and if so use it</span>
-    <span class="token keyword">if</span> <span class="token punctuation">(</span>RouteViewService<span class="token punctuation">.</span><span class="token function">GetRouteMatch</span><span class="token punctuation">(</span>url<span class="token punctuation">,</span> <span class="token keyword">out</span> <span class="token class-name"><span class="token keyword">var</span></span> routedata<span class="token punctuation">)</span><span class="token punctuation">)</span>
-        _routeData <span class="token operator">=</span> routedata<span class="token punctuation">;</span>
-    <span class="token comment">// if The layout is blank show the ChildContent without a layout </span>
-    <span class="token keyword">if</span> <span class="token punctuation">(</span>_pageLayoutType <span class="token operator">==</span> <span class="token keyword">null</span><span class="token punctuation">)</span>
-        _renderHandle<span class="token punctuation">.</span><span class="token function">Render</span><span class="token punctuation">(</span>ChildContent<span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token comment">// otherwise show the route or ChildContent inside the layout</span>
-    <span class="token keyword">else</span>
-        _renderHandle<span class="token punctuation">.</span><span class="token function">Render</span><span class="token punctuation">(</span>_ViewFragment<span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token keyword">return</span> Task<span class="token punctuation">.</span>CompletedTask<span class="token punctuation">;</span>
-<span class="token punctuation">}</span>
-</code></pre></div><p><code>_ViewFragment</code> either renders a <code>RouteViewManager</code>, setting <code>RouteData</code> if it finds a custom route, or the contents of <code>RouteNotFoundManager</code>.</p> <div class="language-csharp extra-class"><pre class="language-csharp"><code><span class="token comment">/// Layouted Render Fragment</span>
-<span class="token keyword">private</span> <span class="token return-type class-name">RenderFragment</span> _ViewFragment <span class="token operator">=&gt;</span> builder <span class="token operator">=&gt;</span>
-<span class="token punctuation">{</span>
-    <span class="token comment">// check if we have a RouteData object and if so load the RouteViewManager, otherwise the ChildContent</span>
-    <span class="token keyword">if</span> <span class="token punctuation">(</span>_routeData <span class="token operator">!=</span> <span class="token keyword">null</span><span class="token punctuation">)</span>
-    <span class="token punctuation">{</span>
-        builder<span class="token punctuation">.</span><span class="token generic-method"><span class="token function">OpenComponent</span><span class="token generic class-name"><span class="token punctuation">&lt;</span>RouteViewManager<span class="token punctuation">&gt;</span></span></span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        builder<span class="token punctuation">.</span><span class="token function">AddAttribute</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token keyword">nameof</span><span class="token punctuation">(</span>RouteViewManager<span class="token punctuation">.</span>DefaultLayout<span class="token punctuation">)</span><span class="token punctuation">,</span> _pageLayoutType<span class="token punctuation">)</span><span class="token punctuation">;</span>
-        builder<span class="token punctuation">.</span><span class="token function">AddAttribute</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token keyword">nameof</span><span class="token punctuation">(</span>RouteViewManager<span class="token punctuation">.</span>RouteData<span class="token punctuation">)</span><span class="token punctuation">,</span> _routeData<span class="token punctuation">)</span><span class="token punctuation">;</span>
-        builder<span class="token punctuation">.</span><span class="token function">CloseComponent</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token punctuation">}</span>
-    <span class="token keyword">else</span>
-    <span class="token punctuation">{</span>
-        builder<span class="token punctuation">.</span><span class="token generic-method"><span class="token function">OpenComponent</span><span class="token generic class-name"><span class="token punctuation">&lt;</span>LayoutView<span class="token punctuation">&gt;</span></span></span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        builder<span class="token punctuation">.</span><span class="token function">AddAttribute</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token keyword">nameof</span><span class="token punctuation">(</span>LayoutView<span class="token punctuation">.</span>Layout<span class="token punctuation">)</span><span class="token punctuation">,</span> _pageLayoutType<span class="token punctuation">)</span><span class="token punctuation">;</span>
-        builder<span class="token punctuation">.</span><span class="token function">AddAttribute</span><span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">,</span> <span class="token keyword">nameof</span><span class="token punctuation">(</span>LayoutView<span class="token punctuation">.</span>ChildContent<span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token keyword">this</span><span class="token punctuation">.</span>ChildContent<span class="token punctuation">)</span><span class="token punctuation">;</span>
-        builder<span class="token punctuation">.</span><span class="token function">CloseComponent</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token punctuation">}</span>
-<span class="token punctuation">}</span><span class="token punctuation">;</span>
-</code></pre></div><h2 id="switching-the-routeview-without-routing"><a href="#switching-the-routeview-without-routing" class="header-anchor">#</a> Switching the RouteView Without Routing</h2> <p>Switching the RouteView without routing has several applications.  These are some I've used:</p> <ol><li>Hide direct access to a page.  It can only be accessed within the application.</li> <li>Multipart forms/processes with a single entry point.  The state of the saved form/process dictates which form gets loaded.</li> <li>Context dependant forms or information.  Login/logout/signup is a good example.  The same Url but with a different routeviews loaded depending on the context.</li></ol> <h3 id="viewdata"><a href="#viewdata" class="header-anchor">#</a> ViewData</h3> <p>The equivalent to <code>RouteData</code>.</p> <div class="language-csharp extra-class"><pre class="language-csharp"><code><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">ViewData</span>
-<span class="token punctuation">{</span>
-    <span class="token comment">/// Gets the type of the View.</span>
-    <span class="token keyword">public</span> <span class="token return-type class-name">Type</span> ViewType <span class="token punctuation">{</span> <span class="token keyword">get</span><span class="token punctuation">;</span> <span class="token keyword">set</span><span class="token punctuation">;</span> <span class="token punctuation">}</span>
+<span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">bool</span> <span class="hljs-title">GetRouteMatch</span>(<span class="hljs-params"><span class="hljs-keyword">string</span> url, <span class="hljs-keyword">out</span> RouteData routeData</span>)</span>
+{
+    <span class="hljs-keyword">var</span> route = Routes?.FirstOrDefault(item =&gt; item.IsMatch(url)) ?? <span class="hljs-literal">null</span>;
+    routeData = route?.RouteData ?? <span class="hljs-literal">null</span>;
+    <span class="hljs-keyword">return</span> route != <span class="hljs-literal">null</span>;
+}
+</div></code></pre>
+<h2 id="the-routenotfoundmanager-component">The RouteNotFoundManager Component</h2>
+<p><code>RouteNotFoundManager</code> is a simple version of <code>RouteViewManager</code>.</p>
+<p><code>SetParametersAsync</code> is called when the component loads.  It gets the local Url, calls <code>GetRouteMatch</code> on <code>RouteViewService</code>, and renders the component.  If there's no layout, it just renders the <code>ChildContent</code>.</p>
+<pre><code class="language-csharp"><div><span class="hljs-function"><span class="hljs-keyword">public</span> Task <span class="hljs-title">SetParametersAsync</span>(<span class="hljs-params">ParameterView parameters</span>)</span>
+{
+    parameters.SetParameterProperties(<span class="hljs-keyword">this</span>);
+    <span class="hljs-comment">// Get the route url</span>
+    <span class="hljs-keyword">var</span> url = <span class="hljs-string">$&quot;/<span class="hljs-subst">{NavManager.Uri.Replace(NavManager.BaseUri, <span class="hljs-string">&quot;&quot;</span>)}</span>&quot;</span>;
+    <span class="hljs-comment">// check if we have a custom route and if so use it</span>
+    <span class="hljs-keyword">if</span> (RouteViewService.GetRouteMatch(url, <span class="hljs-keyword">out</span> <span class="hljs-keyword">var</span> routedata))
+        _routeData = routedata;
+    <span class="hljs-comment">// if The layout is blank show the ChildContent without a layout </span>
+    <span class="hljs-keyword">if</span> (_pageLayoutType == <span class="hljs-literal">null</span>)
+        _renderHandle.Render(ChildContent);
+    <span class="hljs-comment">// otherwise show the route or ChildContent inside the layout</span>
+    <span class="hljs-keyword">else</span>
+        _renderHandle.Render(_ViewFragment);
+    <span class="hljs-keyword">return</span> Task.CompletedTask;
+}
+</div></code></pre>
+<p><code>_ViewFragment</code> either renders a <code>RouteViewManager</code>, setting <code>RouteData</code> if it finds a custom route, or the contents of <code>RouteNotFoundManager</code>.</p>
+<pre><code class="language-csharp"><div><span class="hljs-comment"><span class="hljs-doctag">///</span> Layouted Render Fragment</span>
+<span class="hljs-keyword">private</span> RenderFragment _ViewFragment =&gt; builder =&gt;
+{
+    <span class="hljs-comment">// check if we have a RouteData object and if so load the RouteViewManager, otherwise the ChildContent</span>
+    <span class="hljs-keyword">if</span> (_routeData != <span class="hljs-literal">null</span>)
+    {
+        builder.OpenComponent&lt;RouteViewManager&gt;(<span class="hljs-number">0</span>);
+        builder.AddAttribute(<span class="hljs-number">1</span>, <span class="hljs-keyword">nameof</span>(RouteViewManager.DefaultLayout), _pageLayoutType);
+        builder.AddAttribute(<span class="hljs-number">1</span>, <span class="hljs-keyword">nameof</span>(RouteViewManager.RouteData), _routeData);
+        builder.CloseComponent();
+    }
+    <span class="hljs-keyword">else</span>
+    {
+        builder.OpenComponent&lt;LayoutView&gt;(<span class="hljs-number">0</span>);
+        builder.AddAttribute(<span class="hljs-number">1</span>, <span class="hljs-keyword">nameof</span>(LayoutView.Layout), _pageLayoutType);
+        builder.AddAttribute(<span class="hljs-number">2</span>, <span class="hljs-keyword">nameof</span>(LayoutView.ChildContent), <span class="hljs-keyword">this</span>.ChildContent);
+        builder.CloseComponent();
+    }
+};
+</div></code></pre>
+<h2 id="switching-the-routeview-without-routing">Switching the RouteView Without Routing</h2>
+<p>Switching the RouteView without routing has several applications.  These are some I've used:</p>
+<ol>
+<li>Hide direct access to a page.  It can only be accessed within the application.</li>
+<li>Multipart forms/processes with a single entry point.  The state of the saved form/process dictates which form gets loaded.</li>
+<li>Context dependant forms or information.  Login/logout/signup is a good example.  The same Url but with a different routeviews loaded depending on the context.</li>
+</ol>
+<h3 id="viewdata">ViewData</h3>
+<p>The equivalent to <code>RouteData</code>.</p>
+<pre><code class="language-csharp"><div><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title">ViewData</span>
+{
+    <span class="hljs-comment"><span class="hljs-doctag">///</span> Gets the type of the View.</span>
+    <span class="hljs-keyword">public</span> Type ViewType { <span class="hljs-keyword">get</span>; <span class="hljs-keyword">set</span>; }
 
-    <span class="token comment">/// Gets the type of the page matching the route.</span>
-    <span class="token keyword">public</span> <span class="token return-type class-name">Type</span> LayoutType <span class="token punctuation">{</span> <span class="token keyword">get</span><span class="token punctuation">;</span> <span class="token keyword">set</span><span class="token punctuation">;</span> <span class="token punctuation">}</span>
+    <span class="hljs-comment"><span class="hljs-doctag">///</span> Gets the type of the page matching the route.</span>
+    <span class="hljs-keyword">public</span> Type LayoutType { <span class="hljs-keyword">get</span>; <span class="hljs-keyword">set</span>; }
 
-    <span class="token comment">/// Parameter values to add to the Route when created</span>
-    <span class="token keyword">public</span> <span class="token return-type class-name">Dictionary<span class="token punctuation">&lt;</span><span class="token keyword">string</span><span class="token punctuation">,</span> <span class="token keyword">object</span><span class="token punctuation">&gt;</span></span> ViewParameters <span class="token punctuation">{</span> <span class="token keyword">get</span><span class="token punctuation">;</span> <span class="token keyword">private</span> <span class="token keyword">set</span><span class="token punctuation">;</span> <span class="token punctuation">}</span> <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token constructor-invocation class-name">Dictionary<span class="token punctuation">&lt;</span><span class="token keyword">string</span><span class="token punctuation">,</span> <span class="token keyword">object</span><span class="token punctuation">&gt;</span></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="hljs-comment"><span class="hljs-doctag">///</span> Parameter values to add to the Route when created</span>
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">Dictionary</span>&lt;<span class="hljs-title">string</span>, <span class="hljs-title">object</span>&gt; ViewParameters</span> { <span class="hljs-keyword">get</span>; <span class="hljs-keyword">private</span> <span class="hljs-keyword">set</span>; } = <span class="hljs-keyword">new</span> Dictionary&lt;<span class="hljs-keyword">string</span>, <span class="hljs-keyword">object</span>&gt;();
 
-    <span class="token comment">/// Constructs an instance of &lt;see cref=&quot;ViewData&quot;/&gt;.</span>
-    <span class="token keyword">public</span> <span class="token function">ViewData</span><span class="token punctuation">(</span><span class="token class-name">Type</span> viewType<span class="token punctuation">,</span> <span class="token class-name">Dictionary<span class="token punctuation">&lt;</span><span class="token keyword">string</span><span class="token punctuation">,</span> <span class="token keyword">object</span><span class="token punctuation">&gt;</span></span> viewValues <span class="token operator">=</span> <span class="token keyword">null</span><span class="token punctuation">)</span>
-    <span class="token punctuation">{</span>
-        <span class="token keyword">if</span> <span class="token punctuation">(</span>viewType <span class="token operator">==</span> <span class="token keyword">null</span><span class="token punctuation">)</span> <span class="token keyword">throw</span> <span class="token keyword">new</span> <span class="token constructor-invocation class-name">ArgumentNullException</span><span class="token punctuation">(</span><span class="token keyword">nameof</span><span class="token punctuation">(</span>viewType<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token keyword">this</span><span class="token punctuation">.</span>ViewType <span class="token operator">=</span> viewType<span class="token punctuation">;</span>
-        <span class="token keyword">if</span> <span class="token punctuation">(</span>viewValues <span class="token operator">!=</span> <span class="token keyword">null</span><span class="token punctuation">)</span> <span class="token keyword">this</span><span class="token punctuation">.</span>ViewParameters <span class="token operator">=</span> viewValues<span class="token punctuation">;</span>
-    <span class="token punctuation">}</span>
-<span class="token punctuation">}</span>
-</code></pre></div><p>All functionality is implemented in <code>RouteViewManager</code>.</p> <h3 id="routeviewmanager-2"><a href="#routeviewmanager-2" class="header-anchor">#</a> RouteViewManager</h3> <p>First some properties and fields.</p> <div class="language-csharp extra-class"><pre class="language-csharp"><code><span class="token comment">/// The size of the History list used for Views.</span>
-<span class="token punctuation">[</span>Parameter<span class="token punctuation">]</span> <span class="token keyword">public</span> <span class="token return-type class-name"><span class="token keyword">int</span></span> ViewHistorySize <span class="token punctuation">{</span> <span class="token keyword">get</span><span class="token punctuation">;</span> <span class="token keyword">set</span><span class="token punctuation">;</span> <span class="token punctuation">}</span> <span class="token operator">=</span> <span class="token number">10</span><span class="token punctuation">;</span>
+    <span class="hljs-comment"><span class="hljs-doctag">///</span> Constructs an instance of <span class="hljs-doctag">&lt;see cref=&quot;ViewData&quot;/&gt;</span>.</span>
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">ViewData</span>(<span class="hljs-params">Type viewType, Dictionary&lt;<span class="hljs-keyword">string</span>, <span class="hljs-keyword">object</span>&gt; viewValues = <span class="hljs-literal">null</span></span>)</span>
+    {
+        <span class="hljs-keyword">if</span> (viewType == <span class="hljs-literal">null</span>) <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> ArgumentNullException(<span class="hljs-keyword">nameof</span>(viewType));
+        <span class="hljs-keyword">this</span>.ViewType = viewType;
+        <span class="hljs-keyword">if</span> (viewValues != <span class="hljs-literal">null</span>) <span class="hljs-keyword">this</span>.ViewParameters = viewValues;
+    }
+}
+</div></code></pre>
+<p>All functionality is implemented in <code>RouteViewManager</code>.</p>
+<h3 id="routeviewmanager-1">RouteViewManager</h3>
+<p>First some properties and fields.</p>
+<pre><code class="language-csharp"><div><span class="hljs-comment"><span class="hljs-doctag">///</span> The size of the History list used for Views.</span>
+[<span class="hljs-meta">Parameter</span>] <span class="hljs-keyword">public</span> <span class="hljs-keyword">int</span> ViewHistorySize { <span class="hljs-keyword">get</span>; <span class="hljs-keyword">set</span>; } = <span class="hljs-number">10</span>;
 
-<span class="token comment">/// Gets and sets the view data.</span>
-<span class="token keyword">public</span> <span class="token return-type class-name">ViewData</span> ViewData
-<span class="token punctuation">{</span>
-    <span class="token keyword">get</span> <span class="token operator">=&gt;</span> <span class="token keyword">this</span><span class="token punctuation">.</span>_ViewData<span class="token punctuation">;</span>
-    <span class="token keyword">protected</span> <span class="token keyword">set</span>
-    <span class="token punctuation">{</span>
-        <span class="token keyword">this</span><span class="token punctuation">.</span><span class="token function">AddViewToHistory</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">.</span>_ViewData<span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token keyword">this</span><span class="token punctuation">.</span>_ViewData <span class="token operator">=</span> <span class="token keyword">value</span><span class="token punctuation">;</span>
-    <span class="token punctuation">}</span>
-<span class="token punctuation">}</span>
+<span class="hljs-comment"><span class="hljs-doctag">///</span> Gets and sets the view data.</span>
+<span class="hljs-keyword">public</span> ViewData ViewData
+{
+    <span class="hljs-keyword">get</span> =&gt; <span class="hljs-keyword">this</span>._ViewData;
+    <span class="hljs-keyword">protected</span> <span class="hljs-keyword">set</span>
+    {
+        <span class="hljs-keyword">this</span>.AddViewToHistory(<span class="hljs-keyword">this</span>._ViewData);
+        <span class="hljs-keyword">this</span>._ViewData = <span class="hljs-keyword">value</span>;
+    }
+}
 
-<span class="token comment">/// Property that stores the View History.  It's size is controlled by ViewHistorySize</span>
-<span class="token keyword">public</span> <span class="token return-type class-name">SortedList<span class="token punctuation">&lt;</span>DateTime<span class="token punctuation">,</span> ViewData<span class="token punctuation">&gt;</span></span> ViewHistory <span class="token punctuation">{</span> <span class="token keyword">get</span><span class="token punctuation">;</span> <span class="token keyword">private</span> <span class="token keyword">set</span><span class="token punctuation">;</span> <span class="token punctuation">}</span> <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token constructor-invocation class-name">SortedList<span class="token punctuation">&lt;</span>DateTime<span class="token punctuation">,</span> ViewData<span class="token punctuation">&gt;</span></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="hljs-comment"><span class="hljs-doctag">///</span> Property that stores the View History.  It&#x27;s size is controlled by ViewHistorySize</span>
+<span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">SortedList</span>&lt;<span class="hljs-title">DateTime</span>, <span class="hljs-title">ViewData</span>&gt; ViewHistory</span> { <span class="hljs-keyword">get</span>; <span class="hljs-keyword">private</span> <span class="hljs-keyword">set</span>; } = <span class="hljs-keyword">new</span> SortedList&lt;DateTime, ViewData&gt;();
 
-<span class="token comment">/// Gets the last view data.</span>
-<span class="token keyword">public</span> <span class="token return-type class-name">ViewData</span> LastViewData
-<span class="token punctuation">{</span>
-    <span class="token keyword">get</span>
-    <span class="token punctuation">{</span>
-        <span class="token class-name"><span class="token keyword">var</span></span> newest <span class="token operator">=</span> ViewHistory<span class="token punctuation">.</span><span class="token function">Max</span><span class="token punctuation">(</span>item <span class="token operator">=&gt;</span> item<span class="token punctuation">.</span>Key<span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token keyword">if</span> <span class="token punctuation">(</span>newest <span class="token operator">!=</span> <span class="token keyword">default</span><span class="token punctuation">)</span> <span class="token keyword">return</span> ViewHistory<span class="token punctuation">[</span>newest<span class="token punctuation">]</span><span class="token punctuation">;</span>
-        <span class="token keyword">else</span> <span class="token keyword">return</span> <span class="token keyword">null</span><span class="token punctuation">;</span>
-    <span class="token punctuation">}</span>
-<span class="token punctuation">}</span>
+<span class="hljs-comment"><span class="hljs-doctag">///</span> Gets the last view data.</span>
+<span class="hljs-keyword">public</span> ViewData LastViewData
+{
+    <span class="hljs-keyword">get</span>
+    {
+        <span class="hljs-keyword">var</span> newest = ViewHistory.Max(item =&gt; item.Key);
+        <span class="hljs-keyword">if</span> (newest != <span class="hljs-keyword">default</span>) <span class="hljs-keyword">return</span> ViewHistory[newest];
+        <span class="hljs-keyword">else</span> <span class="hljs-keyword">return</span> <span class="hljs-literal">null</span>;
+    }
+}
 
-<span class="token comment">/// Method to check if &lt;param name=&quot;view&quot;&gt; is the current View</span>
-<span class="token keyword">public</span> <span class="token return-type class-name"><span class="token keyword">bool</span></span> <span class="token function">IsCurrentView</span><span class="token punctuation">(</span><span class="token class-name">Type</span> view<span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token keyword">this</span><span class="token punctuation">.</span>ViewData<span class="token punctuation">?.</span>ViewType <span class="token operator">==</span> view<span class="token punctuation">;</span>
+<span class="hljs-comment"><span class="hljs-doctag">///</span> Method to check if <span class="hljs-doctag">&lt;param name=&quot;view&quot;&gt;</span> is the current View</span>
+<span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">bool</span> <span class="hljs-title">IsCurrentView</span>(<span class="hljs-params">Type view</span>)</span> =&gt; <span class="hljs-keyword">this</span>.ViewData?.ViewType == view;
 
-<span class="token comment">/// Boolean to check if we have a View set</span>
-<span class="token keyword">public</span> <span class="token return-type class-name"><span class="token keyword">bool</span></span> HasView <span class="token operator">=&gt;</span> <span class="token keyword">this</span><span class="token punctuation">.</span>_ViewData<span class="token punctuation">?.</span>ViewType <span class="token operator">!=</span> <span class="token keyword">null</span><span class="token punctuation">;</span>
+<span class="hljs-comment"><span class="hljs-doctag">///</span> Boolean to check if we have a View set</span>
+<span class="hljs-keyword">public</span> <span class="hljs-keyword">bool</span> HasView =&gt; <span class="hljs-keyword">this</span>._ViewData?.ViewType != <span class="hljs-literal">null</span>;
 
-<span class="token comment">/// Internal ViewData used by the component</span>
-<span class="token keyword">private</span> <span class="token return-type class-name">ViewData</span> _ViewData <span class="token punctuation">{</span> <span class="token keyword">get</span><span class="token punctuation">;</span> <span class="token keyword">set</span><span class="token punctuation">;</span> <span class="token punctuation">}</span>
-</code></pre></div><p>Next a set of <code>LoadViewAsync</code> methods to provide a variety of ways to load a new view.  The main method sets the internal <code>viewData</code> field and calls <code>Render</code> to re-render the component.</p> <div class="language-csharp extra-class"><pre class="language-csharp"><code><span class="token comment">// The main method</span>
-<span class="token keyword">public</span> <span class="token keyword">await</span> <span class="token return-type class-name">Task</span> <span class="token function">LoadViewAsync</span><span class="token punctuation">(</span><span class="token class-name">ViewData</span> viewData <span class="token operator">=</span> <span class="token keyword">null</span><span class="token punctuation">)</span>
-<span class="token punctuation">{</span>
-    <span class="token keyword">if</span> <span class="token punctuation">(</span>viewData <span class="token operator">!=</span> <span class="token keyword">null</span><span class="token punctuation">)</span> <span class="token keyword">this</span><span class="token punctuation">.</span>ViewData <span class="token operator">=</span> viewData<span class="token punctuation">;</span>
-    <span class="token keyword">if</span> <span class="token punctuation">(</span>ViewData <span class="token operator">==</span> <span class="token keyword">null</span><span class="token punctuation">)</span>
-    <span class="token punctuation">{</span>
-        <span class="token keyword">throw</span> <span class="token keyword">new</span> <span class="token constructor-invocation class-name">InvalidOperationException</span><span class="token punctuation">(</span><span class="token interpolation-string"><span class="token string">$&quot;The </span><span class="token interpolation"><span class="token punctuation">{</span><span class="token expression language-csharp"><span class="token keyword">nameof</span><span class="token punctuation">(</span>RouteViewManager<span class="token punctuation">)</span></span><span class="token punctuation">}</span></span><span class="token string"> component requires a non-null value for the parameter </span><span class="token interpolation"><span class="token punctuation">{</span><span class="token expression language-csharp"><span class="token keyword">nameof</span><span class="token punctuation">(</span>ViewData<span class="token punctuation">)</span></span><span class="token punctuation">}</span></span><span class="token string">.&quot;</span></span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token punctuation">}</span>
-    <span class="token keyword">await</span> <span class="token keyword">this</span><span class="token punctuation">.</span><span class="token function">RenderAsync</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token punctuation">}</span>
+<span class="hljs-comment"><span class="hljs-doctag">///</span> Internal ViewData used by the component</span>
+<span class="hljs-keyword">private</span> ViewData _ViewData { <span class="hljs-keyword">get</span>; <span class="hljs-keyword">set</span>; }
+</div></code></pre>
+<p>Next a set of <code>LoadViewAsync</code> methods to provide a variety of ways to load a new view.  The main method sets the internal <code>viewData</code> field and calls <code>Render</code> to re-render the component.</p>
+<pre><code class="language-csharp"><div><span class="hljs-comment">// The main method</span>
+<span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">await</span> Task <span class="hljs-title">LoadViewAsync</span>(<span class="hljs-params">ViewData viewData = <span class="hljs-literal">null</span></span>)</span>
+{
+    <span class="hljs-keyword">if</span> (viewData != <span class="hljs-literal">null</span>) <span class="hljs-keyword">this</span>.ViewData = viewData;
+    <span class="hljs-keyword">if</span> (ViewData == <span class="hljs-literal">null</span>)
+    {
+        <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> InvalidOperationException(<span class="hljs-string">$&quot;The <span class="hljs-subst">{<span class="hljs-keyword">nameof</span>(RouteViewManager)}</span> component requires a non-null value for the parameter <span class="hljs-subst">{<span class="hljs-keyword">nameof</span>(ViewData)}</span>.&quot;</span>);
+    }
+    <span class="hljs-keyword">await</span> <span class="hljs-keyword">this</span>.RenderAsync();
+}
 
-<span class="token keyword">public</span> <span class="token keyword">async</span> <span class="token return-type class-name">Task</span> <span class="token function">LoadViewAsync</span><span class="token punctuation">(</span><span class="token class-name">Type</span> viewtype<span class="token punctuation">)</span>
-    <span class="token operator">=&gt;</span> <span class="token keyword">await</span> <span class="token keyword">this</span><span class="token punctuation">.</span><span class="token function">LoadViewAsync</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token constructor-invocation class-name">ViewData</span><span class="token punctuation">(</span>viewtype<span class="token punctuation">,</span> <span class="token keyword">new</span> <span class="token constructor-invocation class-name">Dictionary<span class="token punctuation">&lt;</span><span class="token keyword">string</span><span class="token punctuation">,</span> <span class="token keyword">object</span><span class="token punctuation">&gt;</span></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">async</span> Task <span class="hljs-title">LoadViewAsync</span>(<span class="hljs-params">Type viewtype</span>)</span>
+    =&gt; <span class="hljs-keyword">await</span> <span class="hljs-keyword">this</span>.LoadViewAsync(<span class="hljs-keyword">new</span> ViewData(viewtype, <span class="hljs-keyword">new</span> Dictionary&lt;<span class="hljs-keyword">string</span>, <span class="hljs-keyword">object</span>&gt;()));
 
-<span class="token keyword">public</span> <span class="token keyword">async</span> <span class="token return-type class-name">Task</span> <span class="token generic-method"><span class="token function">LoadViewAsync</span><span class="token generic class-name"><span class="token punctuation">&lt;</span>TView<span class="token punctuation">&gt;</span></span></span><span class="token punctuation">(</span><span class="token class-name">Dictionary<span class="token punctuation">&lt;</span><span class="token keyword">string</span><span class="token punctuation">,</span> <span class="token keyword">object</span><span class="token punctuation">&gt;</span></span> data <span class="token operator">=</span> <span class="token keyword">null</span><span class="token punctuation">)</span>
-    <span class="token operator">=&gt;</span> <span class="token keyword">await</span> <span class="token keyword">this</span><span class="token punctuation">.</span><span class="token function">LoadViewAsync</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token constructor-invocation class-name">ViewData</span><span class="token punctuation">(</span><span class="token keyword">typeof</span><span class="token punctuation">(</span><span class="token type-expression class-name">TView</span><span class="token punctuation">)</span><span class="token punctuation">,</span> data<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-</code></pre></div><p>We have already seen <code>_renderComponentWithParameters</code>.  With a valid <code>_ViewData</code> object, it renders the component using <code>_ViewData</code>.</p> <div class="language-csharp extra-class"><pre class="language-csharp"><code><span class="token keyword">private</span> <span class="token return-type class-name">RenderFragment</span> _renderComponentWithParameters <span class="token operator">=&gt;</span> builder <span class="token operator">=&gt;</span>
-<span class="token punctuation">{</span>
-    <span class="token class-name">Type</span> componentType <span class="token operator">=</span> <span class="token keyword">null</span><span class="token punctuation">;</span>
-    <span class="token class-name">IReadOnlyDictionary<span class="token punctuation">&lt;</span><span class="token keyword">string</span><span class="token punctuation">,</span> <span class="token keyword">object</span><span class="token punctuation">&gt;</span></span> parameters <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token constructor-invocation class-name">Dictionary<span class="token punctuation">&lt;</span><span class="token keyword">string</span><span class="token punctuation">,</span> <span class="token keyword">object</span><span class="token punctuation">&gt;</span></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">async</span> Task <span class="hljs-title">LoadViewAsync</span>&lt;<span class="hljs-title">TView</span>&gt;(<span class="hljs-params">Dictionary&lt;<span class="hljs-keyword">string</span>, <span class="hljs-keyword">object</span>&gt; data = <span class="hljs-literal">null</span></span>)</span>
+    =&gt; <span class="hljs-keyword">await</span> <span class="hljs-keyword">this</span>.LoadViewAsync(<span class="hljs-keyword">new</span> ViewData(<span class="hljs-keyword">typeof</span>(TView), data));
+</div></code></pre>
+<p>We have already seen <code>_renderComponentWithParameters</code>.  With a valid <code>_ViewData</code> object, it renders the component using <code>_ViewData</code>.</p>
+<pre><code class="language-csharp"><div><span class="hljs-keyword">private</span> RenderFragment _renderComponentWithParameters =&gt; builder =&gt;
+{
+    Type componentType = <span class="hljs-literal">null</span>;
+    IReadOnlyDictionary&lt;<span class="hljs-keyword">string</span>, <span class="hljs-keyword">object</span>&gt; parameters = <span class="hljs-keyword">new</span> Dictionary&lt;<span class="hljs-keyword">string</span>, <span class="hljs-keyword">object</span>&gt;();
 
-    <span class="token keyword">if</span> <span class="token punctuation">(</span>_ViewData <span class="token operator">!=</span> <span class="token keyword">null</span><span class="token punctuation">)</span>
-    <span class="token punctuation">{</span>
-        componentType <span class="token operator">=</span> _ViewData<span class="token punctuation">.</span>ViewType<span class="token punctuation">;</span>
-        parameters <span class="token operator">=</span> _ViewData<span class="token punctuation">.</span>ViewParameters<span class="token punctuation">;</span>
-    <span class="token punctuation">}</span>
-    <span class="token keyword">else</span> <span class="token keyword">if</span> <span class="token punctuation">(</span>RouteData <span class="token operator">!=</span> <span class="token keyword">null</span><span class="token punctuation">)</span>
-    <span class="token punctuation">{</span>
-        componentType <span class="token operator">=</span> RouteData<span class="token punctuation">.</span>PageType<span class="token punctuation">;</span>
-        parameters <span class="token operator">=</span> RouteData<span class="token punctuation">.</span>RouteValues<span class="token punctuation">;</span>
-    <span class="token punctuation">}</span>
+    <span class="hljs-keyword">if</span> (_ViewData != <span class="hljs-literal">null</span>)
+    {
+        componentType = _ViewData.ViewType;
+        parameters = _ViewData.ViewParameters;
+    }
+    <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (RouteData != <span class="hljs-literal">null</span>)
+    {
+        componentType = RouteData.PageType;
+        parameters = RouteData.RouteValues;
+    }
 
-    <span class="token keyword">if</span> <span class="token punctuation">(</span>componentType <span class="token operator">!=</span> <span class="token keyword">null</span><span class="token punctuation">)</span>
-    <span class="token punctuation">{</span>
-        builder<span class="token punctuation">.</span><span class="token function">OpenComponent</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">,</span> componentType<span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token keyword">foreach</span> <span class="token punctuation">(</span><span class="token class-name"><span class="token keyword">var</span></span> kvp <span class="token keyword">in</span> parameters<span class="token punctuation">)</span>
-        <span class="token punctuation">{</span>
-            builder<span class="token punctuation">.</span><span class="token function">AddAttribute</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span> kvp<span class="token punctuation">.</span>Key<span class="token punctuation">,</span> kvp<span class="token punctuation">.</span>Value<span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token punctuation">}</span>
-        builder<span class="token punctuation">.</span><span class="token function">CloseComponent</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token punctuation">}</span>
-    <span class="token keyword">else</span>
-    <span class="token punctuation">{</span>
-        builder<span class="token punctuation">.</span><span class="token function">OpenElement</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">,</span> <span class="token string">&quot;div&quot;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        builder<span class="token punctuation">.</span><span class="token function">AddContent</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token string">&quot;No Route or View Configured to Display&quot;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        builder<span class="token punctuation">.</span><span class="token function">CloseElement</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token punctuation">}</span>
-<span class="token punctuation">}</span><span class="token punctuation">;</span>
-</code></pre></div><h3 id="routenavlink"><a href="#routenavlink" class="header-anchor">#</a> RouteNavLink</h3> <p><code>RouteNavLink</code> is an enhanced <code>NavLink</code> control.  The code is a direct copy with a small amount of added code.  It doesn't inherit because <code>NavLink</code> is a black box.  It ensures navigation is through the NavigationManager rather than Html anchor links and provides direct access to RouteView loading.  The code is in the Repo - it's too long to reproduce here.</p> <h2 id="example-pages"><a href="#example-pages" class="header-anchor">#</a> Example Pages</h2> <p>The application has RouteViews/Pages to demonstrate the new components.  You can review the source code in the Repo.  You can also see the pages on the Demo Site.</p> <p><img src="https://shauncurtis.github.io/siteimages/Articles/App/DemoSite.png" alt="EditForm"></p> <h3 id="routeviewer-razor"><a href="#routeviewer-razor" class="header-anchor">#</a> RouteViewer.razor</h3> <p><a href="https://cec-blazor-database.azurewebsites.net/routeviewer" target="_blank" rel="noopener noreferrer">https://cec-blazor-database.azurewebsites.net/routeviewer<span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></p> <p>This demonstrates:</p> <ol><li>Adding routes dynamically to the Application.  Choose a page to add a custom route for, add a route name and click <em>Go To Route</em>.</li> <li>Loading a <code>RouteView</code> without navigation.  Choose a Page and click on <em>Go To View</em>.  The page is displayed, but the Url doesn't change!  Confusing, but it demos the principle.</li> <li>Changing the default Layout.  Click on <em>Red Layout</em> and the layout will change to red.  Basic FetchData has a specific layout defined so it will use the original layout.  Click on <em>Normal Layout</em> to change back.</li></ol> <h3 id="form-razor"><a href="#form-razor" class="header-anchor">#</a> Form.Razor</h3> <p><a href="https://cec-blazor-database.azurewebsites.net/form" target="_blank" rel="noopener noreferrer">https://cec-blazor-database.azurewebsites.net/form<span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></p> <p>This demonstrates a multipart form.  There are four forms:</p> <ol><li><em>Form.Razor</em> the base and first form.</li> <li><em>Form2.Razor</em> the second form - inherits from the first form.</li> <li><em>Form3.Razor</em> the third form - inherits from the first form.</li> <li><em>Form4.Razor</em> the result form - inherits from the first form.</li></ol> <p>The forms link to data in the WeathForecastService which maintains the form state.  Try leaving the form part way through and then returning.  State is preserved while the SPA session is maintained.</p> <h2 id="wrap-up"><a href="#wrap-up" class="header-anchor">#</a> Wrap Up</h2> <p>Hopefully I've demonstrated the principles you can use to build the extra functionality into the core Blazor framework.  None of the components are finished articles.  Use them and develop them as you wish.</p> <p>If you're reading this article a long time into the future chack <a href="https://shauncurtis.github.io/articles/A-Flexible-App.html" target="_blank" rel="noopener noreferrer">here<span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a> for the latest version</p></div> <footer class="page-edit"><!----> <!----></footer> <div class="page-nav"><p class="inner"><span class="prev">
-      ←
-      <a href="/articles/" class="prev router-link-active">
-        Articles
-      </a></span> <span class="next"><a href="/articles/Async-Programming-in-DotNetCore.html">
-        Async Programming in DotNetCore
-      </a>
-      →
-    </span></p></div> </main></div><div class="global-ui"><!----></div></div>
-    <script src="/assets/js/app.e7504274.js" defer></script><script src="/assets/js/3.f3d70fce.js" defer></script><script src="/assets/js/42.046bbbbf.js" defer></script>
-  </body>
+    <span class="hljs-keyword">if</span> (componentType != <span class="hljs-literal">null</span>)
+    {
+        builder.OpenComponent(<span class="hljs-number">0</span>, componentType);
+        <span class="hljs-keyword">foreach</span> (<span class="hljs-keyword">var</span> kvp <span class="hljs-keyword">in</span> parameters)
+        {
+            builder.AddAttribute(<span class="hljs-number">1</span>, kvp.Key, kvp.Value);
+        }
+        builder.CloseComponent();
+    }
+    <span class="hljs-keyword">else</span>
+    {
+        builder.OpenElement(<span class="hljs-number">0</span>, <span class="hljs-string">&quot;div&quot;</span>);
+        builder.AddContent(<span class="hljs-number">1</span>, <span class="hljs-string">&quot;No Route or View Configured to Display&quot;</span>);
+        builder.CloseElement();
+    }
+};
+</div></code></pre>
+<h3 id="routenavlink">RouteNavLink</h3>
+<p><code>RouteNavLink</code> is an enhanced <code>NavLink</code> control.  The code is a direct copy with a small amount of added code.  It doesn't inherit because <code>NavLink</code> is a black box.  It ensures navigation is through the NavigationManager rather than Html anchor links and provides direct access to RouteView loading.  The code is in the Repo - it's too long to reproduce here.</p>
+<h2 id="example-pages">Example Pages</h2>
+<p>The application has RouteViews/Pages to demonstrate the new components.  You can review the source code in the Repo.  You can also see the pages on the Demo Site.</p>
+<p><img src="\articles\assets\A-Flexible-App\DemoSite.png" alt="EditForm"></p>
+<h3 id="routeviewerrazor">RouteViewer.razor</h3>
+<p><a href="https://cec-blazor-database.azurewebsites.net/routeviewer">https://cec-blazor-database.azurewebsites.net/routeviewer</a></p>
+<p>This demonstrates:</p>
+<ol>
+<li>Adding routes dynamically to the Application.  Choose a page to add a custom route for, add a route name and click <em>Go To Route</em>.</li>
+<li>Loading a <code>RouteView</code> without navigation.  Choose a Page and click on <em>Go To View</em>.  The page is displayed, but the Url doesn't change!  Confusing, but it demos the principle.</li>
+<li>Changing the default Layout.  Click on <em>Red Layout</em> and the layout will change to red.  Basic FetchData has a specific layout defined so it will use the original layout.  Click on <em>Normal Layout</em> to change back.</li>
+</ol>
+<h3 id="formrazor">Form.Razor</h3>
+<p><a href="https://cec-blazor-database.azurewebsites.net/form">https://cec-blazor-database.azurewebsites.net/form</a></p>
+<p>This demonstrates a multipart form.  There are four forms:</p>
+<ol>
+<li><em>Form.Razor</em> the base and first form.</li>
+<li><em>Form2.Razor</em> the second form - inherits from the first form.</li>
+<li><em>Form3.Razor</em> the third form - inherits from the first form.</li>
+<li><em>Form4.Razor</em> the result form - inherits from the first form.</li>
+</ol>
+<p>The forms link to data in the WeathForecastService which maintains the form state.  Try leaving the form part way through and then returning.  State is preserved while the SPA session is maintained.</p>
+<h2 id="wrap-up">Wrap Up</h2>
+<p>Hopefully I've demonstrated the principles you can use to build the extra functionality into the core Blazor framework.  None of the components are finished articles.  Use them and develop them as you wish.</p>
+<p>If you're reading this article a long time into the future chack <a href="https://shauncurtis.github.io/articles/A-Flexible-App.html">here</a> for the latest version</p>
+
+    
+
+            </div>
+        </div>
+    </div>
+</div>
+<!-- end of Article Container -->
+
+
+                </div>
+                <!-- End of Main Content -->
+            </div>
+            <!-- Footer -->
+            
+<!-- Copyright -->
+<footer class="sticky-footer bg-white">
+    <div class="container my-auto">
+        <div class="copyright text-center my-auto">
+            
+<span>Copyright &copy; Cold Elm Coders - 2021</span>
+
+        </div>
+    </div>
+</footer>
+<!-- end of copyright -->
+
+
+            <!-- End of Footer -->
+        </div>
+        <!-- End of Content Wrapper -->
+        
+<a class="scroll-to-top rounded" href="#page-top">
+    <i class="fas fa-angle-up"></i>
+</a>
+
+
+    </div>
+    <!-- End of Page Wrapper -->
+    <!-- Scripts -->
+    
+<!-- Scripts -->
+<!-- Bootstrap core JavaScript-->
+<script src="/assets/vendor/jquery/jquery.min.js"></script>
+<script src="/assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+<!-- Core plugin JavaScript-->
+<script src="/assets/vendor/jquery-easing/jquery.easing.min.js"></script>
+
+<!-- Custom scripts for all pages-->
+<script src="/assets/js/sb-admin-2.min.js"></script>
+
+
+</body>
 </html>

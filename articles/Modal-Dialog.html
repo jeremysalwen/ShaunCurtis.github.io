@@ -1,331 +1,656 @@
 <!DOCTYPE html>
-<html lang="en-US">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>A Blazor Modal Dialog | Cold Elm Coders</title>
-    <meta name="generator" content="VuePress 1.8.2">
+<html lang="en">
+<head>
     
-    <meta name="description" content="">
-    <meta name="theme-color" content="#3eaf7c">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+<!-- SEO Meta Tags -->
+<meta name="description" content="Your description">
+<meta name="author" content="Your name">
+
+<!-- OG Meta Tags to improve the way the post looks when you share the page on Facebook, Twitter, LinkedIn -->
+<meta property="og:site_name" content="" /> <!-- website name -->
+<meta property="og:site" content="" /> <!-- website link -->
+<meta property="og:title" content="" /> <!-- title shown in the actual shared post -->
+<meta property="og:description" content="" /> <!-- description shown in the actual shared post -->
+<meta property="og:image" content="" /> <!-- image link, make sure it's jpg -->
+<meta property="og:url" content="" /> <!-- where do you want your post to link to -->
+<meta name="twitter:card" content="summary_large_image"> <!-- to have large image post format in Twitter -->
+
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+
+<meta name="description" content="This article describes how to build a modal dialog for Blazor that you can use with any form." >
+<meta name="author" content="Shaun Curtis" >
+
+
+
+<title>A Blazor Modal Dialog</title>
+
+
+<!-- Custom fonts for this template-->
+<link href="/assets/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+<link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+      rel="stylesheet">
+
+<!-- Custom styles for this template-->
+<link href="/assets/css/sb-admin-2.css" rel="stylesheet" type="text/css">
+<link href="/assets/css/site.css" rel="stylesheet" type="text/css">
+
+<!-- Favicon  -->
+<link rel="icon" href="/assets/images/favicon.png">
+
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/highlight.css">
+    <link rel="stylesheet" href="/assets/css/article.css" type="text/css">
+</head>
+<body id="page-top">
+    <!--topbar-->
+    <div id="topbar">
+        
+<!-- Topbar -->
+<nav class="navbar navbar-expand navbar-light topbar mb-4 static-top">
     
-    <link rel="preload" href="/assets/css/0.styles.757cca11.css" as="style"><link rel="preload" href="/assets/js/app.e7504274.js" as="script"><link rel="preload" href="/assets/js/3.f3d70fce.js" as="script"><link rel="preload" href="/assets/js/55.6168cc1a.js" as="script"><link rel="prefetch" href="/assets/js/1.dd2e798d.js"><link rel="prefetch" href="/assets/js/10.62cd9054.js"><link rel="prefetch" href="/assets/js/11.7ef2f0cc.js"><link rel="prefetch" href="/assets/js/12.571448aa.js"><link rel="prefetch" href="/assets/js/13.e5a600e9.js"><link rel="prefetch" href="/assets/js/14.4ed01dd2.js"><link rel="prefetch" href="/assets/js/15.d0a813d8.js"><link rel="prefetch" href="/assets/js/16.3d701298.js"><link rel="prefetch" href="/assets/js/17.dd96adea.js"><link rel="prefetch" href="/assets/js/18.f6955aa8.js"><link rel="prefetch" href="/assets/js/19.bb1f166c.js"><link rel="prefetch" href="/assets/js/20.440b537e.js"><link rel="prefetch" href="/assets/js/21.1e192f13.js"><link rel="prefetch" href="/assets/js/22.0f3db856.js"><link rel="prefetch" href="/assets/js/23.9a2edb75.js"><link rel="prefetch" href="/assets/js/24.3d8317a7.js"><link rel="prefetch" href="/assets/js/25.e6e973f9.js"><link rel="prefetch" href="/assets/js/26.2f4dce51.js"><link rel="prefetch" href="/assets/js/27.eddfbfe3.js"><link rel="prefetch" href="/assets/js/28.1a753628.js"><link rel="prefetch" href="/assets/js/29.dd0c2751.js"><link rel="prefetch" href="/assets/js/30.049ba17e.js"><link rel="prefetch" href="/assets/js/31.ec7a699c.js"><link rel="prefetch" href="/assets/js/32.128041a3.js"><link rel="prefetch" href="/assets/js/33.90a80a82.js"><link rel="prefetch" href="/assets/js/34.640d5210.js"><link rel="prefetch" href="/assets/js/35.dd6a5277.js"><link rel="prefetch" href="/assets/js/36.af0fb7fb.js"><link rel="prefetch" href="/assets/js/37.6282d3d3.js"><link rel="prefetch" href="/assets/js/38.09c22a9c.js"><link rel="prefetch" href="/assets/js/39.34118569.js"><link rel="prefetch" href="/assets/js/4.004aaf89.js"><link rel="prefetch" href="/assets/js/40.42fb5da5.js"><link rel="prefetch" href="/assets/js/41.d1ac92f4.js"><link rel="prefetch" href="/assets/js/42.046bbbbf.js"><link rel="prefetch" href="/assets/js/43.86ac5d2f.js"><link rel="prefetch" href="/assets/js/44.1393eed1.js"><link rel="prefetch" href="/assets/js/45.a4121f00.js"><link rel="prefetch" href="/assets/js/46.f78d075f.js"><link rel="prefetch" href="/assets/js/47.02e428da.js"><link rel="prefetch" href="/assets/js/48.3f9d12a6.js"><link rel="prefetch" href="/assets/js/49.bb9c3fab.js"><link rel="prefetch" href="/assets/js/5.8a61fa12.js"><link rel="prefetch" href="/assets/js/50.ebb028fd.js"><link rel="prefetch" href="/assets/js/51.a2b343de.js"><link rel="prefetch" href="/assets/js/52.2a464137.js"><link rel="prefetch" href="/assets/js/53.54a07d54.js"><link rel="prefetch" href="/assets/js/54.72acf66d.js"><link rel="prefetch" href="/assets/js/56.0653a59a.js"><link rel="prefetch" href="/assets/js/57.df56ec02.js"><link rel="prefetch" href="/assets/js/58.fc8f11bc.js"><link rel="prefetch" href="/assets/js/59.158abf7b.js"><link rel="prefetch" href="/assets/js/6.1fda51af.js"><link rel="prefetch" href="/assets/js/60.10f7e3a6.js"><link rel="prefetch" href="/assets/js/61.844ecd3b.js"><link rel="prefetch" href="/assets/js/62.da039f8c.js"><link rel="prefetch" href="/assets/js/63.f2fe69a7.js"><link rel="prefetch" href="/assets/js/64.b9085bd9.js"><link rel="prefetch" href="/assets/js/65.6c182c91.js"><link rel="prefetch" href="/assets/js/66.e0d48b84.js"><link rel="prefetch" href="/assets/js/7.eca4725c.js"><link rel="prefetch" href="/assets/js/8.2504867c.js"><link rel="prefetch" href="/assets/js/9.64046c51.js">
-    <link rel="stylesheet" href="/assets/css/0.styles.757cca11.css">
-  </head>
-  <body>
-    <div id="app" data-server-rendered="true"><div class="theme-container"><header class="navbar"><div class="sidebar-button"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon"><path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path></svg></div> <a href="/" class="home-link router-link-active"><!----> <span class="site-name">Cold Elm Coders</span></a> <div class="links"><div class="search-box"><input aria-label="Search" autocomplete="off" spellcheck="false" value=""> <!----></div> <nav class="nav-links can-hide"><div class="nav-item"><a href="/articles/" class="nav-link router-link-active">
-  Articles
-</a></div><div class="nav-item"><a href="/posts/" class="nav-link">
-  Posts
-</a></div><div class="nav-item"><a href="/ArchivedArticles/" class="nav-link">
-  Old Articles
-</a></div><div class="nav-item"><a href="/Building-a-Database-Application-in-Blazor/" class="nav-link">
-  Database Application
-</a></div><div class="nav-item"><a href="https://cec-blazor-examples.azurewebsites.net/" target="_blank" rel="noopener noreferrer" class="nav-link external">
-  Demo Site
-  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></div> <!----></nav></div></header> <div class="sidebar-mask"></div> <aside class="sidebar"><nav class="nav-links"><div class="nav-item"><a href="/articles/" class="nav-link router-link-active">
-  Articles
-</a></div><div class="nav-item"><a href="/posts/" class="nav-link">
-  Posts
-</a></div><div class="nav-item"><a href="/ArchivedArticles/" class="nav-link">
-  Old Articles
-</a></div><div class="nav-item"><a href="/Building-a-Database-Application-in-Blazor/" class="nav-link">
-  Database Application
-</a></div><div class="nav-item"><a href="https://cec-blazor-examples.azurewebsites.net/" target="_blank" rel="noopener noreferrer" class="nav-link external">
-  Demo Site
-  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></div> <!----></nav>  <ul class="sidebar-links"><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading open"><span>My Articles</span> <span class="arrow down"></span></p> <ul class="sidebar-links sidebar-group-items"><li><a href="/articles/" aria-current="page" class="sidebar-link">Articles</a></li><li><a href="/articles/A-Flexible-App.html" class="sidebar-link">Adding Dynamic Routing, Layouts and RouteViews to the Blazor App Component</a></li><li><a href="/articles/Async-Programming-in-DotNetCore.html" class="sidebar-link">Async Programming in DotNetCore</a></li><li><a href="/articles/Blazor-AllinOne.html" class="sidebar-link">Blazor AllinOne - Multi SPA Hosting</a></li><li><a href="/articles/Blazor-CSS.html" class="sidebar-link">CSS in Blazor</a></li><li><a href="/articles/Blazor-Components.html" class="sidebar-link">A Deep Dive into Blazor Components</a></li><li><a href="/articles/Blazor-DataList-Control.html" class="sidebar-link">A Blazor DataList Control</a></li><li><a href="/articles/BlazorAsyncProgramming.html" class="sidebar-link">Async Programming in Blazor</a></li><li><a href="/articles/Building-Edit-Forms.html" class="sidebar-link">Building Blazor Edit Forms</a></li><li><a href="/articles/EditFormState.html" class="sidebar-link">The Blazor EditFormState Control</a></li><li><a href="/articles/Hydra Full Article.html" class="sidebar-link">Blazor Hydra - Multi SPA Hosting</a></li><li><a href="/articles/Inline-Dialog.html" class="sidebar-link">The Blazor Inline Dialog Control</a></li><li><a href="/articles/Modal-Dialog.html" aria-current="page" class="active sidebar-link">A Blazor Modal Dialog</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header"><a href="/articles/Modal-Dialog.html#overview" class="sidebar-link">Overview</a></li><li class="sidebar-sub-header"><a href="/articles/Modal-Dialog.html#code-and-examples" class="sidebar-link">Code and Examples</a></li><li class="sidebar-sub-header"><a href="/articles/Modal-Dialog.html#the-modal-dialog-classes" class="sidebar-link">The Modal Dialog Classes</a></li><li class="sidebar-sub-header"><a href="/articles/Modal-Dialog.html#implementing-modals" class="sidebar-link">Implementing Modals</a></li><li class="sidebar-sub-header"><a href="/articles/Modal-Dialog.html#wrap-up" class="sidebar-link">Wrap Up</a></li></ul></li><li><a href="/articles/ValidationFormState.html" class="sidebar-link">A Blazor Validation Control</a></li></ul></section></li></ul> </aside> <main class="page"> <div class="theme-default-content content__default"><h1 id="a-simple-modal-dialog-for-blazor"><a href="#a-simple-modal-dialog-for-blazor" class="header-anchor">#</a> A Simple Modal Dialog for Blazor</h1> <h2 id="overview"><a href="#overview" class="header-anchor">#</a> Overview</h2> <p>If a web based SPA [Single Page Application] is goinfg to look like a a real application it needs a modal dialog framework.  This article shows how to build a modal dialog container for Blazor <code>IComponents</code>.</p> <h2 id="code-and-examples"><a href="#code-and-examples" class="header-anchor">#</a> Code and Examples</h2> <p>The component is part of my Application Framework Library <code>Blazor.Database</code> avaliable on Github at <a href="https://github.com/ShaunCurtis/Blazor.Database" target="_blank" rel="noopener noreferrer">Blazor.Database Repo<span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a>.</p> <p>You can see a live version of the site here <a href="https://cec-blazor-database.azurewebsites.net/" target="_blank" rel="noopener noreferrer">CEC.Blazor WASM Site<span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a> - look at <em>Modal Weather</em>.</p> <h2 id="the-modal-dialog-classes"><a href="#the-modal-dialog-classes" class="header-anchor">#</a> The Modal Dialog Classes</h2> <p>There are three classes, one interface and one Enum:</p> <ol><li><code>IModalDialog</code></li> <li><code>BaseModalDialog</code></li> <li><code>ModalOptions</code></li> <li><code>ModalResult</code></li> <li><code>ModalResultType</code></li></ol> <h3 id="imodal"><a href="#imodal" class="header-anchor">#</a> IModal</h3> <p><code>IModalDialog</code> defines an interface that all modal dialogs must implementation.</p> <div class="language-csharp extra-class"><pre class="language-csharp"><code><span class="token keyword">namespace</span> <span class="token namespace">Blazr<span class="token punctuation">.</span>Modal</span>
-<span class="token punctuation">{</span>
-    <span class="token keyword">public</span> <span class="token keyword">interface</span> <span class="token class-name">IModalDialog</span>
-    <span class="token punctuation">{</span>
-        <span class="token return-type class-name">ModalOptions</span> Options <span class="token punctuation">{</span> <span class="token keyword">get</span><span class="token punctuation">;</span> <span class="token keyword">set</span><span class="token punctuation">;</span> <span class="token punctuation">}</span>
+<ul class="navbar-nav" >
+<li class="nav-item" >
+<a class="nav-link " href="/index.html" role="button"  >
+<span class="mr-2 d-none d-lg-inline text-gray-100">Index</span>
+</a>
+</li>
+<li class="nav-item dropdown no-arrow mx-1" >
+<a class="nav-link dropdown-toggle" href="#" id="26d86313-0de5-4f0d-b677-eb90d9a6946f" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"  >
+<span class="mr-2 d-none d-lg-inline text-gray-100">Articles</span>
+</a>
+<div class=" dropdown-list dropdown-menu shadow animated--grow-in" aria-labelledby="26d86313-0de5-4f0d-b677-eb90d9a6946f" >
+<a class="dropdown-item" href="/articles/A-Flexible-app.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+A Flexible App
+</a>
+<a class="dropdown-item" href="/articles/Async-Programming-in-DotNetCore.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Async Programming In Dotnetcore
+</a>
+<a class="dropdown-item" href="/articles/Blazor-AllinOne.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Blazor Allinone
+</a>
+<a class="dropdown-item" href="/articles/Blazor-Async-Programming.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Blazor Async Programming
+</a>
+<a class="dropdown-item" href="/articles/Blazor-Components.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Blazor Components
+</a>
+<a class="dropdown-item" href="/articles/Blazor-CSS.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Blazor CSS
+</a>
+<a class="dropdown-item" href="/articles/Blazor-DataList-Control.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Blazor Datalist Control
+</a>
+<a class="dropdown-item" href="/articles/Blazor-Form-Validation.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Blazor Form Validation
+</a>
+<a class="dropdown-item" href="/articles/Building-Edit-Forms.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Building Edit Forms
+</a>
+<a class="dropdown-item" href="/articles/Hydra.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Hydra
+</a>
+<a class="dropdown-item" href="/articles/Inline-Dialog.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Inline Dialog
+</a>
+<a class="dropdown-item" href="/articles/Modal-Dialog.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Modal Dialog
+</a>
+</div>
+</li>
+<li class="nav-item dropdown no-arrow mx-1" >
+<a class="nav-link dropdown-toggle" href="#" id="0cb4441a-85a1-4eae-acef-629b05d8269f" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"  >
+<span class="mr-2 d-none d-lg-inline text-gray-100">Blazor Database Application</span>
+</a>
+<div class=" dropdown-list dropdown-menu shadow animated--grow-in" aria-labelledby="0cb4441a-85a1-4eae-acef-629b05d8269f" >
+<a class="dropdown-item" href="/Building-a-Database-Application-in-Blazor/Building-a-Database-Application-in-Blazor-Part-1.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Building A Database Application In Blazor Part 1
+</a>
+<a class="dropdown-item" href="/Building-a-Database-Application-in-Blazor/Building-a-Database-Application-in-Blazor-Part-2.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Building A Database Application In Blazor Part 2
+</a>
+<a class="dropdown-item" href="/Building-a-Database-Application-in-Blazor/Building-a-Database-Application-in-Blazor-Part-3.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Building A Database Application In Blazor Part 3
+</a>
+<a class="dropdown-item" href="/Building-a-Database-Application-in-Blazor/Building-a-Database-Application-in-Blazor-Part-4.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Building A Database Application In Blazor Part 4
+</a>
+<a class="dropdown-item" href="/Building-a-Database-Application-in-Blazor/Building-a-Database-Application-in-Blazor-Part-5.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Building A Database Application In Blazor Part 5
+</a>
+<a class="dropdown-item" href="/Building-a-Database-Application-in-Blazor/Building-a-Database-Application-in-Blazor-Part-6.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Building A Database Application In Blazor Part 6
+</a>
+<a class="dropdown-item" href="/Building-a-Database-Application-in-Blazor/index.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Index
+</a>
+</div>
+</li>
+<li class="nav-item dropdown no-arrow mx-1" >
+<a class="nav-link dropdown-toggle" href="#" id="14ebc4c0-21bb-434e-932d-f570659660d0" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"  >
+<span class="mr-2 d-none d-lg-inline text-gray-100">Posts</span>
+</a>
+<div class=" dropdown-list dropdown-menu shadow animated--grow-in" aria-labelledby="14ebc4c0-21bb-434e-932d-f570659660d0" >
+<a class="dropdown-item" href="/posts/Blazor-Async-UI-Events.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Blazor Async UI Events
+</a>
+<a class="dropdown-item" href="/posts/DBContexts-In-Transient-Services.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Dbcontexts In Transient Services
+</a>
+<a class="dropdown-item" href="/posts/DynamicCss.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Dynamiccss
+</a>
+<a class="dropdown-item" href="/posts/For-ForEach-in-Blazor.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+For Foreach In Blazor
+</a>
+<a class="dropdown-item" href="/posts/Notification-Service-Pattern.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Notification Service Pattern
+</a>
+<a class="dropdown-item" href="/posts/XML-XSD-Serialization.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+XML XSD Serialization
+</a>
+</div>
+</li>
+</ul>
 
-        <span class="token comment">//  Method to display a Modal Dialog</span>
-        <span class="token return-type class-name">Task<span class="token punctuation">&lt;</span>ModalResult<span class="token punctuation">&gt;</span></span> <span class="token generic-method"><span class="token function">ShowAsync</span><span class="token generic class-name"><span class="token punctuation">&lt;</span>TModal<span class="token punctuation">&gt;</span></span></span><span class="token punctuation">(</span><span class="token class-name">ModalOptions</span> options<span class="token punctuation">)</span> <span class="token keyword">where</span> <span class="token class-name">TModal</span> <span class="token punctuation">:</span> <span class="token type-list"><span class="token class-name">IComponent</span></span><span class="token punctuation">;</span>
+    <div class="ms-5 me-5 ml-auto">
+        <h1>Cold Elm Coders</h1>
+    </div>
+</nav>
 
-        <span class="token comment">// Method to update the Modal Dialog during display</span>
-        <span class="token return-type class-name"><span class="token keyword">void</span></span> <span class="token function">Update</span><span class="token punctuation">(</span><span class="token class-name">ModalOptions</span> options <span class="token operator">=</span> <span class="token keyword">null</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 
-        <span class="token comment">// Method to dismiss - normally called by the dismiss button in the header bar</span>
-        <span class="token return-type class-name"><span class="token keyword">void</span></span> <span class="token function">Dismiss</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    </div>
+    <!--End topbar-->
+    <!--Sidebar-->
+    <div id="sidebar">
+        
+<div class="article-info p-2" Published: 23-10-2020 >
+<div>Published: 23-10-2020</div>
+<div>Last Updated: 25-06-2021</div>
+<div>Author: Shaun Curtis</div>
+</div>
 
-        <span class="token comment">// Method to close the dialog - normally called by the child component TModal</span>
-        <span class="token return-type class-name"><span class="token keyword">void</span></span> <span class="token function">Close</span><span class="token punctuation">(</span><span class="token class-name">ModalResult</span> result<span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token punctuation">}</span>
-<span class="token punctuation">}</span>
-</code></pre></div><h3 id="modalresulttype"><a href="#modalresulttype" class="header-anchor">#</a> ModalResultType</h3> <div class="language-csharp extra-class"><pre class="language-csharp"><code><span class="token keyword">namespace</span> <span class="token namespace">Blazr<span class="token punctuation">.</span>Modal</span>
-<span class="token punctuation">{</span>
-    <span class="token comment">// Defines the types for exiting the dialog</span>
-    <span class="token keyword">public</span> <span class="token keyword">enum</span> <span class="token class-name">ModalResultType</span>
-    <span class="token punctuation">{</span>
-        NoSet<span class="token punctuation">,</span>
-        OK<span class="token punctuation">,</span>
-        Cancel<span class="token punctuation">,</span>
+        
+<h4 class="p-2">Table of Contents</h4>
+<ul class="TOC" >
+<li class="TOC-item TOC-item-0" >
+<a class="TOC-link" href="#">Top</a>
+<ul class="TOC TOC-0" >
+<li class="TOC-item TOC-item-1" >
+<ul class="TOC TOC-1" >
+<li class="TOC-item TOC-item-2" >
+<a class="TOC-link" href="#overview">Overview</a>
+</li>
+<li class="TOC-item TOC-item-2" >
+<a class="TOC-link" href="#code-and-examples">Code and Examples</a>
+</li>
+<li class="TOC-item TOC-item-2" >
+<a class="TOC-link" href="#the-modal-dialog-classes">The Modal Dialog Classes</a>
+<ul class="TOC TOC-2" >
+<li class="TOC-item TOC-item-3" >
+<a class="TOC-link" href="#imodal">IModal</a>
+</li>
+<li class="TOC-item TOC-item-3" >
+<a class="TOC-link" href="#modalresulttype">ModalResultType</a>
+</li>
+<li class="TOC-item TOC-item-3" >
+<a class="TOC-link" href="#modalresult">ModalResult</a>
+</li>
+<li class="TOC-item TOC-item-3" >
+<a class="TOC-link" href="#modaloptions">ModalOptions</a>
+</li>
+<li class="TOC-item TOC-item-3" >
+<a class="TOC-link" href="#basemodaldialog">BaseModalDialog</a>
+</li>
+</ul>
+</li>
+<li class="TOC-item TOC-item-2" >
+<a class="TOC-link" href="#implementing-modals">Implementing Modals</a>
+<ul class="TOC TOC-2" >
+<li class="TOC-item TOC-item-3" >
+<a class="TOC-link" href="#inital-setup">Inital Setup</a>
+</li>
+<li class="TOC-item TOC-item-3" >
+<a class="TOC-link" href="#modify-fetchdata">Modify FetchData</a>
+</li>
+<li class="TOC-item TOC-item-3" >
+<a class="TOC-link" href="#modify-indexrazor">Modify Index.razor</a>
+</li>
+<li class="TOC-item TOC-item-3" >
+<a class="TOC-link" href="#form-using-bootstrapmodal">Form using BootstrapModal</a>
+</li>
+</ul>
+</li>
+<li class="TOC-item TOC-item-2" >
+<a class="TOC-link" href="#wrap-up">Wrap Up</a>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+    </div>
+    <!--End Sidebar-->
+    <!-- Page Wrapper -->
+    <div id="wrapper">
+        <!-- Content Wrapper -->
+        <div id="content-wrapper" class="d-flex flex-column">
+            <!-- Main Content -->
+            <div id="content">
+                <!-- Topbar -->
+                <div id="article">
+                    <!-- Article -->
+                    
+<!-- Header -->
+<header class="ex-header-article">
+    <div class="container">
+        <div class="row pt-3 pb-3 border-bottom">
+            <div class="col">
+                
+<h1>A Blazor Modal Dialog</h1>
+<div>This article describes how to build a modal dialog for Blazor that you can use with any form.</div>
+
+            </div> <!-- end of col -->
+        </div> <!-- end of row -->
+    </div> <!-- end of container -->
+</header> <!-- end of ex-header -->
+<!-- end of header -->
+
+
+                    
+<!-- Article Container -->
+<div class="ex-basic-1 pt-4">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                
+
+        <h2 id="overview">Overview</h2>
+<p>If a web based SPA [Single Page Application] is goinfg to look like a a real application it needs a modal dialog framework.  This article shows how to build a modal dialog container for Blazor <code>IComponents</code>.</p>
+<h2 id="code-and-examples">Code and Examples</h2>
+<p>The component is part of my Application Framework Library <code>Blazor.Database</code> avaliable on Github at <a href="https://github.com/ShaunCurtis/Blazor.Database">Blazor.Database Repo</a>.</p>
+<p>You can see a live version of the site here <a href="https://cec-blazor-database.azurewebsites.net/">CEC.Blazor WASM Site</a> - look at <em>Modal Weather</em>.</p>
+<h2 id="the-modal-dialog-classes">The Modal Dialog Classes</h2>
+<p>There are three classes, one interface and one Enum:</p>
+<ol>
+<li><code>IModalDialog</code></li>
+<li><code>BaseModalDialog</code></li>
+<li><code>ModalOptions</code></li>
+<li><code>ModalResult</code></li>
+<li><code>ModalResultType</code></li>
+</ol>
+<h3 id="imodal">IModal</h3>
+<p><code>IModalDialog</code> defines an interface that all modal dialogs must implementation.</p>
+<pre><code class="language-csharp"><div><span class="hljs-keyword">namespace</span> <span class="hljs-title">Blazr.Modal</span>
+{
+    <span class="hljs-keyword">public</span> <span class="hljs-keyword">interface</span> <span class="hljs-title">IModalDialog</span>
+    {
+        ModalOptions Options { <span class="hljs-keyword">get</span>; <span class="hljs-keyword">set</span>; }
+
+        <span class="hljs-comment">//  Method to display a Modal Dialog</span>
+        <span class="hljs-function"><span class="hljs-title">Task</span>&lt;<span class="hljs-title">ModalResult</span>&gt; <span class="hljs-title">ShowAsync</span>&lt;<span class="hljs-title">TModal</span>&gt;(<span class="hljs-params">ModalOptions options</span>) <span class="hljs-keyword">where</span> TModal : IComponent</span>;
+
+        <span class="hljs-comment">// Method to update the Modal Dialog during display</span>
+        <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">Update</span>(<span class="hljs-params">ModalOptions options = <span class="hljs-literal">null</span></span>)</span>;
+
+        <span class="hljs-comment">// Method to dismiss - normally called by the dismiss button in the header bar</span>
+        <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">Dismiss</span>(<span class="hljs-params"></span>)</span>;
+
+        <span class="hljs-comment">// Method to close the dialog - normally called by the child component TModal</span>
+        <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">Close</span>(<span class="hljs-params">ModalResult result</span>)</span>;
+    }
+}
+</div></code></pre>
+<h3 id="modalresulttype">ModalResultType</h3>
+<pre><code class="language-csharp"><div><span class="hljs-keyword">namespace</span> <span class="hljs-title">Blazr.Modal</span>
+{
+    <span class="hljs-comment">// Defines the types for exiting the dialog</span>
+    <span class="hljs-keyword">public</span> <span class="hljs-keyword">enum</span> ModalResultType
+    {
+        NoSet,
+        OK,
+        Cancel,
         Exit
-    <span class="token punctuation">}</span>
-<span class="token punctuation">}</span>
-</code></pre></div><h3 id="modalresult"><a href="#modalresult" class="header-anchor">#</a> ModalResult</h3> <p><code>ModalResult</code> is passed back to the <code>Show</code> caller as the <code>Task</code> completion result when the modal closes.</p> <div class="language-csharp extra-class"><pre class="language-csharp"><code><span class="token keyword">namespace</span> <span class="token namespace">Blazr<span class="token punctuation">.</span>Modal</span>
-<span class="token punctuation">{</span>
-    <span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">ModalResult</span>
-    <span class="token punctuation">{</span>
-        <span class="token comment">// The closing type</span>
-        <span class="token keyword">public</span> <span class="token return-type class-name">BootstrapModalResultType</span> ResultType <span class="token punctuation">{</span> <span class="token keyword">get</span><span class="token punctuation">;</span> <span class="token keyword">private</span> <span class="token keyword">set</span><span class="token punctuation">;</span> <span class="token punctuation">}</span> <span class="token operator">=</span> ModalResultType<span class="token punctuation">.</span>NoSet<span class="token punctuation">;</span>
+    }
+}
+</div></code></pre>
+<h3 id="modalresult">ModalResult</h3>
+<p><code>ModalResult</code> is passed back to the <code>Show</code> caller as the <code>Task</code> completion result when the modal closes.</p>
+<pre><code class="language-csharp"><div><span class="hljs-keyword">namespace</span> <span class="hljs-title">Blazr.Modal</span>
+{
+    <span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title">ModalResult</span>
+    {
+        <span class="hljs-comment">// The closing type</span>
+        <span class="hljs-keyword">public</span> BootstrapModalResultType ResultType { <span class="hljs-keyword">get</span>; <span class="hljs-keyword">private</span> <span class="hljs-keyword">set</span>; } = ModalResultType.NoSet;
 
-        <span class="token comment">// Whatever object you wish to pass back</span>
-        <span class="token keyword">public</span> <span class="token return-type class-name"><span class="token keyword">object</span></span> Data <span class="token punctuation">{</span> <span class="token keyword">get</span><span class="token punctuation">;</span> <span class="token keyword">set</span><span class="token punctuation">;</span> <span class="token punctuation">}</span> <span class="token operator">=</span> <span class="token keyword">null</span><span class="token punctuation">;</span>
+        <span class="hljs-comment">// Whatever object you wish to pass back</span>
+        <span class="hljs-keyword">public</span> <span class="hljs-keyword">object</span> Data { <span class="hljs-keyword">get</span>; <span class="hljs-keyword">set</span>; } = <span class="hljs-literal">null</span>;
 
-        <span class="token comment">// A set of static methods to build a BootstrapModalResult</span>
+        <span class="hljs-comment">// A set of static methods to build a BootstrapModalResult</span>
 
-        <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token return-type class-name">ModalResult</span> <span class="token function">OK</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token keyword">new</span> <span class="token constructor-invocation class-name">ModalResult</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>ResultType <span class="token operator">=</span> ModalResultType<span class="token punctuation">.</span>OK <span class="token punctuation">}</span><span class="token punctuation">;</span>
+        <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> ModalResult <span class="hljs-title">OK</span>(<span class="hljs-params"></span>)</span> =&gt; <span class="hljs-keyword">new</span> ModalResult() {ResultType = ModalResultType.OK };
 
-        <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token return-type class-name">ModalResult</span> <span class="token function">Exit</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token keyword">new</span> <span class="token constructor-invocation class-name">ModalResult</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>ResultType <span class="token operator">=</span> ModalResultType<span class="token punctuation">.</span>Exit<span class="token punctuation">}</span><span class="token punctuation">;</span>
+        <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> ModalResult <span class="hljs-title">Exit</span>(<span class="hljs-params"></span>)</span> =&gt; <span class="hljs-keyword">new</span> ModalResult() {ResultType = ModalResultType.Exit};
 
-        <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token return-type class-name">ModalResult</span> <span class="token function">Cancel</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token keyword">new</span> <span class="token constructor-invocation class-name">ModalResult</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>ResultType <span class="token operator">=</span> ModalResultType<span class="token punctuation">.</span>Cancel <span class="token punctuation">}</span><span class="token punctuation">;</span>
+        <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> ModalResult <span class="hljs-title">Cancel</span>(<span class="hljs-params"></span>)</span> =&gt; <span class="hljs-keyword">new</span> ModalResult() {ResultType = ModalResultType.Cancel };
 
-        <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token return-type class-name">ModalResult</span> <span class="token function">OK</span><span class="token punctuation">(</span><span class="token class-name"><span class="token keyword">object</span></span> data<span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token keyword">new</span> <span class="token constructor-invocation class-name">ModalResult</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span> Data <span class="token operator">=</span> data<span class="token punctuation">,</span> ResultType <span class="token operator">=</span> ModalResultType<span class="token punctuation">.</span>OK <span class="token punctuation">}</span><span class="token punctuation">;</span>
+        <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> ModalResult <span class="hljs-title">OK</span>(<span class="hljs-params"><span class="hljs-keyword">object</span> data</span>)</span> =&gt; <span class="hljs-keyword">new</span> ModalResult() { Data = data, ResultType = ModalResultType.OK };
 
-        <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token return-type class-name">ModalResult</span> <span class="token function">Exit</span><span class="token punctuation">(</span><span class="token class-name"><span class="token keyword">object</span></span> data<span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token keyword">new</span> <span class="token constructor-invocation class-name">ModalResult</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span> Data <span class="token operator">=</span> data<span class="token punctuation">,</span> ResultType <span class="token operator">=</span> ModalResultType<span class="token punctuation">.</span>Exit <span class="token punctuation">}</span><span class="token punctuation">;</span>
+        <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> ModalResult <span class="hljs-title">Exit</span>(<span class="hljs-params"><span class="hljs-keyword">object</span> data</span>)</span> =&gt; <span class="hljs-keyword">new</span> ModalResult() { Data = data, ResultType = ModalResultType.Exit };
 
-        <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token return-type class-name">ModalResult</span> <span class="token function">Cancel</span><span class="token punctuation">(</span><span class="token class-name"><span class="token keyword">object</span></span> data<span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token keyword">new</span> <span class="token constructor-invocation class-name">ModalResult</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span> Data <span class="token operator">=</span> data<span class="token punctuation">,</span> ResultType <span class="token operator">=</span> ModalResultType<span class="token punctuation">.</span>Cancel <span class="token punctuation">}</span><span class="token punctuation">;</span>
-    <span class="token punctuation">}</span>
-<span class="token punctuation">}</span>
-</code></pre></div><h3 id="modaloptions"><a href="#modaloptions" class="header-anchor">#</a> ModalOptions</h3> <p><code>ModalOptions</code> is an <code>IEnumerable</code> collection of options passed to the Modal Dialog class when opening the Dialog.</p> <div class="language-csharp extra-class"><pre class="language-csharp"><code><span class="token keyword">namespace</span> <span class="token namespace">Blazr<span class="token punctuation">.</span>Modal</span>
-<span class="token punctuation">{</span>   <span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">ModalOptions</span> <span class="token punctuation">:</span><span class="token type-list"><span class="token class-name">IEnumerable<span class="token punctuation">&lt;</span>KeyValuePair<span class="token punctuation">&lt;</span><span class="token keyword">string</span><span class="token punctuation">,</span> <span class="token keyword">object</span><span class="token punctuation">&gt;</span><span class="token punctuation">&gt;</span></span></span>
-    <span class="token punctuation">{</span>
-        <span class="token comment">/// &lt;summary&gt;</span>
-        <span class="token comment">/// List of options</span>
-        <span class="token comment">/// &lt;/summary&gt;</span>
-        <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">readonly</span> <span class="token class-name"><span class="token keyword">string</span></span> __Width <span class="token operator">=</span> <span class="token string">&quot;Width&quot;</span><span class="token punctuation">;</span>
-        <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">readonly</span> <span class="token class-name"><span class="token keyword">string</span></span> __ID <span class="token operator">=</span> <span class="token string">&quot;ID&quot;</span><span class="token punctuation">;</span>
-        <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">readonly</span> <span class="token class-name"><span class="token keyword">string</span></span> __ExitOnBackGroundClick <span class="token operator">=</span> <span class="token string">&quot;ExitOnBackGroundClick&quot;</span><span class="token punctuation">;</span>
+        <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> ModalResult <span class="hljs-title">Cancel</span>(<span class="hljs-params"><span class="hljs-keyword">object</span> data</span>)</span> =&gt; <span class="hljs-keyword">new</span> ModalResult() { Data = data, ResultType = ModalResultType.Cancel };
+    }
+}
+</div></code></pre>
+<h3 id="modaloptions">ModalOptions</h3>
+<p><code>ModalOptions</code> is an <code>IEnumerable</code> collection of options passed to the Modal Dialog class when opening the Dialog.</p>
+<pre><code class="language-csharp"><div><span class="hljs-keyword">namespace</span> <span class="hljs-title">Blazr.Modal</span>
+{   <span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title">ModalOptions</span> :<span class="hljs-title">IEnumerable</span>&lt;<span class="hljs-title">KeyValuePair</span>&lt;<span class="hljs-title">string</span>, <span class="hljs-title">object</span>&gt;&gt;
+    {
+        <span class="hljs-comment"><span class="hljs-doctag">///</span> <span class="hljs-doctag">&lt;summary&gt;</span></span>
+        <span class="hljs-comment"><span class="hljs-doctag">///</span> List of options</span>
+        <span class="hljs-comment"><span class="hljs-doctag">///</span> <span class="hljs-doctag">&lt;/summary&gt;</span></span>
+        <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">readonly</span> <span class="hljs-keyword">string</span> __Width = <span class="hljs-string">&quot;Width&quot;</span>;
+        <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">readonly</span> <span class="hljs-keyword">string</span> __ID = <span class="hljs-string">&quot;ID&quot;</span>;
+        <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">readonly</span> <span class="hljs-keyword">string</span> __ExitOnBackGroundClick = <span class="hljs-string">&quot;ExitOnBackGroundClick&quot;</span>;
 
-        <span class="token keyword">private</span> <span class="token return-type class-name">Dictionary<span class="token punctuation">&lt;</span><span class="token keyword">string</span><span class="token punctuation">,</span> <span class="token keyword">object</span><span class="token punctuation">&gt;</span></span> Parameters <span class="token punctuation">{</span> <span class="token keyword">get</span><span class="token punctuation">;</span> <span class="token punctuation">}</span> <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token constructor-invocation class-name">Dictionary<span class="token punctuation">&lt;</span><span class="token keyword">string</span><span class="token punctuation">,</span> <span class="token keyword">object</span><span class="token punctuation">&gt;</span></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-title">Dictionary</span>&lt;<span class="hljs-title">string</span>, <span class="hljs-title">object</span>&gt; Parameters</span> { <span class="hljs-keyword">get</span>; } = <span class="hljs-keyword">new</span> Dictionary&lt;<span class="hljs-keyword">string</span>, <span class="hljs-keyword">object</span>&gt;();
 
-        <span class="token keyword">public</span> <span class="token return-type class-name">IEnumerator<span class="token punctuation">&lt;</span>KeyValuePair<span class="token punctuation">&lt;</span><span class="token keyword">string</span><span class="token punctuation">,</span> <span class="token keyword">object</span><span class="token punctuation">&gt;</span><span class="token punctuation">&gt;</span></span> <span class="token function">GetEnumerator</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
-        <span class="token punctuation">{</span>
-            <span class="token keyword">foreach</span> <span class="token punctuation">(</span><span class="token class-name"><span class="token keyword">var</span></span> item <span class="token keyword">in</span> Parameters<span class="token punctuation">)</span>
-                <span class="token keyword">yield</span> <span class="token keyword">return</span> item<span class="token punctuation">;</span>
-        <span class="token punctuation">}</span>
+        <span class="hljs-keyword">public</span> IEnumerator&lt;KeyValuePair&lt;<span class="hljs-keyword">string</span>, <span class="hljs-keyword">object</span>&gt;&gt; GetEnumerator()
+        {
+            <span class="hljs-keyword">foreach</span> (<span class="hljs-keyword">var</span> item <span class="hljs-keyword">in</span> Parameters)
+                <span class="hljs-keyword">yield</span> <span class="hljs-keyword">return</span> item;
+        }
 
-        <span class="token return-type class-name">IEnumerator</span> IEnumerable<span class="token punctuation">.</span><span class="token function">GetEnumerator</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
-            <span class="token operator">=&gt;</span> <span class="token keyword">this</span><span class="token punctuation">.</span><span class="token function">GetEnumerator</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        IEnumerator IEnumerable.GetEnumerator()
+            =&gt; <span class="hljs-keyword">this</span>.GetEnumerator();
 
-        <span class="token keyword">public</span> <span class="token return-type class-name">T</span> <span class="token generic-method"><span class="token function">Get</span><span class="token generic class-name"><span class="token punctuation">&lt;</span>T<span class="token punctuation">&gt;</span></span></span><span class="token punctuation">(</span><span class="token class-name"><span class="token keyword">string</span></span> key<span class="token punctuation">)</span>
-        <span class="token punctuation">{</span>
-            <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">.</span>Parameters<span class="token punctuation">.</span><span class="token function">ContainsKey</span><span class="token punctuation">(</span>key<span class="token punctuation">)</span><span class="token punctuation">)</span>
-            <span class="token punctuation">{</span>
-                <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">.</span>Parameters<span class="token punctuation">[</span>key<span class="token punctuation">]</span> <span class="token keyword">is</span> <span class="token class-name">T</span> t<span class="token punctuation">)</span> <span class="token keyword">return</span> t<span class="token punctuation">;</span>
-            <span class="token punctuation">}</span>
-            <span class="token keyword">return</span> <span class="token keyword">default</span><span class="token punctuation">;</span>
-        <span class="token punctuation">}</span>
+        <span class="hljs-function"><span class="hljs-keyword">public</span> T <span class="hljs-title">Get</span>&lt;<span class="hljs-title">T</span>&gt;(<span class="hljs-params"><span class="hljs-keyword">string</span> key</span>)</span>
+        {
+            <span class="hljs-keyword">if</span> (<span class="hljs-keyword">this</span>.Parameters.ContainsKey(key))
+            {
+                <span class="hljs-keyword">if</span> (<span class="hljs-keyword">this</span>.Parameters[key] <span class="hljs-keyword">is</span> T t) <span class="hljs-keyword">return</span> t;
+            }
+            <span class="hljs-keyword">return</span> <span class="hljs-keyword">default</span>;
+        }
 
-        <span class="token keyword">public</span> <span class="token return-type class-name"><span class="token keyword">bool</span></span> <span class="token generic-method"><span class="token function">TryGet</span><span class="token generic class-name"><span class="token punctuation">&lt;</span>T<span class="token punctuation">&gt;</span></span></span><span class="token punctuation">(</span><span class="token class-name"><span class="token keyword">string</span></span> key<span class="token punctuation">,</span> <span class="token keyword">out</span> <span class="token class-name">T</span> <span class="token keyword">value</span><span class="token punctuation">)</span>
-        <span class="token punctuation">{</span>
-            <span class="token keyword">value</span> <span class="token operator">=</span> <span class="token keyword">default</span><span class="token punctuation">;</span>
-            <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">.</span>Parameters<span class="token punctuation">.</span><span class="token function">ContainsKey</span><span class="token punctuation">(</span>key<span class="token punctuation">)</span><span class="token punctuation">)</span>
-            <span class="token punctuation">{</span>
-                <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">.</span>Parameters<span class="token punctuation">[</span>key<span class="token punctuation">]</span> <span class="token keyword">is</span> <span class="token class-name">T</span> t<span class="token punctuation">)</span>
-                <span class="token punctuation">{</span>
-                    <span class="token keyword">value</span> <span class="token operator">=</span> t<span class="token punctuation">;</span>
-                    <span class="token keyword">return</span> <span class="token boolean">true</span><span class="token punctuation">;</span>
-                <span class="token punctuation">}</span>
-            <span class="token punctuation">}</span>
-            <span class="token keyword">return</span> <span class="token boolean">false</span><span class="token punctuation">;</span>
-        <span class="token punctuation">}</span>
+        <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">bool</span> <span class="hljs-title">TryGet</span>&lt;<span class="hljs-title">T</span>&gt;(<span class="hljs-params"><span class="hljs-keyword">string</span> key, <span class="hljs-keyword">out</span> T <span class="hljs-keyword">value</span></span>)</span>
+        {
+            <span class="hljs-keyword">value</span> = <span class="hljs-keyword">default</span>;
+            <span class="hljs-keyword">if</span> (<span class="hljs-keyword">this</span>.Parameters.ContainsKey(key))
+            {
+                <span class="hljs-keyword">if</span> (<span class="hljs-keyword">this</span>.Parameters[key] <span class="hljs-keyword">is</span> T t)
+                {
+                    <span class="hljs-keyword">value</span> = t;
+                    <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;
+                }
+            }
+            <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;
+        }
 
-        <span class="token keyword">public</span> <span class="token return-type class-name"><span class="token keyword">bool</span></span> <span class="token function">Set</span><span class="token punctuation">(</span><span class="token class-name"><span class="token keyword">string</span></span> key<span class="token punctuation">,</span> <span class="token class-name"><span class="token keyword">object</span></span> <span class="token keyword">value</span><span class="token punctuation">)</span>
-        <span class="token punctuation">{</span>
-            <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">.</span>Parameters<span class="token punctuation">.</span><span class="token function">ContainsKey</span><span class="token punctuation">(</span>key<span class="token punctuation">)</span><span class="token punctuation">)</span>
-            <span class="token punctuation">{</span>
-                <span class="token keyword">this</span><span class="token punctuation">.</span>Parameters<span class="token punctuation">[</span>key<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token keyword">value</span><span class="token punctuation">;</span>
-                <span class="token keyword">return</span> <span class="token boolean">false</span><span class="token punctuation">;</span>
-            <span class="token punctuation">}</span>
-            <span class="token keyword">this</span><span class="token punctuation">.</span>Parameters<span class="token punctuation">.</span><span class="token function">Add</span><span class="token punctuation">(</span>key<span class="token punctuation">,</span> <span class="token keyword">value</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-            <span class="token keyword">return</span> <span class="token boolean">true</span><span class="token punctuation">;</span>
-        <span class="token punctuation">}</span>
-    <span class="token punctuation">}</span>
-<span class="token punctuation">}</span>
-</code></pre></div><h3 id="basemodaldialog"><a href="#basemodaldialog" class="header-anchor">#</a> BaseModalDialog</h3> <p>The Razor Markup for <code>BaseModalDialog</code> implements the markup for a dialog.  A cascading value provides child form access to the <code>IModalDialog</code> instance.</p> <div class="language-csharp extra-class"><pre class="language-csharp"><code>@<span class="token keyword">namespace</span> Blazr<span class="token punctuation">.</span>Modal
+        <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">bool</span> <span class="hljs-title">Set</span>(<span class="hljs-params"><span class="hljs-keyword">string</span> key, <span class="hljs-keyword">object</span> <span class="hljs-keyword">value</span></span>)</span>
+        {
+            <span class="hljs-keyword">if</span> (<span class="hljs-keyword">this</span>.Parameters.ContainsKey(key))
+            {
+                <span class="hljs-keyword">this</span>.Parameters[key] = <span class="hljs-keyword">value</span>;
+                <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;
+            }
+            <span class="hljs-keyword">this</span>.Parameters.Add(key, <span class="hljs-keyword">value</span>);
+            <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;
+        }
+    }
+}
+</div></code></pre>
+<h3 id="basemodaldialog">BaseModalDialog</h3>
+<p>The Razor Markup for <code>BaseModalDialog</code> implements the markup for a dialog.  A cascading value provides child form access to the <code>IModalDialog</code> instance.</p>
+<pre><code class="language-csharp"><div>@namespace Blazr.Modal
 @inherits ComponentBase
-@implements <span class="token return-type class-name">IModalDialog</span>
+@implements IModalDialog
 
-@<span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">.</span>Display<span class="token punctuation">)</span>
-<span class="token punctuation">{</span>
-    <span class="token operator">&lt;</span><span class="token class-name">CascadingValue</span> Value<span class="token operator">=</span><span class="token string">&quot;(IModalDialog)this&quot;</span><span class="token operator">&gt;</span>
-        <span class="token operator">&lt;</span>div <span class="token keyword">class</span><span class="token operator">=</span><span class="token string">&quot;base-modal-background&quot;</span> @onclick<span class="token operator">=</span><span class="token string">&quot;OnBackClick&quot;</span><span class="token operator">&gt;</span>
-            <span class="token operator">&lt;</span>div <span class="token keyword">class</span><span class="token operator">=</span><span class="token string">&quot;base-modal-content&quot;</span> style<span class="token operator">=</span><span class="token string">&quot;@this.Width&quot;</span> @onclick<span class="token punctuation">:</span>stopPropagation<span class="token operator">=</span><span class="token string">&quot;true&quot;</span><span class="token operator">&gt;</span>
-                @<span class="token keyword">this</span><span class="token punctuation">.</span>_Content
-            <span class="token operator">&lt;</span><span class="token operator">/</span>div<span class="token operator">&gt;</span>
-        <span class="token operator">&lt;</span><span class="token operator">/</span>div<span class="token operator">&gt;</span>
-    <span class="token operator">&lt;</span><span class="token operator">/</span>CascadingValue<span class="token operator">&gt;</span>
-<span class="token punctuation">}</span>
-</code></pre></div><p>Some key points:</p> <ol><li>The component is initialised when the View is created and added to the RenderTree.  At this point it empty and hidden.</li> <li>There's no need for multiple copies in different forms.  When &quot;hidden&quot; there's no form loaded.  Calling <code>Show&lt;TForm&gt;</code>, with the form to display defined as <code>TForm</code>, shows the dialog with an instance of <code>TForm</code> as it's child content.</li> <li>The component hides itself.  Either the child form calls <code>Close</code> on the cascaded <code>IModalDialog</code> instance, or the modal calls <code>Dismiss</code>.  Both actions set the Task to completed, <code>Display</code> to false,  clear the content, and call <code>Render</code> which renders an empty component.</li> <li>The component uses a <code>TaskCompletionSource</code> object to manage async behaviour and communicate task status to the caller.</li></ol> <div class="language-csharp extra-class"><pre class="language-csharp"><code><span class="token keyword">namespace</span> <span class="token namespace">Blazr<span class="token punctuation">.</span>Modal</span>
-<span class="token punctuation">{</span>
-    <span class="token keyword">public</span> <span class="token keyword">partial</span> <span class="token keyword">class</span> <span class="token class-name">BaseModalDialog</span> <span class="token punctuation">:</span> <span class="token type-list"><span class="token class-name">ComponentBase</span><span class="token punctuation">,</span> <span class="token class-name">IModalDialog</span></span>
-    <span class="token punctuation">{</span>
-        <span class="token punctuation">[</span><span class="token attribute"><span class="token class-name">Inject</span></span><span class="token punctuation">]</span> <span class="token keyword">private</span> <span class="token return-type class-name">IJSRuntime</span> _js <span class="token punctuation">{</span> <span class="token keyword">get</span><span class="token punctuation">;</span> <span class="token keyword">set</span><span class="token punctuation">;</span> <span class="token punctuation">}</span>
+@if (<span class="hljs-keyword">this</span>.Display)
+{
+    &lt;CascadingValue Value=<span class="hljs-string">&quot;(IModalDialog)this&quot;</span>&gt;
+        &lt;div <span class="hljs-keyword">class</span>=<span class="hljs-string">&quot;base-modal-background&quot;</span> @onclick=<span class="hljs-string">&quot;OnBackClick&quot;</span>&gt;
+            &lt;div <span class="hljs-keyword">class</span>=<span class="hljs-string">&quot;base-modal-content&quot;</span> style=<span class="hljs-string">&quot;@this.Width&quot;</span> @onclick:stopPropagation=<span class="hljs-string">&quot;true&quot;</span>&gt;
+                @this._Content
+            &lt;/div&gt;
+        &lt;/div&gt;
+    &lt;/CascadingValue&gt;
+}
+</div></code></pre>
+<p>Some key points:</p>
+<ol>
+<li>The component is initialised when the View is created and added to the RenderTree.  At this point it empty and hidden.</li>
+<li>There's no need for multiple copies in different forms.  When &quot;hidden&quot; there's no form loaded.  Calling <code>Show&lt;TForm&gt;</code>, with the form to display defined as <code>TForm</code>, shows the dialog with an instance of <code>TForm</code> as it's child content.</li>
+<li>The component hides itself.  Either the child form calls <code>Close</code> on the cascaded <code>IModalDialog</code> instance, or the modal calls <code>Dismiss</code>.  Both actions set the Task to completed, <code>Display</code> to false,  clear the content, and call <code>Render</code> which renders an empty component.</li>
+<li>The component uses a <code>TaskCompletionSource</code> object to manage async behaviour and communicate task status to the caller.</li>
+</ol>
+<pre><code class="language-csharp"><div><span class="hljs-keyword">namespace</span> <span class="hljs-title">Blazr.Modal</span>
+{
+    <span class="hljs-keyword">public</span> <span class="hljs-keyword">partial</span> <span class="hljs-keyword">class</span> <span class="hljs-title">BaseModalDialog</span> : <span class="hljs-title">ComponentBase</span>, <span class="hljs-title">IModalDialog</span>
+    {
+        [<span class="hljs-meta">Inject</span>] <span class="hljs-keyword">private</span> IJSRuntime _js { <span class="hljs-keyword">get</span>; <span class="hljs-keyword">set</span>; }
 
-        <span class="token keyword">public</span> <span class="token return-type class-name">ModalOptions</span> Options <span class="token punctuation">{</span> <span class="token keyword">get</span><span class="token punctuation">;</span> <span class="token keyword">protected</span> <span class="token keyword">set</span><span class="token punctuation">;</span> <span class="token punctuation">}</span> <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token constructor-invocation class-name">ModalOptions</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="hljs-keyword">public</span> ModalOptions Options { <span class="hljs-keyword">get</span>; <span class="hljs-keyword">protected</span> <span class="hljs-keyword">set</span>; } = <span class="hljs-keyword">new</span> ModalOptions();
 
-        <span class="token keyword">public</span> <span class="token return-type class-name"><span class="token keyword">bool</span></span> Display <span class="token punctuation">{</span> <span class="token keyword">get</span><span class="token punctuation">;</span> <span class="token keyword">protected</span> <span class="token keyword">set</span><span class="token punctuation">;</span> <span class="token punctuation">}</span>
+        <span class="hljs-keyword">public</span> <span class="hljs-keyword">bool</span> Display { <span class="hljs-keyword">get</span>; <span class="hljs-keyword">protected</span> <span class="hljs-keyword">set</span>; }
 
-        <span class="token keyword">public</span> <span class="token return-type class-name"><span class="token keyword">bool</span></span> IsLocked <span class="token punctuation">{</span> <span class="token keyword">get</span><span class="token punctuation">;</span> <span class="token keyword">protected</span> <span class="token keyword">set</span><span class="token punctuation">;</span> <span class="token punctuation">}</span>
+        <span class="hljs-keyword">public</span> <span class="hljs-keyword">bool</span> IsLocked { <span class="hljs-keyword">get</span>; <span class="hljs-keyword">protected</span> <span class="hljs-keyword">set</span>; }
 
-        <span class="token keyword">protected</span> <span class="token return-type class-name">RenderFragment</span> _Content <span class="token punctuation">{</span> <span class="token keyword">get</span><span class="token punctuation">;</span> <span class="token keyword">set</span><span class="token punctuation">;</span> <span class="token punctuation">}</span>
+        <span class="hljs-keyword">protected</span> RenderFragment _Content { <span class="hljs-keyword">get</span>; <span class="hljs-keyword">set</span>; }
 
-        <span class="token keyword">protected</span> <span class="token return-type class-name"><span class="token keyword">string</span></span> Width <span class="token operator">=&gt;</span> <span class="token keyword">this</span><span class="token punctuation">.</span>Options<span class="token punctuation">.</span><span class="token generic-method"><span class="token function">TryGet</span><span class="token generic class-name"><span class="token punctuation">&lt;</span><span class="token keyword">string</span><span class="token punctuation">&gt;</span></span></span><span class="token punctuation">(</span>ModalOptions<span class="token punctuation">.</span>__Width<span class="token punctuation">,</span> <span class="token keyword">out</span> <span class="token class-name"><span class="token keyword">string</span></span> <span class="token keyword">value</span><span class="token punctuation">)</span> <span class="token punctuation">?</span> <span class="token interpolation-string"><span class="token string">$&quot;width:</span><span class="token interpolation"><span class="token punctuation">{</span><span class="token expression language-csharp"><span class="token keyword">value</span></span><span class="token punctuation">}</span></span><span class="token string">&quot;</span></span> <span class="token punctuation">:</span> <span class="token keyword">string</span><span class="token punctuation">.</span>Empty<span class="token punctuation">;</span>
+        <span class="hljs-keyword">protected</span> <span class="hljs-keyword">string</span> Width =&gt; <span class="hljs-keyword">this</span>.Options.TryGet&lt;<span class="hljs-keyword">string</span>&gt;(ModalOptions.__Width, <span class="hljs-keyword">out</span> <span class="hljs-keyword">string</span> <span class="hljs-keyword">value</span>) ? <span class="hljs-string">$&quot;width:<span class="hljs-subst">{<span class="hljs-keyword">value</span>}</span>&quot;</span> : <span class="hljs-keyword">string</span>.Empty;
 
-        <span class="token keyword">protected</span> <span class="token return-type class-name"><span class="token keyword">bool</span></span> ExitOnBackGroundClick <span class="token operator">=&gt;</span> <span class="token keyword">this</span><span class="token punctuation">.</span>Options<span class="token punctuation">.</span><span class="token generic-method"><span class="token function">TryGet</span><span class="token generic class-name"><span class="token punctuation">&lt;</span><span class="token keyword">bool</span><span class="token punctuation">&gt;</span></span></span><span class="token punctuation">(</span>ModalOptions<span class="token punctuation">.</span>__ExitOnBackGroundClick<span class="token punctuation">,</span> <span class="token keyword">out</span> <span class="token class-name"><span class="token keyword">bool</span></span> <span class="token keyword">value</span><span class="token punctuation">)</span> <span class="token punctuation">?</span> <span class="token keyword">value</span> <span class="token punctuation">:</span> <span class="token boolean">false</span><span class="token punctuation">;</span>
+        <span class="hljs-keyword">protected</span> <span class="hljs-keyword">bool</span> ExitOnBackGroundClick =&gt; <span class="hljs-keyword">this</span>.Options.TryGet&lt;<span class="hljs-keyword">bool</span>&gt;(ModalOptions.__ExitOnBackGroundClick, <span class="hljs-keyword">out</span> <span class="hljs-keyword">bool</span> <span class="hljs-keyword">value</span>) ? <span class="hljs-keyword">value</span> : <span class="hljs-literal">false</span>;
 
-        <span class="token keyword">protected</span> <span class="token return-type class-name">TaskCompletionSource<span class="token punctuation">&lt;</span>ModalResult<span class="token punctuation">&gt;</span></span> _ModalTask <span class="token punctuation">{</span> <span class="token keyword">get</span><span class="token punctuation">;</span> <span class="token keyword">set</span><span class="token punctuation">;</span> <span class="token punctuation">}</span> <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token constructor-invocation class-name">TaskCompletionSource<span class="token punctuation">&lt;</span>ModalResult<span class="token punctuation">&gt;</span></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="hljs-function"><span class="hljs-keyword">protected</span> <span class="hljs-title">TaskCompletionSource</span>&lt;<span class="hljs-title">ModalResult</span>&gt; _ModalTask</span> { <span class="hljs-keyword">get</span>; <span class="hljs-keyword">set</span>; } = <span class="hljs-keyword">new</span> TaskCompletionSource&lt;ModalResult&gt;();
 
-        <span class="token keyword">public</span> <span class="token return-type class-name">Task<span class="token punctuation">&lt;</span>ModalResult<span class="token punctuation">&gt;</span></span> <span class="token generic-method"><span class="token function">ShowAsync</span><span class="token generic class-name"><span class="token punctuation">&lt;</span>TModal<span class="token punctuation">&gt;</span></span></span><span class="token punctuation">(</span><span class="token class-name">ModalOptions</span> options<span class="token punctuation">)</span> <span class="token keyword">where</span> <span class="token class-name">TModal</span> <span class="token punctuation">:</span> <span class="token type-list"><span class="token class-name">IComponent</span></span>
-        <span class="token punctuation">{</span>
-            <span class="token keyword">this</span><span class="token punctuation">.</span>Options <span class="token operator">=</span> options <span class="token operator">??=</span> <span class="token keyword">this</span><span class="token punctuation">.</span>Options<span class="token punctuation">;</span>
-            <span class="token keyword">this</span><span class="token punctuation">.</span>_ModalTask <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token constructor-invocation class-name">TaskCompletionSource<span class="token punctuation">&lt;</span>ModalResult<span class="token punctuation">&gt;</span></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-            <span class="token keyword">this</span><span class="token punctuation">.</span>_Content <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token constructor-invocation class-name">RenderFragment</span><span class="token punctuation">(</span>builder <span class="token operator">=&gt;</span>
-            <span class="token punctuation">{</span>
-                builder<span class="token punctuation">.</span><span class="token function">OpenComponent</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token keyword">typeof</span><span class="token punctuation">(</span><span class="token type-expression class-name">TModal</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-                builder<span class="token punctuation">.</span><span class="token function">CloseComponent</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-            <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-            <span class="token keyword">this</span><span class="token punctuation">.</span>Display <span class="token operator">=</span> <span class="token boolean">true</span><span class="token punctuation">;</span>
-            <span class="token function">InvokeAsync</span><span class="token punctuation">(</span>StateHasChanged<span class="token punctuation">)</span><span class="token punctuation">;</span>
-            <span class="token keyword">return</span> <span class="token keyword">this</span><span class="token punctuation">.</span>_ModalTask<span class="token punctuation">.</span>Task<span class="token punctuation">;</span>
-        <span class="token punctuation">}</span>
+        <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">Task</span>&lt;<span class="hljs-title">ModalResult</span>&gt; <span class="hljs-title">ShowAsync</span>&lt;<span class="hljs-title">TModal</span>&gt;(<span class="hljs-params">ModalOptions options</span>) <span class="hljs-keyword">where</span> TModal : IComponent</span>
+        {
+            <span class="hljs-keyword">this</span>.Options = options ??= <span class="hljs-keyword">this</span>.Options;
+            <span class="hljs-keyword">this</span>._ModalTask = <span class="hljs-keyword">new</span> TaskCompletionSource&lt;ModalResult&gt;();
+            <span class="hljs-keyword">this</span>._Content = <span class="hljs-keyword">new</span> RenderFragment(builder =&gt;
+            {
+                builder.OpenComponent(<span class="hljs-number">1</span>, <span class="hljs-keyword">typeof</span>(TModal));
+                builder.CloseComponent();
+            });
+            <span class="hljs-keyword">this</span>.Display = <span class="hljs-literal">true</span>;
+            InvokeAsync(StateHasChanged);
+            <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>._ModalTask.Task;
+        }
 
-        <span class="token comment">/// &lt;summary&gt;</span>
-        <span class="token comment">/// Method to update the state of the display based on UIOptions</span>
-        <span class="token comment">/// &lt;/summary&gt;</span>
-        <span class="token comment">/// &lt;param name=&quot;options&quot;&gt;&lt;/param&gt;</span>
-        <span class="token keyword">public</span> <span class="token return-type class-name"><span class="token keyword">void</span></span> <span class="token function">Update</span><span class="token punctuation">(</span><span class="token class-name">ModalOptions</span> options <span class="token operator">=</span> <span class="token keyword">null</span><span class="token punctuation">)</span>
-        <span class="token punctuation">{</span>
-            <span class="token keyword">this</span><span class="token punctuation">.</span>Options <span class="token operator">=</span> options <span class="token operator">??=</span> <span class="token keyword">this</span><span class="token punctuation">.</span>Options<span class="token punctuation">;</span>
-            <span class="token function">InvokeAsync</span><span class="token punctuation">(</span>StateHasChanged<span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token punctuation">}</span>
+        <span class="hljs-comment"><span class="hljs-doctag">///</span> <span class="hljs-doctag">&lt;summary&gt;</span></span>
+        <span class="hljs-comment"><span class="hljs-doctag">///</span> Method to update the state of the display based on UIOptions</span>
+        <span class="hljs-comment"><span class="hljs-doctag">///</span> <span class="hljs-doctag">&lt;/summary&gt;</span></span>
+        <span class="hljs-comment"><span class="hljs-doctag">///</span> <span class="hljs-doctag">&lt;param name=&quot;options&quot;&gt;</span><span class="hljs-doctag">&lt;/param&gt;</span></span>
+        <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">Update</span>(<span class="hljs-params">ModalOptions options = <span class="hljs-literal">null</span></span>)</span>
+        {
+            <span class="hljs-keyword">this</span>.Options = options ??= <span class="hljs-keyword">this</span>.Options;
+            InvokeAsync(StateHasChanged);
+        }
 
-        <span class="token comment">/// Method called by the dismiss button to close the dialog</span>
-        <span class="token comment">/// sets the task to complete, show to false and renders the component (which hides it as show is false!)</span>
-        <span class="token keyword">public</span> <span class="token keyword">async</span> <span class="token return-type class-name"><span class="token keyword">void</span></span> <span class="token function">Dismiss</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
-        <span class="token punctuation">{</span>
-            _ <span class="token operator">=</span> <span class="token keyword">this</span><span class="token punctuation">.</span>_ModalTask<span class="token punctuation">.</span><span class="token function">TrySetResult</span><span class="token punctuation">(</span>ModalResult<span class="token punctuation">.</span><span class="token function">Cancel</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-            <span class="token keyword">this</span><span class="token punctuation">.</span>Display <span class="token operator">=</span> <span class="token boolean">false</span><span class="token punctuation">;</span>
-            <span class="token keyword">this</span><span class="token punctuation">.</span>_Content <span class="token operator">=</span> <span class="token keyword">null</span><span class="token punctuation">;</span>
-            <span class="token keyword">await</span> <span class="token function">InvokeAsync</span><span class="token punctuation">(</span>StateHasChanged<span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token punctuation">}</span>
+        <span class="hljs-comment"><span class="hljs-doctag">///</span> Method called by the dismiss button to close the dialog</span>
+        <span class="hljs-comment"><span class="hljs-doctag">///</span> sets the task to complete, show to false and renders the component (which hides it as show is false!)</span>
+        <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">async</span> <span class="hljs-keyword">void</span> <span class="hljs-title">Dismiss</span>(<span class="hljs-params"></span>)</span>
+        {
+            _ = <span class="hljs-keyword">this</span>._ModalTask.TrySetResult(ModalResult.Cancel());
+            <span class="hljs-keyword">this</span>.Display = <span class="hljs-literal">false</span>;
+            <span class="hljs-keyword">this</span>._Content = <span class="hljs-literal">null</span>;
+            <span class="hljs-keyword">await</span> InvokeAsync(StateHasChanged);
+        }
 
-        <span class="token comment">/// Method called by child components through the cascade value of this component</span>
-        <span class="token comment">/// sets the task to complete, show to false and renders the component (which hides it as show is false!)</span>
-        <span class="token keyword">public</span> <span class="token keyword">async</span> <span class="token return-type class-name"><span class="token keyword">void</span></span> <span class="token function">Close</span><span class="token punctuation">(</span><span class="token class-name">ModalResult</span> result<span class="token punctuation">)</span>
-        <span class="token punctuation">{</span>
-            _ <span class="token operator">=</span> <span class="token keyword">this</span><span class="token punctuation">.</span>_ModalTask<span class="token punctuation">.</span><span class="token function">TrySetResult</span><span class="token punctuation">(</span>result<span class="token punctuation">)</span><span class="token punctuation">;</span>
-            <span class="token keyword">this</span><span class="token punctuation">.</span>Display <span class="token operator">=</span> <span class="token boolean">false</span><span class="token punctuation">;</span>
-            <span class="token keyword">this</span><span class="token punctuation">.</span>_Content <span class="token operator">=</span> <span class="token keyword">null</span><span class="token punctuation">;</span>
-            <span class="token keyword">await</span> <span class="token function">InvokeAsync</span><span class="token punctuation">(</span>StateHasChanged<span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token punctuation">}</span>
+        <span class="hljs-comment"><span class="hljs-doctag">///</span> Method called by child components through the cascade value of this component</span>
+        <span class="hljs-comment"><span class="hljs-doctag">///</span> sets the task to complete, show to false and renders the component (which hides it as show is false!)</span>
+        <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">async</span> <span class="hljs-keyword">void</span> <span class="hljs-title">Close</span>(<span class="hljs-params">ModalResult result</span>)</span>
+        {
+            _ = <span class="hljs-keyword">this</span>._ModalTask.TrySetResult(result);
+            <span class="hljs-keyword">this</span>.Display = <span class="hljs-literal">false</span>;
+            <span class="hljs-keyword">this</span>._Content = <span class="hljs-literal">null</span>;
+            <span class="hljs-keyword">await</span> InvokeAsync(StateHasChanged);
+        }
 
-        <span class="token keyword">private</span> <span class="token return-type class-name"><span class="token keyword">void</span></span> <span class="token function">SetPageExitCheck</span><span class="token punctuation">(</span><span class="token class-name"><span class="token keyword">bool</span></span> action<span class="token punctuation">)</span>
-        <span class="token punctuation">{</span>
-            _js<span class="token punctuation">.</span><span class="token generic-method"><span class="token function">InvokeAsync</span><span class="token generic class-name"><span class="token punctuation">&lt;</span><span class="token keyword">bool</span><span class="token punctuation">&gt;</span></span></span><span class="token punctuation">(</span><span class="token string">&quot;cecblazor_setEditorExitCheck&quot;</span><span class="token punctuation">,</span> action<span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token punctuation">}</span>
+        <span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-keyword">void</span> <span class="hljs-title">SetPageExitCheck</span>(<span class="hljs-params"><span class="hljs-keyword">bool</span> action</span>)</span>
+        {
+            _js.InvokeAsync&lt;<span class="hljs-keyword">bool</span>&gt;(<span class="hljs-string">&quot;cecblazor_setEditorExitCheck&quot;</span>, action);
+        }
 
-        <span class="token keyword">public</span> <span class="token return-type class-name"><span class="token keyword">void</span></span> <span class="token function">Lock</span><span class="token punctuation">(</span><span class="token class-name"><span class="token keyword">bool</span></span> setlock<span class="token punctuation">)</span>
-        <span class="token punctuation">{</span>
-            <span class="token keyword">if</span> <span class="token punctuation">(</span>setlock <span class="token operator">&amp;&amp;</span> <span class="token operator">!</span><span class="token keyword">this</span><span class="token punctuation">.</span>IsLocked<span class="token punctuation">)</span>
-            <span class="token punctuation">{</span>
-                <span class="token keyword">this</span><span class="token punctuation">.</span>IsLocked <span class="token operator">=</span> <span class="token boolean">true</span><span class="token punctuation">;</span>
-                <span class="token keyword">this</span><span class="token punctuation">.</span><span class="token function">SetPageExitCheck</span><span class="token punctuation">(</span><span class="token boolean">true</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-            <span class="token punctuation">}</span>
-            <span class="token keyword">else</span> <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">.</span>IsLocked <span class="token operator">&amp;&amp;</span> <span class="token operator">!</span>setlock<span class="token punctuation">)</span>
-            <span class="token punctuation">{</span>
-                <span class="token keyword">this</span><span class="token punctuation">.</span>IsLocked <span class="token operator">=</span> <span class="token boolean">false</span><span class="token punctuation">;</span>
-                <span class="token keyword">this</span><span class="token punctuation">.</span><span class="token function">SetPageExitCheck</span><span class="token punctuation">(</span><span class="token boolean">false</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-            <span class="token punctuation">}</span>
-        <span class="token punctuation">}</span>
+        <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">Lock</span>(<span class="hljs-params"><span class="hljs-keyword">bool</span> setlock</span>)</span>
+        {
+            <span class="hljs-keyword">if</span> (setlock &amp;&amp; !<span class="hljs-keyword">this</span>.IsLocked)
+            {
+                <span class="hljs-keyword">this</span>.IsLocked = <span class="hljs-literal">true</span>;
+                <span class="hljs-keyword">this</span>.SetPageExitCheck(<span class="hljs-literal">true</span>);
+            }
+            <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (<span class="hljs-keyword">this</span>.IsLocked &amp;&amp; !setlock)
+            {
+                <span class="hljs-keyword">this</span>.IsLocked = <span class="hljs-literal">false</span>;
+                <span class="hljs-keyword">this</span>.SetPageExitCheck(<span class="hljs-literal">false</span>);
+            }
+        }
 
-        <span class="token keyword">private</span> <span class="token return-type class-name"><span class="token keyword">void</span></span> <span class="token function">OnBackClick</span><span class="token punctuation">(</span><span class="token class-name">MouseEventArgs</span> e<span class="token punctuation">)</span>
-        <span class="token punctuation">{</span>
-            <span class="token keyword">if</span> <span class="token punctuation">(</span>ExitOnBackGroundClick <span class="token operator">&amp;&amp;</span> <span class="token operator">!</span>IsLocked<span class="token punctuation">)</span>
-                <span class="token keyword">this</span><span class="token punctuation">.</span><span class="token function">Close</span><span class="token punctuation">(</span>ModalResult<span class="token punctuation">.</span><span class="token function">Exit</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token punctuation">}</span>
-    <span class="token punctuation">}</span>
-<span class="token punctuation">}</span>
-</code></pre></div><p>Next we add some component Css as <em>BasModalDialog.razor.css</em>.</p> <div class="language-css extra-class"><pre class="language-css"><code><span class="token selector">div.base-modal-background</span> <span class="token punctuation">{</span>
-    <span class="token property">display</span><span class="token punctuation">:</span> block<span class="token punctuation">;</span>
-    <span class="token property">position</span><span class="token punctuation">:</span> fixed<span class="token punctuation">;</span>
-    <span class="token property">z-index</span><span class="token punctuation">:</span> 1<span class="token punctuation">;</span> <span class="token comment">/* Sit on top */</span>
-    <span class="token property">left</span><span class="token punctuation">:</span> 0<span class="token punctuation">;</span>
-    <span class="token property">top</span><span class="token punctuation">:</span> 0<span class="token punctuation">;</span>
-    <span class="token property">width</span><span class="token punctuation">:</span> 100%<span class="token punctuation">;</span> <span class="token comment">/* Full width */</span>
-    <span class="token property">height</span><span class="token punctuation">:</span> 100%<span class="token punctuation">;</span> <span class="token comment">/* Full height */</span>
-    <span class="token property">overflow</span><span class="token punctuation">:</span> auto<span class="token punctuation">;</span> <span class="token comment">/* Enable scroll if needed */</span>
-    <span class="token property">background-color</span><span class="token punctuation">:</span> <span class="token function">rgb</span><span class="token punctuation">(</span>0<span class="token punctuation">,</span>0<span class="token punctuation">,</span>0<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">/* Fallback color */</span>
-    <span class="token property">background-color</span><span class="token punctuation">:</span> <span class="token function">rgba</span><span class="token punctuation">(</span>0<span class="token punctuation">,</span>0<span class="token punctuation">,</span>0<span class="token punctuation">,</span>0.4<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">/* Black w/ opacity */</span>
-<span class="token punctuation">}</span>
+        <span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-keyword">void</span> <span class="hljs-title">OnBackClick</span>(<span class="hljs-params">MouseEventArgs e</span>)</span>
+        {
+            <span class="hljs-keyword">if</span> (ExitOnBackGroundClick &amp;&amp; !IsLocked)
+                <span class="hljs-keyword">this</span>.Close(ModalResult.Exit());
+        }
+    }
+}
+</div></code></pre>
+<p>Next we add some component Css as <em>BasModalDialog.razor.css</em>.</p>
+<pre><code class="language-css"><div><span class="hljs-selector-tag">div</span><span class="hljs-selector-class">.base-modal-background</span> {
+    <span class="hljs-attribute">display</span>: block;
+    <span class="hljs-attribute">position</span>: fixed;
+    <span class="hljs-attribute">z-index</span>: <span class="hljs-number">1</span>; <span class="hljs-comment">/* Sit on top */</span>
+    <span class="hljs-attribute">left</span>: <span class="hljs-number">0</span>;
+    <span class="hljs-attribute">top</span>: <span class="hljs-number">0</span>;
+    <span class="hljs-attribute">width</span>: <span class="hljs-number">100%</span>; <span class="hljs-comment">/* Full width */</span>
+    <span class="hljs-attribute">height</span>: <span class="hljs-number">100%</span>; <span class="hljs-comment">/* Full height */</span>
+    <span class="hljs-attribute">overflow</span>: auto; <span class="hljs-comment">/* Enable scroll if needed */</span>
+    <span class="hljs-attribute">background-color</span>: <span class="hljs-built_in">rgb</span>(<span class="hljs-number">0</span>,<span class="hljs-number">0</span>,<span class="hljs-number">0</span>); <span class="hljs-comment">/* Fallback color */</span>
+    <span class="hljs-attribute">background-color</span>: <span class="hljs-built_in">rgba</span>(<span class="hljs-number">0</span>,<span class="hljs-number">0</span>,<span class="hljs-number">0</span>,<span class="hljs-number">0.4</span>); <span class="hljs-comment">/* Black w/ opacity */</span>
+}
 
-<span class="token selector">div.base-modal-content</span> <span class="token punctuation">{</span>
-    <span class="token property">background-color</span><span class="token punctuation">:</span> #fefefe<span class="token punctuation">;</span>
-    <span class="token property">margin</span><span class="token punctuation">:</span> 10% auto<span class="token punctuation">;</span>
-    <span class="token property">padding</span><span class="token punctuation">:</span> 10px<span class="token punctuation">;</span>
-    <span class="token property">border</span><span class="token punctuation">:</span> 2px solid #888<span class="token punctuation">;</span>
-    <span class="token property">width</span><span class="token punctuation">:</span> 90%<span class="token punctuation">;</span>
-<span class="token punctuation">}</span>
-</code></pre></div><p>Finally we need to set up some JsInterop to handle browser exit locking.  Add a <em>site.js</em> file to <em>wwwroot</em></p> <div class="language-js extra-class"><pre class="language-js"><code>window<span class="token punctuation">.</span><span class="token function-variable function">cecblazor_setEditorExitCheck</span> <span class="token operator">=</span> <span class="token keyword">function</span> <span class="token punctuation">(</span><span class="token parameter">show</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-    <span class="token keyword">if</span> <span class="token punctuation">(</span>show<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-        window<span class="token punctuation">.</span><span class="token function">addEventListener</span><span class="token punctuation">(</span><span class="token string">&quot;beforeunload&quot;</span><span class="token punctuation">,</span> cecblazor_showExitDialog<span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token punctuation">}</span>
-    <span class="token keyword">else</span> <span class="token punctuation">{</span>
-        window<span class="token punctuation">.</span><span class="token function">removeEventListener</span><span class="token punctuation">(</span><span class="token string">&quot;beforeunload&quot;</span><span class="token punctuation">,</span> cecblazor_showExitDialog<span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token punctuation">}</span>
-<span class="token punctuation">}</span>
+<span class="hljs-selector-tag">div</span><span class="hljs-selector-class">.base-modal-content</span> {
+    <span class="hljs-attribute">background-color</span>: <span class="hljs-number">#fefefe</span>;
+    <span class="hljs-attribute">margin</span>: <span class="hljs-number">10%</span> auto;
+    <span class="hljs-attribute">padding</span>: <span class="hljs-number">10px</span>;
+    <span class="hljs-attribute">border</span>: <span class="hljs-number">2px</span> solid <span class="hljs-number">#888</span>;
+    <span class="hljs-attribute">width</span>: <span class="hljs-number">90%</span>;
+}
+</div></code></pre>
+<p>Finally we need to set up some JsInterop to handle browser exit locking.  Add a <em>site.js</em> file to <em>wwwroot</em></p>
+<pre><code class="language-js"><div><span class="hljs-built_in">window</span>.cecblazor_setEditorExitCheck = <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">show</span>) </span>{
+    <span class="hljs-keyword">if</span> (show) {
+        <span class="hljs-built_in">window</span>.addEventListener(<span class="hljs-string">&quot;beforeunload&quot;</span>, cecblazor_showExitDialog);
+    }
+    <span class="hljs-keyword">else</span> {
+        <span class="hljs-built_in">window</span>.removeEventListener(<span class="hljs-string">&quot;beforeunload&quot;</span>, cecblazor_showExitDialog);
+    }
+}
 
-window<span class="token punctuation">.</span><span class="token function-variable function">cecblazor_showExitDialog</span> <span class="token operator">=</span> <span class="token keyword">function</span> <span class="token punctuation">(</span><span class="token parameter">event</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-    event<span class="token punctuation">.</span><span class="token function">preventDefault</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    event<span class="token punctuation">.</span>returnValue <span class="token operator">=</span> <span class="token string">&quot;There are unsaved changes on this page.  Do you want to leave?&quot;</span><span class="token punctuation">;</span>
-<span class="token punctuation">}</span>
-</code></pre></div><p>And add a reference to the SPA startup page - _Host.cshtml or index.html:</p> <div class="language-html extra-class"><pre class="language-html"><code>    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>script</span> <span class="token attr-name">src</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">&quot;</span>/site.js<span class="token punctuation">&quot;</span></span><span class="token punctuation">&gt;</span></span><span class="token script"></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>script</span><span class="token punctuation">&gt;</span></span>
-</code></pre></div><h2 id="implementing-modals"><a href="#implementing-modals" class="header-anchor">#</a> Implementing Modals</h2> <p>We will demonstrate using the modal dialog with two examples:</p> <ol><li>Displaying the FetchData page in a modal dialog.</li> <li>A Pseudo editor page</li></ol> <h3 id="inital-setup"><a href="#inital-setup" class="header-anchor">#</a> Inital Setup</h3> <ol><li>Start with a standard Blazor Server template site.</li> <li>Set up the five classes/interfaces/emuns above.</li> <li>Add the <code>Blazr.Dialog</code> namespace to <code>_Imports.razor</code>.</li></ol> <h3 id="modify-fetchdata"><a href="#modify-fetchdata" class="header-anchor">#</a> Modify FetchData</h3> <div class="language-html extra-class"><pre class="language-html"><code>@page &quot;/fetchdata&quot;
+<span class="hljs-built_in">window</span>.cecblazor_showExitDialog = <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">event</span>) </span>{
+    event.preventDefault();
+    event.returnValue = <span class="hljs-string">&quot;There are unsaved changes on this page.  Do you want to leave?&quot;</span>;
+}
+</div></code></pre>
+<p>And add a reference to the SPA startup page - _Host.cshtml or index.html:</p>
+<pre><code class="language-html"><div>    <span class="hljs-tag">&lt;<span class="hljs-name">script</span> <span class="hljs-attr">src</span>=<span class="hljs-string">&quot;/site.js&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span>
+</div></code></pre>
+<h2 id="implementing-modals">Implementing Modals</h2>
+<p>We will demonstrate using the modal dialog with two examples:</p>
+<ol>
+<li>Displaying the FetchData page in a modal dialog.</li>
+<li>A Pseudo editor page</li>
+</ol>
+<h3 id="inital-setup">Inital Setup</h3>
+<ol>
+<li>Start with a standard Blazor Server template site.</li>
+<li>Set up the five classes/interfaces/emuns above.</li>
+<li>Add the <code>Blazr.Dialog</code> namespace to <code>_Imports.razor</code>.</li>
+</ol>
+<h3 id="modify-fetchdata">Modify FetchData</h3>
+<pre><code class="language-html"><div>@page &quot;/fetchdata&quot;
 
 .....
 
     @if (this.isDialog)
     {
-        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">&quot;</span>text-right<span class="token punctuation">&quot;</span></span><span class="token punctuation">&gt;</span></span> <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>button</span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">&quot;</span>btn btn-dark<span class="token punctuation">&quot;</span></span> <span class="token attr-name">@onclick</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">&quot;</span>Exit<span class="token punctuation">&quot;</span></span><span class="token punctuation">&gt;</span></span>Exit<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>button</span><span class="token punctuation">&gt;</span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">&gt;</span></span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;text-right&quot;</span>&gt;</span> <span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;btn btn-dark&quot;</span> @<span class="hljs-attr">onclick</span>=<span class="hljs-string">&quot;Exit&quot;</span>&gt;</span>Exit<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
     }
 }
-</code></pre></div><div class="language-csharp extra-class"><pre class="language-csharp"><code>@code <span class="token punctuation">{</span>
+</div></code></pre>
+<pre><code class="language-csharp"><div>@code {
 
-    <span class="token punctuation">[</span><span class="token attribute"><span class="token class-name">CascadingParameter</span></span><span class="token punctuation">]</span> <span class="token return-type class-name">IModalDialog</span> Dialog <span class="token punctuation">{</span> <span class="token keyword">get</span><span class="token punctuation">;</span> <span class="token keyword">set</span><span class="token punctuation">;</span> <span class="token punctuation">}</span>
+    [<span class="hljs-meta">CascadingParameter</span>] IModalDialog Dialog { <span class="hljs-keyword">get</span>; <span class="hljs-keyword">set</span>; }
 
-    <span class="token keyword">private</span> <span class="token return-type class-name"><span class="token keyword">bool</span></span> isDialog <span class="token operator">=&gt;</span> Dialog <span class="token keyword">is</span> <span class="token keyword">not</span> <span class="token keyword">null</span><span class="token punctuation">;</span>
+    <span class="hljs-keyword">private</span> <span class="hljs-keyword">bool</span> isDialog =&gt; Dialog <span class="hljs-keyword">is</span> not <span class="hljs-literal">null</span>;
 
-    <span class="token keyword">private</span> <span class="token class-name">List<span class="token punctuation">&lt;</span>WeatherForecast<span class="token punctuation">&gt;</span></span> forecasts<span class="token punctuation">;</span>
+    <span class="hljs-keyword">private</span> List&lt;WeatherForecast&gt; forecasts;
 
-    <span class="token keyword">private</span> <span class="token return-type class-name"><span class="token keyword">void</span></span> <span class="token function">Exit</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
-    <span class="token punctuation">{</span>
-        <span class="token keyword">this</span><span class="token punctuation">.</span>Dialog<span class="token punctuation">.</span><span class="token function">Dismiss</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token punctuation">}</span>
-    <span class="token range operator">..</span><span class="token range operator">..</span><span class="token punctuation">.</span>
-<span class="token punctuation">}</span>
-</code></pre></div><h3 id="modify-index-razor"><a href="#modify-index-razor" class="header-anchor">#</a> Modify Index.razor</h3> <div class="language-html extra-class"><pre class="language-html"><code>@page &quot;/&quot;
+    <span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-keyword">void</span> <span class="hljs-title">Exit</span>(<span class="hljs-params"></span>)</span>
+    {
+        <span class="hljs-keyword">this</span>.Dialog.Dismiss();
+    }
+    .....
+}
+</div></code></pre>
+<h3 id="modify-indexrazor">Modify Index.razor</h3>
+<pre><code class="language-html"><div>@page &quot;/&quot;
 
-<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>button</span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">&quot;</span>btn btn-primary<span class="token punctuation">&quot;</span></span> <span class="token attr-name">@onclick</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">&quot;</span>ShowModal<span class="token punctuation">&quot;</span></span><span class="token punctuation">&gt;</span></span>Show FetchData<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>button</span><span class="token punctuation">&gt;</span></span>
-<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>BaseModalDialog</span> <span class="token attr-name">@ref</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">&quot;</span>Dialog<span class="token punctuation">&quot;</span></span> <span class="token punctuation">/&gt;</span></span>
-</code></pre></div><div class="language-csharp extra-class"><pre class="language-csharp"><code>@code <span class="token punctuation">{</span>
-    <span class="token keyword">public</span> <span class="token return-type class-name">IModalDialog</span> Dialog <span class="token punctuation">{</span> <span class="token keyword">get</span><span class="token punctuation">;</span> <span class="token keyword">set</span><span class="token punctuation">;</span> <span class="token punctuation">}</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;btn btn-primary&quot;</span> @<span class="hljs-attr">onclick</span>=<span class="hljs-string">&quot;ShowModal&quot;</span>&gt;</span>Show FetchData<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">BaseModalDialog</span> @<span class="hljs-attr">ref</span>=<span class="hljs-string">&quot;Dialog&quot;</span> /&gt;</span>
+</div></code></pre>
+<pre><code class="language-csharp"><div>@code {
+    <span class="hljs-keyword">public</span> IModalDialog Dialog { <span class="hljs-keyword">get</span>; <span class="hljs-keyword">set</span>; }
 
-    <span class="token keyword">private</span> <span class="token return-type class-name"><span class="token keyword">void</span></span> <span class="token function">ShowModal</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
-        <span class="token operator">=&gt;</span> Dialog<span class="token punctuation">.</span><span class="token generic-method"><span class="token function">ShowAsync</span><span class="token generic class-name"><span class="token punctuation">&lt;</span>FetchData<span class="token punctuation">&gt;</span></span></span><span class="token punctuation">(</span> <span class="token keyword">new</span> <span class="token constructor-invocation class-name">Blazr<span class="token punctuation">.</span>Modal<span class="token punctuation">.</span>ModalOptions</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token punctuation">}</span>
-</code></pre></div><h3 id="form-using-bootstrapmodal"><a href="#form-using-bootstrapmodal" class="header-anchor">#</a> Form using BootstrapModal</h3> <p>This demonstrates using an edit form in a dialog.</p> <p>First the component - <em>PseudoEditor.Razor</em></p> <p>Use the &quot;Set To Dirty&quot; button to emulate making edits in the form.</p> <div class="language-html extra-class"><pre class="language-html"><code><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>h3</span><span class="token punctuation">&gt;</span></span>PseudoEditor<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>h3</span><span class="token punctuation">&gt;</span></span>
+    <span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-keyword">void</span> <span class="hljs-title">ShowModal</span>(<span class="hljs-params"></span>)</span>
+        =&gt; Dialog.ShowAsync&lt;FetchData&gt;( <span class="hljs-keyword">new</span> Blazr.Modal.ModalOptions());
+}
+</div></code></pre>
+<h3 id="form-using-bootstrapmodal">Form using BootstrapModal</h3>
+<p>This demonstrates using an edit form in a dialog.</p>
+<p>First the component - <em>PseudoEditor.Razor</em></p>
+<p>Use the &quot;Set To Dirty&quot; button to emulate making edits in the form.</p>
+<pre><code class="language-html"><div><span class="hljs-tag">&lt;<span class="hljs-name">h3</span>&gt;</span>PseudoEditor<span class="hljs-tag">&lt;/<span class="hljs-name">h3</span>&gt;</span>
 
-<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span><span class="token punctuation">&gt;</span></span> DATA<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">&gt;</span></span>
+<span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span> DATA<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
 
-<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">&quot;</span>p-2 m-2 text-right<span class="token punctuation">&quot;</span></span><span class="token punctuation">&gt;</span></span>
-    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>button</span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">&quot;</span>btn @this._editButtonColour<span class="token punctuation">&quot;</span></span> <span class="token attr-name">@onclick</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">&quot;</span>this.SetToEdit<span class="token punctuation">&quot;</span></span><span class="token punctuation">&gt;</span></span>@this._editButtonText<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>button</span><span class="token punctuation">&gt;</span></span>
-    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>button</span> <span class="token attr-name">disabled</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">&quot;</span>@(!this._isDirty)<span class="token punctuation">&quot;</span></span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">&quot;</span>btn btn-success<span class="token punctuation">&quot;</span></span> <span class="token attr-name">@onclick</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">&quot;</span>this.Save<span class="token punctuation">&quot;</span></span><span class="token punctuation">&gt;</span></span>Save<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>button</span><span class="token punctuation">&gt;</span></span>
-    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>button</span> <span class="token attr-name">disabled</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">&quot;</span>@(this._isDirty)<span class="token punctuation">&quot;</span></span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">&quot;</span>btn btn-dark<span class="token punctuation">&quot;</span></span> <span class="token attr-name">@onclick</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">&quot;</span>this.Close<span class="token punctuation">&quot;</span></span><span class="token punctuation">&gt;</span></span>Close<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>button</span><span class="token punctuation">&gt;</span></span>
-<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">&gt;</span></span>
+<span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;p-2 m-2 text-right&quot;</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;btn @this._editButtonColour&quot;</span> @<span class="hljs-attr">onclick</span>=<span class="hljs-string">&quot;this.SetToEdit&quot;</span>&gt;</span>@this._editButtonText<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">disabled</span>=<span class="hljs-string">&quot;@(!this._isDirty)&quot;</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;btn btn-success&quot;</span> @<span class="hljs-attr">onclick</span>=<span class="hljs-string">&quot;this.Save&quot;</span>&gt;</span>Save<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">disabled</span>=<span class="hljs-string">&quot;@(this._isDirty)&quot;</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;btn btn-dark&quot;</span> @<span class="hljs-attr">onclick</span>=<span class="hljs-string">&quot;this.Close&quot;</span>&gt;</span>Close<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
 
 @code {
     [CascadingParameter]
@@ -356,12 +681,14 @@ window<span class="token punctuation">.</span><span class="token function-variab
         this.Modal.Close(ModalResult.OK());
     }
 }
-</code></pre></div><p>The test page:</p> <div class="language-html extra-class"><pre class="language-html"><code>@page &quot;/modal&quot;
+</div></code></pre>
+<p>The test page:</p>
+<pre><code class="language-html"><div>@page &quot;/modal&quot;
 
-<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span><span class="token punctuation">&gt;</span></span>
-    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>button</span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">&quot;</span>btn btn-primary<span class="token punctuation">&quot;</span></span> <span class="token attr-name">@onclick</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">&quot;</span>GetYesNo<span class="token punctuation">&quot;</span></span><span class="token punctuation">&gt;</span></span>Open<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>button</span><span class="token punctuation">&gt;</span></span>
-<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">&gt;</span></span>
-<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>BaseModalDialog</span> <span class="token attr-name">@ref</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">&quot;</span>this.Modal<span class="token punctuation">&quot;</span></span><span class="token punctuation">&gt;</span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>BaseModalDialog</span><span class="token punctuation">&gt;</span></span>
+<span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;btn btn-primary&quot;</span> @<span class="hljs-attr">onclick</span>=<span class="hljs-string">&quot;GetYesNo&quot;</span>&gt;</span>Open<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">BaseModalDialog</span> @<span class="hljs-attr">ref</span>=<span class="hljs-string">&quot;this.Modal&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">BaseModalDialog</span>&gt;</span>
 @code
 {
     private BaseModalDialog Modal { get; set; }
@@ -370,18 +697,65 @@ window<span class="token punctuation">.</span><span class="token function-variab
     {
         var options = new ModalOptions();
         options.Set(ModalOptions.__ExitOnBackGroundClick, true);
-        Modal.ShowAsync<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>PseudoEditor</span><span class="token punctuation">&gt;</span></span>(options);
+        Modal.ShowAsync<span class="hljs-tag">&lt;<span class="hljs-name">PseudoEditor</span>&gt;</span>(options);
     }
 }
-</code></pre></div><h2 id="wrap-up"><a href="#wrap-up" class="header-anchor">#</a> Wrap Up</h2> <p>Modal dialogs are just CSS.  You implement them using layers.  The modal background is a full browser sized layer that covers and &quot;hides&quot; everything below it.  The modal content sits on top, and is the only &quot;live&quot; content.</p> <p>If your looking for a more complex Modal Dialog with more features, take a look at <a href="https://github.com/Blazored/Modal" target="_blank" rel="noopener noreferrer">Blazored Modal Dialog<span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a>.</p></div> <footer class="page-edit"><!----> <!----></footer> <div class="page-nav"><p class="inner"><span class="prev">
-      ←
-      <a href="/articles/Inline-Dialog.html" class="prev">
-        The Blazor Inline Dialog Control
-      </a></span> <span class="next"><a href="/articles/ValidationFormState.html">
-        A Blazor Validation Control
-      </a>
-      →
-    </span></p></div> </main></div><div class="global-ui"><!----></div></div>
-    <script src="/assets/js/app.e7504274.js" defer></script><script src="/assets/js/3.f3d70fce.js" defer></script><script src="/assets/js/55.6168cc1a.js" defer></script>
-  </body>
+</div></code></pre>
+<h2 id="wrap-up">Wrap Up</h2>
+<p>Modal dialogs are just CSS.  You implement them using layers.  The modal background is a full browser sized layer that covers and &quot;hides&quot; everything below it.  The modal content sits on top, and is the only &quot;live&quot; content.</p>
+<p>If your looking for a more complex Modal Dialog with more features, take a look at <a href="https://github.com/Blazored/Modal">Blazored Modal Dialog</a>.</p>
+
+    
+
+            </div>
+        </div>
+    </div>
+</div>
+<!-- end of Article Container -->
+
+
+                </div>
+                <!-- End of Main Content -->
+            </div>
+            <!-- Footer -->
+            
+<!-- Copyright -->
+<footer class="sticky-footer bg-white">
+    <div class="container my-auto">
+        <div class="copyright text-center my-auto">
+            
+<span>Copyright &copy; Cold Elm Coders - 2021</span>
+
+        </div>
+    </div>
+</footer>
+<!-- end of copyright -->
+
+
+            <!-- End of Footer -->
+        </div>
+        <!-- End of Content Wrapper -->
+        
+<a class="scroll-to-top rounded" href="#page-top">
+    <i class="fas fa-angle-up"></i>
+</a>
+
+
+    </div>
+    <!-- End of Page Wrapper -->
+    <!-- Scripts -->
+    
+<!-- Scripts -->
+<!-- Bootstrap core JavaScript-->
+<script src="/assets/vendor/jquery/jquery.min.js"></script>
+<script src="/assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+<!-- Core plugin JavaScript-->
+<script src="/assets/vendor/jquery-easing/jquery.easing.min.js"></script>
+
+<!-- Custom scripts for all pages-->
+<script src="/assets/js/sb-admin-2.min.js"></script>
+
+
+</body>
 </html>

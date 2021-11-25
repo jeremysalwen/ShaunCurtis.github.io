@@ -1,104 +1,411 @@
 <!DOCTYPE html>
-<html lang="en-US">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>For and ForEach loops in Blazor Components | Cold Elm Coders</title>
-    <meta name="generator" content="VuePress 1.8.2">
+<html lang="en">
+<head>
     
-    <meta name="description" content="">
-    <meta name="theme-color" content="#3eaf7c">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+<!-- SEO Meta Tags -->
+<meta name="description" content="Your description">
+<meta name="author" content="Your name">
+
+<!-- OG Meta Tags to improve the way the post looks when you share the page on Facebook, Twitter, LinkedIn -->
+<meta property="og:site_name" content="" /> <!-- website name -->
+<meta property="og:site" content="" /> <!-- website link -->
+<meta property="og:title" content="" /> <!-- title shown in the actual shared post -->
+<meta property="og:description" content="" /> <!-- description shown in the actual shared post -->
+<meta property="og:image" content="" /> <!-- image link, make sure it's jpg -->
+<meta property="og:url" content="" /> <!-- where do you want your post to link to -->
+<meta name="twitter:card" content="summary_large_image"> <!-- to have large image post format in Twitter -->
+
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+
+<meta name="description" content="Using For and ForEach loops in Blazor Components" >
+<meta name="author" content="Shaun Curtis" >
+
+
+
+<title>For and ForEach loops in Blazor Components</title>
+
+
+<!-- Custom fonts for this template-->
+<link href="/assets/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+<link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+      rel="stylesheet">
+
+<!-- Custom styles for this template-->
+<link href="/assets/css/sb-admin-2.css" rel="stylesheet" type="text/css">
+<link href="/assets/css/site.css" rel="stylesheet" type="text/css">
+
+<!-- Favicon  -->
+<link rel="icon" href="/assets/images/favicon.png">
+
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/highlight.css">
+    <link rel="stylesheet" href="/assets/css/article.css" type="text/css">
+</head>
+<body id="page-top">
+    <!--topbar-->
+    <div id="topbar">
+        
+<!-- Topbar -->
+<nav class="navbar navbar-expand navbar-light topbar mb-4 static-top">
     
-    <link rel="preload" href="/assets/css/0.styles.757cca11.css" as="style"><link rel="preload" href="/assets/js/app.e7504274.js" as="script"><link rel="preload" href="/assets/js/3.f3d70fce.js" as="script"><link rel="preload" href="/assets/js/62.da039f8c.js" as="script"><link rel="prefetch" href="/assets/js/1.dd2e798d.js"><link rel="prefetch" href="/assets/js/10.62cd9054.js"><link rel="prefetch" href="/assets/js/11.7ef2f0cc.js"><link rel="prefetch" href="/assets/js/12.571448aa.js"><link rel="prefetch" href="/assets/js/13.e5a600e9.js"><link rel="prefetch" href="/assets/js/14.4ed01dd2.js"><link rel="prefetch" href="/assets/js/15.d0a813d8.js"><link rel="prefetch" href="/assets/js/16.3d701298.js"><link rel="prefetch" href="/assets/js/17.dd96adea.js"><link rel="prefetch" href="/assets/js/18.f6955aa8.js"><link rel="prefetch" href="/assets/js/19.bb1f166c.js"><link rel="prefetch" href="/assets/js/20.440b537e.js"><link rel="prefetch" href="/assets/js/21.1e192f13.js"><link rel="prefetch" href="/assets/js/22.0f3db856.js"><link rel="prefetch" href="/assets/js/23.9a2edb75.js"><link rel="prefetch" href="/assets/js/24.3d8317a7.js"><link rel="prefetch" href="/assets/js/25.e6e973f9.js"><link rel="prefetch" href="/assets/js/26.2f4dce51.js"><link rel="prefetch" href="/assets/js/27.eddfbfe3.js"><link rel="prefetch" href="/assets/js/28.1a753628.js"><link rel="prefetch" href="/assets/js/29.dd0c2751.js"><link rel="prefetch" href="/assets/js/30.049ba17e.js"><link rel="prefetch" href="/assets/js/31.ec7a699c.js"><link rel="prefetch" href="/assets/js/32.128041a3.js"><link rel="prefetch" href="/assets/js/33.90a80a82.js"><link rel="prefetch" href="/assets/js/34.640d5210.js"><link rel="prefetch" href="/assets/js/35.dd6a5277.js"><link rel="prefetch" href="/assets/js/36.af0fb7fb.js"><link rel="prefetch" href="/assets/js/37.6282d3d3.js"><link rel="prefetch" href="/assets/js/38.09c22a9c.js"><link rel="prefetch" href="/assets/js/39.34118569.js"><link rel="prefetch" href="/assets/js/4.004aaf89.js"><link rel="prefetch" href="/assets/js/40.42fb5da5.js"><link rel="prefetch" href="/assets/js/41.d1ac92f4.js"><link rel="prefetch" href="/assets/js/42.046bbbbf.js"><link rel="prefetch" href="/assets/js/43.86ac5d2f.js"><link rel="prefetch" href="/assets/js/44.1393eed1.js"><link rel="prefetch" href="/assets/js/45.a4121f00.js"><link rel="prefetch" href="/assets/js/46.f78d075f.js"><link rel="prefetch" href="/assets/js/47.02e428da.js"><link rel="prefetch" href="/assets/js/48.3f9d12a6.js"><link rel="prefetch" href="/assets/js/49.bb9c3fab.js"><link rel="prefetch" href="/assets/js/5.8a61fa12.js"><link rel="prefetch" href="/assets/js/50.ebb028fd.js"><link rel="prefetch" href="/assets/js/51.a2b343de.js"><link rel="prefetch" href="/assets/js/52.2a464137.js"><link rel="prefetch" href="/assets/js/53.54a07d54.js"><link rel="prefetch" href="/assets/js/54.72acf66d.js"><link rel="prefetch" href="/assets/js/55.6168cc1a.js"><link rel="prefetch" href="/assets/js/56.0653a59a.js"><link rel="prefetch" href="/assets/js/57.df56ec02.js"><link rel="prefetch" href="/assets/js/58.fc8f11bc.js"><link rel="prefetch" href="/assets/js/59.158abf7b.js"><link rel="prefetch" href="/assets/js/6.1fda51af.js"><link rel="prefetch" href="/assets/js/60.10f7e3a6.js"><link rel="prefetch" href="/assets/js/61.844ecd3b.js"><link rel="prefetch" href="/assets/js/63.f2fe69a7.js"><link rel="prefetch" href="/assets/js/64.b9085bd9.js"><link rel="prefetch" href="/assets/js/65.6c182c91.js"><link rel="prefetch" href="/assets/js/66.e0d48b84.js"><link rel="prefetch" href="/assets/js/7.eca4725c.js"><link rel="prefetch" href="/assets/js/8.2504867c.js"><link rel="prefetch" href="/assets/js/9.64046c51.js">
-    <link rel="stylesheet" href="/assets/css/0.styles.757cca11.css">
-  </head>
-  <body>
-    <div id="app" data-server-rendered="true"><div class="theme-container"><header class="navbar"><div class="sidebar-button"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon"><path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path></svg></div> <a href="/" class="home-link router-link-active"><!----> <span class="site-name">Cold Elm Coders</span></a> <div class="links"><div class="search-box"><input aria-label="Search" autocomplete="off" spellcheck="false" value=""> <!----></div> <nav class="nav-links can-hide"><div class="nav-item"><a href="/articles/" class="nav-link">
-  Articles
-</a></div><div class="nav-item"><a href="/posts/" class="nav-link router-link-active">
-  Posts
-</a></div><div class="nav-item"><a href="/ArchivedArticles/" class="nav-link">
-  Old Articles
-</a></div><div class="nav-item"><a href="/Building-a-Database-Application-in-Blazor/" class="nav-link">
-  Database Application
-</a></div><div class="nav-item"><a href="https://cec-blazor-examples.azurewebsites.net/" target="_blank" rel="noopener noreferrer" class="nav-link external">
-  Demo Site
-  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></div> <!----></nav></div></header> <div class="sidebar-mask"></div> <aside class="sidebar"><nav class="nav-links"><div class="nav-item"><a href="/articles/" class="nav-link">
-  Articles
-</a></div><div class="nav-item"><a href="/posts/" class="nav-link router-link-active">
-  Posts
-</a></div><div class="nav-item"><a href="/ArchivedArticles/" class="nav-link">
-  Old Articles
-</a></div><div class="nav-item"><a href="/Building-a-Database-Application-in-Blazor/" class="nav-link">
-  Database Application
-</a></div><div class="nav-item"><a href="https://cec-blazor-examples.azurewebsites.net/" target="_blank" rel="noopener noreferrer" class="nav-link external">
-  Demo Site
-  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></div> <!----></nav>  <ul class="sidebar-links"><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading open"><span>My Posts</span> <span class="arrow down"></span></p> <ul class="sidebar-links sidebar-group-items"><li><a href="/posts/" aria-current="page" class="sidebar-link">Posts</a></li><li><a href="/posts/Blazor-Async-UI-Events.html" class="sidebar-link">Blazor Async Behaviour on UI Events</a></li><li><a href="/posts/DBContexts-In-Transient-Services.html" class="sidebar-link">No to DbContexts in Transient Services</a></li><li><a href="/posts/DynamicCss.html" class="sidebar-link">Blazor Dynamic Stylesheets</a></li><li><a href="/posts/For-ForEach-in-Blazor.html" aria-current="page" class="active sidebar-link">For and ForEach loops in Blazor Components</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header"><a href="/posts/For-ForEach-in-Blazor.html#test-razor" class="sidebar-link">Test.razor</a></li><li class="sidebar-sub-header"><a href="/posts/For-ForEach-in-Blazor.html#the-straight-foreach" class="sidebar-link">The Straight ForEach</a></li><li class="sidebar-sub-header"><a href="/posts/For-ForEach-in-Blazor.html#the-indexed-foreach" class="sidebar-link">The Indexed ForEach</a></li><li class="sidebar-sub-header"><a href="/posts/For-ForEach-in-Blazor.html#the-for" class="sidebar-link">The For</a></li><li class="sidebar-sub-header"><a href="/posts/For-ForEach-in-Blazor.html#the-for-with-a-local-loop-variable" class="sidebar-link">The For with a Local Loop Variable</a></li><li class="sidebar-sub-header"><a href="/posts/For-ForEach-in-Blazor.html#wrap-up" class="sidebar-link">Wrap Up</a></li></ul></li><li><a href="/posts/Notification-Service-Pattern.html" class="sidebar-link">Blazor Notification Service Pattern</a></li><li><a href="/posts/XML-XSD-Serialization.html" class="sidebar-link">DotNetCore XML/XSD Serialization</a></li></ul></section></li></ul> </aside> <main class="page"> <div class="theme-default-content content__default"><h1 id="for-and-foreach-iteration-in-blazor-components"><a href="#for-and-foreach-iteration-in-blazor-components" class="header-anchor">#</a> For and ForEach Iteration in Blazor Components</h1> <p>Iteration statements such as <code>for</code> and <code>foreach</code> present challenges in Blazor components that you don't normally face.  In a classic interation implementation, your loop specific code is confined to the loop - you know you can't reference <code>List[i]</code> outside the loop.  In Blazor components the actual values/references are crystalised and used long after the loop completes.</p> <p>Let's look at various examples and see what happens.</p> <h2 id="test-razor"><a href="#test-razor" class="header-anchor">#</a> Test.razor</h2> <p>We need a test page with some supporting code:</p> <div class="language-csharp extra-class"><pre class="language-csharp"><code>@page <span class="token string">&quot;/Test&quot;</span>
+<ul class="navbar-nav" >
+<li class="nav-item" >
+<a class="nav-link " href="/index.html" role="button"  >
+<span class="mr-2 d-none d-lg-inline text-gray-100">Index</span>
+</a>
+</li>
+<li class="nav-item dropdown no-arrow mx-1" >
+<a class="nav-link dropdown-toggle" href="#" id="e0fe6526-139e-4680-898e-9f3053f34145" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"  >
+<span class="mr-2 d-none d-lg-inline text-gray-100">Articles</span>
+</a>
+<div class=" dropdown-list dropdown-menu shadow animated--grow-in" aria-labelledby="e0fe6526-139e-4680-898e-9f3053f34145" >
+<a class="dropdown-item" href="/articles/A-Flexible-app.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+A Flexible App
+</a>
+<a class="dropdown-item" href="/articles/Async-Programming-in-DotNetCore.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Async Programming In Dotnetcore
+</a>
+<a class="dropdown-item" href="/articles/Blazor-AllinOne.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Blazor Allinone
+</a>
+<a class="dropdown-item" href="/articles/Blazor-Async-Programming.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Blazor Async Programming
+</a>
+<a class="dropdown-item" href="/articles/Blazor-Components.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Blazor Components
+</a>
+<a class="dropdown-item" href="/articles/Blazor-CSS.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Blazor CSS
+</a>
+<a class="dropdown-item" href="/articles/Blazor-DataList-Control.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Blazor Datalist Control
+</a>
+<a class="dropdown-item" href="/articles/Blazor-Form-Validation.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Blazor Form Validation
+</a>
+<a class="dropdown-item" href="/articles/Building-Edit-Forms.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Building Edit Forms
+</a>
+<a class="dropdown-item" href="/articles/Hydra.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Hydra
+</a>
+<a class="dropdown-item" href="/articles/Inline-Dialog.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Inline Dialog
+</a>
+<a class="dropdown-item" href="/articles/Modal-Dialog.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Modal Dialog
+</a>
+</div>
+</li>
+<li class="nav-item dropdown no-arrow mx-1" >
+<a class="nav-link dropdown-toggle" href="#" id="6af6fc21-b422-47e6-99a9-dde7b1501757" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"  >
+<span class="mr-2 d-none d-lg-inline text-gray-100">Blazor Database Application</span>
+</a>
+<div class=" dropdown-list dropdown-menu shadow animated--grow-in" aria-labelledby="6af6fc21-b422-47e6-99a9-dde7b1501757" >
+<a class="dropdown-item" href="/Building-a-Database-Application-in-Blazor/Building-a-Database-Application-in-Blazor-Part-1.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Building A Database Application In Blazor Part 1
+</a>
+<a class="dropdown-item" href="/Building-a-Database-Application-in-Blazor/Building-a-Database-Application-in-Blazor-Part-2.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Building A Database Application In Blazor Part 2
+</a>
+<a class="dropdown-item" href="/Building-a-Database-Application-in-Blazor/Building-a-Database-Application-in-Blazor-Part-3.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Building A Database Application In Blazor Part 3
+</a>
+<a class="dropdown-item" href="/Building-a-Database-Application-in-Blazor/Building-a-Database-Application-in-Blazor-Part-4.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Building A Database Application In Blazor Part 4
+</a>
+<a class="dropdown-item" href="/Building-a-Database-Application-in-Blazor/Building-a-Database-Application-in-Blazor-Part-5.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Building A Database Application In Blazor Part 5
+</a>
+<a class="dropdown-item" href="/Building-a-Database-Application-in-Blazor/Building-a-Database-Application-in-Blazor-Part-6.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Building A Database Application In Blazor Part 6
+</a>
+<a class="dropdown-item" href="/Building-a-Database-Application-in-Blazor/index.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Index
+</a>
+</div>
+</li>
+<li class="nav-item dropdown no-arrow mx-1" >
+<a class="nav-link dropdown-toggle" href="#" id="aae8435c-4325-4b20-9e33-4cb2e3fd4b45" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"  >
+<span class="mr-2 d-none d-lg-inline text-gray-100">Posts</span>
+</a>
+<div class=" dropdown-list dropdown-menu shadow animated--grow-in" aria-labelledby="aae8435c-4325-4b20-9e33-4cb2e3fd4b45" >
+<a class="dropdown-item" href="/posts/Blazor-Async-UI-Events.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Blazor Async UI Events
+</a>
+<a class="dropdown-item" href="/posts/DBContexts-In-Transient-Services.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Dbcontexts In Transient Services
+</a>
+<a class="dropdown-item" href="/posts/DynamicCss.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Dynamiccss
+</a>
+<a class="dropdown-item" href="/posts/For-ForEach-in-Blazor.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+For Foreach In Blazor
+</a>
+<a class="dropdown-item" href="/posts/Notification-Service-Pattern.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Notification Service Pattern
+</a>
+<a class="dropdown-item" href="/posts/XML-XSD-Serialization.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+XML XSD Serialization
+</a>
+</div>
+</li>
+</ul>
 
-<span class="token comment">// Our iteration code</span>
+    <div class="ms-5 me-5 ml-auto">
+        <h1>Cold Elm Coders</h1>
+    </div>
+</nav>
 
-<span class="token operator">&lt;</span>div<span class="token operator">&gt;</span>@_selected<span class="token operator">&lt;</span><span class="token operator">/</span>div<span class="token operator">&gt;</span>
 
-@code <span class="token punctuation">{</span>
-    <span class="token keyword">private</span> <span class="token class-name"><span class="token keyword">string</span></span> _selected <span class="token operator">=</span> <span class="token string">&quot;None&quot;</span><span class="token punctuation">;</span>
+    </div>
+    <!--End topbar-->
+    <!--Sidebar-->
+    <div id="sidebar">
+        
+<div class="article-info p-2" Published: 02-06-2021 >
+<div>Published: 02-06-2021</div>
+<div>Last Updated: 02-06-2021</div>
+<div>Author: Shaun Curtis</div>
+</div>
 
-    <span class="token keyword">class</span> <span class="token class-name">Model</span>
-    <span class="token punctuation">{</span>
-        <span class="token keyword">public</span> <span class="token return-type class-name"><span class="token keyword">int</span></span> Id <span class="token punctuation">{</span> <span class="token keyword">get</span><span class="token punctuation">;</span> <span class="token keyword">set</span><span class="token punctuation">;</span> <span class="token punctuation">}</span>
-        <span class="token keyword">public</span> <span class="token return-type class-name"><span class="token keyword">string</span></span> Country <span class="token punctuation">{</span> <span class="token keyword">get</span><span class="token punctuation">;</span> <span class="token keyword">set</span><span class="token punctuation">;</span> <span class="token punctuation">}</span>
-    <span class="token punctuation">}</span>
+        
+<h4 class="p-2">Table of Contents</h4>
+<ul class="TOC" >
+<li class="TOC-item TOC-item-0" >
+<a class="TOC-link" href="#">Top</a>
+<ul class="TOC TOC-0" >
+<li class="TOC-item TOC-item-1" >
+<ul class="TOC TOC-1" >
+<li class="TOC-item TOC-item-2" >
+<a class="TOC-link" href="#testrazor">Test.razor</a>
+</li>
+<li class="TOC-item TOC-item-2" >
+<a class="TOC-link" href="#the-straight-foreach">The Straight ForEach</a>
+</li>
+<li class="TOC-item TOC-item-2" >
+<a class="TOC-link" href="#the-indexed-foreach">The Indexed ForEach</a>
+</li>
+<li class="TOC-item TOC-item-2" >
+<a class="TOC-link" href="#the-for">The For</a>
+</li>
+<li class="TOC-item TOC-item-2" >
+<a class="TOC-link" href="#the-for-with-a-local-loop-variable">The For with a Local Loop Variable</a>
+</li>
+<li class="TOC-item TOC-item-2" >
+<a class="TOC-link" href="#wrap-up">Wrap Up</a>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
 
-    <span class="token keyword">private</span> <span class="token return-type class-name">Task</span> <span class="token function">OnClick</span><span class="token punctuation">(</span><span class="token class-name"><span class="token keyword">int</span></span> id<span class="token punctuation">)</span>
-    <span class="token punctuation">{</span>
-        <span class="token class-name"><span class="token keyword">var</span></span> x <span class="token operator">=</span> id<span class="token punctuation">;</span>
-        _selected <span class="token operator">=</span> <span class="token interpolation-string"><span class="token string">$&quot;</span><span class="token interpolation"><span class="token punctuation">{</span><span class="token expression language-csharp">id</span><span class="token punctuation">}</span></span><span class="token string">&quot;</span></span><span class="token punctuation">;</span>
-        <span class="token keyword">return</span> Task<span class="token punctuation">.</span>CompletedTask<span class="token punctuation">;</span>
-    <span class="token punctuation">}</span>
+    </div>
+    <!--End Sidebar-->
+    <!-- Page Wrapper -->
+    <div id="wrapper">
+        <!-- Content Wrapper -->
+        <div id="content-wrapper" class="d-flex flex-column">
+            <!-- Main Content -->
+            <div id="content">
+                <!-- Topbar -->
+                <div id="article">
+                    <!-- Article -->
+                    
+<!-- Header -->
+<header class="ex-header-article">
+    <div class="container">
+        <div class="row pt-3 pb-3 border-bottom">
+            <div class="col">
+                
+<h1>For and ForEach loops in Blazor Components</h1>
+<div>Using For and ForEach loops in Blazor Components</div>
 
-    <span class="token keyword">private</span> <span class="token return-type class-name">Task</span> <span class="token function">OnClick</span><span class="token punctuation">(</span><span class="token class-name">Model</span> country<span class="token punctuation">)</span>
-    <span class="token punctuation">{</span>
-        _selected <span class="token operator">=</span> <span class="token interpolation-string"><span class="token string">$&quot;</span><span class="token interpolation"><span class="token punctuation">{</span><span class="token expression language-csharp">country<span class="token punctuation">.</span>Id</span><span class="token punctuation">}</span></span><span class="token string">&quot;</span></span><span class="token punctuation">;</span>
-        <span class="token keyword">return</span> Task<span class="token punctuation">.</span>CompletedTask<span class="token punctuation">;</span>
-    <span class="token punctuation">}</span>
+            </div> <!-- end of col -->
+        </div> <!-- end of row -->
+    </div> <!-- end of container -->
+</header> <!-- end of ex-header -->
+<!-- end of header -->
 
-    <span class="token keyword">private</span> <span class="token return-type class-name">List<span class="token punctuation">&lt;</span>Model<span class="token punctuation">&gt;</span></span> Countries <span class="token operator">=&gt;</span> <span class="token keyword">new</span> <span class="token constructor-invocation class-name">List<span class="token punctuation">&lt;</span>Model<span class="token punctuation">&gt;</span></span><span class="token punctuation">(</span><span class="token punctuation">)</span>
-        <span class="token punctuation">{</span>
-            <span class="token keyword">new</span> <span class="token constructor-invocation class-name">Model</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span> Id <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">,</span> Country <span class="token operator">=</span> <span class="token string">&quot;UK&quot;</span><span class="token punctuation">}</span><span class="token punctuation">,</span>
-            <span class="token keyword">new</span> <span class="token constructor-invocation class-name">Model</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span> Id <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">,</span> Country <span class="token operator">=</span> <span class="token string">&quot;Spain&quot;</span><span class="token punctuation">}</span><span class="token punctuation">,</span>
-            <span class="token keyword">new</span> <span class="token constructor-invocation class-name">Model</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span> Id <span class="token operator">=</span> <span class="token number">2</span><span class="token punctuation">,</span> Country <span class="token operator">=</span> <span class="token string">&quot;Portugal&quot;</span><span class="token punctuation">}</span>
-    <span class="token punctuation">}</span><span class="token punctuation">;</span>
-<span class="token punctuation">}</span>
-</code></pre></div><h2 id="the-straight-foreach"><a href="#the-straight-foreach" class="header-anchor">#</a> The Straight ForEach</h2> <p>This looks like:</p> <div class="language-csharp extra-class"><pre class="language-csharp"><code>@<span class="token keyword">foreach</span> <span class="token punctuation">(</span><span class="token class-name"><span class="token keyword">var</span></span> country <span class="token keyword">in</span> Countries<span class="token punctuation">)</span>
-<span class="token punctuation">{</span>
-    <span class="token operator">&lt;</span>div<span class="token operator">&gt;</span><span class="token operator">&lt;</span>button <span class="token keyword">class</span><span class="token operator">=</span><span class="token string">&quot;btn btn-dark m-1&quot;</span> @onclick<span class="token operator">=</span><span class="token string">&quot;() =&gt; OnClick(country)&quot;</span><span class="token operator">&gt;</span>Edit<span class="token operator">&lt;</span><span class="token operator">/</span>button<span class="token operator">&gt;</span>@country<span class="token punctuation">.</span>Country<span class="token operator">&lt;</span><span class="token operator">/</span>div<span class="token operator">&gt;</span>
-    <span class="token operator">&lt;</span>div<span class="token operator">&gt;</span><span class="token operator">&lt;</span>button <span class="token keyword">class</span><span class="token operator">=</span><span class="token string">&quot;btn btn-secondary m-1&quot;</span> @onclick<span class="token operator">=</span><span class="token string">&quot;() =&gt; OnClick(country.Id)&quot;</span><span class="token operator">&gt;</span>Edit<span class="token operator">&lt;</span><span class="token operator">/</span>button<span class="token operator">&gt;</span>@country<span class="token punctuation">.</span>Country<span class="token operator">&lt;</span><span class="token operator">/</span>div<span class="token operator">&gt;</span>
-<span class="token punctuation">}</span>
-</code></pre></div><p>Each iteration points <code>OnClick</code> to the correct <code>country</code> object in <code>Countries</code>.</p> <ul><li>When the first button is pressed the reference to the correct country object is passed to <code>OnClick</code> - and the correct <code>Id</code> is displayed.</li> <li>When the second button is pressed the reference to the correct <code>int</code> value is passed to <code>OnClick</code> - and the correct <code>Id</code> is displayed.</li></ul> <h2 id="the-indexed-foreach"><a href="#the-indexed-foreach" class="header-anchor">#</a> The Indexed ForEach</h2> <p>This looks like:</p> <div class="language-csharp extra-class"><pre class="language-csharp"><code>@<span class="token punctuation">{</span> <span class="token class-name"><span class="token keyword">int</span></span> x <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span><span class="token punctuation">}</span>
-@<span class="token keyword">foreach</span> <span class="token punctuation">(</span><span class="token class-name"><span class="token keyword">var</span></span> country <span class="token keyword">in</span> Countries<span class="token punctuation">)</span>
-<span class="token punctuation">{</span>
-    <span class="token operator">&lt;</span>div<span class="token operator">&gt;</span><span class="token operator">&lt;</span>button <span class="token keyword">class</span><span class="token operator">=</span><span class="token string">&quot;btn btn-danger m-1&quot;</span> @onclick<span class="token operator">=</span><span class="token string">&quot;() =&gt; OnClick(x)&quot;</span><span class="token operator">&gt;</span>Edit<span class="token operator">&lt;</span><span class="token operator">/</span>button<span class="token operator">&gt;</span>@country<span class="token punctuation">.</span>Country<span class="token operator">&lt;</span><span class="token operator">/</span>div<span class="token operator">&gt;</span>
-    x<span class="token operator">++</span><span class="token punctuation">;</span>
-<span class="token punctuation">}</span>
-</code></pre></div><p>Now we're setting a counter which we increment and pass when the button is clicked.  As the loop is complete when we click on the button, <code>x</code> is at <code>Countries.Count</code> (one iteration after completion of foreach) - in our case 3. <code>OnClick</code> is passed 3.</p> <h2 id="the-for"><a href="#the-for" class="header-anchor">#</a> The For</h2> <p>This looks like this:</p> <div class="language-csharp extra-class"><pre class="language-csharp"><code>@<span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token class-name"><span class="token keyword">var</span></span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> Countries<span class="token punctuation">.</span>Count<span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span>
-<span class="token punctuation">{</span>
-    <span class="token operator">&lt;</span>div<span class="token operator">&gt;</span><span class="token operator">&lt;</span>button <span class="token keyword">class</span><span class="token operator">=</span><span class="token string">&quot;btn btn-danger m-1&quot;</span> @onclick<span class="token operator">=</span><span class="token string">&quot;() =&gt; OnClick(i)&quot;</span><span class="token operator">&gt;</span>Edit<span class="token operator">&lt;</span><span class="token operator">/</span>button<span class="token operator">&gt;</span> @Countries<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">.</span>Country<span class="token operator">&lt;</span><span class="token operator">/</span>div<span class="token operator">&gt;</span>
-<span class="token punctuation">}</span>
-</code></pre></div><p>Again we're passing the value of the counter when the button is clicked.  As the loop is complete when we click on the button, <code>x</code> is at <code>Countries.Count</code> (one iteration after completion of foreach) - in our case 3. <code>OnClick</code> is passed 3.</p> <h2 id="the-for-with-a-local-loop-variable"><a href="#the-for-with-a-local-loop-variable" class="header-anchor">#</a> The For with a Local Loop Variable</h2> <p>This looks like this:</p> <div class="language-csharp extra-class"><pre class="language-csharp"><code>@<span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token class-name"><span class="token keyword">var</span></span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> Countries<span class="token punctuation">.</span>Count<span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span>
-<span class="token punctuation">{</span>
-    <span class="token class-name"><span class="token keyword">var</span></span> item <span class="token operator">=</span> Countries<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">;</span>
-    <span class="token operator">&lt;</span>div<span class="token operator">&gt;</span><span class="token operator">&lt;</span>button <span class="token keyword">class</span><span class="token operator">=</span><span class="token string">&quot;btn btn-success m-1&quot;</span> @onclick<span class="token operator">=</span><span class="token string">&quot;() =&gt; OnClick(item.Id)&quot;</span><span class="token operator">&gt;</span>Edit<span class="token operator">&lt;</span><span class="token operator">/</span>button<span class="token operator">&gt;</span> @item<span class="token punctuation">.</span>Country<span class="token operator">&lt;</span><span class="token operator">/</span>div<span class="token operator">&gt;</span>
-<span class="token punctuation">}</span>
-</code></pre></div><p>We now set a local loop variable and reference that within the loop.    When the button is pressed the reference to the correct value is passed to <code>OnClick</code> - and the correct <code>Id</code> is displayed.</p> <h2 id="wrap-up"><a href="#wrap-up" class="header-anchor">#</a> Wrap Up</h2> <p>Hopefully you can see that you should either:</p> <ul><li>Stick to the standard <code>foreach</code> loop - it's fairly bulletproof.</li> <li>Use a local loop variable if you have to use <code>for</code>.</li></ul></div> <footer class="page-edit"><!----> <!----></footer> <div class="page-nav"><p class="inner"><span class="prev">
-      ←
-      <a href="/posts/DynamicCss.html" class="prev">
-        Blazor Dynamic Stylesheets
-      </a></span> <span class="next"><a href="/posts/Notification-Service-Pattern.html">
-        Blazor Notification Service Pattern
-      </a>
-      →
-    </span></p></div> </main></div><div class="global-ui"><!----></div></div>
-    <script src="/assets/js/app.e7504274.js" defer></script><script src="/assets/js/3.f3d70fce.js" defer></script><script src="/assets/js/62.da039f8c.js" defer></script>
-  </body>
+
+                    
+<!-- Article Container -->
+<div class="ex-basic-1 pt-4">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                
+
+        <p>Iteration statements such as <code>for</code> and <code>foreach</code> present challenges in Blazor components that you don't normally face.  In a classic interation implementation, your loop specific code is confined to the loop - you know you can't reference <code>List[i]</code> outside the loop.  In Blazor components the actual values/references are crystalised and used long after the loop completes.</p>
+<p>Let's look at various examples and see what happens.</p>
+<h2 id="testrazor">Test.razor</h2>
+<p>We need a test page with some supporting code:</p>
+<pre><code class="language-csharp"><div>@page <span class="hljs-string">&quot;/Test&quot;</span>
+
+<span class="hljs-comment">// Our iteration code</span>
+
+&lt;div&gt;@_selected&lt;/div&gt;
+
+@code {
+    <span class="hljs-keyword">private</span> <span class="hljs-keyword">string</span> _selected = <span class="hljs-string">&quot;None&quot;</span>;
+
+    <span class="hljs-keyword">class</span> <span class="hljs-title">Model</span>
+    {
+        <span class="hljs-keyword">public</span> <span class="hljs-keyword">int</span> Id { <span class="hljs-keyword">get</span>; <span class="hljs-keyword">set</span>; }
+        <span class="hljs-keyword">public</span> <span class="hljs-keyword">string</span> Country { <span class="hljs-keyword">get</span>; <span class="hljs-keyword">set</span>; }
+    }
+
+    <span class="hljs-function"><span class="hljs-keyword">private</span> Task <span class="hljs-title">OnClick</span>(<span class="hljs-params"><span class="hljs-keyword">int</span> id</span>)</span>
+    {
+        <span class="hljs-keyword">var</span> x = id;
+        _selected = <span class="hljs-string">$&quot;<span class="hljs-subst">{id}</span>&quot;</span>;
+        <span class="hljs-keyword">return</span> Task.CompletedTask;
+    }
+
+    <span class="hljs-function"><span class="hljs-keyword">private</span> Task <span class="hljs-title">OnClick</span>(<span class="hljs-params">Model country</span>)</span>
+    {
+        _selected = <span class="hljs-string">$&quot;<span class="hljs-subst">{country.Id}</span>&quot;</span>;
+        <span class="hljs-keyword">return</span> Task.CompletedTask;
+    }
+
+    <span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-title">List</span>&lt;<span class="hljs-title">Model</span>&gt; Countries</span> =&gt; <span class="hljs-keyword">new</span> List&lt;Model&gt;()
+        {
+            <span class="hljs-keyword">new</span> Model() { Id = <span class="hljs-number">0</span>, Country = <span class="hljs-string">&quot;UK&quot;</span>},
+            <span class="hljs-keyword">new</span> Model() { Id = <span class="hljs-number">1</span>, Country = <span class="hljs-string">&quot;Spain&quot;</span>},
+            <span class="hljs-keyword">new</span> Model() { Id = <span class="hljs-number">2</span>, Country = <span class="hljs-string">&quot;Portugal&quot;</span>}
+    };
+}
+</div></code></pre>
+<h2 id="the-straight-foreach">The Straight ForEach</h2>
+<p>This looks like:</p>
+<pre><code class="language-csharp"><div>@foreach (<span class="hljs-keyword">var</span> country <span class="hljs-keyword">in</span> Countries)
+{
+    &lt;div&gt;&lt;button <span class="hljs-keyword">class</span>=<span class="hljs-string">&quot;btn btn-dark m-1&quot;</span> @onclick=<span class="hljs-string">&quot;() =&gt; OnClick(country)&quot;</span>&gt;Edit&lt;/button&gt;@country.Country&lt;/div&gt;
+    &lt;div&gt;&lt;button <span class="hljs-keyword">class</span>=<span class="hljs-string">&quot;btn btn-secondary m-1&quot;</span> @onclick=<span class="hljs-string">&quot;() =&gt; OnClick(country.Id)&quot;</span>&gt;Edit&lt;/button&gt;@country.Country&lt;/div&gt;
+}
+</div></code></pre>
+<p>Each iteration points <code>OnClick</code> to the correct <code>country</code> object in <code>Countries</code>.</p>
+<ul>
+<li>When the first button is pressed the reference to the correct country object is passed to <code>OnClick</code> - and the correct <code>Id</code> is displayed.</li>
+<li>When the second button is pressed the reference to the correct <code>int</code> value is passed to <code>OnClick</code> - and the correct <code>Id</code> is displayed.</li>
+</ul>
+<h2 id="the-indexed-foreach">The Indexed ForEach</h2>
+<p>This looks like:</p>
+<pre><code class="language-csharp"><div>@{ <span class="hljs-keyword">int</span> x = <span class="hljs-number">0</span>;}
+@foreach (<span class="hljs-keyword">var</span> country <span class="hljs-keyword">in</span> Countries)
+{
+    &lt;div&gt;&lt;button <span class="hljs-keyword">class</span>=<span class="hljs-string">&quot;btn btn-danger m-1&quot;</span> @onclick=<span class="hljs-string">&quot;() =&gt; OnClick(x)&quot;</span>&gt;Edit&lt;/button&gt;@country.Country&lt;/div&gt;
+    x++;
+}
+</div></code></pre>
+<p>Now we're setting a counter which we increment and pass when the button is clicked.  As the loop is complete when we click on the button, <code>x</code> is at <code>Countries.Count</code> (one iteration after completion of foreach) - in our case 3. <code>OnClick</code> is passed 3.</p>
+<h2 id="the-for">The For</h2>
+<p>This looks like this:</p>
+<pre><code class="language-csharp"><div>@for (<span class="hljs-keyword">var</span> i = <span class="hljs-number">0</span>; i &lt; Countries.Count; i++)
+{
+    &lt;div&gt;&lt;button <span class="hljs-keyword">class</span>=<span class="hljs-string">&quot;btn btn-danger m-1&quot;</span> @onclick=<span class="hljs-string">&quot;() =&gt; OnClick(i)&quot;</span>&gt;Edit&lt;/button&gt; @Countries[i].Country&lt;/div&gt;
+}
+</div></code></pre>
+<p>Again we're passing the value of the counter when the button is clicked.  As the loop is complete when we click on the button, <code>x</code> is at <code>Countries.Count</code> (one iteration after completion of foreach) - in our case 3. <code>OnClick</code> is passed 3.</p>
+<h2 id="the-for-with-a-local-loop-variable">The For with a Local Loop Variable</h2>
+<p>This looks like this:</p>
+<pre><code class="language-csharp"><div>@for (<span class="hljs-keyword">var</span> i = <span class="hljs-number">0</span>; i &lt; Countries.Count; i++)
+{
+    <span class="hljs-keyword">var</span> item = Countries[i];
+    &lt;div&gt;&lt;button <span class="hljs-keyword">class</span>=<span class="hljs-string">&quot;btn btn-success m-1&quot;</span> @onclick=<span class="hljs-string">&quot;() =&gt; OnClick(item.Id)&quot;</span>&gt;Edit&lt;/button&gt; @item.Country&lt;/div&gt;
+}
+</div></code></pre>
+<p>We now set a local loop variable and reference that within the loop.    When the button is pressed the reference to the correct value is passed to <code>OnClick</code> - and the correct <code>Id</code> is displayed.</p>
+<h2 id="wrap-up">Wrap Up</h2>
+<p>Hopefully you can see that you should either:</p>
+<ul>
+<li>Stick to the standard <code>foreach</code> loop - it's fairly bulletproof.</li>
+<li>Use a local loop variable if you have to use <code>for</code>.</li>
+</ul>
+
+    
+
+            </div>
+        </div>
+    </div>
+</div>
+<!-- end of Article Container -->
+
+
+                </div>
+                <!-- End of Main Content -->
+            </div>
+            <!-- Footer -->
+            
+<!-- Copyright -->
+<footer class="sticky-footer bg-white">
+    <div class="container my-auto">
+        <div class="copyright text-center my-auto">
+            
+<span>Copyright &copy; Cold Elm Coders - 2021</span>
+
+        </div>
+    </div>
+</footer>
+<!-- end of copyright -->
+
+
+            <!-- End of Footer -->
+        </div>
+        <!-- End of Content Wrapper -->
+        
+<a class="scroll-to-top rounded" href="#page-top">
+    <i class="fas fa-angle-up"></i>
+</a>
+
+
+    </div>
+    <!-- End of Page Wrapper -->
+    <!-- Scripts -->
+    
+<!-- Scripts -->
+<!-- Bootstrap core JavaScript-->
+<script src="/assets/vendor/jquery/jquery.min.js"></script>
+<script src="/assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+<!-- Core plugin JavaScript-->
+<script src="/assets/vendor/jquery-easing/jquery.easing.min.js"></script>
+
+<!-- Custom scripts for all pages-->
+<script src="/assets/js/sb-admin-2.min.js"></script>
+
+
+</body>
 </html>

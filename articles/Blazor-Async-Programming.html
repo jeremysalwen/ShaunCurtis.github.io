@@ -1,0 +1,644 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+<!-- SEO Meta Tags -->
+<meta name="description" content="Your description">
+<meta name="author" content="Your name">
+
+<!-- OG Meta Tags to improve the way the post looks when you share the page on Facebook, Twitter, LinkedIn -->
+<meta property="og:site_name" content="" /> <!-- website name -->
+<meta property="og:site" content="" /> <!-- website link -->
+<meta property="og:title" content="" /> <!-- title shown in the actual shared post -->
+<meta property="og:description" content="" /> <!-- description shown in the actual shared post -->
+<meta property="og:image" content="" /> <!-- image link, make sure it's jpg -->
+<meta property="og:url" content="" /> <!-- where do you want your post to link to -->
+<meta name="twitter:card" content="summary_large_image"> <!-- to have large image post format in Twitter -->
+
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+
+<meta name="description" content="A guide to async programming in Blazor." >
+<meta name="author" content="Shaun Curtis" >
+
+
+
+<title>Async Programming in Blazor</title>
+
+
+<!-- Custom fonts for this template-->
+<link href="/assets/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+<link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+      rel="stylesheet">
+
+<!-- Custom styles for this template-->
+<link href="/assets/css/sb-admin-2.css" rel="stylesheet" type="text/css">
+<link href="/assets/css/site.css" rel="stylesheet" type="text/css">
+
+<!-- Favicon  -->
+<link rel="icon" href="/assets/images/favicon.png">
+
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/highlight.css">
+    <link rel="stylesheet" href="/assets/css/article.css" type="text/css">
+</head>
+<body id="page-top">
+    <!--topbar-->
+    <div id="topbar">
+        
+<!-- Topbar -->
+<nav class="navbar navbar-expand navbar-light topbar mb-4 static-top">
+    
+<ul class="navbar-nav" >
+<li class="nav-item" >
+<a class="nav-link " href="/index.html" role="button"  >
+<span class="mr-2 d-none d-lg-inline text-gray-100">Index</span>
+</a>
+</li>
+<li class="nav-item dropdown no-arrow mx-1" >
+<a class="nav-link dropdown-toggle" href="#" id="22e21c9b-e68f-446b-be5e-762f086eed5f" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"  >
+<span class="mr-2 d-none d-lg-inline text-gray-100">Articles</span>
+</a>
+<div class=" dropdown-list dropdown-menu shadow animated--grow-in" aria-labelledby="22e21c9b-e68f-446b-be5e-762f086eed5f" >
+<a class="dropdown-item" href="/articles/A-Flexible-app.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+A Flexible App
+</a>
+<a class="dropdown-item" href="/articles/Async-Programming-in-DotNetCore.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Async Programming In Dotnetcore
+</a>
+<a class="dropdown-item" href="/articles/Blazor-AllinOne.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Blazor Allinone
+</a>
+<a class="dropdown-item" href="/articles/Blazor-Async-Programming.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Blazor Async Programming
+</a>
+<a class="dropdown-item" href="/articles/Blazor-Components.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Blazor Components
+</a>
+<a class="dropdown-item" href="/articles/Blazor-CSS.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Blazor CSS
+</a>
+<a class="dropdown-item" href="/articles/Blazor-DataList-Control.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Blazor Datalist Control
+</a>
+<a class="dropdown-item" href="/articles/Blazor-Form-Validation.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Blazor Form Validation
+</a>
+<a class="dropdown-item" href="/articles/Building-Edit-Forms.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Building Edit Forms
+</a>
+<a class="dropdown-item" href="/articles/Hydra.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Hydra
+</a>
+<a class="dropdown-item" href="/articles/Inline-Dialog.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Inline Dialog
+</a>
+<a class="dropdown-item" href="/articles/Modal-Dialog.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Modal Dialog
+</a>
+</div>
+</li>
+<li class="nav-item dropdown no-arrow mx-1" >
+<a class="nav-link dropdown-toggle" href="#" id="4435fd22-3c53-4fa1-a83d-578bbe16c815" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"  >
+<span class="mr-2 d-none d-lg-inline text-gray-100">Blazor Database Application</span>
+</a>
+<div class=" dropdown-list dropdown-menu shadow animated--grow-in" aria-labelledby="4435fd22-3c53-4fa1-a83d-578bbe16c815" >
+<a class="dropdown-item" href="/Building-a-Database-Application-in-Blazor/Building-a-Database-Application-in-Blazor-Part-1.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Building A Database Application In Blazor Part 1
+</a>
+<a class="dropdown-item" href="/Building-a-Database-Application-in-Blazor/Building-a-Database-Application-in-Blazor-Part-2.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Building A Database Application In Blazor Part 2
+</a>
+<a class="dropdown-item" href="/Building-a-Database-Application-in-Blazor/Building-a-Database-Application-in-Blazor-Part-3.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Building A Database Application In Blazor Part 3
+</a>
+<a class="dropdown-item" href="/Building-a-Database-Application-in-Blazor/Building-a-Database-Application-in-Blazor-Part-4.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Building A Database Application In Blazor Part 4
+</a>
+<a class="dropdown-item" href="/Building-a-Database-Application-in-Blazor/Building-a-Database-Application-in-Blazor-Part-5.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Building A Database Application In Blazor Part 5
+</a>
+<a class="dropdown-item" href="/Building-a-Database-Application-in-Blazor/Building-a-Database-Application-in-Blazor-Part-6.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Building A Database Application In Blazor Part 6
+</a>
+<a class="dropdown-item" href="/Building-a-Database-Application-in-Blazor/index.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Index
+</a>
+</div>
+</li>
+<li class="nav-item dropdown no-arrow mx-1" >
+<a class="nav-link dropdown-toggle" href="#" id="abbcd730-51f8-4aba-839a-7a9aeb80fd0b" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"  >
+<span class="mr-2 d-none d-lg-inline text-gray-100">Posts</span>
+</a>
+<div class=" dropdown-list dropdown-menu shadow animated--grow-in" aria-labelledby="abbcd730-51f8-4aba-839a-7a9aeb80fd0b" >
+<a class="dropdown-item" href="/posts/Blazor-Async-UI-Events.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Blazor Async UI Events
+</a>
+<a class="dropdown-item" href="/posts/DBContexts-In-Transient-Services.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Dbcontexts In Transient Services
+</a>
+<a class="dropdown-item" href="/posts/DynamicCss.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Dynamiccss
+</a>
+<a class="dropdown-item" href="/posts/For-ForEach-in-Blazor.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+For Foreach In Blazor
+</a>
+<a class="dropdown-item" href="/posts/Notification-Service-Pattern.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Notification Service Pattern
+</a>
+<a class="dropdown-item" href="/posts/XML-XSD-Serialization.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+XML XSD Serialization
+</a>
+</div>
+</li>
+</ul>
+
+    <div class="ms-5 me-5 ml-auto">
+        <h1>Cold Elm Coders</h1>
+    </div>
+</nav>
+
+
+    </div>
+    <!--End topbar-->
+    <!--Sidebar-->
+    <div id="sidebar">
+        
+<div class="article-info p-2" Published: 11-11-2020 >
+<div>Published: 11-11-2020</div>
+<div>Last Updated: 20-04-2021</div>
+<div>Author: Shaun Curtis</div>
+</div>
+
+        
+<h4 class="p-2">Table of Contents</h4>
+<ul class="TOC" >
+<li class="TOC-item TOC-item-0" >
+<a class="TOC-link" href="#">Top</a>
+<ul class="TOC TOC-0" >
+<li class="TOC-item TOC-item-1" >
+<ul class="TOC TOC-1" >
+<li class="TOC-item TOC-item-2" >
+<a class="TOC-link" href="#what-do-you-know-about-asynchronous-programming">What do you know about Async(hronous) Programming?</a>
+</li>
+<li class="TOC-item TOC-item-2" >
+<a class="TOC-link" href="#so-what-is-asynchronous-programming">So, What is Async(hronous) Programming?</a>
+</li>
+<li class="TOC-item TOC-item-2" >
+<a class="TOC-link" href="#when-should-we-use-it">When should we use it?</a>
+</li>
+<li class="TOC-item TOC-item-2" >
+<a class="TOC-link" href="#tasks-threading-scheduling-contexts">Tasks, Threading, Scheduling, Contexts</a>
+</li>
+<li class="TOC-item TOC-item-2" >
+<a class="TOC-link" href="#asnyc-in-the-ui">Asnyc in the UI</a>
+<ul class="TOC TOC-2" >
+<li class="TOC-item TOC-item-3" >
+<a class="TOC-link" href="#component-events">Component Events</a>
+</li>
+<li class="TOC-item TOC-item-3" >
+<a class="TOC-link" href="#ui-events">UI Events</a>
+</li>
+</ul>
+</li>
+<li class="TOC-item TOC-item-2" >
+<a class="TOC-link" href="#component-events-and-eventcallbacks">Component Events and EventCallbacks</a>
+</li>
+<li class="TOC-item TOC-item-2" >
+<a class="TOC-link" href="#service-events">Service Events</a>
+</li>
+<li class="TOC-item TOC-item-2" >
+<a class="TOC-link" href="#async-in-services">Async In Services</a>
+<ul class="TOC TOC-2" >
+<li class="TOC-item TOC-item-3" >
+<a class="TOC-link" href="#ef-database-operations">EF Database Operations</a>
+</li>
+<li class="TOC-item TOC-item-3" >
+<a class="TOC-link" href="#api-call-operations">API Call Operations</a>
+</li>
+</ul>
+</li>
+<li class="TOC-item TOC-item-2" >
+<a class="TOC-link" href="#blocking-and-deadlocking">Blocking and Deadlocking</a>
+</li>
+<li class="TOC-item TOC-item-2" >
+<a class="TOC-link" href="#recommendations">Recommendations</a>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+    </div>
+    <!--End Sidebar-->
+    <!-- Page Wrapper -->
+    <div id="wrapper">
+        <!-- Content Wrapper -->
+        <div id="content-wrapper" class="d-flex flex-column">
+            <!-- Main Content -->
+            <div id="content">
+                <!-- Topbar -->
+                <div id="article">
+                    <!-- Article -->
+                    
+<!-- Header -->
+<header class="ex-header-article">
+    <div class="container">
+        <div class="row pt-3 pb-3 border-bottom">
+            <div class="col">
+                
+<h1>Async Programming in Blazor</h1>
+<div>A guide to async programming in Blazor.</div>
+
+            </div> <!-- end of col -->
+        </div> <!-- end of row -->
+    </div> <!-- end of container -->
+</header> <!-- end of ex-header -->
+<!-- end of header -->
+
+
+                    
+<!-- Article Container -->
+<div class="ex-basic-1 pt-4">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                
+
+        <p>This article provides an insight into async programming in Blazor.  I make no claim to be an expert: this is a summary of my recent experiences and knowledge acquisition.  There's some original content, but most of what I've written has been gleaned from other author's work.  There's a list of links at the bottom to articles, blogs and other material I've found useful, and have mined in writing this article.</p>
+<p>This is a major revision to the earlier article published in November 2020, concentrating on use rather than theory.</p>
+<p>Blazor applications rely on remote databases and services and need to handle latency and delay.  Understanding and using async methodologies is a key skill Blazor programmers need to acquire.</p>
+<h2 id="what-do-you-know-about-asynchronous-programming">What do you know about Async(hronous) Programming?</h2>
+<p>Most of us believe we understand what async programming is.  I started developing Blazor applications with that delusion.  I soon became painfully aware of just how shallow that knowledge was. Yes, sure, I knew what it was and could explain it in broad terms. But actually write structured and well behaved code? There followed a somewhat painful lesson in humility.</p>
+<h2 id="so-what-is-asynchronous-programming">So, What is Async(hronous) Programming?</h2>
+<p>Put simply, asynchronous programming lets us multi-task - like driving a car whilst talking to the passenger.  There's a very good explanation on the Microsoft Docs site describing <a href="https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/concepts/async/">how to make a parallel task hot or sequential luke warm breakfast</a>.</p>
+<h2 id="when-should-we-use-it">When should we use it?</h2>
+<p>There are three principle situations were asynchronous processes have significant advantages over a single sequential process:</p>
+<ol>
+<li>Processor Intensive Operations - such as complex mathematical calculations.</li>
+<li>I/0 Operations - where tasks are offloaded to either subsystems on the same computer, or run on remote computers.</li>
+<li>Improved User Interface experience.</li>
+</ol>
+<p>In processor intensive operations, you want multiple processors or cores.  Hand off most of the processing to these cores and the program can interact with the UI on the main process updating progress and handling user interaction.  Multi-tasking on the same processor buys nothing.  The program doen't need more balls to juggle, just more jugglers.</p>
+<p>On the other hand I/O operations don't need multiple processors.  They dispatch requests to sub-systems or remote services and await responses.  It's multi-tasking that now buys time - set up and monitor several tasks at once and wait for them to complete.  Wait time becomes dependant on the longest running task, not the sum of the tasks.</p>
+<p>Run everything serially and the User Interface gets locked whever a task is running.  Asynchronous tasks free up the UI process. The UI can interact with the user while tasks are running.</p>
+<p>In Blazor we're principly interested in I/O and UI operations.  Any serious processor intensive operations should be handled by a service.</p>
+<h2 id="tasks-threading-scheduling-contexts">Tasks, Threading, Scheduling, Contexts</h2>
+<p>There's an excellent article <a href="https://www.codeproject.com/Articles/5299501/Async-Await-Explained-with-Diagrams-and-Examples">here by David Deley</a> that explains things better than I did in the orginal version of this article.  I'll not regurgitate it.  If you want to understand what's going on under the hood, read it.</p>
+<p>Blazor, like desktop applications, has a <code>SynchronisationContext</code> UI thread.  All UI code must run in this context.  Blazor server has the <code>SynchronisationContext</code> and a threadpool.  Web Assembly has only one thread - a limitation imposed by the browser.  It may change in the future, but at present, <code>Task.Run</code> doesn't do what you think it should do in Web Assembly.  Block that thread and deadlock.</p>
+<h2 id="asnyc-in-the-ui">Asnyc in the UI</h2>
+<p>The Blazor UI is driven by events.  The initial render events, and then button clicks, data entry, ...</p>
+<h3 id="component-events">Component Events</h3>
+<p>Component events have both synchronous and asynchronous versions.  <code>OnInitialized</code> and <code>OnInitialisedAsync</code> - often shortened to <code>OnInitialised{Async}</code>.  Which should you use?  My view, and it's personal not best practice, is forget the synchronous versions.  Go async from the start.  If you intend to get data from somewhere it's almost certainly going to involve  asynchronous behaviour.</p>
+<p>The standard patterns for <code>OnInitializedAsync</code> are:</p>
+<pre><code class="language-csharp"><div><span class="hljs-function"><span class="hljs-keyword">protected</span> <span class="hljs-keyword">async</span> <span class="hljs-keyword">override</span> Task <span class="hljs-title">OnInitializedAsync</span>(<span class="hljs-params"></span>)</span>
+{
+    <span class="hljs-comment">// sync or async code</span>
+    <span class="hljs-keyword">await</span> <span class="hljs-keyword">base</span>.OnInitializedAsync();
+}
+</div></code></pre>
+<pre><code class="language-csharp"><div><span class="hljs-function"><span class="hljs-keyword">protected</span> <span class="hljs-keyword">override</span> Task <span class="hljs-title">OnInitializedAsync</span>(<span class="hljs-params"></span>)</span>
+{
+    <span class="hljs-comment">// some sync code</span>
+    <span class="hljs-keyword">return</span> Task.CompletedTask;
+}
+</div></code></pre>
+<p>The <code>ComponentBase</code> implementation is:</p>
+<pre><code class="language-csharp"><div><span class="hljs-function"><span class="hljs-keyword">protected</span> <span class="hljs-keyword">virtual</span> Task <span class="hljs-title">OnInitializedAsync</span>(<span class="hljs-params"></span>)</span>
+    =&gt; Task.CompletedTask;
+</div></code></pre>
+<p>In my <em>Blazor.Database</em> repo the <code>RecordFormBase</code> implementation looks like:</p>
+<pre><code class="language-csharp"><div><span class="hljs-function"><span class="hljs-keyword">protected</span> <span class="hljs-keyword">async</span> <span class="hljs-keyword">override</span> Task <span class="hljs-title">OnInitializedAsync</span>(<span class="hljs-params"></span>)</span>
+{
+    <span class="hljs-comment">// Get the record - code separated out so can be called outside the `OnInitializedAsync` event</span>
+    <span class="hljs-keyword">await</span> LoadRecordAsync();
+    <span class="hljs-keyword">await</span> <span class="hljs-keyword">base</span>.OnInitializedAsync();
+}
+</div></code></pre>
+<p>The same patterns apply to <code>OnParametersSet{Async}</code> and <code>OnAfterRender{Async}</code>.</p>
+<p>Note that the sync version of each event is called - and therefore completes - before the async version.</p>
+<h4 id="component-render-events">Component Render Events</h4>
+<p>In the component process it's important to understand when render events occur.  The main render occurs after the <code>OnParametersSet{Async}</code> events complete.  However, an initial render occurs if (and only if) <code>OnInitializedAsync</code> yields before completing.  This provides the opportunity to display a &quot;loading&quot; message/component/notification during the component initilaization process.</p>
+<p>The following simple page demonstrates this:</p>
+<pre><code class="language-csharp"><div>@page <span class="hljs-string">&quot;/testasync&quot;</span>
+&lt;div&gt;
+    &lt;h3&gt;@_message&lt;/h3&gt;
+&lt;/div&gt;
+@code {    
+    <span class="hljs-keyword">private</span> <span class="hljs-keyword">string</span> _message = <span class="hljs-string">&quot;Starting&quot;</span>;
+
+    <span class="hljs-function"><span class="hljs-keyword">protected</span> <span class="hljs-keyword">async</span> <span class="hljs-keyword">override</span> Task <span class="hljs-title">OnInitializedAsync</span>(<span class="hljs-params"></span>)</span>
+    {
+        _message = <span class="hljs-string">&quot;Sync Code running&quot;</span>;
+        <span class="hljs-keyword">await</span> Task.Delay(<span class="hljs-number">2000</span>);
+        _message = <span class="hljs-string">&quot;Async Code completed&quot;</span>;
+    }
+}
+</div></code></pre>
+<h3 id="ui-events">UI Events</h3>
+<p>UI events originate from the user.  We'll concentrate on mouse clicks on buttons here for the examples.</p>
+<p>Here's a simple Razor page component.</p>
+<pre><code class="language-html"><div>@page &quot;/asyncbuttons&quot;
+<span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;container m-2 px-3 p-t bg-light&quot;</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;row pt-2&quot;</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;col-12&quot;</span>&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-name">h3</span>&gt;</span>Event Buttons<span class="hljs-tag">&lt;/<span class="hljs-name">h3</span>&gt;</span>
+        <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;row pt-2&quot;</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;col-6&quot;</span>&gt;</span>
+            @value1
+        <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;col-6&quot;</span>&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;btn btn-warning&quot;</span> @<span class="hljs-attr">onclick</span>=<span class="hljs-string">&quot;this.OnClick&quot;</span>&gt;</span>Click<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span>
+        <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;row pt-2&quot;</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;col-6&quot;</span>&gt;</span>
+            @value1
+        <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;col-6&quot;</span>&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;btn btn-warning&quot;</span> @<span class="hljs-attr">onclick</span>=<span class="hljs-string">&quot;(e) =&gt; this.OnClick(e)&quot;</span>&gt;</span>Click<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span>
+        <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+</div></code></pre>
+<pre><code class="language-csharp"><div>@code {
+    <span class="hljs-keyword">private</span> <span class="hljs-keyword">string</span> value1 = <span class="hljs-string">&quot;notset&quot;</span>;
+
+    <span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-keyword">void</span> <span class="hljs-title">OnClick</span>(<span class="hljs-params">MouseEventArgs e</span>)</span>
+    {
+        value1 = <span class="hljs-string">&quot;Onclick started&quot;</span>;
+            <span class="hljs-comment">// run some synchronous code</span>
+        value1 = <span class="hljs-string">&quot;Onclick complete&quot;</span>;
+    }
+}
+</div></code></pre>
+<p>These work fine.  Now let's introduce a <code>Task</code>.</p>
+<pre><code class="language-csharp"><div>@code {
+    <span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-keyword">async</span> <span class="hljs-keyword">void</span> <span class="hljs-title">Onclick</span>(<span class="hljs-params">MouseEventArgs e</span>)</span>
+    {
+        value1 = <span class="hljs-string">&quot;Onclick started&quot;</span>;
+        <span class="hljs-keyword">await</span> DoSomethingAsync();
+        value1 = <span class="hljs-string">&quot;Onclick complete&quot;</span>;
+    }
+
+    <span class="hljs-function"><span class="hljs-keyword">private</span> Task <span class="hljs-title">DoSomethingAsync</span>(<span class="hljs-params"></span>)</span>
+    {
+        Task.Yield();
+        <span class="hljs-keyword">return</span> Task.CompletedTask;
+    }
+}
+</div></code></pre>
+<p>This also works. Finally let's make <code>DoSomethingAsync</code> operate in a true async manner and yield.</p>
+<pre><code class="language-csharp"><div>@code {
+    <span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-keyword">async</span> <span class="hljs-keyword">void</span> <span class="hljs-title">OnClick</span>(<span class="hljs-params">MouseEventArgs e</span>)</span>
+    {
+        value1 = <span class="hljs-string">&quot;Onclick started&quot;</span>;
+        <span class="hljs-keyword">await</span> DoSomethingAsync();
+        value1 = <span class="hljs-string">&quot;Onclick complete&quot;</span>;
+    }
+
+    <span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-keyword">async</span> Task <span class="hljs-title">DoSomethingAsync</span>(<span class="hljs-params"></span>)</span>
+    {
+        <span class="hljs-keyword">await</span> Task.Yield();
+    }
+}
+</div></code></pre>
+<p>Now <code>Value1</code> only shows <em>Onclick started</em>.  The second update isn't displayed.  Put a break in the code at the end of <code>OnClick</code>.  <code>value1</code> is set to <em>Onclick complete</em> but the UI shows the previous value.</p>
+<p>The temptation now is to call <code>StateHasChanged</code> at the end to fix the problem.  It'll work, but you're only masking the real problem.  So what's happening?</p>
+<p>Blazor loads the <code>OnClick</code> event into the <code>SynchronisationContext</code> queue as an asynchronous operation that looks something like:</p>
+<pre><code class="language-csharp"><div>Await {UIEvent code <span class="hljs-keyword">as</span> Task};
+Invoke(StateHasChanged);
+</div></code></pre>
+<p>In example one and two look at what <code>OnClick</code> is returning - a void.  The event loaded on the <code>SynchronisationContext</code> has nothing to wait on.</p>
+<ul>
+<li>In the first codeblock, the code is all synchronous so runs to completion before the UI update.</li>
+<li>In the second block, we may have wrapped things in Tasks, but it's all synchronous so again runs to completion - calling <code>Task.Yield()</code> without an <code>await</code> kicks it off but doesn't wait on it.</li>
+<li>In the final codeblock there's a proper yield on an <code>await</code>.  This yields back to the queued UI event code in the <code>SynchronisationContext</code>.  There's no Task to wait on, so it runs to completion,  re-rendering the component before <code>DoSomethingAsync</code> completes.  <code>Task.Yield()</code> re-schedules itself and any subsequent code as a new <code>Task</code> on the <code>SynchronisationContext</code> queue after the UI event, allowing the UI event task to complete first.</li>
+</ul>
+<p>This problem is solved by changing the event handler to return a <code>Task</code>.</p>
+<pre><code class="language-csharp"><div>@code {
+    <span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-keyword">async</span> Task <span class="hljs-title">OnClick</span>(<span class="hljs-params">MouseEventArgs e</span>)</span>
+    {
+        value1 = <span class="hljs-string">&quot;Onclick started&quot;</span>;
+        <span class="hljs-keyword">await</span> DoSomethingAsync();
+        value1 = <span class="hljs-string">&quot;Onclick complete&quot;</span>;
+    }
+}
+</div></code></pre>
+<p>Now the UI event task has something to wait on and only re-renders when the event handler <code>Task</code> completes.  The UI event task still yields to the <code>SynchronisationContext</code> queue, letting it continue with other tasks.</p>
+<p>You often see this pattern.  It's overkill, just wrapping a <code>Task</code> inside another <code>Task</code>.</p>
+<pre><code class="language-csharp"><div>&lt;button <span class="hljs-keyword">class</span>=<span class="hljs-string">&quot;btn btn-warning&quot;</span> @onclick=<span class="hljs-string">&quot;async (e) =&gt; await this.OnClick(e)&quot;</span>&gt;Click&lt;/button&gt;
+</div></code></pre>
+<h2 id="component-events-and-eventcallbacks">Component Events and EventCallbacks</h2>
+<p>Consider this code:</p>
+<pre><code class="language-csharp"><div>&lt;MyComponent @onclick=<span class="hljs-string">&quot;() =&gt; OnClick()&quot;</span>&gt;Hello&lt;MyComponent&gt;
+</div></code></pre>
+<p>Components aren't html elements.  There's no <code>OnClick</code> event on <code>MyComponent</code> unless you've created an EventCallback.</p>
+<p>The code below shows the code patterns to use for full async behaviour through components.  <code>BtnClick</code> in the component uses <code>InvokeAsync</code> to call the EventCallback.  In the parent the delegate registered with the <code>OnClick</code> EventCallback passes an awaitable  Task back to the component. Async all the way.</p>
+<h5 id="uibuttonrazor">UIButton.razor</h5>
+<pre><code class="language-csharp"><div>&lt;button <span class="hljs-keyword">class</span>=<span class="hljs-string">&quot;btn btn-warning&quot;</span> @onclick=<span class="hljs-string">&quot;this.BtnClick&quot;</span>&gt;@ChildContent&lt;/button&gt;
+
+@code {
+    [<span class="hljs-meta">Parameter</span>] <span class="hljs-keyword">public</span> EventCallback&lt;MouseEventArgs&gt; OnClick { <span class="hljs-keyword">get</span>; <span class="hljs-keyword">set</span>; }
+    [<span class="hljs-meta">Parameter</span>] <span class="hljs-keyword">public</span> RenderFragment ChildContent { <span class="hljs-keyword">get</span>; <span class="hljs-keyword">set</span>; }
+
+    <span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-keyword">async</span> Task <span class="hljs-title">BtnClick</span>(<span class="hljs-params">MouseEventArgs e</span>)</span>
+        =&gt; <span class="hljs-keyword">await</span> OnClick.InvokeAsync(e);
+}
+</div></code></pre>
+<h5 id="testrazor">Test.razor</h5>
+<pre><code class="language-html"><div><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;row pt-2&quot;</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;col-6&quot;</span>&gt;</span>
+        @value5
+    <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;col-6&quot;</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">UIButton</span> <span class="hljs-attr">OnClick</span>=<span class="hljs-string">&quot;OnclickComponent&quot;</span>&gt;</span>click me<span class="hljs-tag">&lt;/<span class="hljs-name">UIButton</span>&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+</div></code></pre>
+<pre><code class="language-csharp"><div><span class="hljs-keyword">private</span> <span class="hljs-keyword">string</span> value5 = <span class="hljs-string">&quot;notset&quot;</span>;
+
+<span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-keyword">async</span> Task <span class="hljs-title">OnclickComponent</span>(<span class="hljs-params">MouseEventArgs e</span>)</span>
+{
+    value5 = <span class="hljs-string">&quot;Onclick started&quot;</span>;
+    <span class="hljs-keyword">await</span> Task.Delay(<span class="hljs-number">2000</span>);
+    <span class="hljs-keyword">await</span> DoSomethingAsync();
+    value5 = <span class="hljs-string">&quot;Onclick complete&quot;</span>;
+}
+</div></code></pre>
+<h2 id="service-events">Service Events</h2>
+<p>Another source of events in the UI is service events to which a component has subscribed.  The most common are notifications of data changes - normally lists or data objects.</p>
+<p>The base pattern for these looks like this:</p>
+<pre><code class="language-csharp"><div><span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-keyword">async</span> <span class="hljs-keyword">void</span> <span class="hljs-title">OnRecordChange</span>(<span class="hljs-params"><span class="hljs-keyword">object</span> sender, EventArgs e</span>)</span>
+{
+    <span class="hljs-comment">// Do something</span>
+    <span class="hljs-keyword">await</span> <span class="hljs-keyword">this</span>.InvokeAsync(StateHasChanged);
+}
+</div></code></pre>
+<p>In this case the handler is declared void.  The code's invoked like this <code>RecordChanged?.Invoke(this, EventArgs.Empty)</code>.  There's no await and no expectation of a return value. <code>OnRecordChange</code> is the top level event.  It may need to run async code and await certain operations so can be declared <code>async</code>.  The event is also outside the component rendering process, so if the UI needs updating, such as on a list change, <code>StateHasChanged</code> needs to be invoked.</p>
+<p><code>InvokeAsync</code> is a <code>ComponentBase</code> method that looks like this:</p>
+<pre><code class="language-csharp"><div><span class="hljs-function"><span class="hljs-keyword">protected</span> Task <span class="hljs-title">InvokeAsync</span>(<span class="hljs-params">Func&lt;Task&gt; workItem</span>)</span>
+    =&gt; _renderHandle.Dispatcher.InvokeAsync(workItem);
+
+<span class="hljs-function"><span class="hljs-keyword">protected</span> Task <span class="hljs-title">InvokeAsync</span>(<span class="hljs-params">Action workItem</span>)</span>
+    =&gt; _renderHandle.Dispatcher.InvokeAsync(workItem);
+</div></code></pre>
+<p><code>_renderHandle</code> is passed to components when they are attached to the RenderTree by the RenderTreeBuilder.  <code>InvokeAsync</code> uses the supplied <code>SynchronisationContext</code> <code>Dispatcher</code> to invoke <code>StateHasChanged</code>, ensuring the <code>Func</code> or <code>Action</code> passed is run on the UI thread.</p>
+<h2 id="async-in-services">Async In Services</h2>
+<p>Async code in services depends on what your trying to do.  I'll look at two very common uses here:</p>
+<h3 id="ef-database-operations">EF Database Operations</h3>
+<p>Entity Framework database operations can all be run async.  Below is a standard call in a dataservice into a <code>DbContext</code> to get a list.  Note <code>ToListAsync</code> gets the list asynchronously and returns a <code>Task</code>.</p>
+<pre><code class="language-csharp"><div><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">override</span> <span class="hljs-keyword">async</span> <span class="hljs-title">Task</span>&lt;<span class="hljs-title">List</span>&lt;<span class="hljs-title">TRecord</span>&gt;&gt; <span class="hljs-title">GetRecordListAsync</span>&lt;<span class="hljs-title">TRecord</span>&gt;(<span class="hljs-params"></span>)</span>
+    =&gt; <span class="hljs-keyword">await</span> <span class="hljs-keyword">this</span>.DBContext
+    .CreateDbContext()
+    .GetDbSet&lt;TRecord&gt;()
+    .ToListAsync() ?? <span class="hljs-keyword">new</span> List&lt;TRecord&gt;();
+</div></code></pre>
+<p>And <code>UpdateContext</code> is async and returns a <code>Task</code>.</p>
+<pre><code class="language-csharp"><div><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">override</span> <span class="hljs-keyword">async</span> <span class="hljs-title">Task</span>&lt;<span class="hljs-title">DbTaskResult</span>&gt; <span class="hljs-title">UpdateRecordAsync</span>&lt;<span class="hljs-title">TRecord</span>&gt;(<span class="hljs-params">TRecord record</span>)</span>
+{
+    <span class="hljs-keyword">var</span> context = <span class="hljs-keyword">this</span>.DBContext.CreateDbContext();
+    context.Entry(<span class="hljs-keyword">record</span>).<span class="hljs-title">State</span> = EntityState.Modified;
+    <span class="hljs-keyword">return</span> <span class="hljs-keyword">await</span> <span class="hljs-keyword">this</span>.UpdateContext(context);
+}
+</div></code></pre>
+<h3 id="api-call-operations">API Call Operations</h3>
+<p>The API calls for the two same operations above look like this.  <code>GetFromJsonAsync</code>, <code>PostAsJsonAsync</code> and <code>ReadFromJsonAsync</code> are all async.</p>
+<pre><code class="language-csharp"><div><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">override</span> <span class="hljs-keyword">async</span> <span class="hljs-title">Task</span>&lt;<span class="hljs-title">List</span>&lt;<span class="hljs-title">TRecord</span>&gt;&gt; <span class="hljs-title">GetRecordListAsync</span>&lt;<span class="hljs-title">TRecord</span>&gt;(<span class="hljs-params"></span>)</span>
+    =&gt; <span class="hljs-keyword">await</span> <span class="hljs-keyword">this</span>.HttpClient.GetFromJsonAsync&lt;List&lt;TRecord&gt;&gt;(<span class="hljs-string">$&quot;/api/<span class="hljs-subst">{GetRecordName&lt;TRecord&gt;()}</span>/list&quot;</span>);
+</div></code></pre>
+<pre><code class="language-csharp"><div><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">override</span> <span class="hljs-keyword">async</span> <span class="hljs-title">Task</span>&lt;<span class="hljs-title">DbTaskResult</span>&gt; <span class="hljs-title">UpdateRecordAsync</span>&lt;<span class="hljs-title">TRecord</span>&gt;(<span class="hljs-params">TRecord record</span>)</span>
+{
+    <span class="hljs-keyword">var</span> response = <span class="hljs-keyword">await</span> <span class="hljs-keyword">this</span>.HttpClient.PostAsJsonAsync&lt;TRecord&gt;(<span class="hljs-string">$&quot;/api/<span class="hljs-subst">{GetRecordName&lt;TRecord&gt;()}</span>/update&quot;</span>, <span class="hljs-keyword">record</span>);
+    <span class="hljs-keyword">var</span> result = <span class="hljs-keyword">await</span> response.Content.ReadFromJsonAsync&lt;DbTaskResult&gt;();
+    <span class="hljs-keyword">return</span> result;
+}
+</div></code></pre>
+<p>These code snippets come from a series of articles and Repo.</p>
+<ul>
+<li><a href="https://www.codeproject.com/Articles/5279560/Building-a-Database-Application-in-Blazor-Part-1-P">CodeProject Article here</a></li>
+<li><a href="https://github.com/ShaunCurtis/Blazor.Database">Blazor.Database Repo here</a></li>
+</ul>
+<h2 id="blocking-and-deadlocking">Blocking and Deadlocking</h2>
+<p>At some point you'll face the Deadlock. Async code that either always locks, or locks under load. In Blazor, this manifests itself as a locked page. The lights are on but there's no one at home. You've killed the application process running your SPA instance. The only way out is to reload the page (F5).</p>
+<p>The normal reason is blocking code - program execution on the application thread is halted waiting for a task to complete that's further down the queue. The halt blocks execution of the code it's waiting on. Deadlock. Move the task to the threadpool, the task completes and the block unblocks. However, no UI updates happen. Shifting code to the taskpool to unblock the application thread isn't the answer. Nor is blocking threadpool threads.  Under load the application may block all the threads available.</p>
+<p>Here's so classic blocking code - in this case a button click event in the UI.</p>
+<pre><code class="language-csharp"><div><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">ButtonClicked</span>(<span class="hljs-params"></span>)</span>
+{
+    <span class="hljs-keyword">var</span> task = <span class="hljs-keyword">this</span>.SomeService.GetAListAsync();
+    task.Wait();
+}
+</div></code></pre>
+<p>and more:</p>
+<pre><code class="language-csharp"><div><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">GetAListAsync</span>(<span class="hljs-params"></span>)</span>
+{
+    <span class="hljs-keyword">var</span> task = myDataContext.somedataset.GetListAsync();
+    <span class="hljs-keyword">var</span> ret = task.Result;
+}
+</div></code></pre>
+<p><em>Task.Wait()</em> and <em>task.Result</em> are blocking actions.  They stop execution on the thread and wait for <em>task</em> to complete. <em>Task</em> can't complete because the thread is blocked.  Unless you really understand what you're doing - you probably won't be reading this if you do - <strong>don't use them</strong>.  If you think you need to, re-think your design.</p>
+<h2 id="recommendations">Recommendations</h2>
+<ol>
+<li><strong>Async and Await All The Way</strong>. Don't mix synchronous and asynchronous methods.  Start at the bottom - the data or process interface - and code async all the way up though the data and business/logic layers to the UI.  Blazor components implement both async and sync events, so there's no reason for sync if your base library provides async interfaces.</li>
+<li>Only assign processor intensive tasks to the threadpool.  Don't assign normal tasks to the threadpool because you can.</li>
+<li>Don't use <em>Task.Run()</em> in your libraries. Keep that decision as far up in the application code as possible. Make your libraries context agnostic.</li>
+<li>Never block in your libraries.  Seems obvious but... if you absolutely must block do it in the front end.</li>
+<li>Always use <em>async</em> and <em>await</em>, don't try and get fancy.</li>
+<li>If your library provides both async and sync calls, code them separately.  &quot;Code it once&quot; best practice doesn't apply here.  NEVER call one from the other if you don't want to shoot yourself in the foot at some point!</li>
+<li>Only use <em>async void</em> for class based event handlers.  Never anywhere else.</li>
+</ol>
+<h4 id="useful-resources-and-sources-of-knowledge">Useful Resources and Sources of Knowledge</h4>
+<p><a href="https://www.codeproject.com/Articles/5299501/Async-Await-Explained-with-Diagrams-and-Examples">David Deley Async/Await Explained</a></p>
+<p><a href="https://docs.microsoft.com/en-us/dotnet/csharp/async#:~:text=C%23%20has%20a%20language-level%20asynchronous%20programming%20model%20which,is%20known%20as%20the%20Task-based%20Asynchronous%20Pattern%20%28TAP%29.">Async Programming - Microsoft</a></p>
+<p><a href="https://blog.stephencleary.com/2014/04/a-tour-of-task-part-0-overview.html">Stephen Cleary - A Tour of Task and other articles</a></p>
+<p><a href="https://medium.com/rubrikkgroup/understanding-async-avoiding-deadlocks-e41f8f2c6f5d">Eke Peter - Understanding Async, Avoiding Deadlocks in C#</a></p>
+<p><a href="https://docs.microsoft.com/en-us/archive/msdn-magazine/2013/march/async-await-best-practices-in-asynchronous-programming">Stephen Cleary - MSDN - Best Practices in Asynchronous Programming</a></p>
+<p>Many StackOverflow Answers to Questions</p>
+
+    
+
+            </div>
+        </div>
+    </div>
+</div>
+<!-- end of Article Container -->
+
+
+                </div>
+                <!-- End of Main Content -->
+            </div>
+            <!-- Footer -->
+            
+<!-- Copyright -->
+<footer class="sticky-footer bg-white">
+    <div class="container my-auto">
+        <div class="copyright text-center my-auto">
+            
+<span>Copyright &copy; Cold Elm Coders - 2021</span>
+
+        </div>
+    </div>
+</footer>
+<!-- end of copyright -->
+
+
+            <!-- End of Footer -->
+        </div>
+        <!-- End of Content Wrapper -->
+        
+<a class="scroll-to-top rounded" href="#page-top">
+    <i class="fas fa-angle-up"></i>
+</a>
+
+
+    </div>
+    <!-- End of Page Wrapper -->
+    <!-- Scripts -->
+    
+<!-- Scripts -->
+<!-- Bootstrap core JavaScript-->
+<script src="/assets/vendor/jquery/jquery.min.js"></script>
+<script src="/assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+<!-- Core plugin JavaScript-->
+<script src="/assets/vendor/jquery-easing/jquery.easing.min.js"></script>
+
+<!-- Custom scripts for all pages-->
+<script src="/assets/js/sb-admin-2.min.js"></script>
+
+
+</body>
+</html>

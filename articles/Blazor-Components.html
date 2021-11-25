@@ -1,428 +1,1025 @@
 <!DOCTYPE html>
-<html lang="en-US">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>A Deep Dive into Blazor Components | Cold Elm Coders</title>
-    <meta name="generator" content="VuePress 1.8.2">
+<html lang="en">
+<head>
     
-    <meta name="description" content="">
-    <meta name="theme-color" content="#3eaf7c">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+<!-- SEO Meta Tags -->
+<meta name="description" content="Your description">
+<meta name="author" content="Your name">
+
+<!-- OG Meta Tags to improve the way the post looks when you share the page on Facebook, Twitter, LinkedIn -->
+<meta property="og:site_name" content="" /> <!-- website name -->
+<meta property="og:site" content="" /> <!-- website link -->
+<meta property="og:title" content="" /> <!-- title shown in the actual shared post -->
+<meta property="og:description" content="" /> <!-- description shown in the actual shared post -->
+<meta property="og:image" content="" /> <!-- image link, make sure it's jpg -->
+<meta property="og:url" content="" /> <!-- where do you want your post to link to -->
+<meta name="twitter:card" content="summary_large_image"> <!-- to have large image post format in Twitter -->
+
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+
+<meta name="description" content="This article take a detailed look at the anatomy of a component and how it interacts with the rendering process." >
+<meta name="author" content="Shaun Curtis" >
+
+
+
+<title>A Deep Dive into Blazor Components</title>
+
+
+<!-- Custom fonts for this template-->
+<link href="/assets/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+<link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+      rel="stylesheet">
+
+<!-- Custom styles for this template-->
+<link href="/assets/css/sb-admin-2.css" rel="stylesheet" type="text/css">
+<link href="/assets/css/site.css" rel="stylesheet" type="text/css">
+
+<!-- Favicon  -->
+<link rel="icon" href="/assets/images/favicon.png">
+
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/highlight.css">
+    <link rel="stylesheet" href="/assets/css/article.css" type="text/css">
+</head>
+<body id="page-top">
+    <!--topbar-->
+    <div id="topbar">
+        
+<!-- Topbar -->
+<nav class="navbar navbar-expand navbar-light topbar mb-4 static-top">
     
-    <link rel="preload" href="/assets/css/0.styles.757cca11.css" as="style"><link rel="preload" href="/assets/js/app.e7504274.js" as="script"><link rel="preload" href="/assets/js/3.f3d70fce.js" as="script"><link rel="preload" href="/assets/js/46.f78d075f.js" as="script"><link rel="prefetch" href="/assets/js/1.dd2e798d.js"><link rel="prefetch" href="/assets/js/10.62cd9054.js"><link rel="prefetch" href="/assets/js/11.7ef2f0cc.js"><link rel="prefetch" href="/assets/js/12.571448aa.js"><link rel="prefetch" href="/assets/js/13.e5a600e9.js"><link rel="prefetch" href="/assets/js/14.4ed01dd2.js"><link rel="prefetch" href="/assets/js/15.d0a813d8.js"><link rel="prefetch" href="/assets/js/16.3d701298.js"><link rel="prefetch" href="/assets/js/17.dd96adea.js"><link rel="prefetch" href="/assets/js/18.f6955aa8.js"><link rel="prefetch" href="/assets/js/19.bb1f166c.js"><link rel="prefetch" href="/assets/js/20.440b537e.js"><link rel="prefetch" href="/assets/js/21.1e192f13.js"><link rel="prefetch" href="/assets/js/22.0f3db856.js"><link rel="prefetch" href="/assets/js/23.9a2edb75.js"><link rel="prefetch" href="/assets/js/24.3d8317a7.js"><link rel="prefetch" href="/assets/js/25.e6e973f9.js"><link rel="prefetch" href="/assets/js/26.2f4dce51.js"><link rel="prefetch" href="/assets/js/27.eddfbfe3.js"><link rel="prefetch" href="/assets/js/28.1a753628.js"><link rel="prefetch" href="/assets/js/29.dd0c2751.js"><link rel="prefetch" href="/assets/js/30.049ba17e.js"><link rel="prefetch" href="/assets/js/31.ec7a699c.js"><link rel="prefetch" href="/assets/js/32.128041a3.js"><link rel="prefetch" href="/assets/js/33.90a80a82.js"><link rel="prefetch" href="/assets/js/34.640d5210.js"><link rel="prefetch" href="/assets/js/35.dd6a5277.js"><link rel="prefetch" href="/assets/js/36.af0fb7fb.js"><link rel="prefetch" href="/assets/js/37.6282d3d3.js"><link rel="prefetch" href="/assets/js/38.09c22a9c.js"><link rel="prefetch" href="/assets/js/39.34118569.js"><link rel="prefetch" href="/assets/js/4.004aaf89.js"><link rel="prefetch" href="/assets/js/40.42fb5da5.js"><link rel="prefetch" href="/assets/js/41.d1ac92f4.js"><link rel="prefetch" href="/assets/js/42.046bbbbf.js"><link rel="prefetch" href="/assets/js/43.86ac5d2f.js"><link rel="prefetch" href="/assets/js/44.1393eed1.js"><link rel="prefetch" href="/assets/js/45.a4121f00.js"><link rel="prefetch" href="/assets/js/47.02e428da.js"><link rel="prefetch" href="/assets/js/48.3f9d12a6.js"><link rel="prefetch" href="/assets/js/49.bb9c3fab.js"><link rel="prefetch" href="/assets/js/5.8a61fa12.js"><link rel="prefetch" href="/assets/js/50.ebb028fd.js"><link rel="prefetch" href="/assets/js/51.a2b343de.js"><link rel="prefetch" href="/assets/js/52.2a464137.js"><link rel="prefetch" href="/assets/js/53.54a07d54.js"><link rel="prefetch" href="/assets/js/54.72acf66d.js"><link rel="prefetch" href="/assets/js/55.6168cc1a.js"><link rel="prefetch" href="/assets/js/56.0653a59a.js"><link rel="prefetch" href="/assets/js/57.df56ec02.js"><link rel="prefetch" href="/assets/js/58.fc8f11bc.js"><link rel="prefetch" href="/assets/js/59.158abf7b.js"><link rel="prefetch" href="/assets/js/6.1fda51af.js"><link rel="prefetch" href="/assets/js/60.10f7e3a6.js"><link rel="prefetch" href="/assets/js/61.844ecd3b.js"><link rel="prefetch" href="/assets/js/62.da039f8c.js"><link rel="prefetch" href="/assets/js/63.f2fe69a7.js"><link rel="prefetch" href="/assets/js/64.b9085bd9.js"><link rel="prefetch" href="/assets/js/65.6c182c91.js"><link rel="prefetch" href="/assets/js/66.e0d48b84.js"><link rel="prefetch" href="/assets/js/7.eca4725c.js"><link rel="prefetch" href="/assets/js/8.2504867c.js"><link rel="prefetch" href="/assets/js/9.64046c51.js">
-    <link rel="stylesheet" href="/assets/css/0.styles.757cca11.css">
-  </head>
-  <body>
-    <div id="app" data-server-rendered="true"><div class="theme-container"><header class="navbar"><div class="sidebar-button"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon"><path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path></svg></div> <a href="/" class="home-link router-link-active"><!----> <span class="site-name">Cold Elm Coders</span></a> <div class="links"><div class="search-box"><input aria-label="Search" autocomplete="off" spellcheck="false" value=""> <!----></div> <nav class="nav-links can-hide"><div class="nav-item"><a href="/articles/" class="nav-link router-link-active">
-  Articles
-</a></div><div class="nav-item"><a href="/posts/" class="nav-link">
-  Posts
-</a></div><div class="nav-item"><a href="/ArchivedArticles/" class="nav-link">
-  Old Articles
-</a></div><div class="nav-item"><a href="/Building-a-Database-Application-in-Blazor/" class="nav-link">
-  Database Application
-</a></div><div class="nav-item"><a href="https://cec-blazor-examples.azurewebsites.net/" target="_blank" rel="noopener noreferrer" class="nav-link external">
-  Demo Site
-  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></div> <!----></nav></div></header> <div class="sidebar-mask"></div> <aside class="sidebar"><nav class="nav-links"><div class="nav-item"><a href="/articles/" class="nav-link router-link-active">
-  Articles
-</a></div><div class="nav-item"><a href="/posts/" class="nav-link">
-  Posts
-</a></div><div class="nav-item"><a href="/ArchivedArticles/" class="nav-link">
-  Old Articles
-</a></div><div class="nav-item"><a href="/Building-a-Database-Application-in-Blazor/" class="nav-link">
-  Database Application
-</a></div><div class="nav-item"><a href="https://cec-blazor-examples.azurewebsites.net/" target="_blank" rel="noopener noreferrer" class="nav-link external">
-  Demo Site
-  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></div> <!----></nav>  <ul class="sidebar-links"><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading open"><span>My Articles</span> <span class="arrow down"></span></p> <ul class="sidebar-links sidebar-group-items"><li><a href="/articles/" aria-current="page" class="sidebar-link">Articles</a></li><li><a href="/articles/A-Flexible-App.html" class="sidebar-link">Adding Dynamic Routing, Layouts and RouteViews to the Blazor App Component</a></li><li><a href="/articles/Async-Programming-in-DotNetCore.html" class="sidebar-link">Async Programming in DotNetCore</a></li><li><a href="/articles/Blazor-AllinOne.html" class="sidebar-link">Blazor AllinOne - Multi SPA Hosting</a></li><li><a href="/articles/Blazor-CSS.html" class="sidebar-link">CSS in Blazor</a></li><li><a href="/articles/Blazor-Components.html" aria-current="page" class="active sidebar-link">A Deep Dive into Blazor Components</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header"><a href="/articles/Blazor-Components.html#what-is-a-component" class="sidebar-link">What is a Component?</a></li><li class="sidebar-sub-header"><a href="/articles/Blazor-Components.html#the-renderer-and-the-render-tree" class="sidebar-link">The Renderer and the Render Tree</a></li><li class="sidebar-sub-header"><a href="/articles/Blazor-Components.html#the-client-application" class="sidebar-link">The Client Application</a></li><li class="sidebar-sub-header"><a href="/articles/Blazor-Components.html#components" class="sidebar-link">Components</a></li><li class="sidebar-sub-header"><a href="/articles/Blazor-Components.html#componentbase" class="sidebar-link">ComponentBase</a></li><li class="sidebar-sub-header"><a href="/articles/Blazor-Components.html#the-render-process" class="sidebar-link">The Render Process</a></li><li class="sidebar-sub-header"><a href="/articles/Blazor-Components.html#component-events" class="sidebar-link">Component Events</a></li><li class="sidebar-sub-header"><a href="/articles/Blazor-Components.html#some-important-less-documented-information-and-lessons-learned" class="sidebar-link">Some Important Less Documented Information and Lessons Learned</a></li><li class="sidebar-sub-header"><a href="/articles/Blazor-Components.html#building-components" class="sidebar-link">Building Components</a></li><li class="sidebar-sub-header"><a href="/articles/Blazor-Components.html#some-observations" class="sidebar-link">Some Observations</a></li></ul></li><li><a href="/articles/Blazor-DataList-Control.html" class="sidebar-link">A Blazor DataList Control</a></li><li><a href="/articles/BlazorAsyncProgramming.html" class="sidebar-link">Async Programming in Blazor</a></li><li><a href="/articles/Building-Edit-Forms.html" class="sidebar-link">Building Blazor Edit Forms</a></li><li><a href="/articles/EditFormState.html" class="sidebar-link">The Blazor EditFormState Control</a></li><li><a href="/articles/Hydra Full Article.html" class="sidebar-link">Blazor Hydra - Multi SPA Hosting</a></li><li><a href="/articles/Inline-Dialog.html" class="sidebar-link">The Blazor Inline Dialog Control</a></li><li><a href="/articles/Modal-Dialog.html" class="sidebar-link">A Blazor Modal Dialog</a></li><li><a href="/articles/ValidationFormState.html" class="sidebar-link">A Blazor Validation Control</a></li></ul></section></li></ul> </aside> <main class="page"> <div class="theme-default-content content__default"><h1 id="a-deep-dive-into-blazor-components"><a href="#a-deep-dive-into-blazor-components" class="header-anchor">#</a> A Deep Dive into Blazor Components</h1> <p>This article looks at the anatomy of a component, its life cycle and how Blazor uses and manages components in building and running the UI.</p> <p>A deep understanding of components makes developing Blazor applications a very different experience.</p> <h2 id="what-is-a-component"><a href="#what-is-a-component" class="header-anchor">#</a> What is a Component?</h2> <p>Microsoft defines:</p> <p><em>A component is a self-contained portion of user interface (UI) with processing logic to enable dynamic behavior. Components can be nested, reused, shared among projects, and used in MVC and Razor Pages apps.</em></p> <p><em>Components are implemented using a combination of C# and HTML markup in Razor component files with the .razor file extension.</em></p> <p>What is does rather than what it is, and not all strictly true.</p> <p>From a programming perspective, a component is a simply a class that implements the <code>IComponent</code> interface.  Nothing more.  It comes to life when it's attached to a <code>RenderTree</code>, the component tree used by a <code>Renderer</code> to build and update.  The <code>IComponent</code> interface proves the <code>Renderer</code>s  interface to communicate with and receive communication from a component.</p> <p>Before we dive into components we need to look at the <code>Renderer</code> and <code>RenderTree</code>, and the application setting.</p> <h2 id="the-renderer-and-the-render-tree"><a href="#the-renderer-and-the-render-tree" class="header-anchor">#</a> The Renderer and the Render Tree</h2> <p>A detailed description of how the <code>Renderer</code> and <code>RenderTree</code> work is beyond the scope of this article, but you need a basic grasp of the concepts to understand the rendering process.</p> <p>The <code>Renderer</code> and <code>RenderTree</code> reside in the Client Application in WASM and in the SignalR Hub Session in Server, i.e. one per connected Client Application.</p> <p>The UI - defined by html code in the DOM [Document Object Model] - is represented in the application as a <code>RenderTree</code> and managed by a <code>Renderer</code>. Think of the <code>RenderTree</code> as a tree with one or more components attached to each branch. Each component is a C# class that implements the <code>IComponent</code> interface.  The <code>Renderer</code> has a <code>RenderQueue</code> which runs code to update the UI.  Components submit <code>RenderFragments</code> for the <code>Renderer</code> to run to update the <code>RenderTree</code> and the UI.  The <code>Renderer</code> uses a diffing process to detect changes in the DOM caused by <code>RenderTree</code> updates, and passes these to the client code to implement in the Browser DOM and update the displayed page.</p> <p>The diagram below is a visual representation of the render tree for the out-of-the-box Blazor template.</p> <p><img src="/siteimages/articles/razor-component/Root-Render-tree.png" alt="Root Render Tree"></p> <h2 id="the-client-application"><a href="#the-client-application" class="header-anchor">#</a> The Client Application</h2> <h3 id="blazor-server"><a href="#blazor-server" class="header-anchor">#</a> Blazor Server</h3> <p>Blazor Server defines the <code>&lt;app&gt;</code> component in the initial server/html page.  This looks like this:</p> <div class="language-html extra-class"><pre class="language-html"><code><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>app</span><span class="token punctuation">&gt;</span></span>
-    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>component</span> <span class="token attr-name">type</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">&quot;</span>typeof(App)<span class="token punctuation">&quot;</span></span> <span class="token attr-name">render-mode</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">&quot;</span>ServerPrerendered<span class="token punctuation">&quot;</span></span> <span class="token punctuation">/&gt;</span></span>
-<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>app</span><span class="token punctuation">&gt;</span></span>
-</code></pre></div><p><code>type</code> defines the route component class - in this case <code>App</code> and <code>render-mode</code> defines how the initial server-side render process runs.  You can read about that elsewhere.  The only important bit to understand is that if it pre-renders, the page is rendered twice on the initial load - once by the server to build a static version of the page, and then a second time by the browser client code to build the live version of the page.</p> <p>The browser client code gets loaded by:</p> <div class="language-html extra-class"><pre class="language-html"><code><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>script</span> <span class="token attr-name">src</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">&quot;</span>_framework/blazor.server.js<span class="token punctuation">&quot;</span></span><span class="token punctuation">&gt;</span></span><span class="token script"></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>script</span><span class="token punctuation">&gt;</span></span>
-</code></pre></div><p>Once <em>blazor.server.js</em> loads, the client application runs in the browser page and a SignalR connection estabished with the server.  To complete the initial load, the Client Application calls the Blazor Hub Session and requests a complete server render of the <code>App</code> component.  It then applies the resultant DOM changes to the Client Application DOM - this will principly be the event wiring.</p> <p>The diagram below shows how a render request is passed to the displayed page.</p> <p><img src="/siteimages/articles/razor-component/Server-render.png" alt="Server Rendering"></p> <h3 id="blazor-web-assembly"><a href="#blazor-web-assembly" class="header-anchor">#</a> Blazor Web Assembly</h3> <p>In Blazor WebAssembly the browser receives an Html page with a defined <code>div</code> placeholder where the root component should be loaded:</p> <div class="language-html extra-class"><pre class="language-html"><code><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span> <span class="token attr-name">id</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">&quot;</span>app<span class="token punctuation">&quot;</span></span><span class="token punctuation">&gt;</span></span>
+<ul class="navbar-nav" >
+<li class="nav-item" >
+<a class="nav-link " href="/index.html" role="button"  >
+<span class="mr-2 d-none d-lg-inline text-gray-100">Index</span>
+</a>
+</li>
+<li class="nav-item dropdown no-arrow mx-1" >
+<a class="nav-link dropdown-toggle" href="#" id="2b261163-559b-4a88-b622-bd6ad3c8999b" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"  >
+<span class="mr-2 d-none d-lg-inline text-gray-100">Articles</span>
+</a>
+<div class=" dropdown-list dropdown-menu shadow animated--grow-in" aria-labelledby="2b261163-559b-4a88-b622-bd6ad3c8999b" >
+<a class="dropdown-item" href="/articles/A-Flexible-app.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+A Flexible App
+</a>
+<a class="dropdown-item" href="/articles/Async-Programming-in-DotNetCore.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Async Programming In Dotnetcore
+</a>
+<a class="dropdown-item" href="/articles/Blazor-AllinOne.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Blazor Allinone
+</a>
+<a class="dropdown-item" href="/articles/Blazor-Async-Programming.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Blazor Async Programming
+</a>
+<a class="dropdown-item" href="/articles/Blazor-Components.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Blazor Components
+</a>
+<a class="dropdown-item" href="/articles/Blazor-CSS.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Blazor CSS
+</a>
+<a class="dropdown-item" href="/articles/Blazor-DataList-Control.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Blazor Datalist Control
+</a>
+<a class="dropdown-item" href="/articles/Blazor-Form-Validation.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Blazor Form Validation
+</a>
+<a class="dropdown-item" href="/articles/Building-Edit-Forms.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Building Edit Forms
+</a>
+<a class="dropdown-item" href="/articles/Hydra.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Hydra
+</a>
+<a class="dropdown-item" href="/articles/Inline-Dialog.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Inline Dialog
+</a>
+<a class="dropdown-item" href="/articles/Modal-Dialog.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Modal Dialog
+</a>
+</div>
+</li>
+<li class="nav-item dropdown no-arrow mx-1" >
+<a class="nav-link dropdown-toggle" href="#" id="37812227-9d57-4f91-9b65-d1d0f96e4d7f" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"  >
+<span class="mr-2 d-none d-lg-inline text-gray-100">Blazor Database Application</span>
+</a>
+<div class=" dropdown-list dropdown-menu shadow animated--grow-in" aria-labelledby="37812227-9d57-4f91-9b65-d1d0f96e4d7f" >
+<a class="dropdown-item" href="/Building-a-Database-Application-in-Blazor/Building-a-Database-Application-in-Blazor-Part-1.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Building A Database Application In Blazor Part 1
+</a>
+<a class="dropdown-item" href="/Building-a-Database-Application-in-Blazor/Building-a-Database-Application-in-Blazor-Part-2.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Building A Database Application In Blazor Part 2
+</a>
+<a class="dropdown-item" href="/Building-a-Database-Application-in-Blazor/Building-a-Database-Application-in-Blazor-Part-3.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Building A Database Application In Blazor Part 3
+</a>
+<a class="dropdown-item" href="/Building-a-Database-Application-in-Blazor/Building-a-Database-Application-in-Blazor-Part-4.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Building A Database Application In Blazor Part 4
+</a>
+<a class="dropdown-item" href="/Building-a-Database-Application-in-Blazor/Building-a-Database-Application-in-Blazor-Part-5.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Building A Database Application In Blazor Part 5
+</a>
+<a class="dropdown-item" href="/Building-a-Database-Application-in-Blazor/Building-a-Database-Application-in-Blazor-Part-6.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Building A Database Application In Blazor Part 6
+</a>
+<a class="dropdown-item" href="/Building-a-Database-Application-in-Blazor/index.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Index
+</a>
+</div>
+</li>
+<li class="nav-item dropdown no-arrow mx-1" >
+<a class="nav-link dropdown-toggle" href="#" id="c9b73d65-94cf-45eb-bd6d-1768ca4bb07a" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"  >
+<span class="mr-2 d-none d-lg-inline text-gray-100">Posts</span>
+</a>
+<div class=" dropdown-list dropdown-menu shadow animated--grow-in" aria-labelledby="c9b73d65-94cf-45eb-bd6d-1768ca4bb07a" >
+<a class="dropdown-item" href="/posts/Blazor-Async-UI-Events.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Blazor Async UI Events
+</a>
+<a class="dropdown-item" href="/posts/DBContexts-In-Transient-Services.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Dbcontexts In Transient Services
+</a>
+<a class="dropdown-item" href="/posts/DynamicCss.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Dynamiccss
+</a>
+<a class="dropdown-item" href="/posts/For-ForEach-in-Blazor.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+For Foreach In Blazor
+</a>
+<a class="dropdown-item" href="/posts/Notification-Service-Pattern.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Notification Service Pattern
+</a>
+<a class="dropdown-item" href="/posts/XML-XSD-Serialization.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+XML XSD Serialization
+</a>
+</div>
+</li>
+</ul>
+
+    <div class="ms-5 me-5 ml-auto">
+        <h1>Cold Elm Coders</h1>
+    </div>
+</nav>
+
+
+    </div>
+    <!--End topbar-->
+    <!--Sidebar-->
+    <div id="sidebar">
+        
+<div class="article-info p-2" Published: 11-11-2020 >
+<div>Published: 11-11-2020</div>
+<div>Last Updated: 16-06-2021</div>
+<div>Author: Shaun Curtis</div>
+</div>
+
+        
+<h4 class="p-2">Table of Contents</h4>
+<ul class="TOC" >
+<li class="TOC-item TOC-item-0" >
+<a class="TOC-link" href="#">Top</a>
+<ul class="TOC TOC-0" >
+<li class="TOC-item TOC-item-1" >
+<ul class="TOC TOC-1" >
+<li class="TOC-item TOC-item-2" >
+<a class="TOC-link" href="#what-is-a-component">What is a Component?</a>
+</li>
+<li class="TOC-item TOC-item-2" >
+<a class="TOC-link" href="#the-renderer-and-the-render-tree">The Renderer and the Render Tree</a>
+</li>
+<li class="TOC-item TOC-item-2" >
+<a class="TOC-link" href="#the-client-application">The Client Application</a>
+<ul class="TOC TOC-2" >
+<li class="TOC-item TOC-item-3" >
+<a class="TOC-link" href="#blazor-server">Blazor Server</a>
+</li>
+<li class="TOC-item TOC-item-3" >
+<a class="TOC-link" href="#blazor-web-assembly">Blazor Web Assembly</a>
+</li>
+</ul>
+</li>
+<li class="TOC-item TOC-item-2" >
+<a class="TOC-link" href="#components">Components</a>
+<ul class="TOC TOC-2" >
+<li class="TOC-item TOC-item-3" >
+<a class="TOC-link" href="#the-helloworld-component">The HelloWorld Component</a>
+</li>
+<li class="TOC-item TOC-item-3" >
+<a class="TOC-link" href="#a-simple-icomponent-implementation">A Simple IComponent Implementation</a>
+</li>
+<li class="TOC-item TOC-item-3" >
+<a class="TOC-link" href="#routed-components">Routed Components</a>
+</li>
+</ul>
+</li>
+<li class="TOC-item TOC-item-2" >
+<a class="TOC-link" href="#componentbase">ComponentBase</a>
+<ul class="TOC TOC-2" >
+<li class="TOC-item TOC-item-3" >
+<a class="TOC-link" href="#componentbase-lifecycle-and-events">ComponentBase Lifecycle and Events</a>
+</li>
+</ul>
+</li>
+<li class="TOC-item TOC-item-2" >
+<a class="TOC-link" href="#the-render-process">The Render Process</a>
+<ul class="TOC TOC-2" >
+<li class="TOC-item TOC-item-3" >
+<a class="TOC-link" href="#component-content">Component Content</a>
+</li>
+</ul>
+</li>
+<li class="TOC-item TOC-item-2" >
+<a class="TOC-link" href="#component-events">Component Events</a>
+</li>
+<li class="TOC-item TOC-item-2" >
+<a class="TOC-link" href="#some-important-less-documented-information-and-lessons-learned">Some Important Less Documented Information and Lessons Learned</a>
+<ul class="TOC TOC-2" >
+<li class="TOC-item TOC-item-3" >
+<a class="TOC-link" href="#keep-parameter-properties-simple">Keep Parameter Properties Simple</a>
+</li>
+<li class="TOC-item TOC-item-3" >
+<a class="TOC-link" href="#overriding-setparametersasync">Overriding SetParametersAsync</a>
+</li>
+<li class="TOC-item TOC-item-3" >
+<a class="TOC-link" href="#treat-parameters-as-immutable">Treat Parameters as Immutable</a>
+</li>
+<li class="TOC-item TOC-item-3" >
+<a class="TOC-link" href="#iterators">Iterators</a>
+</li>
+<li class="TOC-item TOC-item-3" >
+<a class="TOC-link" href="#component-numbering">Component Numbering</a>
+</li>
+</ul>
+</li>
+<li class="TOC-item TOC-item-2" >
+<a class="TOC-link" href="#building-components">Building Components</a>
+</li>
+<li class="TOC-item TOC-item-2" >
+<a class="TOC-link" href="#some-observations">Some Observations</a>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+    </div>
+    <!--End Sidebar-->
+    <!-- Page Wrapper -->
+    <div id="wrapper">
+        <!-- Content Wrapper -->
+        <div id="content-wrapper" class="d-flex flex-column">
+            <!-- Main Content -->
+            <div id="content">
+                <!-- Topbar -->
+                <div id="article">
+                    <!-- Article -->
+                    
+<!-- Header -->
+<header class="ex-header-article">
+    <div class="container">
+        <div class="row pt-3 pb-3 border-bottom">
+            <div class="col">
+                
+<h1>A Deep Dive into Blazor Components</h1>
+<div>This article take a detailed look at the anatomy of a component and how it interacts with the rendering process.</div>
+
+            </div> <!-- end of col -->
+        </div> <!-- end of row -->
+    </div> <!-- end of container -->
+</header> <!-- end of ex-header -->
+<!-- end of header -->
+
+
+                    
+<!-- Article Container -->
+<div class="ex-basic-1 pt-4">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                
+
+        <h2 id="what-is-a-component">What is a Component?</h2>
+<p>Microsoft defines:</p>
+<p><em>A component is a self-contained portion of user interface (UI) with processing logic to enable dynamic behavior. Components can be nested, reused, shared among projects, and used in MVC and Razor Pages apps.</em></p>
+<p><em>Components are implemented using a combination of C# and HTML markup in Razor component files with the .razor file extension.</em></p>
+<p>What is does rather than what it is, and not all strictly true.</p>
+<p>From a programming perspective, a component is a simply a class that implements the <code>IComponent</code> interface.  Nothing more.  It comes to life when it's attached to a <code>RenderTree</code>, the component tree used by a <code>Renderer</code> to build and update.  The <code>IComponent</code> interface proves the <code>Renderer</code>s  interface to communicate with and receive communication from a component.</p>
+<p>Before we dive into components we need to look at the <code>Renderer</code> and <code>RenderTree</code>, and the application setting.</p>
+<h2 id="the-renderer-and-the-render-tree">The Renderer and the Render Tree</h2>
+<p>A detailed description of how the <code>Renderer</code> and <code>RenderTree</code> work is beyond the scope of this article, but you need a basic grasp of the concepts to understand the rendering process.</p>
+<p>The <code>Renderer</code> and <code>RenderTree</code> reside in the Client Application in WASM and in the SignalR Hub Session in Server, i.e. one per connected Client Application.</p>
+<p>The UI - defined by html code in the DOM [Document Object Model] - is represented in the application as a <code>RenderTree</code> and managed by a <code>Renderer</code>. Think of the <code>RenderTree</code> as a tree with one or more components attached to each branch. Each component is a C# class that implements the <code>IComponent</code> interface.  The <code>Renderer</code> has a <code>RenderQueue</code> which runs code to update the UI.  Components submit <code>RenderFragments</code> for the <code>Renderer</code> to run to update the <code>RenderTree</code> and the UI.  The <code>Renderer</code> uses a diffing process to detect changes in the DOM caused by <code>RenderTree</code> updates, and passes these to the client code to implement in the Browser DOM and update the displayed page.</p>
+<p>The diagram below is a visual representation of the render tree for the out-of-the-box Blazor template.</p>
+<p><img src="\articles\assets\Root-Render-tree.png" alt="Root Render Tree"></p>
+<h2 id="the-client-application">The Client Application</h2>
+<h3 id="blazor-server">Blazor Server</h3>
+<p>Blazor Server defines the <code>&lt;app&gt;</code> component in the initial server/html page.  This looks like this:</p>
+<pre><code class="language-html"><div><span class="hljs-tag">&lt;<span class="hljs-name">app</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">component</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;typeof(App)&quot;</span> <span class="hljs-attr">render-mode</span>=<span class="hljs-string">&quot;ServerPrerendered&quot;</span> /&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">app</span>&gt;</span>
+</div></code></pre>
+<p><code>type</code> defines the route component class - in this case <code>App</code> and <code>render-mode</code> defines how the initial server-side render process runs.  You can read about that elsewhere.  The only important bit to understand is that if it pre-renders, the page is rendered twice on the initial load - once by the server to build a static version of the page, and then a second time by the browser client code to build the live version of the page.</p>
+<p>The browser client code gets loaded by:</p>
+<pre><code class="language-html"><div><span class="hljs-tag">&lt;<span class="hljs-name">script</span> <span class="hljs-attr">src</span>=<span class="hljs-string">&quot;_framework/blazor.server.js&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span>
+</div></code></pre>
+<p>Once <em>blazor.server.js</em> loads, the client application runs in the browser page and a SignalR connection estabished with the server.  To complete the initial load, the Client Application calls the Blazor Hub Session and requests a complete server render of the <code>App</code> component.  It then applies the resultant DOM changes to the Client Application DOM - this will principly be the event wiring.</p>
+<p>The diagram below shows how a render request is passed to the displayed page.</p>
+<p><img src="\articles\assets\Server-render.png" alt="Server Rendering"></p>
+<h3 id="blazor-web-assembly">Blazor Web Assembly</h3>
+<p>In Blazor WebAssembly the browser receives an Html page with a defined <code>div</code> placeholder where the root component should be loaded:</p>
+<pre><code class="language-html"><div><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;app&quot;</span>&gt;</span>
     ....
-<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">&gt;</span></span>
-</code></pre></div><p>The Client Application gets loaded by:</p> <div class="language-html extra-class"><pre class="language-html"><code><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>script</span> <span class="token attr-name">src</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">&quot;</span>_framework/blazor.webassembly.js<span class="token punctuation">&quot;</span></span><span class="token punctuation">&gt;</span></span><span class="token script"></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>script</span><span class="token punctuation">&gt;</span></span>
-</code></pre></div><p>Once the WASM code is loaded, it runs <code>program</code>.</p> <div class="language-csharp extra-class"><pre class="language-csharp"><code>builder<span class="token punctuation">.</span>RootComponents<span class="token punctuation">.</span><span class="token generic-method"><span class="token function">Add</span><span class="token generic class-name"><span class="token punctuation">&lt;</span>App<span class="token punctuation">&gt;</span></span></span><span class="token punctuation">(</span><span class="token string">&quot;#app&quot;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-</code></pre></div><p>The code tells the Renderer that the <code>App</code> class component is the root component for the <code>RenderTree</code> and to load it's DOM into the <code>app</code> element in the browser DOM.</p> <p><img src="/siteimages/articles/razor-component/Web-Assembly-render.png" alt="Server Rendering"></p> <p>The key point to take from this is that although the process by which the root component is defined and loaded is different, there's no difference between in a WebAssembly and Server root component or any sub-component.  You can use the same component.</p> <h4 id="app-razor"><a href="#app-razor" class="header-anchor">#</a> App.razor</h4> <p><em>App.razor</em> is the &quot;standard&quot; root component.  It can be any <code>IComponent</code> defined class.</p> <p><code>App</code> looks like this:</p> <div class="language-html extra-class"><pre class="language-html"><code><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>Router</span> <span class="token attr-name">AppAssembly</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">&quot;</span>@typeof(Program).Assembly<span class="token punctuation">&quot;</span></span><span class="token punctuation">&gt;</span></span>
-    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>Found</span> <span class="token attr-name">Context</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">&quot;</span>routeData<span class="token punctuation">&quot;</span></span><span class="token punctuation">&gt;</span></span>
-        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>RouteView</span> <span class="token attr-name">RouteData</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">&quot;</span>@routeData<span class="token punctuation">&quot;</span></span> <span class="token attr-name">DefaultLayout</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">&quot;</span>@typeof(MainLayout)<span class="token punctuation">&quot;</span></span> <span class="token punctuation">/&gt;</span></span>
-    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>Found</span><span class="token punctuation">&gt;</span></span>
-    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>NotFound</span><span class="token punctuation">&gt;</span></span>
-        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>LayoutView</span> <span class="token attr-name">Layout</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">&quot;</span>@typeof(MainLayout)<span class="token punctuation">&quot;</span></span><span class="token punctuation">&gt;</span></span>
-            <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>p</span><span class="token punctuation">&gt;</span></span>Sorry, there's nothing at this address.<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>p</span><span class="token punctuation">&gt;</span></span>
-        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>LayoutView</span><span class="token punctuation">&gt;</span></span>
-    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>NotFound</span><span class="token punctuation">&gt;</span></span>
-<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>Router</span><span class="token punctuation">&gt;</span></span>
-</code></pre></div><p>It's a Razor component defining one child component, <code>Router</code>.  <code>Router</code> has two <code>RenderFragments</code>, <code>Found</code> and <code>NotFound</code>.  If <code>Router</code> finds a route, and therefore an <code>IComponent</code> class, it renders the <code>RouteView</code> component and passes it the route class type along with the default <code>Layout</code> class.   If no route is found it renders a <code>LayoutView</code> and renders the defined content in it's <code>Body</code>.</p> <p><code>RouteView</code> checks if the <code>RouteData</code> component has a specific layout class defined.  If so it uses it, otherwise it uses the default layout.  It renders the layout and passes it the type of the component to add to the <code>Body</code> RenderFragment.</p> <h2 id="components"><a href="#components" class="header-anchor">#</a> Components</h2> <p>All components are normal DotNetCore classes that implement <code>IComponent</code>.</p> <p>The <code>IComponent</code> interface definition is:</p> <div class="language-csharp extra-class"><pre class="language-csharp"><code><span class="token keyword">public</span> <span class="token keyword">interface</span> <span class="token class-name">IComponent</span>
-<span class="token punctuation">{</span>
-    <span class="token return-type class-name"><span class="token keyword">void</span></span> <span class="token function">Attach</span><span class="token punctuation">(</span><span class="token class-name">RenderHandle</span> renderHandle<span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token return-type class-name">Task</span> <span class="token function">SetParametersAsync</span><span class="token punctuation">(</span><span class="token class-name">ParameterView</span> parameters<span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token punctuation">}</span>
-</code></pre></div><p>My first reaction on seeing this was &quot;What? Something missing here. Where's all those events and initialization methods?&quot; Every article you read talks about components and  <code>OnInitialized</code>, ...  Don't let them confuse you.   These are part of <code>ComponentBase</code> the out-of-the-box Blazor implementation of <code>IComponent</code>.  <code>ComponentBase</code> does not define of a component.  You will see a much simpler implementation below.</p> <p>Lets look at what is defined in more detail.  The Blazor Hub Session has a <code>Renderer</code> that runs the <code>RenderTree</code> for each root component.  Technically you can have more than one, but we'll ignore that for this discussion.  To quote the class documentation:</p> <p><code>Renderer</code> provides mechanisms:</p> <ol><li>For rendering hierarchies of <code>IComponent</code> instances;</li> <li>Dispatching events to them;</li> <li>Notifying when the user interface is being updated.</li></ol> <p>A RenderHandle structure:</p> <ol><li>Allows a component to interact with its renderer.</li></ol> <p>Going back to the <code>IComponent</code> interface:</p> <ol><li><code>Attach</code> is called when the <code>Renderer</code> attaches an <code>IComponent</code> object to the <code>RenderTree</code>.  It passes the component a <code>RenderHandle</code> struct.  The component uses this render handle to queue <code>RenderFragments</code> onto the <code>Renderer</code>'s <code>RenderQueue</code>.  We'll look at <code>RenderFragement</code> in more detail soon.</li> <li><code>SetParametersAsync</code> is called by the <code>Renderer</code> on a component when it first attaches it to the <code>RenderTree</code> and whenever it deems one or more of the components <code>Parameters</code> has changed.</li></ol> <p>Note that the <code>IComponent</code> has no concept of the <code>RenderTree</code>.  It gets triggered into action through a call to <code>SetParametersAsync</code> and it passes changes by calling a method on a <code>RenderHandle</code>.</p> <h3 id="the-helloworld-component"><a href="#the-helloworld-component" class="header-anchor">#</a> The HelloWorld Component</h3> <p>To demonstrate the <code>IComponent</code> interface We'll build a simple <code>HelloWorld</code> component.</p> <p>Our simplest Hello World Razor component looks like this:</p> <div class="language-html extra-class"><pre class="language-html"><code>@page &quot;/helloworld&quot;
-<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span><span class="token punctuation">&gt;</span></span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+</div></code></pre>
+<p>The Client Application gets loaded by:</p>
+<pre><code class="language-html"><div><span class="hljs-tag">&lt;<span class="hljs-name">script</span> <span class="hljs-attr">src</span>=<span class="hljs-string">&quot;_framework/blazor.webassembly.js&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span>
+</div></code></pre>
+<p>Once the WASM code is loaded, it runs <code>program</code>.</p>
+<pre><code class="language-csharp"><div>builder.RootComponents.Add&lt;App&gt;(<span class="hljs-string">&quot;#app&quot;</span>);
+</div></code></pre>
+<p>The code tells the Renderer that the <code>App</code> class component is the root component for the <code>RenderTree</code> and to load it's DOM into the <code>app</code> element in the browser DOM.</p>
+<p><img src="\articles\assets\Web-Assembly-render.png" alt="Server Rendering"></p>
+<p>The key point to take from this is that although the process by which the root component is defined and loaded is different, there's no difference between in a WebAssembly and Server root component or any sub-component.  You can use the same component.</p>
+<h4 id="apprazor">App.razor</h4>
+<p><em>App.razor</em> is the &quot;standard&quot; root component.  It can be any <code>IComponent</code> defined class.</p>
+<p><code>App</code> looks like this:</p>
+<pre><code class="language-html"><div><span class="hljs-tag">&lt;<span class="hljs-name">Router</span> <span class="hljs-attr">AppAssembly</span>=<span class="hljs-string">&quot;@typeof(Program).Assembly&quot;</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">Found</span> <span class="hljs-attr">Context</span>=<span class="hljs-string">&quot;routeData&quot;</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">RouteView</span> <span class="hljs-attr">RouteData</span>=<span class="hljs-string">&quot;@routeData&quot;</span> <span class="hljs-attr">DefaultLayout</span>=<span class="hljs-string">&quot;@typeof(MainLayout)&quot;</span> /&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-name">Found</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">NotFound</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">LayoutView</span> <span class="hljs-attr">Layout</span>=<span class="hljs-string">&quot;@typeof(MainLayout)&quot;</span>&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span>Sorry, there&#x27;s nothing at this address.<span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span>
+        <span class="hljs-tag">&lt;/<span class="hljs-name">LayoutView</span>&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-name">NotFound</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">Router</span>&gt;</span>
+</div></code></pre>
+<p>It's a Razor component defining one child component, <code>Router</code>.  <code>Router</code> has two <code>RenderFragments</code>, <code>Found</code> and <code>NotFound</code>.  If <code>Router</code> finds a route, and therefore an <code>IComponent</code> class, it renders the <code>RouteView</code> component and passes it the route class type along with the default <code>Layout</code> class.   If no route is found it renders a <code>LayoutView</code> and renders the defined content in it's <code>Body</code>.</p>
+<p><code>RouteView</code> checks if the <code>RouteData</code> component has a specific layout class defined.  If so it uses it, otherwise it uses the default layout.  It renders the layout and passes it the type of the component to add to the <code>Body</code> RenderFragment.</p>
+<h2 id="components">Components</h2>
+<p>All components are normal DotNetCore classes that implement <code>IComponent</code>.</p>
+<p>The <code>IComponent</code> interface definition is:</p>
+<pre><code class="language-csharp"><div><span class="hljs-keyword">public</span> <span class="hljs-keyword">interface</span> <span class="hljs-title">IComponent</span>
+{
+    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">Attach</span>(<span class="hljs-params">RenderHandle renderHandle</span>)</span>;
+    <span class="hljs-function">Task <span class="hljs-title">SetParametersAsync</span>(<span class="hljs-params">ParameterView parameters</span>)</span>;
+}
+</div></code></pre>
+<p>My first reaction on seeing this was &quot;What? Something missing here. Where's all those events and initialization methods?&quot; Every article you read talks about components and  <code>OnInitialized</code>, ...  Don't let them confuse you.   These are part of <code>ComponentBase</code> the out-of-the-box Blazor implementation of <code>IComponent</code>.  <code>ComponentBase</code> does not define of a component.  You will see a much simpler implementation below.</p>
+<p>Lets look at what is defined in more detail.  The Blazor Hub Session has a <code>Renderer</code> that runs the <code>RenderTree</code> for each root component.  Technically you can have more than one, but we'll ignore that for this discussion.  To quote the class documentation:</p>
+<p><code>Renderer</code> provides mechanisms:</p>
+<ol>
+<li>For rendering hierarchies of <code>IComponent</code> instances;</li>
+<li>Dispatching events to them;</li>
+<li>Notifying when the user interface is being updated.</li>
+</ol>
+<p>A RenderHandle structure:</p>
+<ol>
+<li>Allows a component to interact with its renderer.</li>
+</ol>
+<p>Going back to the <code>IComponent</code> interface:</p>
+<ol>
+<li><code>Attach</code> is called when the <code>Renderer</code> attaches an <code>IComponent</code> object to the <code>RenderTree</code>.  It passes the component a <code>RenderHandle</code> struct.  The component uses this render handle to queue <code>RenderFragments</code> onto the <code>Renderer</code>'s <code>RenderQueue</code>.  We'll look at <code>RenderFragement</code> in more detail soon.</li>
+<li><code>SetParametersAsync</code> is called by the <code>Renderer</code> on a component when it first attaches it to the <code>RenderTree</code> and whenever it deems one or more of the components <code>Parameters</code> has changed.</li>
+</ol>
+<p>Note that the <code>IComponent</code> has no concept of the <code>RenderTree</code>.  It gets triggered into action through a call to <code>SetParametersAsync</code> and it passes changes by calling a method on a <code>RenderHandle</code>.</p>
+<h3 id="the-helloworld-component">The HelloWorld Component</h3>
+<p>To demonstrate the <code>IComponent</code> interface We'll build a simple <code>HelloWorld</code> component.</p>
+<p>Our simplest Hello World Razor component looks like this:</p>
+<pre><code class="language-html"><div>@page &quot;/helloworld&quot;
+<span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span>
     Hello World
-<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">&gt;</span></span>
-</code></pre></div><p>It's a Razor defined component.</p> <p>We can refactor it to look like this:</p> <div class="language-csharp extra-class"><pre class="language-csharp"><code>@page <span class="token string">&quot;/helloworld&quot;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+</div></code></pre>
+<p>It's a Razor defined component.</p>
+<p>We can refactor it to look like this:</p>
+<pre><code class="language-csharp"><div>@page <span class="hljs-string">&quot;/helloworld&quot;</span>
 
-<span class="token return-type class-name">@HelloWorld</span>
+@HelloWorld
 
-@code <span class="token punctuation">{</span>
-    <span class="token keyword">protected</span> <span class="token return-type class-name">RenderFragment</span> HelloWorld <span class="token operator">=&gt;</span> <span class="token punctuation">(</span><span class="token class-name">RenderTreeBuilder</span> builder<span class="token punctuation">)</span> <span class="token operator">=&gt;</span>
-    <span class="token punctuation">{</span>
-        builder<span class="token punctuation">.</span><span class="token function">OpenElement</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">,</span> <span class="token string">&quot;div&quot;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        builder<span class="token punctuation">.</span><span class="token function">AddContent</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token string">&quot;Hello World 2&quot;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        builder<span class="token punctuation">.</span><span class="token function">CloseElement</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token punctuation">}</span><span class="token punctuation">;</span>
-<span class="token punctuation">}</span>
-</code></pre></div><p>This introduces the <code>RenderFragment</code>. To quote the official Microsoft documentation.</p> <p><em>A RenderFragement represents a segment of UI content, implemented as a delegate that writes the content to a RenderTreeBuilder.</em></p> <p>The <code>RenderTreeBuilder</code> is even more succinct:</p> <p><em>Provides methods for building a collection of RenderTreeFrame entries.</em></p> <p>So, a <code>RenderFragment</code> is a delegate - defined in <em>Microsoft.AspNetCore.Components</em> as follows:</p> <div class="language-csharp extra-class"><pre class="language-csharp"><code><span class="token keyword">public</span> <span class="token keyword">delegate</span> <span class="token return-type class-name"><span class="token keyword">void</span></span> <span class="token function">RenderFragment</span><span class="token punctuation">(</span><span class="token class-name">RenderTreeBuilder</span> builder<span class="token punctuation">)</span><span class="token punctuation">;</span>
-</code></pre></div><p>If you're new to delegates think of them as a pattern definition.  Any function that conforms to the pattern defined by <code>RenderFragment</code> delegate can passed as a <code>RenderFragment</code>.</p> <p>The pattern dictates your method must:</p> <ol><li>Have one, and only one, parameter of type <code>RenderTreeBuilder</code>.</li> <li>Return a <code>void</code>.</li></ol> <p>Looking back to the code above, we're defining a <code>RenderFragment</code> property and assigning an anonymous method to it that conforms to the <code>RenderFragment</code> pattern.  It takes a  <code>RenderTreeBuilder</code> and has no return so returns a void.  It uses the provided <code>RenderTreeBuilder</code> object to build the content: a simple hello world html div.  Each call to the builder adds what is called a <code>RenderTreeFrame</code>.  Note each frame is sequentially numbered.</p> <p>It's important to understand two points:</p> <ol><li>The component itself never &quot;runs&quot; the <code>RenderFragement</code>.  It is passed to the Renderer which Invokes it.</li> <li>Even though the <code>Renderer</code> invokes the code, the code is run in the context of the component, and the state of the component when executing happens.</li></ol> <h3 id="a-simple-icomponent-implementation"><a href="#a-simple-icomponent-implementation" class="header-anchor">#</a> A Simple <em>IComponent</em> Implementation</h3> <p>The <code>HelloWorld</code> component above inherits from <code>ComponentBase</code>.  Razor components that don't explicitly define inheritance inherit by default from <code>ComponentBase</code>.</p> <p>We can now build our component as a simple C# class.</p> <div class="language-csharp extra-class"><pre class="language-csharp"><code><span class="token keyword">using</span> <span class="token namespace">Microsoft<span class="token punctuation">.</span>AspNetCore<span class="token punctuation">.</span>Components</span><span class="token punctuation">;</span>
-<span class="token keyword">using</span> <span class="token namespace">Microsoft<span class="token punctuation">.</span>AspNetCore<span class="token punctuation">.</span>Components<span class="token punctuation">.</span>Rendering</span><span class="token punctuation">;</span>
-<span class="token keyword">using</span> <span class="token namespace">Microsoft<span class="token punctuation">.</span>AspNetCore<span class="token punctuation">.</span>Components<span class="token punctuation">.</span>Web</span><span class="token punctuation">;</span>
-<span class="token keyword">using</span> <span class="token namespace">System<span class="token punctuation">.</span>Threading<span class="token punctuation">.</span>Tasks</span><span class="token punctuation">;</span>
+@code {
+    <span class="hljs-keyword">protected</span> RenderFragment HelloWorld =&gt; (RenderTreeBuilder builder) =&gt;
+    {
+        builder.OpenElement(<span class="hljs-number">0</span>, <span class="hljs-string">&quot;div&quot;</span>);
+        builder.AddContent(<span class="hljs-number">1</span>, <span class="hljs-string">&quot;Hello World 2&quot;</span>);
+        builder.CloseElement();
+    };
+}
+</div></code></pre>
+<p>This introduces the <code>RenderFragment</code>. To quote the official Microsoft documentation.</p>
+<p><em>A RenderFragement represents a segment of UI content, implemented as a delegate that writes the content to a RenderTreeBuilder.</em></p>
+<p>The <code>RenderTreeBuilder</code> is even more succinct:</p>
+<p><em>Provides methods for building a collection of RenderTreeFrame entries.</em></p>
+<p>So, a <code>RenderFragment</code> is a delegate - defined in <em>Microsoft.AspNetCore.Components</em> as follows:</p>
+<pre><code class="language-csharp"><div><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">delegate</span> <span class="hljs-keyword">void</span> <span class="hljs-title">RenderFragment</span>(<span class="hljs-params">RenderTreeBuilder builder</span>)</span>;
+</div></code></pre>
+<p>If you're new to delegates think of them as a pattern definition.  Any function that conforms to the pattern defined by <code>RenderFragment</code> delegate can passed as a <code>RenderFragment</code>.</p>
+<p>The pattern dictates your method must:</p>
+<ol>
+<li>Have one, and only one, parameter of type <code>RenderTreeBuilder</code>.</li>
+<li>Return a <code>void</code>.</li>
+</ol>
+<p>Looking back to the code above, we're defining a <code>RenderFragment</code> property and assigning an anonymous method to it that conforms to the <code>RenderFragment</code> pattern.  It takes a  <code>RenderTreeBuilder</code> and has no return so returns a void.  It uses the provided <code>RenderTreeBuilder</code> object to build the content: a simple hello world html div.  Each call to the builder adds what is called a <code>RenderTreeFrame</code>.  Note each frame is sequentially numbered.</p>
+<p>It's important to understand two points:</p>
+<ol>
+<li>The component itself never &quot;runs&quot; the <code>RenderFragement</code>.  It is passed to the Renderer which Invokes it.</li>
+<li>Even though the <code>Renderer</code> invokes the code, the code is run in the context of the component, and the state of the component when executing happens.</li>
+</ol>
+<h3 id="a-simple-icomponent-implementation">A Simple IComponent Implementation</h3>
+<p>The <code>HelloWorld</code> component above inherits from <code>ComponentBase</code>.  Razor components that don't explicitly define inheritance inherit by default from <code>ComponentBase</code>.</p>
+<p>We can now build our component as a simple C# class.</p>
+<pre><code class="language-csharp"><div><span class="hljs-keyword">using</span> Microsoft.AspNetCore.Components;
+<span class="hljs-keyword">using</span> Microsoft.AspNetCore.Components.Rendering;
+<span class="hljs-keyword">using</span> Microsoft.AspNetCore.Components.Web;
+<span class="hljs-keyword">using</span> System.Threading.Tasks;
 
-<span class="token keyword">namespace</span> <span class="token namespace">Blazor<span class="token punctuation">.</span>HelloWorld<span class="token punctuation">.</span>Pages</span>
-<span class="token punctuation">{</span>
-    <span class="token punctuation">[</span><span class="token attribute"><span class="token class-name">RouteAttribute</span><span class="token attribute-arguments"><span class="token punctuation">(</span><span class="token string">&quot;/helloworld&quot;</span><span class="token punctuation">)</span></span></span><span class="token punctuation">]</span>
-    <span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">RendererComponent</span> <span class="token punctuation">:</span> <span class="token type-list"><span class="token class-name">IComponent</span></span>
-    <span class="token punctuation">{</span>
-        <span class="token keyword">private</span> <span class="token class-name">RenderHandle</span> _renderHandle<span class="token punctuation">;</span>
+<span class="hljs-keyword">namespace</span> <span class="hljs-title">Blazor.HelloWorld.Pages</span>
+{
+    [<span class="hljs-meta">RouteAttribute(<span class="hljs-meta-string">&quot;/helloworld&quot;</span>)</span>]
+    <span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title">RendererComponent</span> : <span class="hljs-title">IComponent</span>
+    {
+        <span class="hljs-keyword">private</span> RenderHandle _renderHandle;
 
-        <span class="token keyword">public</span> <span class="token return-type class-name"><span class="token keyword">void</span></span> <span class="token function">Attach</span><span class="token punctuation">(</span><span class="token class-name">RenderHandle</span> renderHandle<span class="token punctuation">)</span>
-        <span class="token punctuation">{</span>
-            _renderHandle <span class="token operator">=</span> renderHandle<span class="token punctuation">;</span>
-        <span class="token punctuation">}</span>
+        <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">Attach</span>(<span class="hljs-params">RenderHandle renderHandle</span>)</span>
+        {
+            _renderHandle = renderHandle;
+        }
 
-        <span class="token keyword">public</span> <span class="token return-type class-name">Task</span> <span class="token function">SetParametersAsync</span><span class="token punctuation">(</span><span class="token class-name">ParameterView</span> parameters<span class="token punctuation">)</span>
-        <span class="token punctuation">{</span>
-            parameters<span class="token punctuation">.</span><span class="token function">SetParameterProperties</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-            <span class="token keyword">this</span><span class="token punctuation">.</span><span class="token function">Render</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-            <span class="token keyword">return</span> Task<span class="token punctuation">.</span>CompletedTask<span class="token punctuation">;</span>
-        <span class="token punctuation">}</span>
+        <span class="hljs-function"><span class="hljs-keyword">public</span> Task <span class="hljs-title">SetParametersAsync</span>(<span class="hljs-params">ParameterView parameters</span>)</span>
+        {
+            parameters.SetParameterProperties(<span class="hljs-keyword">this</span>);
+            <span class="hljs-keyword">this</span>.Render();
+            <span class="hljs-keyword">return</span> Task.CompletedTask;
+        }
 
-        <span class="token keyword">public</span> <span class="token return-type class-name"><span class="token keyword">void</span></span> <span class="token function">Render</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
-            <span class="token operator">=&gt;</span> _renderHandle<span class="token punctuation">.</span><span class="token function">Render</span><span class="token punctuation">(</span>RenderComponent<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">Render</span>(<span class="hljs-params"></span>)</span>
+            =&gt; _renderHandle.Render(RenderComponent);
 
-        <span class="token keyword">private</span> <span class="token return-type class-name"><span class="token keyword">void</span></span> <span class="token function">RenderComponent</span><span class="token punctuation">(</span><span class="token class-name">RenderTreeBuilder</span> builder<span class="token punctuation">)</span>
-        <span class="token punctuation">{</span>
-            builder<span class="token punctuation">.</span><span class="token function">OpenElement</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">,</span> <span class="token string">&quot;div&quot;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-            builder<span class="token punctuation">.</span><span class="token function">AddContent</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token string">&quot;Hello World 2&quot;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-            builder<span class="token punctuation">.</span><span class="token function">CloseElement</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token punctuation">}</span>
-    <span class="token punctuation">}</span>
-<span class="token punctuation">}</span>
-</code></pre></div><p>Points to note in the above code:</p> <ol><li>The class uses the custom attribute <code>RouteAttribute</code> to define the route.</li> <li>The class inherits from <code>IComponent</code>.</li> <li>The class implements <code>Attach</code>.  The passed object <code>RenderHandle</code> is assigned to a local class field.</li> <li>The class implements <code>SetParametersAsync</code> which is called when the component is first rendered, and whenever any <code>Parameters</code> are changed.  In our case never - we have no <code>Parameters</code> defined.  It calls the class method  <code>Render</code>.</li> <li>The rest of the code is copied from the Razor component.</li> <li>There's no <code>OnInitialized</code>, <code>OnAfterRender</code>, <code>StateHasChanged</code>,...  These are all  part of <code>ComponentBase</code>.</li></ol> <p>The <code>Render</code> method calls <code>RenderHandle.Render</code> on the <code>RenderHandle</code> the component received when it was attached to the render tree.  It passes the <code>RenderComponent</code> method as a delegate.  Calling <code>Render</code> queues the passed delegate onto the Renderer's render queue.  This is where the code is actually executed.  Being a delegate it executes in the owning object's context.</p> <p>The component is very simplistic, but it demonstrates the basics.</p> <h3 id="routed-components"><a href="#routed-components" class="header-anchor">#</a> Routed Components</h3> <p>Everything's a component, but not all components are equal.  <strong>Routed Components</strong> are a little special.</p> <p>They contain <em>@page</em> routing directives and optionally a <em>@Layout</em> directive.</p> <div class="language-html extra-class"><pre class="language-html"><code>@page &quot;/WeatherForecast&quot;
+        <span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-keyword">void</span> <span class="hljs-title">RenderComponent</span>(<span class="hljs-params">RenderTreeBuilder builder</span>)</span>
+        {
+            builder.OpenElement(<span class="hljs-number">0</span>, <span class="hljs-string">&quot;div&quot;</span>);
+            builder.AddContent(<span class="hljs-number">1</span>, <span class="hljs-string">&quot;Hello World 2&quot;</span>);
+            builder.CloseElement();
+        }
+    }
+}
+</div></code></pre>
+<p>Points to note in the above code:</p>
+<ol>
+<li>The class uses the custom attribute <code>RouteAttribute</code> to define the route.</li>
+<li>The class inherits from <code>IComponent</code>.</li>
+<li>The class implements <code>Attach</code>.  The passed object <code>RenderHandle</code> is assigned to a local class field.</li>
+<li>The class implements <code>SetParametersAsync</code> which is called when the component is first rendered, and whenever any <code>Parameters</code> are changed.  In our case never - we have no <code>Parameters</code> defined.  It calls the class method  <code>Render</code>.</li>
+<li>The rest of the code is copied from the Razor component.</li>
+<li>There's no <code>OnInitialized</code>, <code>OnAfterRender</code>, <code>StateHasChanged</code>,...  These are all  part of <code>ComponentBase</code>.</li>
+</ol>
+<p>The <code>Render</code> method calls <code>RenderHandle.Render</code> on the <code>RenderHandle</code> the component received when it was attached to the render tree.  It passes the <code>RenderComponent</code> method as a delegate.  Calling <code>Render</code> queues the passed delegate onto the Renderer's render queue.  This is where the code is actually executed.  Being a delegate it executes in the owning object's context.</p>
+<p>The component is very simplistic, but it demonstrates the basics.</p>
+<h3 id="routed-components">Routed Components</h3>
+<p>Everything's a component, but not all components are equal.  <strong>Routed Components</strong> are a little special.</p>
+<p>They contain <em>@page</em> routing directives and optionally a <em>@Layout</em> directive.</p>
+<pre><code class="language-html"><div>@page &quot;/WeatherForecast&quot;
 @page &quot;/WeatherForecasts&quot;
 @layout MainLayout
-</code></pre></div><p>You can define these directly on classes like this:</p> <div class="language-csharp extra-class"><pre class="language-csharp"><code><span class="token punctuation">[</span><span class="token attribute"><span class="token class-name">LayoutAttribute</span><span class="token attribute-arguments"><span class="token punctuation">(</span><span class="token keyword">typeof</span><span class="token punctuation">(</span><span class="token type-expression class-name">MainLayout</span><span class="token punctuation">)</span><span class="token punctuation">)</span></span></span><span class="token punctuation">]</span>
-<span class="token punctuation">[</span><span class="token attribute"><span class="token class-name">RouteAttribute</span><span class="token attribute-arguments"><span class="token punctuation">(</span><span class="token string">&quot;/helloworld&quot;</span><span class="token punctuation">)</span></span></span><span class="token punctuation">]</span>
-<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">RendererComponent</span> <span class="token punctuation">:</span> <span class="token type-list"><span class="token class-name">IComponent</span></span> <span class="token punctuation">{</span><span class="token punctuation">}</span>
-</code></pre></div><p>The <code>RouteAttribute</code> is used by the router to find Routes in the application.</p> <p>Don't think of routed components as pages. It may seem obvious to do so, but don't.  Lots of web page properties don't apply to routed components.  You will:</p> <ul><li>get confused when routed components don't behave like a page.</li> <li>try and code the component logic as if it is a web page.</li></ul> <h2 id="componentbase"><a href="#componentbase" class="header-anchor">#</a> <em>ComponentBase</em></h2> <p><code>ComponentBase</code> is the &quot;standard&quot; out-of-the-box Blazor implementation of <code>IComponent</code>.  All <em>.razor</em> files by default inherit from it.  While you may never step outside <code>ComponentBase</code> it's important to understand that it's just one implementation of the <code>IComponent</code> interface.  It doesn't define a component.  <code>OnInitialized</code> is not a component lifecycle method, it's a <code>ComponentBase</code> lifecycle method.</p> <h3 id="componentbase-lifecycle-and-events"><a href="#componentbase-lifecycle-and-events" class="header-anchor">#</a> <em>ComponentBase</em> Lifecycle and Events</h3> <p>There are articles galore regurgitating the same old basic lifecycle information.  I'm not going to repeat it.  Instead I'm going to concentrate on certain often misunderstood aspects of the lifecycle: there's more to the lifecycle that just the initial component load covered in most of the articles.</p> <p>We need to consider five types of event:</p> <ol><li>Instantiation of the class</li> <li>Initialization of the component</li> <li>Component parameter changes</li> <li>Component events</li> <li>Component disposal</li></ol> <p>There are seven exposed Events/Methods and their async equivalents:</p> <ol><li><code>SetParametersAsync</code></li> <li><code>OnInitialized</code> and <code>OnInitializedAsync</code></li> <li><code>OnParametersSet</code> and <code>OnParametersSetAsync</code></li> <li><code>OnAfterRender</code> and <code>OnAfterRenderAsync</code></li> <li><code>Dispose</code> - if <code>IDisposable</code> is implemented</li> <li><code>StateHasChanged</code></li> <li><code>new</code> - often forgotten.</li></ol> <p>The standard class instantiation method builds the <code>RenderFragment</code> that <code>StateHasChanged</code> passes to the  <code>Renderer</code> to render the component.  It sets two private class variables to false and runs <code>BuildRenderTree</code>.</p> <div class="language-csharp extra-class"><pre class="language-csharp"><code><span class="token keyword">public</span> <span class="token function">ComponentBase</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
-<span class="token punctuation">{</span>
-    _renderFragment <span class="token operator">=</span> builder <span class="token operator">=&gt;</span>
-    <span class="token punctuation">{</span>
-        _hasPendingQueuedRender <span class="token operator">=</span> <span class="token boolean">false</span><span class="token punctuation">;</span>
-        _hasNeverRendered <span class="token operator">=</span> <span class="token boolean">false</span><span class="token punctuation">;</span>
-        <span class="token function">BuildRenderTree</span><span class="token punctuation">(</span>builder<span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token punctuation">}</span><span class="token punctuation">;</span>
-<span class="token punctuation">}</span>
-</code></pre></div><p><code>SetParametersAsync</code> sets the properties for the submitted parameters. It only runs <code>RunInitAndSetParametersAsync</code> - and thus <code>OnInitialized</code> followed by <code>OnInitializedAsync</code> - on initialization. It always calls <code>CallOnParametersSetAsync</code>.  Note:</p> <ol><li><code>CallOnParametersSetAsync</code> waits on <code>OnInitializedAsync</code> to complete before calling <code>CallOnParametersSetAsync</code>.</li> <li><code>RunInitAndSetParametersAsync</code> calls <code>StateHasChanged</code> if <code>OnInitializedAsync</code> task yields before completion.</li></ol> <div class="language-csharp extra-class"><pre class="language-csharp"><code><span class="token keyword">public</span> <span class="token keyword">virtual</span> <span class="token return-type class-name">Task</span> <span class="token function">SetParametersAsync</span><span class="token punctuation">(</span><span class="token class-name">ParameterView</span> parameters<span class="token punctuation">)</span>
-<span class="token punctuation">{</span>
-    parameters<span class="token punctuation">.</span><span class="token function">SetParameterProperties</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span>_initialized<span class="token punctuation">)</span>
-    <span class="token punctuation">{</span>
-        _initialized <span class="token operator">=</span> <span class="token boolean">true</span><span class="token punctuation">;</span>
-        <span class="token keyword">return</span> <span class="token function">RunInitAndSetParametersAsync</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token punctuation">}</span>
-    <span class="token keyword">else</span> <span class="token keyword">return</span> <span class="token function">CallOnParametersSetAsync</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token punctuation">}</span>
+</div></code></pre>
+<p>You can define these directly on classes like this:</p>
+<pre><code class="language-csharp"><div>[<span class="hljs-meta">LayoutAttribute(typeof(MainLayout))</span>]
+[<span class="hljs-meta">RouteAttribute(<span class="hljs-meta-string">&quot;/helloworld&quot;</span>)</span>]
+<span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title">RendererComponent</span> : <span class="hljs-title">IComponent</span> {}
+</div></code></pre>
+<p>The <code>RouteAttribute</code> is used by the router to find Routes in the application.</p>
+<p>Don't think of routed components as pages. It may seem obvious to do so, but don't.  Lots of web page properties don't apply to routed components.  You will:</p>
+<ul>
+<li>get confused when routed components don't behave like a page.</li>
+<li>try and code the component logic as if it is a web page.</li>
+</ul>
+<h2 id="componentbase">ComponentBase</h2>
+<p><code>ComponentBase</code> is the &quot;standard&quot; out-of-the-box Blazor implementation of <code>IComponent</code>.  All <em>.razor</em> files by default inherit from it.  While you may never step outside <code>ComponentBase</code> it's important to understand that it's just one implementation of the <code>IComponent</code> interface.  It doesn't define a component.  <code>OnInitialized</code> is not a component lifecycle method, it's a <code>ComponentBase</code> lifecycle method.</p>
+<h3 id="componentbase-lifecycle-and-events">ComponentBase Lifecycle and Events</h3>
+<p>There are articles galore regurgitating the same old basic lifecycle information.  I'm not going to repeat it.  Instead I'm going to concentrate on certain often misunderstood aspects of the lifecycle: there's more to the lifecycle that just the initial component load covered in most of the articles.</p>
+<p>We need to consider five types of event:</p>
+<ol>
+<li>Instantiation of the class</li>
+<li>Initialization of the component</li>
+<li>Component parameter changes</li>
+<li>Component events</li>
+<li>Component disposal</li>
+</ol>
+<p>There are seven exposed Events/Methods and their async equivalents:</p>
+<ol>
+<li><code>SetParametersAsync</code></li>
+<li><code>OnInitialized</code> and <code>OnInitializedAsync</code></li>
+<li><code>OnParametersSet</code> and <code>OnParametersSetAsync</code></li>
+<li><code>OnAfterRender</code> and <code>OnAfterRenderAsync</code></li>
+<li><code>Dispose</code> - if <code>IDisposable</code> is implemented</li>
+<li><code>StateHasChanged</code></li>
+<li><code>new</code> - often forgotten.</li>
+</ol>
+<p>The standard class instantiation method builds the <code>RenderFragment</code> that <code>StateHasChanged</code> passes to the  <code>Renderer</code> to render the component.  It sets two private class variables to false and runs <code>BuildRenderTree</code>.</p>
+<pre><code class="language-csharp"><div><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">ComponentBase</span>(<span class="hljs-params"></span>)</span>
+{
+    _renderFragment = builder =&gt;
+    {
+        _hasPendingQueuedRender = <span class="hljs-literal">false</span>;
+        _hasNeverRendered = <span class="hljs-literal">false</span>;
+        BuildRenderTree(builder);
+    };
+}
+</div></code></pre>
+<p><code>SetParametersAsync</code> sets the properties for the submitted parameters. It only runs <code>RunInitAndSetParametersAsync</code> - and thus <code>OnInitialized</code> followed by <code>OnInitializedAsync</code> - on initialization. It always calls <code>CallOnParametersSetAsync</code>.  Note:</p>
+<ol>
+<li><code>CallOnParametersSetAsync</code> waits on <code>OnInitializedAsync</code> to complete before calling <code>CallOnParametersSetAsync</code>.</li>
+<li><code>RunInitAndSetParametersAsync</code> calls <code>StateHasChanged</code> if <code>OnInitializedAsync</code> task yields before completion.</li>
+</ol>
+<pre><code class="language-csharp"><div><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">virtual</span> Task <span class="hljs-title">SetParametersAsync</span>(<span class="hljs-params">ParameterView parameters</span>)</span>
+{
+    parameters.SetParameterProperties(<span class="hljs-keyword">this</span>);
+    <span class="hljs-keyword">if</span> (!_initialized)
+    {
+        _initialized = <span class="hljs-literal">true</span>;
+        <span class="hljs-keyword">return</span> RunInitAndSetParametersAsync();
+    }
+    <span class="hljs-keyword">else</span> <span class="hljs-keyword">return</span> CallOnParametersSetAsync();
+}
 
-<span class="token keyword">private</span> <span class="token keyword">async</span> <span class="token return-type class-name">Task</span> <span class="token function">RunInitAndSetParametersAsync</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
-<span class="token punctuation">{</span>
-    <span class="token function">OnInitialized</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token class-name"><span class="token keyword">var</span></span> task <span class="token operator">=</span> <span class="token function">OnInitializedAsync</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token keyword">if</span> <span class="token punctuation">(</span>task<span class="token punctuation">.</span>Status <span class="token operator">!=</span> TaskStatus<span class="token punctuation">.</span>RanToCompletion <span class="token operator">&amp;&amp;</span> task<span class="token punctuation">.</span>Status <span class="token operator">!=</span> TaskStatus<span class="token punctuation">.</span>Canceled<span class="token punctuation">)</span>
-    <span class="token punctuation">{</span>
-        <span class="token function">StateHasChanged</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token keyword">try</span> <span class="token punctuation">{</span> <span class="token keyword">await</span> task<span class="token punctuation">;</span><span class="token punctuation">}</span>
-        <span class="token keyword">catch</span> <span class="token punctuation">{</span> <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span>task<span class="token punctuation">.</span>IsCanceled<span class="token punctuation">)</span> <span class="token keyword">throw</span><span class="token punctuation">;</span> <span class="token punctuation">}</span>
-    <span class="token punctuation">}</span>
-    <span class="token keyword">await</span> <span class="token function">CallOnParametersSetAsync</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-keyword">async</span> Task <span class="hljs-title">RunInitAndSetParametersAsync</span>(<span class="hljs-params"></span>)</span>
+{
+    OnInitialized();
+    <span class="hljs-keyword">var</span> task = OnInitializedAsync();
+    <span class="hljs-keyword">if</span> (task.Status != TaskStatus.RanToCompletion &amp;&amp; task.Status != TaskStatus.Canceled)
+    {
+        StateHasChanged();
+        <span class="hljs-keyword">try</span> { <span class="hljs-keyword">await</span> task;}
+        <span class="hljs-keyword">catch</span> { <span class="hljs-keyword">if</span> (!task.IsCanceled) <span class="hljs-keyword">throw</span>; }
+    }
+    <span class="hljs-keyword">await</span> CallOnParametersSetAsync();
 
-</code></pre></div><p><code>CallOnParametersSetAsync</code> calls <code>OnParametersSet</code> followed by <code>OnParametersSetAsync</code>, and finally <code>StateHasChanged</code>.  If the <code>OnParametersSetAsync()</code> task yields <code>CallStateHasChangedOnAsyncCompletion</code> awaits the task and re-runs <code>StateHasChanged</code>.</p> <div class="language-csharp extra-class"><pre class="language-csharp"><code><span class="token keyword">private</span> <span class="token return-type class-name">Task</span> <span class="token function">CallOnParametersSetAsync</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
-<span class="token punctuation">{</span>
-    <span class="token function">OnParametersSet</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token class-name"><span class="token keyword">var</span></span> task <span class="token operator">=</span> <span class="token function">OnParametersSetAsync</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token class-name"><span class="token keyword">var</span></span> shouldAwaitTask <span class="token operator">=</span> task<span class="token punctuation">.</span>Status <span class="token operator">!=</span> TaskStatus<span class="token punctuation">.</span>RanToCompletion <span class="token operator">&amp;&amp;</span>
-        task<span class="token punctuation">.</span>Status <span class="token operator">!=</span> TaskStatus<span class="token punctuation">.</span>Canceled<span class="token punctuation">;</span>
+</div></code></pre>
+<p><code>CallOnParametersSetAsync</code> calls <code>OnParametersSet</code> followed by <code>OnParametersSetAsync</code>, and finally <code>StateHasChanged</code>.  If the <code>OnParametersSetAsync()</code> task yields <code>CallStateHasChangedOnAsyncCompletion</code> awaits the task and re-runs <code>StateHasChanged</code>.</p>
+<pre><code class="language-csharp"><div><span class="hljs-function"><span class="hljs-keyword">private</span> Task <span class="hljs-title">CallOnParametersSetAsync</span>(<span class="hljs-params"></span>)</span>
+{
+    OnParametersSet();
+    <span class="hljs-keyword">var</span> task = OnParametersSetAsync();
+    <span class="hljs-keyword">var</span> shouldAwaitTask = task.Status != TaskStatus.RanToCompletion &amp;&amp;
+        task.Status != TaskStatus.Canceled;
 
-    <span class="token function">StateHasChanged</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    StateHasChanged();
 
-    <span class="token keyword">return</span> <span class="token return-type class-name">shouldAwaitTask <span class="token punctuation">?</span></span>
-        <span class="token function">CallStateHasChangedOnAsyncCompletion</span><span class="token punctuation">(</span>task<span class="token punctuation">)</span> <span class="token punctuation">:</span>
-        Task<span class="token punctuation">.</span>CompletedTask<span class="token punctuation">;</span>
-<span class="token punctuation">}</span>
+    <span class="hljs-keyword">return</span> shouldAwaitTask ?
+        CallStateHasChangedOnAsyncCompletion(task) :
+        Task.CompletedTask;
+}
 
-<span class="token keyword">private</span> <span class="token keyword">async</span> <span class="token return-type class-name">Task</span> <span class="token function">CallStateHasChangedOnAsyncCompletion</span><span class="token punctuation">(</span><span class="token class-name">Task</span> task<span class="token punctuation">)</span>
-<span class="token punctuation">{</span>
-    <span class="token keyword">try</span> <span class="token punctuation">{</span> <span class="token keyword">await</span> task<span class="token punctuation">;</span> <span class="token punctuation">}</span>
-    <span class="token keyword">catch</span> 
-    <span class="token punctuation">{</span>
-        <span class="token keyword">if</span> <span class="token punctuation">(</span>task<span class="token punctuation">.</span>IsCanceled<span class="token punctuation">)</span> <span class="token keyword">return</span><span class="token punctuation">;</span>
-        <span class="token keyword">throw</span><span class="token punctuation">;</span>
-    <span class="token punctuation">}</span>
-    <span class="token function">StateHasChanged</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token punctuation">}</span>
-</code></pre></div><p>Lastly, lets look at <code>StateHasChanged</code>.  If a render is pending i.e. the renderer hasn't got round to running the queued render request, it closes - whatever changes have been made will be captured in the queued render.  If not, it sets the  <code>_hasPendingQueuedRender</code> class flag and calls the Render method on the <code>RenderHandle</code>.  This queues <code>_renderFragement</code> onto the <code>Renderer</code> <code>RenderQueue</code>.  When the queue runs <code>_renderFragment</code> - see above - it sets the two class flags to false and runs <code>BuildRenderTree</code>.</p> <div class="language-csharp extra-class"><pre class="language-csharp"><code><span class="token keyword">protected</span> <span class="token return-type class-name"><span class="token keyword">void</span></span> <span class="token function">StateHasChanged</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
-<span class="token punctuation">{</span>
-    <span class="token keyword">if</span> <span class="token punctuation">(</span>_hasPendingQueuedRender<span class="token punctuation">)</span> <span class="token keyword">return</span><span class="token punctuation">;</span>
-    <span class="token keyword">if</span> <span class="token punctuation">(</span>_hasNeverRendered <span class="token operator">||</span> <span class="token function">ShouldRender</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
-    <span class="token punctuation">{</span>
-        _hasPendingQueuedRender <span class="token operator">=</span> <span class="token boolean">true</span><span class="token punctuation">;</span>
-        <span class="token keyword">try</span> <span class="token punctuation">{</span> _renderHandle<span class="token punctuation">.</span><span class="token function">Render</span><span class="token punctuation">(</span>_renderFragment<span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token punctuation">}</span>
-        <span class="token keyword">catch</span> <span class="token punctuation">{</span>
-            _hasPendingQueuedRender <span class="token operator">=</span> <span class="token boolean">false</span><span class="token punctuation">;</span>
-            <span class="token keyword">throw</span><span class="token punctuation">;</span>
-        <span class="token punctuation">}</span>
-    <span class="token punctuation">}</span>
-<span class="token punctuation">}</span>
-</code></pre></div><p>Some key points to note:</p> <ol><li><p><code>OnInitialized</code> and <code>OnInitializedAsync</code> only get called during initialization.  <code>OnInitialized</code> is run first.  If, and only if, <code>OnInitializedAsync</code> yields back to the internal calling method <code>RunInitAndSetParametersAsync</code>, then <code>StateHasChanged</code> get called, providing the opportunity to provide &quot;Loading&quot; information to the user.  <code>OnInitializedAsync</code> completes before <code>OnParametersSet</code> and <code>OnParametersSetAsync</code> are called.</p></li> <li><p><code>OnParametersSet</code> and <code>OnParametersSetAsync</code> get called whenever the parent component makes changes to the parameter set for the component or a captured cascaded parameter changes.  Any code that needs to respond to parameter changes need to live here. <code>OnParametersSet</code> is run first.  Note that if <code>OnParametersSetAsync</code> yields, <code>StateHasChanged</code> is run after the yield, providing the opportunity to provide &quot;Loading&quot; information to the user.</p></li> <li><p><code>StateHasChanged</code> is called after the <code>OnParametersSet{async}</code> methods complete to render the component.</p></li> <li><p><code>OnAfterRender</code> and <code>OnAfterRenderAsync</code> occur at the end of all four events.  <code>firstRender</code> is only true on component initialization.  Note that any changes made here to parameters won't get applied to display values until the component re-renders.</p></li> <li><p><code>StateHasChanged</code> is called during the initialization process if the conditions stated above are met, after the <code>OnParametersSet</code> processes, and any event callback.  Don't call it explicitly during the render or parameter set process unless you need to.  If you do call it you are probably doing something wrong.</p></li></ol> <h2 id="the-render-process"><a href="#the-render-process" class="header-anchor">#</a> The Render Process</h2> <p>Let's look in detail at how a simple page and component get rendered.</p> <h4 id="simplecomponent-razor"><a href="#simplecomponent-razor" class="header-anchor">#</a> SimpleComponent.razor</h4> <div class="language-html extra-class"><pre class="language-html"><code><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">&quot;</span>h4 bg-success text-white p-2<span class="token punctuation">&quot;</span></span><span class="token punctuation">&gt;</span></span>Loaded<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">&gt;</span></span>
-</code></pre></div><h4 id="simplepage-razor"><a href="#simplepage-razor" class="header-anchor">#</a> SimplePage.razor</h4> <div class="language-csharp extra-class"><pre class="language-csharp"><code>@page <span class="token string">&quot;/simple&quot;</span>
-<span class="token operator">&lt;</span>h3<span class="token operator">&gt;</span>SimplePage<span class="token operator">&lt;</span><span class="token operator">/</span>h3<span class="token operator">&gt;</span>
-@<span class="token keyword">if</span> <span class="token punctuation">(</span>loaded<span class="token punctuation">)</span>
-<span class="token punctuation">{</span>
-    <span class="token operator">&lt;</span>SimpleComponent<span class="token operator">&gt;</span><span class="token operator">&lt;</span><span class="token operator">/</span>SimpleComponent<span class="token operator">&gt;</span>
-<span class="token punctuation">}</span>
-<span class="token keyword">else</span>
-<span class="token punctuation">{</span>
-    <span class="token operator">&lt;</span>div <span class="token keyword">class</span><span class="token operator">=</span><span class="token string">&quot;h4 bg-danger text-white p-2&quot;</span><span class="token operator">&gt;</span>Loading<span class="token range operator">..</span><span class="token range operator">..</span><span class="token punctuation">.</span><span class="token operator">&lt;</span><span class="token operator">/</span>div<span class="token operator">&gt;</span>
-<span class="token punctuation">}</span>
+<span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-keyword">async</span> Task <span class="hljs-title">CallStateHasChangedOnAsyncCompletion</span>(<span class="hljs-params">Task task</span>)</span>
+{
+    <span class="hljs-keyword">try</span> { <span class="hljs-keyword">await</span> task; }
+    <span class="hljs-keyword">catch</span> 
+    {
+        <span class="hljs-keyword">if</span> (task.IsCanceled) <span class="hljs-keyword">return</span>;
+        <span class="hljs-keyword">throw</span>;
+    }
+    StateHasChanged();
+}
+</div></code></pre>
+<p>Lastly, lets look at <code>StateHasChanged</code>.  If a render is pending i.e. the renderer hasn't got round to running the queued render request, it closes - whatever changes have been made will be captured in the queued render.  If not, it sets the  <code>_hasPendingQueuedRender</code> class flag and calls the Render method on the <code>RenderHandle</code>.  This queues <code>_renderFragement</code> onto the <code>Renderer</code> <code>RenderQueue</code>.  When the queue runs <code>_renderFragment</code> - see above - it sets the two class flags to false and runs <code>BuildRenderTree</code>.</p>
+<pre><code class="language-csharp"><div><span class="hljs-function"><span class="hljs-keyword">protected</span> <span class="hljs-keyword">void</span> <span class="hljs-title">StateHasChanged</span>(<span class="hljs-params"></span>)</span>
+{
+    <span class="hljs-keyword">if</span> (_hasPendingQueuedRender) <span class="hljs-keyword">return</span>;
+    <span class="hljs-keyword">if</span> (_hasNeverRendered || ShouldRender())
+    {
+        _hasPendingQueuedRender = <span class="hljs-literal">true</span>;
+        <span class="hljs-keyword">try</span> { _renderHandle.Render(_renderFragment);}
+        <span class="hljs-keyword">catch</span> {
+            _hasPendingQueuedRender = <span class="hljs-literal">false</span>;
+            <span class="hljs-keyword">throw</span>;
+        }
+    }
+}
+</div></code></pre>
+<p>Some key points to note:</p>
+<ol>
+<li>
+<p><code>OnInitialized</code> and <code>OnInitializedAsync</code> only get called during initialization.  <code>OnInitialized</code> is run first.  If, and only if, <code>OnInitializedAsync</code> yields back to the internal calling method <code>RunInitAndSetParametersAsync</code>, then <code>StateHasChanged</code> get called, providing the opportunity to provide &quot;Loading&quot; information to the user.  <code>OnInitializedAsync</code> completes before <code>OnParametersSet</code> and <code>OnParametersSetAsync</code> are called.</p>
+</li>
+<li>
+<p><code>OnParametersSet</code> and <code>OnParametersSetAsync</code> get called whenever the parent component makes changes to the parameter set for the component or a captured cascaded parameter changes.  Any code that needs to respond to parameter changes need to live here. <code>OnParametersSet</code> is run first.  Note that if <code>OnParametersSetAsync</code> yields, <code>StateHasChanged</code> is run after the yield, providing the opportunity to provide &quot;Loading&quot; information to the user.</p>
+</li>
+<li>
+<p><code>StateHasChanged</code> is called after the <code>OnParametersSet{async}</code> methods complete to render the component.</p>
+</li>
+<li>
+<p><code>OnAfterRender</code> and <code>OnAfterRenderAsync</code> occur at the end of all four events.  <code>firstRender</code> is only true on component initialization.  Note that any changes made here to parameters won't get applied to display values until the component re-renders.</p>
+</li>
+<li>
+<p><code>StateHasChanged</code> is called during the initialization process if the conditions stated above are met, after the <code>OnParametersSet</code> processes, and any event callback.  Don't call it explicitly during the render or parameter set process unless you need to.  If you do call it you are probably doing something wrong.</p>
+</li>
+</ol>
+<h2 id="the-render-process">The Render Process</h2>
+<p>Let's look in detail at how a simple page and component get rendered.</p>
+<h4 id="simplecomponentrazor">SimpleComponent.razor</h4>
+<pre><code class="language-html"><div><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;h4 bg-success text-white p-2&quot;</span>&gt;</span>Loaded<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+</div></code></pre>
+<h4 id="simplepagerazor">SimplePage.razor</h4>
+<pre><code class="language-csharp"><div>@page <span class="hljs-string">&quot;/simple&quot;</span>
+&lt;h3&gt;SimplePage&lt;/h3&gt;
+@if (loaded)
+{
+    &lt;SimpleComponent&gt;&lt;/SimpleComponent&gt;
+}
+<span class="hljs-keyword">else</span>
+{
+    &lt;div <span class="hljs-keyword">class</span>=<span class="hljs-string">&quot;h4 bg-danger text-white p-2&quot;</span>&gt;Loading.....&lt;/div&gt;
+}
 
-@code <span class="token punctuation">{</span>
-    <span class="token keyword">private</span> <span class="token class-name"><span class="token keyword">bool</span></span> loaded<span class="token punctuation">;</span>
+@code {
+    <span class="hljs-keyword">private</span> <span class="hljs-keyword">bool</span> loaded;
 
-    <span class="token keyword">protected</span> <span class="token keyword">async</span> <span class="token keyword">override</span> <span class="token return-type class-name">Task</span> <span class="token function">OnInitializedAsync</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
-    <span class="token punctuation">{</span>
-        <span class="token keyword">await</span> Task<span class="token punctuation">.</span><span class="token function">Delay</span><span class="token punctuation">(</span><span class="token number">2000</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        loaded <span class="token operator">=</span> <span class="token boolean">true</span><span class="token punctuation">;</span>
-    <span class="token punctuation">}</span>
-<span class="token punctuation">}</span>
-</code></pre></div><p>The follow diagram shows a simplified <code>RenderTree</code> representing a simple &quot;/&quot; route.</p> <p><img src="/siteimages/articles/razor-component/Root-Render-tree.png" alt="Root Render Tree"></p> <p>Note the three nodes in <code>NavMenu</code> for the three <code>NavLink</code> controls.</p> <p>On our page, the render tree looks like the diagram below on first render - we have a yielding <code>OnInitializedAsync</code> method, so <code>StateHasChanged</code> gets run in the initialization process.</p> <p><img src="/siteimages/articles/razor-component/simple-page-loading.png" alt="Simple Page Loading"></p> <p>Once initialization completes, <code>StateHasChanged</code> is run a second time.  <code>Loaded</code> is now <code>true</code> and <code>SimpleComponent</code> is added to the component <code>RenderFragment</code>.  When the <code>Renderer</code> runs the <code>RenderFragment</code>, <code>SimpleComponent</code> is added to the render tree, instantiated and initialized.</p> <p><img src="/siteimages/articles/razor-component/simple-page-loaded.png" alt="Simple Page Loaded"></p> <h3 id="component-content"><a href="#component-content" class="header-anchor">#</a> Component Content</h3> <p>Change <code>SimpleComponent</code> and <code>SimplePage</code> to:</p> <h4 id="simplecomponent-razor-2"><a href="#simplecomponent-razor-2" class="header-anchor">#</a> SimpleComponent.razor</h4> <div class="language-csharp extra-class"><pre class="language-csharp"><code><span class="token operator">&lt;</span>div <span class="token keyword">class</span><span class="token operator">=</span><span class="token string">&quot;h4 bg-success text-white p-2&quot;</span><span class="token operator">&gt;</span>@ChildContent<span class="token operator">&lt;</span><span class="token operator">/</span>div<span class="token operator">&gt;</span>
+    <span class="hljs-function"><span class="hljs-keyword">protected</span> <span class="hljs-keyword">async</span> <span class="hljs-keyword">override</span> Task <span class="hljs-title">OnInitializedAsync</span>(<span class="hljs-params"></span>)</span>
+    {
+        <span class="hljs-keyword">await</span> Task.Delay(<span class="hljs-number">2000</span>);
+        loaded = <span class="hljs-literal">true</span>;
+    }
+}
+</div></code></pre>
+<p>The follow diagram shows a simplified <code>RenderTree</code> representing a simple &quot;/&quot; route.</p>
+<p><img src="\articles\assets\Root-Render-tree.png" alt="Root Render Tree"></p>
+<p>Note the three nodes in <code>NavMenu</code> for the three <code>NavLink</code> controls.</p>
+<p>On our page, the render tree looks like the diagram below on first render - we have a yielding <code>OnInitializedAsync</code> method, so <code>StateHasChanged</code> gets run in the initialization process.</p>
+<p><img src="\articles\assets\simple-page-loading.png" alt="Simple Page Loading"></p>
+<p>Once initialization completes, <code>StateHasChanged</code> is run a second time.  <code>Loaded</code> is now <code>true</code> and <code>SimpleComponent</code> is added to the component <code>RenderFragment</code>.  When the <code>Renderer</code> runs the <code>RenderFragment</code>, <code>SimpleComponent</code> is added to the render tree, instantiated and initialized.</p>
+<p><img src="\articles\assets\simple-page-loaded.png" alt="Simple Page Loaded"></p>
+<h3 id="component-content">Component Content</h3>
+<p>Change <code>SimpleComponent</code> and <code>SimplePage</code> to:</p>
+<h4 id="simplecomponentrazor-1">SimpleComponent.razor</h4>
+<pre><code class="language-csharp"><div>&lt;div <span class="hljs-keyword">class</span>=<span class="hljs-string">&quot;h4 bg-success text-white p-2&quot;</span>&gt;@ChildContent&lt;/div&gt;
 
-@code <span class="token punctuation">{</span>
-    <span class="token punctuation">[</span><span class="token attribute"><span class="token class-name">Parameter</span></span><span class="token punctuation">]</span> <span class="token keyword">public</span> <span class="token return-type class-name">RenderFragment</span> ChildContent <span class="token punctuation">{</span> <span class="token keyword">get</span><span class="token punctuation">;</span> <span class="token keyword">set</span><span class="token punctuation">;</span> <span class="token punctuation">}</span>
-<span class="token punctuation">}</span>
-</code></pre></div><h4 id="simplepage-razor-2"><a href="#simplepage-razor-2" class="header-anchor">#</a> SimplePage.razor</h4> <div class="language-csharp extra-class"><pre class="language-csharp"><code>@page <span class="token string">&quot;/simple&quot;</span>
-<span class="token operator">&lt;</span>h3<span class="token operator">&gt;</span>SimplePage<span class="token operator">&lt;</span><span class="token operator">/</span>h3<span class="token operator">&gt;</span>
-@<span class="token keyword">if</span> <span class="token punctuation">(</span>loaded<span class="token punctuation">)</span>
-<span class="token punctuation">{</span>
-    <span class="token operator">&lt;</span>SimpleComponent<span class="token operator">&gt;</span>
-        <span class="token operator">&lt;</span>button <span class="token keyword">class</span><span class="token operator">=</span><span class="token string">&quot;btn btn-primary&quot;</span> @onclick<span class="token operator">=</span><span class="token string">&quot;ButtonClick&quot;</span><span class="token operator">&gt;</span>Click Me<span class="token operator">&lt;</span><span class="token operator">/</span>button<span class="token operator">&gt;</span>
-    <span class="token operator">&lt;</span><span class="token operator">/</span>SimpleComponent<span class="token operator">&gt;</span>
-<span class="token punctuation">}</span>
-<span class="token keyword">else</span>
-<span class="token punctuation">{</span>
-    <span class="token operator">&lt;</span>div <span class="token keyword">class</span><span class="token operator">=</span><span class="token string">&quot;h4 bg-danger text-white p-2&quot;</span><span class="token operator">&gt;</span>Loading<span class="token range operator">..</span><span class="token range operator">..</span><span class="token punctuation">.</span><span class="token operator">&lt;</span><span class="token operator">/</span>div<span class="token operator">&gt;</span>
-<span class="token punctuation">}</span>
+@code {
+    [<span class="hljs-meta">Parameter</span>] <span class="hljs-keyword">public</span> RenderFragment ChildContent { <span class="hljs-keyword">get</span>; <span class="hljs-keyword">set</span>; }
+}
+</div></code></pre>
+<h4 id="simplepagerazor-1">SimplePage.razor</h4>
+<pre><code class="language-csharp"><div>@page <span class="hljs-string">&quot;/simple&quot;</span>
+&lt;h3&gt;SimplePage&lt;/h3&gt;
+@if (loaded)
+{
+    &lt;SimpleComponent&gt;
+        &lt;button <span class="hljs-keyword">class</span>=<span class="hljs-string">&quot;btn btn-primary&quot;</span> @onclick=<span class="hljs-string">&quot;ButtonClick&quot;</span>&gt;Click Me&lt;/button&gt;
+    &lt;/SimpleComponent&gt;
+}
+<span class="hljs-keyword">else</span>
+{
+    &lt;div <span class="hljs-keyword">class</span>=<span class="hljs-string">&quot;h4 bg-danger text-white p-2&quot;</span>&gt;Loading.....&lt;/div&gt;
+}
 
-@code <span class="token punctuation">{</span>
-    <span class="token keyword">private</span> <span class="token class-name"><span class="token keyword">bool</span></span> loaded<span class="token punctuation">;</span>
+@code {
+    <span class="hljs-keyword">private</span> <span class="hljs-keyword">bool</span> loaded;
 
-    <span class="token keyword">protected</span> <span class="token keyword">async</span> <span class="token keyword">override</span> <span class="token return-type class-name">Task</span> <span class="token function">OnInitializedAsync</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
-    <span class="token punctuation">{</span>
-        <span class="token keyword">await</span> Task<span class="token punctuation">.</span><span class="token function">Delay</span><span class="token punctuation">(</span><span class="token number">2000</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        loaded <span class="token operator">=</span> <span class="token boolean">true</span><span class="token punctuation">;</span>
-    <span class="token punctuation">}</span>
+    <span class="hljs-function"><span class="hljs-keyword">protected</span> <span class="hljs-keyword">async</span> <span class="hljs-keyword">override</span> Task <span class="hljs-title">OnInitializedAsync</span>(<span class="hljs-params"></span>)</span>
+    {
+        <span class="hljs-keyword">await</span> Task.Delay(<span class="hljs-number">2000</span>);
+        loaded = <span class="hljs-literal">true</span>;
+    }
 
-    <span class="token keyword">protected</span> <span class="token return-type class-name"><span class="token keyword">void</span></span> <span class="token function">ButtonClick</span><span class="token punctuation">(</span><span class="token class-name">MouseEventArgs</span> e<span class="token punctuation">)</span>
-    <span class="token punctuation">{</span>
-        <span class="token class-name"><span class="token keyword">var</span></span> x <span class="token operator">=</span> <span class="token boolean">true</span><span class="token punctuation">;</span>
-    <span class="token punctuation">}</span>
-<span class="token punctuation">}</span>
-</code></pre></div><p>There is now content in <code>SimpleComponent</code>. When the application is run that content gets executed in the context of the parent component.  How?</p> <p>The answer is in <code>SimpleComponent</code>.   Remove the <code>[Parameter]</code> attribute from <code>SimpleComponent</code> and run the page.  It errors:</p> <div class="language-Text extra-class"><pre class="language-text"><code>InvalidOperationException: Object of type 'xxx.SimpleComponent' has a property matching the name 'ChildContent', but it does not have [ParameterAttribute] or [CascadingParameterAttribute] applied.
-</code></pre></div><p>If a component has &quot;content&quot; i.e. markup between the opening and closing tags, Blazor expects to find a <code>Parameter</code> named <code>ChildContent</code> in the component.  The content between the tags is pre-compiled into a <code>RenderFragment</code> and then added to the component.  The content of the <code>RenderFragment</code> is run in the context of the object that owns it - <code>SimplePage</code>.</p> <p>The content can also be defined like this:</p> <div class="language-html extra-class"><pre class="language-html"><code><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>SimpleComponent</span><span class="token punctuation">&gt;</span></span>
-    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>ChildContent</span><span class="token punctuation">&gt;</span></span>
-        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>button</span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">&quot;</span>btn btn-primary<span class="token punctuation">&quot;</span></span> <span class="token attr-name">@onclick</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">&quot;</span>ButtonClick<span class="token punctuation">&quot;</span></span><span class="token punctuation">&gt;</span></span>
+    <span class="hljs-function"><span class="hljs-keyword">protected</span> <span class="hljs-keyword">void</span> <span class="hljs-title">ButtonClick</span>(<span class="hljs-params">MouseEventArgs e</span>)</span>
+    {
+        <span class="hljs-keyword">var</span> x = <span class="hljs-literal">true</span>;
+    }
+}
+</div></code></pre>
+<p>There is now content in <code>SimpleComponent</code>. When the application is run that content gets executed in the context of the parent component.  How?</p>
+<p>The answer is in <code>SimpleComponent</code>.   Remove the <code>[Parameter]</code> attribute from <code>SimpleComponent</code> and run the page.  It errors:</p>
+<pre><code class="language-Text"><div>InvalidOperationException: Object of type &#x27;xxx.SimpleComponent&#x27; has a property matching the name &#x27;ChildContent&#x27;, but it does not have [ParameterAttribute] or [CascadingParameterAttribute] applied.
+</div></code></pre>
+<p>If a component has &quot;content&quot; i.e. markup between the opening and closing tags, Blazor expects to find a <code>Parameter</code> named <code>ChildContent</code> in the component.  The content between the tags is pre-compiled into a <code>RenderFragment</code> and then added to the component.  The content of the <code>RenderFragment</code> is run in the context of the object that owns it - <code>SimplePage</code>.</p>
+<p>The content can also be defined like this:</p>
+<pre><code class="language-html"><div><span class="hljs-tag">&lt;<span class="hljs-name">SimpleComponent</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">ChildContent</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;btn btn-primary&quot;</span> @<span class="hljs-attr">onclick</span>=<span class="hljs-string">&quot;ButtonClick&quot;</span>&gt;</span>
             Click Me
-        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>button</span><span class="token punctuation">&gt;</span></span>
-    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>ChildContent</span><span class="token punctuation">&gt;</span></span>
-<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>SimpleComponent</span><span class="token punctuation">&gt;</span></span>
-</code></pre></div><p>The page can also be re-written as below, where it now becomes more obvious who owns the <code>RenderFragment</code>.</p> <div class="language-csharp extra-class"><pre class="language-csharp"><code>@page <span class="token string">&quot;/simple&quot;</span>
-<span class="token operator">&lt;</span>h3<span class="token operator">&gt;</span>SimplePage<span class="token operator">&lt;</span><span class="token operator">/</span>h3<span class="token operator">&gt;</span>
-@<span class="token keyword">if</span> <span class="token punctuation">(</span>loaded<span class="token punctuation">)</span>
-<span class="token punctuation">{</span>
-    <span class="token operator">&lt;</span>SimpleComponent<span class="token operator">&gt;</span>
+        <span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-name">ChildContent</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">SimpleComponent</span>&gt;</span>
+</div></code></pre>
+<p>The page can also be re-written as below, where it now becomes more obvious who owns the <code>RenderFragment</code>.</p>
+<pre><code class="language-csharp"><div>@page <span class="hljs-string">&quot;/simple&quot;</span>
+&lt;h3&gt;SimplePage&lt;/h3&gt;
+@if (loaded)
+{
+    &lt;SimpleComponent&gt;
         @_childContent
-    <span class="token operator">&lt;</span><span class="token operator">/</span>SimpleComponent<span class="token operator">&gt;</span>
-<span class="token punctuation">}</span>
-<span class="token keyword">else</span>
-<span class="token punctuation">{</span>
-    <span class="token operator">&lt;</span>div <span class="token keyword">class</span><span class="token operator">=</span><span class="token string">&quot;h4 bg-danger text-white p-2&quot;</span><span class="token operator">&gt;</span>Loading<span class="token range operator">..</span><span class="token range operator">..</span><span class="token punctuation">.</span><span class="token operator">&lt;</span><span class="token operator">/</span>div<span class="token operator">&gt;</span>
-<span class="token punctuation">}</span>
+    &lt;/SimpleComponent&gt;
+}
+<span class="hljs-keyword">else</span>
+{
+    &lt;div <span class="hljs-keyword">class</span>=<span class="hljs-string">&quot;h4 bg-danger text-white p-2&quot;</span>&gt;Loading.....&lt;/div&gt;
+}
 
-@code <span class="token punctuation">{</span>
+@code {
 
-    <span class="token keyword">private</span> <span class="token class-name"><span class="token keyword">bool</span></span> loaded<span class="token punctuation">;</span>
+    <span class="hljs-keyword">private</span> <span class="hljs-keyword">bool</span> loaded;
 
-    <span class="token keyword">protected</span> <span class="token keyword">async</span> <span class="token keyword">override</span> <span class="token return-type class-name">Task</span> <span class="token function">OnInitializedAsync</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
-    <span class="token punctuation">{</span>
-        <span class="token keyword">await</span> Task<span class="token punctuation">.</span><span class="token function">Delay</span><span class="token punctuation">(</span><span class="token number">2000</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        loaded <span class="token operator">=</span> <span class="token boolean">true</span><span class="token punctuation">;</span>
-    <span class="token punctuation">}</span>
+    <span class="hljs-function"><span class="hljs-keyword">protected</span> <span class="hljs-keyword">async</span> <span class="hljs-keyword">override</span> Task <span class="hljs-title">OnInitializedAsync</span>(<span class="hljs-params"></span>)</span>
+    {
+        <span class="hljs-keyword">await</span> Task.Delay(<span class="hljs-number">2000</span>);
+        loaded = <span class="hljs-literal">true</span>;
+    }
 
-    <span class="token keyword">protected</span> <span class="token return-type class-name"><span class="token keyword">void</span></span> <span class="token function">ButtonClick</span><span class="token punctuation">(</span><span class="token class-name">MouseEventArgs</span> e<span class="token punctuation">)</span>
-    <span class="token punctuation">{</span>
-        <span class="token class-name"><span class="token keyword">var</span></span> x <span class="token operator">=</span> <span class="token boolean">true</span><span class="token punctuation">;</span>
-    <span class="token punctuation">}</span>
+    <span class="hljs-function"><span class="hljs-keyword">protected</span> <span class="hljs-keyword">void</span> <span class="hljs-title">ButtonClick</span>(<span class="hljs-params">MouseEventArgs e</span>)</span>
+    {
+        <span class="hljs-keyword">var</span> x = <span class="hljs-literal">true</span>;
+    }
 
-    <span class="token keyword">private</span> <span class="token return-type class-name">RenderFragment</span> _childContent <span class="token operator">=&gt;</span> <span class="token punctuation">(</span>builder<span class="token punctuation">)</span> <span class="token operator">=&gt;</span>
-    <span class="token punctuation">{</span>
-        builder<span class="token punctuation">.</span><span class="token function">OpenElement</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">,</span> <span class="token string">&quot;button&quot;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        builder<span class="token punctuation">.</span><span class="token function">AddAttribute</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token string">&quot;class&quot;</span><span class="token punctuation">,</span> <span class="token string">&quot;btn btn-primary&quot;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        builder<span class="token punctuation">.</span><span class="token function">AddAttribute</span><span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">,</span> <span class="token string">&quot;onclick&quot;</span><span class="token punctuation">,</span> EventCallback<span class="token punctuation">.</span>Factory<span class="token punctuation">.</span><span class="token generic-method"><span class="token function">Create</span><span class="token generic class-name"><span class="token punctuation">&lt;</span>MouseEventArgs<span class="token punctuation">&gt;</span></span></span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">,</span> ButtonClick<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        builder<span class="token punctuation">.</span><span class="token function">AddContent</span><span class="token punctuation">(</span><span class="token number">3</span><span class="token punctuation">,</span> <span class="token string">&quot;Click Me&quot;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        builder<span class="token punctuation">.</span><span class="token function">CloseElement</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token punctuation">}</span><span class="token punctuation">;</span>
-<span class="token punctuation">}</span>
-</code></pre></div><p>A component is not limited to a single <code>RenderFragment</code>.  A table component could look like this:</p> <div class="language-html extra-class"><pre class="language-html"><code><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>TableComponent</span><span class="token punctuation">&gt;</span></span>
-    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>Header</span><span class="token punctuation">&gt;</span></span>
+    <span class="hljs-keyword">private</span> RenderFragment _childContent =&gt; (builder) =&gt;
+    {
+        builder.OpenElement(<span class="hljs-number">0</span>, <span class="hljs-string">&quot;button&quot;</span>);
+        builder.AddAttribute(<span class="hljs-number">1</span>, <span class="hljs-string">&quot;class&quot;</span>, <span class="hljs-string">&quot;btn btn-primary&quot;</span>);
+        builder.AddAttribute(<span class="hljs-number">2</span>, <span class="hljs-string">&quot;onclick&quot;</span>, EventCallback.Factory.Create&lt;MouseEventArgs&gt;(<span class="hljs-keyword">this</span>, ButtonClick));
+        builder.AddContent(<span class="hljs-number">3</span>, <span class="hljs-string">&quot;Click Me&quot;</span>);
+        builder.CloseElement();
+    };
+}
+</div></code></pre>
+<p>A component is not limited to a single <code>RenderFragment</code>.  A table component could look like this:</p>
+<pre><code class="language-html"><div><span class="hljs-tag">&lt;<span class="hljs-name">TableComponent</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">Header</span>&gt;</span>
         ...
-    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>Header</span><span class="token punctuation">&gt;</span></span>
-    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>Rows</span><span class="token punctuation">&gt;</span></span>
+    <span class="hljs-tag">&lt;/<span class="hljs-name">Header</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">Rows</span>&gt;</span>
         ...
-    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>Rows</span><span class="token punctuation">&gt;</span></span>
-    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>Footer</span><span class="token punctuation">&gt;</span></span>
+    <span class="hljs-tag">&lt;/<span class="hljs-name">Rows</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">Footer</span>&gt;</span>
         ...
-    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>Footer</span><span class="token punctuation">&gt;</span></span>
-<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>TableComponent</span><span class="token punctuation">&gt;</span></span>
-</code></pre></div><h2 id="component-events"><a href="#component-events" class="header-anchor">#</a> Component Events</h2> <p>The most important point to understand about Component events is they are <strong>NOT</strong> fire and forget.  All events are by default asynchronous and look like this:</p> <div class="language-csharp extra-class"><pre class="language-csharp"><code><span class="token class-name"><span class="token keyword">var</span></span> task <span class="token operator">=</span> <span class="token function">InvokeAsync</span><span class="token punctuation">(</span>HandlerMethod<span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token function">StateHasChanged</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span>task<span class="token punctuation">.</span>IsCompleted<span class="token punctuation">)</span>
-<span class="token punctuation">{</span>
-    <span class="token keyword">await</span> task<span class="token punctuation">;</span>
-    <span class="token function">StateHasChanged</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token punctuation">}</span>
-</code></pre></div><p>So the following code won't execute as expected:</p> <div class="language-csharp extra-class"><pre class="language-csharp"><code><span class="token keyword">void</span> <span class="token keyword">async</span> <span class="token function">ButtonClick</span><span class="token punctuation">(</span><span class="token class-name">MouseEventArgs</span> e<span class="token punctuation">)</span> 
-<span class="token punctuation">{</span>
-  <span class="token keyword">await</span> Task<span class="token punctuation">.</span><span class="token function">Delay</span><span class="token punctuation">(</span><span class="token number">2000</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-  <span class="token function">UpdateADisplayProperty</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token punctuation">}</span>
-</code></pre></div><p>The DisplayProperty doesn't display the current value until another <code>StateHasChanged</code> events occurs.  Why? ButtonClick doesn't return a <code>Task</code>, so there's nothing for the event handler to wait on.  It runs <code>StateHasChanged</code> before <code>UpdateADisplayProperty</code> completes.</p> <p>This is a bandaid fix - it's bad pactice.</p> <div class="language-csharp extra-class"><pre class="language-csharp"><code><span class="token keyword">void</span> <span class="token keyword">async</span> <span class="token function">ButtonClick</span><span class="token punctuation">(</span><span class="token class-name">MouseEventArgs</span> e<span class="token punctuation">)</span> 
-<span class="token punctuation">{</span>
-  <span class="token keyword">await</span> Task<span class="token punctuation">.</span><span class="token function">Delay</span><span class="token punctuation">(</span><span class="token number">2000</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-  <span class="token function">UpdateADisplayProperty</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-  <span class="token function">StateHasChanged</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token punctuation">}</span>
-</code></pre></div><p>The correct solution is:</p> <div class="language-csharp extra-class"><pre class="language-csharp"><code>Task <span class="token keyword">async</span> <span class="token function">ButtonClick</span><span class="token punctuation">(</span><span class="token class-name">MouseEventArgs</span> e<span class="token punctuation">)</span> 
-<span class="token punctuation">{</span>
-  <span class="token keyword">await</span> Task<span class="token punctuation">.</span><span class="token function">Delay</span><span class="token punctuation">(</span><span class="token number">2000</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-  <span class="token function">UpdateADisplayProperty</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token punctuation">}</span>
-</code></pre></div><p>Now the event handle has a <code>Task</code> to await and doesn't execute <code>StateHasChanged</code> until <code>ButtonClick</code> completes.</p> <h2 id="some-important-less-documented-information-and-lessons-learned"><a href="#some-important-less-documented-information-and-lessons-learned" class="header-anchor">#</a> Some Important Less Documented Information and Lessons Learned</h2> <h3 id="keep-parameter-properties-simple"><a href="#keep-parameter-properties-simple" class="header-anchor">#</a> Keep Parameter Properties Simple</h3> <p>Your parameter declarations should look like this:</p> <div class="language-csharp extra-class"><pre class="language-csharp"><code><span class="token punctuation">[</span><span class="token attribute"><span class="token class-name">Parameter</span></span><span class="token punctuation">]</span> <span class="token return-type class-name">MyClass</span> myClass <span class="token punctuation">{</span><span class="token keyword">get</span><span class="token punctuation">;</span> <span class="token keyword">set</span><span class="token punctuation">;</span><span class="token punctuation">}</span>
-</code></pre></div><p><strong>DON'T</strong> add code to the getter or setter.  Why?  Any setter must be run as part of the render process and can have a significant impact on render speed and component state.</p> <h3 id="overriding-setparametersasync"><a href="#overriding-setparametersasync" class="header-anchor">#</a> Overriding SetParametersAsync</h3> <p>If you override <code>SetParametersAsync</code> your method should look like this:</p> <div class="language-csharp extra-class"><pre class="language-csharp"><code>    <span class="token keyword">public</span> <span class="token keyword">override</span> <span class="token return-type class-name">Task</span> <span class="token function">SetParametersAsync</span><span class="token punctuation">(</span><span class="token class-name">ParameterView</span> parameters<span class="token punctuation">)</span>
-    <span class="token punctuation">{</span>
-        <span class="token comment">// always call first</span>
-        parameters<span class="token punctuation">.</span><span class="token function">SetParameterProperties</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token comment">// Your Code</span>
-        <span class="token range operator">..</span><span class="token range operator">..</span><span class="token punctuation">.</span>
-        <span class="token comment">// pass an empty ParameterView, not parameters</span>
-        <span class="token keyword">return</span> <span class="token keyword">base</span><span class="token punctuation">.</span><span class="token function">SetParametersAsync</span><span class="token punctuation">(</span>ParameterView<span class="token punctuation">.</span>Empty<span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token punctuation">}</span>
-</code></pre></div><p>Set the parameters in the first line and call the base method passing <code>ParameterView.Empty</code>.  Don't try to pass <code>parameters</code> - you will get an error.</p> <h3 id="treat-parameters-as-immutable"><a href="#treat-parameters-as-immutable" class="header-anchor">#</a> Treat Parameters as Immutable</h3> <p>Never set Parameters in your code.  If you want to make or track changes do this:</p> <div class="language-csharp extra-class"><pre class="language-csharp"><code>    <span class="token punctuation">[</span><span class="token attribute"><span class="token class-name">Parameter</span></span><span class="token punctuation">]</span> <span class="token keyword">public</span> <span class="token return-type class-name"><span class="token keyword">int</span></span> MyParameter <span class="token punctuation">{</span> <span class="token keyword">get</span><span class="token punctuation">;</span> <span class="token keyword">set</span><span class="token punctuation">;</span> <span class="token punctuation">}</span>
-    <span class="token keyword">private</span> <span class="token class-name"><span class="token keyword">int</span></span> _MyParameter<span class="token punctuation">;</span>
-    <span class="token keyword">public</span> <span class="token keyword">event</span> <span class="token class-name">EventHandler</span> MyParameterChanged<span class="token punctuation">;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-name">Footer</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">TableComponent</span>&gt;</span>
+</div></code></pre>
+<h2 id="component-events">Component Events</h2>
+<p>The most important point to understand about Component events is they are <strong>NOT</strong> fire and forget.  All events are by default asynchronous and look like this:</p>
+<pre><code class="language-csharp"><div><span class="hljs-keyword">var</span> task = InvokeAsync(HandlerMethod);
+StateHasChanged();
+<span class="hljs-keyword">if</span> (!task.IsCompleted)
+{
+    <span class="hljs-keyword">await</span> task;
+    StateHasChanged();
+}
+</div></code></pre>
+<p>So the following code won't execute as expected:</p>
+<pre><code class="language-csharp"><div><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-keyword">async</span> <span class="hljs-title">ButtonClick</span>(<span class="hljs-params">MouseEventArgs e</span>)</span> 
+{
+  <span class="hljs-keyword">await</span> Task.Delay(<span class="hljs-number">2000</span>);
+  UpdateADisplayProperty();
+}
+</div></code></pre>
+<p>The DisplayProperty doesn't display the current value until another <code>StateHasChanged</code> events occurs.  Why? ButtonClick doesn't return a <code>Task</code>, so there's nothing for the event handler to wait on.  It runs <code>StateHasChanged</code> before <code>UpdateADisplayProperty</code> completes.</p>
+<p>This is a bandaid fix - it's bad pactice.</p>
+<pre><code class="language-csharp"><div><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-keyword">async</span> <span class="hljs-title">ButtonClick</span>(<span class="hljs-params">MouseEventArgs e</span>)</span> 
+{
+  <span class="hljs-keyword">await</span> Task.Delay(<span class="hljs-number">2000</span>);
+  UpdateADisplayProperty();
+  StateHasChanged();
+}
+</div></code></pre>
+<p>The correct solution is:</p>
+<pre><code class="language-csharp"><div><span class="hljs-function">Task <span class="hljs-keyword">async</span> <span class="hljs-title">ButtonClick</span>(<span class="hljs-params">MouseEventArgs e</span>)</span> 
+{
+  <span class="hljs-keyword">await</span> Task.Delay(<span class="hljs-number">2000</span>);
+  UpdateADisplayProperty();
+}
+</div></code></pre>
+<p>Now the event handle has a <code>Task</code> to await and doesn't execute <code>StateHasChanged</code> until <code>ButtonClick</code> completes.</p>
+<h2 id="some-important-less-documented-information-and-lessons-learned">Some Important Less Documented Information and Lessons Learned</h2>
+<h3 id="keep-parameter-properties-simple">Keep Parameter Properties Simple</h3>
+<p>Your parameter declarations should look like this:</p>
+<pre><code class="language-csharp"><div>[<span class="hljs-meta">Parameter</span>] MyClass myClass {<span class="hljs-keyword">get</span>; <span class="hljs-keyword">set</span>;}
+</div></code></pre>
+<p><strong>DON'T</strong> add code to the getter or setter.  Why?  Any setter must be run as part of the render process and can have a significant impact on render speed and component state.</p>
+<h3 id="overriding-setparametersasync">Overriding SetParametersAsync</h3>
+<p>If you override <code>SetParametersAsync</code> your method should look like this:</p>
+<pre><code class="language-csharp"><div>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">override</span> Task <span class="hljs-title">SetParametersAsync</span>(<span class="hljs-params">ParameterView parameters</span>)</span>
+    {
+        <span class="hljs-comment">// always call first</span>
+        parameters.SetParameterProperties(<span class="hljs-keyword">this</span>);
+        <span class="hljs-comment">// Your Code</span>
+        .....
+        <span class="hljs-comment">// pass an empty ParameterView, not parameters</span>
+        <span class="hljs-keyword">return</span> <span class="hljs-keyword">base</span>.SetParametersAsync(ParameterView.Empty);
+    }
+</div></code></pre>
+<p>Set the parameters in the first line and call the base method passing <code>ParameterView.Empty</code>.  Don't try to pass <code>parameters</code> - you will get an error.</p>
+<h3 id="treat-parameters-as-immutable">Treat Parameters as Immutable</h3>
+<p>Never set Parameters in your code.  If you want to make or track changes do this:</p>
+<pre><code class="language-csharp"><div>    [<span class="hljs-meta">Parameter</span>] <span class="hljs-keyword">public</span> <span class="hljs-keyword">int</span> MyParameter { <span class="hljs-keyword">get</span>; <span class="hljs-keyword">set</span>; }
+    <span class="hljs-keyword">private</span> <span class="hljs-keyword">int</span> _MyParameter;
+    <span class="hljs-keyword">public</span> <span class="hljs-keyword">event</span> EventHandler MyParameterChanged;
 
-    <span class="token keyword">public</span> <span class="token keyword">async</span> <span class="token keyword">override</span> <span class="token return-type class-name">Task</span> <span class="token function">SetParametersAsync</span><span class="token punctuation">(</span><span class="token class-name">ParameterView</span> parameters<span class="token punctuation">)</span>
-    <span class="token punctuation">{</span>
-        parameters<span class="token punctuation">.</span><span class="token function">SetParameterProperties</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span>_MyParameter<span class="token punctuation">.</span><span class="token function">Equals</span><span class="token punctuation">(</span>MyParameter<span class="token punctuation">)</span><span class="token punctuation">)</span>
-        <span class="token punctuation">{</span>
-            _MyParameter <span class="token operator">=</span> MyParameter<span class="token punctuation">;</span>
-            MyParameterChanged<span class="token punctuation">?.</span><span class="token function">Invoke</span><span class="token punctuation">(</span>_MyParameter<span class="token punctuation">,</span> EventArgs<span class="token punctuation">.</span>Empty<span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token punctuation">}</span>
-        <span class="token keyword">await</span> <span class="token keyword">base</span><span class="token punctuation">.</span><span class="token function">SetParametersAsync</span><span class="token punctuation">(</span>ParameterView<span class="token punctuation">.</span>Empty<span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token punctuation">}</span>
-</code></pre></div><h3 id="iterators"><a href="#iterators" class="header-anchor">#</a> Iterators</h3> <p>A common problem occurs when a <code>For</code> iterator is used to loop through a collection to build a <code>select</code> or a data table.  A typical example is shown below:</p> <div class="language-csharp extra-class"><pre class="language-csharp"><code>@<span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token class-name"><span class="token keyword">var</span></span> counter <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> counter <span class="token operator">&lt;</span> <span class="token keyword">this</span><span class="token punctuation">.</span>myList<span class="token punctuation">.</span>Count<span class="token punctuation">;</span> counter<span class="token operator">++</span><span class="token punctuation">)</span>
-<span class="token punctuation">{</span>
-    <span class="token operator">&lt;</span>button <span class="token keyword">class</span><span class="token operator">=</span><span class="token string">&quot;btn btn-dark m-3&quot;</span> @onclick<span class="token operator">=</span><span class="token string">&quot;() =&gt; ButtonClick(this.myList[counter])&quot;</span><span class="token operator">&gt;</span>@<span class="token keyword">this</span><span class="token punctuation">.</span>myList<span class="token punctuation">[</span>counter<span class="token punctuation">]</span><span class="token operator">&lt;</span><span class="token operator">/</span>button<span class="token operator">&gt;</span>
-<span class="token punctuation">}</span>
-@<span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token class-name"><span class="token keyword">var</span></span> counter <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> counter <span class="token operator">&lt;</span> <span class="token keyword">this</span><span class="token punctuation">.</span>myList<span class="token punctuation">.</span>Count<span class="token punctuation">;</span> counter<span class="token operator">++</span><span class="token punctuation">)</span>
-<span class="token punctuation">{</span>
-    <span class="token operator">&lt;</span>button <span class="token keyword">class</span><span class="token operator">=</span><span class="token string">&quot;btn btn-dark m-3&quot;</span> @onclick<span class="token operator">=</span><span class="token string">&quot;() =&gt; ButtonClick(counter)&quot;</span><span class="token operator">&gt;</span>@<span class="token keyword">this</span><span class="token punctuation">.</span>myList<span class="token punctuation">[</span>counter<span class="token punctuation">]</span><span class="token operator">&lt;</span><span class="token operator">/</span>button<span class="token operator">&gt;</span>
-<span class="token punctuation">}</span>
-<span class="token operator">&lt;</span>div<span class="token operator">&gt;</span>Value <span class="token operator">=</span> @<span class="token keyword">this</span><span class="token punctuation">.</span><span class="token keyword">value</span> <span class="token operator">&lt;</span><span class="token operator">/</span>div<span class="token operator">&gt;</span>
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">async</span> <span class="hljs-keyword">override</span> Task <span class="hljs-title">SetParametersAsync</span>(<span class="hljs-params">ParameterView parameters</span>)</span>
+    {
+        parameters.SetParameterProperties(<span class="hljs-keyword">this</span>);
+        <span class="hljs-keyword">if</span> (!_MyParameter.Equals(MyParameter))
+        {
+            _MyParameter = MyParameter;
+            MyParameterChanged?.Invoke(_MyParameter, EventArgs.Empty);
+        }
+        <span class="hljs-keyword">await</span> <span class="hljs-keyword">base</span>.SetParametersAsync(ParameterView.Empty);
+    }
+</div></code></pre>
+<h3 id="iterators">Iterators</h3>
+<p>A common problem occurs when a <code>For</code> iterator is used to loop through a collection to build a <code>select</code> or a data table.  A typical example is shown below:</p>
+<pre><code class="language-csharp"><div>@for (<span class="hljs-keyword">var</span> counter = <span class="hljs-number">0</span>; counter &lt; <span class="hljs-keyword">this</span>.myList.Count; counter++)
+{
+    &lt;button <span class="hljs-keyword">class</span>=<span class="hljs-string">&quot;btn btn-dark m-3&quot;</span> @onclick=<span class="hljs-string">&quot;() =&gt; ButtonClick(this.myList[counter])&quot;</span>&gt;@this.myList[counter]&lt;/button&gt;
+}
+@for (<span class="hljs-keyword">var</span> counter = <span class="hljs-number">0</span>; counter &lt; <span class="hljs-keyword">this</span>.myList.Count; counter++)
+{
+    &lt;button <span class="hljs-keyword">class</span>=<span class="hljs-string">&quot;btn btn-dark m-3&quot;</span> @onclick=<span class="hljs-string">&quot;() =&gt; ButtonClick(counter)&quot;</span>&gt;@this.myList[counter]&lt;/button&gt;
+}
+&lt;div&gt;Value = @this.<span class="hljs-keyword">value</span> &lt;/div&gt;
 
-@code <span class="token punctuation">{</span>
-    <span class="token keyword">private</span> <span class="token return-type class-name">List<span class="token punctuation">&lt;</span><span class="token keyword">int</span><span class="token punctuation">&gt;</span></span> myList <span class="token operator">=&gt;</span> <span class="token keyword">new</span> <span class="token constructor-invocation class-name">List<span class="token punctuation">&lt;</span><span class="token keyword">int</span><span class="token punctuation">&gt;</span></span> <span class="token punctuation">{</span> <span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">,</span> <span class="token number">4</span><span class="token punctuation">,</span> <span class="token number">5</span><span class="token punctuation">,</span> <span class="token number">6</span><span class="token punctuation">,</span> <span class="token number">7</span><span class="token punctuation">,</span> <span class="token number">8</span><span class="token punctuation">,</span> <span class="token number">9</span><span class="token punctuation">,</span> <span class="token number">10</span> <span class="token punctuation">}</span><span class="token punctuation">;</span>
-    <span class="token keyword">private</span> <span class="token class-name"><span class="token keyword">int</span></span> <span class="token keyword">value</span><span class="token punctuation">;</span>
+@code {
+    <span class="hljs-keyword">private</span> List&lt;<span class="hljs-keyword">int</span>&gt; myList =&gt; <span class="hljs-keyword">new</span> List&lt;<span class="hljs-keyword">int</span>&gt; { <span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">4</span>, <span class="hljs-number">5</span>, <span class="hljs-number">6</span>, <span class="hljs-number">7</span>, <span class="hljs-number">8</span>, <span class="hljs-number">9</span>, <span class="hljs-number">10</span> };
+    <span class="hljs-keyword">private</span> <span class="hljs-keyword">int</span> <span class="hljs-keyword">value</span>;
 
-    <span class="token keyword">private</span> <span class="token return-type class-name">Task</span> <span class="token function">ButtonClick</span><span class="token punctuation">(</span><span class="token class-name"><span class="token keyword">int</span></span> <span class="token keyword">value</span><span class="token punctuation">)</span>
-    <span class="token punctuation">{</span>
-        <span class="token keyword">this</span><span class="token punctuation">.</span><span class="token keyword">value</span> <span class="token operator">=</span> <span class="token keyword">value</span><span class="token punctuation">;</span>
-        <span class="token keyword">return</span> Task<span class="token punctuation">.</span>CompletedTask<span class="token punctuation">;</span>
-    <span class="token punctuation">}</span>
-<span class="token punctuation">}</span>
-</code></pre></div><p>If you click on a button in the first row, you will get a <em>Index was out of range</em> error.  Click on a button in the second row and value is always 10.  The reason is that the interator has completed before you click a button, at which time <code>counter</code> is 10.</p> <p>To fix the problem, set a local variable within the loop as shown below.</p> <div class="language-csharp extra-class"><pre class="language-csharp"><code>@<span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token class-name"><span class="token keyword">var</span></span> counter <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> counter <span class="token operator">&lt;</span> <span class="token keyword">this</span><span class="token punctuation">.</span>myList<span class="token punctuation">.</span>Count<span class="token punctuation">;</span> counter<span class="token operator">++</span><span class="token punctuation">)</span>
-<span class="token punctuation">{</span>
-    <span class="token class-name"><span class="token keyword">var</span></span> item <span class="token operator">=</span> <span class="token keyword">this</span><span class="token punctuation">.</span>myList<span class="token punctuation">[</span>counter<span class="token punctuation">]</span><span class="token punctuation">;</span>
-    <span class="token operator">&lt;</span>button <span class="token keyword">class</span><span class="token operator">=</span><span class="token string">&quot;btn btn-dark m-3&quot;</span> @onclick<span class="token operator">=</span><span class="token string">&quot;() =&gt; ButtonClick(item)&quot;</span><span class="token operator">&gt;</span>@item<span class="token operator">&lt;</span><span class="token operator">/</span>button<span class="token operator">&gt;</span>
-<span class="token punctuation">}</span>
-@<span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token class-name"><span class="token keyword">var</span></span> counter <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> counter <span class="token operator">&lt;</span> <span class="token keyword">this</span><span class="token punctuation">.</span>myList<span class="token punctuation">.</span>Count<span class="token punctuation">;</span> counter<span class="token operator">++</span><span class="token punctuation">)</span>
-<span class="token punctuation">{</span>
-    <span class="token class-name"><span class="token keyword">var</span></span> item <span class="token operator">=</span> <span class="token keyword">this</span><span class="token punctuation">.</span>myList<span class="token punctuation">[</span>counter<span class="token punctuation">]</span><span class="token punctuation">;</span>
-    <span class="token class-name"><span class="token keyword">var</span></span> thiscount <span class="token operator">=</span> counter<span class="token punctuation">;</span>
-    <span class="token operator">&lt;</span>button <span class="token keyword">class</span><span class="token operator">=</span><span class="token string">&quot;btn btn-info m-3&quot;</span> @onclick<span class="token operator">=</span><span class="token string">&quot;() =&gt; ButtonClick(thiscount)&quot;</span><span class="token operator">&gt;</span>@item<span class="token operator">&lt;</span><span class="token operator">/</span>button<span class="token operator">&gt;</span>
-<span class="token punctuation">}</span>
-</code></pre></div><p>The best solution is to use <code>ForEach</code>.</p> <div class="language-csharp extra-class"><pre class="language-csharp"><code>@<span class="token keyword">foreach</span>  <span class="token punctuation">(</span><span class="token class-name"><span class="token keyword">var</span></span> item <span class="token keyword">in</span> <span class="token keyword">this</span><span class="token punctuation">.</span>myList<span class="token punctuation">)</span>
-<span class="token punctuation">{</span>
-    <span class="token operator">&lt;</span>button <span class="token keyword">class</span><span class="token operator">=</span><span class="token string">&quot;btn btn-primary m-3&quot;</span> @onclick<span class="token operator">=</span><span class="token string">&quot;() =&gt; ButtonClick(item)&quot;</span><span class="token operator">&gt;</span>@item<span class="token operator">&lt;</span><span class="token operator">/</span>button<span class="token operator">&gt;</span>
-<span class="token punctuation">}</span>
-</code></pre></div><h3 id="component-numbering"><a href="#component-numbering" class="header-anchor">#</a> Component Numbering</h3> <p>It's seems logical to use iterators to automate the numbering of component elements.  DON'T.  The numbering system is used by the diffing engine to decide which bits of the DOM need updating and which bits don't.  Numbering must be consistent within a <code>RenderFragment</code>.  You can use <code>OpenRegion</code> and <code>CloseRegion</code> to define a region with it's own number space.  <a href="https://gist.github.com/SteveSandersonMS/ec232992c2446ab9a0059dd0fbc5d0c3" target="_blank" rel="noopener noreferrer">See this gist for a more detailed explanation<span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a>.</p> <h2 id="building-components"><a href="#building-components" class="header-anchor">#</a> Building Components</h2> <p>Components can be defined in three ways:</p> <ol><li>As a <em>.razor</em> file with an code inside an <em>@code</em> block.</li> <li>As a <em>.razor</em> file and a code behind <em>.razor.cs</em> file.</li> <li>As a pure <em>.cs</em> class file inheriting from <em>ComponentBase</em> or a <em>ComponentBase</em> inherited class, or implementing <em>IComponent</em>.</li></ol> <h5 id="all-in-one-razor-file"><a href="#all-in-one-razor-file" class="header-anchor">#</a> All in One Razor File</h5> <p>HelloWorld.razor</p> <div class="language-html extra-class"><pre class="language-html"><code><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span><span class="token punctuation">&gt;</span></span>
+    <span class="hljs-function"><span class="hljs-keyword">private</span> Task <span class="hljs-title">ButtonClick</span>(<span class="hljs-params"><span class="hljs-keyword">int</span> <span class="hljs-keyword">value</span></span>)</span>
+    {
+        <span class="hljs-keyword">this</span>.<span class="hljs-keyword">value</span> = <span class="hljs-keyword">value</span>;
+        <span class="hljs-keyword">return</span> Task.CompletedTask;
+    }
+}
+</div></code></pre>
+<p>If you click on a button in the first row, you will get a <em>Index was out of range</em> error.  Click on a button in the second row and value is always 10.  The reason is that the interator has completed before you click a button, at which time <code>counter</code> is 10.</p>
+<p>To fix the problem, set a local variable within the loop as shown below.</p>
+<pre><code class="language-csharp"><div>@for (<span class="hljs-keyword">var</span> counter = <span class="hljs-number">0</span>; counter &lt; <span class="hljs-keyword">this</span>.myList.Count; counter++)
+{
+    <span class="hljs-keyword">var</span> item = <span class="hljs-keyword">this</span>.myList[counter];
+    &lt;button <span class="hljs-keyword">class</span>=<span class="hljs-string">&quot;btn btn-dark m-3&quot;</span> @onclick=<span class="hljs-string">&quot;() =&gt; ButtonClick(item)&quot;</span>&gt;@item&lt;/button&gt;
+}
+@for (<span class="hljs-keyword">var</span> counter = <span class="hljs-number">0</span>; counter &lt; <span class="hljs-keyword">this</span>.myList.Count; counter++)
+{
+    <span class="hljs-keyword">var</span> item = <span class="hljs-keyword">this</span>.myList[counter];
+    <span class="hljs-keyword">var</span> thiscount = counter;
+    &lt;button <span class="hljs-keyword">class</span>=<span class="hljs-string">&quot;btn btn-info m-3&quot;</span> @onclick=<span class="hljs-string">&quot;() =&gt; ButtonClick(thiscount)&quot;</span>&gt;@item&lt;/button&gt;
+}
+</div></code></pre>
+<p>The best solution is to use <code>ForEach</code>.</p>
+<pre><code class="language-csharp"><div>@foreach  (<span class="hljs-keyword">var</span> item <span class="hljs-keyword">in</span> <span class="hljs-keyword">this</span>.myList)
+{
+    &lt;button <span class="hljs-keyword">class</span>=<span class="hljs-string">&quot;btn btn-primary m-3&quot;</span> @onclick=<span class="hljs-string">&quot;() =&gt; ButtonClick(item)&quot;</span>&gt;@item&lt;/button&gt;
+}
+</div></code></pre>
+<h3 id="component-numbering">Component Numbering</h3>
+<p>It's seems logical to use iterators to automate the numbering of component elements.  DON'T.  The numbering system is used by the diffing engine to decide which bits of the DOM need updating and which bits don't.  Numbering must be consistent within a <code>RenderFragment</code>.  You can use <code>OpenRegion</code> and <code>CloseRegion</code> to define a region with it's own number space.  <a href="https://gist.github.com/SteveSandersonMS/ec232992c2446ab9a0059dd0fbc5d0c3">See this gist for a more detailed explanation</a>.</p>
+<h2 id="building-components">Building Components</h2>
+<p>Components can be defined in three ways:</p>
+<ol>
+<li>As a <em>.razor</em> file with an code inside an <em>@code</em> block.</li>
+<li>As a <em>.razor</em> file and a code behind <em>.razor.cs</em> file.</li>
+<li>As a pure <em>.cs</em> class file inheriting from <em>ComponentBase</em> or a <em>ComponentBase</em> inherited class, or implementing <em>IComponent</em>.</li>
+</ol>
+<h5 id="all-in-one-razor-file">All in One Razor File</h5>
+<p>HelloWorld.razor</p>
+<pre><code class="language-html"><div><span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span>
 @HelloWorld
-<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">&gt;</span></span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
 
 @code {
 [Parameter]
 public string HelloWorld {get; set;} = &quot;Hello?&quot;;
 }
-</code></pre></div><h5 id="code-behind"><a href="#code-behind" class="header-anchor">#</a> Code Behind</h5> <p>HelloWorld.razor</p> <div class="language-html extra-class"><pre class="language-html"><code>@inherits ComponentBase
+</div></code></pre>
+<h5 id="code-behind">Code Behind</h5>
+<p>HelloWorld.razor</p>
+<pre><code class="language-html"><div>@inherits ComponentBase
 @namespace CEC.Blazor.Server.Pages
 
-<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span><span class="token punctuation">&gt;</span></span>
+<span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span>
 @HelloWorld
-<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">&gt;</span></span>
-</code></pre></div><p>HelloWorld.razor.cs</p> <div class="language-csharp extra-class"><pre class="language-csharp"><code><span class="token keyword">namespace</span> <span class="token namespace">CEC<span class="token punctuation">.</span>Blazor<span class="token punctuation">.</span>Server<span class="token punctuation">.</span>Pages</span>
-<span class="token punctuation">{</span>
-    <span class="token keyword">public</span> <span class="token keyword">partial</span> <span class="token keyword">class</span> <span class="token class-name">HelloWorld</span> <span class="token punctuation">:</span> <span class="token type-list"><span class="token class-name">ComponentBase</span></span>
-    <span class="token punctuation">{</span>
-        <span class="token punctuation">[</span><span class="token attribute"><span class="token class-name">Parameter</span></span><span class="token punctuation">]</span>
-        <span class="token keyword">public</span> <span class="token return-type class-name"><span class="token keyword">string</span></span> HelloWorld <span class="token punctuation">{</span><span class="token keyword">get</span><span class="token punctuation">;</span> <span class="token keyword">set</span><span class="token punctuation">;</span><span class="token punctuation">}</span> <span class="token operator">=</span> <span class="token string">&quot;Hello?&quot;</span><span class="token punctuation">;</span>
-    <span class="token punctuation">}</span>
-<span class="token punctuation">}</span>
-</code></pre></div><h5 id="c-class"><a href="#c-class" class="header-anchor">#</a> C# Class</h5> <p>HelloWorld.cs</p> <div class="language-csharp extra-class"><pre class="language-csharp"><code><span class="token keyword">namespace</span> <span class="token namespace">CEC<span class="token punctuation">.</span>Blazor<span class="token punctuation">.</span>Server<span class="token punctuation">.</span>Pages</span>
-<span class="token punctuation">{</span>
-    <span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">HelloWorld</span> <span class="token punctuation">:</span> <span class="token type-list"><span class="token class-name">ComponentBase</span></span>
-    <span class="token punctuation">{</span>
-        <span class="token punctuation">[</span><span class="token attribute"><span class="token class-name">Parameter</span></span><span class="token punctuation">]</span>
-        <span class="token keyword">public</span> <span class="token return-type class-name"><span class="token keyword">string</span></span> HelloWorld <span class="token punctuation">{</span><span class="token keyword">get</span><span class="token punctuation">;</span> <span class="token keyword">set</span><span class="token punctuation">;</span><span class="token punctuation">}</span> <span class="token operator">=</span> <span class="token string">&quot;Hello?&quot;</span><span class="token punctuation">;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+</div></code></pre>
+<p>HelloWorld.razor.cs</p>
+<pre><code class="language-csharp"><div><span class="hljs-keyword">namespace</span> <span class="hljs-title">CEC.Blazor.Server.Pages</span>
+{
+    <span class="hljs-keyword">public</span> <span class="hljs-keyword">partial</span> <span class="hljs-keyword">class</span> <span class="hljs-title">HelloWorld</span> : <span class="hljs-title">ComponentBase</span>
+    {
+        [<span class="hljs-meta">Parameter</span>]
+        <span class="hljs-keyword">public</span> <span class="hljs-keyword">string</span> HelloWorld {<span class="hljs-keyword">get</span>; <span class="hljs-keyword">set</span>;} = <span class="hljs-string">&quot;Hello?&quot;</span>;
+    }
+}
+</div></code></pre>
+<h5 id="c-class">C# Class</h5>
+<p>HelloWorld.cs</p>
+<pre><code class="language-csharp"><div><span class="hljs-keyword">namespace</span> <span class="hljs-title">CEC.Blazor.Server.Pages</span>
+{
+    <span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title">HelloWorld</span> : <span class="hljs-title">ComponentBase</span>
+    {
+        [<span class="hljs-meta">Parameter</span>]
+        <span class="hljs-keyword">public</span> <span class="hljs-keyword">string</span> HelloWorld {<span class="hljs-keyword">get</span>; <span class="hljs-keyword">set</span>;} = <span class="hljs-string">&quot;Hello?&quot;</span>;
 
-        <span class="token keyword">protected</span> <span class="token keyword">override</span> <span class="token return-type class-name"><span class="token keyword">void</span></span> <span class="token function">BuildRenderTree</span><span class="token punctuation">(</span><span class="token class-name">RenderTreeBuilder</span> builder<span class="token punctuation">)</span>
-        <span class="token punctuation">{</span>
-            builder<span class="token punctuation">.</span><span class="token function">OpenElement</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">,</span> <span class="token string">&quot;div&quot;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-            builder<span class="token punctuation">.</span><span class="token function">AddContent</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token punctuation">(</span>MarkupString<span class="token punctuation">)</span><span class="token keyword">this</span><span class="token punctuation">.</span>_Content<span class="token punctuation">)</span><span class="token punctuation">;</span>
-            builder<span class="token punctuation">.</span><span class="token function">CloseElement</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token punctuation">}</span>
-    <span class="token punctuation">}</span>
-<span class="token punctuation">}</span>
-</code></pre></div><h2 id="some-observations"><a href="#some-observations" class="header-anchor">#</a> Some Observations</h2> <ol><li><p>There's a tendency to pile too much code into <code>OnInitialized</code> and <code>OnInitializedAsync</code> and then use events to drive <code>StateHasChanged</code> updates in the component tree.  Get the relevant code into the right places in the lifecycle and you won't need the events.</p></li> <li><p>There's a temptation to start with the non-async versions (because they're easier to implement) and only use the async versions when you have to, when the opposite should be true.  Most web based activities are inherently async in nature.  I never use the non-async versions - I work on the principle that at some point I'm going to need to add async behaviour.</p></li> <li><p><code>StateHasChanged</code> is called far to often, normally because code is in the wrong place in the component lifecycle, or the events have been coded incorrectly.  Ask yourself a challenging &quot;Why?&quot; when you type <code>StateHasChanged</code>.</p></li> <li><p>Components are underused in the UI.  The same code/markup blocks are used repeatedly.  The same rules apply to code/markup blocks as to C# code.</p></li> <li><p>Once you really, REALLY understand components, writing Blazor code becomes a totally &quot;different&quot; experience.</p></li></ol></div> <footer class="page-edit"><!----> <!----></footer> <div class="page-nav"><p class="inner"><span class="prev">
-      ←
-      <a href="/articles/Blazor-CSS.html" class="prev">
-        CSS in Blazor
-      </a></span> <span class="next"><a href="/articles/Blazor-DataList-Control.html">
-        A Blazor DataList Control
-      </a>
-      →
-    </span></p></div> </main></div><div class="global-ui"><!----></div></div>
-    <script src="/assets/js/app.e7504274.js" defer></script><script src="/assets/js/3.f3d70fce.js" defer></script><script src="/assets/js/46.f78d075f.js" defer></script>
-  </body>
+        <span class="hljs-function"><span class="hljs-keyword">protected</span> <span class="hljs-keyword">override</span> <span class="hljs-keyword">void</span> <span class="hljs-title">BuildRenderTree</span>(<span class="hljs-params">RenderTreeBuilder builder</span>)</span>
+        {
+            builder.OpenElement(<span class="hljs-number">0</span>, <span class="hljs-string">&quot;div&quot;</span>);
+            builder.AddContent(<span class="hljs-number">1</span>, (MarkupString)<span class="hljs-keyword">this</span>._Content);
+            builder.CloseElement();
+        }
+    }
+}
+</div></code></pre>
+<h2 id="some-observations">Some Observations</h2>
+<ol>
+<li>
+<p>There's a tendency to pile too much code into <code>OnInitialized</code> and <code>OnInitializedAsync</code> and then use events to drive <code>StateHasChanged</code> updates in the component tree.  Get the relevant code into the right places in the lifecycle and you won't need the events.</p>
+</li>
+<li>
+<p>There's a temptation to start with the non-async versions (because they're easier to implement) and only use the async versions when you have to, when the opposite should be true.  Most web based activities are inherently async in nature.  I never use the non-async versions - I work on the principle that at some point I'm going to need to add async behaviour.</p>
+</li>
+<li>
+<p><code>StateHasChanged</code> is called far to often, normally because code is in the wrong place in the component lifecycle, or the events have been coded incorrectly.  Ask yourself a challenging &quot;Why?&quot; when you type <code>StateHasChanged</code>.</p>
+</li>
+<li>
+<p>Components are underused in the UI.  The same code/markup blocks are used repeatedly.  The same rules apply to code/markup blocks as to C# code.</p>
+</li>
+<li>
+<p>Once you really, REALLY understand components, writing Blazor code becomes a totally &quot;different&quot; experience.</p>
+</li>
+</ol>
+
+    
+
+            </div>
+        </div>
+    </div>
+</div>
+<!-- end of Article Container -->
+
+
+                </div>
+                <!-- End of Main Content -->
+            </div>
+            <!-- Footer -->
+            
+<!-- Copyright -->
+<footer class="sticky-footer bg-white">
+    <div class="container my-auto">
+        <div class="copyright text-center my-auto">
+            
+<span>Copyright &copy; Cold Elm Coders - 2021</span>
+
+        </div>
+    </div>
+</footer>
+<!-- end of copyright -->
+
+
+            <!-- End of Footer -->
+        </div>
+        <!-- End of Content Wrapper -->
+        
+<a class="scroll-to-top rounded" href="#page-top">
+    <i class="fas fa-angle-up"></i>
+</a>
+
+
+    </div>
+    <!-- End of Page Wrapper -->
+    <!-- Scripts -->
+    
+<!-- Scripts -->
+<!-- Bootstrap core JavaScript-->
+<script src="/assets/vendor/jquery/jquery.min.js"></script>
+<script src="/assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+<!-- Core plugin JavaScript-->
+<script src="/assets/vendor/jquery-easing/jquery.easing.min.js"></script>
+
+<!-- Custom scripts for all pages-->
+<script src="/assets/js/sb-admin-2.min.js"></script>
+
+
+</body>
 </html>

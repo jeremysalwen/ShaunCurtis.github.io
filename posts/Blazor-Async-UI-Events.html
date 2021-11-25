@@ -1,182 +1,506 @@
 <!DOCTYPE html>
-<html lang="en-US">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>Blazor Async Behaviour on UI Events | Cold Elm Coders</title>
-    <meta name="generator" content="VuePress 1.8.2">
+<html lang="en">
+<head>
     
-    <meta name="description" content="">
-    <meta name="theme-color" content="#3eaf7c">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+<!-- SEO Meta Tags -->
+<meta name="description" content="Your description">
+<meta name="author" content="Your name">
+
+<!-- OG Meta Tags to improve the way the post looks when you share the page on Facebook, Twitter, LinkedIn -->
+<meta property="og:site_name" content="" /> <!-- website name -->
+<meta property="og:site" content="" /> <!-- website link -->
+<meta property="og:title" content="" /> <!-- title shown in the actual shared post -->
+<meta property="og:description" content="" /> <!-- description shown in the actual shared post -->
+<meta property="og:image" content="" /> <!-- image link, make sure it's jpg -->
+<meta property="og:url" content="" /> <!-- where do you want your post to link to -->
+<meta name="twitter:card" content="summary_large_image"> <!-- to have large image post format in Twitter -->
+
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+
+<meta name="description" content="What Async patterns to use for UI events in Blazor" >
+<meta name="author" content="Shaun Curtis" >
+
+
+
+<title>Blazor Async Behaviour on UI Events</title>
+
+
+<!-- Custom fonts for this template-->
+<link href="/assets/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+<link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+      rel="stylesheet">
+
+<!-- Custom styles for this template-->
+<link href="/assets/css/sb-admin-2.css" rel="stylesheet" type="text/css">
+<link href="/assets/css/site.css" rel="stylesheet" type="text/css">
+
+<!-- Favicon  -->
+<link rel="icon" href="/assets/images/favicon.png">
+
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/highlight.css">
+    <link rel="stylesheet" href="/assets/css/article.css" type="text/css">
+</head>
+<body id="page-top">
+    <!--topbar-->
+    <div id="topbar">
+        
+<!-- Topbar -->
+<nav class="navbar navbar-expand navbar-light topbar mb-4 static-top">
     
-    <link rel="preload" href="/assets/css/0.styles.757cca11.css" as="style"><link rel="preload" href="/assets/js/app.e7504274.js" as="script"><link rel="preload" href="/assets/js/3.f3d70fce.js" as="script"><link rel="preload" href="/assets/js/59.158abf7b.js" as="script"><link rel="prefetch" href="/assets/js/1.dd2e798d.js"><link rel="prefetch" href="/assets/js/10.62cd9054.js"><link rel="prefetch" href="/assets/js/11.7ef2f0cc.js"><link rel="prefetch" href="/assets/js/12.571448aa.js"><link rel="prefetch" href="/assets/js/13.e5a600e9.js"><link rel="prefetch" href="/assets/js/14.4ed01dd2.js"><link rel="prefetch" href="/assets/js/15.d0a813d8.js"><link rel="prefetch" href="/assets/js/16.3d701298.js"><link rel="prefetch" href="/assets/js/17.dd96adea.js"><link rel="prefetch" href="/assets/js/18.f6955aa8.js"><link rel="prefetch" href="/assets/js/19.bb1f166c.js"><link rel="prefetch" href="/assets/js/20.440b537e.js"><link rel="prefetch" href="/assets/js/21.1e192f13.js"><link rel="prefetch" href="/assets/js/22.0f3db856.js"><link rel="prefetch" href="/assets/js/23.9a2edb75.js"><link rel="prefetch" href="/assets/js/24.3d8317a7.js"><link rel="prefetch" href="/assets/js/25.e6e973f9.js"><link rel="prefetch" href="/assets/js/26.2f4dce51.js"><link rel="prefetch" href="/assets/js/27.eddfbfe3.js"><link rel="prefetch" href="/assets/js/28.1a753628.js"><link rel="prefetch" href="/assets/js/29.dd0c2751.js"><link rel="prefetch" href="/assets/js/30.049ba17e.js"><link rel="prefetch" href="/assets/js/31.ec7a699c.js"><link rel="prefetch" href="/assets/js/32.128041a3.js"><link rel="prefetch" href="/assets/js/33.90a80a82.js"><link rel="prefetch" href="/assets/js/34.640d5210.js"><link rel="prefetch" href="/assets/js/35.dd6a5277.js"><link rel="prefetch" href="/assets/js/36.af0fb7fb.js"><link rel="prefetch" href="/assets/js/37.6282d3d3.js"><link rel="prefetch" href="/assets/js/38.09c22a9c.js"><link rel="prefetch" href="/assets/js/39.34118569.js"><link rel="prefetch" href="/assets/js/4.004aaf89.js"><link rel="prefetch" href="/assets/js/40.42fb5da5.js"><link rel="prefetch" href="/assets/js/41.d1ac92f4.js"><link rel="prefetch" href="/assets/js/42.046bbbbf.js"><link rel="prefetch" href="/assets/js/43.86ac5d2f.js"><link rel="prefetch" href="/assets/js/44.1393eed1.js"><link rel="prefetch" href="/assets/js/45.a4121f00.js"><link rel="prefetch" href="/assets/js/46.f78d075f.js"><link rel="prefetch" href="/assets/js/47.02e428da.js"><link rel="prefetch" href="/assets/js/48.3f9d12a6.js"><link rel="prefetch" href="/assets/js/49.bb9c3fab.js"><link rel="prefetch" href="/assets/js/5.8a61fa12.js"><link rel="prefetch" href="/assets/js/50.ebb028fd.js"><link rel="prefetch" href="/assets/js/51.a2b343de.js"><link rel="prefetch" href="/assets/js/52.2a464137.js"><link rel="prefetch" href="/assets/js/53.54a07d54.js"><link rel="prefetch" href="/assets/js/54.72acf66d.js"><link rel="prefetch" href="/assets/js/55.6168cc1a.js"><link rel="prefetch" href="/assets/js/56.0653a59a.js"><link rel="prefetch" href="/assets/js/57.df56ec02.js"><link rel="prefetch" href="/assets/js/58.fc8f11bc.js"><link rel="prefetch" href="/assets/js/6.1fda51af.js"><link rel="prefetch" href="/assets/js/60.10f7e3a6.js"><link rel="prefetch" href="/assets/js/61.844ecd3b.js"><link rel="prefetch" href="/assets/js/62.da039f8c.js"><link rel="prefetch" href="/assets/js/63.f2fe69a7.js"><link rel="prefetch" href="/assets/js/64.b9085bd9.js"><link rel="prefetch" href="/assets/js/65.6c182c91.js"><link rel="prefetch" href="/assets/js/66.e0d48b84.js"><link rel="prefetch" href="/assets/js/7.eca4725c.js"><link rel="prefetch" href="/assets/js/8.2504867c.js"><link rel="prefetch" href="/assets/js/9.64046c51.js">
-    <link rel="stylesheet" href="/assets/css/0.styles.757cca11.css">
-  </head>
-  <body>
-    <div id="app" data-server-rendered="true"><div class="theme-container"><header class="navbar"><div class="sidebar-button"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon"><path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path></svg></div> <a href="/" class="home-link router-link-active"><!----> <span class="site-name">Cold Elm Coders</span></a> <div class="links"><div class="search-box"><input aria-label="Search" autocomplete="off" spellcheck="false" value=""> <!----></div> <nav class="nav-links can-hide"><div class="nav-item"><a href="/articles/" class="nav-link">
-  Articles
-</a></div><div class="nav-item"><a href="/posts/" class="nav-link router-link-active">
-  Posts
-</a></div><div class="nav-item"><a href="/ArchivedArticles/" class="nav-link">
-  Old Articles
-</a></div><div class="nav-item"><a href="/Building-a-Database-Application-in-Blazor/" class="nav-link">
-  Database Application
-</a></div><div class="nav-item"><a href="https://cec-blazor-examples.azurewebsites.net/" target="_blank" rel="noopener noreferrer" class="nav-link external">
-  Demo Site
-  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></div> <!----></nav></div></header> <div class="sidebar-mask"></div> <aside class="sidebar"><nav class="nav-links"><div class="nav-item"><a href="/articles/" class="nav-link">
-  Articles
-</a></div><div class="nav-item"><a href="/posts/" class="nav-link router-link-active">
-  Posts
-</a></div><div class="nav-item"><a href="/ArchivedArticles/" class="nav-link">
-  Old Articles
-</a></div><div class="nav-item"><a href="/Building-a-Database-Application-in-Blazor/" class="nav-link">
-  Database Application
-</a></div><div class="nav-item"><a href="https://cec-blazor-examples.azurewebsites.net/" target="_blank" rel="noopener noreferrer" class="nav-link external">
-  Demo Site
-  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></div> <!----></nav>  <ul class="sidebar-links"><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading open"><span>My Posts</span> <span class="arrow down"></span></p> <ul class="sidebar-links sidebar-group-items"><li><a href="/posts/" aria-current="page" class="sidebar-link">Posts</a></li><li><a href="/posts/Blazor-Async-UI-Events.html" aria-current="page" class="active sidebar-link">Blazor Async Behaviour on UI Events</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header"><a href="/posts/Blazor-Async-UI-Events.html#test-razor" class="sidebar-link">Test.Razor</a></li><li class="sidebar-sub-header"><a href="/posts/Blazor-Async-UI-Events.html#the-void-pattern" class="sidebar-link">The Void Pattern</a></li><li class="sidebar-sub-header"><a href="/posts/Blazor-Async-UI-Events.html#the-task-pattern" class="sidebar-link">The Task Pattern</a></li><li class="sidebar-sub-header"><a href="/posts/Blazor-Async-UI-Events.html#the-await-task-pattern" class="sidebar-link">The Await Task Pattern</a></li><li class="sidebar-sub-header"><a href="/posts/Blazor-Async-UI-Events.html#component-events-and-eventcallbacks" class="sidebar-link">Component Events and EventCallbacks</a></li><li class="sidebar-sub-header"><a href="/posts/Blazor-Async-UI-Events.html#when-to-use-the-void-pattern" class="sidebar-link">When to use the Void Pattern</a></li></ul></li><li><a href="/posts/DBContexts-In-Transient-Services.html" class="sidebar-link">No to DbContexts in Transient Services</a></li><li><a href="/posts/DynamicCss.html" class="sidebar-link">Blazor Dynamic Stylesheets</a></li><li><a href="/posts/For-ForEach-in-Blazor.html" class="sidebar-link">For and ForEach loops in Blazor Components</a></li><li><a href="/posts/Notification-Service-Pattern.html" class="sidebar-link">Blazor Notification Service Pattern</a></li><li><a href="/posts/XML-XSD-Serialization.html" class="sidebar-link">DotNetCore XML/XSD Serialization</a></li></ul></section></li></ul> </aside> <main class="page"> <div class="theme-default-content content__default"><h1 id="ui-event-behaviour-in-blazor"><a href="#ui-event-behaviour-in-blazor" class="header-anchor">#</a> UI Event Behaviour in Blazor</h1> <p>This short article describes how Blazor handles UI events and the programming patterns you should use.</p> <p>The classic asynchronous pattern for events is the &quot;fire and forget&quot; pattern:</p> <div class="language-csharp extra-class"><pre class="language-csharp"><code><span class="token return-type class-name"><span class="token keyword">void</span></span> <span class="token function">EventHandlerMethod</span><span class="token punctuation">(</span>args<span class="token punctuation">)</span>
-<span class="token comment">// or</span>
-<span class="token keyword">async</span> <span class="token return-type class-name"><span class="token keyword">void</span></span> <span class="token function">EventHandlerMethod</span><span class="token punctuation">(</span>args<span class="token punctuation">)</span>
-</code></pre></div><p>The the event caller doesn't expect a return, so the event handler method should return a <code>void</code>.</p> <p>Blazor UI <em>events</em> aren't fire and forget.  They're loaded by the Blazor runtime onto the <code>SynchronisationContext</code> thread and look something like:</p> <div class="language-csharp extra-class"><pre class="language-csharp"><code><span class="token class-name"><span class="token keyword">var</span></span> task <span class="token operator">=</span> <span class="token function">InvokeAsync</span><span class="token punctuation">(</span>EventMethod<span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token function">StateHasChanged</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span>task<span class="token punctuation">.</span>IsCompleted<span class="token punctuation">)</span>
-<span class="token punctuation">{</span>
-    <span class="token keyword">await</span> task<span class="token punctuation">;</span>
-    <span class="token function">StateHasChanged</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token punctuation">}</span>
-</code></pre></div><p>The event handler is called and awaited and then <code>StateHasChanged</code> is called on the component that owns the event.  This ensures that whatever actions the event caused are captured in the re-render event.</p> <h2 id="test-razor"><a href="#test-razor" class="header-anchor">#</a> Test.Razor</h2> <p>We need a test page with some support code:</p> <div class="language-html extra-class"><pre class="language-html"><code><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">&quot;</span>container m-2 px-3 p-t bg-light<span class="token punctuation">&quot;</span></span><span class="token punctuation">&gt;</span></span>
-    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">&quot;</span>row pt-2<span class="token punctuation">&quot;</span></span><span class="token punctuation">&gt;</span></span>
-        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">&quot;</span>col-12<span class="token punctuation">&quot;</span></span><span class="token punctuation">&gt;</span></span>
-            <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>h3</span><span class="token punctuation">&gt;</span></span>Event Buttons<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>h3</span><span class="token punctuation">&gt;</span></span>
-        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">&gt;</span></span>
-    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">&gt;</span></span>
-    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">&quot;</span>row pt-2<span class="token punctuation">&quot;</span></span><span class="token punctuation">&gt;</span></span>
-        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">&quot;</span>col-6<span class="token punctuation">&quot;</span></span><span class="token punctuation">&gt;</span></span>
+<ul class="navbar-nav" >
+<li class="nav-item" >
+<a class="nav-link " href="/index.html" role="button"  >
+<span class="mr-2 d-none d-lg-inline text-gray-100">Index</span>
+</a>
+</li>
+<li class="nav-item dropdown no-arrow mx-1" >
+<a class="nav-link dropdown-toggle" href="#" id="5bb87ae6-df2d-491e-934c-14f6a3796f2f" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"  >
+<span class="mr-2 d-none d-lg-inline text-gray-100">Articles</span>
+</a>
+<div class=" dropdown-list dropdown-menu shadow animated--grow-in" aria-labelledby="5bb87ae6-df2d-491e-934c-14f6a3796f2f" >
+<a class="dropdown-item" href="/articles/A-Flexible-app.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+A Flexible App
+</a>
+<a class="dropdown-item" href="/articles/Async-Programming-in-DotNetCore.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Async Programming In Dotnetcore
+</a>
+<a class="dropdown-item" href="/articles/Blazor-AllinOne.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Blazor Allinone
+</a>
+<a class="dropdown-item" href="/articles/Blazor-Async-Programming.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Blazor Async Programming
+</a>
+<a class="dropdown-item" href="/articles/Blazor-Components.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Blazor Components
+</a>
+<a class="dropdown-item" href="/articles/Blazor-CSS.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Blazor CSS
+</a>
+<a class="dropdown-item" href="/articles/Blazor-DataList-Control.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Blazor Datalist Control
+</a>
+<a class="dropdown-item" href="/articles/Blazor-Form-Validation.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Blazor Form Validation
+</a>
+<a class="dropdown-item" href="/articles/Building-Edit-Forms.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Building Edit Forms
+</a>
+<a class="dropdown-item" href="/articles/Hydra.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Hydra
+</a>
+<a class="dropdown-item" href="/articles/Inline-Dialog.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Inline Dialog
+</a>
+<a class="dropdown-item" href="/articles/Modal-Dialog.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Modal Dialog
+</a>
+</div>
+</li>
+<li class="nav-item dropdown no-arrow mx-1" >
+<a class="nav-link dropdown-toggle" href="#" id="d80892d7-5a49-4955-92e7-8d82bf72025b" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"  >
+<span class="mr-2 d-none d-lg-inline text-gray-100">Blazor Database Application</span>
+</a>
+<div class=" dropdown-list dropdown-menu shadow animated--grow-in" aria-labelledby="d80892d7-5a49-4955-92e7-8d82bf72025b" >
+<a class="dropdown-item" href="/Building-a-Database-Application-in-Blazor/Building-a-Database-Application-in-Blazor-Part-1.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Building A Database Application In Blazor Part 1
+</a>
+<a class="dropdown-item" href="/Building-a-Database-Application-in-Blazor/Building-a-Database-Application-in-Blazor-Part-2.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Building A Database Application In Blazor Part 2
+</a>
+<a class="dropdown-item" href="/Building-a-Database-Application-in-Blazor/Building-a-Database-Application-in-Blazor-Part-3.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Building A Database Application In Blazor Part 3
+</a>
+<a class="dropdown-item" href="/Building-a-Database-Application-in-Blazor/Building-a-Database-Application-in-Blazor-Part-4.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Building A Database Application In Blazor Part 4
+</a>
+<a class="dropdown-item" href="/Building-a-Database-Application-in-Blazor/Building-a-Database-Application-in-Blazor-Part-5.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Building A Database Application In Blazor Part 5
+</a>
+<a class="dropdown-item" href="/Building-a-Database-Application-in-Blazor/Building-a-Database-Application-in-Blazor-Part-6.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Building A Database Application In Blazor Part 6
+</a>
+<a class="dropdown-item" href="/Building-a-Database-Application-in-Blazor/index.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Index
+</a>
+</div>
+</li>
+<li class="nav-item dropdown no-arrow mx-1" >
+<a class="nav-link dropdown-toggle" href="#" id="51a8f321-3bfd-4e5a-8518-a96810d345a1" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"  >
+<span class="mr-2 d-none d-lg-inline text-gray-100">Posts</span>
+</a>
+<div class=" dropdown-list dropdown-menu shadow animated--grow-in" aria-labelledby="51a8f321-3bfd-4e5a-8518-a96810d345a1" >
+<a class="dropdown-item" href="/posts/Blazor-Async-UI-Events.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Blazor Async UI Events
+</a>
+<a class="dropdown-item" href="/posts/DBContexts-In-Transient-Services.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Dbcontexts In Transient Services
+</a>
+<a class="dropdown-item" href="/posts/DynamicCss.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Dynamiccss
+</a>
+<a class="dropdown-item" href="/posts/For-ForEach-in-Blazor.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+For Foreach In Blazor
+</a>
+<a class="dropdown-item" href="/posts/Notification-Service-Pattern.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Notification Service Pattern
+</a>
+<a class="dropdown-item" href="/posts/XML-XSD-Serialization.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+XML XSD Serialization
+</a>
+</div>
+</li>
+</ul>
+
+    <div class="ms-5 me-5 ml-auto">
+        <h1>Cold Elm Coders</h1>
+    </div>
+</nav>
+
+
+    </div>
+    <!--End topbar-->
+    <!--Sidebar-->
+    <div id="sidebar">
+        
+<div class="article-info p-2" Published: 01-10-2020 >
+<div>Published: 01-10-2020</div>
+<div>Last Updated: 01-10-2020</div>
+<div>Author: Shaun Curtis</div>
+</div>
+
+        
+<h4 class="p-2">Table of Contents</h4>
+<ul class="TOC" >
+<li class="TOC-item TOC-item-0" >
+<a class="TOC-link" href="#">Top</a>
+<ul class="TOC TOC-0" >
+<li class="TOC-item TOC-item-1" >
+<ul class="TOC TOC-1" >
+<li class="TOC-item TOC-item-2" >
+<a class="TOC-link" href="#testrazor">Test.Razor</a>
+</li>
+<li class="TOC-item TOC-item-2" >
+<a class="TOC-link" href="#the-void-pattern">The Void Pattern</a>
+</li>
+<li class="TOC-item TOC-item-2" >
+<a class="TOC-link" href="#the-task-pattern">The Task Pattern</a>
+</li>
+<li class="TOC-item TOC-item-2" >
+<a class="TOC-link" href="#the-await-task-pattern">The Await Task Pattern</a>
+</li>
+<li class="TOC-item TOC-item-2" >
+<a class="TOC-link" href="#component-events-and-eventcallbacks">Component Events and EventCallbacks</a>
+</li>
+<li class="TOC-item TOC-item-2" >
+<a class="TOC-link" href="#when-to-use-the-void-pattern">When to use the Void Pattern</a>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+    </div>
+    <!--End Sidebar-->
+    <!-- Page Wrapper -->
+    <div id="wrapper">
+        <!-- Content Wrapper -->
+        <div id="content-wrapper" class="d-flex flex-column">
+            <!-- Main Content -->
+            <div id="content">
+                <!-- Topbar -->
+                <div id="article">
+                    <!-- Article -->
+                    
+<!-- Header -->
+<header class="ex-header-article">
+    <div class="container">
+        <div class="row pt-3 pb-3 border-bottom">
+            <div class="col">
+                
+<h1>Blazor Async Behaviour on UI Events</h1>
+<div>What Async patterns to use for UI events in Blazor</div>
+
+            </div> <!-- end of col -->
+        </div> <!-- end of row -->
+    </div> <!-- end of container -->
+</header> <!-- end of ex-header -->
+<!-- end of header -->
+
+
+                    
+<!-- Article Container -->
+<div class="ex-basic-1 pt-4">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                
+
+        <p>This short post describes how Blazor handles UI events and the programming patterns you should use.</p>
+<p>The classic asynchronous pattern for events is the &quot;fire and forget&quot; pattern:</p>
+<pre><code class="language-csharp"><div><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">EventHandlerMethod</span>(<span class="hljs-params">args</span>)
+<span class="hljs-comment">// or</span>
+<span class="hljs-keyword">async</span> <span class="hljs-keyword">void</span> <span class="hljs-title">EventHandlerMethod</span>(<span class="hljs-params">args</span>)
+</span></div></code></pre>
+<p>The the event caller doesn't expect a return, so the event handler method should return a <code>void</code>.</p>
+<p>Blazor UI <em>events</em> aren't fire and forget.  They're loaded by the Blazor runtime onto the <code>SynchronisationContext</code> thread and look something like:</p>
+<pre><code class="language-csharp"><div><span class="hljs-keyword">var</span> task = InvokeAsync(EventMethod);
+StateHasChanged();
+<span class="hljs-keyword">if</span> (!task.IsCompleted)
+{
+    <span class="hljs-keyword">await</span> task;
+    StateHasChanged();
+}
+</div></code></pre>
+<p>The event handler is called and awaited and then <code>StateHasChanged</code> is called on the component that owns the event.  This ensures that whatever actions the event caused are captured in the re-render event.</p>
+<h2 id="testrazor">Test.Razor</h2>
+<p>We need a test page with some support code:</p>
+<pre><code class="language-html"><div><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;container m-2 px-3 p-t bg-light&quot;</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;row pt-2&quot;</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;col-12&quot;</span>&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-name">h3</span>&gt;</span>Event Buttons<span class="hljs-tag">&lt;/<span class="hljs-name">h3</span>&gt;</span>
+        <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;row pt-2&quot;</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;col-6&quot;</span>&gt;</span>
             @value1
-        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">&gt;</span></span>
-        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">&quot;</span>col-6<span class="token punctuation">&quot;</span></span><span class="token punctuation">&gt;</span></span>
-            <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>button</span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">&quot;</span>btn btn-primary<span class="token punctuation">&quot;</span></span> <span class="token attr-name">@onclick</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">&quot;</span>this.OnClick<span class="token punctuation">&quot;</span></span><span class="token punctuation">&gt;</span></span>Click<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>button</span><span class="token punctuation">&gt;</span></span>
-        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">&gt;</span></span>
-    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">&gt;</span></span>
-<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">&gt;</span></span>
-</code></pre></div><div class="language-csharp extra-class"><pre class="language-csharp"><code>@code <span class="token punctuation">{</span>
-    <span class="token keyword">private</span> <span class="token class-name"><span class="token keyword">string</span></span> value1 <span class="token operator">=</span> <span class="token string">&quot;not set&quot;</span><span class="token punctuation">;</span>
-<span class="token punctuation">}</span>
-</code></pre></div><h2 id="the-void-pattern"><a href="#the-void-pattern" class="header-anchor">#</a> The Void Pattern</h2> <p>Let's look at a simple void pattern example that works:</p> <div class="language-csharp extra-class"><pre class="language-csharp"><code><span class="token keyword">private</span> <span class="token return-type class-name"><span class="token keyword">void</span></span> <span class="token function">OnClick</span><span class="token punctuation">(</span><span class="token class-name">MouseEventArgs</span> e<span class="token punctuation">)</span>
-<span class="token punctuation">{</span>
-    value1 <span class="token operator">=</span> <span class="token string">&quot;Onclick started&quot;</span><span class="token punctuation">;</span>
-        <span class="token comment">// run some synchronous code</span>
-    value1 <span class="token operator">=</span> <span class="token string">&quot;Onclick complete&quot;</span><span class="token punctuation">;</span>
-<span class="token punctuation">}</span>
-</code></pre></div><p>Why?  All the code is synchronous.  The event handler completes before <code>StateHasChanged</code> is called.
-This works fine, <code>Value1</code> has the correct value.</p> <p>Now lets add an async method into <code>OnClick</code> that still works.</p> <div class="language-csharp extra-class"><pre class="language-csharp"><code>@code <span class="token punctuation">{</span>
-    <span class="token keyword">private</span> <span class="token keyword">async</span> <span class="token return-type class-name"><span class="token keyword">void</span></span> <span class="token function">Onclick</span><span class="token punctuation">(</span><span class="token class-name">MouseEventArgs</span> e<span class="token punctuation">)</span>
-    <span class="token punctuation">{</span>
-        value1 <span class="token operator">=</span> <span class="token string">&quot;Onclick started&quot;</span><span class="token punctuation">;</span>
-        <span class="token keyword">await</span> <span class="token function">DoSomethingAsync</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        value1 <span class="token operator">=</span> <span class="token string">&quot;Onclick complete&quot;</span><span class="token punctuation">;</span>
-    <span class="token punctuation">}</span>
+        <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;col-6&quot;</span>&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;btn btn-primary&quot;</span> @<span class="hljs-attr">onclick</span>=<span class="hljs-string">&quot;this.OnClick&quot;</span>&gt;</span>Click<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span>
+        <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+</div></code></pre>
+<pre><code class="language-csharp"><div>@code {
+    <span class="hljs-keyword">private</span> <span class="hljs-keyword">string</span> value1 = <span class="hljs-string">&quot;not set&quot;</span>;
+}
+</div></code></pre>
+<h2 id="the-void-pattern">The Void Pattern</h2>
+<p>Let's look at a simple void pattern example that works:</p>
+<pre><code class="language-csharp"><div><span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-keyword">void</span> <span class="hljs-title">OnClick</span>(<span class="hljs-params">MouseEventArgs e</span>)</span>
+{
+    value1 = <span class="hljs-string">&quot;Onclick started&quot;</span>;
+        <span class="hljs-comment">// run some synchronous code</span>
+    value1 = <span class="hljs-string">&quot;Onclick complete&quot;</span>;
+}
+</div></code></pre>
+<p>Why?  All the code is synchronous.  The event handler completes before <code>StateHasChanged</code> is called.
+This works fine, <code>Value1</code> has the correct value.</p>
+<p>Now lets add an async method into <code>OnClick</code> that still works.</p>
+<pre><code class="language-csharp"><div>@code {
+    <span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-keyword">async</span> <span class="hljs-keyword">void</span> <span class="hljs-title">Onclick</span>(<span class="hljs-params">MouseEventArgs e</span>)</span>
+    {
+        value1 = <span class="hljs-string">&quot;Onclick started&quot;</span>;
+        <span class="hljs-keyword">await</span> DoSomethingAsync();
+        value1 = <span class="hljs-string">&quot;Onclick complete&quot;</span>;
+    }
 
-    <span class="token keyword">private</span> <span class="token return-type class-name">Task</span> <span class="token function">DoSomethingAsync</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
-    <span class="token punctuation">{</span>
-        <span class="token comment">// some sync code</span>
-        <span class="token keyword">return</span> Task<span class="token punctuation">.</span>CompletedTask<span class="token punctuation">;</span>
-    <span class="token punctuation">}</span>
-<span class="token punctuation">}</span>
-</code></pre></div><p>Why?  All the code is still synchronous.  <code>DoSomethingAsync</code> may return a <code>Task</code> but it doesn't yield.  The event handler completes before <code>StateHasChanged</code> is called.</p> <p>Finally let's make <code>DoSomethingAsync</code> yield - such as doing an API call or getting data from a database - and see the problem.</p> <div class="language-csharp extra-class"><pre class="language-csharp"><code><span class="token keyword">private</span> <span class="token keyword">async</span> <span class="token return-type class-name"><span class="token keyword">void</span></span> <span class="token function">OnClick</span><span class="token punctuation">(</span><span class="token class-name">MouseEventArgs</span> e<span class="token punctuation">)</span>
-<span class="token punctuation">{</span>
-    value1 <span class="token operator">=</span> <span class="token string">&quot;Onclick started&quot;</span><span class="token punctuation">;</span>
-    <span class="token keyword">await</span> <span class="token function">DoSomethingAsync</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    value1 <span class="token operator">=</span> <span class="token string">&quot;Onclick complete&quot;</span><span class="token punctuation">;</span>
-<span class="token punctuation">}</span>
+    <span class="hljs-function"><span class="hljs-keyword">private</span> Task <span class="hljs-title">DoSomethingAsync</span>(<span class="hljs-params"></span>)</span>
+    {
+        <span class="hljs-comment">// some sync code</span>
+        <span class="hljs-keyword">return</span> Task.CompletedTask;
+    }
+}
+</div></code></pre>
+<p>Why?  All the code is still synchronous.  <code>DoSomethingAsync</code> may return a <code>Task</code> but it doesn't yield.  The event handler completes before <code>StateHasChanged</code> is called.</p>
+<p>Finally let's make <code>DoSomethingAsync</code> yield - such as doing an API call or getting data from a database - and see the problem.</p>
+<pre><code class="language-csharp"><div><span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-keyword">async</span> <span class="hljs-keyword">void</span> <span class="hljs-title">OnClick</span>(<span class="hljs-params">MouseEventArgs e</span>)</span>
+{
+    value1 = <span class="hljs-string">&quot;Onclick started&quot;</span>;
+    <span class="hljs-keyword">await</span> DoSomethingAsync();
+    value1 = <span class="hljs-string">&quot;Onclick complete&quot;</span>;
+}
 
-<span class="token keyword">private</span> <span class="token keyword">async</span> <span class="token return-type class-name">Task</span> <span class="token function">DoSomethingAsync</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
-    <span class="token operator">=&gt;</span> <span class="token keyword">await</span> Task<span class="token punctuation">.</span><span class="token function">Yield</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-</code></pre></div><p>Why?  <code>DoSomethingAsync</code> yields back to <code>OnClick</code> before it completes.  <code>OnClick</code> yields back to the Blazor event which has nothing to wait on - <code>OnClick</code> returned a <code>void</code> - so runs to completion and calls <code>StateHasChanged</code>.  The Blazor event completes before <code>OnClick</code> completes.</p> <p>The temptation is to add a call the <code>StateHasChanged</code> like this:</p> <div class="language-csharp extra-class"><pre class="language-csharp"><code><span class="token keyword">private</span> <span class="token keyword">async</span> <span class="token return-type class-name"><span class="token keyword">void</span></span> <span class="token function">OnClick</span><span class="token punctuation">(</span><span class="token class-name">MouseEventArgs</span> e<span class="token punctuation">)</span>
-<span class="token punctuation">{</span>
-    value1 <span class="token operator">=</span> <span class="token string">&quot;Onclick started&quot;</span><span class="token punctuation">;</span>
-    <span class="token keyword">await</span> <span class="token function">DoSomethingAsync</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    value1 <span class="token operator">=</span> <span class="token string">&quot;Onclick complete&quot;</span><span class="token punctuation">;</span>
-    <span class="token function">StateHasChanged</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token punctuation">}</span>
-</code></pre></div><p>Which is not the eight answer!</p> <h2 id="the-task-pattern"><a href="#the-task-pattern" class="header-anchor">#</a> The Task Pattern</h2> <p>This is the final async code above changed so <code>OnClick</code> returns a Task.  This now works correctly.</p> <div class="language-csharp extra-class"><pre class="language-csharp"><code><span class="token keyword">private</span> <span class="token keyword">async</span> <span class="token return-type class-name">Task</span> <span class="token function">OnClick</span><span class="token punctuation">(</span><span class="token class-name">MouseEventArgs</span> e<span class="token punctuation">)</span>
-<span class="token punctuation">{</span>
-    value1 <span class="token operator">=</span> <span class="token string">&quot;Onclick started&quot;</span><span class="token punctuation">;</span>
-    <span class="token keyword">await</span> <span class="token function">DoSomethingAsync</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    value1 <span class="token operator">=</span> <span class="token string">&quot;Onclick complete&quot;</span><span class="token punctuation">;</span>
-<span class="token punctuation">}</span>
+<span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-keyword">async</span> Task <span class="hljs-title">DoSomethingAsync</span>(<span class="hljs-params"></span>)</span>
+    =&gt; <span class="hljs-keyword">await</span> Task.Yield();
+</div></code></pre>
+<p>Why?  <code>DoSomethingAsync</code> yields back to <code>OnClick</code> before it completes.  <code>OnClick</code> yields back to the Blazor event which has nothing to wait on - <code>OnClick</code> returned a <code>void</code> - so runs to completion and calls <code>StateHasChanged</code>.  The Blazor event completes before <code>OnClick</code> completes.</p>
+<p>The temptation is to add a call the <code>StateHasChanged</code> like this:</p>
+<pre><code class="language-csharp"><div><span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-keyword">async</span> <span class="hljs-keyword">void</span> <span class="hljs-title">OnClick</span>(<span class="hljs-params">MouseEventArgs e</span>)</span>
+{
+    value1 = <span class="hljs-string">&quot;Onclick started&quot;</span>;
+    <span class="hljs-keyword">await</span> DoSomethingAsync();
+    value1 = <span class="hljs-string">&quot;Onclick complete&quot;</span>;
+    StateHasChanged();
+}
+</div></code></pre>
+<p>Which is not the eight answer!</p>
+<h2 id="the-task-pattern">The Task Pattern</h2>
+<p>This is the final async code above changed so <code>OnClick</code> returns a Task.  This now works correctly.</p>
+<pre><code class="language-csharp"><div><span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-keyword">async</span> Task <span class="hljs-title">OnClick</span>(<span class="hljs-params">MouseEventArgs e</span>)</span>
+{
+    value1 = <span class="hljs-string">&quot;Onclick started&quot;</span>;
+    <span class="hljs-keyword">await</span> DoSomethingAsync();
+    value1 = <span class="hljs-string">&quot;Onclick complete&quot;</span>;
+}
 
-<span class="token keyword">private</span> <span class="token keyword">async</span> <span class="token return-type class-name">Task</span> <span class="token function">DoSomethingAsync</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
-    <span class="token operator">=&gt;</span> <span class="token keyword">await</span> Task<span class="token punctuation">.</span><span class="token function">Yield</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-</code></pre></div><p>Why? The Blazor event now has a Task to wait on and only runs <code>StateHasChanged</code> when <code>OnClick</code> returns a completed Task.</p> <h2 id="the-await-task-pattern"><a href="#the-await-task-pattern" class="header-anchor">#</a> The Await Task Pattern</h2> <p>You will see the following pattern used on html element events:</p> <div class="language-csharp extra-class"><pre class="language-csharp"><code><span class="token operator">&lt;</span>button <span class="token keyword">class</span><span class="token operator">=</span><span class="token string">&quot;btn btn-warning&quot;</span> @onclick<span class="token operator">=</span><span class="token string">&quot;async (e) =&gt; await this.OnClick(e)&quot;</span><span class="token operator">&gt;</span>Click<span class="token operator">&lt;</span><span class="token operator">/</span>button<span class="token operator">&gt;</span>
-</code></pre></div><p>This isn't required.  It's overkill, wrapping a <code>Task</code> in a <code>Task</code>.</p> <h2 id="component-events-and-eventcallbacks"><a href="#component-events-and-eventcallbacks" class="header-anchor">#</a> Component Events and EventCallbacks</h2> <p>A common error is:</p> <div class="language-csharp extra-class"><pre class="language-csharp"><code><span class="token operator">&lt;</span><span class="token class-name">MyComponent</span> @onclick<span class="token operator">=</span><span class="token string">&quot;() =&gt; OnClick()&quot;</span><span class="token operator">&gt;</span>Hello<span class="token operator">&lt;</span>MyComponent<span class="token operator">&gt;</span>
-</code></pre></div><p>Components aren't html elements.  There's no <code>OnClick</code> event on <code>MyComponent</code> unless you've created an EventCallback.</p> <p>The code below is for a simple button control.</p> <div class="language-csharp extra-class"><pre class="language-csharp"><code><span class="token comment">// UIButton.razor</span>
-<span class="token operator">&lt;</span>button <span class="token keyword">class</span><span class="token operator">=</span><span class="token string">&quot;btn btn-warning&quot;</span> @onclick<span class="token operator">=</span><span class="token string">&quot;this.BtnClick&quot;</span><span class="token operator">&gt;</span>@ChildContent<span class="token operator">&lt;</span><span class="token operator">/</span>button<span class="token operator">&gt;</span>
+<span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-keyword">async</span> Task <span class="hljs-title">DoSomethingAsync</span>(<span class="hljs-params"></span>)</span>
+    =&gt; <span class="hljs-keyword">await</span> Task.Yield();
+</div></code></pre>
+<p>Why? The Blazor event now has a Task to wait on and only runs <code>StateHasChanged</code> when <code>OnClick</code> returns a completed Task.</p>
+<h2 id="the-await-task-pattern">The Await Task Pattern</h2>
+<p>You will see the following pattern used on html element events:</p>
+<pre><code class="language-csharp"><div>&lt;button <span class="hljs-keyword">class</span>=<span class="hljs-string">&quot;btn btn-warning&quot;</span> @onclick=<span class="hljs-string">&quot;async (e) =&gt; await this.OnClick(e)&quot;</span>&gt;Click&lt;/button&gt;
+</div></code></pre>
+<p>This isn't required.  It's overkill, wrapping a <code>Task</code> in a <code>Task</code>.</p>
+<h2 id="component-events-and-eventcallbacks">Component Events and EventCallbacks</h2>
+<p>A common error is:</p>
+<pre><code class="language-csharp"><div>&lt;MyComponent @onclick=<span class="hljs-string">&quot;() =&gt; OnClick()&quot;</span>&gt;Hello&lt;MyComponent&gt;
+</div></code></pre>
+<p>Components aren't html elements.  There's no <code>OnClick</code> event on <code>MyComponent</code> unless you've created an EventCallback.</p>
+<p>The code below is for a simple button control.</p>
+<pre><code class="language-csharp"><div><span class="hljs-comment">// UIButton.razor</span>
+&lt;button <span class="hljs-keyword">class</span>=<span class="hljs-string">&quot;btn btn-warning&quot;</span> @onclick=<span class="hljs-string">&quot;this.BtnClick&quot;</span>&gt;@ChildContent&lt;/button&gt;
 
-@code <span class="token punctuation">{</span>
-    <span class="token punctuation">[</span><span class="token attribute"><span class="token class-name">Parameter</span></span><span class="token punctuation">]</span> <span class="token keyword">public</span> <span class="token return-type class-name">EventCallback<span class="token punctuation">&lt;</span>MouseEventArgs<span class="token punctuation">&gt;</span></span> OnClick <span class="token punctuation">{</span> <span class="token keyword">get</span><span class="token punctuation">;</span> <span class="token keyword">set</span><span class="token punctuation">;</span> <span class="token punctuation">}</span>
-    <span class="token punctuation">[</span><span class="token attribute"><span class="token class-name">Parameter</span></span><span class="token punctuation">]</span> <span class="token keyword">public</span> <span class="token return-type class-name">RenderFragment</span> ChildContent <span class="token punctuation">{</span> <span class="token keyword">get</span><span class="token punctuation">;</span> <span class="token keyword">set</span><span class="token punctuation">;</span> <span class="token punctuation">}</span>
+@code {
+    [<span class="hljs-meta">Parameter</span>] <span class="hljs-keyword">public</span> EventCallback&lt;MouseEventArgs&gt; OnClick { <span class="hljs-keyword">get</span>; <span class="hljs-keyword">set</span>; }
+    [<span class="hljs-meta">Parameter</span>] <span class="hljs-keyword">public</span> RenderFragment ChildContent { <span class="hljs-keyword">get</span>; <span class="hljs-keyword">set</span>; }
 
-    <span class="token keyword">private</span> <span class="token keyword">async</span> <span class="token return-type class-name">Task</span> <span class="token function">BtnClick</span><span class="token punctuation">(</span><span class="token class-name">MouseEventArgs</span> e<span class="token punctuation">)</span>
-        <span class="token operator">=&gt;</span> <span class="token keyword">await</span> OnClick<span class="token punctuation">.</span><span class="token function">InvokeAsync</span><span class="token punctuation">(</span>e<span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token punctuation">}</span>
-</code></pre></div><p>Note that the <code>BtnClick</code> event handler uses the <code>Task</code> pattern, invokes the EventCallback asynchronously and waits it.</p> <p>The <em>Test.razor</em> code looks like this:</p> <div class="language-html extra-class"><pre class="language-html"><code><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">&quot;</span>row pt-2<span class="token punctuation">&quot;</span></span><span class="token punctuation">&gt;</span></span>
-    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">&quot;</span>col-6<span class="token punctuation">&quot;</span></span><span class="token punctuation">&gt;</span></span>
+    <span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-keyword">async</span> Task <span class="hljs-title">BtnClick</span>(<span class="hljs-params">MouseEventArgs e</span>)</span>
+        =&gt; <span class="hljs-keyword">await</span> OnClick.InvokeAsync(e);
+}
+</div></code></pre>
+<p>Note that the <code>BtnClick</code> event handler uses the <code>Task</code> pattern, invokes the EventCallback asynchronously and waits it.</p>
+<p>The <em>Test.razor</em> code looks like this:</p>
+<pre><code class="language-html"><div><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;row pt-2&quot;</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;col-6&quot;</span>&gt;</span>
         @value5
-    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">&gt;</span></span>
-    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">&quot;</span>col-6<span class="token punctuation">&quot;</span></span><span class="token punctuation">&gt;</span></span>
-        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>UIButton</span> <span class="token attr-name">OnClick</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">&quot;</span>OnclickComponent<span class="token punctuation">&quot;</span></span><span class="token punctuation">&gt;</span></span>click me<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>UIButton</span><span class="token punctuation">&gt;</span></span>
-    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">&gt;</span></span>
-<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">&gt;</span></span>
-</code></pre></div><div class="language-csharp extra-class"><pre class="language-csharp"><code><span class="token keyword">private</span> <span class="token class-name"><span class="token keyword">string</span></span> value5 <span class="token operator">=</span> <span class="token string">&quot;notset&quot;</span><span class="token punctuation">;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;col-6&quot;</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">UIButton</span> <span class="hljs-attr">OnClick</span>=<span class="hljs-string">&quot;OnclickComponent&quot;</span>&gt;</span>click me<span class="hljs-tag">&lt;/<span class="hljs-name">UIButton</span>&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+</div></code></pre>
+<pre><code class="language-csharp"><div><span class="hljs-keyword">private</span> <span class="hljs-keyword">string</span> value5 = <span class="hljs-string">&quot;notset&quot;</span>;
 
-<span class="token keyword">private</span> <span class="token keyword">async</span> <span class="token return-type class-name">Task</span> <span class="token function">OnclickComponent</span><span class="token punctuation">(</span><span class="token class-name">MouseEventArgs</span> e<span class="token punctuation">)</span>
-<span class="token punctuation">{</span>
-    value5 <span class="token operator">=</span> <span class="token string">&quot;Onclick started&quot;</span><span class="token punctuation">;</span>
-    <span class="token keyword">await</span> Task<span class="token punctuation">.</span><span class="token function">Delay</span><span class="token punctuation">(</span><span class="token number">2000</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token keyword">await</span> <span class="token function">DoSomethingAsync</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    value5 <span class="token operator">=</span> <span class="token string">&quot;Onclick complete&quot;</span><span class="token punctuation">;</span>
-<span class="token punctuation">}</span>
-</code></pre></div><p>The parent <code>OnclickComponent</code> delegate registered with the <code>OnClick</code> EventCallback passes an awaitable Task back to the component.  It's <code>async</code> and <code>Task</code> based all the way.</p> <h2 id="when-to-use-the-void-pattern"><a href="#when-to-use-the-void-pattern" class="header-anchor">#</a> When to use the Void Pattern</h2> <p>Only use the void pattern on true class based events.  The code below shows a simple service which generates a new randon number when <code>NewNumber</code> is called and triggers the <code>NumberChanged</code> event when the number changes.</p> <div class="language-csharp extra-class"><pre class="language-csharp"><code><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">RandomNumberService</span>
-<span class="token punctuation">{</span>
-    <span class="token keyword">public</span> <span class="token return-type class-name"><span class="token keyword">int</span></span> Value <span class="token operator">=&gt;</span> _Value<span class="token punctuation">;</span>
-    <span class="token keyword">private</span> <span class="token class-name"><span class="token keyword">int</span></span> _Value <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
-    <span class="token keyword">public</span> <span class="token keyword">event</span> <span class="token class-name">EventHandler</span> NumberChanged<span class="token punctuation">;</span>
+<span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-keyword">async</span> Task <span class="hljs-title">OnclickComponent</span>(<span class="hljs-params">MouseEventArgs e</span>)</span>
+{
+    value5 = <span class="hljs-string">&quot;Onclick started&quot;</span>;
+    <span class="hljs-keyword">await</span> Task.Delay(<span class="hljs-number">2000</span>);
+    <span class="hljs-keyword">await</span> DoSomethingAsync();
+    value5 = <span class="hljs-string">&quot;Onclick complete&quot;</span>;
+}
+</div></code></pre>
+<p>The parent <code>OnclickComponent</code> delegate registered with the <code>OnClick</code> EventCallback passes an awaitable Task back to the component.  It's <code>async</code> and <code>Task</code> based all the way.</p>
+<h2 id="when-to-use-the-void-pattern">When to use the Void Pattern</h2>
+<p>Only use the void pattern on true class based events.  The code below shows a simple service which generates a new randon number when <code>NewNumber</code> is called and triggers the <code>NumberChanged</code> event when the number changes.</p>
+<pre><code class="language-csharp"><div><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title">RandomNumberService</span>
+{
+    <span class="hljs-keyword">public</span> <span class="hljs-keyword">int</span> Value =&gt; _Value;
+    <span class="hljs-keyword">private</span> <span class="hljs-keyword">int</span> _Value = <span class="hljs-number">0</span>;
+    <span class="hljs-keyword">public</span> <span class="hljs-keyword">event</span> EventHandler NumberChanged;
 
-    <span class="token keyword">public</span> <span class="token return-type class-name"><span class="token keyword">void</span></span> <span class="token function">NewNumber</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
-    <span class="token punctuation">{</span>
-        <span class="token class-name"><span class="token keyword">var</span></span> rand <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token constructor-invocation class-name">Random</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token function">NotifyNumberChanged</span><span class="token punctuation">(</span>rand<span class="token punctuation">.</span><span class="token function">Next</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">100</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token punctuation">}</span>
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">NewNumber</span>(<span class="hljs-params"></span>)</span>
+    {
+        <span class="hljs-keyword">var</span> rand = <span class="hljs-keyword">new</span> Random();
+        NotifyNumberChanged(rand.Next(<span class="hljs-number">0</span>, <span class="hljs-number">100</span>));
+    }
 
-    <span class="token keyword">public</span> <span class="token return-type class-name"><span class="token keyword">void</span></span> <span class="token function">NotifyNumberChanged</span><span class="token punctuation">(</span><span class="token class-name"><span class="token keyword">int</span></span> <span class="token keyword">value</span><span class="token punctuation">)</span>
-    <span class="token punctuation">{</span>
-        <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span><span class="token keyword">value</span><span class="token punctuation">.</span><span class="token function">Equals</span><span class="token punctuation">(</span>_Value<span class="token punctuation">)</span><span class="token punctuation">)</span>
-        <span class="token punctuation">{</span>
-            _Value <span class="token operator">=</span> <span class="token keyword">value</span><span class="token punctuation">;</span>
-            <span class="token comment">// only trigger event if it has delegates registered</span>
-            NumberChanged<span class="token punctuation">?.</span><span class="token function">Invoke</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">,</span> EventArgs<span class="token punctuation">.</span>Empty<span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token punctuation">}</span>
-    <span class="token punctuation">}</span>
-<span class="token punctuation">}</span>
-</code></pre></div><p>And the code that registers for the event.  Note that <code>OnNumberChange</code> invokes <code>StateHasChanged</code> rather than calling it directly.  You don't know which thread the service code is being executed on, so you need to ensure <code>StateHasChanged</code> is run on the UI thread.  <code>InvokeAsync</code> - a public <code>ComponentBase</code> method - ensures that it is.</p> <div class="language-csharp extra-class"><pre class="language-csharp"><code><span class="token keyword">protected</span> <span class="token keyword">override</span> <span class="token return-type class-name">Task</span> <span class="token function">OnInitializedAsync</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
-<span class="token punctuation">{</span>
-    <span class="token keyword">this</span><span class="token punctuation">.</span>RdmService<span class="token punctuation">.</span>NumberChanged <span class="token operator">+=</span> <span class="token keyword">this</span><span class="token punctuation">.</span>OnNumberChange<span class="token punctuation">;</span>
-    <span class="token keyword">return</span> <span class="token keyword">base</span><span class="token punctuation">.</span><span class="token function">OnInitializedAsync</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token punctuation">}</span>
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">NotifyNumberChanged</span>(<span class="hljs-params"><span class="hljs-keyword">int</span> <span class="hljs-keyword">value</span></span>)</span>
+    {
+        <span class="hljs-keyword">if</span> (!<span class="hljs-keyword">value</span>.Equals(_Value))
+        {
+            _Value = <span class="hljs-keyword">value</span>;
+            <span class="hljs-comment">// only trigger event if it has delegates registered</span>
+            NumberChanged?.Invoke(<span class="hljs-keyword">this</span>, EventArgs.Empty);
+        }
+    }
+}
+</div></code></pre>
+<p>And the code that registers for the event.  Note that <code>OnNumberChange</code> invokes <code>StateHasChanged</code> rather than calling it directly.  You don't know which thread the service code is being executed on, so you need to ensure <code>StateHasChanged</code> is run on the UI thread.  <code>InvokeAsync</code> - a public <code>ComponentBase</code> method - ensures that it is.</p>
+<pre><code class="language-csharp"><div><span class="hljs-function"><span class="hljs-keyword">protected</span> <span class="hljs-keyword">override</span> Task <span class="hljs-title">OnInitializedAsync</span>(<span class="hljs-params"></span>)</span>
+{
+    <span class="hljs-keyword">this</span>.RdmService.NumberChanged += <span class="hljs-keyword">this</span>.OnNumberChange;
+    <span class="hljs-keyword">return</span> <span class="hljs-keyword">base</span>.OnInitializedAsync();
+}
 
-<span class="token keyword">private</span> <span class="token return-type class-name"><span class="token keyword">void</span></span> <span class="token function">OnNumberChange</span><span class="token punctuation">(</span><span class="token class-name"><span class="token keyword">object</span></span> sender<span class="token punctuation">,</span> <span class="token class-name">EventArgs</span> e<span class="token punctuation">)</span>
-    <span class="token operator">=&gt;</span> <span class="token keyword">this</span><span class="token punctuation">.</span><span class="token function">InvokeAsync</span><span class="token punctuation">(</span>StateHasChanged<span class="token punctuation">)</span><span class="token punctuation">;</span>
-</code></pre></div></div> <footer class="page-edit"><!----> <!----></footer> <div class="page-nav"><p class="inner"><span class="prev">
-      ←
-      <a href="/posts/" class="prev router-link-active">
-        Posts
-      </a></span> <span class="next"><a href="/posts/DBContexts-In-Transient-Services.html">
-        No to DbContexts in Transient Services
-      </a>
-      →
-    </span></p></div> </main></div><div class="global-ui"><!----></div></div>
-    <script src="/assets/js/app.e7504274.js" defer></script><script src="/assets/js/3.f3d70fce.js" defer></script><script src="/assets/js/59.158abf7b.js" defer></script>
-  </body>
+<span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-keyword">void</span> <span class="hljs-title">OnNumberChange</span>(<span class="hljs-params"><span class="hljs-keyword">object</span> sender, EventArgs e</span>)</span>
+    =&gt; <span class="hljs-keyword">this</span>.InvokeAsync(StateHasChanged);
+</div></code></pre>
+
+    
+
+            </div>
+        </div>
+    </div>
+</div>
+<!-- end of Article Container -->
+
+
+                </div>
+                <!-- End of Main Content -->
+            </div>
+            <!-- Footer -->
+            
+<!-- Copyright -->
+<footer class="sticky-footer bg-white">
+    <div class="container my-auto">
+        <div class="copyright text-center my-auto">
+            
+<span>Copyright &copy; Cold Elm Coders - 2021</span>
+
+        </div>
+    </div>
+</footer>
+<!-- end of copyright -->
+
+
+            <!-- End of Footer -->
+        </div>
+        <!-- End of Content Wrapper -->
+        
+<a class="scroll-to-top rounded" href="#page-top">
+    <i class="fas fa-angle-up"></i>
+</a>
+
+
+    </div>
+    <!-- End of Page Wrapper -->
+    <!-- Scripts -->
+    
+<!-- Scripts -->
+<!-- Bootstrap core JavaScript-->
+<script src="/assets/vendor/jquery/jquery.min.js"></script>
+<script src="/assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+<!-- Core plugin JavaScript-->
+<script src="/assets/vendor/jquery-easing/jquery.easing.min.js"></script>
+
+<!-- Custom scripts for all pages-->
+<script src="/assets/js/sb-admin-2.min.js"></script>
+
+
+</body>
 </html>

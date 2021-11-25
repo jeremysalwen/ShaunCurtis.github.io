@@ -1,388 +1,795 @@
 <!DOCTYPE html>
-<html lang="en-US">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>Blazor AllinOne - Multi SPA Hosting | Cold Elm Coders</title>
-    <meta name="generator" content="VuePress 1.8.2">
+<html lang="en">
+<head>
     
-    <meta name="description" content="">
-    <meta name="theme-color" content="#3eaf7c">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+<!-- SEO Meta Tags -->
+<meta name="description" content="Your description">
+<meta name="author" content="Your name">
+
+<!-- OG Meta Tags to improve the way the post looks when you share the page on Facebook, Twitter, LinkedIn -->
+<meta property="og:site_name" content="" /> <!-- website name -->
+<meta property="og:site" content="" /> <!-- website link -->
+<meta property="og:title" content="" /> <!-- title shown in the actual shared post -->
+<meta property="og:description" content="" /> <!-- description shown in the actual shared post -->
+<meta property="og:image" content="" /> <!-- image link, make sure it's jpg -->
+<meta property="og:url" content="" /> <!-- where do you want your post to link to -->
+<meta name="twitter:card" content="summary_large_image"> <!-- to have large image post format in Twitter -->
+
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+
+<meta name="description" content="ow to build a single Blazor Application that runs in both WASM and Server Modes." >
+<meta name="author" content="Shaun Curtis" >
+
+
+
+<title>Blazor AllinOne - Multi SPA Hosting</title>
+
+
+<!-- Custom fonts for this template-->
+<link href="/assets/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+<link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+      rel="stylesheet">
+
+<!-- Custom styles for this template-->
+<link href="/assets/css/sb-admin-2.css" rel="stylesheet" type="text/css">
+<link href="/assets/css/site.css" rel="stylesheet" type="text/css">
+
+<!-- Favicon  -->
+<link rel="icon" href="/assets/images/favicon.png">
+
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/highlight.css">
+    <link rel="stylesheet" href="/assets/css/article.css" type="text/css">
+</head>
+<body id="page-top">
+    <!--topbar-->
+    <div id="topbar">
+        
+<!-- Topbar -->
+<nav class="navbar navbar-expand navbar-light topbar mb-4 static-top">
     
-    <link rel="preload" href="/assets/css/0.styles.757cca11.css" as="style"><link rel="preload" href="/assets/js/app.e7504274.js" as="script"><link rel="preload" href="/assets/js/3.f3d70fce.js" as="script"><link rel="preload" href="/assets/js/44.1393eed1.js" as="script"><link rel="prefetch" href="/assets/js/1.dd2e798d.js"><link rel="prefetch" href="/assets/js/10.62cd9054.js"><link rel="prefetch" href="/assets/js/11.7ef2f0cc.js"><link rel="prefetch" href="/assets/js/12.571448aa.js"><link rel="prefetch" href="/assets/js/13.e5a600e9.js"><link rel="prefetch" href="/assets/js/14.4ed01dd2.js"><link rel="prefetch" href="/assets/js/15.d0a813d8.js"><link rel="prefetch" href="/assets/js/16.3d701298.js"><link rel="prefetch" href="/assets/js/17.dd96adea.js"><link rel="prefetch" href="/assets/js/18.f6955aa8.js"><link rel="prefetch" href="/assets/js/19.bb1f166c.js"><link rel="prefetch" href="/assets/js/20.440b537e.js"><link rel="prefetch" href="/assets/js/21.1e192f13.js"><link rel="prefetch" href="/assets/js/22.0f3db856.js"><link rel="prefetch" href="/assets/js/23.9a2edb75.js"><link rel="prefetch" href="/assets/js/24.3d8317a7.js"><link rel="prefetch" href="/assets/js/25.e6e973f9.js"><link rel="prefetch" href="/assets/js/26.2f4dce51.js"><link rel="prefetch" href="/assets/js/27.eddfbfe3.js"><link rel="prefetch" href="/assets/js/28.1a753628.js"><link rel="prefetch" href="/assets/js/29.dd0c2751.js"><link rel="prefetch" href="/assets/js/30.049ba17e.js"><link rel="prefetch" href="/assets/js/31.ec7a699c.js"><link rel="prefetch" href="/assets/js/32.128041a3.js"><link rel="prefetch" href="/assets/js/33.90a80a82.js"><link rel="prefetch" href="/assets/js/34.640d5210.js"><link rel="prefetch" href="/assets/js/35.dd6a5277.js"><link rel="prefetch" href="/assets/js/36.af0fb7fb.js"><link rel="prefetch" href="/assets/js/37.6282d3d3.js"><link rel="prefetch" href="/assets/js/38.09c22a9c.js"><link rel="prefetch" href="/assets/js/39.34118569.js"><link rel="prefetch" href="/assets/js/4.004aaf89.js"><link rel="prefetch" href="/assets/js/40.42fb5da5.js"><link rel="prefetch" href="/assets/js/41.d1ac92f4.js"><link rel="prefetch" href="/assets/js/42.046bbbbf.js"><link rel="prefetch" href="/assets/js/43.86ac5d2f.js"><link rel="prefetch" href="/assets/js/45.a4121f00.js"><link rel="prefetch" href="/assets/js/46.f78d075f.js"><link rel="prefetch" href="/assets/js/47.02e428da.js"><link rel="prefetch" href="/assets/js/48.3f9d12a6.js"><link rel="prefetch" href="/assets/js/49.bb9c3fab.js"><link rel="prefetch" href="/assets/js/5.8a61fa12.js"><link rel="prefetch" href="/assets/js/50.ebb028fd.js"><link rel="prefetch" href="/assets/js/51.a2b343de.js"><link rel="prefetch" href="/assets/js/52.2a464137.js"><link rel="prefetch" href="/assets/js/53.54a07d54.js"><link rel="prefetch" href="/assets/js/54.72acf66d.js"><link rel="prefetch" href="/assets/js/55.6168cc1a.js"><link rel="prefetch" href="/assets/js/56.0653a59a.js"><link rel="prefetch" href="/assets/js/57.df56ec02.js"><link rel="prefetch" href="/assets/js/58.fc8f11bc.js"><link rel="prefetch" href="/assets/js/59.158abf7b.js"><link rel="prefetch" href="/assets/js/6.1fda51af.js"><link rel="prefetch" href="/assets/js/60.10f7e3a6.js"><link rel="prefetch" href="/assets/js/61.844ecd3b.js"><link rel="prefetch" href="/assets/js/62.da039f8c.js"><link rel="prefetch" href="/assets/js/63.f2fe69a7.js"><link rel="prefetch" href="/assets/js/64.b9085bd9.js"><link rel="prefetch" href="/assets/js/65.6c182c91.js"><link rel="prefetch" href="/assets/js/66.e0d48b84.js"><link rel="prefetch" href="/assets/js/7.eca4725c.js"><link rel="prefetch" href="/assets/js/8.2504867c.js"><link rel="prefetch" href="/assets/js/9.64046c51.js">
-    <link rel="stylesheet" href="/assets/css/0.styles.757cca11.css">
-  </head>
-  <body>
-    <div id="app" data-server-rendered="true"><div class="theme-container"><header class="navbar"><div class="sidebar-button"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon"><path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path></svg></div> <a href="/" class="home-link router-link-active"><!----> <span class="site-name">Cold Elm Coders</span></a> <div class="links"><div class="search-box"><input aria-label="Search" autocomplete="off" spellcheck="false" value=""> <!----></div> <nav class="nav-links can-hide"><div class="nav-item"><a href="/articles/" class="nav-link router-link-active">
-  Articles
-</a></div><div class="nav-item"><a href="/posts/" class="nav-link">
-  Posts
-</a></div><div class="nav-item"><a href="/ArchivedArticles/" class="nav-link">
-  Old Articles
-</a></div><div class="nav-item"><a href="/Building-a-Database-Application-in-Blazor/" class="nav-link">
-  Database Application
-</a></div><div class="nav-item"><a href="https://cec-blazor-examples.azurewebsites.net/" target="_blank" rel="noopener noreferrer" class="nav-link external">
-  Demo Site
-  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></div> <!----></nav></div></header> <div class="sidebar-mask"></div> <aside class="sidebar"><nav class="nav-links"><div class="nav-item"><a href="/articles/" class="nav-link router-link-active">
-  Articles
-</a></div><div class="nav-item"><a href="/posts/" class="nav-link">
-  Posts
-</a></div><div class="nav-item"><a href="/ArchivedArticles/" class="nav-link">
-  Old Articles
-</a></div><div class="nav-item"><a href="/Building-a-Database-Application-in-Blazor/" class="nav-link">
-  Database Application
-</a></div><div class="nav-item"><a href="https://cec-blazor-examples.azurewebsites.net/" target="_blank" rel="noopener noreferrer" class="nav-link external">
-  Demo Site
-  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></div> <!----></nav>  <ul class="sidebar-links"><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading open"><span>My Articles</span> <span class="arrow down"></span></p> <ul class="sidebar-links sidebar-group-items"><li><a href="/articles/" aria-current="page" class="sidebar-link">Articles</a></li><li><a href="/articles/A-Flexible-App.html" class="sidebar-link">Adding Dynamic Routing, Layouts and RouteViews to the Blazor App Component</a></li><li><a href="/articles/Async-Programming-in-DotNetCore.html" class="sidebar-link">Async Programming in DotNetCore</a></li><li><a href="/articles/Blazor-AllinOne.html" aria-current="page" class="active sidebar-link">Blazor AllinOne - Multi SPA Hosting</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header"><a href="/articles/Blazor-AllinOne.html#code-repository" class="sidebar-link">Code Repository</a></li><li class="sidebar-sub-header"><a href="/articles/Blazor-AllinOne.html#the-solution-and-projects" class="sidebar-link">The Solution and Projects</a></li><li class="sidebar-sub-header"><a href="/articles/Blazor-AllinOne.html#blazor-project-changes" class="sidebar-link">Blazor Project Changes</a></li><li class="sidebar-sub-header"><a href="/articles/Blazor-AllinOne.html#blazor-web" class="sidebar-link">Blazor.Web</a></li><li class="sidebar-sub-header"><a href="/articles/Blazor-AllinOne.html#run-the-application" class="sidebar-link">Run the Application</a></li><li class="sidebar-sub-header"><a href="/articles/Blazor-AllinOne.html#adding-a-dataservice" class="sidebar-link">Adding a DataService</a></li><li class="sidebar-sub-header"><a href="/articles/Blazor-AllinOne.html#building-and-run-the-project" class="sidebar-link">Building and Run the project</a></li><li class="sidebar-sub-header"><a href="/articles/Blazor-AllinOne.html#how-does-it-work" class="sidebar-link">How Does It Work?</a></li><li class="sidebar-sub-header"><a href="/articles/Blazor-AllinOne.html#wrap-up" class="sidebar-link">Wrap Up</a></li></ul></li><li><a href="/articles/Blazor-CSS.html" class="sidebar-link">CSS in Blazor</a></li><li><a href="/articles/Blazor-Components.html" class="sidebar-link">A Deep Dive into Blazor Components</a></li><li><a href="/articles/Blazor-DataList-Control.html" class="sidebar-link">A Blazor DataList Control</a></li><li><a href="/articles/BlazorAsyncProgramming.html" class="sidebar-link">Async Programming in Blazor</a></li><li><a href="/articles/Building-Edit-Forms.html" class="sidebar-link">Building Blazor Edit Forms</a></li><li><a href="/articles/EditFormState.html" class="sidebar-link">The Blazor EditFormState Control</a></li><li><a href="/articles/Hydra Full Article.html" class="sidebar-link">Blazor Hydra - Multi SPA Hosting</a></li><li><a href="/articles/Inline-Dialog.html" class="sidebar-link">The Blazor Inline Dialog Control</a></li><li><a href="/articles/Modal-Dialog.html" class="sidebar-link">A Blazor Modal Dialog</a></li><li><a href="/articles/ValidationFormState.html" class="sidebar-link">A Blazor Validation Control</a></li></ul></section></li></ul> </aside> <main class="page"> <div class="theme-default-content content__default"><h1 id="blazor-allinone"><a href="#blazor-allinone" class="header-anchor">#</a> Blazor AllinOne</h1> <p>Published: 2021-02-26</p> <p>Last Update: 2021-04-04</p> <p>This article shows how to build a single Blazor application that runs in both WASM and Server Modes.</p> <p><img src="https://shauncurtis.github.io/siteimages/Articles/AllinOne/Screenshot.png" alt="screenshot"></p> <h2 id="code-repository"><a href="#code-repository" class="header-anchor">#</a> Code Repository</h2> <p>The Code repository for the article is <a href="https://github.com/ShaunCurtis/AllinOne" target="_blank" rel="noopener noreferrer">here - https://github.com/ShaunCurtis/AllinOne <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></p> <h2 id="the-solution-and-projects"><a href="#the-solution-and-projects" class="header-anchor">#</a> The Solution and Projects</h2> <p>Create a new solution called <strong>Blazor</strong> using the Blazor WebAssembly template.  Don't choose to host it on Aspnetcore.  You will get a single project called <strong>Blazor</strong>.</p> <p>Now add a second project to the solution using the <em>ASP.NET Core Web App</em> template.  Call it <strong>Blazor.Web</strong>.  Set it as the startup project.</p> <p>The solution should now look like this:</p> <p><img src="https://shauncurtis.github.io/siteimages/Articles/AllinOne/Base-Projects.png" alt="Solution"></p> <h2 id="blazor-project-changes"><a href="#blazor-project-changes" class="header-anchor">#</a> Blazor Project Changes</h2> <p>The solution runs the WASM context in a sub-directory on the web site.  To get this working there are a few modifications that need to be made to the <em>Blazor</em> project.</p> <ol><li>Move the contents of wwwroot to <em>Blazor.Web</em> and delete everything in <em>wwwroot</em>.</li> <li>Add a <code>StaticWebAssetBasePath</code> entry to the project file set to <code>wasm</code>.  This is case sensitive in the context in which it is used, so stick to small letters.</li> <li>Add the necessary packages.</li></ol> <p>The project file should look like this:</p> <div class="language-xml extra-class"><pre class="language-xml"><code><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>Project</span> <span class="token attr-name">Sdk</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">&quot;</span>Microsoft.NET.Sdk.BlazorWebAssembly<span class="token punctuation">&quot;</span></span><span class="token punctuation">&gt;</span></span>
+<ul class="navbar-nav" >
+<li class="nav-item" >
+<a class="nav-link " href="/index.html" role="button"  >
+<span class="mr-2 d-none d-lg-inline text-gray-100">Index</span>
+</a>
+</li>
+<li class="nav-item dropdown no-arrow mx-1" >
+<a class="nav-link dropdown-toggle" href="#" id="b137486b-56de-4ce0-8024-dd0b4a4171bc" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"  >
+<span class="mr-2 d-none d-lg-inline text-gray-100">Articles</span>
+</a>
+<div class=" dropdown-list dropdown-menu shadow animated--grow-in" aria-labelledby="b137486b-56de-4ce0-8024-dd0b4a4171bc" >
+<a class="dropdown-item" href="/articles/A-Flexible-app.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+A Flexible App
+</a>
+<a class="dropdown-item" href="/articles/Async-Programming-in-DotNetCore.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Async Programming In Dotnetcore
+</a>
+<a class="dropdown-item" href="/articles/Blazor-AllinOne.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Blazor Allinone
+</a>
+<a class="dropdown-item" href="/articles/Blazor-Async-Programming.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Blazor Async Programming
+</a>
+<a class="dropdown-item" href="/articles/Blazor-Components.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Blazor Components
+</a>
+<a class="dropdown-item" href="/articles/Blazor-CSS.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Blazor CSS
+</a>
+<a class="dropdown-item" href="/articles/Blazor-DataList-Control.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Blazor Datalist Control
+</a>
+<a class="dropdown-item" href="/articles/Blazor-Form-Validation.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Blazor Form Validation
+</a>
+<a class="dropdown-item" href="/articles/Building-Edit-Forms.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Building Edit Forms
+</a>
+<a class="dropdown-item" href="/articles/Hydra.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Hydra
+</a>
+<a class="dropdown-item" href="/articles/Inline-Dialog.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Inline Dialog
+</a>
+<a class="dropdown-item" href="/articles/Modal-Dialog.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Modal Dialog
+</a>
+</div>
+</li>
+<li class="nav-item dropdown no-arrow mx-1" >
+<a class="nav-link dropdown-toggle" href="#" id="63eb9127-6f46-4e8e-a71a-baf66600fb3d" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"  >
+<span class="mr-2 d-none d-lg-inline text-gray-100">Blazor Database Application</span>
+</a>
+<div class=" dropdown-list dropdown-menu shadow animated--grow-in" aria-labelledby="63eb9127-6f46-4e8e-a71a-baf66600fb3d" >
+<a class="dropdown-item" href="/Building-a-Database-Application-in-Blazor/Building-a-Database-Application-in-Blazor-Part-1.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Building A Database Application In Blazor Part 1
+</a>
+<a class="dropdown-item" href="/Building-a-Database-Application-in-Blazor/Building-a-Database-Application-in-Blazor-Part-2.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Building A Database Application In Blazor Part 2
+</a>
+<a class="dropdown-item" href="/Building-a-Database-Application-in-Blazor/Building-a-Database-Application-in-Blazor-Part-3.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Building A Database Application In Blazor Part 3
+</a>
+<a class="dropdown-item" href="/Building-a-Database-Application-in-Blazor/Building-a-Database-Application-in-Blazor-Part-4.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Building A Database Application In Blazor Part 4
+</a>
+<a class="dropdown-item" href="/Building-a-Database-Application-in-Blazor/Building-a-Database-Application-in-Blazor-Part-5.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Building A Database Application In Blazor Part 5
+</a>
+<a class="dropdown-item" href="/Building-a-Database-Application-in-Blazor/Building-a-Database-Application-in-Blazor-Part-6.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Building A Database Application In Blazor Part 6
+</a>
+<a class="dropdown-item" href="/Building-a-Database-Application-in-Blazor/index.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Index
+</a>
+</div>
+</li>
+<li class="nav-item dropdown no-arrow mx-1" >
+<a class="nav-link dropdown-toggle" href="#" id="2c6d5b9f-47d9-4326-a999-58106f3aea44" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"  >
+<span class="mr-2 d-none d-lg-inline text-gray-100">Posts</span>
+</a>
+<div class=" dropdown-list dropdown-menu shadow animated--grow-in" aria-labelledby="2c6d5b9f-47d9-4326-a999-58106f3aea44" >
+<a class="dropdown-item" href="/posts/Blazor-Async-UI-Events.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Blazor Async UI Events
+</a>
+<a class="dropdown-item" href="/posts/DBContexts-In-Transient-Services.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Dbcontexts In Transient Services
+</a>
+<a class="dropdown-item" href="/posts/DynamicCss.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Dynamiccss
+</a>
+<a class="dropdown-item" href="/posts/For-ForEach-in-Blazor.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+For Foreach In Blazor
+</a>
+<a class="dropdown-item" href="/posts/Notification-Service-Pattern.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Notification Service Pattern
+</a>
+<a class="dropdown-item" href="/posts/XML-XSD-Serialization.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+XML XSD Serialization
+</a>
+</div>
+</li>
+</ul>
 
-  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>PropertyGroup</span><span class="token punctuation">&gt;</span></span>
-    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>StaticWebAssetBasePath</span><span class="token punctuation">&gt;</span></span>wasm<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>StaticWebAssetBasePath</span><span class="token punctuation">&gt;</span></span>
-    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>TargetFramework</span><span class="token punctuation">&gt;</span></span>net5.0<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>TargetFramework</span><span class="token punctuation">&gt;</span></span>
-  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>PropertyGroup</span><span class="token punctuation">&gt;</span></span>
+    <div class="ms-5 me-5 ml-auto">
+        <h1>Cold Elm Coders</h1>
+    </div>
+</nav>
 
-  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>ItemGroup</span><span class="token punctuation">&gt;</span></span>
-    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>PackageReference</span> <span class="token attr-name">Include</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">&quot;</span>Microsoft.AspNetCore.Components.WebAssembly<span class="token punctuation">&quot;</span></span> <span class="token attr-name">Version</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">&quot;</span>5.0.4<span class="token punctuation">&quot;</span></span> <span class="token punctuation">/&gt;</span></span>
-    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>PackageReference</span> <span class="token attr-name">Include</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">&quot;</span>Microsoft.AspNetCore.Components.WebAssembly.DevServer<span class="token punctuation">&quot;</span></span> <span class="token attr-name">Version</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">&quot;</span>5.0.4<span class="token punctuation">&quot;</span></span> <span class="token attr-name">PrivateAssets</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">&quot;</span>all<span class="token punctuation">&quot;</span></span> <span class="token punctuation">/&gt;</span></span>
-    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>PackageReference</span> <span class="token attr-name">Include</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">&quot;</span>System.Net.Http.Json<span class="token punctuation">&quot;</span></span> <span class="token attr-name">Version</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">&quot;</span>5.0.0<span class="token punctuation">&quot;</span></span> <span class="token punctuation">/&gt;</span></span>
-  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>ItemGroup</span><span class="token punctuation">&gt;</span></span>
 
-  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>ItemGroup</span><span class="token punctuation">&gt;</span></span>
-    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>Folder</span> <span class="token attr-name">Include</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">&quot;</span>wwwroot\<span class="token punctuation">&quot;</span></span> <span class="token punctuation">/&gt;</span></span>
-  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>ItemGroup</span><span class="token punctuation">&gt;</span></span>
+    </div>
+    <!--End topbar-->
+    <!--Sidebar-->
+    <div id="sidebar">
+        
+<div class="article-info p-2" Published: 26-02-2021 >
+<div>Published: 26-02-2021</div>
+<div>Last Updated: 04-04-2021</div>
+<div>Author: Shaun Curtis</div>
+</div>
 
-<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>Project</span><span class="token punctuation">&gt;</span></span>
-</code></pre></div><h3 id="mainlayout"><a href="#mainlayout" class="header-anchor">#</a> MainLayout</h3> <p><code>MainLayout</code> needs to be modified to handle both contexts.  The solution changes the colour scheme for each context.  WASM  <em>Teal</em> and Server <em>Steel</em>.</p> <div class="language-csharp extra-class"><pre class="language-csharp"><code>@inherits LayoutComponentBase
-<span class="token operator">&lt;</span>div <span class="token keyword">class</span><span class="token operator">=</span><span class="token string">&quot;page&quot;</span><span class="token operator">&gt;</span>
-    @<span class="token operator">*</span>change <span class="token keyword">class</span><span class="token operator">*</span>@
-    <span class="token operator">&lt;</span>div <span class="token keyword">class</span><span class="token operator">=</span><span class="token string">&quot;@_sidebarCss&quot;</span><span class="token operator">&gt;</span>
-        <span class="token operator">&lt;</span>NavMenu <span class="token operator">/</span><span class="token operator">&gt;</span>
-    <span class="token operator">&lt;</span><span class="token operator">/</span>div<span class="token operator">&gt;</span>
-    <span class="token operator">&lt;</span>div <span class="token keyword">class</span><span class="token operator">=</span><span class="token string">&quot;main&quot;</span><span class="token operator">&gt;</span>
-        <span class="token operator">&lt;</span>div <span class="token keyword">class</span><span class="token operator">=</span><span class="token string">&quot;top-row px-4&quot;</span><span class="token operator">&gt;</span>
-            <span class="token operator">&lt;</span><span class="token class-name">a</span> href<span class="token operator">=</span><span class="token string">&quot;https://docs.microsoft.com/aspnet/&quot;</span> target<span class="token operator">=</span><span class="token string">&quot;_blank&quot;</span><span class="token operator">&gt;</span>About<span class="token operator">&lt;</span><span class="token operator">/</span>a<span class="token operator">&gt;</span>
-        <span class="token operator">&lt;</span><span class="token operator">/</span>div<span class="token operator">&gt;</span>
-        <span class="token operator">&lt;</span>div <span class="token keyword">class</span><span class="token operator">=</span><span class="token string">&quot;content px-4&quot;</span><span class="token operator">&gt;</span>
-            @Body
-        <span class="token operator">&lt;</span><span class="token operator">/</span>div<span class="token operator">&gt;</span>
-    <span class="token operator">&lt;</span><span class="token operator">/</span>div<span class="token operator">&gt;</span>
-<span class="token operator">&lt;</span><span class="token operator">/</span>div<span class="token operator">&gt;</span>
+        
+<h4 class="p-2">Table of Contents</h4>
+<ul class="TOC" >
+<li class="TOC-item TOC-item-0" >
+<a class="TOC-link" href="#">Top</a>
+<ul class="TOC TOC-0" >
+<li class="TOC-item TOC-item-1" >
+<ul class="TOC TOC-1" >
+<li class="TOC-item TOC-item-2" >
+<a class="TOC-link" href="#code-repository">Code Repository</a>
+</li>
+<li class="TOC-item TOC-item-2" >
+<a class="TOC-link" href="#the-solution-and-projects">The Solution and Projects</a>
+</li>
+<li class="TOC-item TOC-item-2" >
+<a class="TOC-link" href="#blazor-project-changes">Blazor Project Changes</a>
+<ul class="TOC TOC-2" >
+<li class="TOC-item TOC-item-3" >
+<a class="TOC-link" href="#mainlayout">MainLayout</a>
+</li>
+<li class="TOC-item TOC-item-3" >
+<a class="TOC-link" href="#navmenu">NavMenu</a>
+</li>
+<li class="TOC-item TOC-item-3" >
+<a class="TOC-link" href="#fetchdatarazor">FetchData.razor</a>
+</li>
+</ul>
+</li>
+<li class="TOC-item TOC-item-2" >
+<a class="TOC-link" href="#blazorweb"><a href="http://Blazor.Web">Blazor.Web</a></a>
+<ul class="TOC TOC-2" >
+<li class="TOC-item TOC-item-3" >
+<a class="TOC-link" href="#indexcshtml">Index.cshtml</a>
+</li>
+<li class="TOC-item TOC-item-3" >
+<a class="TOC-link" href="#startupcs">Startup.cs</a>
+</li>
+</ul>
+</li>
+<li class="TOC-item TOC-item-2" >
+<a class="TOC-link" href="#run-the-application">Run the Application</a>
+</li>
+<li class="TOC-item TOC-item-2" >
+<a class="TOC-link" href="#adding-a-dataservice">Adding a DataService</a>
+<ul class="TOC TOC-2" >
+<li class="TOC-item TOC-item-3" >
+<a class="TOC-link" href="#weatherforecastcs">WeatherForecast.cs</a>
+</li>
+<li class="TOC-item TOC-item-3" >
+<a class="TOC-link" href="#iweatherforecastservicecs">IWeatherForecastService.cs</a>
+</li>
+<li class="TOC-item TOC-item-3" >
+<a class="TOC-link" href="#weatherforecastserverservicecs">WeatherForecastServerService.cs</a>
+</li>
+<li class="TOC-item TOC-item-3" >
+<a class="TOC-link" href="#weatherforecastapiservicecs">WeatherForecastAPIService.cs</a>
+</li>
+<li class="TOC-item TOC-item-3" >
+<a class="TOC-link" href="#weatherforecastcontrollercs">WeatherForecastController.cs</a>
+</li>
+<li class="TOC-item TOC-item-3" >
+<a class="TOC-link" href="#blazor-project-programcs">Blazor Project Program.cs</a>
+</li>
+<li class="TOC-item TOC-item-3" >
+<a class="TOC-link" href="#blazorweb-startupcs"><a href="http://Blazor.Web">Blazor.Web</a> Startup.cs</a>
+</li>
+</ul>
+</li>
+<li class="TOC-item TOC-item-2" >
+<a class="TOC-link" href="#building-and-run-the-project">Building and Run the project</a>
+</li>
+<li class="TOC-item TOC-item-2" >
+<a class="TOC-link" href="#how-does-it-work">How Does It Work?</a>
+</li>
+<li class="TOC-item TOC-item-2" >
+<a class="TOC-link" href="#wrap-up">Wrap Up</a>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
 
-@code <span class="token punctuation">{</span>
-    <span class="token punctuation">[</span><span class="token attribute"><span class="token class-name">Inject</span></span><span class="token punctuation">]</span> <span class="token return-type class-name">NavigationManager</span> NavManager <span class="token punctuation">{</span> <span class="token keyword">get</span><span class="token punctuation">;</span> <span class="token keyword">set</span><span class="token punctuation">;</span> <span class="token punctuation">}</span>
-    <span class="token keyword">private</span> <span class="token return-type class-name"><span class="token keyword">bool</span></span> _isWasm <span class="token operator">=&gt;</span> NavManager<span class="token punctuation">?.</span>Uri<span class="token punctuation">.</span><span class="token function">Contains</span><span class="token punctuation">(</span><span class="token string">&quot;wasm&quot;</span><span class="token punctuation">,</span> StringComparison<span class="token punctuation">.</span>CurrentCultureIgnoreCase<span class="token punctuation">)</span> <span class="token operator">??</span> <span class="token boolean">false</span><span class="token punctuation">;</span>
-    <span class="token keyword">private</span> <span class="token return-type class-name"><span class="token keyword">string</span></span> _sidebarCss <span class="token operator">=&gt;</span> _isWasm <span class="token punctuation">?</span> <span class="token string">&quot;sidebar sidebar-teal&quot;</span> <span class="token punctuation">:</span> <span class="token string">&quot;sidebar sidebar-steel&quot;</span><span class="token punctuation">;</span>
-<span class="token punctuation">}</span>
-</code></pre></div><p>Add the following Css styles to the component Css file below <code>.sidebar</code>.</p> <div class="language-css extra-class"><pre class="language-css"><code><span class="token selector">.sidebar</span> <span class="token punctuation">{</span>
-    <span class="token property">background-image</span><span class="token punctuation">:</span> <span class="token function">linear-gradient</span><span class="token punctuation">(</span>180deg<span class="token punctuation">,</span> <span class="token function">rgb</span><span class="token punctuation">(</span>5<span class="token punctuation">,</span> 39<span class="token punctuation">,</span> 103<span class="token punctuation">)</span> 0%<span class="token punctuation">,</span> #3a0647 70%<span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token punctuation">}</span>
+    </div>
+    <!--End Sidebar-->
+    <!-- Page Wrapper -->
+    <div id="wrapper">
+        <!-- Content Wrapper -->
+        <div id="content-wrapper" class="d-flex flex-column">
+            <!-- Main Content -->
+            <div id="content">
+                <!-- Topbar -->
+                <div id="article">
+                    <!-- Article -->
+                    
+<!-- Header -->
+<header class="ex-header-article">
+    <div class="container">
+        <div class="row pt-3 pb-3 border-bottom">
+            <div class="col">
+                
+<h1>Blazor AllinOne - Multi SPA Hosting</h1>
+<div>ow to build a single Blazor Application that runs in both WASM and Server Modes.</div>
 
-<span class="token comment">/* Added Styles*/</span>
-<span class="token selector">.sidebar-teal</span> <span class="token punctuation">{</span>
-    <span class="token property">background-image</span><span class="token punctuation">:</span> <span class="token function">linear-gradient</span><span class="token punctuation">(</span>180deg<span class="token punctuation">,</span> <span class="token function">rgb</span><span class="token punctuation">(</span>0<span class="token punctuation">,</span> 64<span class="token punctuation">,</span> 128<span class="token punctuation">)</span> 0%<span class="token punctuation">,</span> <span class="token function">rgb</span><span class="token punctuation">(</span>0<span class="token punctuation">,</span>96<span class="token punctuation">,</span>192<span class="token punctuation">)</span> 70%<span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token punctuation">}</span>
+            </div> <!-- end of col -->
+        </div> <!-- end of row -->
+    </div> <!-- end of container -->
+</header> <!-- end of ex-header -->
+<!-- end of header -->
 
-<span class="token selector">.sidebar-steel</span> <span class="token punctuation">{</span>
-    <span class="token property">background-image</span><span class="token punctuation">:</span> <span class="token function">linear-gradient</span><span class="token punctuation">(</span>180deg<span class="token punctuation">,</span> #2a3f4f 0%<span class="token punctuation">,</span> #446680 70%<span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token punctuation">}</span>
-<span class="token comment">/* End Added Styles*/</span>
-</code></pre></div><h3 id="navmenu"><a href="#navmenu" class="header-anchor">#</a> NavMenu</h3> <p>Add code and markup - it adds a link to switch between contexts.</p> <div class="language-csharp extra-class"><pre class="language-csharp"><code><span class="token operator">&lt;</span>div <span class="token keyword">class</span><span class="token operator">=</span><span class="token string">&quot;top-row pl-4 navbar navbar-dark&quot;</span><span class="token operator">&gt;</span>
-    @<span class="token operator">*</span>Change title<span class="token operator">*</span>@
-    <span class="token operator">&lt;</span>a <span class="token keyword">class</span><span class="token operator">=</span><span class="token string">&quot;navbar-brand&quot;</span> href<span class="token operator">=</span><span class="token string">&quot;&quot;</span><span class="token operator">&gt;</span>Blazor<span class="token operator">&lt;</span><span class="token operator">/</span>a<span class="token operator">&gt;</span>
-    <span class="token operator">&lt;</span>button <span class="token keyword">class</span><span class="token operator">=</span><span class="token string">&quot;navbar-toggler&quot;</span> @onclick<span class="token operator">=</span><span class="token string">&quot;ToggleNavMenu&quot;</span><span class="token operator">&gt;</span>
-        <span class="token operator">&lt;</span>span <span class="token keyword">class</span><span class="token operator">=</span><span class="token string">&quot;navbar-toggler-icon&quot;</span><span class="token operator">&gt;</span><span class="token operator">&lt;</span><span class="token operator">/</span>span<span class="token operator">&gt;</span>
-    <span class="token operator">&lt;</span><span class="token operator">/</span>button<span class="token operator">&gt;</span>
-<span class="token operator">&lt;</span><span class="token operator">/</span>div<span class="token operator">&gt;</span>
 
-<span class="token operator">&lt;</span>div <span class="token keyword">class</span><span class="token operator">=</span><span class="token string">&quot;@NavMenuCssClass&quot;</span> @onclick<span class="token operator">=</span><span class="token string">&quot;ToggleNavMenu&quot;</span><span class="token operator">&gt;</span>
-    <span class="token operator">&lt;</span>ul <span class="token keyword">class</span><span class="token operator">=</span><span class="token string">&quot;nav flex-column&quot;</span><span class="token operator">&gt;</span>
-        @<span class="token operator">*</span>Add links between contexts<span class="token operator">*</span>@
-        <span class="token operator">&lt;</span>li <span class="token keyword">class</span><span class="token operator">=</span><span class="token string">&quot;nav-item px-3&quot;</span><span class="token operator">&gt;</span>
-                <span class="token operator">&lt;</span>NavLink <span class="token keyword">class</span><span class="token operator">=</span><span class="token string">&quot;nav-link&quot;</span> href<span class="token operator">=</span><span class="token string">&quot;@_otherContextUrl&quot;</span> Match<span class="token operator">=</span><span class="token string">&quot;NavLinkMatch.All&quot;</span><span class="token operator">&gt;</span>
-                    <span class="token operator">&lt;</span>span <span class="token keyword">class</span><span class="token operator">=</span><span class="token string">&quot;oi oi-home&quot;</span> aria<span class="token operator">-</span>hidden<span class="token operator">=</span><span class="token string">&quot;true&quot;</span><span class="token operator">&gt;</span><span class="token operator">&lt;</span><span class="token operator">/</span>span<span class="token operator">&gt;</span> @_otherContextLinkName
-                <span class="token operator">&lt;</span><span class="token operator">/</span>NavLink<span class="token operator">&gt;</span>
-        <span class="token operator">&lt;</span><span class="token operator">/</span>li<span class="token operator">&gt;</span>
-        <span class="token operator">&lt;</span>li <span class="token keyword">class</span><span class="token operator">=</span><span class="token string">&quot;nav-item px-3&quot;</span><span class="token operator">&gt;</span>
-            <span class="token operator">&lt;</span>NavLink <span class="token keyword">class</span><span class="token operator">=</span><span class="token string">&quot;nav-link&quot;</span> href<span class="token operator">=</span><span class="token string">&quot;&quot;</span> Match<span class="token operator">=</span><span class="token string">&quot;NavLinkMatch.All&quot;</span><span class="token operator">&gt;</span>
-                <span class="token operator">&lt;</span>span <span class="token keyword">class</span><span class="token operator">=</span><span class="token string">&quot;oi oi-home&quot;</span> aria<span class="token operator">-</span>hidden<span class="token operator">=</span><span class="token string">&quot;true&quot;</span><span class="token operator">&gt;</span><span class="token operator">&lt;</span><span class="token operator">/</span>span<span class="token operator">&gt;</span> Home
-            <span class="token operator">&lt;</span><span class="token operator">/</span>NavLink<span class="token operator">&gt;</span>
-        <span class="token operator">&lt;</span><span class="token operator">/</span>li<span class="token operator">&gt;</span>
-        <span class="token operator">&lt;</span>li <span class="token keyword">class</span><span class="token operator">=</span><span class="token string">&quot;nav-item px-3&quot;</span><span class="token operator">&gt;</span>
-            <span class="token operator">&lt;</span>NavLink <span class="token keyword">class</span><span class="token operator">=</span><span class="token string">&quot;nav-link&quot;</span> href<span class="token operator">=</span><span class="token string">&quot;counter&quot;</span><span class="token operator">&gt;</span>
-                <span class="token operator">&lt;</span>span <span class="token keyword">class</span><span class="token operator">=</span><span class="token string">&quot;oi oi-plus&quot;</span> aria<span class="token operator">-</span>hidden<span class="token operator">=</span><span class="token string">&quot;true&quot;</span><span class="token operator">&gt;</span><span class="token operator">&lt;</span><span class="token operator">/</span>span<span class="token operator">&gt;</span> Counter
-            <span class="token operator">&lt;</span><span class="token operator">/</span>NavLink<span class="token operator">&gt;</span>
-        <span class="token operator">&lt;</span><span class="token operator">/</span>li<span class="token operator">&gt;</span>
-        <span class="token operator">&lt;</span>li <span class="token keyword">class</span><span class="token operator">=</span><span class="token string">&quot;nav-item px-3&quot;</span><span class="token operator">&gt;</span>
-            <span class="token operator">&lt;</span>NavLink <span class="token keyword">class</span><span class="token operator">=</span><span class="token string">&quot;nav-link&quot;</span> href<span class="token operator">=</span><span class="token string">&quot;fetchdata&quot;</span><span class="token operator">&gt;</span>
-                <span class="token operator">&lt;</span>span <span class="token keyword">class</span><span class="token operator">=</span><span class="token string">&quot;oi oi-list-rich&quot;</span> aria<span class="token operator">-</span>hidden<span class="token operator">=</span><span class="token string">&quot;true&quot;</span><span class="token operator">&gt;</span><span class="token operator">&lt;</span><span class="token operator">/</span>span<span class="token operator">&gt;</span> Fetch data
-            <span class="token operator">&lt;</span><span class="token operator">/</span>NavLink<span class="token operator">&gt;</span>
-        <span class="token operator">&lt;</span><span class="token operator">/</span>li<span class="token operator">&gt;</span>
-    <span class="token operator">&lt;</span><span class="token operator">/</span>ul<span class="token operator">&gt;</span>
-<span class="token operator">&lt;</span><span class="token operator">/</span>div<span class="token operator">&gt;</span>
+                    
+<!-- Article Container -->
+<div class="ex-basic-1 pt-4">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                
 
-@code <span class="token punctuation">{</span>
-    <span class="token punctuation">[</span><span class="token attribute"><span class="token class-name">Inject</span></span><span class="token punctuation">]</span> <span class="token return-type class-name">NavigationManager</span> NavManager <span class="token punctuation">{</span> <span class="token keyword">get</span><span class="token punctuation">;</span> <span class="token keyword">set</span><span class="token punctuation">;</span> <span class="token punctuation">}</span>
-    <span class="token keyword">private</span> <span class="token return-type class-name"><span class="token keyword">bool</span></span> _isWasm <span class="token operator">=&gt;</span> NavManager<span class="token punctuation">?.</span>Uri<span class="token punctuation">.</span><span class="token function">Contains</span><span class="token punctuation">(</span><span class="token string">&quot;wasm&quot;</span><span class="token punctuation">,</span> StringComparison<span class="token punctuation">.</span>CurrentCultureIgnoreCase<span class="token punctuation">)</span> <span class="token operator">??</span> <span class="token boolean">false</span><span class="token punctuation">;</span>
-    <span class="token keyword">private</span> <span class="token return-type class-name"><span class="token keyword">string</span></span> _otherContextUrl <span class="token operator">=&gt;</span> _isWasm <span class="token punctuation">?</span> <span class="token string">&quot;/&quot;</span> <span class="token punctuation">:</span> <span class="token string">&quot;/wasm&quot;</span><span class="token punctuation">;</span>
-    <span class="token keyword">private</span> <span class="token return-type class-name"><span class="token keyword">string</span></span> _otherContextLinkName <span class="token operator">=&gt;</span> _isWasm <span class="token punctuation">?</span> <span class="token string">&quot;Server Home&quot;</span> <span class="token punctuation">:</span> <span class="token string">&quot;WASM Home&quot;</span><span class="token punctuation">;</span>
-    <span class="token keyword">private</span> <span class="token return-type class-name"><span class="token keyword">string</span></span> _title <span class="token operator">=&gt;</span> _isWasm <span class="token punctuation">?</span> <span class="token string">&quot;AllinOne WASM&quot;</span> <span class="token punctuation">:</span> <span class="token string">&quot;AllinOne Server&quot;</span><span class="token punctuation">;</span>
-    <span class="token keyword">private</span> <span class="token class-name"><span class="token keyword">bool</span></span> collapseNavMenu <span class="token operator">=</span> <span class="token boolean">true</span><span class="token punctuation">;</span>
-    <span class="token keyword">private</span> <span class="token return-type class-name"><span class="token keyword">string</span></span> NavMenuCssClass <span class="token operator">=&gt;</span> collapseNavMenu <span class="token punctuation">?</span> <span class="token string">&quot;collapse&quot;</span> <span class="token punctuation">:</span> <span class="token keyword">null</span><span class="token punctuation">;</span>
+        <p>This article shows how to build a single Blazor application that runs in both WASM and Server Modes.</p>
+<p><img src="\articles\assets\Blazor-AllinOne\Screenshot.png" alt="screenshot"></p>
+<h2 id="code-repository">Code Repository</h2>
+<p>The Code repository for the article is <a href="https://github.com/ShaunCurtis/AllinOne">here - https://github.com/ShaunCurtis/AllinOne </a></p>
+<h2 id="the-solution-and-projects">The Solution and Projects</h2>
+<p>Create a new solution called <strong>Blazor</strong> using the Blazor WebAssembly template.  Don't choose to host it on Aspnetcore.  You will get a single project called <strong>Blazor</strong>.</p>
+<p>Now add a second project to the solution using the <em><a href="http://ASP.NET">ASP.NET</a> Core Web App</em> template.  Call it <strong><a href="http://Blazor.Web">Blazor.Web</a></strong>.  Set it as the startup project.</p>
+<p>The solution should now look like this:</p>
+<p><img src="\articles\assets\Blazor-AllinOne\Base-Projects.png" alt="Solution"></p>
+<h2 id="blazor-project-changes">Blazor Project Changes</h2>
+<p>The solution runs the WASM context in a sub-directory on the web site.  To get this working there are a few modifications that need to be made to the <em>Blazor</em> project.</p>
+<ol>
+<li>Move the contents of wwwroot to <em><a href="http://Blazor.Web">Blazor.Web</a></em> and delete everything in <em>wwwroot</em>.</li>
+<li>Add a <code>StaticWebAssetBasePath</code> entry to the project file set to <code>wasm</code>.  This is case sensitive in the context in which it is used, so stick to small letters.</li>
+<li>Add the necessary packages.</li>
+</ol>
+<p>The project file should look like this:</p>
+<pre><code class="language-xml"><div><span class="hljs-tag">&lt;<span class="hljs-name">Project</span> <span class="hljs-attr">Sdk</span>=<span class="hljs-string">&quot;Microsoft.NET.Sdk.BlazorWebAssembly&quot;</span>&gt;</span>
 
-    <span class="token keyword">private</span> <span class="token return-type class-name"><span class="token keyword">void</span></span> <span class="token function">ToggleNavMenu</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
-    <span class="token punctuation">{</span>
-        collapseNavMenu <span class="token operator">=</span> <span class="token operator">!</span>collapseNavMenu<span class="token punctuation">;</span>
-    <span class="token punctuation">}</span>
-<span class="token punctuation">}</span>
-</code></pre></div><h3 id="fetchdata-razor"><a href="#fetchdata-razor" class="header-anchor">#</a> FetchData.razor</h3> <p>Update the Url for getting forecasts by adding a <code>/</code> at the start, the file is now in the root and not in <code>wasm</code>.</p> <div class="language-csharp extra-class"><pre class="language-csharp"><code><span class="token keyword">protected</span> <span class="token keyword">override</span> <span class="token keyword">async</span> <span class="token return-type class-name">Task</span> <span class="token function">OnInitializedAsync</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
-<span class="token punctuation">{</span>
-    forecasts <span class="token operator">=</span> <span class="token keyword">await</span> Http<span class="token punctuation">.</span><span class="token generic-method"><span class="token function">GetFromJsonAsync</span><span class="token generic class-name"><span class="token punctuation">&lt;</span>WeatherForecast<span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">&gt;</span></span></span><span class="token punctuation">(</span><span class="token string">&quot;/sample-data/weather.json&quot;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token punctuation">}</span>
-</code></pre></div><h2 id="blazor-web"><a href="#blazor-web" class="header-anchor">#</a> Blazor.Web</h2> <p>Update the project file:</p> <div class="language-xml extra-class"><pre class="language-xml"><code><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>Project</span> <span class="token attr-name">Sdk</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">&quot;</span>Microsoft.NET.Sdk.Web<span class="token punctuation">&quot;</span></span><span class="token punctuation">&gt;</span></span>
-  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>PropertyGroup</span><span class="token punctuation">&gt;</span></span>
-    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>TargetFramework</span><span class="token punctuation">&gt;</span></span>net5.0<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>TargetFramework</span><span class="token punctuation">&gt;</span></span>
-  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>PropertyGroup</span><span class="token punctuation">&gt;</span></span>
-  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>ItemGroup</span><span class="token punctuation">&gt;</span></span>
-    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>PackageReference</span> <span class="token attr-name">Include</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">&quot;</span>Microsoft.AspNetCore.Components.WebAssembly.Server<span class="token punctuation">&quot;</span></span> <span class="token attr-name">Version</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">&quot;</span>5.0.3<span class="token punctuation">&quot;</span></span> <span class="token punctuation">/&gt;</span></span>
-  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>ItemGroup</span><span class="token punctuation">&gt;</span></span>
-  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>ItemGroup</span><span class="token punctuation">&gt;</span></span>
-    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>ProjectReference</span> <span class="token attr-name">Include</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">&quot;</span>..\Blazor\Blazor.csproj<span class="token punctuation">&quot;</span></span> <span class="token punctuation">/&gt;</span></span>
-  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>ItemGroup</span><span class="token punctuation">&gt;</span></span>
-<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>Project</span><span class="token punctuation">&gt;</span></span>
-</code></pre></div><p>Add a Razor Page to <em>Pages</em> called <em>WASM.cshtml</em> - the launch page for the WASM SPA.</p> <div class="language-html extra-class"><pre class="language-html"><code>@page &quot;/wasm&quot;
+  <span class="hljs-tag">&lt;<span class="hljs-name">PropertyGroup</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">StaticWebAssetBasePath</span>&gt;</span>wasm<span class="hljs-tag">&lt;/<span class="hljs-name">StaticWebAssetBasePath</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">TargetFramework</span>&gt;</span>net5.0<span class="hljs-tag">&lt;/<span class="hljs-name">TargetFramework</span>&gt;</span>
+  <span class="hljs-tag">&lt;/<span class="hljs-name">PropertyGroup</span>&gt;</span>
+
+  <span class="hljs-tag">&lt;<span class="hljs-name">ItemGroup</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">PackageReference</span> <span class="hljs-attr">Include</span>=<span class="hljs-string">&quot;Microsoft.AspNetCore.Components.WebAssembly&quot;</span> <span class="hljs-attr">Version</span>=<span class="hljs-string">&quot;5.0.4&quot;</span> /&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">PackageReference</span> <span class="hljs-attr">Include</span>=<span class="hljs-string">&quot;Microsoft.AspNetCore.Components.WebAssembly.DevServer&quot;</span> <span class="hljs-attr">Version</span>=<span class="hljs-string">&quot;5.0.4&quot;</span> <span class="hljs-attr">PrivateAssets</span>=<span class="hljs-string">&quot;all&quot;</span> /&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">PackageReference</span> <span class="hljs-attr">Include</span>=<span class="hljs-string">&quot;System.Net.Http.Json&quot;</span> <span class="hljs-attr">Version</span>=<span class="hljs-string">&quot;5.0.0&quot;</span> /&gt;</span>
+  <span class="hljs-tag">&lt;/<span class="hljs-name">ItemGroup</span>&gt;</span>
+
+  <span class="hljs-tag">&lt;<span class="hljs-name">ItemGroup</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">Folder</span> <span class="hljs-attr">Include</span>=<span class="hljs-string">&quot;wwwroot\&quot;</span> /&gt;</span>
+  <span class="hljs-tag">&lt;/<span class="hljs-name">ItemGroup</span>&gt;</span>
+
+<span class="hljs-tag">&lt;/<span class="hljs-name">Project</span>&gt;</span>
+</div></code></pre>
+<h3 id="mainlayout">MainLayout</h3>
+<p><code>MainLayout</code> needs to be modified to handle both contexts.  The solution changes the colour scheme for each context.  WASM  <em>Teal</em> and Server <em>Steel</em>.</p>
+<pre><code class="language-csharp"><div>@inherits LayoutComponentBase
+&lt;div <span class="hljs-keyword">class</span>=<span class="hljs-string">&quot;page&quot;</span>&gt;
+    @*change <span class="hljs-keyword">class</span>*@
+    &lt;<span class="hljs-title">div</span> <span class="hljs-title">class</span>=&quot;@_<span class="hljs-title">sidebarCss</span>&quot;&gt;
+        &lt;<span class="hljs-title">NavMenu</span> /&gt;
+    &lt;/<span class="hljs-title">div</span>&gt;
+    &lt;<span class="hljs-title">div</span> <span class="hljs-title">class</span>=&quot;<span class="hljs-title">main</span>&quot;&gt;
+        &lt;<span class="hljs-title">div</span> <span class="hljs-title">class</span>=&quot;<span class="hljs-title">top</span>-<span class="hljs-title">row</span> <span class="hljs-title">px</span>-4&quot;&gt;
+            &lt;<span class="hljs-title">a</span> <span class="hljs-title">href</span>=&quot;<span class="hljs-title">https</span>://<span class="hljs-title">docs.microsoft.com</span>/<span class="hljs-title">aspnet</span>/&quot; <span class="hljs-title">target</span>=&quot;_<span class="hljs-title">blank</span>&quot;&gt;<span class="hljs-title">About</span>&lt;/<span class="hljs-title">a</span>&gt;
+        &lt;/<span class="hljs-title">div</span>&gt;
+        &lt;<span class="hljs-title">div</span> <span class="hljs-title">class</span>=&quot;<span class="hljs-title">content</span> <span class="hljs-title">px</span>-4&quot;&gt;
+            @<span class="hljs-title">Body</span>
+        &lt;/<span class="hljs-title">div</span>&gt;
+    &lt;/<span class="hljs-title">div</span>&gt;
+&lt;/<span class="hljs-title">div</span>&gt;
+
+@<span class="hljs-title">code</span> {
+    [<span class="hljs-meta">Inject</span>] NavigationManager NavManager { <span class="hljs-keyword">get</span>; <span class="hljs-keyword">set</span>; }
+    <span class="hljs-keyword">private</span> <span class="hljs-keyword">bool</span> _isWasm =&gt; NavManager?.Uri.Contains(<span class="hljs-string">&quot;wasm&quot;</span>, StringComparison.CurrentCultureIgnoreCase) ?? <span class="hljs-literal">false</span>;
+    <span class="hljs-keyword">private</span> <span class="hljs-keyword">string</span> _sidebarCss =&gt; _isWasm ? <span class="hljs-string">&quot;sidebar sidebar-teal&quot;</span> : <span class="hljs-string">&quot;sidebar sidebar-steel&quot;</span>;
+}
+</div></code></pre>
+<p>Add the following Css styles to the component Css file below <code>.sidebar</code>.</p>
+<pre><code class="language-css"><div><span class="hljs-selector-class">.sidebar</span> {
+    <span class="hljs-attribute">background-image</span>: <span class="hljs-built_in">linear-gradient</span>(<span class="hljs-number">180deg</span>, rgb(<span class="hljs-number">5</span>, <span class="hljs-number">39</span>, <span class="hljs-number">103</span>) <span class="hljs-number">0%</span>, <span class="hljs-number">#3a0647</span> <span class="hljs-number">70%</span>);
+}
+
+<span class="hljs-comment">/* Added Styles*/</span>
+<span class="hljs-selector-class">.sidebar-teal</span> {
+    <span class="hljs-attribute">background-image</span>: <span class="hljs-built_in">linear-gradient</span>(<span class="hljs-number">180deg</span>, rgb(<span class="hljs-number">0</span>, <span class="hljs-number">64</span>, <span class="hljs-number">128</span>) <span class="hljs-number">0%</span>, <span class="hljs-built_in">rgb</span>(<span class="hljs-number">0</span>,<span class="hljs-number">96</span>,<span class="hljs-number">192</span>) <span class="hljs-number">70%</span>);
+}
+
+<span class="hljs-selector-class">.sidebar-steel</span> {
+    <span class="hljs-attribute">background-image</span>: <span class="hljs-built_in">linear-gradient</span>(<span class="hljs-number">180deg</span>, #<span class="hljs-number">2</span>a3f4f <span class="hljs-number">0%</span>, #<span class="hljs-number">446680</span> <span class="hljs-number">70%</span>);
+}
+<span class="hljs-comment">/* End Added Styles*/</span>
+</div></code></pre>
+<h3 id="navmenu">NavMenu</h3>
+<p>Add code and markup - it adds a link to switch between contexts.</p>
+<pre><code class="language-csharp"><div>&lt;div <span class="hljs-keyword">class</span>=<span class="hljs-string">&quot;top-row pl-4 navbar navbar-dark&quot;</span>&gt;
+    @*Change title*@
+    &lt;a <span class="hljs-keyword">class</span>=<span class="hljs-string">&quot;navbar-brand&quot;</span> href=<span class="hljs-string">&quot;&quot;</span>&gt;Blazor&lt;/a&gt;
+    &lt;button <span class="hljs-keyword">class</span>=<span class="hljs-string">&quot;navbar-toggler&quot;</span> @onclick=<span class="hljs-string">&quot;ToggleNavMenu&quot;</span>&gt;
+        &lt;span <span class="hljs-keyword">class</span>=<span class="hljs-string">&quot;navbar-toggler-icon&quot;</span>&gt;&lt;/span&gt;
+    &lt;/button&gt;
+&lt;/div&gt;
+
+&lt;div <span class="hljs-keyword">class</span>=<span class="hljs-string">&quot;@NavMenuCssClass&quot;</span> @onclick=<span class="hljs-string">&quot;ToggleNavMenu&quot;</span>&gt;
+    &lt;ul <span class="hljs-keyword">class</span>=<span class="hljs-string">&quot;nav flex-column&quot;</span>&gt;
+        @*Add links between contexts*@
+        &lt;li <span class="hljs-keyword">class</span>=<span class="hljs-string">&quot;nav-item px-3&quot;</span>&gt;
+                &lt;NavLink <span class="hljs-keyword">class</span>=<span class="hljs-string">&quot;nav-link&quot;</span> href=<span class="hljs-string">&quot;@_otherContextUrl&quot;</span> Match=<span class="hljs-string">&quot;NavLinkMatch.All&quot;</span>&gt;
+                    &lt;span <span class="hljs-keyword">class</span>=<span class="hljs-string">&quot;oi oi-home&quot;</span> aria-hidden=<span class="hljs-string">&quot;true&quot;</span>&gt;&lt;/span&gt; @_otherContextLinkName
+                &lt;/NavLink&gt;
+        &lt;/li&gt;
+        &lt;li <span class="hljs-keyword">class</span>=<span class="hljs-string">&quot;nav-item px-3&quot;</span>&gt;
+            &lt;NavLink <span class="hljs-keyword">class</span>=<span class="hljs-string">&quot;nav-link&quot;</span> href=<span class="hljs-string">&quot;&quot;</span> Match=<span class="hljs-string">&quot;NavLinkMatch.All&quot;</span>&gt;
+                &lt;span <span class="hljs-keyword">class</span>=<span class="hljs-string">&quot;oi oi-home&quot;</span> aria-hidden=<span class="hljs-string">&quot;true&quot;</span>&gt;&lt;/span&gt; Home
+            &lt;/NavLink&gt;
+        &lt;/li&gt;
+        &lt;li <span class="hljs-keyword">class</span>=<span class="hljs-string">&quot;nav-item px-3&quot;</span>&gt;
+            &lt;NavLink <span class="hljs-keyword">class</span>=<span class="hljs-string">&quot;nav-link&quot;</span> href=<span class="hljs-string">&quot;counter&quot;</span>&gt;
+                &lt;span <span class="hljs-keyword">class</span>=<span class="hljs-string">&quot;oi oi-plus&quot;</span> aria-hidden=<span class="hljs-string">&quot;true&quot;</span>&gt;&lt;/span&gt; Counter
+            &lt;/NavLink&gt;
+        &lt;/li&gt;
+        &lt;li <span class="hljs-keyword">class</span>=<span class="hljs-string">&quot;nav-item px-3&quot;</span>&gt;
+            &lt;NavLink <span class="hljs-keyword">class</span>=<span class="hljs-string">&quot;nav-link&quot;</span> href=<span class="hljs-string">&quot;fetchdata&quot;</span>&gt;
+                &lt;span <span class="hljs-keyword">class</span>=<span class="hljs-string">&quot;oi oi-list-rich&quot;</span> aria-hidden=<span class="hljs-string">&quot;true&quot;</span>&gt;&lt;/span&gt; Fetch data
+            &lt;/NavLink&gt;
+        &lt;/li&gt;
+    &lt;/ul&gt;
+&lt;/div&gt;
+
+@code {
+    [<span class="hljs-meta">Inject</span>] NavigationManager NavManager { <span class="hljs-keyword">get</span>; <span class="hljs-keyword">set</span>; }
+    <span class="hljs-keyword">private</span> <span class="hljs-keyword">bool</span> _isWasm =&gt; NavManager?.Uri.Contains(<span class="hljs-string">&quot;wasm&quot;</span>, StringComparison.CurrentCultureIgnoreCase) ?? <span class="hljs-literal">false</span>;
+    <span class="hljs-keyword">private</span> <span class="hljs-keyword">string</span> _otherContextUrl =&gt; _isWasm ? <span class="hljs-string">&quot;/&quot;</span> : <span class="hljs-string">&quot;/wasm&quot;</span>;
+    <span class="hljs-keyword">private</span> <span class="hljs-keyword">string</span> _otherContextLinkName =&gt; _isWasm ? <span class="hljs-string">&quot;Server Home&quot;</span> : <span class="hljs-string">&quot;WASM Home&quot;</span>;
+    <span class="hljs-keyword">private</span> <span class="hljs-keyword">string</span> _title =&gt; _isWasm ? <span class="hljs-string">&quot;AllinOne WASM&quot;</span> : <span class="hljs-string">&quot;AllinOne Server&quot;</span>;
+    <span class="hljs-keyword">private</span> <span class="hljs-keyword">bool</span> collapseNavMenu = <span class="hljs-literal">true</span>;
+    <span class="hljs-keyword">private</span> <span class="hljs-keyword">string</span> NavMenuCssClass =&gt; collapseNavMenu ? <span class="hljs-string">&quot;collapse&quot;</span> : <span class="hljs-literal">null</span>;
+
+    <span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-keyword">void</span> <span class="hljs-title">ToggleNavMenu</span>(<span class="hljs-params"></span>)</span>
+    {
+        collapseNavMenu = !collapseNavMenu;
+    }
+}
+</div></code></pre>
+<h3 id="fetchdatarazor">FetchData.razor</h3>
+<p>Update the Url for getting forecasts by adding a <code>/</code> at the start, the file is now in the root and not in <code>wasm</code>.</p>
+<pre><code class="language-csharp"><div><span class="hljs-function"><span class="hljs-keyword">protected</span> <span class="hljs-keyword">override</span> <span class="hljs-keyword">async</span> Task <span class="hljs-title">OnInitializedAsync</span>(<span class="hljs-params"></span>)</span>
+{
+    forecasts = <span class="hljs-keyword">await</span> Http.GetFromJsonAsync&lt;WeatherForecast[]&gt;(<span class="hljs-string">&quot;/sample-data/weather.json&quot;</span>);
+}
+</div></code></pre>
+<h2 id="blazorweb"><a href="http://Blazor.Web">Blazor.Web</a></h2>
+<p>Update the project file:</p>
+<pre><code class="language-xml"><div><span class="hljs-tag">&lt;<span class="hljs-name">Project</span> <span class="hljs-attr">Sdk</span>=<span class="hljs-string">&quot;Microsoft.NET.Sdk.Web&quot;</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-name">PropertyGroup</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">TargetFramework</span>&gt;</span>net5.0<span class="hljs-tag">&lt;/<span class="hljs-name">TargetFramework</span>&gt;</span>
+  <span class="hljs-tag">&lt;/<span class="hljs-name">PropertyGroup</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-name">ItemGroup</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">PackageReference</span> <span class="hljs-attr">Include</span>=<span class="hljs-string">&quot;Microsoft.AspNetCore.Components.WebAssembly.Server&quot;</span> <span class="hljs-attr">Version</span>=<span class="hljs-string">&quot;5.0.3&quot;</span> /&gt;</span>
+  <span class="hljs-tag">&lt;/<span class="hljs-name">ItemGroup</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-name">ItemGroup</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">ProjectReference</span> <span class="hljs-attr">Include</span>=<span class="hljs-string">&quot;..\Blazor\Blazor.csproj&quot;</span> /&gt;</span>
+  <span class="hljs-tag">&lt;/<span class="hljs-name">ItemGroup</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">Project</span>&gt;</span>
+</div></code></pre>
+<p>Add a Razor Page to <em>Pages</em> called <em>WASM.cshtml</em> - the launch page for the WASM SPA.</p>
+<pre><code class="language-html"><div>@page &quot;/wasm&quot;
 @{
     Layout = null;
 }
 
-<span class="token doctype"><span class="token punctuation">&lt;!</span><span class="token doctype-tag">DOCTYPE</span> <span class="token name">html</span><span class="token punctuation">&gt;</span></span>
-<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>html</span><span class="token punctuation">&gt;</span></span>
-<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>head</span><span class="token punctuation">&gt;</span></span>
-    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>meta</span> <span class="token attr-name">charset</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">&quot;</span>utf-8<span class="token punctuation">&quot;</span></span> <span class="token punctuation">/&gt;</span></span>
-    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>meta</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">&quot;</span>viewport<span class="token punctuation">&quot;</span></span> <span class="token attr-name">content</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">&quot;</span>width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no<span class="token punctuation">&quot;</span></span> <span class="token punctuation">/&gt;</span></span>
-    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>title</span><span class="token punctuation">&gt;</span></span>Blazor<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>title</span><span class="token punctuation">&gt;</span></span>
+<span class="hljs-meta">&lt;!DOCTYPE <span class="hljs-meta-keyword">html</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">html</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">head</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">meta</span> <span class="hljs-attr">charset</span>=<span class="hljs-string">&quot;utf-8&quot;</span> /&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">meta</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;viewport&quot;</span> <span class="hljs-attr">content</span>=<span class="hljs-string">&quot;width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no&quot;</span> /&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">title</span>&gt;</span>Blazor<span class="hljs-tag">&lt;/<span class="hljs-name">title</span>&gt;</span>
     @*Change base*@
-    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>base</span> <span class="token attr-name">href</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">&quot;</span>/wasm/<span class="token punctuation">&quot;</span></span> <span class="token punctuation">/&gt;</span></span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">base</span> <span class="hljs-attr">href</span>=<span class="hljs-string">&quot;/wasm/&quot;</span> /&gt;</span>
     @*Update Link hrefs*@
-    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>link</span> <span class="token attr-name">href</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">&quot;</span>/css/bootstrap/bootstrap.min.css<span class="token punctuation">&quot;</span></span> <span class="token attr-name">rel</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">&quot;</span>stylesheet<span class="token punctuation">&quot;</span></span> <span class="token punctuation">/&gt;</span></span>
-    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>link</span> <span class="token attr-name">href</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">&quot;</span>/css/app.css<span class="token punctuation">&quot;</span></span> <span class="token attr-name">rel</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">&quot;</span>stylesheet<span class="token punctuation">&quot;</span></span> <span class="token punctuation">/&gt;</span></span>
-    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>link</span> <span class="token attr-name">href</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">&quot;</span>/wasm/Blazor.styles.css<span class="token punctuation">&quot;</span></span> <span class="token attr-name">rel</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">&quot;</span>stylesheet<span class="token punctuation">&quot;</span></span> <span class="token punctuation">/&gt;</span></span>
-<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>head</span><span class="token punctuation">&gt;</span></span>
-<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>body</span><span class="token punctuation">&gt;</span></span>
-    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span> <span class="token attr-name">id</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">&quot;</span>app<span class="token punctuation">&quot;</span></span><span class="token punctuation">&gt;</span></span>Loading...<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">&gt;</span></span>
-    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span> <span class="token attr-name">id</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">&quot;</span>blazor-error-ui<span class="token punctuation">&quot;</span></span><span class="token punctuation">&gt;</span></span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">link</span> <span class="hljs-attr">href</span>=<span class="hljs-string">&quot;/css/bootstrap/bootstrap.min.css&quot;</span> <span class="hljs-attr">rel</span>=<span class="hljs-string">&quot;stylesheet&quot;</span> /&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">link</span> <span class="hljs-attr">href</span>=<span class="hljs-string">&quot;/css/app.css&quot;</span> <span class="hljs-attr">rel</span>=<span class="hljs-string">&quot;stylesheet&quot;</span> /&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">link</span> <span class="hljs-attr">href</span>=<span class="hljs-string">&quot;/wasm/Blazor.styles.css&quot;</span> <span class="hljs-attr">rel</span>=<span class="hljs-string">&quot;stylesheet&quot;</span> /&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">head</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">body</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;app&quot;</span>&gt;</span>Loading...<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;blazor-error-ui&quot;</span>&gt;</span>
         An unhandled error has occurred.
-        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>a</span> <span class="token attr-name">href</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">&quot;</span><span class="token punctuation">&quot;</span></span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">&quot;</span>reload<span class="token punctuation">&quot;</span></span><span class="token punctuation">&gt;</span></span>Reload<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>a</span><span class="token punctuation">&gt;</span></span>
-        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>a</span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">&quot;</span>dismiss<span class="token punctuation">&quot;</span></span><span class="token punctuation">&gt;</span></span>🗙<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>a</span><span class="token punctuation">&gt;</span></span>
-    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">&gt;</span></span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">a</span> <span class="hljs-attr">href</span>=<span class="hljs-string">&quot;&quot;</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;reload&quot;</span>&gt;</span>Reload<span class="hljs-tag">&lt;/<span class="hljs-name">a</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">a</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;dismiss&quot;</span>&gt;</span>🗙<span class="hljs-tag">&lt;/<span class="hljs-name">a</span>&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
     @*Update js sources *@
-    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>script</span> <span class="token attr-name">src</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">&quot;</span>/wasm/_framework/blazor.webassembly.js<span class="token punctuation">&quot;</span></span><span class="token punctuation">&gt;</span></span><span class="token script"></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>script</span><span class="token punctuation">&gt;</span></span>
-<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>body</span><span class="token punctuation">&gt;</span></span>
-<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>html</span><span class="token punctuation">&gt;</span></span>
-</code></pre></div><p>Add a second Razor Page to <em>Pages</em> called <em>Server.cshtml</em> - the launch page for the Servr SPA.</p> <div class="language-csharp extra-class"><pre class="language-csharp"><code>@page <span class="token string">&quot;/&quot;</span>
-@addTagHelper <span class="token operator">*</span><span class="token punctuation">,</span> Microsoft<span class="token punctuation">.</span>AspNetCore<span class="token punctuation">.</span>Mvc<span class="token punctuation">.</span>TagHelpers
-@<span class="token punctuation">{</span>
-    Layout <span class="token operator">=</span> <span class="token keyword">null</span><span class="token punctuation">;</span>
-<span class="token punctuation">}</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">script</span> <span class="hljs-attr">src</span>=<span class="hljs-string">&quot;/wasm/_framework/blazor.webassembly.js&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">body</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">html</span>&gt;</span>
+</div></code></pre>
+<p>Add a second Razor Page to <em>Pages</em> called <em>Server.cshtml</em> - the launch page for the Servr SPA.</p>
+<pre><code class="language-csharp"><div>@page <span class="hljs-string">&quot;/&quot;</span>
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@{
+    Layout = <span class="hljs-literal">null</span>;
+}
 
-<span class="token operator">&lt;</span><span class="token operator">!</span>DOCTYPE html<span class="token operator">&gt;</span>
-<span class="token operator">&lt;</span>html<span class="token operator">&gt;</span>
+&lt;!DOCTYPE html&gt;
+&lt;html&gt;
 
-<span class="token operator">&lt;</span>head<span class="token operator">&gt;</span>
-    <span class="token operator">&lt;</span><span class="token class-name">meta</span> charset<span class="token operator">=</span><span class="token string">&quot;utf-8&quot;</span> <span class="token operator">/</span><span class="token operator">&gt;</span>
-    <span class="token operator">&lt;</span><span class="token class-name">meta</span> name<span class="token operator">=</span><span class="token string">&quot;viewport&quot;</span> content<span class="token operator">=</span><span class="token string">&quot;width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no&quot;</span> <span class="token operator">/</span><span class="token operator">&gt;</span>
-    <span class="token operator">&lt;</span>title<span class="token operator">&gt;</span>Blazor<span class="token operator">&lt;</span><span class="token operator">/</span>title<span class="token operator">&gt;</span>
-    <span class="token operator">&lt;</span><span class="token keyword">base</span> href<span class="token operator">=</span><span class="token string">&quot;/&quot;</span> <span class="token operator">/</span><span class="token operator">&gt;</span>
-    <span class="token operator">&lt;</span><span class="token class-name">link</span> href<span class="token operator">=</span><span class="token string">&quot;/css/bootstrap/bootstrap.min.css&quot;</span> rel<span class="token operator">=</span><span class="token string">&quot;stylesheet&quot;</span> <span class="token operator">/</span><span class="token operator">&gt;</span>
-    <span class="token operator">&lt;</span><span class="token class-name">link</span> href<span class="token operator">=</span><span class="token string">&quot;/css/site.css&quot;</span> rel<span class="token operator">=</span><span class="token string">&quot;stylesheet&quot;</span> <span class="token operator">/</span><span class="token operator">&gt;</span>
-    <span class="token operator">&lt;</span><span class="token class-name">link</span> href<span class="token operator">=</span><span class="token string">&quot;/wasm/Blazor.styles.css&quot;</span> rel<span class="token operator">=</span><span class="token string">&quot;stylesheet&quot;</span> <span class="token operator">/</span><span class="token operator">&gt;</span>
-<span class="token operator">&lt;</span><span class="token operator">/</span>head<span class="token operator">&gt;</span>
+&lt;head&gt;
+    &lt;meta charset=<span class="hljs-string">&quot;utf-8&quot;</span> /&gt;
+    &lt;meta name=<span class="hljs-string">&quot;viewport&quot;</span> content=<span class="hljs-string">&quot;width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no&quot;</span> /&gt;
+    &lt;title&gt;Blazor&lt;/title&gt;
+    &lt;<span class="hljs-keyword">base</span> href=<span class="hljs-string">&quot;/&quot;</span> /&gt;
+    &lt;link href=<span class="hljs-string">&quot;/css/bootstrap/bootstrap.min.css&quot;</span> rel=<span class="hljs-string">&quot;stylesheet&quot;</span> /&gt;
+    &lt;link href=<span class="hljs-string">&quot;/css/site.css&quot;</span> rel=<span class="hljs-string">&quot;stylesheet&quot;</span> /&gt;
+    &lt;link href=<span class="hljs-string">&quot;/wasm/Blazor.styles.css&quot;</span> rel=<span class="hljs-string">&quot;stylesheet&quot;</span> /&gt;
+&lt;/head&gt;
 
-<span class="token operator">&lt;</span>body<span class="token operator">&gt;</span>
-    <span class="token operator">&lt;</span><span class="token class-name">component</span> type<span class="token operator">=</span><span class="token string">&quot;typeof(Blazor.App)&quot;</span> render<span class="token operator">-</span>mode<span class="token operator">=</span><span class="token string">&quot;ServerPrerendered&quot;</span> <span class="token operator">/</span><span class="token operator">&gt;</span>
+&lt;body&gt;
+    &lt;component type=<span class="hljs-string">&quot;typeof(Blazor.App)&quot;</span> render-mode=<span class="hljs-string">&quot;ServerPrerendered&quot;</span> /&gt;
 
-    <span class="token operator">&lt;</span><span class="token class-name">div</span> id<span class="token operator">=</span><span class="token string">&quot;blazor-error-ui&quot;</span><span class="token operator">&gt;</span>
-        <span class="token operator">&lt;</span><span class="token class-name">environment</span> include<span class="token operator">=</span><span class="token string">&quot;Staging,Production&quot;</span><span class="token operator">&gt;</span>
-            An error has occurred<span class="token punctuation">.</span> This application may no longer respond until reloaded<span class="token punctuation">.</span>
-        <span class="token operator">&lt;</span><span class="token operator">/</span>environment<span class="token operator">&gt;</span>
-        <span class="token operator">&lt;</span><span class="token class-name">environment</span> include<span class="token operator">=</span><span class="token string">&quot;Development&quot;</span><span class="token operator">&gt;</span>
-            An unhandled exception has occurred<span class="token punctuation">.</span> See browser dev tools <span class="token keyword">for</span> details<span class="token punctuation">.</span>
-        <span class="token operator">&lt;</span><span class="token operator">/</span>environment<span class="token operator">&gt;</span>
-        <span class="token operator">&lt;</span><span class="token class-name">a</span> href<span class="token operator">=</span><span class="token string">&quot;&quot;</span> <span class="token keyword">class</span><span class="token operator">=</span><span class="token string">&quot;reload&quot;</span><span class="token operator">&gt;</span>Reload<span class="token operator">&lt;</span><span class="token operator">/</span>a<span class="token operator">&gt;</span>
-        <span class="token operator">&lt;</span>a <span class="token keyword">class</span><span class="token operator">=</span><span class="token string">&quot;dismiss&quot;</span><span class="token operator">&gt;</span>🗙<span class="token operator">&lt;</span><span class="token operator">/</span>a<span class="token operator">&gt;</span>
-    <span class="token operator">&lt;</span><span class="token operator">/</span>div<span class="token operator">&gt;</span>
+    &lt;div id=<span class="hljs-string">&quot;blazor-error-ui&quot;</span>&gt;
+        &lt;environment include=<span class="hljs-string">&quot;Staging,Production&quot;</span>&gt;
+            An error has occurred. This application may no longer respond until reloaded.
+        &lt;/environment&gt;
+        &lt;environment include=<span class="hljs-string">&quot;Development&quot;</span>&gt;
+            An unhandled exception has occurred. See browser dev tools <span class="hljs-keyword">for</span> details.
+        &lt;/environment&gt;
+        &lt;a href=<span class="hljs-string">&quot;&quot;</span> <span class="hljs-keyword">class</span>=<span class="hljs-string">&quot;reload&quot;</span>&gt;Reload&lt;/a&gt;
+        &lt;a <span class="hljs-keyword">class</span>=<span class="hljs-string">&quot;dismiss&quot;</span>&gt;🗙&lt;/a&gt;
+    &lt;/div&gt;
 
-    <span class="token operator">&lt;</span><span class="token class-name">script</span> src<span class="token operator">=</span><span class="token string">&quot;_framework/blazor.server.js&quot;</span><span class="token operator">&gt;</span><span class="token operator">&lt;</span><span class="token operator">/</span>script<span class="token operator">&gt;</span>
-<span class="token operator">&lt;</span><span class="token operator">/</span>body<span class="token operator">&gt;</span>
-<span class="token operator">&lt;</span><span class="token operator">/</span>html<span class="token operator">&gt;</span>
-</code></pre></div><h3 id="index-cshtml"><a href="#index-cshtml" class="header-anchor">#</a> Index.cshtml</h3> <p>Update the <code>@page</code> directive to <code>@page &quot;/index&quot;</code>.</p> <h3 id="startup-cs"><a href="#startup-cs" class="header-anchor">#</a> Startup.cs</h3> <p>Update <code>Startup</code> to handle WASM and Server middleware paths.</p> <div class="language-csharp extra-class"><pre class="language-csharp"><code><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">Startup</span>
-<span class="token punctuation">{</span>
-    <span class="token keyword">public</span> <span class="token function">Startup</span><span class="token punctuation">(</span><span class="token class-name">IConfiguration</span> configuration<span class="token punctuation">)</span>
-    <span class="token punctuation">{</span>
-        Configuration <span class="token operator">=</span> configuration<span class="token punctuation">;</span>
-    <span class="token punctuation">}</span>
+    &lt;script src=<span class="hljs-string">&quot;_framework/blazor.server.js&quot;</span>&gt;&lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</div></code></pre>
+<h3 id="indexcshtml">Index.cshtml</h3>
+<p>Update the <code>@page</code> directive to <code>@page &quot;/index&quot;</code>.</p>
+<h3 id="startupcs">Startup.cs</h3>
+<p>Update <code>Startup</code> to handle WASM and Server middleware paths.</p>
+<pre><code class="language-csharp"><div><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title">Startup</span>
+{
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">Startup</span>(<span class="hljs-params">IConfiguration configuration</span>)</span>
+    {
+        Configuration = configuration;
+    }
 
-    <span class="token keyword">public</span> <span class="token return-type class-name">IConfiguration</span> Configuration <span class="token punctuation">{</span> <span class="token keyword">get</span><span class="token punctuation">;</span> <span class="token punctuation">}</span>
+    <span class="hljs-keyword">public</span> IConfiguration Configuration { <span class="hljs-keyword">get</span>; }
 
-    <span class="token comment">// This method gets called by the runtime. Use this method to add services to the container.</span>
-    <span class="token keyword">public</span> <span class="token return-type class-name"><span class="token keyword">void</span></span> <span class="token function">ConfigureServices</span><span class="token punctuation">(</span><span class="token class-name">IServiceCollection</span> services<span class="token punctuation">)</span>
-    <span class="token punctuation">{</span>
-        services<span class="token punctuation">.</span><span class="token function">AddRazorPages</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        services<span class="token punctuation">.</span><span class="token function">AddServerSideBlazor</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="hljs-comment">// This method gets called by the runtime. Use this method to add services to the container.</span>
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">ConfigureServices</span>(<span class="hljs-params">IServiceCollection services</span>)</span>
+    {
+        services.AddRazorPages();
+        services.AddServerSideBlazor();
 
-        <span class="token comment">// Server Side Blazor doesn't register HttpClient by default</span>
-        <span class="token comment">// Thanks to Robin Sue - Suchiman https://github.com/Suchiman/BlazorDualMode</span>
-        <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span>services<span class="token punctuation">.</span><span class="token function">Any</span><span class="token punctuation">(</span>x <span class="token operator">=&gt;</span> x<span class="token punctuation">.</span>ServiceType <span class="token operator">==</span> <span class="token keyword">typeof</span><span class="token punctuation">(</span><span class="token type-expression class-name">HttpClient</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
-        <span class="token punctuation">{</span>
-            <span class="token comment">// Setup HttpClient for server side in a client side compatible fashion</span>
-            services<span class="token punctuation">.</span><span class="token generic-method"><span class="token function">AddScoped</span><span class="token generic class-name"><span class="token punctuation">&lt;</span>HttpClient<span class="token punctuation">&gt;</span></span></span><span class="token punctuation">(</span>s <span class="token operator">=&gt;</span>
-            <span class="token punctuation">{</span>
-                <span class="token comment">// Creating the URI helper needs to wait until the JS Runtime is initialized, so defer it.</span>
-                <span class="token class-name"><span class="token keyword">var</span></span> uriHelper <span class="token operator">=</span> s<span class="token punctuation">.</span><span class="token generic-method"><span class="token function">GetRequiredService</span><span class="token generic class-name"><span class="token punctuation">&lt;</span>NavigationManager<span class="token punctuation">&gt;</span></span></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-                <span class="token keyword">return</span> <span class="token keyword">new</span> <span class="token constructor-invocation class-name">HttpClient</span>
-                <span class="token punctuation">{</span>
-                    BaseAddress <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token constructor-invocation class-name">Uri</span><span class="token punctuation">(</span>uriHelper<span class="token punctuation">.</span>BaseUri<span class="token punctuation">)</span>
-                <span class="token punctuation">}</span><span class="token punctuation">;</span>
-            <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token punctuation">}</span>
-    <span class="token punctuation">}</span>
+        <span class="hljs-comment">// Server Side Blazor doesn&#x27;t register HttpClient by default</span>
+        <span class="hljs-comment">// Thanks to Robin Sue - Suchiman https://github.com/Suchiman/BlazorDualMode</span>
+        <span class="hljs-keyword">if</span> (!services.Any(x =&gt; x.ServiceType == <span class="hljs-keyword">typeof</span>(HttpClient)))
+        {
+            <span class="hljs-comment">// Setup HttpClient for server side in a client side compatible fashion</span>
+            services.AddScoped&lt;HttpClient&gt;(s =&gt;
+            {
+                <span class="hljs-comment">// Creating the URI helper needs to wait until the JS Runtime is initialized, so defer it.</span>
+                <span class="hljs-keyword">var</span> uriHelper = s.GetRequiredService&lt;NavigationManager&gt;();
+                <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> HttpClient
+                {
+                    BaseAddress = <span class="hljs-keyword">new</span> Uri(uriHelper.BaseUri)
+                };
+            });
+        }
+    }
 
-    <span class="token comment">// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.</span>
-    <span class="token keyword">public</span> <span class="token return-type class-name"><span class="token keyword">void</span></span> <span class="token function">Configure</span><span class="token punctuation">(</span><span class="token class-name">IApplicationBuilder</span> app<span class="token punctuation">,</span> <span class="token class-name">IWebHostEnvironment</span> env<span class="token punctuation">)</span>
-    <span class="token punctuation">{</span>
-        <span class="token keyword">if</span> <span class="token punctuation">(</span>env<span class="token punctuation">.</span><span class="token function">IsDevelopment</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
-        <span class="token punctuation">{</span>
-            app<span class="token punctuation">.</span><span class="token function">UseDeveloperExceptionPage</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token punctuation">}</span>
-        <span class="token keyword">else</span>
-        <span class="token punctuation">{</span>
-            app<span class="token punctuation">.</span><span class="token function">UseExceptionHandler</span><span class="token punctuation">(</span><span class="token string">&quot;/Error&quot;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-            <span class="token comment">// The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.</span>
-            app<span class="token punctuation">.</span><span class="token function">UseHsts</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token punctuation">}</span>
+    <span class="hljs-comment">// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.</span>
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">Configure</span>(<span class="hljs-params">IApplicationBuilder app, IWebHostEnvironment env</span>)</span>
+    {
+        <span class="hljs-keyword">if</span> (env.IsDevelopment())
+        {
+            app.UseDeveloperExceptionPage();
+        }
+        <span class="hljs-keyword">else</span>
+        {
+            app.UseExceptionHandler(<span class="hljs-string">&quot;/Error&quot;</span>);
+            <span class="hljs-comment">// The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.</span>
+            app.UseHsts();
+        }
 
-        app<span class="token punctuation">.</span><span class="token function">UseHttpsRedirection</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        app<span class="token punctuation">.</span><span class="token function">UseStaticFiles</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        app.UseHttpsRedirection();
+        app.UseStaticFiles();
 
-        app<span class="token punctuation">.</span><span class="token function">MapWhen</span><span class="token punctuation">(</span>ctx <span class="token operator">=&gt;</span> ctx<span class="token punctuation">.</span>Request<span class="token punctuation">.</span>Path<span class="token punctuation">.</span><span class="token function">StartsWithSegments</span><span class="token punctuation">(</span><span class="token string">&quot;/wasm&quot;</span><span class="token punctuation">)</span><span class="token punctuation">,</span> app1 <span class="token operator">=&gt;</span>
-        <span class="token punctuation">{</span>
-            app1<span class="token punctuation">.</span><span class="token function">UseBlazorFrameworkFiles</span><span class="token punctuation">(</span><span class="token string">&quot;/wasm&quot;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-            app1<span class="token punctuation">.</span><span class="token function">UseRouting</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-            app1<span class="token punctuation">.</span><span class="token function">UseEndpoints</span><span class="token punctuation">(</span>endpoints <span class="token operator">=&gt;</span>
-            <span class="token punctuation">{</span>
-                endpoints<span class="token punctuation">.</span><span class="token function">MapFallbackToPage</span><span class="token punctuation">(</span><span class="token string">&quot;/wasm/{*path:nonfile}&quot;</span><span class="token punctuation">,</span> <span class="token string">&quot;/wasm&quot;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-            <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        app.MapWhen(ctx =&gt; ctx.Request.Path.StartsWithSegments(<span class="hljs-string">&quot;/wasm&quot;</span>), app1 =&gt;
+        {
+            app1.UseBlazorFrameworkFiles(<span class="hljs-string">&quot;/wasm&quot;</span>);
+            app1.UseRouting();
+            app1.UseEndpoints(endpoints =&gt;
+            {
+                endpoints.MapFallbackToPage(<span class="hljs-string">&quot;/wasm/{*path:nonfile}&quot;</span>, <span class="hljs-string">&quot;/wasm&quot;</span>);
+            });
+        });
 
-        app<span class="token punctuation">.</span><span class="token function">UseRouting</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        app.UseRouting();
 
-        app<span class="token punctuation">.</span><span class="token function">UseEndpoints</span><span class="token punctuation">(</span>endpoints <span class="token operator">=&gt;</span>
-        <span class="token punctuation">{</span>
-            endpoints<span class="token punctuation">.</span><span class="token function">MapControllers</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-            endpoints<span class="token punctuation">.</span><span class="token function">MapBlazorHub</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-            endpoints<span class="token punctuation">.</span><span class="token function">MapRazorPages</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-            endpoints<span class="token punctuation">.</span><span class="token function">MapFallbackToPage</span><span class="token punctuation">(</span><span class="token string">&quot;/Server&quot;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token punctuation">}</span>
-<span class="token punctuation">}</span>
-</code></pre></div><h2 id="run-the-application"><a href="#run-the-application" class="header-anchor">#</a> Run the Application</h2> <p>The application should now run.  It will start in the Server context.  Switch to the WASM context via the link in the left menu.  You should see the the colour change as you switch between contexts.</p> <h2 id="adding-a-dataservice"><a href="#adding-a-dataservice" class="header-anchor">#</a> Adding a DataService</h2> <p>While the above configuation works, it needs some demo code to show how it handles more conventional data services.  We'll modify the solution to work with a very basic data services to show the DI and interface concepts that should be used.</p> <p>Add <em>Data</em> and <em>Services</em> folders to the <em>Blazor</em> project.</p> <h3 id="weatherforecast-cs"><a href="#weatherforecast-cs" class="header-anchor">#</a> WeatherForecast.cs</h3> <p>Add a <code>WeatherForecast</code> class to <em>Data</em>.</p> <div class="language-csharp extra-class"><pre class="language-csharp"><code><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">WeatherForecast</span>
-<span class="token punctuation">{</span>
-    <span class="token keyword">public</span> <span class="token return-type class-name">DateTime</span> Date <span class="token punctuation">{</span> <span class="token keyword">get</span><span class="token punctuation">;</span> <span class="token keyword">set</span><span class="token punctuation">;</span> <span class="token punctuation">}</span>
-    <span class="token keyword">public</span> <span class="token return-type class-name"><span class="token keyword">int</span></span> TemperatureC <span class="token punctuation">{</span> <span class="token keyword">get</span><span class="token punctuation">;</span> <span class="token keyword">set</span><span class="token punctuation">;</span> <span class="token punctuation">}</span>
-    <span class="token keyword">public</span> <span class="token return-type class-name"><span class="token keyword">string</span></span> Summary <span class="token punctuation">{</span> <span class="token keyword">get</span><span class="token punctuation">;</span> <span class="token keyword">set</span><span class="token punctuation">;</span> <span class="token punctuation">}</span>
-    <span class="token keyword">public</span> <span class="token return-type class-name"><span class="token keyword">int</span></span> TemperatureF <span class="token operator">=&gt;</span> <span class="token number">32</span> <span class="token operator">+</span> <span class="token punctuation">(</span><span class="token keyword">int</span><span class="token punctuation">)</span><span class="token punctuation">(</span>TemperatureC <span class="token operator">/</span> <span class="token number">0.5556</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token punctuation">}</span>
-</code></pre></div><h3 id="iweatherforecastservice-cs"><a href="#iweatherforecastservice-cs" class="header-anchor">#</a> IWeatherForecastService.cs</h3> <p>Add a <code>IWeatherForecastService</code> interface to <em>Services</em>.</p> <div class="language-csharp extra-class"><pre class="language-csharp"><code>    <span class="token keyword">public</span> <span class="token keyword">interface</span> <span class="token class-name">IWeatherForecastService</span>
-    <span class="token punctuation">{</span>
-        <span class="token keyword">public</span> <span class="token return-type class-name">Task<span class="token punctuation">&lt;</span>List<span class="token punctuation">&lt;</span>WeatherForecast<span class="token punctuation">&gt;</span><span class="token punctuation">&gt;</span></span> <span class="token function">GetRecordsAsync</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token punctuation">}</span>
-</code></pre></div><h3 id="weatherforecastserverservice-cs"><a href="#weatherforecastserverservice-cs" class="header-anchor">#</a> WeatherForecastServerService.cs</h3> <p>Add a <code>WeatherForecastServerService</code> class to <em>Services</em>.  Normally this would interface to a database, but here we're just creating a set of dummy records.</p> <div class="language-csharp extra-class"><pre class="language-csharp"><code><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">WeatherForecastServerService</span> <span class="token punctuation">:</span> <span class="token type-list"><span class="token class-name">IWeatherForecastService</span></span>
-<span class="token punctuation">{</span>
-    <span class="token keyword">private</span> <span class="token keyword">static</span> <span class="token keyword">readonly</span> <span class="token class-name"><span class="token keyword">string</span><span class="token punctuation">[</span><span class="token punctuation">]</span></span> Summaries <span class="token operator">=</span> <span class="token keyword">new</span><span class="token punctuation">[</span><span class="token punctuation">]</span>
-    <span class="token punctuation">{</span>
-        <span class="token string">&quot;Freezing&quot;</span><span class="token punctuation">,</span> <span class="token string">&quot;Bracing&quot;</span><span class="token punctuation">,</span> <span class="token string">&quot;Chilly&quot;</span><span class="token punctuation">,</span> <span class="token string">&quot;Cool&quot;</span><span class="token punctuation">,</span> <span class="token string">&quot;Mild&quot;</span><span class="token punctuation">,</span> <span class="token string">&quot;Warm&quot;</span><span class="token punctuation">,</span> <span class="token string">&quot;Balmy&quot;</span><span class="token punctuation">,</span> <span class="token string">&quot;Hot&quot;</span><span class="token punctuation">,</span> <span class="token string">&quot;Sweltering&quot;</span><span class="token punctuation">,</span> <span class="token string">&quot;Scorching&quot;</span>
-    <span class="token punctuation">}</span><span class="token punctuation">;</span>
+        app.UseEndpoints(endpoints =&gt;
+        {
+            endpoints.MapControllers();
+            endpoints.MapBlazorHub();
+            endpoints.MapRazorPages();
+            endpoints.MapFallbackToPage(<span class="hljs-string">&quot;/Server&quot;</span>);
+        });
+    }
+}
+</div></code></pre>
+<h2 id="run-the-application">Run the Application</h2>
+<p>The application should now run.  It will start in the Server context.  Switch to the WASM context via the link in the left menu.  You should see the the colour change as you switch between contexts.</p>
+<h2 id="adding-a-dataservice">Adding a DataService</h2>
+<p>While the above configuation works, it needs some demo code to show how it handles more conventional data services.  We'll modify the solution to work with a very basic data services to show the DI and interface concepts that should be used.</p>
+<p>Add <em>Data</em> and <em>Services</em> folders to the <em>Blazor</em> project.</p>
+<h3 id="weatherforecastcs">WeatherForecast.cs</h3>
+<p>Add a <code>WeatherForecast</code> class to <em>Data</em>.</p>
+<pre><code class="language-csharp"><div><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title">WeatherForecast</span>
+{
+    <span class="hljs-keyword">public</span> DateTime Date { <span class="hljs-keyword">get</span>; <span class="hljs-keyword">set</span>; }
+    <span class="hljs-keyword">public</span> <span class="hljs-keyword">int</span> TemperatureC { <span class="hljs-keyword">get</span>; <span class="hljs-keyword">set</span>; }
+    <span class="hljs-keyword">public</span> <span class="hljs-keyword">string</span> Summary { <span class="hljs-keyword">get</span>; <span class="hljs-keyword">set</span>; }
+    <span class="hljs-keyword">public</span> <span class="hljs-keyword">int</span> TemperatureF =&gt; <span class="hljs-number">32</span> + (<span class="hljs-keyword">int</span>)(TemperatureC / <span class="hljs-number">0.5556</span>);
+}
+</div></code></pre>
+<h3 id="iweatherforecastservicecs">IWeatherForecastService.cs</h3>
+<p>Add a <code>IWeatherForecastService</code> interface to <em>Services</em>.</p>
+<pre><code class="language-csharp"><div>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">interface</span> <span class="hljs-title">IWeatherForecastService</span>
+    {
+        <span class="hljs-keyword">public</span> Task&lt;List&lt;WeatherForecast&gt;&gt; GetRecordsAsync();
+    }
+</div></code></pre>
+<h3 id="weatherforecastserverservicecs">WeatherForecastServerService.cs</h3>
+<p>Add a <code>WeatherForecastServerService</code> class to <em>Services</em>.  Normally this would interface to a database, but here we're just creating a set of dummy records.</p>
+<pre><code class="language-csharp"><div><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title">WeatherForecastServerService</span> : <span class="hljs-title">IWeatherForecastService</span>
+{
+    <span class="hljs-keyword">private</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">readonly</span> <span class="hljs-keyword">string</span>[] Summaries = <span class="hljs-keyword">new</span>[]
+    {
+        <span class="hljs-string">&quot;Freezing&quot;</span>, <span class="hljs-string">&quot;Bracing&quot;</span>, <span class="hljs-string">&quot;Chilly&quot;</span>, <span class="hljs-string">&quot;Cool&quot;</span>, <span class="hljs-string">&quot;Mild&quot;</span>, <span class="hljs-string">&quot;Warm&quot;</span>, <span class="hljs-string">&quot;Balmy&quot;</span>, <span class="hljs-string">&quot;Hot&quot;</span>, <span class="hljs-string">&quot;Sweltering&quot;</span>, <span class="hljs-string">&quot;Scorching&quot;</span>
+    };
 
-    <span class="token keyword">private</span> <span class="token class-name">List<span class="token punctuation">&lt;</span>WeatherForecast<span class="token punctuation">&gt;</span></span> records <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token constructor-invocation class-name">List<span class="token punctuation">&lt;</span>WeatherForecast<span class="token punctuation">&gt;</span></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-title">List</span>&lt;<span class="hljs-title">WeatherForecast</span>&gt; records</span> = <span class="hljs-keyword">new</span> List&lt;WeatherForecast&gt;();
 
-    <span class="token keyword">public</span> <span class="token function">WeatherForecastServerService</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
-        <span class="token operator">=&gt;</span> <span class="token keyword">this</span><span class="token punctuation">.</span><span class="token function">GetForecasts</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">WeatherForecastServerService</span>(<span class="hljs-params"></span>)</span>
+        =&gt; <span class="hljs-keyword">this</span>.GetForecasts();
 
-    <span class="token keyword">public</span> <span class="token return-type class-name"><span class="token keyword">void</span></span> <span class="token function">GetForecasts</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
-    <span class="token punctuation">{</span>
-        <span class="token class-name"><span class="token keyword">var</span></span> rng <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token constructor-invocation class-name">Random</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        records <span class="token operator">=</span> Enumerable<span class="token punctuation">.</span><span class="token function">Range</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">10</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">Select</span><span class="token punctuation">(</span>index <span class="token operator">=&gt;</span> <span class="token keyword">new</span> <span class="token constructor-invocation class-name">WeatherForecast</span>
-        <span class="token punctuation">{</span>
-            Date <span class="token operator">=</span> DateTime<span class="token punctuation">.</span>Now<span class="token punctuation">.</span><span class="token function">AddDays</span><span class="token punctuation">(</span>index<span class="token punctuation">)</span><span class="token punctuation">,</span>
-            TemperatureC <span class="token operator">=</span> rng<span class="token punctuation">.</span><span class="token function">Next</span><span class="token punctuation">(</span><span class="token operator">-</span><span class="token number">20</span><span class="token punctuation">,</span> <span class="token number">55</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
-            Summary <span class="token operator">=</span> Summaries<span class="token punctuation">[</span>rng<span class="token punctuation">.</span><span class="token function">Next</span><span class="token punctuation">(</span>Summaries<span class="token punctuation">.</span>Length<span class="token punctuation">)</span><span class="token punctuation">]</span>
-        <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">ToList</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token punctuation">}</span>
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">GetForecasts</span>(<span class="hljs-params"></span>)</span>
+    {
+        <span class="hljs-keyword">var</span> rng = <span class="hljs-keyword">new</span> Random();
+        records = Enumerable.Range(<span class="hljs-number">1</span>, <span class="hljs-number">10</span>).Select(index =&gt; <span class="hljs-keyword">new</span> WeatherForecast
+        {
+            Date = DateTime.Now.AddDays(index),
+            TemperatureC = rng.Next(<span class="hljs-number">-20</span>, <span class="hljs-number">55</span>),
+            Summary = Summaries[rng.Next(Summaries.Length)]
+        }).ToList();
+    }
 
-    <span class="token keyword">public</span> <span class="token return-type class-name">Task<span class="token punctuation">&lt;</span>List<span class="token punctuation">&lt;</span>WeatherForecast<span class="token punctuation">&gt;</span><span class="token punctuation">&gt;</span></span> <span class="token function">GetRecordsAsync</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
-        <span class="token operator">=&gt;</span> Task<span class="token punctuation">.</span><span class="token function">FromResult</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">.</span>records<span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token punctuation">}</span>
-</code></pre></div><h3 id="weatherforecastapiservice-cs"><a href="#weatherforecastapiservice-cs" class="header-anchor">#</a> WeatherForecastAPIService.cs</h3> <p>Add a <code>WeatherForecastAPIService</code> class to <em>Services</em>.</p> <div class="language-csharp extra-class"><pre class="language-csharp"><code><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">WeatherForecastAPIService</span> <span class="token punctuation">:</span> <span class="token type-list"><span class="token class-name">IWeatherForecastService</span></span>
-<span class="token punctuation">{</span>
-    <span class="token keyword">protected</span> <span class="token return-type class-name">HttpClient</span> HttpClient <span class="token punctuation">{</span> <span class="token keyword">get</span><span class="token punctuation">;</span> <span class="token keyword">set</span><span class="token punctuation">;</span> <span class="token punctuation">}</span>
+    <span class="hljs-keyword">public</span> Task&lt;List&lt;WeatherForecast&gt;&gt; GetRecordsAsync()
+        =&gt; Task.FromResult(<span class="hljs-keyword">this</span>.records);
+}
+</div></code></pre>
+<h3 id="weatherforecastapiservicecs">WeatherForecastAPIService.cs</h3>
+<p>Add a <code>WeatherForecastAPIService</code> class to <em>Services</em>.</p>
+<pre><code class="language-csharp"><div><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title">WeatherForecastAPIService</span> : <span class="hljs-title">IWeatherForecastService</span>
+{
+    <span class="hljs-keyword">protected</span> HttpClient HttpClient { <span class="hljs-keyword">get</span>; <span class="hljs-keyword">set</span>; }
 
-    <span class="token keyword">public</span> <span class="token function">WeatherForecastAPIService</span><span class="token punctuation">(</span><span class="token class-name">HttpClient</span> httpClient<span class="token punctuation">)</span>
-        <span class="token operator">=&gt;</span> <span class="token keyword">this</span><span class="token punctuation">.</span>HttpClient <span class="token operator">=</span> httpClient<span class="token punctuation">;</span>
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">WeatherForecastAPIService</span>(<span class="hljs-params">HttpClient httpClient</span>)</span>
+        =&gt; <span class="hljs-keyword">this</span>.HttpClient = httpClient;
 
-    <span class="token keyword">public</span> <span class="token keyword">async</span> <span class="token return-type class-name">Task<span class="token punctuation">&lt;</span>List<span class="token punctuation">&lt;</span>WeatherForecast<span class="token punctuation">&gt;</span><span class="token punctuation">&gt;</span></span> <span class="token function">GetRecordsAsync</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
-        <span class="token operator">=&gt;</span> <span class="token keyword">await</span> <span class="token keyword">this</span><span class="token punctuation">.</span>HttpClient<span class="token punctuation">.</span><span class="token generic-method"><span class="token function">GetFromJsonAsync</span><span class="token generic class-name"><span class="token punctuation">&lt;</span>List<span class="token punctuation">&lt;</span>WeatherForecast<span class="token punctuation">&gt;</span><span class="token punctuation">&gt;</span></span></span><span class="token punctuation">(</span><span class="token interpolation-string"><span class="token string">$&quot;/api/weatherforecast/list&quot;</span></span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token punctuation">}</span>
-</code></pre></div><h3 id="weatherforecastcontroller-cs"><a href="#weatherforecastcontroller-cs" class="header-anchor">#</a> WeatherForecastController.cs</h3> <p>Finally add a <code>WeatherForecastController</code> class to the <em>Blazor.Web</em> project in a <em>Controller</em> folder.</p> <div class="language-csharp extra-class"><pre class="language-csharp"><code><span class="token keyword">using</span> <span class="token namespace">System<span class="token punctuation">.</span>Collections<span class="token punctuation">.</span>Generic</span><span class="token punctuation">;</span>
-<span class="token keyword">using</span> <span class="token namespace">System<span class="token punctuation">.</span>Threading<span class="token punctuation">.</span>Tasks</span><span class="token punctuation">;</span>
-<span class="token keyword">using</span> <span class="token namespace">Blazor<span class="token punctuation">.</span>Data</span><span class="token punctuation">;</span>
-<span class="token keyword">using</span> <span class="token namespace">Microsoft<span class="token punctuation">.</span>AspNetCore<span class="token punctuation">.</span>Mvc</span><span class="token punctuation">;</span>
-<span class="token keyword">using</span> <span class="token class-name">MVC</span> <span class="token operator">=</span> <span class="token class-name">Microsoft<span class="token punctuation">.</span>AspNetCore<span class="token punctuation">.</span>Mvc</span><span class="token punctuation">;</span>
-<span class="token keyword">using</span> <span class="token namespace">Blazor<span class="token punctuation">.</span>Services</span><span class="token punctuation">;</span>
+    <span class="hljs-keyword">public</span> <span class="hljs-keyword">async</span> Task&lt;List&lt;WeatherForecast&gt;&gt; GetRecordsAsync()
+        =&gt; <span class="hljs-keyword">await</span> <span class="hljs-keyword">this</span>.HttpClient.GetFromJsonAsync&lt;List&lt;WeatherForecast&gt;&gt;(<span class="hljs-string">$&quot;/api/weatherforecast/list&quot;</span>);
+}
+</div></code></pre>
+<h3 id="weatherforecastcontrollercs">WeatherForecastController.cs</h3>
+<p>Finally add a <code>WeatherForecastController</code> class to the <em><a href="http://Blazor.Web">Blazor.Web</a></em> project in a <em>Controller</em> folder.</p>
+<pre><code class="language-csharp"><div><span class="hljs-keyword">using</span> System.Collections.Generic;
+<span class="hljs-keyword">using</span> System.Threading.Tasks;
+<span class="hljs-keyword">using</span> Blazor.Data;
+<span class="hljs-keyword">using</span> Microsoft.AspNetCore.Mvc;
+<span class="hljs-keyword">using</span> MVC = Microsoft.AspNetCore.Mvc;
+<span class="hljs-keyword">using</span> Blazor.Services;
 
-<span class="token keyword">namespace</span> <span class="token namespace">Blazor<span class="token punctuation">.</span>Web<span class="token punctuation">.</span>APIControllers</span>
-<span class="token punctuation">{</span>
-    <span class="token punctuation">[</span><span class="token attribute"><span class="token class-name">ApiController</span></span><span class="token punctuation">]</span>
-    <span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">WeatherForecastController</span> <span class="token punctuation">:</span> <span class="token type-list"><span class="token class-name">ControllerBase</span></span>
-    <span class="token punctuation">{</span>
-        <span class="token keyword">protected</span> <span class="token return-type class-name">IWeatherForecastService</span> DataService <span class="token punctuation">{</span> <span class="token keyword">get</span><span class="token punctuation">;</span> <span class="token keyword">set</span><span class="token punctuation">;</span> <span class="token punctuation">}</span>
+<span class="hljs-keyword">namespace</span> <span class="hljs-title">Blazor.Web.APIControllers</span>
+{
+    [<span class="hljs-meta">ApiController</span>]
+    <span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title">WeatherForecastController</span> : <span class="hljs-title">ControllerBase</span>
+    {
+        <span class="hljs-keyword">protected</span> IWeatherForecastService DataService { <span class="hljs-keyword">get</span>; <span class="hljs-keyword">set</span>; }
 
-        <span class="token keyword">public</span> <span class="token function">WeatherForecastController</span><span class="token punctuation">(</span><span class="token class-name">IWeatherForecastService</span> dataService<span class="token punctuation">)</span>
-            <span class="token operator">=&gt;</span> <span class="token keyword">this</span><span class="token punctuation">.</span>DataService <span class="token operator">=</span> dataService<span class="token punctuation">;</span>
+        <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">WeatherForecastController</span>(<span class="hljs-params">IWeatherForecastService dataService</span>)</span>
+            =&gt; <span class="hljs-keyword">this</span>.DataService = dataService;
 
-        <span class="token punctuation">[</span><span class="token attribute"><span class="token class-name">MVC<span class="token punctuation">.</span>Route</span><span class="token attribute-arguments"><span class="token punctuation">(</span><span class="token string">&quot;/api/weatherforecast/list&quot;</span><span class="token punctuation">)</span></span></span><span class="token punctuation">]</span>
-        <span class="token punctuation">[</span><span class="token attribute"><span class="token class-name">HttpGet</span></span><span class="token punctuation">]</span>
-        <span class="token keyword">public</span> <span class="token keyword">async</span> <span class="token return-type class-name">Task<span class="token punctuation">&lt;</span>List<span class="token punctuation">&lt;</span>WeatherForecast<span class="token punctuation">&gt;</span><span class="token punctuation">&gt;</span></span> <span class="token function">GetList</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token keyword">await</span> DataService<span class="token punctuation">.</span><span class="token function">GetRecordsAsync</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token punctuation">}</span>
-<span class="token punctuation">}</span>
-</code></pre></div><h3 id="blazor-project-program-cs"><a href="#blazor-project-program-cs" class="header-anchor">#</a> Blazor Project Program.cs</h3> <p>Add the API service to <em>Program.cs</em> in the <em>Blazor</em> project, declaring it through it's <code>IWeatherForecastService</code>.</p> <div class="language-csharp extra-class"><pre class="language-csharp"><code><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">Program</span>
-<span class="token punctuation">{</span>
-    <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">async</span> <span class="token return-type class-name">Task</span> <span class="token function">Main</span><span class="token punctuation">(</span><span class="token class-name"><span class="token keyword">string</span><span class="token punctuation">[</span><span class="token punctuation">]</span></span> args<span class="token punctuation">)</span>
-    <span class="token punctuation">{</span>
-        <span class="token class-name"><span class="token keyword">var</span></span> builder <span class="token operator">=</span> WebAssemblyHostBuilder<span class="token punctuation">.</span><span class="token function">CreateDefault</span><span class="token punctuation">(</span>args<span class="token punctuation">)</span><span class="token punctuation">;</span>
-        builder<span class="token punctuation">.</span>RootComponents<span class="token punctuation">.</span><span class="token generic-method"><span class="token function">Add</span><span class="token generic class-name"><span class="token punctuation">&lt;</span>App<span class="token punctuation">&gt;</span></span></span><span class="token punctuation">(</span><span class="token string">&quot;#app&quot;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        [<span class="hljs-meta">MVC.Route(<span class="hljs-meta-string">&quot;/api/weatherforecast/list&quot;</span>)</span>]
+        [<span class="hljs-meta">HttpGet</span>]
+        <span class="hljs-keyword">public</span> <span class="hljs-keyword">async</span> Task&lt;List&lt;WeatherForecast&gt;&gt; GetList() =&gt; <span class="hljs-keyword">await</span> DataService.GetRecordsAsync();
+    }
+}
+</div></code></pre>
+<h3 id="blazor-project-programcs">Blazor Project Program.cs</h3>
+<p>Add the API service to <em>Program.cs</em> in the <em>Blazor</em> project, declaring it through it's <code>IWeatherForecastService</code>.</p>
+<pre><code class="language-csharp"><div><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title">Program</span>
+{
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">async</span> Task <span class="hljs-title">Main</span>(<span class="hljs-params"><span class="hljs-keyword">string</span>[] args</span>)</span>
+    {
+        <span class="hljs-keyword">var</span> builder = WebAssemblyHostBuilder.CreateDefault(args);
+        builder.RootComponents.Add&lt;App&gt;(<span class="hljs-string">&quot;#app&quot;</span>);
 
-        builder<span class="token punctuation">.</span>Services<span class="token punctuation">.</span><span class="token function">AddScoped</span><span class="token punctuation">(</span>sp <span class="token operator">=&gt;</span> <span class="token keyword">new</span> <span class="token constructor-invocation class-name">HttpClient</span> <span class="token punctuation">{</span> BaseAddress <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token constructor-invocation class-name">Uri</span><span class="token punctuation">(</span>builder<span class="token punctuation">.</span>HostEnvironment<span class="token punctuation">.</span>BaseAddress<span class="token punctuation">)</span> <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        builder<span class="token punctuation">.</span>Services<span class="token punctuation">.</span><span class="token generic-method"><span class="token function">AddScoped</span><span class="token generic class-name"><span class="token punctuation">&lt;</span>IWeatherForecastService<span class="token punctuation">,</span> WeatherForecastAPIService<span class="token punctuation">&gt;</span></span></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        builder.Services.AddScoped(sp =&gt; <span class="hljs-keyword">new</span> HttpClient { BaseAddress = <span class="hljs-keyword">new</span> Uri(builder.HostEnvironment.BaseAddress) });
+        builder.Services.AddScoped&lt;IWeatherForecastService, WeatherForecastAPIService&gt;();
 
-        <span class="token keyword">await</span> builder<span class="token punctuation">.</span><span class="token function">Build</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">RunAsync</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token punctuation">}</span>
-<span class="token punctuation">}</span>
-</code></pre></div><h3 id="blazor-web-startup-cs"><a href="#blazor-web-startup-cs" class="header-anchor">#</a> Blazor.Web Startup.cs</h3> <p>Add the server service to <em>Startup.cs</em> in the <em>Blazor.Web</em> project, again through it's <code>IWeatherForecastService</code>.</p> <div class="language-csharp extra-class"><pre class="language-csharp"><code><span class="token keyword">public</span> <span class="token return-type class-name"><span class="token keyword">void</span></span> <span class="token function">ConfigureServices</span><span class="token punctuation">(</span><span class="token class-name">IServiceCollection</span> services<span class="token punctuation">)</span>
-<span class="token punctuation">{</span>
-    services<span class="token punctuation">.</span><span class="token function">AddRazorPages</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    services<span class="token punctuation">.</span><span class="token function">AddServerSideBlazor</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    services<span class="token punctuation">.</span><span class="token generic-method"><span class="token function">AddScoped</span><span class="token generic class-name"><span class="token punctuation">&lt;</span>IWeatherForecastService<span class="token punctuation">,</span> WeatherForecastServerService<span class="token punctuation">&gt;</span></span></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token range operator">..</span><span class="token range operator">..</span><span class="token punctuation">.</span>
-<span class="token punctuation">}</span>
-</code></pre></div><h2 id="building-and-run-the-project"><a href="#building-and-run-the-project" class="header-anchor">#</a> Building and Run the project</h2> <p>The solution should now build and run.</p> <p><img src="https://shauncurtis.github.io/siteimages/Articles/AllinOne/Blazor-Project.png" alt="Blazor Project"></p> <p><img src="https://shauncurtis.github.io/siteimages/Articles/AllinOne/Blazor-Web-Project.png" alt="Blazor.Web Project"></p> <h2 id="how-does-it-work"><a href="#how-does-it-work" class="header-anchor">#</a> How Does It Work?</h2> <p>Fundimentally, the difference between a Blazor Server and a Blazor WASM Application is the context in which it's run.  In the solution all SPA code is built in the Web Assembly project, and used by both the WASM and Server contexts.  There's no &quot;shared&quot; code library code, because it's exactly the same front end code with the same entrypoint - App.razor.  The different between the two contexts, is the provider of the backend services.</p> <p>The web assembly project is declared <code>&lt;Project Sdk=&quot;Microsoft.NET.Sdk.BlazorWebAssembly&quot;&gt;</code>.  It builds both a standard <em>Blazor.dll</em> file and the WASM specific code including the Web Assembly &quot;boot configuration file&quot; <em>blazor.boot.json</em>.</p> <p>In the web assembly context, the initial page loads <em>blazor.webassembly.js</em>.  This loads <em>blazor.boot.json</em> which tells <em>blazor.webassembly.js</em> how to &quot;boot&quot; the Web assembly code in the browser.  It runs <code>Program</code> which builds the <code>WebAssemblyHost</code>, loads the defined services, and starts the <code>Renderer</code> which replaces the <em>app</em> html element with the root component specified in <code>Program</code>.  This loads the router, which reads the Url, gets the appropiate component, loads it into the specified layout, and begins the rendering process.  SPA up and running.</p> <p>In the Server context, the server side code picks up the component reference in the initial load page and statically renders it.  It passes the rendered page to the client.  This loads and runs <code>blazor.server.js</code>, which calls back to the server SignalR Hub and gets the dynamically rendered app root component.  SPA up and running.  The services container and renderer are in the Blazor Hub - started by calling <code>services.AddServerSideBlazor()</code> in Startup when the web server starts.</p> <p>The data services we implemented demonstrate Dependancy injection and interfaces.  The UI components - in our case <code>FetchData</code> consume the <code>IWeatherForcastService</code> service registered in Services.  In the WASM context, the services container starts <code>WeatherForecastAPIService</code>, while in the Server context, the services container starts <code>WeatherForecastServerService</code>.  Two different services, conforming to the same interface and consumed by the UI components using the interface.  The UI components don't care which service they consume, it just needs to implement <code>IWeatherForcastService</code>.</p> <h2 id="wrap-up"><a href="#wrap-up" class="header-anchor">#</a> Wrap Up</h2> <p>Hopefully this article has provided an insight into how Blazor SPAs work and the real differences between a Server and WASM Blazor SPA.</p> <p>If you are reading this well into the future, the most recent version of this article will be <a href="https://shauncurtis.github.io/articles/Blazor-AllinOne.html" target="_blank" rel="noopener noreferrer">here<span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a>.</p></div> <footer class="page-edit"><!----> <!----></footer> <div class="page-nav"><p class="inner"><span class="prev">
-      ←
-      <a href="/articles/Async-Programming-in-DotNetCore.html" class="prev">
-        Async Programming in DotNetCore
-      </a></span> <span class="next"><a href="/articles/Blazor-CSS.html">
-        CSS in Blazor
-      </a>
-      →
-    </span></p></div> </main></div><div class="global-ui"><!----></div></div>
-    <script src="/assets/js/app.e7504274.js" defer></script><script src="/assets/js/3.f3d70fce.js" defer></script><script src="/assets/js/44.1393eed1.js" defer></script>
-  </body>
+        <span class="hljs-keyword">await</span> builder.Build().RunAsync();
+    }
+}
+</div></code></pre>
+<h3 id="blazorweb-startupcs"><a href="http://Blazor.Web">Blazor.Web</a> Startup.cs</h3>
+<p>Add the server service to <em>Startup.cs</em> in the <em><a href="http://Blazor.Web">Blazor.Web</a></em> project, again through it's <code>IWeatherForecastService</code>.</p>
+<pre><code class="language-csharp"><div><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">ConfigureServices</span>(<span class="hljs-params">IServiceCollection services</span>)</span>
+{
+    services.AddRazorPages();
+    services.AddServerSideBlazor();
+    services.AddScoped&lt;IWeatherForecastService, WeatherForecastServerService&gt;();
+    .....
+}
+</div></code></pre>
+<h2 id="building-and-run-the-project">Building and Run the project</h2>
+<p>The solution should now build and run.</p>
+<p><img src="\articles\assets\Blazor-AllinOne\Blazor-Project.png" alt="Blazor Project"></p>
+<p><img src="\articles\assets\Blazor-AllinOne\Blazor-Web-Project.png" alt="Blazor.Web Project"></p>
+<h2 id="how-does-it-work">How Does It Work?</h2>
+<p>Fundimentally, the difference between a Blazor Server and a Blazor WASM Application is the context in which it's run.  In the solution all SPA code is built in the Web Assembly project, and used by both the WASM and Server contexts.  There's no &quot;shared&quot; code library code, because it's exactly the same front end code with the same entrypoint - App.razor.  The different between the two contexts, is the provider of the backend services.</p>
+<p>The web assembly project is declared <code>&lt;Project Sdk=&quot;Microsoft.NET.Sdk.BlazorWebAssembly&quot;&gt;</code>.  It builds both a standard <em>Blazor.dll</em> file and the WASM specific code including the Web Assembly &quot;boot configuration file&quot; <em>blazor.boot.json</em>.</p>
+<p>In the web assembly context, the initial page loads <em>blazor.webassembly.js</em>.  This loads <em>blazor.boot.json</em> which tells <em>blazor.webassembly.js</em> how to &quot;boot&quot; the Web assembly code in the browser.  It runs <code>Program</code> which builds the <code>WebAssemblyHost</code>, loads the defined services, and starts the <code>Renderer</code> which replaces the <em>app</em> html element with the root component specified in <code>Program</code>.  This loads the router, which reads the Url, gets the appropiate component, loads it into the specified layout, and begins the rendering process.  SPA up and running.</p>
+<p>In the Server context, the server side code picks up the component reference in the initial load page and statically renders it.  It passes the rendered page to the client.  This loads and runs <code>blazor.server.js</code>, which calls back to the server SignalR Hub and gets the dynamically rendered app root component.  SPA up and running.  The services container and renderer are in the Blazor Hub - started by calling <code>services.AddServerSideBlazor()</code> in Startup when the web server starts.</p>
+<p>The data services we implemented demonstrate Dependancy injection and interfaces.  The UI components - in our case <code>FetchData</code> consume the <code>IWeatherForcastService</code> service registered in Services.  In the WASM context, the services container starts <code>WeatherForecastAPIService</code>, while in the Server context, the services container starts <code>WeatherForecastServerService</code>.  Two different services, conforming to the same interface and consumed by the UI components using the interface.  The UI components don't care which service they consume, it just needs to implement <code>IWeatherForcastService</code>.</p>
+<h2 id="wrap-up">Wrap Up</h2>
+<p>Hopefully this article has provided an insight into how Blazor SPAs work and the real differences between a Server and WASM Blazor SPA.</p>
+<p>If you are reading this well into the future, the most recent version of this article will be <a href="https://shauncurtis.github.io/articles/Blazor-AllinOne.html">here</a>.</p>
+
+    
+
+            </div>
+        </div>
+    </div>
+</div>
+<!-- end of Article Container -->
+
+
+                </div>
+                <!-- End of Main Content -->
+            </div>
+            <!-- Footer -->
+            
+<!-- Copyright -->
+<footer class="sticky-footer bg-white">
+    <div class="container my-auto">
+        <div class="copyright text-center my-auto">
+            
+<span>Copyright &copy; Cold Elm Coders - 2021</span>
+
+        </div>
+    </div>
+</footer>
+<!-- end of copyright -->
+
+
+            <!-- End of Footer -->
+        </div>
+        <!-- End of Content Wrapper -->
+        
+<a class="scroll-to-top rounded" href="#page-top">
+    <i class="fas fa-angle-up"></i>
+</a>
+
+
+    </div>
+    <!-- End of Page Wrapper -->
+    <!-- Scripts -->
+    
+<!-- Scripts -->
+<!-- Bootstrap core JavaScript-->
+<script src="/assets/vendor/jquery/jquery.min.js"></script>
+<script src="/assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+<!-- Core plugin JavaScript-->
+<script src="/assets/vendor/jquery-easing/jquery.easing.min.js"></script>
+
+<!-- Custom scripts for all pages-->
+<script src="/assets/js/sb-admin-2.min.js"></script>
+
+
+</body>
 </html>

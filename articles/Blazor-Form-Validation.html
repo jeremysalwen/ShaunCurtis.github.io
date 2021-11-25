@@ -1,0 +1,717 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+<!-- SEO Meta Tags -->
+<meta name="description" content="Your description">
+<meta name="author" content="Your name">
+
+<!-- OG Meta Tags to improve the way the post looks when you share the page on Facebook, Twitter, LinkedIn -->
+<meta property="og:site_name" content="" /> <!-- website name -->
+<meta property="og:site" content="" /> <!-- website link -->
+<meta property="og:title" content="" /> <!-- title shown in the actual shared post -->
+<meta property="og:description" content="" /> <!-- description shown in the actual shared post -->
+<meta property="og:image" content="" /> <!-- image link, make sure it's jpg -->
+<meta property="og:url" content="" /> <!-- where do you want your post to link to -->
+<meta name="twitter:card" content="summary_large_image"> <!-- to have large image post format in Twitter -->
+
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+
+<meta name="description" content="A Blazor validation control to manage and monitor validation state in a form." >
+<meta name="author" content="Shaun Curtis" >
+
+
+
+<title>Blazor Form Validation</title>
+
+
+<!-- Custom fonts for this template-->
+<link href="/assets/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+<link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+      rel="stylesheet">
+
+<!-- Custom styles for this template-->
+<link href="/assets/css/sb-admin-2.css" rel="stylesheet" type="text/css">
+<link href="/assets/css/site.css" rel="stylesheet" type="text/css">
+
+<!-- Favicon  -->
+<link rel="icon" href="/assets/images/favicon.png">
+
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/highlight.css">
+    <link rel="stylesheet" href="/assets/css/article.css" type="text/css">
+</head>
+<body id="page-top">
+    <!--topbar-->
+    <div id="topbar">
+        
+<!-- Topbar -->
+<nav class="navbar navbar-expand navbar-light topbar mb-4 static-top">
+    
+<ul class="navbar-nav" >
+<li class="nav-item" >
+<a class="nav-link " href="/index.html" role="button"  >
+<span class="mr-2 d-none d-lg-inline text-gray-100">Index</span>
+</a>
+</li>
+<li class="nav-item dropdown no-arrow mx-1" >
+<a class="nav-link dropdown-toggle" href="#" id="1c7a37ae-4653-49ee-b9f5-708a0a719f3d" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"  >
+<span class="mr-2 d-none d-lg-inline text-gray-100">Articles</span>
+</a>
+<div class=" dropdown-list dropdown-menu shadow animated--grow-in" aria-labelledby="1c7a37ae-4653-49ee-b9f5-708a0a719f3d" >
+<a class="dropdown-item" href="/articles/A-Flexible-app.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+A Flexible App
+</a>
+<a class="dropdown-item" href="/articles/Async-Programming-in-DotNetCore.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Async Programming In Dotnetcore
+</a>
+<a class="dropdown-item" href="/articles/Blazor-AllinOne.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Blazor Allinone
+</a>
+<a class="dropdown-item" href="/articles/Blazor-Async-Programming.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Blazor Async Programming
+</a>
+<a class="dropdown-item" href="/articles/Blazor-Components.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Blazor Components
+</a>
+<a class="dropdown-item" href="/articles/Blazor-CSS.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Blazor CSS
+</a>
+<a class="dropdown-item" href="/articles/Blazor-DataList-Control.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Blazor Datalist Control
+</a>
+<a class="dropdown-item" href="/articles/Blazor-Form-Validation.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Blazor Form Validation
+</a>
+<a class="dropdown-item" href="/articles/Building-Edit-Forms.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Building Edit Forms
+</a>
+<a class="dropdown-item" href="/articles/Hydra.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Hydra
+</a>
+<a class="dropdown-item" href="/articles/Inline-Dialog.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Inline Dialog
+</a>
+<a class="dropdown-item" href="/articles/Modal-Dialog.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Modal Dialog
+</a>
+</div>
+</li>
+<li class="nav-item dropdown no-arrow mx-1" >
+<a class="nav-link dropdown-toggle" href="#" id="206509c2-93f4-41df-aa66-ba93eb1b561a" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"  >
+<span class="mr-2 d-none d-lg-inline text-gray-100">Blazor Database Application</span>
+</a>
+<div class=" dropdown-list dropdown-menu shadow animated--grow-in" aria-labelledby="206509c2-93f4-41df-aa66-ba93eb1b561a" >
+<a class="dropdown-item" href="/Building-a-Database-Application-in-Blazor/Building-a-Database-Application-in-Blazor-Part-1.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Building A Database Application In Blazor Part 1
+</a>
+<a class="dropdown-item" href="/Building-a-Database-Application-in-Blazor/Building-a-Database-Application-in-Blazor-Part-2.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Building A Database Application In Blazor Part 2
+</a>
+<a class="dropdown-item" href="/Building-a-Database-Application-in-Blazor/Building-a-Database-Application-in-Blazor-Part-3.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Building A Database Application In Blazor Part 3
+</a>
+<a class="dropdown-item" href="/Building-a-Database-Application-in-Blazor/Building-a-Database-Application-in-Blazor-Part-4.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Building A Database Application In Blazor Part 4
+</a>
+<a class="dropdown-item" href="/Building-a-Database-Application-in-Blazor/Building-a-Database-Application-in-Blazor-Part-5.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Building A Database Application In Blazor Part 5
+</a>
+<a class="dropdown-item" href="/Building-a-Database-Application-in-Blazor/Building-a-Database-Application-in-Blazor-Part-6.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Building A Database Application In Blazor Part 6
+</a>
+<a class="dropdown-item" href="/Building-a-Database-Application-in-Blazor/index.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Index
+</a>
+</div>
+</li>
+<li class="nav-item dropdown no-arrow mx-1" >
+<a class="nav-link dropdown-toggle" href="#" id="4a2bf1b4-25ae-4b9f-8654-da4378f4f92a" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"  >
+<span class="mr-2 d-none d-lg-inline text-gray-100">Posts</span>
+</a>
+<div class=" dropdown-list dropdown-menu shadow animated--grow-in" aria-labelledby="4a2bf1b4-25ae-4b9f-8654-da4378f4f92a" >
+<a class="dropdown-item" href="/posts/Blazor-Async-UI-Events.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Blazor Async UI Events
+</a>
+<a class="dropdown-item" href="/posts/DBContexts-In-Transient-Services.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Dbcontexts In Transient Services
+</a>
+<a class="dropdown-item" href="/posts/DynamicCss.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Dynamiccss
+</a>
+<a class="dropdown-item" href="/posts/For-ForEach-in-Blazor.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+For Foreach In Blazor
+</a>
+<a class="dropdown-item" href="/posts/Notification-Service-Pattern.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Notification Service Pattern
+</a>
+<a class="dropdown-item" href="/posts/XML-XSD-Serialization.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+XML XSD Serialization
+</a>
+</div>
+</li>
+</ul>
+
+    <div class="ms-5 me-5 ml-auto">
+        <h1>Cold Elm Coders</h1>
+    </div>
+</nav>
+
+
+    </div>
+    <!--End topbar-->
+    <!--Sidebar-->
+    <div id="sidebar">
+        
+<div class="article-info p-2" Published: 11-03-2021 >
+<div>Published: 11-03-2021</div>
+<div>Last Updated: 16-03-2021</div>
+<div>Author: Shaun Curtis</div>
+</div>
+
+        
+<h4 class="p-2">Table of Contents</h4>
+<ul class="TOC" >
+<li class="TOC-item TOC-item-0" >
+<a class="TOC-link" href="#">Top</a>
+<ul class="TOC TOC-0" >
+<li class="TOC-item TOC-item-1" >
+<ul class="TOC TOC-1" >
+<li class="TOC-item TOC-item-2" >
+<a class="TOC-link" href="#overview">Overview</a>
+</li>
+<li class="TOC-item TOC-item-2" >
+<a class="TOC-link" href="#code-and-examples">Code and Examples</a>
+</li>
+<li class="TOC-item TOC-item-2" >
+<a class="TOC-link" href="#related-articles">Related Articles</a>
+</li>
+<li class="TOC-item TOC-item-2" >
+<a class="TOC-link" href="#the-blazor-edit-setting">The Blazor Edit Setting</a>
+</li>
+<li class="TOC-item TOC-item-2" >
+<a class="TOC-link" href="#validator">Validator</a>
+<ul class="TOC TOC-2" >
+<li class="TOC-item TOC-item-3" >
+<a class="TOC-link" href="#weatherforecast">WeatherForecast</a>
+</li>
+</ul>
+</li>
+<li class="TOC-item TOC-item-2" >
+<a class="TOC-link" href="#validationformstate-control">ValidationFormState Control</a>
+</li>
+<li class="TOC-item TOC-item-2" >
+<a class="TOC-link" href="#a-simple-implementation">A Simple Implementation</a>
+</li>
+<li class="TOC-item TOC-item-2" >
+<a class="TOC-link" href="#wrap-up">Wrap Up</a>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+    </div>
+    <!--End Sidebar-->
+    <!-- Page Wrapper -->
+    <div id="wrapper">
+        <!-- Content Wrapper -->
+        <div id="content-wrapper" class="d-flex flex-column">
+            <!-- Main Content -->
+            <div id="content">
+                <!-- Topbar -->
+                <div id="article">
+                    <!-- Article -->
+                    
+<!-- Header -->
+<header class="ex-header-article">
+    <div class="container">
+        <div class="row pt-3 pb-3 border-bottom">
+            <div class="col">
+                
+<h1>Blazor Form Validation</h1>
+<div>A Blazor validation control to manage and monitor validation state in a form.</div>
+
+            </div> <!-- end of col -->
+        </div> <!-- end of row -->
+    </div> <!-- end of container -->
+</header> <!-- end of ex-header -->
+<!-- end of header -->
+
+
+                    
+<!-- Article Container -->
+<div class="ex-basic-1 pt-4">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                
+
+        <h2 id="overview">Overview</h2>
+<p>This is the second in a series of articles describing a set of useful Blazor Edit controls that solve some of the current shortcomings in the out-of-the-box edit experience without the need to buy expensive toolkits.</p>
+<p>This article covers how form validation works and shows how to build a relatively simple but fully featured validation system from scratch. Once the basic structure and classes are defined, it's easy to write additional validation chain methods for any new validation requirement or validator for a custom class.</p>
+<p><img src="\articles\assets\Editor-Controls\ValidationFormState.png" alt="EditForm"></p>
+<h2 id="code-and-examples">Code and Examples</h2>
+<p>The repository contains a project that implements the controls for all the articles in this series.  You can find it <a href="https://github.com/ShaunCurtis/Blazor.Database">here</a>.</p>
+<p>The example site is here <a href="https://cec-blazor-database.azurewebsites.net/">https://cec-blazor-database.azurewebsites.net/</a>.</p>
+<p>The example form described at this end of this article can be seen at <a href="https://cec-blazor-database.azurewebsites.net//validationeditor">https://cec-blazor-database.azurewebsites.net//validationeditor</a>.</p>
+<blockquote>
+<p>The Repo is a Work In Progress for future articles so will change and develop.</p>
+</blockquote>
+<h2 id="related-articles">Related Articles</h2>
+<p>The three articles are:</p>
+<ul>
+<li><a href="https://shauncurtis.github.io/articles/EditFormState.html">Managing Edit form State</a></li>
+<li><a href="https://shauncurtis.github.io/articles/ValidationFormState.html">Managing Validation State</a></li>
+<li><a href="https://shauncurtis.github.io/articles/Inline-Dialog.html">The Inline Dialog Control</a></li>
+</ul>
+<p>There's also an article on building a Modal Dialog Editor <a href="https://shauncurtis.github.io/articles/Modal-Editor.html">here</a>.</p>
+<h2 id="the-blazor-edit-setting">The Blazor Edit Setting</h2>
+<p>To begin lets look at the out-of-the-box form controls and how validation works.  A classic form looks something like this:</p>
+<pre><code class="language-html"><div><span class="hljs-tag">&lt;<span class="hljs-name">EditForm</span> <span class="hljs-attr">Model</span>=<span class="hljs-string">&quot;@exampleModel&quot;</span> <span class="hljs-attr">OnValidSubmit</span>=<span class="hljs-string">&quot;@HandleValidSubmit&quot;</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">DataAnnotationsValidator</span> /&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">ValidationSummary</span> /&gt;</span>
+
+    <span class="hljs-tag">&lt;<span class="hljs-name">InputText</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;name&quot;</span> @<span class="hljs-attr">bind-Value</span>=<span class="hljs-string">&quot;exampleModel.Name&quot;</span> /&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">ValidationMessage</span> <span class="hljs-attr">For</span>=<span class="hljs-string">&quot;@(() =&gt; exampleModel.Name)&quot;</span> /&gt;</span>
+
+    <span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;submit&quot;</span>&gt;</span>Submit<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">EditForm</span>&gt;</span>
+</div></code></pre>
+<p>The first article describes the basic interacts of <code>EditForm</code> and <code>EditContext</code> so we'll skip that and concentrate on the validation process.</p>
+<p>When the user clicks on the <em>Submit</em> button, <code>EditForm</code> either:</p>
+<ol>
+<li>If a delegate is registered with <code>OnSubmit</code>, it triggers it and ignores validation.</li>
+<li>If there's no <code>OnSubmit</code> delegate, it calls <code>EditContext.Validate</code>.  Depending on the result either triggers <code>OnValidSubmit</code> or <code>OnInvalidSubmit</code>.</li>
+</ol>
+<p><code>EditContext.Validate</code> checks if there's a delagate registered for <code>OnValidationRequested</code> and if so runs it synchronously.  Once complete it checks if there are any messages in the <code>ValidationMessageStore</code>.  If it's empty, the form passes validation and <code>OnValidSubmit</code> is invoked, otherwise <code>OnInvalidSubmit</code> is invoked.</p>
+<p>A Validator is a form component with no emitted markup.  It's placed within <code>EditForm</code> and captures the cascaded <code>EditContext</code>.  On initialization it registers an event handler with <code>EditContext.OnValidationRequested</code> to trigger validation.  On validation, the validator does whatever it's coded to do, logs validation failure messages to the <code>EditContext</code> <code>ValidationMessageStore</code> and finally calls <code>EditContext.NotifyValidationStateChanged</code> which triggers <code>EditContext.OnValidationStateChanged</code>.</p>
+<h4 id="validation-controls">Validation Controls</h4>
+<p>Controls such as <code>ValidationMessage</code> and <code>ValidationSummary</code> capture the cascaded <code>EditContext</code> and register event handlers on <code>EditContext.OnValidationStateChanged</code>.  When triggered they check for any relevant messages and display them.</p>
+<p>In the form shown above <code>&lt;DataAnnotationsValidator /&gt;</code> adds the <code>DataAnnotationsValidator</code> control to the form.  This hooks in as described above, and uses the custom attribute annotations on the model class to validate values.</p>
+<h2 id="validator">Validator</h2>
+<p><code>Validator</code> is the base validator class.  It's declared abstract and uses generics.  Validators work on a chaining principle.  The base class contains all the common boilerplate code.</p>
+<ol>
+<li>The first call is on an extension method defined for the object type to be validated.  Each object type needs it's own extension method to call it's specific validator.  This extension method returns the appropriate validator for the object type.</li>
+<li>Once you have the validator instance you can chain as many validation methods as you wish together.  Each is coded to run it's validation test, log any specific messages to the validator, trigger the trip if necessary, and return the validator instance.</li>
+<li>Validation finishes by calling <code>Validate</code>, which trips the passed tripwire if necessary, and log all the validation messages to the <code>ValidationMessageStore</code>.</li>
+</ol>
+<p>The <code>Validator</code> Properties/Fields are:</p>
+<pre><code><code><div>public bool IsValid =&gt; !Trip;
+public List&lt;string&gt; Messages { get; } = new List&lt;string&gt;();
+protected bool Trip { get; set; } = false;
+protected string FieldName { get; set; }
+protected T Value { get; set; }
+protected string DefaultMessage { get; set; } = &quot;The value failed validation&quot;;
+protected ValidationMessageStore ValidationMessageStore { get; set; }
+protected object Model { get; set; }
+</div></code></code></pre>
+<p>The constructor populates the validator</p>
+<pre><code class="language-csharp"><div><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">Validator</span>(<span class="hljs-params">T <span class="hljs-keyword">value</span>, <span class="hljs-keyword">string</span> fieldName, <span class="hljs-keyword">object</span> model, ValidationMessageStore validationMessageStore, <span class="hljs-keyword">string</span> message</span>)</span>
+{
+    <span class="hljs-keyword">this</span>.FieldName = fieldName;
+    <span class="hljs-keyword">this</span>.Value = <span class="hljs-keyword">value</span>;
+    <span class="hljs-keyword">this</span>.Model = model;
+    <span class="hljs-keyword">this</span>.ValidationMessageStore = validationMessageStore;
+    <span class="hljs-keyword">this</span>.DefaultMessage = <span class="hljs-keyword">string</span>.IsNullOrWhiteSpace(message) ? <span class="hljs-keyword">this</span>.DefaultMessage : message;
+}
+</div></code></pre>
+<p>There are two <code>Validate</code> methods: a public method for external usage and a protected one for specific validators to override.</p>
+<pre><code class="language-csharp"><div>
+<span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">virtual</span> <span class="hljs-keyword">bool</span> <span class="hljs-title">Validate</span>(<span class="hljs-params"><span class="hljs-keyword">ref</span> <span class="hljs-keyword">bool</span> tripwire, <span class="hljs-keyword">string</span> fieldname, <span class="hljs-keyword">string</span> message = <span class="hljs-literal">null</span></span>)</span>
+{
+    <span class="hljs-keyword">if</span> (<span class="hljs-keyword">string</span>.IsNullOrEmpty(fieldname) || <span class="hljs-keyword">this</span>.FieldName.Equals(fieldname))
+    {
+        <span class="hljs-keyword">this</span>.Validate(message);
+        <span class="hljs-keyword">if</span> (!<span class="hljs-keyword">this</span>.IsValid)
+            tripwire = <span class="hljs-literal">true</span>;
+    }
+    <span class="hljs-keyword">else</span> <span class="hljs-keyword">this</span>.Trip = <span class="hljs-literal">false</span>;
+    <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>.IsValid;
+}
+</div></code></pre>
+<pre><code class="language-csharp"><div><span class="hljs-function"><span class="hljs-keyword">protected</span> <span class="hljs-keyword">virtual</span> <span class="hljs-keyword">bool</span> <span class="hljs-title">Validate</span>(<span class="hljs-params"><span class="hljs-keyword">string</span> message = <span class="hljs-literal">null</span></span>)</span>
+{
+    <span class="hljs-keyword">if</span> (!<span class="hljs-keyword">this</span>.IsValid)
+    {
+        message ??= <span class="hljs-keyword">this</span>.DefaultMessage;
+        <span class="hljs-comment">// Check if we&#x27;ve logged specific messages.  If not add the default message</span>
+        <span class="hljs-keyword">if</span> (<span class="hljs-keyword">this</span>.Messages.Count == <span class="hljs-number">0</span>) Messages.Add(message);
+        <span class="hljs-comment">//set up a FieldIdentifier and add the message to the Edit Context ValidationMessageStore</span>
+        <span class="hljs-keyword">var</span> fi = <span class="hljs-keyword">new</span> FieldIdentifier(<span class="hljs-keyword">this</span>.Model, <span class="hljs-keyword">this</span>.FieldName);
+        <span class="hljs-keyword">this</span>.ValidationMessageStore.Add(fi, <span class="hljs-keyword">this</span>.Messages);
+    }
+    <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>.IsValid;
+}
+
+<span class="hljs-function"><span class="hljs-keyword">protected</span> <span class="hljs-keyword">void</span> <span class="hljs-title">LogMessage</span>(<span class="hljs-params"><span class="hljs-keyword">string</span> message</span>)</span>
+{
+    <span class="hljs-keyword">if</span> (!<span class="hljs-keyword">string</span>.IsNullOrWhiteSpace(message)) Messages.Add(message);
+}
+</div></code></pre>
+<h4 id="stringvalidator">StringValidator</h4>
+<p>Let's look at <code>StringValidator</code> as an example implementation of a validator.  The full set of validators is in the Repo.  There are two classes:</p>
+<ol>
+<li><code>StringValidatorExtensions</code> is a static class declaring as an extension method to <code>string</code>.</li>
+<li><code>StringValidator</code> is a implementation of <code>Validator</code> specifically for strings.</li>
+</ol>
+<p><code>StringValidatorExtensions</code> declares a single static extension method <code>Validation</code> for <code>string</code>.  It returns a <code>StringValidator</code> instance.  Call <code>StringValidator</code> on any string to initialise a validation chain.</p>
+<pre><code class="language-csharp"><div><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">class</span> <span class="hljs-title">StringValidatorExtensions</span>
+{
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> StringValidator <span class="hljs-title">Validation</span>(<span class="hljs-params"><span class="hljs-keyword">this</span> <span class="hljs-keyword">string</span> <span class="hljs-keyword">value</span>, <span class="hljs-keyword">string</span> fieldName, <span class="hljs-keyword">object</span> model, ValidationMessageStore validationMessageStore, <span class="hljs-keyword">string</span> message = <span class="hljs-literal">null</span></span>)</span>
+    {
+        <span class="hljs-keyword">var</span> validation = <span class="hljs-keyword">new</span> StringValidator(<span class="hljs-keyword">value</span>, fieldName, model, validationMessageStore, message);
+        <span class="hljs-keyword">return</span> validation;
+    }
+}
+</div></code></pre>
+<p><code>StringValidator</code> inherits from <code>Validator</code> and declares the specific validation chain methods for strings.  Each runs it's test.  If validation fails it logs any provided message to the message store and trips the tripwire.  Finally it returns <code>this</code>.  For strings, we have two length methods and a RegEx method to cover most circumstances.</p>
+<pre><code class="language-csharp"><div><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title">StringValidator</span> : <span class="hljs-title">Validator</span>&lt;<span class="hljs-title">string</span>&gt;
+{
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">StringValidator</span>(<span class="hljs-params"><span class="hljs-keyword">string</span> <span class="hljs-keyword">value</span>, <span class="hljs-keyword">string</span> fieldName, <span class="hljs-keyword">object</span> model, ValidationMessageStore validationMessageStore, <span class="hljs-keyword">string</span> message</span>) : <span class="hljs-title">base</span>(<span class="hljs-params"><span class="hljs-keyword">value</span>, fieldName, model, validationMessageStore, message</span>)</span> { }
+
+    <span class="hljs-comment"><span class="hljs-doctag">///</span> Check of the string is longer than test</span>
+    <span class="hljs-function"><span class="hljs-keyword">public</span> StringValidator <span class="hljs-title">LongerThan</span>(<span class="hljs-params"><span class="hljs-keyword">int</span> test, <span class="hljs-keyword">string</span> message = <span class="hljs-literal">null</span></span>)</span>
+    {
+        <span class="hljs-keyword">if</span> (<span class="hljs-keyword">string</span>.IsNullOrEmpty(<span class="hljs-keyword">this</span>.Value) || !(<span class="hljs-keyword">this</span>.Value.Length &gt; test))
+        {
+            Trip = <span class="hljs-literal">true</span>;
+            LogMessage(message);
+        }
+        <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>;
+    }
+
+    <span class="hljs-comment"><span class="hljs-doctag">///</span> Check if the string is shorter than</span>
+    <span class="hljs-function"><span class="hljs-keyword">public</span> StringValidator <span class="hljs-title">ShorterThan</span>(<span class="hljs-params"><span class="hljs-keyword">int</span> test, <span class="hljs-keyword">string</span> message = <span class="hljs-literal">null</span></span>)</span>
+    {
+            
+        <span class="hljs-keyword">if</span> (<span class="hljs-keyword">string</span>.IsNullOrEmpty(<span class="hljs-keyword">this</span>.Value) || !(<span class="hljs-keyword">this</span>.Value.Length &lt; test))
+        {
+            Trip = <span class="hljs-literal">true</span>;
+            LogMessage(message);
+        }
+        <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>;
+    }
+
+    <span class="hljs-comment"><span class="hljs-doctag">///</span> Check if the string is matches a RegEx pattern</span>
+    <span class="hljs-function"><span class="hljs-keyword">public</span> StringValidator <span class="hljs-title">Matches</span>(<span class="hljs-params"><span class="hljs-keyword">string</span> pattern, <span class="hljs-keyword">string</span> message = <span class="hljs-literal">null</span></span>)</span>
+    {
+        <span class="hljs-keyword">if</span> (!<span class="hljs-keyword">string</span>.IsNullOrWhiteSpace(<span class="hljs-keyword">this</span>.Value))
+        {
+            <span class="hljs-keyword">var</span> match = Regex.Match(<span class="hljs-keyword">this</span>.Value, pattern);
+            <span class="hljs-keyword">if</span> (match.Success &amp;&amp; match.Value.Equals(<span class="hljs-keyword">this</span>.Value)) <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>;
+        }
+        <span class="hljs-keyword">this</span>.Trip = <span class="hljs-literal">true</span>;
+        LogMessage(message);
+        <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>;
+    }
+}
+</div></code></pre>
+<h4 id="ivalidation">IValidation</h4>
+<p>The  <code>IValidation</code> interface looks like this.  It simply defines a <code>Validate</code> method.</p>
+<pre><code class="language-csharp"><div><span class="hljs-keyword">public</span> <span class="hljs-keyword">interface</span> <span class="hljs-title">IValidation</span>
+{
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">bool</span> <span class="hljs-title">Validate</span>(<span class="hljs-params">ValidationMessageStore validationMessageStore, <span class="hljs-keyword">string</span> fieldname, <span class="hljs-keyword">object</span> model = <span class="hljs-literal">null</span></span>)</span>;
+}
+</div></code></pre>
+<h3 id="weatherforecast">WeatherForecast</h3>
+<p><code>WeatherForecast</code> is a typical data class.</p>
+<ol>
+<li>It implements <code>IValidation</code> so the control can run validation.</li>
+<li>Each field is declared as a property with default values.</li>
+<li>It implements <code>IValidation.Validate</code> which calls three validations.</li>
+</ol>
+<p>Each validation:</p>
+<ol>
+<li>Calls the <code>Validation</code> extension method on the type.</li>
+<li>Calls one or more validation chain methods.</li>
+<li>Calls <code>Validate</code> to log any validation messages to the <code>ValidationMessageStore</code> on <code>EditContext</code> and if necessary trip the tripwire.</li>
+</ol>
+<pre><code class="language-csharp"><div><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title">WeatherForecast</span> : <span class="hljs-title">IValidation</span>
+{
+    <span class="hljs-keyword">public</span> <span class="hljs-keyword">int</span> ID { <span class="hljs-keyword">get</span>; <span class="hljs-keyword">set</span>; } = <span class="hljs-number">-1</span>;
+    <span class="hljs-keyword">public</span> DateTime Date { <span class="hljs-keyword">get</span>; <span class="hljs-keyword">set</span>; } = DateTime.Now;
+    <span class="hljs-keyword">public</span> <span class="hljs-keyword">int</span> TemperatureC { <span class="hljs-keyword">get</span>; <span class="hljs-keyword">set</span>; } = <span class="hljs-number">0</span>;
+    [<span class="hljs-meta">NotMapped</span>] <span class="hljs-keyword">public</span> <span class="hljs-keyword">int</span> TemperatureF =&gt; <span class="hljs-number">32</span> + (<span class="hljs-keyword">int</span>)(TemperatureC / <span class="hljs-number">0.5556</span>);
+    <span class="hljs-keyword">public</span> <span class="hljs-keyword">string</span> Summary { <span class="hljs-keyword">get</span>; <span class="hljs-keyword">set</span>; } = <span class="hljs-keyword">string</span>.Empty;
+
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">bool</span> <span class="hljs-title">Validate</span>(<span class="hljs-params">ValidationMessageStore validationMessageStore, <span class="hljs-keyword">string</span> fieldname, <span class="hljs-keyword">object</span> model = <span class="hljs-literal">null</span></span>)</span>
+    {
+        model = model ?? <span class="hljs-keyword">this</span>;
+        <span class="hljs-keyword">bool</span> trip = <span class="hljs-literal">false</span>;
+
+        <span class="hljs-keyword">this</span>.Summary.Validation(<span class="hljs-string">&quot;Summary&quot;</span>, model, validationMessageStore)
+            .LongerThan(<span class="hljs-number">2</span>, <span class="hljs-string">&quot;Your description needs to be a little longer! 3 letters minimum&quot;</span>)
+            .Validate(<span class="hljs-keyword">ref</span> trip, fieldname);
+
+        <span class="hljs-keyword">this</span>.Date.Validation(<span class="hljs-string">&quot;Date&quot;</span>, model, validationMessageStore)
+            .NotDefault(<span class="hljs-string">&quot;You must select a date&quot;</span>)
+            .LessThan(DateTime.Now.AddMonths(<span class="hljs-number">1</span>), <span class="hljs-literal">true</span>, <span class="hljs-string">&quot;Date can only be up to 1 month ahead&quot;</span>)
+            .Validate(<span class="hljs-keyword">ref</span> trip, fieldname);
+
+        <span class="hljs-keyword">this</span>.TemperatureC.Validation(<span class="hljs-string">&quot;TemperatureC&quot;</span>, model, validationMessageStore)
+            .LessThan(<span class="hljs-number">70</span>, <span class="hljs-string">&quot;The temperature must be less than 70C&quot;</span>)
+            .GreaterThan(<span class="hljs-number">-60</span>, <span class="hljs-string">&quot;The temperature must be greater than -60C&quot;</span>)
+            .Validate(<span class="hljs-keyword">ref</span> trip, fieldname);
+
+        <span class="hljs-keyword">return</span> !trip;
+    }
+
+}
+</div></code></pre>
+<h2 id="validationformstate-control">ValidationFormState Control</h2>
+<p>The <code>ValidationFormState</code> control replaces the basic Validator provided with Blazor.</p>
+<ol>
+<li>It captures the cascaded <code>EditContext</code>.</li>
+<li><code>DoValidationOnFieldChange</code> controls field level validation. if true it validates a field when a user exits the field.  if false it only responds to form level validation requests through <code>EditContext</code>.</li>
+<li><code>ValidStateChanged</code> is a callback for the parent to attach an event handler if required.</li>
+<li><code>IsValid</code> is a public readonly property exposing the current validation state.  It checks if <code>EditContext</code> has any validation messages.</li>
+<li><code>ValidationMessageStore</code> is the <code>EditContext</code>'s <code>ValidationMessageStore</code>.</li>
+<li><code>validating</code> is a boolean field to ensure we don't stack validations.</li>
+<li><code>disposedValue</code> is part of the <code>IDisposable</code> implementation.</li>
+</ol>
+<pre><code class="language-csharp"><div>    [<span class="hljs-meta">CascadingParameter</span>] <span class="hljs-keyword">public</span> EditContext EditContext { <span class="hljs-keyword">get</span>; <span class="hljs-keyword">set</span>; }
+    [<span class="hljs-meta">Parameter</span>] <span class="hljs-keyword">public</span> <span class="hljs-keyword">bool</span> DoValidationOnFieldChange { <span class="hljs-keyword">get</span>; <span class="hljs-keyword">set</span>; } = <span class="hljs-literal">true</span>;
+    [<span class="hljs-meta">Parameter</span>] <span class="hljs-keyword">public</span> EventCallback&lt;<span class="hljs-keyword">bool</span>&gt; ValidStateChanged { <span class="hljs-keyword">get</span>; <span class="hljs-keyword">set</span>; }
+    <span class="hljs-keyword">public</span> <span class="hljs-keyword">bool</span> IsValid =&gt; !EditContext?.GetValidationMessages().Any() ?? <span class="hljs-literal">true</span>;
+
+    <span class="hljs-keyword">private</span> ValidationMessageStore validationMessageStore;
+    <span class="hljs-keyword">private</span> <span class="hljs-keyword">bool</span> validating = <span class="hljs-literal">false</span>;
+    <span class="hljs-keyword">private</span> <span class="hljs-keyword">bool</span> disposedValue;
+</div></code></pre>
+<p>When the component initializes it gets the <code>ValidationMessageStore</code> from <code>EditContext</code>.  It checks if it's running field level validation, and if so registers <code>FieldChanged</code> with <code>EditContext.OnFieldChanged</code> event. Finally it registers <code>ValidationRequested</code> with <code>EditContext.OnValidationRequested</code>.</p>
+<pre><code class="language-csharp"><div>    <span class="hljs-function"><span class="hljs-keyword">protected</span> <span class="hljs-keyword">override</span> Task <span class="hljs-title">OnInitializedAsync</span>(<span class="hljs-params"></span>)</span>
+    {
+        Debug.Assert(<span class="hljs-keyword">this</span>.EditContext != <span class="hljs-literal">null</span>);
+
+        <span class="hljs-keyword">if</span> (<span class="hljs-keyword">this</span>.EditContext != <span class="hljs-literal">null</span>)
+        {
+            <span class="hljs-comment">// Get the Validation Message Store from the EditContext</span>
+            <span class="hljs-keyword">this</span>.validationMessageStore = <span class="hljs-keyword">new</span> ValidationMessageStore(<span class="hljs-keyword">this</span>.EditContext);
+            <span class="hljs-comment">// Wires up to the EditContext OnFieldChanged event</span>
+            <span class="hljs-keyword">if</span> (<span class="hljs-keyword">this</span>.DoValidationOnFieldChange)
+                <span class="hljs-keyword">this</span>.EditContext.OnFieldChanged += FieldChanged;
+            <span class="hljs-comment">// Wires up to the Editcontext OnValidationRequested event</span>
+            <span class="hljs-keyword">this</span>.EditContext.OnValidationRequested += ValidationRequested;
+        }
+        <span class="hljs-keyword">return</span> Task.CompletedTask;
+    }
+</div></code></pre>
+<p>The two event handlers call <code>Validate</code>, one with and one without the field name.</p>
+<pre><code class="language-csharp"><div><span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-keyword">void</span> <span class="hljs-title">FieldChanged</span>(<span class="hljs-params"><span class="hljs-keyword">object</span> sender, FieldChangedEventArgs e</span>)</span>
+    =&gt; <span class="hljs-keyword">this</span>.Validate(e.FieldIdentifier.FieldName);
+
+<span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-keyword">void</span> <span class="hljs-title">ValidationRequested</span>(<span class="hljs-params"><span class="hljs-keyword">object</span> sender, ValidationRequestedEventArgs e</span>)</span>
+    =&gt; <span class="hljs-keyword">this</span>.Validate();
+</div></code></pre>
+<p>The comments within <code>Validate</code> explain what it's doing.  It casts the <code>Model</code> as an IValidator and check if it's valid.  if so it calls the <code>Validate</code> method on the interface. We've seen <em>model</em>.<code>Validate</code> in the <code>WesatherForecast</code> data class.  When it passes a <code>fieldname</code> to <code>Validate</code> it only clears any validation messages for that specific <code>fieldname</code>.</p>
+<pre><code class="language-csharp"><div><span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-keyword">void</span> <span class="hljs-title">Validate</span>(<span class="hljs-params"><span class="hljs-keyword">string</span> fieldname = <span class="hljs-literal">null</span></span>)</span>
+{
+    <span class="hljs-comment">// Checks to see if the Model implements IValidation</span>
+    <span class="hljs-keyword">var</span> validator = <span class="hljs-keyword">this</span>.EditContext.Model <span class="hljs-keyword">as</span> IValidation;
+    <span class="hljs-keyword">if</span> (validator != <span class="hljs-literal">null</span> || !<span class="hljs-keyword">this</span>.validating)
+    {
+        <span class="hljs-keyword">this</span>.validating = <span class="hljs-literal">true</span>;
+        <span class="hljs-comment">// Check if we are doing a field level or form level validation</span>
+        <span class="hljs-comment">// Form level - clear all validation messages</span>
+        <span class="hljs-comment">// Field level - clear any field specific validation messages</span>
+        <span class="hljs-keyword">if</span> (<span class="hljs-keyword">string</span>.IsNullOrEmpty(fieldname))
+            <span class="hljs-keyword">this</span>.validationMessageStore.Clear();
+        <span class="hljs-keyword">else</span>
+            validationMessageStore.Clear(<span class="hljs-keyword">new</span> FieldIdentifier(<span class="hljs-keyword">this</span>.EditContext.Model, fieldname));
+        <span class="hljs-comment">// Run the IValidation interface Validate method</span>
+        validator.Validate(validationMessageStore, fieldname, <span class="hljs-keyword">this</span>.EditContext.Model);
+        <span class="hljs-comment">// Notify the EditContext that the Validation State has changed - </span>
+        <span class="hljs-comment">// This precipitates a OnValidationStateChanged event which the validation message controls are all plugged into</span>
+        <span class="hljs-keyword">this</span>.EditContext.NotifyValidationStateChanged();
+        <span class="hljs-comment">// Invoke ValidationStateChanged</span>
+        <span class="hljs-keyword">this</span>.ValidStateChanged.InvokeAsync(<span class="hljs-keyword">this</span>.IsValid);
+        <span class="hljs-keyword">this</span>.validating = <span class="hljs-literal">false</span>;
+    }
+}
+</div></code></pre>
+<p>The rest of the code consists of utility methods and <code>IDisposable</code> implementation.</p>
+<pre><code class="language-csharp"><div>
+        <span class="hljs-comment"><span class="hljs-doctag">///</span> <span class="hljs-doctag">&lt;summary&gt;</span></span>
+        <span class="hljs-comment"><span class="hljs-doctag">///</span> Method to clear the Validation and Edit State </span>
+        <span class="hljs-comment"><span class="hljs-doctag">///</span> <span class="hljs-doctag">&lt;/summary&gt;</span></span>
+        <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">Clear</span>(<span class="hljs-params"></span>)</span>
+            =&gt; <span class="hljs-keyword">this</span>.validationMessageStore.Clear();
+
+        <span class="hljs-comment">// IDisposable Implementation</span>
+        <span class="hljs-function"><span class="hljs-keyword">protected</span> <span class="hljs-keyword">virtual</span> <span class="hljs-keyword">void</span> <span class="hljs-title">Dispose</span>(<span class="hljs-params"><span class="hljs-keyword">bool</span> disposing</span>)</span>
+        {
+            <span class="hljs-keyword">if</span> (!disposedValue)
+            {
+                <span class="hljs-keyword">if</span> (disposing)
+                {
+                    <span class="hljs-keyword">if</span> (<span class="hljs-keyword">this</span>.EditContext != <span class="hljs-literal">null</span>)
+                    {
+                        <span class="hljs-keyword">this</span>.EditContext.OnFieldChanged -= <span class="hljs-keyword">this</span>.FieldChanged;
+                        <span class="hljs-keyword">this</span>.EditContext.OnValidationRequested -= <span class="hljs-keyword">this</span>.ValidationRequested;
+                    }
+                }
+                disposedValue = <span class="hljs-literal">true</span>;
+            }
+        }
+
+        <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">Dispose</span>(<span class="hljs-params"></span>)</span>
+        {
+            <span class="hljs-comment">// Do not change this code. Put cleanup code in &#x27;Dispose(bool disposing)&#x27; method</span>
+            Dispose(disposing: <span class="hljs-literal">true</span>);
+            GC.SuppressFinalize(<span class="hljs-keyword">this</span>);
+        }
+</div></code></pre>
+<h2 id="a-simple-implementation">A Simple Implementation</h2>
+<p><img src="\articles\assets\Editor-Controls\ValidationFormState.png" alt="EditForm"></p>
+<p>To test the component, here's a simple test page.</p>
+<p>Change the temperature up and down and you should see the buttons change colour and Text, and enabled/disabled state.  Change the Temperature to 200 to get a validation message.</p>
+<p>You can see this at <a href="https://cec-blazor-database.azurewebsites.net//validationeditor">https://cec-blazor-database.azurewebsites.net//validationeditor</a>.</p>
+<pre><code class="language-html"><div>@using Blazor.Database.Data
+@page &quot;/validationeditor&quot;
+
+<span class="hljs-tag">&lt;<span class="hljs-name">EditForm</span> <span class="hljs-attr">Model</span>=<span class="hljs-string">&quot;@Model&quot;</span> <span class="hljs-attr">OnValidSubmit</span>=<span class="hljs-string">&quot;@HandleValidSubmit&quot;</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">EditFormState</span> @<span class="hljs-attr">ref</span>=<span class="hljs-string">&quot;editFormState&quot;</span> <span class="hljs-attr">EditStateChanged</span>=<span class="hljs-string">&quot;this.EditStateChanged&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">EditFormState</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">ValidationFormState</span> @<span class="hljs-attr">ref</span>=<span class="hljs-string">&quot;validationFormState&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">ValidationFormState</span>&gt;</span>
+
+    <span class="hljs-tag">&lt;<span class="hljs-name">label</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;form-label&quot;</span>&gt;</span>ID:<span class="hljs-tag">&lt;/<span class="hljs-name">label</span>&gt;</span> <span class="hljs-tag">&lt;<span class="hljs-name">InputNumber</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;form-control&quot;</span> @<span class="hljs-attr">bind-Value</span>=<span class="hljs-string">&quot;Model.ID&quot;</span> /&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">label</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;form-label&quot;</span>&gt;</span>Date:<span class="hljs-tag">&lt;/<span class="hljs-name">label</span>&gt;</span> <span class="hljs-tag">&lt;<span class="hljs-name">InputDate</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;form-control&quot;</span> @<span class="hljs-attr">bind-Value</span>=<span class="hljs-string">&quot;Model.Date&quot;</span> /&gt;</span><span class="hljs-tag">&lt;<span class="hljs-name">ValidationMessage</span> <span class="hljs-attr">For</span>=<span class="hljs-string">&quot;@(() =&gt; Model.Date)&quot;</span> /&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">label</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;form-label&quot;</span>&gt;</span>Temp C:<span class="hljs-tag">&lt;/<span class="hljs-name">label</span>&gt;</span> <span class="hljs-tag">&lt;<span class="hljs-name">InputNumber</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;form-control&quot;</span> @<span class="hljs-attr">bind-Value</span>=<span class="hljs-string">&quot;Model.TemperatureC&quot;</span> /&gt;</span><span class="hljs-tag">&lt;<span class="hljs-name">ValidationMessage</span> <span class="hljs-attr">For</span>=<span class="hljs-string">&quot;@(() =&gt; Model.TemperatureC)&quot;</span> /&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">label</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;form-label&quot;</span>&gt;</span>Summary:<span class="hljs-tag">&lt;/<span class="hljs-name">label</span>&gt;</span> <span class="hljs-tag">&lt;<span class="hljs-name">InputText</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;form-control&quot;</span> @<span class="hljs-attr">bind-Value</span>=<span class="hljs-string">&quot;Model.Summary&quot;</span> /&gt;</span><span class="hljs-tag">&lt;<span class="hljs-name">ValidationMessage</span> <span class="hljs-attr">For</span>=<span class="hljs-string">&quot;@(() =&gt; Model.Summary)&quot;</span> /&gt;</span>
+
+    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;mt-2&quot;</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span>Validation Messages:<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">ValidationSummary</span> /&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+
+    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;text-right mt-2&quot;</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;btn @btnStateColour&quot;</span> <span class="hljs-attr">disabled</span>&gt;</span>@btnStateText<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;btn @btnValidColour&quot;</span> <span class="hljs-attr">disabled</span>&gt;</span>@btnValidText<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;btn btn-primary&quot;</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;submit&quot;</span> <span class="hljs-attr">disabled</span>=<span class="hljs-string">&quot;@_btnSubmitDisabled&quot;</span>&gt;</span>Submit<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+
+<span class="hljs-tag">&lt;/<span class="hljs-name">EditForm</span>&gt;</span>
+</div></code></pre>
+<pre><code class="language-csharp"><div>@code {
+    <span class="hljs-keyword">protected</span> <span class="hljs-keyword">bool</span> _isDirty = <span class="hljs-literal">false</span>;
+    <span class="hljs-keyword">protected</span> <span class="hljs-keyword">bool</span> _isValid =&gt; validationFormState?.IsValid ?? <span class="hljs-literal">true</span>;
+    <span class="hljs-keyword">protected</span> <span class="hljs-keyword">string</span> btnStateColour =&gt; _isDirty ? <span class="hljs-string">&quot;btn-danger&quot;</span> : <span class="hljs-string">&quot;btn-success&quot;</span>;
+    <span class="hljs-keyword">protected</span> <span class="hljs-keyword">string</span> btnStateText =&gt; _isDirty ? <span class="hljs-string">&quot;Dirty&quot;</span> : <span class="hljs-string">&quot;Clean&quot;</span>;
+    <span class="hljs-keyword">protected</span> <span class="hljs-keyword">string</span> btnValidColour =&gt; !_isValid ? <span class="hljs-string">&quot;btn-danger&quot;</span> : <span class="hljs-string">&quot;btn-success&quot;</span>;
+    <span class="hljs-keyword">protected</span> <span class="hljs-keyword">string</span> btnValidText =&gt; !_isValid ? <span class="hljs-string">&quot;Invalid&quot;</span> : <span class="hljs-string">&quot;Valid&quot;</span>;
+    <span class="hljs-keyword">protected</span> <span class="hljs-keyword">bool</span> _btnSubmitDisabled =&gt; !(_isValid &amp;&amp; _isDirty);
+
+    <span class="hljs-keyword">protected</span> EditFormState editFormState { <span class="hljs-keyword">get</span>; <span class="hljs-keyword">set</span>; }
+    <span class="hljs-keyword">protected</span> ValidationFormState validationFormState { <span class="hljs-keyword">get</span>; <span class="hljs-keyword">set</span>; }
+
+    <span class="hljs-keyword">private</span> WeatherForecast Model = <span class="hljs-keyword">new</span> WeatherForecast()
+    {
+        ID = <span class="hljs-number">1</span>,
+        Date = DateTime.Now,
+        TemperatureC = <span class="hljs-number">22</span>,
+        Summary = <span class="hljs-string">&quot;Balmy&quot;</span>
+    };
+
+    <span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-keyword">void</span> <span class="hljs-title">HandleValidSubmit</span>(<span class="hljs-params"></span>)</span>
+        =&gt; <span class="hljs-keyword">this</span>.editFormState.UpdateState();
+
+    <span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-keyword">void</span> <span class="hljs-title">EditStateChanged</span>(<span class="hljs-params"><span class="hljs-keyword">bool</span> editstate</span>)</span>
+        =&gt; <span class="hljs-keyword">this</span>._isDirty = editstate;
+}
+</div></code></pre>
+<h2 id="wrap-up">Wrap Up</h2>
+<p>Hopefully I've explained how validation works and how to build a simple, but comprehensive and extensible validation system.</p>
+<p>The most common problem with validation is <code>ValidationMessage</code> controls not showing messages.  There are normally two reasons for this:</p>
+<ol>
+<li>The UI hasn't updated.  Step through the code to check what's happening when.</li>
+<li>The <code>FieldIdentifier</code> generated from the <code>For</code> property of <code>ValidationMessage</code> doesn't match the <code>FieldIdentifier</code> in the validation store.  Check the <code>FieldIdentifier</code> you're generating and logging to the validation store.</li>
+</ol>
+<p>The next article shows how to lock out the form and prevent navigation when the form is dirty.</p>
+<p>If you've found this article well into the future, the latest version will be available <a href="https://shauncurtis.github.io/articles/ValidationFormState.html">here</a></p>
+
+    
+
+            </div>
+        </div>
+    </div>
+</div>
+<!-- end of Article Container -->
+
+
+                </div>
+                <!-- End of Main Content -->
+            </div>
+            <!-- Footer -->
+            
+<!-- Copyright -->
+<footer class="sticky-footer bg-white">
+    <div class="container my-auto">
+        <div class="copyright text-center my-auto">
+            
+<span>Copyright &copy; Cold Elm Coders - 2021</span>
+
+        </div>
+    </div>
+</footer>
+<!-- end of copyright -->
+
+
+            <!-- End of Footer -->
+        </div>
+        <!-- End of Content Wrapper -->
+        
+<a class="scroll-to-top rounded" href="#page-top">
+    <i class="fas fa-angle-up"></i>
+</a>
+
+
+    </div>
+    <!-- End of Page Wrapper -->
+    <!-- Scripts -->
+    
+<!-- Scripts -->
+<!-- Bootstrap core JavaScript-->
+<script src="/assets/vendor/jquery/jquery.min.js"></script>
+<script src="/assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+<!-- Core plugin JavaScript-->
+<script src="/assets/vendor/jquery-easing/jquery.easing.min.js"></script>
+
+<!-- Custom scripts for all pages-->
+<script src="/assets/js/sb-admin-2.min.js"></script>
+
+
+</body>
+</html>
