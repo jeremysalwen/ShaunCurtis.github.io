@@ -10,7 +10,8 @@
 pre {
     padding: .5rem;
     color: white;
-    background-color: rgb(16,16,16);
+    background-color: rgb(32,32,32);
+    border-radius: 7px;
 }
 
 /* Style page content */
