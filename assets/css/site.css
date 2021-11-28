@@ -11,6 +11,13 @@
 }
 
 
+/* sort indent with icons */
+.dropdown-item {
+    text-indent: -25px;
+    padding-left: 45px;
+}
+
+
 ul.TOC {
     font-size: .8rem;
     list-style: none ;

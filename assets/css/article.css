@@ -14,6 +14,15 @@ pre {
     border-radius: 7px;
 }
 
+blockquote {
+    padding: .5rem .5rem 0 .5rem;
+    border: 0.1rem solid #888;
+    border-left: 0.25rem solid #4e73df;
+    background-color: white;
+    border-radius: 7px;
+    font-style: italic;
+}
+
 /* Style page content */
 
 /* Style top content */
