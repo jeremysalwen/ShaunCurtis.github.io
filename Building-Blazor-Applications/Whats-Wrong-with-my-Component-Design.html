@@ -23,12 +23,12 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
 
-<meta name="description" content="Applying Separation of Concerns, SOLID and Patterns to your Blazor Application" >
+<meta name="description" content="Applying Separation of Concerns, SOLID and Patterns to your Blazor Components" >
 <meta name="author" content="Shaun Curtis" >
 
 
 
-<title>Rebuilding Counter</title>
+<title>What's Wrong with my Component Design?</title>
 
 
 <!-- Custom fonts for this template-->
@@ -61,10 +61,10 @@
 </a>
 </li>
 <li class="nav-item dropdown no-arrow mx-1" >
-<a class="nav-link dropdown-toggle" href="#" id="12b7f28d-6f6f-4a98-9f91-5d2d8585f1ef" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"  >
+<a class="nav-link dropdown-toggle" href="#" id="cca121eb-3054-4dd3-afb2-07f38a38b1d4" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"  >
 <span class="mr-2 d-none d-lg-inline text-gray-100">Articles</span>
 </a>
-<div class=" dropdown-list dropdown-menu shadow animated--grow-in" aria-labelledby="12b7f28d-6f6f-4a98-9f91-5d2d8585f1ef" >
+<div class=" dropdown-list dropdown-menu shadow animated--grow-in" aria-labelledby="cca121eb-3054-4dd3-afb2-07f38a38b1d4" >
 <a class="dropdown-item" href="/articles/A-Flexible-App.html" >
 <i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
 Creating a Dynamic Blazor App Component
@@ -133,13 +133,17 @@ Policy Base Authorization in Blazor
 <i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
 A Blazor Validation Control
 </a>
+<a class="dropdown-item" href="/articles/XML-XSD-Serialization.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+XML XSD Serialization
+</a>
 </div>
 </li>
 <li class="nav-item dropdown no-arrow mx-1" >
-<a class="nav-link dropdown-toggle" href="#" id="044e7b37-c7dc-419f-8a6e-105f75f27f0a" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"  >
+<a class="nav-link dropdown-toggle" href="#" id="57168f91-9c7a-4499-b9a3-8c37182c1e7a" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"  >
 <span class="mr-2 d-none d-lg-inline text-gray-100">Blazor Database Apps</span>
 </a>
-<div class=" dropdown-list dropdown-menu shadow animated--grow-in" aria-labelledby="044e7b37-c7dc-419f-8a6e-105f75f27f0a" >
+<div class=" dropdown-list dropdown-menu shadow animated--grow-in" aria-labelledby="57168f91-9c7a-4499-b9a3-8c37182c1e7a" >
 <a class="dropdown-item" href="/Building-a-Database-Application-in-Blazor/Building-a-Database-Application-in-Blazor-Part-1.html" >
 <i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
 Building A Database Application In Blazor Part 1
@@ -171,10 +175,22 @@ Building a Database Application in Blazor
 </div>
 </li>
 <li class="nav-item dropdown no-arrow mx-1" >
-<a class="nav-link dropdown-toggle" href="#" id="5fe00116-3bb6-4d12-aae8-42fc9615051b" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"  >
+<a class="nav-link dropdown-toggle" href="#" id="eaeec847-581e-47e2-b55d-38d4e8f3cc32" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"  >
 <span class="mr-2 d-none d-lg-inline text-gray-100">Building Blazor Applications</span>
 </a>
-<div class=" dropdown-list dropdown-menu shadow animated--grow-in" aria-labelledby="5fe00116-3bb6-4d12-aae8-42fc9615051b" >
+<div class=" dropdown-list dropdown-menu shadow animated--grow-in" aria-labelledby="eaeec847-581e-47e2-b55d-38d4e8f3cc32" >
+<a class="dropdown-item" href="/Building-Blazor-Applications/Blazor-Async-UI-Events.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Blazor Async UI Events
+</a>
+<a class="dropdown-item" href="/Building-Blazor-Applications/Blazor-Bootstrap-Toaster.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Blazor Bootstrap Toaster
+</a>
+<a class="dropdown-item" href="/Building-Blazor-Applications/Blazor-Services.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Blazor Services
+</a>
 <a class="dropdown-item" href="/Building-Blazor-Applications/Building-A-Blazor-AutoComplete-Control.html" >
 <i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
 Building A Blazor Autocomplete Control
@@ -183,21 +199,45 @@ Building A Blazor Autocomplete Control
 <i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
 Building Wrapper Components
 </a>
+<a class="dropdown-item" href="/Building-Blazor-Applications/DBContexts-In-Transient-Services.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Dbcontexts In Transient Services
+</a>
+<a class="dropdown-item" href="/Building-Blazor-Applications/DynamicCss.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Blazor Dynamic Stylesheets
+</a>
+<a class="dropdown-item" href="/Building-Blazor-Applications/For-ForEach-in-Blazor.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+For Foreach In Blazor
+</a>
 <a class="dropdown-item" href="/Building-Blazor-Applications/Leaner-Meaner-Greener-Components.html" >
 <i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
 Leaner Meaner Greener Components
 </a>
-<a class="dropdown-item" href="/Building-Blazor-Applications/Rebuilding-Counter.html" >
+<a class="dropdown-item" href="/Building-Blazor-Applications/Notification-Service-Pattern.html" >
 <i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
-Rebuilding Counter
+Notification Service Pattern
+</a>
+<a class="dropdown-item" href="/Building-Blazor-Applications/The-Blazor-WASM-Hosted-Project.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+The Blazor WASM Hosted Project
+</a>
+<a class="dropdown-item" href="/Building-Blazor-Applications/Whats-Wrong-with-my-Component-Design.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Whats Wrong With My Component Design
+</a>
+<a class="dropdown-item" href="/Building-Blazor-Applications/The-Blazor-Component" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Building Blazor Applications\The Blazor Component
 </a>
 </div>
 </li>
 <li class="nav-item dropdown no-arrow mx-1" >
-<a class="nav-link dropdown-toggle" href="#" id="88bccb97-f88f-4dad-abc6-e0de7c789058" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"  >
+<a class="nav-link dropdown-toggle" href="#" id="632a17d4-197d-4808-b4fc-bd8e81b809c4" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"  >
 <span class="mr-2 d-none d-lg-inline text-gray-100">Design</span>
 </a>
-<div class=" dropdown-list dropdown-menu shadow animated--grow-in" aria-labelledby="88bccb97-f88f-4dad-abc6-e0de7c789058" >
+<div class=" dropdown-list dropdown-menu shadow animated--grow-in" aria-labelledby="632a17d4-197d-4808-b4fc-bd8e81b809c4" >
 <a class="dropdown-item" href="/Design/Clean-Design-In-Blazor.html" >
 <i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
 Clean Design Principles in Blazor Applications
@@ -229,56 +269,13 @@ Testing in the Clean Design Blazor Template
 </div>
 </li>
 <li class="nav-item dropdown no-arrow mx-1" >
-<a class="nav-link dropdown-toggle" href="#" id="a1f4d8c2-5d4b-44a8-95cb-6fa2ce10fd62" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"  >
+<a class="nav-link dropdown-toggle" href="#" id="c61714b3-2f84-4f39-90de-7db37de5c9d7" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"  >
 <span class="mr-2 d-none d-lg-inline text-gray-100">Modern C#</span>
 </a>
-<div class=" dropdown-list dropdown-menu shadow animated--grow-in" aria-labelledby="a1f4d8c2-5d4b-44a8-95cb-6fa2ce10fd62" >
+<div class=" dropdown-list dropdown-menu shadow animated--grow-in" aria-labelledby="c61714b3-2f84-4f39-90de-7db37de5c9d7" >
 <a class="dropdown-item" href="/Modern-Coding-Patterns/Nullable-And-VS-2022.html" >
 <i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
 Nullable And VS 2022
-</a>
-</div>
-</li>
-<li class="nav-item dropdown no-arrow mx-1" >
-<a class="nav-link dropdown-toggle" href="#" id="ddb558d6-d800-4152-9e99-1ae906c341d3" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"  >
-<span class="mr-2 d-none d-lg-inline text-gray-100">Posts</span>
-</a>
-<div class=" dropdown-list dropdown-menu shadow animated--grow-in" aria-labelledby="ddb558d6-d800-4152-9e99-1ae906c341d3" >
-<a class="dropdown-item" href="/posts/Blazor-Async-UI-Events.html" >
-<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
-Blazor Async UI Events
-</a>
-<a class="dropdown-item" href="/posts/Blazor-Bootstrap-Toaster.html" >
-<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
-Blazor Bootstrap Toaster
-</a>
-<a class="dropdown-item" href="/posts/Blazor-Services.html" >
-<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
-Blazor Services
-</a>
-<a class="dropdown-item" href="/posts/DBContexts-In-Transient-Services.html" >
-<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
-Dbcontexts In Transient Services
-</a>
-<a class="dropdown-item" href="/posts/DynamicCss.html" >
-<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
-Blazor Dynamic Stylesheets
-</a>
-<a class="dropdown-item" href="/posts/For-ForEach-in-Blazor.html" >
-<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
-For Foreach In Blazor
-</a>
-<a class="dropdown-item" href="/posts/Notification-Service-Pattern.html" >
-<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
-Notification Service Pattern
-</a>
-<a class="dropdown-item" href="/posts/The-Blazor-WASM-Hosted-Project.html" >
-<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
-The Blazor WASM Hosted Project
-</a>
-<a class="dropdown-item" href="/posts/XML-XSD-Serialization.html" >
-<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
-XML XSD Serialization
 </a>
 </div>
 </li>
@@ -378,8 +375,8 @@ XML XSD Serialization
         <div class="row pt-3 pb-3 border-bottom">
             <div class="col">
                 
-<h1>Rebuilding Counter</h1>
-<div>Applying Separation of Concerns, SOLID and Patterns to your Blazor Application</div>
+<h1>What's Wrong with my Component Design?</h1>
+<div>Applying Separation of Concerns, SOLID and Patterns to your Blazor Components</div>
 
             </div> <!-- end of col -->
         </div> <!-- end of row -->
