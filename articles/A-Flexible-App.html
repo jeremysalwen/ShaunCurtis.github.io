@@ -1,0 +1,975 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+<!-- SEO Meta Tags -->
+<meta name="description" content="Your description">
+<meta name="author" content="Your name">
+
+<!-- OG Meta Tags to improve the way the post looks when you share the page on Facebook, Twitter, LinkedIn -->
+<meta property="og:site_name" content="" /> <!-- website name -->
+<meta property="og:site" content="" /> <!-- website link -->
+<meta property="og:title" content="" /> <!-- title shown in the actual shared post -->
+<meta property="og:description" content="" /> <!-- description shown in the actual shared post -->
+<meta property="og:image" content="" /> <!-- image link, make sure it's jpg -->
+<meta property="og:url" content="" /> <!-- where do you want your post to link to -->
+<meta name="twitter:card" content="summary_large_image"> <!-- to have large image post format in Twitter -->
+
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+
+<meta name="description" content="This article shows how to add Dynamic Routing, Layouts and RouteViews to the Blazor App Component." >
+<meta name="author" content="Shaun Curtis" >
+
+
+
+<title>Adding Dynamic Routing, Layouts and RouteViews to the Blazor App Component</title>
+
+
+<!-- Custom fonts for this template-->
+<link href="/assets/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+<link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+      rel="stylesheet">
+
+<!-- Custom styles for this template-->
+<link href="/assets/css/sb-admin-2.css" rel="stylesheet" type="text/css">
+<link href="/assets/css/site.css" rel="stylesheet" type="text/css">
+
+<!-- Favicon  -->
+<link rel="icon" href="/assets/images/favicon.png">
+
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/highlight.css">
+    <link rel="stylesheet" href="/assets/css/article.css" type="text/css">
+</head>
+<body id="page-top">
+    <!--topbar-->
+    <div id="topbar">
+        
+<!-- Topbar -->
+<nav class="navbar navbar-expand navbar-light topbar mb-4 static-top">
+    
+<ul class="navbar-nav" >
+<li class="nav-item" >
+<a class="nav-link " href="/index.html" role="button"  >
+<span class="mr-2 d-none d-lg-inline text-gray-100">Index</span>
+</a>
+</li>
+<li class="nav-item dropdown no-arrow mx-1" >
+<a class="nav-link dropdown-toggle" href="#" id="492a3ca0-1f2a-4baa-8ce5-f16fe8168b90" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"  >
+<span class="mr-2 d-none d-lg-inline text-gray-100">Articles</span>
+</a>
+<div class=" dropdown-list dropdown-menu shadow animated--grow-in" aria-labelledby="492a3ca0-1f2a-4baa-8ce5-f16fe8168b90" >
+<a class="dropdown-item" href="/articles/A-Flexible-App.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Creating a Dynamic Blazor App Component
+</a>
+<a class="dropdown-item" href="/articles/Async-Programming-in-DotNetCore.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Async Programming In Dotnetcore
+</a>
+<a class="dropdown-item" href="/articles/Blazor-AllinOne.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Blazor All In One - Multi SPA Hosting
+</a>
+<a class="dropdown-item" href="/articles/Blazor-Async-Programming.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Blazor Async Programming
+</a>
+<a class="dropdown-item" href="/articles/Blazor-Brick-By-Brick.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Blazor Brick By Brick
+</a>
+<a class="dropdown-item" href="/articles/Blazor-Components.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Blazor Components
+</a>
+<a class="dropdown-item" href="/articles/Blazor-CSS.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Blazor CSS
+</a>
+<a class="dropdown-item" href="/articles/Blazor-DataList-Control.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Blazor Datalist Control
+</a>
+<a class="dropdown-item" href="/articles/Blazor-Form-Validation.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Blazor Form Validation
+</a>
+<a class="dropdown-item" href="/articles/Building-Blazor-List-Components.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Building Blazor List Components and the Notification Pattern
+</a>
+<a class="dropdown-item" href="/articles/Building-Edit-Forms.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Building Edit Forms
+</a>
+<a class="dropdown-item" href="/articles/EditFormState.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+The Blazor EditFormState Control
+</a>
+<a class="dropdown-item" href="/articles/Hydra.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Blazor Hydra
+</a>
+<a class="dropdown-item" href="/articles/Inline-Dialog.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+The Blazor Inline Dialog Control
+</a>
+<a class="dropdown-item" href="/articles/Modal-Dialog.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+A Blazor Modal Dialog
+</a>
+<a class="dropdown-item" href="/articles/Policy-Based-Authorization.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Policy Base Authorization in Blazor
+</a>
+<a class="dropdown-item" href="/articles/ValidationFormState.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+A Blazor Validation Control
+</a>
+<a class="dropdown-item" href="/articles/XML-XSD-Serialization.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+XML XSD Serialization
+</a>
+</div>
+</li>
+<li class="nav-item dropdown no-arrow mx-1" >
+<a class="nav-link dropdown-toggle" href="#" id="72548fab-5008-4cf8-8cca-22f4c1cc8787" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"  >
+<span class="mr-2 d-none d-lg-inline text-gray-100">Blazor Database Apps</span>
+</a>
+<div class=" dropdown-list dropdown-menu shadow animated--grow-in" aria-labelledby="72548fab-5008-4cf8-8cca-22f4c1cc8787" >
+<a class="dropdown-item" href="/Building-a-Database-Application-in-Blazor/Building-a-Database-Application-in-Blazor-Part-1.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Building A Database Application In Blazor Part 1
+</a>
+<a class="dropdown-item" href="/Building-a-Database-Application-in-Blazor/Building-a-Database-Application-in-Blazor-Part-2.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Building A Database Application In Blazor Part 2
+</a>
+<a class="dropdown-item" href="/Building-a-Database-Application-in-Blazor/Building-a-Database-Application-in-Blazor-Part-3.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Building A Database Application In Blazor Part 3
+</a>
+<a class="dropdown-item" href="/Building-a-Database-Application-in-Blazor/Building-a-Database-Application-in-Blazor-Part-4.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Building A Database Application In Blazor Part 4
+</a>
+<a class="dropdown-item" href="/Building-a-Database-Application-in-Blazor/Building-a-Database-Application-in-Blazor-Part-5.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Building A Database Application In Blazor Part 5
+</a>
+<a class="dropdown-item" href="/Building-a-Database-Application-in-Blazor/Building-a-Database-Application-in-Blazor-Part-6.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Building A Database Application In Blazor Part 6
+</a>
+<a class="dropdown-item" href="/Building-a-Database-Application-in-Blazor/index.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Building a Database Application in Blazor
+</a>
+</div>
+</li>
+<li class="nav-item dropdown no-arrow mx-1" >
+<a class="nav-link dropdown-toggle" href="#" id="bcabb9a1-2e77-459d-a2e3-dda3d163640f" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"  >
+<span class="mr-2 d-none d-lg-inline text-gray-100">Building Blazor Applications</span>
+</a>
+<div class=" dropdown-list dropdown-menu shadow animated--grow-in" aria-labelledby="bcabb9a1-2e77-459d-a2e3-dda3d163640f" >
+<a class="dropdown-item" href="/Building-Blazor-Applications/Blazor-Async-UI-Events.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Blazor Async UI Events
+</a>
+<a class="dropdown-item" href="/Building-Blazor-Applications/Blazor-Bootstrap-Toaster.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Blazor Bootstrap Toaster
+</a>
+<a class="dropdown-item" href="/Building-Blazor-Applications/Blazor-Services.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Blazor Services
+</a>
+<a class="dropdown-item" href="/Building-Blazor-Applications/Building-A-Blazor-AutoComplete-Control.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Building A Blazor Autocomplete Control
+</a>
+<a class="dropdown-item" href="/Building-Blazor-Applications/Building-Wrapper-Components.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Building Wrapper Components
+</a>
+<a class="dropdown-item" href="/Building-Blazor-Applications/Component-Service-Manager.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+The Component Service Manager
+</a>
+<a class="dropdown-item" href="/Building-Blazor-Applications/DBContexts-In-Transient-Services.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Dbcontexts In Transient Services
+</a>
+<a class="dropdown-item" href="/Building-Blazor-Applications/DynamicCss.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Blazor Dynamic Stylesheets
+</a>
+<a class="dropdown-item" href="/Building-Blazor-Applications/For-ForEach-in-Blazor.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+For Foreach In Blazor
+</a>
+<a class="dropdown-item" href="/Building-Blazor-Applications/Leaner-Meaner-Greener-Components.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Leaner Meaner Greener Components
+</a>
+<a class="dropdown-item" href="/Building-Blazor-Applications/Notification-Service-Pattern.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Blazor Notification Service Pattern
+</a>
+<a class="dropdown-item" href="/Building-Blazor-Applications/Rethinking-The-Repository-Pattern.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Rethinking The Repository Pattern
+</a>
+<a class="dropdown-item" href="/Building-Blazor-Applications/The-Blazor-WASM-Hosted-Project.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+The Blazor WASM Hosted Project
+</a>
+<a class="dropdown-item" href="/Building-Blazor-Applications/Whats-Wrong-with-my-Component-Design.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Whats Wrong With My Component Design
+</a>
+<a class="dropdown-item" href="/Building-Blazor-Applications/The-Blazor-Component" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Building Blazor Applications\The Blazor Component
+</a>
+</div>
+</li>
+<li class="nav-item dropdown no-arrow mx-1" >
+<a class="nav-link dropdown-toggle" href="#" id="4d9ee306-f3a8-4306-9b68-bba8d973b551" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"  >
+<span class="mr-2 d-none d-lg-inline text-gray-100">Design</span>
+</a>
+<div class=" dropdown-list dropdown-menu shadow animated--grow-in" aria-labelledby="4d9ee306-f3a8-4306-9b68-bba8d973b551" >
+<a class="dropdown-item" href="/Design/Clean-Design-In-Blazor.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Clean Design Principles in Blazor Applications
+</a>
+<a class="dropdown-item" href="/Design/Clean-Design-Blazor-Template.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+A Blazor Clean Design Template
+</a>
+<a class="dropdown-item" href="/Design/Clean-Design-Blazor-Template-Solution-Structure.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Solution Structure in the Clean Design Blazor Template
+</a>
+<a class="dropdown-item" href="/Design/Clean-Design-Blazor-Template-DataServices.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Data Services in the Clean Design Blazor Template
+</a>
+<a class="dropdown-item" href="/Design/Clean-Design-Blazor-Template-UI.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+The UI in the Clean Design Blazor Template
+</a>
+<a class="dropdown-item" href="/Design/Clean-Design-Blazor-Template-Solution-Setup.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Solution Setup in the Clean Design Blazor Template
+</a>
+<a class="dropdown-item" href="/Design/Clean-Design-Blazor-Template-Testing.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Testing in the Clean Design Blazor Template
+</a>
+</div>
+</li>
+<li class="nav-item dropdown no-arrow mx-1" >
+<a class="nav-link dropdown-toggle" href="#" id="d4118b82-cf9b-4f69-94b1-32f164f26164" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"  >
+<span class="mr-2 d-none d-lg-inline text-gray-100">Modern C#</span>
+</a>
+<div class=" dropdown-list dropdown-menu shadow animated--grow-in" aria-labelledby="d4118b82-cf9b-4f69-94b1-32f164f26164" >
+<a class="dropdown-item" href="/Modern-Coding-Patterns/Nullable-And-VS-2022.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Nullable And VS 2022
+</a>
+</div>
+</li>
+</ul>
+
+    <div class="ms-5 me-5 ml-auto">
+        <h1>Cold Elm Coders</h1>
+    </div>
+</nav>
+
+
+    </div>
+    <!--End topbar-->
+    <!--Sidebar-->
+    <div id="sidebar">
+        
+<div class="article-info p-2" Published: 09-04-2021 >
+<div>Published: 09-04-2021</div>
+<div>Last Updated: 13-04-2021</div>
+<div>Author: Shaun Curtis</div>
+</div>
+
+        
+<h4 class="p-2">Table of Contents</h4>
+<ul class="TOC" >
+<li class="TOC-item TOC-item-0" >
+<a class="TOC-link" href="#">Top</a>
+<ul class="TOC TOC-0" >
+<li class="TOC-item TOC-item-1" >
+<ul class="TOC TOC-1" >
+<li class="TOC-item TOC-item-2" >
+<a class="TOC-link" href="#overview">Overview</a>
+</li>
+<li class="TOC-item TOC-item-2" >
+<a class="TOC-link" href="#code-and-examples">Code and Examples</a>
+</li>
+<li class="TOC-item TOC-item-2" >
+<a class="TOC-link" href="#the-blazor-application">The Blazor Application</a>
+</li>
+<li class="TOC-item TOC-item-2" >
+<a class="TOC-link" href="#the-app-component">The App Component</a>
+</li>
+<li class="TOC-item TOC-item-2" >
+<a class="TOC-link" href="#routeviewservice">RouteViewService</a>
+<ul class="TOC TOC-2" >
+<li class="TOC-item TOC-item-3" >
+<a class="TOC-link" href="#routeviewmanager">RouteViewManager</a>
+</li>
+</ul>
+</li>
+<li class="TOC-item TOC-item-2" >
+<a class="TOC-link" href="#dynamic-layouts">Dynamic Layouts</a>
+</li>
+<li class="TOC-item TOC-item-2" >
+<a class="TOC-link" href="#dynamic-routing">Dynamic Routing</a>
+<ul class="TOC TOC-2" >
+<li class="TOC-item TOC-item-3" >
+<a class="TOC-link" href="#customroutedata">CustomRouteData</a>
+</li>
+</ul>
+</li>
+<li class="TOC-item TOC-item-2" >
+<a class="TOC-link" href="#updates-to-the-routeviewservice">Updates to the RouteViewService</a>
+</li>
+<li class="TOC-item TOC-item-2" >
+<a class="TOC-link" href="#the-routenotfoundmanager-component">The RouteNotFoundManager Component</a>
+</li>
+<li class="TOC-item TOC-item-2" >
+<a class="TOC-link" href="#switching-the-routeview-without-routing">Switching the RouteView Without Routing</a>
+<ul class="TOC TOC-2" >
+<li class="TOC-item TOC-item-3" >
+<a class="TOC-link" href="#viewdata">ViewData</a>
+</li>
+<li class="TOC-item TOC-item-3" >
+<a class="TOC-link" href="#routeviewmanager-1">RouteViewManager</a>
+</li>
+<li class="TOC-item TOC-item-3" >
+<a class="TOC-link" href="#routenavlink">RouteNavLink</a>
+</li>
+</ul>
+</li>
+<li class="TOC-item TOC-item-2" >
+<a class="TOC-link" href="#example-pages">Example Pages</a>
+<ul class="TOC TOC-2" >
+<li class="TOC-item TOC-item-3" >
+<a class="TOC-link" href="#routeviewerrazor">RouteViewer.razor</a>
+</li>
+<li class="TOC-item TOC-item-3" >
+<a class="TOC-link" href="#formrazor">Form.Razor</a>
+</li>
+</ul>
+</li>
+<li class="TOC-item TOC-item-2" >
+<a class="TOC-link" href="#wrap-up">Wrap Up</a>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+    </div>
+    <!--End Sidebar-->
+    <!-- Page Wrapper -->
+    <div id="wrapper">
+        <!-- Content Wrapper -->
+        <div id="content-wrapper" class="d-flex flex-column">
+            <!-- Main Content -->
+            <div id="content">
+                <!-- Topbar -->
+                <div id="article">
+                    <!-- Article -->
+                    
+<!-- Header -->
+<header class="ex-header-article">
+    <div class="container">
+        <div class="row pt-3 pb-3 border-bottom">
+            <div class="col">
+                
+<h1>Adding Dynamic Routing, Layouts and RouteViews to the Blazor App Component</h1>
+<div>This article shows how to add Dynamic Routing, Layouts and RouteViews to the Blazor App Component.</div>
+
+            </div> <!-- end of col -->
+        </div> <!-- end of row -->
+    </div> <!-- end of container -->
+</header> <!-- end of ex-header -->
+<!-- end of header -->
+
+
+                    
+<!-- Article Container -->
+<div class="ex-basic-1 pt-4">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                
+
+        <h2 id="overview">Overview</h2>
+<p><code>App</code> is the Blazor UI root component.  This article looks at how it works and demonstrates how to:</p>
+<ol>
+<li>Add Dynamic Layouts - change the default layout at runtime.</li>
+<li>Add Dynamic Routes - add and remove extra routes at runtime.</li>
+<li>Add Dynamic RouteViews - change the RouteView component directly without Routing.</li>
+</ol>
+<p><img src="https://shauncurtis.github.io/articles/assets/A-Flexible-App/Screenshot.png" alt="EditForm"></p>
+<h2 id="code-and-examples">Code and Examples</h2>
+<p><a href="https://github.com/ShaunCurtis/CEC.Blazor.RouteView">The repository for this project is here</a>, and is based on my <a href="https://github.com/ShaunCurtis/AllinOne">Blazor AllInOne Template</a>.</p>
+<p>You can view a demo of the components running on my Blazor.Database site here <a href="https://cec-blazor-database.azurewebsites.net/">https://cec-blazor-database.azurewebsites.net/</a> from the highlighted links.</p>
+<h2 id="the-blazor-application">The Blazor Application</h2>
+<p><code>App</code> is normally defined in <em>App.razor</em>.  The same component is used in both Web Assembly and Server contexts.</p>
+<p>In the Web Assembly context the SPA startup page contains an element placeholder which is replaced when <code>Program</code> starts in the Web Assembly context.</p>
+<pre><code class="language-html"><div>....
+<span class="hljs-tag">&lt;<span class="hljs-name">body</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;app&quot;</span>&gt;</span>Loading...<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+    ...
+<span class="hljs-tag">&lt;/<span class="hljs-name">body</span>&gt;</span>
+</div></code></pre>
+<p>The code line that defines the replacement in <code>Program</code> is:</p>
+<pre><code class="language-csharp"><div>    <span class="hljs-comment">// Replace the app id element with the component App</span>
+    builder.RootComponents.Add&lt;App&gt;(<span class="hljs-string">&quot;#app&quot;</span>);
+</div></code></pre>
+<p>In the Server context <code>App</code> is declared directly as a Razor component in the Razor markup.  It gets pre-rendered by the server and then updated by the Blazor Server client in the browser.</p>
+<pre><code class="language-html"><div>...
+<span class="hljs-tag">&lt;<span class="hljs-name">body</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">component</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;typeof(Blazor.App)&quot;</span> <span class="hljs-attr">render-mode</span>=<span class="hljs-string">&quot;ServerPrerendered&quot;</span> /&gt;</span>
+...
+<span class="hljs-tag">&lt;/<span class="hljs-name">body</span>&gt;</span>
+</div></code></pre>
+<h2 id="the-app-component">The App Component</h2>
+<p>The <code>App</code> code is shown below.  It's a standard Razor component, inheriting from <code>ComponentBase</code>.</p>
+<p><code>Router</code> is the local root component and sets <code>AppAssembly</code> to the assembly containing <code>Program</code>.  On initialization it trawls <code>Assembly</code> for all classes with a Route attribute and registers with the <code>NavigationChanged</code> event on the NavigationManager Service.  On a navigation event it tries to match the navigation Url to a route.  If it finds one, it renders the <code>Found</code> render fragment, otherwise it renders <code>NotFound</code>.</p>
+<pre><code class="language-html"><div><span class="hljs-tag">&lt;<span class="hljs-name">Router</span> <span class="hljs-attr">AppAssembly</span>=<span class="hljs-string">&quot;@typeof(Program).Assembly&quot;</span> <span class="hljs-attr">PreferExactMatches</span>=<span class="hljs-string">&quot;@true&quot;</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">Found</span> <span class="hljs-attr">Context</span>=<span class="hljs-string">&quot;routeData&quot;</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">RouteView</span> <span class="hljs-attr">RouteData</span>=<span class="hljs-string">&quot;@routeData&quot;</span> <span class="hljs-attr">DefaultLayout</span>=<span class="hljs-string">&quot;@typeof(MainLayout)&quot;</span> /&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-name">Found</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">NotFound</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">LayoutView</span> <span class="hljs-attr">Layout</span>=<span class="hljs-string">&quot;@typeof(MainLayout)&quot;</span>&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span>Sorry, there&#x27;s nothing at this address.<span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span>
+        <span class="hljs-tag">&lt;/<span class="hljs-name">LayoutView</span>&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-name">NotFound</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">Router</span>&gt;</span>
+</div></code></pre>
+<p><code>RouteView</code> is declared within <code>Found</code>.  <code>RouteData</code> is set to the router's current <code>routeData</code> object and <code>DefaultLayout</code> set to an application Layout <code>Type</code>.  <code>RouteView</code> renders an instance of <code>RouteData.Type</code> as a component within either the a page specific layout or the default layout, and applies any parameters in <code>RouteData.RouteValues</code>.</p>
+<p><code>NotFound</code> contains a <code>LayoutView</code> component, specifying a layout to render any child content in.</p>
+<h2 id="routeviewservice">RouteViewService</h2>
+<p><code>RouteViewService</code> is the state management service for the new components.  It's registered in the WASM and Server Services.  The Server version can be either a Singleton or Scoped, depending on the application needs.  You could have two separate services to manage application and user contexts separately.</p>
+<pre><code class="language-csharp"><div><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title">RouteViewService</span> 
+{
+  ....
+}
+</div></code></pre>
+<p>In the Server it's added to <code>Startup</code> in <code>ConfigServices</code>.</p>
+<pre><code class="language-csharp"><div>services.AddSingleton&lt;RouteViewService&gt;();
+</div></code></pre>
+<p>In the Web Assembly context it's added to <code>Program</code>.</p>
+<pre><code class="language-csharp"><div>builder.Services.AddScoped&lt;RouteViewService&gt;();
+</div></code></pre>
+<h3 id="routeviewmanager">RouteViewManager</h3>
+<p><code>RouteViewManager</code> replaces <code>RouteView</code>.</p>
+<p>It's implements <code>RouteView</code>'s functionality.  It's too large to show in it's entirety so We'll look at the key functionality in sections.</p>
+<p>When a routing event occurs, <code>RouteViewManager.RouteData</code> is updated and <code>Router</code> re-rendered.  The <code>Renderer</code> calls <code>SetParametersAsync</code> on  <code>RouteViewManager</code>, passing the updated <em>Parameters</em>.  <code>SetParametersAsync</code> checks it has a valid <code>RouteData</code>, sets <code>_ViewData</code> to null and renders the component.  <code>_ViewData</code> is set to null to ensure the component loads the route. A valid <code>ViewData</code> object has precedence over a valid <code>RouteData</code> object in the render process.</p>
+<pre><code class="language-csharp"><div><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">await</span> Task <span class="hljs-title">SetParametersAsync</span>(<span class="hljs-params">ParameterView parameters</span>)</span>
+{
+    <span class="hljs-comment">// Sets the component parameters</span>
+    parameters.SetParameterProperties(<span class="hljs-keyword">this</span>);
+    <span class="hljs-comment">// Check if we have either RouteData or ViewData</span>
+    <span class="hljs-keyword">if</span> (RouteData == <span class="hljs-literal">null</span>)
+    {
+        <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> InvalidOperationException(<span class="hljs-string">$&quot;The <span class="hljs-subst">{<span class="hljs-keyword">nameof</span>(RouteView)}</span> component requires a non-null value for the parameter <span class="hljs-subst">{<span class="hljs-keyword">nameof</span>(RouteData)}</span>.&quot;</span>);
+    }
+    <span class="hljs-comment">// we&#x27;ve routed and need to clear the ViewData</span>
+    <span class="hljs-keyword">this</span>._ViewData = <span class="hljs-literal">null</span>;
+    <span class="hljs-comment">// Render the component</span>
+    <span class="hljs-keyword">await</span> <span class="hljs-keyword">this</span>.RenderAsync();
+}
+</div></code></pre>
+<p><code>Render</code> uses InvokeAsync to ensure the render event is run on the correct thread context. <code>_RenderEventQueued</code> ensures there's only only one render event in the Renderer's queue.</p>
+<pre><code class="language-csharp"><div><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">async</span> Task <span class="hljs-title">RenderAsync</span>(<span class="hljs-params"></span>)</span> =&gt; <span class="hljs-keyword">await</span> InvokeAsync(() =&gt;
+    {
+        <span class="hljs-keyword">if</span> (!<span class="hljs-keyword">this</span>._RenderEventQueued)
+        {
+            <span class="hljs-keyword">this</span>._RenderEventQueued = <span class="hljs-literal">true</span>;
+            _renderHandle.Render(_renderDelegate);
+        }
+    }
+);
+</div></code></pre>
+<p>For those curious, <code>InvokeAsync</code> looks like this.</p>
+<pre><code class="language-csharp"><div><span class="hljs-function"><span class="hljs-keyword">protected</span> Task <span class="hljs-title">InvokeAsync</span>(<span class="hljs-params">Action workItem</span>)</span> =&gt; _renderHandle.Dispatcher.InvokeAsync(workItem);
+</div></code></pre>
+<p><code>RouteViewManager</code>s content is built as a set of components, each defined within a <code>RenderFragment</code>.</p>
+<p><code>_renderDelegate</code> defines the local root component, cascading itself and adding the <code>_layoutViewFragment</code> fragment as it's <code>ChildContent</code>.</p>
+<pre><code class="language-csharp"><div><span class="hljs-keyword">private</span> RenderFragment _renderDelegate =&gt; builder =&gt;
+{
+    <span class="hljs-comment">// We&#x27;re being executed so no longer queued</span>
+    _RenderEventQueued = <span class="hljs-literal">false</span>;
+    <span class="hljs-comment">// Adds cascadingvalue for the ViewManager</span>
+    builder.OpenComponent&lt;CascadingValue&lt;RouteViewManager&gt;&gt;(<span class="hljs-number">0</span>);
+    builder.AddAttribute(<span class="hljs-number">1</span>, <span class="hljs-string">&quot;Value&quot;</span>, <span class="hljs-keyword">this</span>);
+    <span class="hljs-comment">// Get the layout render fragment</span>
+    builder.AddAttribute(<span class="hljs-number">2</span>, <span class="hljs-string">&quot;ChildContent&quot;</span>, <span class="hljs-keyword">this</span>._layoutViewFragment);
+    builder.CloseComponent();
+};
+</div></code></pre>
+<p><code>_layoutViewFragment</code> selects the layout, adds it and sets <code>_renderComponentWithParameters</code> as it's <code>ChildContent</code>.</p>
+<pre><code class="language-csharp"><div><span class="hljs-keyword">private</span> RenderFragment _layoutViewFragment =&gt; builder =&gt;
+{
+    Type _pageLayoutType = RouteData?.PageType.GetCustomAttribute&lt;LayoutAttribute&gt;()?.LayoutType
+        ?? RouteViewService.Layout
+        ?? DefaultLayout;
+
+    builder.OpenComponent&lt;LayoutView&gt;(<span class="hljs-number">0</span>);
+    builder.AddAttribute(<span class="hljs-number">1</span>, <span class="hljs-keyword">nameof</span>(LayoutView.Layout), _pageLayoutType);
+    builder.AddAttribute(<span class="hljs-number">2</span>, <span class="hljs-keyword">nameof</span>(LayoutView.ChildContent), _renderComponentWithParameters);
+    builder.CloseComponent();
+};
+</div></code></pre>
+<p><code>_renderComponentWithParameters</code> selects the view/route component to render and adds it with the supplied parameters.  A valid view take precedence over a valid route.</p>
+<pre><code class="language-csharp"><div><span class="hljs-keyword">private</span> RenderFragment _renderComponentWithParameters =&gt; builder =&gt;
+{
+    Type componentType = <span class="hljs-literal">null</span>;
+    IReadOnlyDictionary&lt;<span class="hljs-keyword">string</span>, <span class="hljs-keyword">object</span>&gt; parameters = <span class="hljs-keyword">new</span> Dictionary&lt;<span class="hljs-keyword">string</span>, <span class="hljs-keyword">object</span>&gt;();
+
+    <span class="hljs-keyword">if</span> (_ViewData != <span class="hljs-literal">null</span>)
+    {
+        componentType = _ViewData.ViewType;
+        parameters = _ViewData.ViewParameters;
+    }
+    <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (RouteData != <span class="hljs-literal">null</span>)
+    {
+        componentType = RouteData.PageType;
+        parameters = RouteData.RouteValues;
+    }
+
+    <span class="hljs-keyword">if</span> (componentType != <span class="hljs-literal">null</span>)
+    {
+        builder.OpenComponent(<span class="hljs-number">0</span>, componentType);
+        <span class="hljs-keyword">foreach</span> (<span class="hljs-keyword">var</span> kvp <span class="hljs-keyword">in</span> parameters)
+        {
+            builder.AddAttribute(<span class="hljs-number">1</span>, kvp.Key, kvp.Value);
+        }
+        builder.CloseComponent();
+    }
+    <span class="hljs-keyword">else</span>
+    {
+        builder.OpenElement(<span class="hljs-number">0</span>, <span class="hljs-string">&quot;div&quot;</span>);
+        builder.AddContent(<span class="hljs-number">1</span>, <span class="hljs-string">&quot;No Route or View Configured to Display&quot;</span>);
+        builder.CloseElement();
+    }
+};
+</div></code></pre>
+<h2 id="dynamic-layouts">Dynamic Layouts</h2>
+<p>Out-of-the-box, Blazor layouts are defined and fixed at compile time.  <code>@Layout</code> is Razor talk that gets transposed when the Razor is pre-compiled to:</p>
+<pre><code class="language-csharp"><div>[<span class="hljs-meta">Microsoft.AspNetCore.Components.LayoutAttribute(typeof(MainLayout))</span>]
+[<span class="hljs-meta">Microsoft.AspNetCore.Components.RouteAttribute(<span class="hljs-meta-string">&quot;/&quot;</span>)</span>]
+[<span class="hljs-meta">Microsoft.AspNetCore.Components.RouteAttribute(<span class="hljs-meta-string">&quot;/index&quot;</span>)</span>]
+<span class="hljs-keyword">public</span> <span class="hljs-keyword">partial</span> <span class="hljs-keyword">class</span> <span class="hljs-title">Index</span> : <span class="hljs-title">Microsoft.AspNetCore.Components.ComponentBase</span>
+....
+</div></code></pre>
+<p>To change Layouts dynamically we use <code>RouteViewService</code> to store the layout. It can be set from any component that injects the service.</p>
+<pre><code class="language-csharp"><div><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title">RouteViewService</span>
+{
+    <span class="hljs-keyword">public</span> Type Layout { <span class="hljs-keyword">get</span>; <span class="hljs-keyword">set</span>; }
+    ....
+}
+</div></code></pre>
+<p><code>_layoutViewFragment</code> in <code>RouteViewManager</code> chooses the layout - <code>RouteViewService.Layout</code> is set above the default layout in precedence.</p>
+<pre><code class="language-csharp"><div><span class="hljs-keyword">private</span> RenderFragment _layoutViewFragment =&gt; builder =&gt;
+{
+    Type _pageLayoutType = RouteData?.PageType.GetCustomAttribute&lt;LayoutAttribute&gt;()?.LayoutType
+        ?? RouteViewService.Layout
+        ?? DefaultLayout;
+
+    builder.OpenComponent&lt;LayoutView&gt;(<span class="hljs-number">0</span>);
+    builder.AddAttribute(<span class="hljs-number">1</span>, <span class="hljs-keyword">nameof</span>(LayoutView.Layout), _pageLayoutType);
+    builder.AddAttribute(<span class="hljs-number">2</span>, <span class="hljs-keyword">nameof</span>(LayoutView.ChildContent), _renderComponentWithParameters);
+    builder.CloseComponent();
+};
+</div></code></pre>
+<p>Changing in the layout is demonstrated in the demo pages.</p>
+<h2 id="dynamic-routing">Dynamic Routing</h2>
+<p>Dynamic Routing is a little more complicated.  <code>Router</code> is a sealed box, so it's take it or re-write it.  Unless you must, don't re-write it.  We're not looking to change existing routes, just add and remove new dynamic routes.</p>
+<p>Routes are defined at compile time and are used internally within the <code>Router</code> Component.</p>
+<p>RouteView Razor Pages are labelled like this:</p>
+<pre><code class="language-html"><div>@page &quot;/&quot;
+@page &quot;/index&quot;
+</div></code></pre>
+<p>This is Razor talk, and gets transposed into the following in the C# class when pre-compiled.</p>
+<pre><code class="language-csharp"><div>[<span class="hljs-meta">Microsoft.AspNetCore.Components.RouteAttribute(<span class="hljs-meta-string">&quot;/&quot;</span>)</span>]
+[<span class="hljs-meta">Microsoft.AspNetCore.Components.RouteAttribute(<span class="hljs-meta-string">&quot;/index&quot;</span>)</span>]
+<span class="hljs-keyword">public</span> <span class="hljs-keyword">partial</span> <span class="hljs-keyword">class</span> <span class="hljs-title">Index</span> : <span class="hljs-title">Microsoft.AspNetCore.Components.ComponentBase</span>
+.....
+</div></code></pre>
+<p>When <code>Router</code> initializes it trawls any assemblies provided and builds a route dictionary of component/route pairs.</p>
+<p>You can get a list of route attribute components like this:</p>
+<pre><code class="language-csharp"><div><span class="hljs-function"><span class="hljs-keyword">static</span> <span class="hljs-keyword">public</span> IEnumerable&lt;Type&gt; <span class="hljs-title">GetTypeListWithCustomAttribute</span>(<span class="hljs-params">Assembly assembly, Type attribute</span>)</span>
+    =&gt; assembly.GetTypes().Where(item =&gt; (item.GetCustomAttributes(attribute, <span class="hljs-literal">true</span>).Length &gt; <span class="hljs-number">0</span>));
+</div></code></pre>
+<p>On initial render the Router register a delegate with the <code>NavigationManager.LocationChanged</code> event.  This delegate looks up routes and triggers render events on the <code>Router</code>. If it finds a route it renders <code>Found</code> which renders our new <code>RouteViewManager</code>.  <code>RouteViewManager</code> builds out the Layout and adds a new instance of the component defined in <code>RouteData</code>.</p>
+<p>When it doesn't find a route, what happens depends on the <code>IsNavigationIntercepted</code> property of the <code>LocationChangedEventArgs</code> provided by the event:</p>
+<ol>
+<li>True if it intercepts navigation in the DOM - anchors, etc.</li>
+<li>True if a UI component calls it's <code>NavigateTo</code> method and sets <code>ForceLoad</code>.</li>
+<li>False if a UI component calls it's <code>NavigateTo</code> method and sets <code>ForceLoad</code>.</li>
+</ol>
+<p>If we can avoid causing a hard navigation events in <code>Router</code>, we can add a component in <code>NotFound</code> to handle additional dynamic routing.  Not too difficult, it is our code!  There's an enhanced <code>NavLink</code> control to help control navigation - covered later.  In the event of a hard navigation event, routing will still work, but the application reloads.  Any rogue navigation events should be detected and fixed during testing.</p>
+<h3 id="customroutedata">CustomRouteData</h3>
+<p><code>CustomRouteData</code> holds the information needed to make routing decisions.  The class looks like this with inline detailed explanations.</p>
+<pre><code class="language-csharp"><div>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title">CustomRouteData</span>
+    {
+        <span class="hljs-comment"><span class="hljs-doctag">///</span> The standard RouteData.</span>
+        <span class="hljs-keyword">public</span> RouteData RouteData { <span class="hljs-keyword">get</span>; <span class="hljs-keyword">private</span> <span class="hljs-keyword">set</span>; }
+        <span class="hljs-comment"><span class="hljs-doctag">///</span> The PageType to load on a match </span>
+        <span class="hljs-keyword">public</span> Type PageType { <span class="hljs-keyword">get</span>; <span class="hljs-keyword">set</span>; }
+        <span class="hljs-comment"><span class="hljs-doctag">///</span> The Regex String to define the route</span>
+        <span class="hljs-keyword">public</span> <span class="hljs-keyword">string</span> RouteMatch { <span class="hljs-keyword">get</span>; <span class="hljs-keyword">set</span>; }
+        <span class="hljs-comment"><span class="hljs-doctag">///</span> Parameter values to add to the Route when created name/defaultvalue</span>
+        <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">SortedDictionary</span>&lt;<span class="hljs-title">string</span>, <span class="hljs-title">object</span>&gt; ComponentParameters</span> { <span class="hljs-keyword">get</span>; <span class="hljs-keyword">set</span>; } = <span class="hljs-keyword">new</span> SortedDictionary&lt;<span class="hljs-keyword">string</span>, <span class="hljs-keyword">object</span>&gt;();
+
+        <span class="hljs-comment"><span class="hljs-doctag">///</span> Method to check if we have a route match</span>
+        <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">bool</span> <span class="hljs-title">IsMatch</span>(<span class="hljs-params"><span class="hljs-keyword">string</span> url</span>)</span>
+        {
+            <span class="hljs-comment">// get the match</span>
+            <span class="hljs-keyword">var</span> match = Regex.Match(url, <span class="hljs-keyword">this</span>.RouteMatch,RegexOptions.IgnoreCase);
+            <span class="hljs-keyword">if</span> (match.Success)
+            {
+                <span class="hljs-comment">// create new dictionary object to add to the RouteData</span>
+                <span class="hljs-keyword">var</span> dict = <span class="hljs-keyword">new</span> Dictionary&lt;<span class="hljs-keyword">string</span>, <span class="hljs-keyword">object</span>&gt;();
+                <span class="hljs-comment">//  check we have the same or fewer groups as parameters to map the to</span>
+                <span class="hljs-keyword">if</span> (match.Groups.Count &gt;= ComponentParameters.Count)
+                {
+                    <span class="hljs-keyword">var</span> i = <span class="hljs-number">1</span>;
+                    <span class="hljs-comment">// iterate through the parameters and add the next match</span>
+                    <span class="hljs-keyword">foreach</span> (<span class="hljs-keyword">var</span> pars <span class="hljs-keyword">in</span> ComponentParameters)
+                    {
+                        <span class="hljs-keyword">string</span> matchValue = <span class="hljs-keyword">string</span>.Empty;
+                        <span class="hljs-keyword">if</span> (i &lt; match.Groups.Count)
+                            matchValue = match.Groups[i].Value;
+                        <span class="hljs-comment">//  Use a StypeSwitch object to do the Type Matching and create the dictionary pair </span>
+                        <span class="hljs-keyword">var</span> ts = <span class="hljs-keyword">new</span> TypeSwitch()
+                            .Case((<span class="hljs-keyword">int</span> x) =&gt;
+                            {
+                                <span class="hljs-keyword">if</span> (<span class="hljs-keyword">int</span>.TryParse(matchValue, <span class="hljs-keyword">out</span> <span class="hljs-keyword">int</span> <span class="hljs-keyword">value</span>))
+                                    dict.Add(pars.Key, <span class="hljs-keyword">value</span>);
+                                <span class="hljs-keyword">else</span>
+                                    dict.Add(pars.Key, pars.Value);
+                            })
+                            .Case((<span class="hljs-keyword">float</span> x) =&gt;
+                            {
+                                <span class="hljs-keyword">if</span> (<span class="hljs-keyword">float</span>.TryParse(matchValue, <span class="hljs-keyword">out</span> <span class="hljs-keyword">float</span> <span class="hljs-keyword">value</span>))
+                                    dict.Add(pars.Key, <span class="hljs-keyword">value</span>);
+                                <span class="hljs-keyword">else</span>
+                                    dict.Add(pars.Key, pars.Value);
+                            })
+                            .Case((<span class="hljs-keyword">decimal</span> x) =&gt;
+                            {
+                                <span class="hljs-keyword">if</span> (<span class="hljs-keyword">decimal</span>.TryParse(matchValue, <span class="hljs-keyword">out</span> <span class="hljs-keyword">decimal</span> <span class="hljs-keyword">value</span>))
+                                    dict.Add(pars.Key, <span class="hljs-keyword">value</span>);
+                                <span class="hljs-keyword">else</span>
+                                    dict.Add(pars.Key, pars.Value);
+                            })
+                            .Case((<span class="hljs-keyword">string</span> x) =&gt;
+                            {
+                                dict.Add(pars.Key, matchValue);
+                            });
+
+                        ts.Switch(pars.Value);
+                        i++;
+                    }
+                }
+                <span class="hljs-comment">// create a new RouteData object and assign it to the RouteData property. </span>
+                <span class="hljs-keyword">this</span>.RouteData = <span class="hljs-keyword">new</span> RouteData(<span class="hljs-keyword">this</span>.PageType, dict);
+            }
+            <span class="hljs-keyword">return</span> match.Success;
+        }
+
+        <span class="hljs-comment"><span class="hljs-doctag">///</span> Method to check if we have a route match and return the RouteData</span>
+        <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">bool</span> <span class="hljs-title">IsMatch</span>(<span class="hljs-params"><span class="hljs-keyword">string</span> url, <span class="hljs-keyword">out</span> RouteData routeData</span>)</span>
+        {
+            routeData = <span class="hljs-keyword">this</span>.RouteData;
+            <span class="hljs-keyword">return</span> IsMatch(url);
+        }
+    }
+</div></code></pre>
+<p>For those interested, <code>TypeSwitch</code> looks like this (thanks to <em>cdiggins</em> on StackOverflow for the code):</p>
+<pre><code class="language-csharp"><div><span class="hljs-comment"><span class="hljs-doctag">///</span> =================================</span>
+<span class="hljs-comment"><span class="hljs-doctag">///</span> Author: stackoverflow: cdiggins</span>
+<span class="hljs-comment"><span class="hljs-doctag">///</span> ==================================</span>
+    <span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title">TypeSwitch</span>
+    {
+        <span class="hljs-function"><span class="hljs-keyword">public</span> TypeSwitch <span class="hljs-title">Case</span>&lt;<span class="hljs-title">T</span>&gt;(<span class="hljs-params">Action&lt;T&gt; action</span>)</span> { matches.Add(<span class="hljs-keyword">typeof</span>(T), (x) =&gt; action((T)x)); <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>; }
+        <span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-title">Dictionary</span>&lt;<span class="hljs-title">Type</span>, <span class="hljs-title">Action</span>&lt;<span class="hljs-title">object</span>&gt;&gt; matches</span> = <span class="hljs-keyword">new</span> Dictionary&lt;Type, Action&lt;<span class="hljs-keyword">object</span>&gt;&gt;();
+        <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">Switch</span>(<span class="hljs-params"><span class="hljs-keyword">object</span> x</span>)</span> { matches[x.GetType()](x); }
+    }
+</div></code></pre>
+<h2 id="updates-to-the-routeviewservice">Updates to the RouteViewService</h2>
+<p>The updated sections in <code>RouteViewService</code> are shown below. <code>Routes</code> holds the list of custom routes - it's deliberately left open for customization.</p>
+<pre><code class="language-csharp"><div><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">List</span>&lt;<span class="hljs-title">CustomRouteData</span>&gt; Routes</span> { <span class="hljs-keyword">get</span>; <span class="hljs-keyword">private</span> <span class="hljs-keyword">set</span>; } = <span class="hljs-keyword">new</span> List&lt;CustomRouteData&gt;();
+
+<span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">bool</span> <span class="hljs-title">GetRouteMatch</span>(<span class="hljs-params"><span class="hljs-keyword">string</span> url, <span class="hljs-keyword">out</span> RouteData routeData</span>)</span>
+{
+    <span class="hljs-keyword">var</span> route = Routes?.FirstOrDefault(item =&gt; item.IsMatch(url)) ?? <span class="hljs-literal">null</span>;
+    routeData = route?.RouteData ?? <span class="hljs-literal">null</span>;
+    <span class="hljs-keyword">return</span> route != <span class="hljs-literal">null</span>;
+}
+</div></code></pre>
+<h2 id="the-routenotfoundmanager-component">The RouteNotFoundManager Component</h2>
+<p><code>RouteNotFoundManager</code> is a simple version of <code>RouteViewManager</code>.</p>
+<p><code>SetParametersAsync</code> is called when the component loads.  It gets the local Url, calls <code>GetRouteMatch</code> on <code>RouteViewService</code>, and renders the component.  If there's no layout, it just renders the <code>ChildContent</code>.</p>
+<pre><code class="language-csharp"><div><span class="hljs-function"><span class="hljs-keyword">public</span> Task <span class="hljs-title">SetParametersAsync</span>(<span class="hljs-params">ParameterView parameters</span>)</span>
+{
+    parameters.SetParameterProperties(<span class="hljs-keyword">this</span>);
+    <span class="hljs-comment">// Get the route url</span>
+    <span class="hljs-keyword">var</span> url = <span class="hljs-string">$&quot;/<span class="hljs-subst">{NavManager.Uri.Replace(NavManager.BaseUri, <span class="hljs-string">&quot;&quot;</span>)}</span>&quot;</span>;
+    <span class="hljs-comment">// check if we have a custom route and if so use it</span>
+    <span class="hljs-keyword">if</span> (RouteViewService.GetRouteMatch(url, <span class="hljs-keyword">out</span> <span class="hljs-keyword">var</span> routedata))
+        _routeData = routedata;
+    <span class="hljs-comment">// if The layout is blank show the ChildContent without a layout </span>
+    <span class="hljs-keyword">if</span> (_pageLayoutType == <span class="hljs-literal">null</span>)
+        _renderHandle.Render(ChildContent);
+    <span class="hljs-comment">// otherwise show the route or ChildContent inside the layout</span>
+    <span class="hljs-keyword">else</span>
+        _renderHandle.Render(_ViewFragment);
+    <span class="hljs-keyword">return</span> Task.CompletedTask;
+}
+</div></code></pre>
+<p><code>_ViewFragment</code> either renders a <code>RouteViewManager</code>, setting <code>RouteData</code> if it finds a custom route, or the contents of <code>RouteNotFoundManager</code>.</p>
+<pre><code class="language-csharp"><div><span class="hljs-comment"><span class="hljs-doctag">///</span> Layouted Render Fragment</span>
+<span class="hljs-keyword">private</span> RenderFragment _ViewFragment =&gt; builder =&gt;
+{
+    <span class="hljs-comment">// check if we have a RouteData object and if so load the RouteViewManager, otherwise the ChildContent</span>
+    <span class="hljs-keyword">if</span> (_routeData != <span class="hljs-literal">null</span>)
+    {
+        builder.OpenComponent&lt;RouteViewManager&gt;(<span class="hljs-number">0</span>);
+        builder.AddAttribute(<span class="hljs-number">1</span>, <span class="hljs-keyword">nameof</span>(RouteViewManager.DefaultLayout), _pageLayoutType);
+        builder.AddAttribute(<span class="hljs-number">1</span>, <span class="hljs-keyword">nameof</span>(RouteViewManager.RouteData), _routeData);
+        builder.CloseComponent();
+    }
+    <span class="hljs-keyword">else</span>
+    {
+        builder.OpenComponent&lt;LayoutView&gt;(<span class="hljs-number">0</span>);
+        builder.AddAttribute(<span class="hljs-number">1</span>, <span class="hljs-keyword">nameof</span>(LayoutView.Layout), _pageLayoutType);
+        builder.AddAttribute(<span class="hljs-number">2</span>, <span class="hljs-keyword">nameof</span>(LayoutView.ChildContent), <span class="hljs-keyword">this</span>.ChildContent);
+        builder.CloseComponent();
+    }
+};
+</div></code></pre>
+<h2 id="switching-the-routeview-without-routing">Switching the RouteView Without Routing</h2>
+<p>Switching the RouteView without routing has several applications.  These are some I've used:</p>
+<ol>
+<li>Hide direct access to a page.  It can only be accessed within the application.</li>
+<li>Multipart forms/processes with a single entry point.  The state of the saved form/process dictates which form gets loaded.</li>
+<li>Context dependant forms or information.  Login/logout/signup is a good example.  The same Url but with a different routeviews loaded depending on the context.</li>
+</ol>
+<h3 id="viewdata">ViewData</h3>
+<p>The equivalent to <code>RouteData</code>.</p>
+<pre><code class="language-csharp"><div><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title">ViewData</span>
+{
+    <span class="hljs-comment"><span class="hljs-doctag">///</span> Gets the type of the View.</span>
+    <span class="hljs-keyword">public</span> Type ViewType { <span class="hljs-keyword">get</span>; <span class="hljs-keyword">set</span>; }
+
+    <span class="hljs-comment"><span class="hljs-doctag">///</span> Gets the type of the page matching the route.</span>
+    <span class="hljs-keyword">public</span> Type LayoutType { <span class="hljs-keyword">get</span>; <span class="hljs-keyword">set</span>; }
+
+    <span class="hljs-comment"><span class="hljs-doctag">///</span> Parameter values to add to the Route when created</span>
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">Dictionary</span>&lt;<span class="hljs-title">string</span>, <span class="hljs-title">object</span>&gt; ViewParameters</span> { <span class="hljs-keyword">get</span>; <span class="hljs-keyword">private</span> <span class="hljs-keyword">set</span>; } = <span class="hljs-keyword">new</span> Dictionary&lt;<span class="hljs-keyword">string</span>, <span class="hljs-keyword">object</span>&gt;();
+
+    <span class="hljs-comment"><span class="hljs-doctag">///</span> Constructs an instance of <span class="hljs-doctag">&lt;see cref=&quot;ViewData&quot;/&gt;</span>.</span>
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">ViewData</span>(<span class="hljs-params">Type viewType, Dictionary&lt;<span class="hljs-keyword">string</span>, <span class="hljs-keyword">object</span>&gt; viewValues = <span class="hljs-literal">null</span></span>)</span>
+    {
+        <span class="hljs-keyword">if</span> (viewType == <span class="hljs-literal">null</span>) <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> ArgumentNullException(<span class="hljs-keyword">nameof</span>(viewType));
+        <span class="hljs-keyword">this</span>.ViewType = viewType;
+        <span class="hljs-keyword">if</span> (viewValues != <span class="hljs-literal">null</span>) <span class="hljs-keyword">this</span>.ViewParameters = viewValues;
+    }
+}
+</div></code></pre>
+<p>All functionality is implemented in <code>RouteViewManager</code>.</p>
+<h3 id="routeviewmanager-1">RouteViewManager</h3>
+<p>First some properties and fields.</p>
+<pre><code class="language-csharp"><div><span class="hljs-comment"><span class="hljs-doctag">///</span> The size of the History list used for Views.</span>
+[<span class="hljs-meta">Parameter</span>] <span class="hljs-keyword">public</span> <span class="hljs-keyword">int</span> ViewHistorySize { <span class="hljs-keyword">get</span>; <span class="hljs-keyword">set</span>; } = <span class="hljs-number">10</span>;
+
+<span class="hljs-comment"><span class="hljs-doctag">///</span> Gets and sets the view data.</span>
+<span class="hljs-keyword">public</span> ViewData ViewData
+{
+    <span class="hljs-keyword">get</span> =&gt; <span class="hljs-keyword">this</span>._ViewData;
+    <span class="hljs-keyword">protected</span> <span class="hljs-keyword">set</span>
+    {
+        <span class="hljs-keyword">this</span>.AddViewToHistory(<span class="hljs-keyword">this</span>._ViewData);
+        <span class="hljs-keyword">this</span>._ViewData = <span class="hljs-keyword">value</span>;
+    }
+}
+
+<span class="hljs-comment"><span class="hljs-doctag">///</span> Property that stores the View History.  It&#x27;s size is controlled by ViewHistorySize</span>
+<span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">SortedList</span>&lt;<span class="hljs-title">DateTime</span>, <span class="hljs-title">ViewData</span>&gt; ViewHistory</span> { <span class="hljs-keyword">get</span>; <span class="hljs-keyword">private</span> <span class="hljs-keyword">set</span>; } = <span class="hljs-keyword">new</span> SortedList&lt;DateTime, ViewData&gt;();
+
+<span class="hljs-comment"><span class="hljs-doctag">///</span> Gets the last view data.</span>
+<span class="hljs-keyword">public</span> ViewData LastViewData
+{
+    <span class="hljs-keyword">get</span>
+    {
+        <span class="hljs-keyword">var</span> newest = ViewHistory.Max(item =&gt; item.Key);
+        <span class="hljs-keyword">if</span> (newest != <span class="hljs-keyword">default</span>) <span class="hljs-keyword">return</span> ViewHistory[newest];
+        <span class="hljs-keyword">else</span> <span class="hljs-keyword">return</span> <span class="hljs-literal">null</span>;
+    }
+}
+
+<span class="hljs-comment"><span class="hljs-doctag">///</span> Method to check if <span class="hljs-doctag">&lt;param name=&quot;view&quot;&gt;</span> is the current View</span>
+<span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">bool</span> <span class="hljs-title">IsCurrentView</span>(<span class="hljs-params">Type view</span>)</span> =&gt; <span class="hljs-keyword">this</span>.ViewData?.ViewType == view;
+
+<span class="hljs-comment"><span class="hljs-doctag">///</span> Boolean to check if we have a View set</span>
+<span class="hljs-keyword">public</span> <span class="hljs-keyword">bool</span> HasView =&gt; <span class="hljs-keyword">this</span>._ViewData?.ViewType != <span class="hljs-literal">null</span>;
+
+<span class="hljs-comment"><span class="hljs-doctag">///</span> Internal ViewData used by the component</span>
+<span class="hljs-keyword">private</span> ViewData _ViewData { <span class="hljs-keyword">get</span>; <span class="hljs-keyword">set</span>; }
+</div></code></pre>
+<p>Next a set of <code>LoadViewAsync</code> methods to provide a variety of ways to load a new view.  The main method sets the internal <code>viewData</code> field and calls <code>Render</code> to re-render the component.</p>
+<pre><code class="language-csharp"><div><span class="hljs-comment">// The main method</span>
+<span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">await</span> Task <span class="hljs-title">LoadViewAsync</span>(<span class="hljs-params">ViewData viewData = <span class="hljs-literal">null</span></span>)</span>
+{
+    <span class="hljs-keyword">if</span> (viewData != <span class="hljs-literal">null</span>) <span class="hljs-keyword">this</span>.ViewData = viewData;
+    <span class="hljs-keyword">if</span> (ViewData == <span class="hljs-literal">null</span>)
+    {
+        <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> InvalidOperationException(<span class="hljs-string">$&quot;The <span class="hljs-subst">{<span class="hljs-keyword">nameof</span>(RouteViewManager)}</span> component requires a non-null value for the parameter <span class="hljs-subst">{<span class="hljs-keyword">nameof</span>(ViewData)}</span>.&quot;</span>);
+    }
+    <span class="hljs-keyword">await</span> <span class="hljs-keyword">this</span>.RenderAsync();
+}
+
+<span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">async</span> Task <span class="hljs-title">LoadViewAsync</span>(<span class="hljs-params">Type viewtype</span>)</span>
+    =&gt; <span class="hljs-keyword">await</span> <span class="hljs-keyword">this</span>.LoadViewAsync(<span class="hljs-keyword">new</span> ViewData(viewtype, <span class="hljs-keyword">new</span> Dictionary&lt;<span class="hljs-keyword">string</span>, <span class="hljs-keyword">object</span>&gt;()));
+
+<span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">async</span> Task <span class="hljs-title">LoadViewAsync</span>&lt;<span class="hljs-title">TView</span>&gt;(<span class="hljs-params">Dictionary&lt;<span class="hljs-keyword">string</span>, <span class="hljs-keyword">object</span>&gt; data = <span class="hljs-literal">null</span></span>)</span>
+    =&gt; <span class="hljs-keyword">await</span> <span class="hljs-keyword">this</span>.LoadViewAsync(<span class="hljs-keyword">new</span> ViewData(<span class="hljs-keyword">typeof</span>(TView), data));
+</div></code></pre>
+<p>We have already seen <code>_renderComponentWithParameters</code>.  With a valid <code>_ViewData</code> object, it renders the component using <code>_ViewData</code>.</p>
+<pre><code class="language-csharp"><div><span class="hljs-keyword">private</span> RenderFragment _renderComponentWithParameters =&gt; builder =&gt;
+{
+    Type componentType = <span class="hljs-literal">null</span>;
+    IReadOnlyDictionary&lt;<span class="hljs-keyword">string</span>, <span class="hljs-keyword">object</span>&gt; parameters = <span class="hljs-keyword">new</span> Dictionary&lt;<span class="hljs-keyword">string</span>, <span class="hljs-keyword">object</span>&gt;();
+
+    <span class="hljs-keyword">if</span> (_ViewData != <span class="hljs-literal">null</span>)
+    {
+        componentType = _ViewData.ViewType;
+        parameters = _ViewData.ViewParameters;
+    }
+    <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (RouteData != <span class="hljs-literal">null</span>)
+    {
+        componentType = RouteData.PageType;
+        parameters = RouteData.RouteValues;
+    }
+
+    <span class="hljs-keyword">if</span> (componentType != <span class="hljs-literal">null</span>)
+    {
+        builder.OpenComponent(<span class="hljs-number">0</span>, componentType);
+        <span class="hljs-keyword">foreach</span> (<span class="hljs-keyword">var</span> kvp <span class="hljs-keyword">in</span> parameters)
+        {
+            builder.AddAttribute(<span class="hljs-number">1</span>, kvp.Key, kvp.Value);
+        }
+        builder.CloseComponent();
+    }
+    <span class="hljs-keyword">else</span>
+    {
+        builder.OpenElement(<span class="hljs-number">0</span>, <span class="hljs-string">&quot;div&quot;</span>);
+        builder.AddContent(<span class="hljs-number">1</span>, <span class="hljs-string">&quot;No Route or View Configured to Display&quot;</span>);
+        builder.CloseElement();
+    }
+};
+</div></code></pre>
+<h3 id="routenavlink">RouteNavLink</h3>
+<p><code>RouteNavLink</code> is an enhanced <code>NavLink</code> control.  The code is a direct copy with a small amount of added code.  It doesn't inherit because <code>NavLink</code> is a black box.  It ensures navigation is through the NavigationManager rather than Html anchor links and provides direct access to RouteView loading.  The code is in the Repo - it's too long to reproduce here.</p>
+<h2 id="example-pages">Example Pages</h2>
+<p>The application has RouteViews/Pages to demonstrate the new components.  You can review the source code in the Repo.  You can also see the pages on the Demo Site.</p>
+<p><img src="https://shauncurtis.github.io/articles/assets/A-Flexible-App/DemoSite.png" alt="EditForm"></p>
+<h3 id="routeviewerrazor">RouteViewer.razor</h3>
+<p><a href="https://cec-blazor-database.azurewebsites.net/routeviewer">https://cec-blazor-database.azurewebsites.net/routeviewer</a></p>
+<p>This demonstrates:</p>
+<ol>
+<li>Adding routes dynamically to the Application.  Choose a page to add a custom route for, add a route name and click <em>Go To Route</em>.</li>
+<li>Loading a <code>RouteView</code> without navigation.  Choose a Page and click on <em>Go To View</em>.  The page is displayed, but the Url doesn't change!  Confusing, but it demos the principle.</li>
+<li>Changing the default Layout.  Click on <em>Red Layout</em> and the layout will change to red.  Basic FetchData has a specific layout defined so it will use the original layout.  Click on <em>Normal Layout</em> to change back.</li>
+</ol>
+<h3 id="formrazor">Form.Razor</h3>
+<p><a href="https://cec-blazor-database.azurewebsites.net/form">https://cec-blazor-database.azurewebsites.net/form</a></p>
+<p>This demonstrates a multipart form.  There are four forms:</p>
+<ol>
+<li><em>Form.Razor</em> the base and first form.</li>
+<li><em>Form2.Razor</em> the second form - inherits from the first form.</li>
+<li><em>Form3.Razor</em> the third form - inherits from the first form.</li>
+<li><em>Form4.Razor</em> the result form - inherits from the first form.</li>
+</ol>
+<p>The forms link to data in the WeathForecastService which maintains the form state.  Try leaving the form part way through and then returning.  State is preserved while the SPA session is maintained.</p>
+<h2 id="wrap-up">Wrap Up</h2>
+<p>Hopefully I've demonstrated the principles you can use to build the extra functionality into the core Blazor framework.  None of the components are finished articles.  Use them and develop them as you wish.</p>
+<p>If you're reading this article a long time into the future chack <a href="https://shauncurtis.github.io/articles/A-Flexible-App.html">here</a> for the latest version</p>
+
+    
+
+            </div>
+        </div>
+    </div>
+</div>
+<!-- end of Article Container -->
+
+
+                </div>
+                <!-- End of Main Content -->
+            </div>
+            <!-- Footer -->
+            
+<!-- Copyright -->
+<footer class="sticky-footer bg-white">
+    <div class="container my-auto">
+        <div class="copyright text-center my-auto">
+            
+<span>Copyright &copy; Cold Elm Coders - 2022</span>
+
+        </div>
+    </div>
+</footer>
+<!-- end of copyright -->
+
+
+            <!-- End of Footer -->
+        </div>
+        <!-- End of Content Wrapper -->
+        
+<a class="scroll-to-top rounded" href="#page-top">
+    <i class="fas fa-angle-up"></i>
+</a>
+
+
+    </div>
+    <!-- End of Page Wrapper -->
+    <!-- Scripts -->
+    
+<!-- Scripts -->
+<!-- Bootstrap core JavaScript-->
+<script src="/assets/vendor/jquery/jquery.min.js"></script>
+<script src="/assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+<!-- Core plugin JavaScript-->
+<script src="/assets/vendor/jquery-easing/jquery.easing.min.js"></script>
+
+<!-- Custom scripts for all pages-->
+<script src="/assets/js/sb-admin-2.min.js"></script>
+
+
+</body>
+</html>

@@ -1,0 +1,883 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+<!-- SEO Meta Tags -->
+<meta name="description" content="Your description">
+<meta name="author" content="Your name">
+
+<!-- OG Meta Tags to improve the way the post looks when you share the page on Facebook, Twitter, LinkedIn -->
+<meta property="og:site_name" content="" /> <!-- website name -->
+<meta property="og:site" content="" /> <!-- website link -->
+<meta property="og:title" content="" /> <!-- title shown in the actual shared post -->
+<meta property="og:description" content="" /> <!-- description shown in the actual shared post -->
+<meta property="og:image" content="" /> <!-- image link, make sure it's jpg -->
+<meta property="og:url" content="" /> <!-- where do you want your post to link to -->
+<meta name="twitter:card" content="summary_large_image"> <!-- to have large image post format in Twitter -->
+
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+
+<meta name="description" content="This article describes how to customize the default CSS setup in Blazor, and looks at the new Scoped CSS." >
+<meta name="author" content="Shaun Curtis" >
+
+
+
+<title>Working with CSS in Blazor</title>
+
+
+<!-- Custom fonts for this template-->
+<link href="/assets/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+<link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+      rel="stylesheet">
+
+<!-- Custom styles for this template-->
+<link href="/assets/css/sb-admin-2.css" rel="stylesheet" type="text/css">
+<link href="/assets/css/site.css" rel="stylesheet" type="text/css">
+
+<!-- Favicon  -->
+<link rel="icon" href="/assets/images/favicon.png">
+
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/highlight.css">
+    <link rel="stylesheet" href="/assets/css/article.css" type="text/css">
+</head>
+<body id="page-top">
+    <!--topbar-->
+    <div id="topbar">
+        
+<!-- Topbar -->
+<nav class="navbar navbar-expand navbar-light topbar mb-4 static-top">
+    
+<ul class="navbar-nav" >
+<li class="nav-item" >
+<a class="nav-link " href="/index.html" role="button"  >
+<span class="mr-2 d-none d-lg-inline text-gray-100">Index</span>
+</a>
+</li>
+<li class="nav-item dropdown no-arrow mx-1" >
+<a class="nav-link dropdown-toggle" href="#" id="8e6a81c2-886e-40dc-83ac-a5f289f15ba3" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"  >
+<span class="mr-2 d-none d-lg-inline text-gray-100">Articles</span>
+</a>
+<div class=" dropdown-list dropdown-menu shadow animated--grow-in" aria-labelledby="8e6a81c2-886e-40dc-83ac-a5f289f15ba3" >
+<a class="dropdown-item" href="/articles/A-Flexible-App.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Creating a Dynamic Blazor App Component
+</a>
+<a class="dropdown-item" href="/articles/Async-Programming-in-DotNetCore.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Async Programming In Dotnetcore
+</a>
+<a class="dropdown-item" href="/articles/Blazor-AllinOne.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Blazor All In One - Multi SPA Hosting
+</a>
+<a class="dropdown-item" href="/articles/Blazor-Async-Programming.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Blazor Async Programming
+</a>
+<a class="dropdown-item" href="/articles/Blazor-Brick-By-Brick.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Blazor Brick By Brick
+</a>
+<a class="dropdown-item" href="/articles/Blazor-Components.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Blazor Components
+</a>
+<a class="dropdown-item" href="/articles/Blazor-CSS.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Blazor CSS
+</a>
+<a class="dropdown-item" href="/articles/Blazor-DataList-Control.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Blazor Datalist Control
+</a>
+<a class="dropdown-item" href="/articles/Blazor-Form-Validation.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Blazor Form Validation
+</a>
+<a class="dropdown-item" href="/articles/Building-Blazor-List-Components.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Building Blazor List Components and the Notification Pattern
+</a>
+<a class="dropdown-item" href="/articles/Building-Edit-Forms.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Building Edit Forms
+</a>
+<a class="dropdown-item" href="/articles/EditFormState.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+The Blazor EditFormState Control
+</a>
+<a class="dropdown-item" href="/articles/Hydra.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Blazor Hydra
+</a>
+<a class="dropdown-item" href="/articles/Inline-Dialog.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+The Blazor Inline Dialog Control
+</a>
+<a class="dropdown-item" href="/articles/Modal-Dialog.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+A Blazor Modal Dialog
+</a>
+<a class="dropdown-item" href="/articles/Policy-Based-Authorization.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Policy Base Authorization in Blazor
+</a>
+<a class="dropdown-item" href="/articles/ValidationFormState.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+A Blazor Validation Control
+</a>
+<a class="dropdown-item" href="/articles/XML-XSD-Serialization.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+XML XSD Serialization
+</a>
+</div>
+</li>
+<li class="nav-item dropdown no-arrow mx-1" >
+<a class="nav-link dropdown-toggle" href="#" id="9119c7ee-4746-4afe-9ac6-88cb2d354843" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"  >
+<span class="mr-2 d-none d-lg-inline text-gray-100">Blazor Database Apps</span>
+</a>
+<div class=" dropdown-list dropdown-menu shadow animated--grow-in" aria-labelledby="9119c7ee-4746-4afe-9ac6-88cb2d354843" >
+<a class="dropdown-item" href="/Building-a-Database-Application-in-Blazor/Building-a-Database-Application-in-Blazor-Part-1.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Building A Database Application In Blazor Part 1
+</a>
+<a class="dropdown-item" href="/Building-a-Database-Application-in-Blazor/Building-a-Database-Application-in-Blazor-Part-2.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Building A Database Application In Blazor Part 2
+</a>
+<a class="dropdown-item" href="/Building-a-Database-Application-in-Blazor/Building-a-Database-Application-in-Blazor-Part-3.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Building A Database Application In Blazor Part 3
+</a>
+<a class="dropdown-item" href="/Building-a-Database-Application-in-Blazor/Building-a-Database-Application-in-Blazor-Part-4.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Building A Database Application In Blazor Part 4
+</a>
+<a class="dropdown-item" href="/Building-a-Database-Application-in-Blazor/Building-a-Database-Application-in-Blazor-Part-5.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Building A Database Application In Blazor Part 5
+</a>
+<a class="dropdown-item" href="/Building-a-Database-Application-in-Blazor/Building-a-Database-Application-in-Blazor-Part-6.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Building A Database Application In Blazor Part 6
+</a>
+<a class="dropdown-item" href="/Building-a-Database-Application-in-Blazor/index.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Building a Database Application in Blazor
+</a>
+</div>
+</li>
+<li class="nav-item dropdown no-arrow mx-1" >
+<a class="nav-link dropdown-toggle" href="#" id="dbee7d3a-9633-4bf4-b2c6-5f23400c5f92" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"  >
+<span class="mr-2 d-none d-lg-inline text-gray-100">Building Blazor Applications</span>
+</a>
+<div class=" dropdown-list dropdown-menu shadow animated--grow-in" aria-labelledby="dbee7d3a-9633-4bf4-b2c6-5f23400c5f92" >
+<a class="dropdown-item" href="/Building-Blazor-Applications/Blazor-Async-UI-Events.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Blazor Async UI Events
+</a>
+<a class="dropdown-item" href="/Building-Blazor-Applications/Blazor-Bootstrap-Toaster.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Blazor Bootstrap Toaster
+</a>
+<a class="dropdown-item" href="/Building-Blazor-Applications/Blazor-Services.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Blazor Services
+</a>
+<a class="dropdown-item" href="/Building-Blazor-Applications/Building-A-Blazor-AutoComplete-Control.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Building A Blazor Autocomplete Control
+</a>
+<a class="dropdown-item" href="/Building-Blazor-Applications/Building-Wrapper-Components.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Building Wrapper Components
+</a>
+<a class="dropdown-item" href="/Building-Blazor-Applications/Component-Service-Manager.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+The Component Service Manager
+</a>
+<a class="dropdown-item" href="/Building-Blazor-Applications/DBContexts-In-Transient-Services.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Dbcontexts In Transient Services
+</a>
+<a class="dropdown-item" href="/Building-Blazor-Applications/DynamicCss.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Blazor Dynamic Stylesheets
+</a>
+<a class="dropdown-item" href="/Building-Blazor-Applications/For-ForEach-in-Blazor.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+For Foreach In Blazor
+</a>
+<a class="dropdown-item" href="/Building-Blazor-Applications/Leaner-Meaner-Greener-Components.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Leaner Meaner Greener Components
+</a>
+<a class="dropdown-item" href="/Building-Blazor-Applications/Notification-Service-Pattern.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Blazor Notification Service Pattern
+</a>
+<a class="dropdown-item" href="/Building-Blazor-Applications/Rethinking-The-Repository-Pattern.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Rethinking The Repository Pattern
+</a>
+<a class="dropdown-item" href="/Building-Blazor-Applications/The-Blazor-WASM-Hosted-Project.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+The Blazor WASM Hosted Project
+</a>
+<a class="dropdown-item" href="/Building-Blazor-Applications/Whats-Wrong-with-my-Component-Design.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Whats Wrong With My Component Design
+</a>
+<a class="dropdown-item" href="/Building-Blazor-Applications/The-Blazor-Component" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Building Blazor Applications\The Blazor Component
+</a>
+</div>
+</li>
+<li class="nav-item dropdown no-arrow mx-1" >
+<a class="nav-link dropdown-toggle" href="#" id="e4877171-ed96-4c3b-9768-d6130eb41157" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"  >
+<span class="mr-2 d-none d-lg-inline text-gray-100">Design</span>
+</a>
+<div class=" dropdown-list dropdown-menu shadow animated--grow-in" aria-labelledby="e4877171-ed96-4c3b-9768-d6130eb41157" >
+<a class="dropdown-item" href="/Design/Clean-Design-In-Blazor.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Clean Design Principles in Blazor Applications
+</a>
+<a class="dropdown-item" href="/Design/Clean-Design-Blazor-Template.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+A Blazor Clean Design Template
+</a>
+<a class="dropdown-item" href="/Design/Clean-Design-Blazor-Template-Solution-Structure.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Solution Structure in the Clean Design Blazor Template
+</a>
+<a class="dropdown-item" href="/Design/Clean-Design-Blazor-Template-DataServices.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Data Services in the Clean Design Blazor Template
+</a>
+<a class="dropdown-item" href="/Design/Clean-Design-Blazor-Template-UI.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+The UI in the Clean Design Blazor Template
+</a>
+<a class="dropdown-item" href="/Design/Clean-Design-Blazor-Template-Solution-Setup.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Solution Setup in the Clean Design Blazor Template
+</a>
+<a class="dropdown-item" href="/Design/Clean-Design-Blazor-Template-Testing.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Testing in the Clean Design Blazor Template
+</a>
+</div>
+</li>
+<li class="nav-item dropdown no-arrow mx-1" >
+<a class="nav-link dropdown-toggle" href="#" id="734904c7-c402-4fa7-9358-29f6c5fd10b5" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"  >
+<span class="mr-2 d-none d-lg-inline text-gray-100">Modern C#</span>
+</a>
+<div class=" dropdown-list dropdown-menu shadow animated--grow-in" aria-labelledby="734904c7-c402-4fa7-9358-29f6c5fd10b5" >
+<a class="dropdown-item" href="/Modern-Coding-Patterns/Nullable-And-VS-2022.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Nullable And VS 2022
+</a>
+</div>
+</li>
+</ul>
+
+    <div class="ms-5 me-5 ml-auto">
+        <h1>Cold Elm Coders</h1>
+    </div>
+</nav>
+
+
+    </div>
+    <!--End topbar-->
+    <!--Sidebar-->
+    <div id="sidebar">
+        
+<div class="article-info p-2" Published: 01-10-2020 >
+<div>Published: 01-10-2020</div>
+<div>Last Updated: 01-10-2020</div>
+<div>Author: Shaun Curtis</div>
+</div>
+
+        
+<h4 class="p-2">Table of Contents</h4>
+<ul class="TOC" >
+<li class="TOC-item TOC-item-0" >
+<a class="TOC-link" href="#">Top</a>
+<ul class="TOC TOC-0" >
+<li class="TOC-item TOC-item-1" >
+<ul class="TOC TOC-1" >
+<li class="TOC-item TOC-item-2" >
+<a class="TOC-link" href="#getting-started">Getting Started</a>
+</li>
+<li class="TOC-item TOC-item-2" >
+<a class="TOC-link" href="#set-up-sass">Set up SASS</a>
+</li>
+<li class="TOC-item TOC-item-2" >
+<a class="TOC-link" href="#set-up-bootstrap">Set up Bootstrap</a>
+</li>
+<li class="TOC-item TOC-item-2" >
+<a class="TOC-link" href="#customize-bootstrap">Customize Bootstrap</a>
+<ul class="TOC TOC-2" >
+<li class="TOC-item TOC-item-3" >
+<a class="TOC-link" href="#build-the-customized-bootstrap">Build the Customized Bootstrap</a>
+</li>
+</ul>
+</li>
+<li class="TOC-item TOC-item-2" >
+<a class="TOC-link" href="#changing-css-frameworks">Changing CSS Frameworks</a>
+<ul class="TOC TOC-2" >
+<li class="TOC-item TOC-item-3" >
+<a class="TOC-link" href="#customization">Customization</a>
+</li>
+</ul>
+</li>
+<li class="TOC-item TOC-item-2" >
+<a class="TOC-link" href="#scoped-css---component-styling">Scoped CSS - Component Styling</a>
+<ul class="TOC TOC-2" >
+<li class="TOC-item TOC-item-3" >
+<a class="TOC-link" href="#whats-going-on">What's Going On</a>
+</li>
+</ul>
+</li>
+<li class="TOC-item TOC-item-2" >
+<a class="TOC-link" href="#wrap-up">Wrap Up</a>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+    </div>
+    <!--End Sidebar-->
+    <!-- Page Wrapper -->
+    <div id="wrapper">
+        <!-- Content Wrapper -->
+        <div id="content-wrapper" class="d-flex flex-column">
+            <!-- Main Content -->
+            <div id="content">
+                <!-- Topbar -->
+                <div id="article">
+                    <!-- Article -->
+                    
+<!-- Header -->
+<header class="ex-header-article">
+    <div class="container">
+        <div class="row pt-3 pb-3 border-bottom">
+            <div class="col">
+                
+<h1>Working with CSS in Blazor</h1>
+<div>This article describes how to customize the default CSS setup in Blazor, and looks at the new Scoped CSS.</div>
+
+            </div> <!-- end of col -->
+        </div> <!-- end of row -->
+    </div> <!-- end of container -->
+</header> <!-- end of ex-header -->
+<!-- end of header -->
+
+
+                    
+<!-- Article Container -->
+<div class="ex-basic-1 pt-4">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                
+
+        <p>This article describes how to customize the default CSS setup in Blazor, and looks at the new Scoped CSS.</p>
+<p>It covers:</p>
+<ol>
+<li>Customizing the deployed BootStrap.</li>
+<li>How to switch to a different CSS Framework.</li>
+<li>The new Scoped CSS functionality.</li>
+</ol>
+<p>Please note that this article is aimed at programmers relatively new to DotNetCore and Blazor, and assumes you have some knowledge of SASS.  The article also assumes you're using Visual Studio 2019 - I use the Community Edition.</p>
+<p>The code is avalable at <a href="https://github.com/ShaunCurtis/Blazor.CSS">Blazor.CSS</a> on GitHub.</p>
+<h2 id="getting-started">Getting Started</h2>
+<ol>
+<li>Create a new Blazor Application using Net5.  I've used Server in the supplied code, but there's no difference between Server and WASM.</li>
+<li>Run the site to make sure it works.</li>
+<li>Install the <a href="https://marketplace.visualstudio.com/items?itemName=MadsKristensen.WebCompiler">Web Compiler</a>  extension.  <em>Extensions &gt; Manage Extensions</em>.  You'll need to restart Visual Studio to complete the installation.</li>
+</ol>
+<h2 id="set-up-sass">Set up SASS</h2>
+<ol>
+<li>Add folder <em>SASS</em> to the project.</li>
+<li>Move <em>wwwroot/css/site.css</em> file to <em>SASS</em> and rename it <em>custom.scss</em>.</li>
+<li>Add <em>bootstrap-site.scss</em> to the folder.</li>
+<li>Right mouse click on the file &gt; Web Compiler &gt; Compile File.</li>
+<li>This will add a <em>compilerconfig.json</em> file to the project.  This is the configuration file for <strong>Web Compiler</strong>.</li>
+</ol>
+<p><em>compilerconfig.json</em> will look like this:</p>
+<pre><code class="language-json"><div>[
+  {
+    <span class="hljs-attr">&quot;outputFile&quot;</span>: <span class="hljs-string">&quot;SASS/bootstrap-site.css&quot;</span>,
+    <span class="hljs-attr">&quot;inputFile&quot;</span>: <span class="hljs-string">&quot;SASS/bootstrap-site.scss&quot;</span>
+  }
+]
+</div></code></pre>
+<ol start="6">
+<li>Change this to output the compiled file into the web site:</li>
+</ol>
+<pre><code class="language-json"><div>[
+  {
+    <span class="hljs-attr">&quot;outputFile&quot;</span>: <span class="hljs-string">&quot;wwwroot/css/site.css&quot;</span>,
+    <span class="hljs-attr">&quot;inputFile&quot;</span>: <span class="hljs-string">&quot;SASS/bootstrap-site.scss&quot;</span>
+  }
+]
+</div></code></pre>
+<ol start="7">
+<li>A new <em>site.css</em> should appear in <em>wwwroot/css</em>.  There'll be nothing in it because the source file is empty.</li>
+</ol>
+<h2 id="set-up-bootstrap">Set up Bootstrap</h2>
+<ol>
+<li>
+<p>Add a <em>Bootstrap</em> folder to <em>SASS</em>.</p>
+</li>
+<li>
+<p>Add a <em>custom</em> folder to <em>Bootstrap</em>.</p>
+</li>
+<li>
+<p>Download the Bootstrap Source from the Bootstrap site and copy the <em>scss</em> folder to <em>Bootstrap</em>.</p>
+<p>The full SASS folder (including the Spectre and other files that we will add later) should look like this:</p>
+</li>
+</ol>
+<p><img src="https://github.com/ShaunCurtis/Blazor.CSS/blob/master/images/sass-folder.png?raw=true" alt="SASS folder"></p>
+<ol start="4">
+<li>Edit <em>SASS/bootstrap-site.scss</em>.</li>
+</ol>
+<pre><code class="language-scss"><div><span class="hljs-comment">/* Source SASS file to build custom Bootstrap site file */</span>
+<span class="hljs-keyword">@import</span> <span class="hljs-string">&quot;../wwwroot/css/open-iconic/font/css/open-iconic-bootstrap.min.css&quot;</span>;
+<span class="hljs-keyword">@import</span> <span class="hljs-string">&quot;Bootstrap/scss/_functions&quot;</span>;
+<span class="hljs-keyword">@import</span> <span class="hljs-string">&quot;Bootstrap/scss/bootstrap&quot;</span>;
+<span class="hljs-comment">/* This is the original site.css file that contains the site specific customizations*/</span>
+<span class="hljs-keyword">@import</span> <span class="hljs-string">&quot;custom.scss&quot;</span>;
+</div></code></pre>
+<ol start="5">
+<li>
+<p>Save and Web Compiler will compile a new site.css.  Watch the status in the bottom left corner of Visual Studio.</p>
+<p>You should have a *site.css and a <em>site.min.css</em> in <em>wwwroot/css</em>.</p>
+</li>
+<li>
+<p>Edit <em>_Host.cshtml</em>, and remove the reference to <em>bootstrap.min.css</em> - all the css is now compiled into <em>site.css</em>.</p>
+</li>
+</ol>
+<pre><code class="language-html"><div><span class="hljs-tag">&lt;<span class="hljs-name">head</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">meta</span> <span class="hljs-attr">charset</span>=<span class="hljs-string">&quot;utf-8&quot;</span> /&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">meta</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;viewport&quot;</span> <span class="hljs-attr">content</span>=<span class="hljs-string">&quot;width=device-width, initial-scale=1.0&quot;</span> /&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">title</span>&gt;</span>Blazor.CSS<span class="hljs-tag">&lt;/<span class="hljs-name">title</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">base</span> <span class="hljs-attr">href</span>=<span class="hljs-string">&quot;~/&quot;</span> /&gt;</span>
+    \\ Remove bootstrap CSS reference
+    <span class="hljs-tag">&lt;<span class="hljs-name">link</span> <span class="hljs-attr">rel</span>=<span class="hljs-string">&quot;stylesheet&quot;</span> <span class="hljs-attr">href</span>=<span class="hljs-string">&quot;css/bootstrap/bootstrap.min.css&quot;</span> /&gt;</span>
+    \\
+    <span class="hljs-tag">&lt;<span class="hljs-name">link</span> <span class="hljs-attr">href</span>=<span class="hljs-string">&quot;css/site.css&quot;</span> <span class="hljs-attr">rel</span>=<span class="hljs-string">&quot;stylesheet&quot;</span> /&gt;</span>
+    \\ This is the new Net5 build generated Scoped CSS stylesheet
+    \\ more later in this article
+    <span class="hljs-tag">&lt;<span class="hljs-name">link</span> <span class="hljs-attr">href</span>=<span class="hljs-string">&quot;Blazor.CSS.styles.css&quot;</span> <span class="hljs-attr">rel</span>=<span class="hljs-string">&quot;stylesheet&quot;</span> /&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">head</span>&gt;</span>
+
+</div></code></pre>
+<ol start="7">
+<li>Run the project.  Everything should be the same as before.</li>
+</ol>
+<h2 id="customize-bootstrap">Customize Bootstrap</h2>
+<p>We customize Bootstrap by adding new scss files.  I'm assuming you have a basic understanding of SASS.  If not then do a bit of background reading - it isn't rocket science.</p>
+<p>To demonstrate customization, we'll adjust some of the colours and add some new button styles.  Most of the code is derived from the <a href="https://startbootstrap.com/theme/sb-admin-2">SB2 Bootstrap template</a>.</p>
+<p>Add <em>_variables.scss</em> to <em>SASS/custom</em> and add the following content.  You can compare it with the base <em>SASS/Bootstrap/scss/_variables.scss</em> to see the differences.</p>
+<pre><code class="language-scss"><div><span class="hljs-comment">// Override Bootstrap default variables here</span>
+<span class="hljs-comment">// Do not edit any of the files in /bootstrap/scss/!</span>
+
+<span class="hljs-comment">// Color Variables</span>
+<span class="hljs-comment">// Bootstrap Color Overrides</span>
+
+<span class="hljs-variable">$white</span>: <span class="hljs-number">#fff</span> !default;
+<span class="hljs-variable">$gray-100</span>: <span class="hljs-number">#f8f9fc</span> !default;
+<span class="hljs-variable">$gray-200</span>: <span class="hljs-number">#eaecf4</span> !default;
+<span class="hljs-variable">$gray-300</span>: <span class="hljs-number">#dddfeb</span> !default;
+<span class="hljs-variable">$gray-400</span>: <span class="hljs-number">#d1d3e2</span> !default;
+<span class="hljs-variable">$gray-500</span>: <span class="hljs-number">#b7b9cc</span> !default;
+<span class="hljs-variable">$gray-600</span>: <span class="hljs-number">#858796</span> !default;
+<span class="hljs-variable">$gray-700</span>: <span class="hljs-number">#6e707e</span> !default;
+<span class="hljs-variable">$gray-800</span>: <span class="hljs-number">#5a5c69</span> !default;
+<span class="hljs-variable">$gray-900</span>: <span class="hljs-number">#3a3b45</span> !default;
+<span class="hljs-variable">$black</span>: <span class="hljs-number">#000</span> !default;
+
+<span class="hljs-comment">// We&#x27;ve adjusted the colors</span>
+<span class="hljs-variable">$blue</span>: <span class="hljs-number">#4e73df</span> !default;
+<span class="hljs-variable">$indigo</span>: <span class="hljs-number">#6610f2</span> !default;
+<span class="hljs-variable">$purple</span>: <span class="hljs-number">#6f42c1</span> !default;
+<span class="hljs-variable">$pink</span>: <span class="hljs-number">#e83e8c</span> !default;
+<span class="hljs-variable">$red</span>: <span class="hljs-number">#e74a3b</span> !default;
+<span class="hljs-variable">$orange</span>: <span class="hljs-number">#fd7e14</span> !default;
+<span class="hljs-variable">$yellow</span>: <span class="hljs-number">#f6c23e</span> !default;
+<span class="hljs-variable">$green</span>: <span class="hljs-number">#1cc88a</span> !default;
+<span class="hljs-variable">$teal</span>: <span class="hljs-number">#20c9a6</span> !default;
+<span class="hljs-variable">$cyan</span>: <span class="hljs-number">#36b9cc</span> !default;
+
+<span class="hljs-variable">$primary</span>: <span class="hljs-variable">$blue</span> !default;
+<span class="hljs-variable">$secondary</span>: <span class="hljs-variable">$gray-600</span> !default;
+<span class="hljs-variable">$success</span>: <span class="hljs-variable">$green</span> !default;
+<span class="hljs-variable">$info</span>: <span class="hljs-variable">$cyan</span> !default;
+<span class="hljs-variable">$warning</span>: <span class="hljs-variable">$yellow</span> !default;
+<span class="hljs-variable">$danger</span>: <span class="hljs-variable">$red</span> !default;
+<span class="hljs-variable">$light</span>: <span class="hljs-variable">$gray-100</span> !default;
+<span class="hljs-variable">$dark</span>: <span class="hljs-variable">$gray-800</span> !default;
+<span class="hljs-variable">$brand</span>: <span class="hljs-number">#b3ccff</span>;
+
+<span class="hljs-variable">$theme-colors</span>: () !default;
+<span class="hljs-comment">// stylelint-disable-next-line scss/dollar-variable-default</span>
+
+<span class="hljs-comment">// We&#x27;ve added brand, add, edit,... </span>
+<span class="hljs-variable">$theme-colors</span>: map-merge( ( 
+    <span class="hljs-string">&quot;primary&quot;</span>: <span class="hljs-variable">$primary</span>, 
+    <span class="hljs-string">&quot;secondary&quot;</span>: <span class="hljs-variable">$secondary</span>, 
+    <span class="hljs-string">&quot;success&quot;</span>: <span class="hljs-variable">$success</span>, 
+    <span class="hljs-string">&quot;info&quot;</span>: <span class="hljs-variable">$info</span>, 
+    <span class="hljs-string">&quot;warning&quot;</span>: <span class="hljs-variable">$warning</span>, 
+    <span class="hljs-string">&quot;danger&quot;</span>: <span class="hljs-variable">$danger</span>, 
+    <span class="hljs-string">&quot;error&quot;</span>: <span class="hljs-variable">$danger</span>,
+    <span class="hljs-string">&quot;light&quot;</span>: <span class="hljs-variable">$light</span>, 
+    <span class="hljs-string">&quot;dark&quot;</span>: <span class="hljs-variable">$dark</span>,
+    <span class="hljs-string">&quot;brand&quot;</span>: <span class="hljs-variable">$brand</span>,
+    <span class="hljs-string">&quot;add&quot;</span>: <span class="hljs-variable">$primary</span>,
+    <span class="hljs-string">&quot;new&quot;</span>: <span class="hljs-variable">$info</span>,
+    <span class="hljs-string">&quot;edit&quot;</span>: <span class="hljs-variable">$primary</span>,
+    <span class="hljs-string">&quot;delete&quot;</span>: <span class="hljs-variable">$danger</span>,
+    <span class="hljs-string">&quot;nav&quot;</span>: <span class="hljs-variable">$secondary</span>,
+    <span class="hljs-string">&quot;change&quot;</span>: <span class="hljs-variable">$warning</span>,
+    <span class="hljs-string">&quot;save&quot;</span>: <span class="hljs-variable">$success</span>
+
+), 
+<span class="hljs-variable">$theme-colors</span> );
+
+<span class="hljs-comment">// Custom Colors</span>
+<span class="hljs-variable">$brand-google</span>: <span class="hljs-number">#ea4335</span> !default;
+<span class="hljs-variable">$brand-facebook</span>: <span class="hljs-number">#3b5998</span> !default;
+
+<span class="hljs-comment">// Set Contrast Threshold</span>
+<span class="hljs-variable">$yiq-contrasted-threshold</span>: <span class="hljs-number">195</span> !default;
+
+<span class="hljs-comment">// Typography</span>
+<span class="hljs-variable">$body-color</span>: <span class="hljs-variable">$gray-600</span> !default;
+
+<span class="hljs-variable">$font-family-sans-serif</span>: <span class="hljs-string">&quot;Nunito&quot;</span>, -apple-system, BlinkMacSystemFont, <span class="hljs-string">&quot;Segoe UI&quot;</span>, Roboto, <span class="hljs-string">&quot;Helvetica Neue&quot;</span>, Arial, sans-serif, <span class="hljs-string">&quot;Apple Color Emoji&quot;</span>, <span class="hljs-string">&quot;Segoe UI Emoji&quot;</span>, <span class="hljs-string">&quot;Segoe UI Symbol&quot;</span>, <span class="hljs-string">&#x27;Noto Color Emoji&#x27;</span> !default;
+
+<span class="hljs-variable">$font-size-base</span>: .<span class="hljs-number">925rem</span> !default; 
+<span class="hljs-variable">$font-size-lg</span>: <span class="hljs-variable">$font-size-base</span> * <span class="hljs-number">1.20</span> !default;
+<span class="hljs-variable">$font-size-sm</span>: <span class="hljs-variable">$font-size-base</span> * .<span class="hljs-number">875</span> !default;
+
+<span class="hljs-variable">$font-weight-light</span>: <span class="hljs-number">300</span> !default;
+<span class="hljs-comment">// $font-weight-base: 400;</span>
+<span class="hljs-variable">$headings-font-weight</span>: <span class="hljs-number">400</span> !default;
+
+<span class="hljs-comment">// Shadows</span>
+<span class="hljs-variable">$box-shadow-sm</span>: <span class="hljs-number">0</span> <span class="hljs-number">0.125rem</span> <span class="hljs-number">0.25rem</span> <span class="hljs-number">0</span> rgba(<span class="hljs-variable">$gray-900</span>, .<span class="hljs-number">2</span>) !default;
+<span class="hljs-variable">$box-shadow</span>: <span class="hljs-number">0</span> <span class="hljs-number">0.15rem</span> <span class="hljs-number">1.75rem</span> <span class="hljs-number">0</span> rgba(<span class="hljs-variable">$gray-900</span>, .<span class="hljs-number">15</span>) !default;
+<span class="hljs-comment">// $box-shadow-lg: 0 1rem 3rem rgba($black, .175) !default;</span>
+
+<span class="hljs-comment">// Borders Radius</span>
+<span class="hljs-variable">$border-radius</span>: <span class="hljs-number">0.35rem</span> !default;
+<span class="hljs-variable">$border-color</span>: darken(<span class="hljs-variable">$gray-200</span>, <span class="hljs-number">2%</span>) !default;
+
+<span class="hljs-comment">// Spacing Variables</span>
+<span class="hljs-comment">// Change below variable if the height of the navbar changes</span>
+<span class="hljs-variable">$topbar-base-height</span>: <span class="hljs-number">4.375rem</span> !default;
+<span class="hljs-comment">// Change below variable to change the width of the sidenav</span>
+<span class="hljs-variable">$sidebar-base-width</span>: <span class="hljs-number">14rem</span> !default;
+<span class="hljs-comment">// Change below variable to change the width of the sidenav when collapsed</span>
+<span class="hljs-variable">$sidebar-collapsed-width</span>: <span class="hljs-number">6.5rem</span> !default;
+
+<span class="hljs-comment">// Card</span>
+<span class="hljs-variable">$card-cap-bg</span>: <span class="hljs-variable">$gray-100</span> !default;
+<span class="hljs-variable">$card-border-color</span>: <span class="hljs-variable">$border-color</span> !default;
+
+<span class="hljs-comment">// Adjust column spacing for symmetry</span>
+<span class="hljs-variable">$spacer</span>: <span class="hljs-number">1rem</span> !default;
+<span class="hljs-variable">$grid-gutter-width</span>: <span class="hljs-variable">$spacer</span> * <span class="hljs-number">1.5</span> !default;
+
+<span class="hljs-comment">// Transitions</span>
+<span class="hljs-variable">$transition-collapse</span>: height .<span class="hljs-number">15s</span> ease !default;
+
+<span class="hljs-comment">// Dropdowns</span>
+<span class="hljs-variable">$dropdown-font-size</span>: <span class="hljs-number">0.85rem</span> !default;
+<span class="hljs-variable">$dropdown-border-color</span>: <span class="hljs-variable">$border-color</span> !default;
+
+<span class="hljs-comment">/* turn off rounding */</span>
+<span class="hljs-variable">$enable-rounded</span>: false;
+</div></code></pre>
+<p>Add <em>_overrides.scss</em> to <em>SASS/custom</em> and add the following content.  This demonstrates the sort of changes you can make - we don't actually use it on the site.</p>
+<pre><code class="language-css"><div><span class="hljs-comment">/* Reduce the default form-group bottom margin*/</span>
+<span class="hljs-selector-class">.form-group</span> {
+    <span class="hljs-attribute">margin-bottom</span>: .<span class="hljs-number">25rem</span>;
+}
+
+<span class="hljs-comment">/* set new margins and padding for small alerts*/</span>
+<span class="hljs-selector-tag">div</span><span class="hljs-selector-class">.alert-sm</span> <span class="hljs-selector-class">.alert</span> {
+    <span class="hljs-attribute">padding</span>: .<span class="hljs-number">25rem</span> <span class="hljs-number">1.25rem</span>;
+    <span class="hljs-attribute">margin-bottom</span>: <span class="hljs-number">0rem</span>;
+}
+</div></code></pre>
+<h3 id="build-the-customized-bootstrap">Build the Customized Bootstrap</h3>
+<p>To build the custom version of Bootstrap, we need to add the new SASS files into the compile process.</p>
+<p>Edit <em>SASS/bootstrap-site.scss</em></p>
+<pre><code class="language-css"><div><span class="hljs-comment">/* Source SASS file to build custom Bootstrap site file */</span>
+<span class="hljs-keyword">@import</span> <span class="hljs-string">&quot;../wwwroot/css/open-iconic/font/css/open-iconic-bootstrap.min.css&quot;</span>;
+<span class="hljs-keyword">@import</span> <span class="hljs-string">&quot;Bootstrap/scss/_functions&quot;</span>;
+<span class="hljs-keyword">@import</span> <span class="hljs-string">&quot;Bootstrap/Custom/_variables&quot;</span>;
+<span class="hljs-keyword">@import</span> <span class="hljs-string">&quot;Bootstrap/scss/bootstrap&quot;</span>;
+<span class="hljs-keyword">@import</span> <span class="hljs-string">&quot;Bootstrap/Custom/_overrides&quot;</span>;
+<span class="hljs-comment">/* This is the original site.css file that contains the site specific customizations*/</span>
+<span class="hljs-keyword">@import</span> <span class="hljs-string">&quot;custom.scss&quot;</span>;
+</div></code></pre>
+<p>Save and this should compile.</p>
+<p>To see the changes, edit <em>Pages/Counter.razor</em> and add a few extra buttons to the page.</p>
+<pre><code class="language-html"><div><span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;btn btn-primary&quot;</span> @<span class="hljs-attr">onclick</span>=<span class="hljs-string">&quot;IncrementCount&quot;</span>&gt;</span>Click me<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;btn btn-save&quot;</span> @<span class="hljs-attr">onclick</span>=<span class="hljs-string">&quot;IncrementCount&quot;</span>&gt;</span>Save Styled Click me<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;btn btn-delete&quot;</span> @<span class="hljs-attr">onclick</span>=<span class="hljs-string">&quot;IncrementCount&quot;</span>&gt;</span>Delete Styled Click me<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;btn btn-brand&quot;</span> @<span class="hljs-attr">onclick</span>=<span class="hljs-string">&quot;IncrementCount&quot;</span>&gt;</span>Brand Styled Click me<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span>
+</div></code></pre>
+<p>Run the site and navigate to the counter page to check the button customization.  They should look like this:</p>
+<p><img src="https://github.com/ShaunCurtis/Blazor.CSS/blob/master/images/custom-buttons.png?raw=true" alt="custom buttons"></p>
+<h2 id="changing-css-frameworks">Changing CSS Frameworks</h2>
+<p>Not everyone wants to use Bootstrap - some people like their sites being a little different!  In this section we'll change to <a href="https://picturepan2.github.io/spectre/">Spectre</a>.</p>
+<ol>
+<li>Download the Spectre code from <a href="https://github.com/picturepan2/spectre">Github</a>.</li>
+<li>Create a <em>Spectre</em> directory in <em>SASS</em>.</li>
+<li>Create a <em>scss</em> directory in <em>Spectre</em>.</li>
+<li>Copy the contents of <em>spectre.src</em> into <em>SASS/Spectre/scss</em>.</li>
+<li>Create <em>site-spectre.scss</em> in <em>SASS</em> and add the following code:</li>
+</ol>
+<pre><code class="language-scss"><div><span class="hljs-keyword">@import</span> <span class="hljs-string">&quot;Spectre/scss/spectre&quot;</span>;
+</div></code></pre>
+<ol start="6">
+<li>Edit <em>compilerconfig.json</em></li>
+</ol>
+<pre><code class="language-json"><div>[
+  {
+    <span class="hljs-attr">&quot;outputFile&quot;</span>: <span class="hljs-string">&quot;wwwroot/css/site.css&quot;</span>,
+    <span class="hljs-attr">&quot;inputFile&quot;</span>: <span class="hljs-string">&quot;SASS/site.scss&quot;</span>
+  },
+  {
+    <span class="hljs-attr">&quot;outputFile&quot;</span>: <span class="hljs-string">&quot;wwwroot/css/spectre.css&quot;</span>,
+    <span class="hljs-attr">&quot;inputFile&quot;</span>: <span class="hljs-string">&quot;SASS/site-spectre.scss&quot;</span>
+  },
+  {
+    <span class="hljs-attr">&quot;outputFile&quot;</span>: <span class="hljs-string">&quot;wwwroot/css/spectre-icons.css&quot;</span>,
+    <span class="hljs-attr">&quot;inputFile&quot;</span>: <span class="hljs-string">&quot;SASS/Spectre/scss/Spectre-icons.scss&quot;</span>
+  }
+]
+</div></code></pre>
+<p>Once you save this you should get a compiled *spectre.css in <em>wwwroot/css</em></p>
+<h3 id="customization">Customization</h3>
+<p>Add folder <em>custom</em> to <em>SASS/Spectre</em></p>
+<p>Add <em>_variables.scss</em></p>
+<pre><code class="language-scss"><div><span class="hljs-comment">// Control colors</span>
+<span class="hljs-variable">$brand-color</span>: <span class="hljs-number">#7952b3</span> !default;
+<span class="hljs-variable">$exit-color</span>: <span class="hljs-number">#66758c</span> !default;
+<span class="hljs-variable">$save-color</span>: <span class="hljs-number">#32b643</span> !default;
+<span class="hljs-variable">$delete-color</span>: <span class="hljs-number">#e85600</span> !default;
+
+</div></code></pre>
+<p>Add <em>_buttons.scss</em></p>
+<pre><code class="language-scss"><div><span class="hljs-comment">// Button Colors</span>
+<span class="hljs-selector-class">.btn</span> {
+    &amp;<span class="hljs-selector-class">.btn-exit</span> {
+        <span class="hljs-keyword">@include</span> button-variant(<span class="hljs-variable">$exit-color</span>);
+    }
+    &amp;<span class="hljs-selector-class">.btn-brand</span> {
+        <span class="hljs-keyword">@include</span> button-variant(<span class="hljs-variable">$brand-color</span>);
+    }
+    &amp;<span class="hljs-selector-class">.btn-delete</span> {
+        <span class="hljs-keyword">@include</span> button-variant(<span class="hljs-variable">$delete-color</span>);
+    }
+}
+</div></code></pre>
+<p>Edit <em>SASS/site-spectre.scss</em></p>
+<pre><code class="language-scss"><div><span class="hljs-keyword">@import</span> <span class="hljs-string">&quot;Spectre/custom/_variables&quot;</span>;
+<span class="hljs-keyword">@import</span> <span class="hljs-string">&quot;Spectre/scss/spectre&quot;</span>;
+<span class="hljs-keyword">@import</span> <span class="hljs-string">&quot;Spectre/custom/_buttons&quot;</span>;
+</div></code></pre>
+<p>Finally change <em>_Host.cshtml</em> over to the new css.</p>
+<pre><code class="language-html"><div><span class="hljs-tag">&lt;<span class="hljs-name">head</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">meta</span> <span class="hljs-attr">charset</span>=<span class="hljs-string">&quot;utf-8&quot;</span> /&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">meta</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;viewport&quot;</span> <span class="hljs-attr">content</span>=<span class="hljs-string">&quot;width=device-width, initial-scale=1.0&quot;</span> /&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">title</span>&gt;</span>Blazor.CSS<span class="hljs-tag">&lt;/<span class="hljs-name">title</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">base</span> <span class="hljs-attr">href</span>=<span class="hljs-string">&quot;~/&quot;</span> /&gt;</span>
+    \\ Link to the new custom Spectre CSS
+    <span class="hljs-tag">&lt;<span class="hljs-name">link</span> <span class="hljs-attr">href</span>=<span class="hljs-string">&quot;css/spectre.css&quot;</span> <span class="hljs-attr">rel</span>=<span class="hljs-string">&quot;stylesheet&quot;</span> /&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">link</span> <span class="hljs-attr">href</span>=<span class="hljs-string">&quot;Blazor.CSS.styles.css&quot;</span> <span class="hljs-attr">rel</span>=<span class="hljs-string">&quot;stylesheet&quot;</span> /&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">head</span>&gt;</span>
+
+</div></code></pre>
+<p>Run the site.</p>
+<p>It will look a little different - it needs some work to fix small problems, but basically works.  Go to the Counter page to see the different buttons - Spectre and Bootstrap button class names are very similar so work.</p>
+<p><img src="https://github.com/ShaunCurtis/Blazor.CSS/blob/master/images/spectre-buttons.png?raw=true" alt="spectre buttons"></p>
+<h2 id="scoped-css---component-styling">Scoped CSS - Component Styling</h2>
+<p>A new feature in Net5 is scoped CSS a.k.a. component styling.  Take a look at the <em>Shared</em> folder in the project and you'll see css files attached to the <em>NavMenu</em> and <em>MainLayout</em> razor components.</p>
+<p><img src="https://github.com/ShaunCurtis/Blazor.CSS/blob/master/images/component-css.png?raw=true" alt="component css"></p>
+<p>To explore how this works, let's re-style the <em>FetchData</em> data table.</p>
+<ol>
+<li>Add a new Razor component DataGrid.razor to <em>Shared</em>, and add the following code - it's a modified version of the existing <em>fetchdata</em> code.</li>
+</ol>
+<pre><code class="language-html"><div>@using Blazor.CSS.Data
+
+@if (forecasts == null)
+{
+    <span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-name">em</span>&gt;</span>Loading...<span class="hljs-tag">&lt;/<span class="hljs-name">em</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span>
+}
+else
+{
+    <span class="hljs-tag">&lt;<span class="hljs-name">table</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;table&quot;</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">thead</span>&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-name">tr</span>&gt;</span>
+                <span class="hljs-tag">&lt;<span class="hljs-name">th</span>&gt;</span>Date<span class="hljs-tag">&lt;/<span class="hljs-name">th</span>&gt;</span>
+                <span class="hljs-tag">&lt;<span class="hljs-name">th</span>&gt;</span>Temp. (C)<span class="hljs-tag">&lt;/<span class="hljs-name">th</span>&gt;</span>
+                <span class="hljs-tag">&lt;<span class="hljs-name">th</span>&gt;</span>Temp. (F)<span class="hljs-tag">&lt;/<span class="hljs-name">th</span>&gt;</span>
+                <span class="hljs-tag">&lt;<span class="hljs-name">th</span>&gt;</span>Summary<span class="hljs-tag">&lt;/<span class="hljs-name">th</span>&gt;</span>
+                <span class="hljs-tag">&lt;<span class="hljs-name">th</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;max-column&quot;</span>&gt;</span>Detail<span class="hljs-tag">&lt;/<span class="hljs-name">th</span>&gt;</span>
+            <span class="hljs-tag">&lt;/<span class="hljs-name">tr</span>&gt;</span>
+        <span class="hljs-tag">&lt;/<span class="hljs-name">thead</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">tbody</span>&gt;</span>
+            @foreach (var forecast in forecasts)
+            {
+                <span class="hljs-tag">&lt;<span class="hljs-name">tr</span>&gt;</span>
+                    <span class="hljs-tag">&lt;<span class="hljs-name">td</span>&gt;</span>@forecast.Date.ToShortDateString()<span class="hljs-tag">&lt;/<span class="hljs-name">td</span>&gt;</span>
+                    <span class="hljs-tag">&lt;<span class="hljs-name">td</span>&gt;</span>@forecast.TemperatureC<span class="hljs-tag">&lt;/<span class="hljs-name">td</span>&gt;</span>
+                    <span class="hljs-tag">&lt;<span class="hljs-name">td</span>&gt;</span>@forecast.TemperatureF<span class="hljs-tag">&lt;/<span class="hljs-name">td</span>&gt;</span>
+                    <span class="hljs-tag">&lt;<span class="hljs-name">td</span>&gt;</span>@forecast.Summary<span class="hljs-tag">&lt;/<span class="hljs-name">td</span>&gt;</span>
+                    <span class="hljs-tag">&lt;<span class="hljs-name">td</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;max-column&quot;</span>&gt;</span>
+                        <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;grid-overflow&quot;</span>&gt;</span>
+                            <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;grid-overflowinner&quot;</span>&gt;</span>
+                                @($&quot;The Weather Forecast for this {forecast.Date.DayOfWeek}, the {forecast.Date.Day} of the month {forecast.Date.Month} in the year of our Lord {forecast.Date.Year} is {forecast.Summary}&quot;)
+                            <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+                        <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+                    <span class="hljs-tag">&lt;/<span class="hljs-name">td</span>&gt;</span>
+                <span class="hljs-tag">&lt;/<span class="hljs-name">tr</span>&gt;</span>
+            }
+        <span class="hljs-tag">&lt;/<span class="hljs-name">tbody</span>&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-name">table</span>&gt;</span>
+}
+@code {
+    [Parameter] public WeatherForecast[] forecasts { get; set; } = null;
+}
+</div></code></pre>
+<ol start="2">
+<li>Add <em>DataGrid.razor.css</em> to <em>Shared</em>.  It should associate with <em>DataGrid.razor</em>.  The component specific css goes here.  We're adding some css to format the max column and handle text overflow gracefully.</li>
+</ol>
+<pre><code class="language-css"><div><span class="hljs-selector-class">.max-column</span> {
+    <span class="hljs-attribute">width</span>:<span class="hljs-number">50%</span>;
+}
+
+<span class="hljs-selector-class">.grid-overflow</span> {
+    <span class="hljs-attribute">display</span>: flex;
+}
+
+<span class="hljs-selector-class">.grid-overflowinner</span> {
+    <span class="hljs-attribute">flex</span>: <span class="hljs-number">1</span>;
+    <span class="hljs-attribute">width</span>: <span class="hljs-number">1px</span>;
+    <span class="hljs-attribute">overflow-x</span>: hidden;
+    <span class="hljs-attribute">white-space</span>: nowrap;
+    <span class="hljs-attribute">text-overflow</span>: ellipsis;
+}
+</div></code></pre>
+<ol start="3">
+<li>Modify <em>Fetchdata</em> to use the new component.</li>
+</ol>
+<pre><code class="language-html"><div>@page &quot;/fetchdata&quot;
+
+@using Blazor.CSS.Data
+@inject WeatherForecastService ForecastService
+
+<span class="hljs-tag">&lt;<span class="hljs-name">h1</span>&gt;</span>Weather forecast<span class="hljs-tag">&lt;/<span class="hljs-name">h1</span>&gt;</span>
+
+<span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span>This component demonstrates fetching data from a service and a data grid to displaying it.<span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span>
+
+<span class="hljs-tag">&lt;<span class="hljs-name">DataGrid</span> <span class="hljs-attr">forecasts</span>=<span class="hljs-string">&quot;this.forecasts&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">DataGrid</span>&gt;</span>
+
+@code {
+    private WeatherForecast[] forecasts;
+
+    protected override async Task OnInitializedAsync()
+    {
+        forecasts = await ForecastService.GetForecastAsync(DateTime.Now);
+    }
+}
+</div></code></pre>
+<ol start="4">
+<li>Run the site and <em>Fetchdata</em> should look like this:</li>
+</ol>
+<p><img src="https://github.com/ShaunCurtis/Blazor.CSS/blob/master/images/weather-datagrid.png?raw=true" alt="fatchdata"></p>
+<p>Note the max column operating with the ellipsis shortening as the page is narrowed.</p>
+<h3 id="whats-going-on">What's Going On</h3>
+<p>Open Developer Tools in the browser and take a look at the HTML.</p>
+<p><img src="https://github.com/ShaunCurtis/Blazor.CSS/blob/master/images/browser-elements-view.png?raw=true" alt="Elements"></p>
+<p>Note the new unique ID attribute used on various elements in the HTML.</p>
+<p>Look at <em>Blazor.CSS.styles.css</em> - the CSS file generated by Blazor during the build process.  You can see the css scoped to the components using the unique IDs.</p>
+<p><img src="https://github.com/ShaunCurtis/Blazor.CSS/blob/master/images/browser-sources.png?raw=true" alt="sources"></p>
+<p>Finally, look at the <em>obj</em> view in Solution Explorer in the project.  You can see the specific css files generated for each component and the <em>bundled</em> file based on the project name.  This is exposed in the <em>wwwroot</em> folder.</p>
+<p><img src="https://github.com/ShaunCurtis/Blazor.CSS/blob/master/images/obj-view.png?raw=true" alt="obj-view"></p>
+<h2 id="wrap-up">Wrap Up</h2>
+<p>There are many ways to deploy and use custom CSS in Blazor.  This is one of many, but probably one of the simplest.</p>
+<p>I've covered Scoped CSS here, though I'm not sure how much I'll use it.</p>
+
+    
+
+            </div>
+        </div>
+    </div>
+</div>
+<!-- end of Article Container -->
+
+
+                </div>
+                <!-- End of Main Content -->
+            </div>
+            <!-- Footer -->
+            
+<!-- Copyright -->
+<footer class="sticky-footer bg-white">
+    <div class="container my-auto">
+        <div class="copyright text-center my-auto">
+            
+<span>Copyright &copy; Cold Elm Coders - 2022</span>
+
+        </div>
+    </div>
+</footer>
+<!-- end of copyright -->
+
+
+            <!-- End of Footer -->
+        </div>
+        <!-- End of Content Wrapper -->
+        
+<a class="scroll-to-top rounded" href="#page-top">
+    <i class="fas fa-angle-up"></i>
+</a>
+
+
+    </div>
+    <!-- End of Page Wrapper -->
+    <!-- Scripts -->
+    
+<!-- Scripts -->
+<!-- Bootstrap core JavaScript-->
+<script src="/assets/vendor/jquery/jquery.min.js"></script>
+<script src="/assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+<!-- Core plugin JavaScript-->
+<script src="/assets/vendor/jquery-easing/jquery.easing.min.js"></script>
+
+<!-- Custom scripts for all pages-->
+<script src="/assets/js/sb-admin-2.min.js"></script>
+
+
+</body>
+</html>

@@ -1,0 +1,868 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+<!-- SEO Meta Tags -->
+<meta name="description" content="Your description">
+<meta name="author" content="Your name">
+
+<!-- OG Meta Tags to improve the way the post looks when you share the page on Facebook, Twitter, LinkedIn -->
+<meta property="og:site_name" content="" /> <!-- website name -->
+<meta property="og:site" content="" /> <!-- website link -->
+<meta property="og:title" content="" /> <!-- title shown in the actual shared post -->
+<meta property="og:description" content="" /> <!-- description shown in the actual shared post -->
+<meta property="og:image" content="" /> <!-- image link, make sure it's jpg -->
+<meta property="og:url" content="" /> <!-- where do you want your post to link to -->
+<meta name="twitter:card" content="summary_large_image"> <!-- to have large image post format in Twitter -->
+
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+
+<meta name="description" content="Applying Separation of Concerns, SOLID and Patterns to your Blazor Components" >
+<meta name="author" content="Shaun Curtis" >
+
+
+
+<title>What's Wrong with my Component Design?</title>
+
+
+<!-- Custom fonts for this template-->
+<link href="/assets/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+<link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+      rel="stylesheet">
+
+<!-- Custom styles for this template-->
+<link href="/assets/css/sb-admin-2.css" rel="stylesheet" type="text/css">
+<link href="/assets/css/site.css" rel="stylesheet" type="text/css">
+
+<!-- Favicon  -->
+<link rel="icon" href="/assets/images/favicon.png">
+
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/highlight.css">
+    <link rel="stylesheet" href="/assets/css/article.css" type="text/css">
+</head>
+<body id="page-top">
+    <!--topbar-->
+    <div id="topbar">
+        
+<!-- Topbar -->
+<nav class="navbar navbar-expand navbar-light topbar mb-4 static-top">
+    
+<ul class="navbar-nav" >
+<li class="nav-item" >
+<a class="nav-link " href="/index.html" role="button"  >
+<span class="mr-2 d-none d-lg-inline text-gray-100">Index</span>
+</a>
+</li>
+<li class="nav-item dropdown no-arrow mx-1" >
+<a class="nav-link dropdown-toggle" href="#" id="0ae5007d-fba6-4e4f-93e7-ac6bf830ac8f" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"  >
+<span class="mr-2 d-none d-lg-inline text-gray-100">Articles</span>
+</a>
+<div class=" dropdown-list dropdown-menu shadow animated--grow-in" aria-labelledby="0ae5007d-fba6-4e4f-93e7-ac6bf830ac8f" >
+<a class="dropdown-item" href="/articles/A-Flexible-App.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Creating a Dynamic Blazor App Component
+</a>
+<a class="dropdown-item" href="/articles/Async-Programming-in-DotNetCore.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Async Programming In Dotnetcore
+</a>
+<a class="dropdown-item" href="/articles/Blazor-AllinOne.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Blazor All In One - Multi SPA Hosting
+</a>
+<a class="dropdown-item" href="/articles/Blazor-Async-Programming.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Blazor Async Programming
+</a>
+<a class="dropdown-item" href="/articles/Blazor-Brick-By-Brick.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Blazor Brick By Brick
+</a>
+<a class="dropdown-item" href="/articles/Blazor-Components.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Blazor Components
+</a>
+<a class="dropdown-item" href="/articles/Blazor-CSS.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Blazor CSS
+</a>
+<a class="dropdown-item" href="/articles/Blazor-DataList-Control.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Blazor Datalist Control
+</a>
+<a class="dropdown-item" href="/articles/Blazor-Form-Validation.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Blazor Form Validation
+</a>
+<a class="dropdown-item" href="/articles/Building-Blazor-List-Components.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Building Blazor List Components and the Notification Pattern
+</a>
+<a class="dropdown-item" href="/articles/Building-Edit-Forms.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Building Edit Forms
+</a>
+<a class="dropdown-item" href="/articles/EditFormState.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+The Blazor EditFormState Control
+</a>
+<a class="dropdown-item" href="/articles/Hydra.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Blazor Hydra
+</a>
+<a class="dropdown-item" href="/articles/Inline-Dialog.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+The Blazor Inline Dialog Control
+</a>
+<a class="dropdown-item" href="/articles/Modal-Dialog.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+A Blazor Modal Dialog
+</a>
+<a class="dropdown-item" href="/articles/Policy-Based-Authorization.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Policy Base Authorization in Blazor
+</a>
+<a class="dropdown-item" href="/articles/ValidationFormState.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+A Blazor Validation Control
+</a>
+<a class="dropdown-item" href="/articles/XML-XSD-Serialization.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+XML XSD Serialization
+</a>
+</div>
+</li>
+<li class="nav-item dropdown no-arrow mx-1" >
+<a class="nav-link dropdown-toggle" href="#" id="9f2ccc23-d4f1-48df-9f69-5f2160020791" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"  >
+<span class="mr-2 d-none d-lg-inline text-gray-100">Blazor Database Apps</span>
+</a>
+<div class=" dropdown-list dropdown-menu shadow animated--grow-in" aria-labelledby="9f2ccc23-d4f1-48df-9f69-5f2160020791" >
+<a class="dropdown-item" href="/Building-a-Database-Application-in-Blazor/Building-a-Database-Application-in-Blazor-Part-1.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Building A Database Application In Blazor Part 1
+</a>
+<a class="dropdown-item" href="/Building-a-Database-Application-in-Blazor/Building-a-Database-Application-in-Blazor-Part-2.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Building A Database Application In Blazor Part 2
+</a>
+<a class="dropdown-item" href="/Building-a-Database-Application-in-Blazor/Building-a-Database-Application-in-Blazor-Part-3.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Building A Database Application In Blazor Part 3
+</a>
+<a class="dropdown-item" href="/Building-a-Database-Application-in-Blazor/Building-a-Database-Application-in-Blazor-Part-4.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Building A Database Application In Blazor Part 4
+</a>
+<a class="dropdown-item" href="/Building-a-Database-Application-in-Blazor/Building-a-Database-Application-in-Blazor-Part-5.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Building A Database Application In Blazor Part 5
+</a>
+<a class="dropdown-item" href="/Building-a-Database-Application-in-Blazor/Building-a-Database-Application-in-Blazor-Part-6.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Building A Database Application In Blazor Part 6
+</a>
+<a class="dropdown-item" href="/Building-a-Database-Application-in-Blazor/index.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Building a Database Application in Blazor
+</a>
+</div>
+</li>
+<li class="nav-item dropdown no-arrow mx-1" >
+<a class="nav-link dropdown-toggle" href="#" id="07ea2db4-253b-4642-ae78-3b355927f6c1" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"  >
+<span class="mr-2 d-none d-lg-inline text-gray-100">Building Blazor Applications</span>
+</a>
+<div class=" dropdown-list dropdown-menu shadow animated--grow-in" aria-labelledby="07ea2db4-253b-4642-ae78-3b355927f6c1" >
+<a class="dropdown-item" href="/Building-Blazor-Applications/Blazor-Async-UI-Events.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Blazor Async UI Events
+</a>
+<a class="dropdown-item" href="/Building-Blazor-Applications/Blazor-Bootstrap-Toaster.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Blazor Bootstrap Toaster
+</a>
+<a class="dropdown-item" href="/Building-Blazor-Applications/Blazor-Services.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Blazor Services
+</a>
+<a class="dropdown-item" href="/Building-Blazor-Applications/Building-A-Blazor-AutoComplete-Control.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Building A Blazor Autocomplete Control
+</a>
+<a class="dropdown-item" href="/Building-Blazor-Applications/Building-Wrapper-Components.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Building Wrapper Components
+</a>
+<a class="dropdown-item" href="/Building-Blazor-Applications/Component-Service-Manager.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+The Component Service Manager
+</a>
+<a class="dropdown-item" href="/Building-Blazor-Applications/DBContexts-In-Transient-Services.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Dbcontexts In Transient Services
+</a>
+<a class="dropdown-item" href="/Building-Blazor-Applications/DynamicCss.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Blazor Dynamic Stylesheets
+</a>
+<a class="dropdown-item" href="/Building-Blazor-Applications/For-ForEach-in-Blazor.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+For Foreach In Blazor
+</a>
+<a class="dropdown-item" href="/Building-Blazor-Applications/Leaner-Meaner-Greener-Components.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Leaner Meaner Greener Components
+</a>
+<a class="dropdown-item" href="/Building-Blazor-Applications/Notification-Service-Pattern.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Blazor Notification Service Pattern
+</a>
+<a class="dropdown-item" href="/Building-Blazor-Applications/Rethinking-The-Repository-Pattern.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Rethinking The Repository Pattern
+</a>
+<a class="dropdown-item" href="/Building-Blazor-Applications/The-Blazor-WASM-Hosted-Project.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+The Blazor WASM Hosted Project
+</a>
+<a class="dropdown-item" href="/Building-Blazor-Applications/Whats-Wrong-with-my-Component-Design.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Whats Wrong With My Component Design
+</a>
+<a class="dropdown-item" href="/Building-Blazor-Applications/The-Blazor-Component" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Building Blazor Applications\The Blazor Component
+</a>
+</div>
+</li>
+<li class="nav-item dropdown no-arrow mx-1" >
+<a class="nav-link dropdown-toggle" href="#" id="d69a53de-5aa2-4e6d-ac09-5cb7d8714fa7" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"  >
+<span class="mr-2 d-none d-lg-inline text-gray-100">Design</span>
+</a>
+<div class=" dropdown-list dropdown-menu shadow animated--grow-in" aria-labelledby="d69a53de-5aa2-4e6d-ac09-5cb7d8714fa7" >
+<a class="dropdown-item" href="/Design/Clean-Design-In-Blazor.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Clean Design Principles in Blazor Applications
+</a>
+<a class="dropdown-item" href="/Design/Clean-Design-Blazor-Template.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+A Blazor Clean Design Template
+</a>
+<a class="dropdown-item" href="/Design/Clean-Design-Blazor-Template-Solution-Structure.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Solution Structure in the Clean Design Blazor Template
+</a>
+<a class="dropdown-item" href="/Design/Clean-Design-Blazor-Template-DataServices.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Data Services in the Clean Design Blazor Template
+</a>
+<a class="dropdown-item" href="/Design/Clean-Design-Blazor-Template-UI.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+The UI in the Clean Design Blazor Template
+</a>
+<a class="dropdown-item" href="/Design/Clean-Design-Blazor-Template-Solution-Setup.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Solution Setup in the Clean Design Blazor Template
+</a>
+<a class="dropdown-item" href="/Design/Clean-Design-Blazor-Template-Testing.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Testing in the Clean Design Blazor Template
+</a>
+</div>
+</li>
+<li class="nav-item dropdown no-arrow mx-1" >
+<a class="nav-link dropdown-toggle" href="#" id="a79ba440-35e6-4f4b-89db-6eb7829c18a4" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"  >
+<span class="mr-2 d-none d-lg-inline text-gray-100">Modern C#</span>
+</a>
+<div class=" dropdown-list dropdown-menu shadow animated--grow-in" aria-labelledby="a79ba440-35e6-4f4b-89db-6eb7829c18a4" >
+<a class="dropdown-item" href="/Modern-Coding-Patterns/Nullable-And-VS-2022.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Nullable And VS 2022
+</a>
+</div>
+</li>
+</ul>
+
+    <div class="ms-5 me-5 ml-auto">
+        <h1>Cold Elm Coders</h1>
+    </div>
+</nav>
+
+
+    </div>
+    <!--End topbar-->
+    <!--Sidebar-->
+    <div id="sidebar">
+        
+<div class="article-info p-2" Published: 07-11-2022 >
+<div>Published: 07-11-2022</div>
+<div>Last Updated: 07-11-2022</div>
+<div>Author: Shaun Curtis</div>
+</div>
+
+        
+<h4 class="p-2">Table of Contents</h4>
+<ul class="TOC" >
+<li class="TOC-item TOC-item-0" >
+<a class="TOC-link" href="#">Top</a>
+<ul class="TOC TOC-0" >
+<li class="TOC-item TOC-item-1" >
+<ul class="TOC TOC-1" >
+<li class="TOC-item TOC-item-2" >
+<a class="TOC-link" href="#repo">Repo</a>
+</li>
+<li class="TOC-item TOC-item-2" >
+<a class="TOC-link" href="#separate-out-the-data">Separate Out the Data</a>
+</li>
+<li class="TOC-item TOC-item-2" >
+<a class="TOC-link" href="#state">State</a>
+<ul class="TOC TOC-2" >
+<li class="TOC-item TOC-item-3" >
+<a class="TOC-link" href="#counterstate">CounterState</a>
+</li>
+<li class="TOC-item TOC-item-3" >
+<a class="TOC-link" href="#abstracting-common-functionality-into-statebase">Abstracting Common Functionality into StateBase</a>
+</li>
+</ul>
+</li>
+<li class="TOC-item TOC-item-2" >
+<a class="TOC-link" href="#services">Services</a>
+<ul class="TOC TOC-2" >
+<li class="TOC-item TOC-item-3" >
+<a class="TOC-link" href="#data-persistance">Data Persistance</a>
+</li>
+</ul>
+</li>
+<li class="TOC-item TOC-item-2" >
+<a class="TOC-link" href="#service-registration">Service Registration</a>
+</li>
+<li class="TOC-item TOC-item-2" >
+<a class="TOC-link" href="#updating-the-ui">Updating the UI</a>
+</li>
+<li class="TOC-item TOC-item-2" >
+<a class="TOC-link" href="#summary">Summary</a>
+</li>
+<li class="TOC-item TOC-item-2" >
+<a class="TOC-link" href="#appendix">Appendix</a>
+<ul class="TOC TOC-2" >
+<li class="TOC-item TOC-item-3" >
+<a class="TOC-link" href="#project-structure">Project Structure</a>
+</li>
+<li class="TOC-item TOC-item-3" >
+<a class="TOC-link" href="#the-cqs-objects">The CQS objects</a>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+    </div>
+    <!--End Sidebar-->
+    <!-- Page Wrapper -->
+    <div id="wrapper">
+        <!-- Content Wrapper -->
+        <div id="content-wrapper" class="d-flex flex-column">
+            <!-- Main Content -->
+            <div id="content">
+                <!-- Topbar -->
+                <div id="article">
+                    <!-- Article -->
+                    
+<!-- Header -->
+<header class="ex-header-article">
+    <div class="container">
+        <div class="row pt-3 pb-3 border-bottom">
+            <div class="col">
+                
+<h1>What's Wrong with my Component Design?</h1>
+<div>Applying Separation of Concerns, SOLID and Patterns to your Blazor Components</div>
+
+            </div> <!-- end of col -->
+        </div> <!-- end of row -->
+    </div> <!-- end of container -->
+</header> <!-- end of ex-header -->
+<!-- end of header -->
+
+
+                    
+<!-- Article Container -->
+<div class="ex-basic-1 pt-4">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                
+
+        <p>In any application it's all too easy to fall into the &quot;Quick&quot; solution trap.  What we forget is the &quot;and Dirty&quot; bit, which soon comes back to haunt us as we expand the functionality and scope of what we've coded.</p>
+<p>The right way seems too complicated, so we cut corners.  Blazor is no different: many of the simple code examples do just that.  In &quot;keeping it simple&quot; they promote a mode of coding that doesn't stand up to the complexities of real world applications.</p>
+<p>In this article I refactor the out-of-the-box template <code>Counter</code> page into something that appears far too complex for its purpose.  No one in their right mind would code it this way!  However, in the context of this article, it's a great start point: a simple requirement with a minimal data set.  We can concentrate on the coding techniques, practices and patterns that are applicable in more complex scenarios in a very simple setting.</p>
+<p>Here's the standard page:</p>
+<pre><code class="language-csharp"><div>@page <span class="hljs-string">&quot;/counter&quot;</span>
+&lt;PageTitle&gt;Counter&lt;/PageTitle&gt;
+
+&lt;h1&gt;Counter&lt;/h1&gt;
+&lt;p role=<span class="hljs-string">&quot;status&quot;</span>&gt;Current count: @currentCount&lt;/p&gt;
+&lt;button <span class="hljs-keyword">class</span>=<span class="hljs-string">&quot;btn btn-primary&quot;</span> @onclick=<span class="hljs-string">&quot;IncrementCount&quot;</span>&gt;Click me&lt;/button&gt;
+
+@code {
+    <span class="hljs-keyword">private</span> <span class="hljs-built_in">int</span> currentCount = <span class="hljs-number">0</span>;
+
+    <span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-keyword">void</span> <span class="hljs-title">IncrementCount</span>(<span class="hljs-params"></span>)</span>
+        =&gt; currentCount++;
+}
+</div></code></pre>
+<p>So what's wrong?  Nothing, or an awful lot: it depends on your perspective.  There's data (<code>private int currentCount</code>), the state of that data and the presentation of that data all mixed up in a single class: the <code>Counter</code> component.  There's no &quot;separation of concerns&quot;: it breaks a lot of SOLID coding principles.</p>
+<h2 id="repo">Repo</h2>
+<p>The repo for this article is <a href="https://github.com/ShaunCurtis/Blazr.SeparationOfConcerns">here - Blazr.SeparationOfConcerns</a>.</p>
+<h2 id="separate-out-the-data">Separate Out the Data</h2>
+<p>We can separate the data by building a Counter class.</p>
+<pre><code class="language-csharp"><div><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title">CounterData</span>
+{
+    <span class="hljs-keyword">public</span> <span class="hljs-built_in">int</span> Counter { <span class="hljs-keyword">get</span>; <span class="hljs-keyword">set</span>; }
+}
+</div></code></pre>
+<p>A view service:</p>
+<pre><code class="language-csharp"><div><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title">CounterService</span>
+{
+    <span class="hljs-keyword">public</span> CounterData Data { <span class="hljs-keyword">get</span>; <span class="hljs-keyword">private</span> <span class="hljs-keyword">set</span>; } = <span class="hljs-keyword">new</span>();
+
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">Increment</span>(<span class="hljs-params"></span>)</span>
+        =&gt; Data.Counter++;
+}
+</div></code></pre>
+<p>Registered in <code>Program</code>:</p>
+<pre><code class="language-csharp"><div>builder.Services.AddScoped&lt;CounterService&gt;();
+</div></code></pre>
+<p>And the Counter route component:</p>
+<pre><code class="language-cssharp"><code><div>@page &quot;/counter&quot;
+@inject CounterService Service
+
+&lt;PageTitle&gt;Counter&lt;/PageTitle&gt;
+
+&lt;h1&gt;Counter&lt;/h1&gt;
+
+&lt;p role=&quot;status&quot;&gt;Current count: @Service.Data.Counter&lt;/p&gt;
+
+&lt;button class=&quot;btn btn-primary&quot; @onclick=&quot;IncrementCount&quot;&gt;Click me&lt;/button&gt;
+
+@code {
+    private void IncrementCount()
+        =&gt; Service.Increment();
+}
+</div></code></code></pre>
+<h2 id="state">State</h2>
+<p>So far so good, but we haven't solved the state problem.  How do we know when a value has changed?  Is our object dirty - different from the original - or clean - the same as the original.</p>
+<p>First we define a record that represents our data (Dro = Data Record Object):</p>
+<pre><code class="language-csharp"><div><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">record</span> <span class="hljs-title">CounterDro</span>(<span class="hljs-params">
+    <span class="hljs-built_in">int</span> Counter
+    </span>)</span>;
+</div></code></pre>
+<p>It's immutable, no one can change it.  And we can compare two <code>CounterDro</code> objects where <code>Counter</code> is <code>2</code> and the comparator will return true.</p>
+<p>The counter has only one property, and it always increments, so its easy to track the changes.  That isn't normally the case.  Data objects have multiple properties that can change to new values or revert to original values.</p>
+<p>There are frameworks for managing state - Fluxor works well with Blazor.  This article demonstrates a relatively simple methodology which loosely implements the <em>Observer</em> pattern.</p>
+<h3 id="counterstate">CounterState</h3>
+<p><code>CounterState</code> replaces <code>CounterData</code>.</p>
+<pre><code class="language-csharp"><div><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title">CounterState</span>
+</div></code></pre>
+<p>A property and private field for each editable property.</p>
+<pre><code class="language-csharp"><div>    <span class="hljs-keyword">private</span> <span class="hljs-built_in">int</span> _counter;
+    <span class="hljs-keyword">public</span> <span class="hljs-built_in">int</span> Counter
+    {
+        <span class="hljs-keyword">get</span> =&gt; _counter;
+        <span class="hljs-keyword">set</span> =&gt; SetAndNotifyIfChanged(<span class="hljs-keyword">ref</span> _counter, <span class="hljs-keyword">value</span>, <span class="hljs-string">&quot;Counter&quot;</span>);
+    }
+</div></code></pre>
+<p>A field to hold the record provided in the Ctor new method and a method to load the data from the provided record.  The actual loading code is separated out as we use it in other methods.</p>
+<pre><code class="language-csharp"><div>    <span class="hljs-keyword">private</span> CounterDro BaseRecord = <span class="hljs-literal">default</span>!;
+
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">CounterState1</span>(<span class="hljs-params">CounterDro <span class="hljs-keyword">record</span></span>)</span>
+        =&gt; <span class="hljs-keyword">this</span>.Load(<span class="hljs-keyword">record</span>);
+
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">Load</span>(<span class="hljs-params">CounterDro <span class="hljs-keyword">record</span></span>)</span>
+    {
+        <span class="hljs-comment">// save a copy of the provided record, not the original</span>
+        <span class="hljs-keyword">this</span>.BaseRecord = <span class="hljs-keyword">record</span> <span class="hljs-title">with</span> { };
+        Counter = <span class="hljs-keyword">record</span>.Counter;
+        <span class="hljs-keyword">this</span>.NotifyStateMayHaveChanged();
+    }
+</div></code></pre>
+<p>A method to build a record based on the current property values:</p>
+<pre><code class="language-csharp"><div>    <span class="hljs-function"><span class="hljs-keyword">public</span> CounterDro <span class="hljs-title">AsRecord</span>(<span class="hljs-params"></span>)</span> =&gt; <span class="hljs-keyword">new</span>(
+        Counter: <span class="hljs-keyword">this</span>.Counter
+        );
+</div></code></pre>
+<p>A Property to get the edit state using record equality checking.</p>
+<pre><code class="language-csharp"><div>    <span class="hljs-keyword">public</span> <span class="hljs-built_in">bool</span> IsDirty
+        =&gt; BaseRecord?.Equals(AsRecord())
+            ?? <span class="hljs-keyword">this</span>.AsRecord() <span class="hljs-keyword">is</span> <span class="hljs-keyword">not</span> <span class="hljs-literal">null</span>;
+</div></code></pre>
+<p>Two events and notification methods for field and state change:</p>
+<pre><code class="language-csharp"><div>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">event</span> EventHandler&lt;<span class="hljs-built_in">string</span>&gt;? FieldChanged;
+    <span class="hljs-keyword">public</span> <span class="hljs-keyword">event</span> EventHandler&lt;<span class="hljs-built_in">bool</span>&gt;? StateChanged;
+
+    <span class="hljs-function"><span class="hljs-keyword">protected</span> <span class="hljs-keyword">void</span> <span class="hljs-title">NotifyFieldChanged</span>(<span class="hljs-params"><span class="hljs-built_in">string</span> fieldName</span>)</span>
+        =&gt; FieldChanged?.Invoke(<span class="hljs-keyword">this</span>, fieldName);
+
+    <span class="hljs-function"><span class="hljs-keyword">protected</span> <span class="hljs-keyword">void</span> <span class="hljs-title">NotifyStateMayHaveChanged</span>(<span class="hljs-params"></span>)</span>
+        =&gt;  <span class="hljs-keyword">this</span>.StateChanged?.Invoke(<span class="hljs-keyword">this</span>, <span class="hljs-keyword">this</span>.IsDirty);
+</div></code></pre>
+<p>A method to detect property change and notify as required:</p>
+<pre><code class="language-csharp"><div>    <span class="hljs-function"><span class="hljs-keyword">protected</span> <span class="hljs-keyword">void</span> <span class="hljs-title">SetAndNotifyIfChanged</span>&lt;<span class="hljs-title">TType</span>&gt;(<span class="hljs-params"><span class="hljs-keyword">ref</span> TType? currentValue, TType? <span class="hljs-keyword">value</span>, <span class="hljs-built_in">string</span> fieldName</span>)</span>
+    {
+        <span class="hljs-keyword">if</span> (!currentValue?.Equals(<span class="hljs-keyword">value</span>) ?? <span class="hljs-keyword">value</span> <span class="hljs-keyword">is</span> <span class="hljs-keyword">not</span> <span class="hljs-literal">null</span>)
+        {
+            currentValue = <span class="hljs-keyword">value</span>;
+            <span class="hljs-keyword">this</span>.NotifyFieldChanged(fieldName);
+            <span class="hljs-keyword">this</span>.NotifyStateMayHaveChanged();
+        }
+    }
+</div></code></pre>
+<p>A method to reset the context to the original data:</p>
+<pre><code class="language-csharp"><div>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">Reset</span>(<span class="hljs-params"></span>)</span>
+        =&gt; <span class="hljs-keyword">this</span>.Load(BaseRecord);
+</div></code></pre>
+<p>A method to set the context to the current state used when the state is saved:</p>
+<pre><code class="language-csharp"><div>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">Update</span>(<span class="hljs-params"></span>)</span>
+        =&gt; <span class="hljs-keyword">this</span>.Load(AsRecord());
+</div></code></pre>
+<h5 id="null-coalescing-and-conditional-operators">Null Coalescing and Conditional Operators</h5>
+<p>The code above uses <em>Null Coalescing</em> and <em>Null Conditional</em> operators.  For those not fully conversant with the modern Null operators, the later versions of C# offer more concise language for dealing with null.  You no longer need to write <code>if (x == null) ....</code> very often.</p>
+<pre><code><code><div>!currentValue?.Equals(value)
+</div></code></code></pre>
+<p>checks if the two values are not equal.</p>
+<p>However, <code>currentValue</code> could be null and throw an exception.  The <code>?</code> - the <em>Null conditional operator</em> - returns <code>null</code> if the object tested is null.  Everything to the right of the operator - <code>.Equals(value)</code> - is not evaluated.</p>
+<p>That's solves the initial exception, but we are doing a boolean check and a return value of null with also throw an error.  We solve this by applying the <em>Null Coalescing</em> operator <code>??</code>.</p>
+<pre><code><code><div>?? value is not null
+</div></code></code></pre>
+<p>This returns the right side of the statement (after <code>??</code>) if the left side evaluates to null.</p>
+<p>In our case <code>currentValue</code> is null - we wouldn't be doing the evaluation if it wasn't - so if value is not null, it has changed and we return the result - <code>true</code>.</p>
+<p>You'll see this null checking language used throughout the code.</p>
+<h3 id="abstracting-common-functionality-into-statebase">Abstracting Common Functionality into StateBase</h3>
+<p>The above code provides a pattern that can be re-used.  We can abstract out most of the functionality into an abstract <code>StateBase</code> class.</p>
+<pre><code class="language-csharp"><div><span class="hljs-keyword">public</span> <span class="hljs-keyword">abstract</span> <span class="hljs-keyword">class</span> <span class="hljs-title">StateBase</span>&lt;<span class="hljs-title">TRecord</span>&gt;
+{
+    <span class="hljs-keyword">protected</span> TRecord BaseRecord = <span class="hljs-literal">default</span>!;
+
+    <span class="hljs-keyword">public</span> <span class="hljs-keyword">event</span> EventHandler&lt;<span class="hljs-built_in">string</span>&gt;? FieldChanged;
+    <span class="hljs-keyword">public</span> <span class="hljs-keyword">event</span> EventHandler&lt;<span class="hljs-built_in">bool</span>&gt;? StateChanged;
+
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">StateBase</span>(<span class="hljs-params">TRecord <span class="hljs-keyword">record</span></span>)</span>
+        =&gt; <span class="hljs-keyword">this</span>.Load(<span class="hljs-keyword">record</span>);
+
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">abstract</span> TRecord <span class="hljs-title">AsRecord</span>(<span class="hljs-params"></span>)</span>;
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">abstract</span> <span class="hljs-keyword">void</span> <span class="hljs-title">Reset</span>(<span class="hljs-params"></span>)</span>;
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">abstract</span> <span class="hljs-keyword">void</span> <span class="hljs-title">Update</span>(<span class="hljs-params"></span>)</span>;
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">abstract</span> <span class="hljs-keyword">void</span> <span class="hljs-title">Load</span>(<span class="hljs-params">TRecord <span class="hljs-keyword">record</span></span>)</span>;
+
+    <span class="hljs-keyword">public</span> <span class="hljs-built_in">bool</span> IsDirty 
+        =&gt; BaseRecord?.Equals(AsRecord()) 
+            ?? <span class="hljs-keyword">this</span>.AsRecord() <span class="hljs-keyword">is</span> <span class="hljs-keyword">not</span> <span class="hljs-literal">null</span>;
+
+    <span class="hljs-function"><span class="hljs-keyword">protected</span> <span class="hljs-keyword">void</span> <span class="hljs-title">SetAndNotifyIfChanged</span>&lt;<span class="hljs-title">TType</span>&gt;(<span class="hljs-params"><span class="hljs-keyword">ref</span> TType? currentValue, TType? <span class="hljs-keyword">value</span>, <span class="hljs-built_in">string</span> fieldName</span>)</span>
+    {
+        <span class="hljs-keyword">if</span> (!currentValue?.Equals(<span class="hljs-keyword">value</span>) ?? <span class="hljs-keyword">value</span> <span class="hljs-keyword">is</span> <span class="hljs-keyword">not</span> <span class="hljs-literal">null</span>)
+        {
+            currentValue = <span class="hljs-keyword">value</span>;
+            <span class="hljs-keyword">this</span>.NotifyFieldChanged(fieldName);
+            <span class="hljs-keyword">this</span>.NotifyStateMayHaveChanged();
+        }
+    }
+
+    <span class="hljs-function"><span class="hljs-keyword">protected</span> <span class="hljs-keyword">void</span> <span class="hljs-title">NotifyFieldChanged</span>(<span class="hljs-params"><span class="hljs-built_in">string</span> fieldName</span>)</span>
+        =&gt; FieldChanged?.Invoke(<span class="hljs-keyword">this</span>, fieldName);
+
+    <span class="hljs-function"><span class="hljs-keyword">protected</span> <span class="hljs-keyword">void</span> <span class="hljs-title">NotifyStateMayHaveChanged</span>(<span class="hljs-params"></span>)</span>
+        =&gt;  <span class="hljs-keyword">this</span>.StateChanged?.Invoke(<span class="hljs-keyword">this</span>, <span class="hljs-keyword">this</span>.IsDirty);
+}
+</div></code></pre>
+<p>Our new CounterState class now looks like this:</p>
+<pre><code class="language-csharp"><div><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title">CounterState</span> : <span class="hljs-title">StateBase</span>&lt;<span class="hljs-title">CounterDro</span>&gt;
+{
+    <span class="hljs-keyword">private</span> <span class="hljs-built_in">int</span> _counter;
+    <span class="hljs-keyword">public</span> <span class="hljs-built_in">int</span> Counter
+    {
+        <span class="hljs-keyword">get</span> =&gt; _counter;
+        <span class="hljs-keyword">set</span> =&gt; SetAndNotifyIfChanged(<span class="hljs-keyword">ref</span> _counter, <span class="hljs-keyword">value</span>, <span class="hljs-string">&quot;Counter&quot;</span>);
+    }
+
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">CounterState</span>(<span class="hljs-params">CounterDro <span class="hljs-keyword">record</span></span>)
+        : <span class="hljs-title">base</span>(<span class="hljs-params"><span class="hljs-keyword">record</span></span>)</span> { }
+
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">override</span> <span class="hljs-keyword">void</span> <span class="hljs-title">Load</span>(<span class="hljs-params">CounterDro <span class="hljs-keyword">record</span></span>)</span>
+    {
+        <span class="hljs-keyword">this</span>.BaseRecord = <span class="hljs-keyword">record</span> <span class="hljs-title">with</span> { };
+        Counter = <span class="hljs-keyword">record</span>.Counter;
+        <span class="hljs-keyword">this</span>.NotifyStateMayHaveChanged();
+    }
+
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">override</span> CounterDro <span class="hljs-title">AsRecord</span>(<span class="hljs-params"></span>)</span> =&gt; <span class="hljs-keyword">new</span>(Counter: <span class="hljs-keyword">this</span>.Counter);
+
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">override</span> <span class="hljs-keyword">void</span> <span class="hljs-title">Reset</span>(<span class="hljs-params"></span>)</span>
+        =&gt; <span class="hljs-keyword">this</span>.Load(BaseRecord);
+
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">override</span> <span class="hljs-keyword">void</span> <span class="hljs-title">Update</span>(<span class="hljs-params"></span>)</span>
+        =&gt; <span class="hljs-keyword">this</span>.Load(AsRecord());
+}
+</div></code></pre>
+<h2 id="services">Services</h2>
+<p>At this point we need to update our services.</p>
+<p><code>CounterViewService</code> is our new view service.  It provides two methods to get and save the counter data to/from an undefined store.</p>
+<pre><code class="language-csharp"><div><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title">CounterViewService</span>
+{
+    <span class="hljs-keyword">public</span> <span class="hljs-keyword">readonly</span> CounterState StateContext = <span class="hljs-keyword">new</span> CounterState(<span class="hljs-keyword">new</span> CounterDro(<span class="hljs-number">0</span>));
+
+    <span class="hljs-keyword">private</span> <span class="hljs-keyword">readonly</span> IDataService _counterDataService;
+
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">CounterViewService</span>(<span class="hljs-params">IDataService counterDataService</span>)</span>
+        =&gt; _counterDataService = counterDataService;
+
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">async</span> Task <span class="hljs-title">GetCounterAsync</span>(<span class="hljs-params"></span>)</span>
+    {
+        <span class="hljs-keyword">var</span> result = <span class="hljs-keyword">await</span> _counterDataService.ReadAsync&lt;CounterDro&gt;(<span class="hljs-keyword">new</span> RecordQueryRequest&lt;CounterDro&gt;(<span class="hljs-string">&quot;Counter&quot;</span>));
+        <span class="hljs-keyword">this</span>.StateContext.Load(result.Record ?? <span class="hljs-keyword">new</span> CounterDro(<span class="hljs-number">0</span>));
+    }
+
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">async</span> Task <span class="hljs-title">SaveCounterAsync</span>(<span class="hljs-params"></span>)</span>
+    {
+        <span class="hljs-keyword">var</span> request = <span class="hljs-keyword">new</span> CommandRequest&lt;CounterDro&gt;(
+            StorageName: <span class="hljs-string">&quot;Counter&quot;</span>, 
+            Record: <span class="hljs-keyword">this</span>.StateContext.AsRecord());
+
+        <span class="hljs-keyword">var</span> result = <span class="hljs-keyword">await</span> _counterDataService.SaveAsync&lt;CounterDro&gt;(request);
+
+        <span class="hljs-keyword">if</span> (result.Successful)
+            <span class="hljs-keyword">this</span>.StateContext.Update();
+    }
+
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">async</span> Task <span class="hljs-title">Increment</span>(<span class="hljs-params"></span>)</span>
+    {
+        StateContext.Counter++;
+        <span class="hljs-keyword">await</span> SaveCounterAsync();
+    }
+}
+</div></code></pre>
+<p>The <code>IDataService</code> is defined as follows.  We'll look at the actual implementation shortly.</p>
+<pre><code class="language-Csharp"><div><span class="hljs-keyword">public</span> <span class="hljs-keyword">interface</span> <span class="hljs-title">IDataService</span>
+{
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">ValueTask</span>&lt;<span class="hljs-title">CommandResult</span>&gt; <span class="hljs-title">SaveAsync</span>&lt;<span class="hljs-title">TRecord</span>&gt;(<span class="hljs-params">CommandRequest&lt;TRecord&gt; request</span>)</span>;
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">ValueTask</span>&lt;<span class="hljs-title">RecordQueryResult</span>&lt;<span class="hljs-title">TRecord</span>&gt;&gt; <span class="hljs-title">ReadAsync</span>&lt;<span class="hljs-title">TRecord</span>&gt;(<span class="hljs-params">RecordQueryRequest&lt;TRecord&gt; request</span>)</span>;
+}
+</div></code></pre>
+<p>The class demonstrates some important concepts.</p>
+<p><strong>Abstraction</strong></p>
+<p>We separate the data persistance out though an interface.  <code>CounterViewService</code> injects the <code>IDataService</code> defined in the service container.  It doesn't care if the implementation loaded is session base storage, <code>LocalStorage</code>, a SQL database or a remote store.</p>
+<p><strong>Command/Query Separation</strong></p>
+<p>Operatons are either:</p>
+<ol>
+<li>
+<p><em>Commands</em> - that change state.  A <em>CommandRequest</em> object defines what needs changing and a <em>CommandResult</em> object returns status information  - normally Success/Failure and a message.</p>
+</li>
+<li>
+<p><em>Queries</em> - request data: they don't change it.  A <em>QueryRequest</em> defines the data to get and a <em>QueryResult</em> contains the requested data and status information - normally Success/Failure and a message.</p>
+</li>
+</ol>
+<p>Request and result objects are defined as immutable records.</p>
+<h3 id="data-persistance">Data Persistance</h3>
+<p>The application presists data to Browser Local Storage.</p>
+<p>Here's the <code>IDataService</code> implementation that uses the <code>ProtectedLocalStorage</code> package.  The code is self explanatory.</p>
+<pre><code class="language-csharp"><div><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title">LocalStorageDataService</span> : <span class="hljs-title">IDataService</span>
+{
+    <span class="hljs-keyword">private</span> <span class="hljs-keyword">readonly</span> ProtectedLocalStorage _storage;
+
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">LocalStorageDataService</span>(<span class="hljs-params">ProtectedLocalStorage storage</span>)</span>
+        =&gt; _storage = storage;
+
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">async</span> <span class="hljs-title">ValueTask</span>&lt;<span class="hljs-title">CommandResult</span>&gt; <span class="hljs-title">SaveAsync</span>&lt;<span class="hljs-title">TRecord</span>&gt;(<span class="hljs-params">CommandRequest&lt;TRecord&gt; request</span>)</span>
+    {
+        <span class="hljs-keyword">if</span> (request.Record <span class="hljs-keyword">is</span> <span class="hljs-keyword">not</span> <span class="hljs-literal">null</span>)
+            <span class="hljs-keyword">await</span> _storage.SetAsync(request.StorageName, request.Record);
+
+        <span class="hljs-comment">// No return so we return success!</span>
+        <span class="hljs-keyword">return</span> CommandResult.Success();
+    }
+
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">async</span> <span class="hljs-title">ValueTask</span>&lt;<span class="hljs-title">RecordQueryResult</span>&lt;<span class="hljs-title">TRecord</span>&gt;&gt; <span class="hljs-title">ReadAsync</span>&lt;<span class="hljs-title">TRecord</span>&gt;(<span class="hljs-params">RecordQueryRequest&lt;TRecord&gt; request</span>)</span>
+    {
+        <span class="hljs-comment">// We need to cover the situation were the component calling this is in the initial page</span>
+        <span class="hljs-comment">// and Blazor server is trying to statically render the page</span>
+        <span class="hljs-keyword">try</span>
+        {
+            <span class="hljs-keyword">var</span> result = <span class="hljs-keyword">await</span> _storage.GetAsync&lt;TRecord&gt;(request.StorageName);
+            <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> RecordQueryResult&lt;TRecord&gt; { Successful = result.Success, Record = result.Value, Message = <span class="hljs-string">$&quot;Failed to retrieve a value for <span class="hljs-subst">{request.StorageName}</span>&quot;</span> };
+        }
+        catch
+        {
+            <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> RecordQueryResult&lt;TRecord&gt; { Successful = <span class="hljs-literal">false</span>, Message = <span class="hljs-string">$&quot;Failed to retrieve a value for <span class="hljs-subst">{request.StorageName}</span>&quot;</span> };
+        }
+    }
+}
+</div></code></pre>
+<h2 id="service-registration">Service Registration</h2>
+<p>The new services are registered in <code>Program</code>:</p>
+<pre><code><code><div>builder.Services.AddScoped&lt;CounterViewService&gt;();
+builder.Services.AddScoped&lt;IDataService, LocalStorageDataService&gt;();
+</div></code></code></pre>
+<h2 id="updating-the-ui">Updating the UI</h2>
+<p>We can now update the UI components.</p>
+<p>First a Counter Viewer component to display the counter information</p>
+<pre><code class="language-csharp"><div>@inject CounterViewService Service
+@implements IDisposable
+
+&lt;div <span class="hljs-keyword">class</span>=<span class="hljs-string">&quot;bg-light border-dark p-3 m-3&quot;</span>&gt;
+    &lt;h3&gt;Counter Viewer&lt;/h3&gt;
+    &lt;div&gt;Counter : @this.Service.StateContext.Counter&lt;/div&gt;
+&lt;/div&gt;
+
+@code {
+    <span class="hljs-function"><span class="hljs-keyword">protected</span> <span class="hljs-keyword">override</span> <span class="hljs-keyword">void</span> <span class="hljs-title">OnInitialized</span>(<span class="hljs-params"></span>)</span>
+        =&gt; Service.StateContext.StateChanged += OnStateChanged;
+
+    <span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-keyword">void</span> <span class="hljs-title">OnStateChanged</span>(<span class="hljs-params"><span class="hljs-built_in">object</span>? sender, <span class="hljs-built_in">bool</span> state</span>)</span>
+                =&gt; <span class="hljs-keyword">this</span>.InvokeAsync(StateHasChanged);
+
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">Dispose</span>(<span class="hljs-params"></span>)</span>
+        =&gt; Service.StateContext.StateChanged += OnStateChanged;
+}
+</div></code></pre>
+<p>An &quot;Editor&quot; for the increment button - we are editing the context:</p>
+<pre><code class="language-csharp"><div>@inject CounterViewService Service
+
+&lt;div <span class="hljs-keyword">class</span>=<span class="hljs-string">&quot;bg-light p-3 m-3&quot;</span>&gt;
+    &lt;h3&gt;Counter Editor&lt;/h3&gt;
+    &lt;button <span class="hljs-keyword">class</span>=<span class="hljs-string">&quot;btn btn-primary&quot;</span> @onclick=<span class="hljs-keyword">this</span>.IncrementCount&gt;Increment Counter&lt;/button&gt;
+&lt;/div&gt;
+
+@code {
+    <span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-keyword">async</span> Task <span class="hljs-title">IncrementCount</span>(<span class="hljs-params"></span>)</span>
+        =&gt; <span class="hljs-keyword">await</span> <span class="hljs-keyword">this</span>.Service.Increment();
+}
+</div></code></pre>
+<p>And the new Counter route:</p>
+<pre><code class="language-csharp"><div>@page <span class="hljs-string">&quot;/counter&quot;</span>
+@inject CounterViewService Service
+
+&lt;PageTitle&gt;Counter&lt;/PageTitle&gt;
+
+&lt;CounterViewer /&gt;
+
+&lt;CounterEditor /&gt;
+
+@code {
+    <span class="hljs-function"><span class="hljs-keyword">protected</span> <span class="hljs-keyword">override</span> <span class="hljs-keyword">async</span> Task <span class="hljs-title">OnInitializedAsync</span>(<span class="hljs-params"></span>)</span>
+    {
+        <span class="hljs-comment">//ensures the component had initially rendered before attempt to read browser data</span>
+        <span class="hljs-keyword">await</span> Task.Delay(<span class="hljs-number">1</span>);
+        <span class="hljs-keyword">await</span> <span class="hljs-keyword">this</span>.Service.GetCounterAsync();
+    }
+}
+</div></code></pre>
+<h2 id="summary">Summary</h2>
+<p>This implementation demonstrates:</p>
+<ol>
+<li>How to separate out functionality into single purpose objects.</li>
+<li>How to separate data and state from the UI.</li>
+<li>How to use abstraction to decouple Data from the core application code.</li>
+<li>How to build a simple state persistance implementation.</li>
+</ol>
+<h2 id="appendix">Appendix</h2>
+<h3 id="project-structure">Project Structure</h3>
+<p><img src="\Building-Blazor-Applications\assets\rebuilding-counter\core-domain.png" alt="Core Domain Code"></p>
+<p><img src="\Building-Blazor-Applications\assets\rebuilding-counter\data-domain.png" alt="Data Domain Code"></p>
+<p><img src="\Building-Blazor-Applications\assets\rebuilding-counter\ui-domain.png" alt="UI Domain Code"></p>
+<h3 id="the-cqs-objects">The CQS objects</h3>
+<h4 id="command-objects">Command Objects</h4>
+<pre><code class="language-csharp"><div><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">record</span> <span class="hljs-title">CommandRequest</span>&lt;<span class="hljs-title">TRecord</span>&gt;(<span class="hljs-params"><span class="hljs-built_in">string</span> StorageName, TRecord Record</span>)</span>;
+
+<span class="hljs-keyword">public</span> <span class="hljs-keyword">record</span> <span class="hljs-title">CommandResult</span>
+{
+    <span class="hljs-keyword">public</span> <span class="hljs-built_in">bool</span> Successful { <span class="hljs-keyword">get</span>; <span class="hljs-keyword">init</span>; }
+    <span class="hljs-keyword">public</span> <span class="hljs-built_in">string</span> Message { <span class="hljs-keyword">get</span>; <span class="hljs-keyword">init</span>; } = <span class="hljs-built_in">string</span>.Empty;
+
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> CommandResult <span class="hljs-title">Success</span>(<span class="hljs-params"></span>)</span>
+        =&gt; <span class="hljs-keyword">new</span> CommandResult { Successful = <span class="hljs-literal">true</span> };
+
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> CommandResult <span class="hljs-title">Failure</span>(<span class="hljs-params"><span class="hljs-built_in">string</span> message</span>)</span>
+        =&gt; <span class="hljs-keyword">new</span> CommandResult { Successful = <span class="hljs-literal">false</span> };
+}
+</div></code></pre>
+<h4 id="query-objects">Query Objects</h4>
+<pre><code class="language-csharp"><div><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">record</span> <span class="hljs-title">RecordQueryRequest</span>&lt;<span class="hljs-title">TRecord</span>&gt;(<span class="hljs-params"><span class="hljs-built_in">string</span> StorageName</span>)</span>;
+
+<span class="hljs-keyword">public</span> <span class="hljs-keyword">record</span> <span class="hljs-title">RecordQueryResult</span>&lt;<span class="hljs-title">TRecord</span>&gt;
+{
+    <span class="hljs-keyword">public</span> TRecord? Record { <span class="hljs-keyword">get</span>; <span class="hljs-keyword">init</span>; }
+    <span class="hljs-keyword">public</span> <span class="hljs-built_in">bool</span> Successful { <span class="hljs-keyword">get</span>; <span class="hljs-keyword">init</span>; }
+    <span class="hljs-keyword">public</span> <span class="hljs-built_in">string</span> Message { <span class="hljs-keyword">get</span>; <span class="hljs-keyword">init</span>; } = <span class="hljs-built_in">string</span>.Empty;
+
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> RecordQueryResult&lt;TRecord&gt; <span class="hljs-title">Success</span>(<span class="hljs-params">TRecord <span class="hljs-keyword">record</span></span>)</span>
+        =&gt; <span class="hljs-keyword">new</span> RecordQueryResult&lt;TRecord&gt; { Record = <span class="hljs-keyword">record</span>, <span class="hljs-title">Successful</span> = <span class="hljs-literal">true</span> };
+
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> RecordQueryResult&lt;TRecord&gt; <span class="hljs-title">Failure</span>(<span class="hljs-params"><span class="hljs-built_in">string</span> message</span>)</span>
+        =&gt; <span class="hljs-keyword">new</span> RecordQueryResult&lt;TRecord&gt; { Successful = <span class="hljs-literal">false</span> };
+}
+</div></code></pre>
+
+        <script async src="https://cdn.jsdelivr.net/npm/katex-copytex@latest/dist/katex-copytex.min.js"></script>
+        
+    
+
+            </div>
+        </div>
+    </div>
+</div>
+<!-- end of Article Container -->
+
+
+                </div>
+                <!-- End of Main Content -->
+            </div>
+            <!-- Footer -->
+            
+<!-- Copyright -->
+<footer class="sticky-footer bg-white">
+    <div class="container my-auto">
+        <div class="copyright text-center my-auto">
+            
+<span>Copyright &copy; Cold Elm Coders - 2022</span>
+
+        </div>
+    </div>
+</footer>
+<!-- end of copyright -->
+
+
+            <!-- End of Footer -->
+        </div>
+        <!-- End of Content Wrapper -->
+        
+<a class="scroll-to-top rounded" href="#page-top">
+    <i class="fas fa-angle-up"></i>
+</a>
+
+
+    </div>
+    <!-- End of Page Wrapper -->
+    <!-- Scripts -->
+    
+<!-- Scripts -->
+<!-- Bootstrap core JavaScript-->
+<script src="/assets/vendor/jquery/jquery.min.js"></script>
+<script src="/assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+<!-- Core plugin JavaScript-->
+<script src="/assets/vendor/jquery-easing/jquery.easing.min.js"></script>
+
+<!-- Custom scripts for all pages-->
+<script src="/assets/js/sb-admin-2.min.js"></script>
+
+
+</body>
+</html>

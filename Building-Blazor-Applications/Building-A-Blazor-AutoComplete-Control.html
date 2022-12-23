@@ -1,0 +1,771 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+<!-- SEO Meta Tags -->
+<meta name="description" content="Your description">
+<meta name="author" content="Your name">
+
+<!-- OG Meta Tags to improve the way the post looks when you share the page on Facebook, Twitter, LinkedIn -->
+<meta property="og:site_name" content="" /> <!-- website name -->
+<meta property="og:site" content="" /> <!-- website link -->
+<meta property="og:title" content="" /> <!-- title shown in the actual shared post -->
+<meta property="og:description" content="" /> <!-- description shown in the actual shared post -->
+<meta property="og:image" content="" /> <!-- image link, make sure it's jpg -->
+<meta property="og:url" content="" /> <!-- where do you want your post to link to -->
+<meta name="twitter:card" content="summary_large_image"> <!-- to have large image post format in Twitter -->
+
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+
+<meta name="description" content="How to build your own Blazor AutoComplete Control" >
+<meta name="author" content="Shaun Curtis" >
+
+
+
+<title>Building a Blazor AutoComplete Control</title>
+
+
+<!-- Custom fonts for this template-->
+<link href="/assets/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+<link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+      rel="stylesheet">
+
+<!-- Custom styles for this template-->
+<link href="/assets/css/sb-admin-2.css" rel="stylesheet" type="text/css">
+<link href="/assets/css/site.css" rel="stylesheet" type="text/css">
+
+<!-- Favicon  -->
+<link rel="icon" href="/assets/images/favicon.png">
+
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/highlight.css">
+    <link rel="stylesheet" href="/assets/css/article.css" type="text/css">
+</head>
+<body id="page-top">
+    <!--topbar-->
+    <div id="topbar">
+        
+<!-- Topbar -->
+<nav class="navbar navbar-expand navbar-light topbar mb-4 static-top">
+    
+<ul class="navbar-nav" >
+<li class="nav-item" >
+<a class="nav-link " href="/index.html" role="button"  >
+<span class="mr-2 d-none d-lg-inline text-gray-100">Index</span>
+</a>
+</li>
+<li class="nav-item dropdown no-arrow mx-1" >
+<a class="nav-link dropdown-toggle" href="#" id="926046dd-312e-4325-b649-e52c5e8d68fa" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"  >
+<span class="mr-2 d-none d-lg-inline text-gray-100">Articles</span>
+</a>
+<div class=" dropdown-list dropdown-menu shadow animated--grow-in" aria-labelledby="926046dd-312e-4325-b649-e52c5e8d68fa" >
+<a class="dropdown-item" href="/articles/A-Flexible-App.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Creating a Dynamic Blazor App Component
+</a>
+<a class="dropdown-item" href="/articles/Async-Programming-in-DotNetCore.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Async Programming In Dotnetcore
+</a>
+<a class="dropdown-item" href="/articles/Blazor-AllinOne.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Blazor All In One - Multi SPA Hosting
+</a>
+<a class="dropdown-item" href="/articles/Blazor-Async-Programming.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Blazor Async Programming
+</a>
+<a class="dropdown-item" href="/articles/Blazor-Brick-By-Brick.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Blazor Brick By Brick
+</a>
+<a class="dropdown-item" href="/articles/Blazor-Components.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Blazor Components
+</a>
+<a class="dropdown-item" href="/articles/Blazor-CSS.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Blazor CSS
+</a>
+<a class="dropdown-item" href="/articles/Blazor-DataList-Control.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Blazor Datalist Control
+</a>
+<a class="dropdown-item" href="/articles/Blazor-Form-Validation.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Blazor Form Validation
+</a>
+<a class="dropdown-item" href="/articles/Building-Blazor-List-Components.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Building Blazor List Components and the Notification Pattern
+</a>
+<a class="dropdown-item" href="/articles/Building-Edit-Forms.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Building Edit Forms
+</a>
+<a class="dropdown-item" href="/articles/EditFormState.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+The Blazor EditFormState Control
+</a>
+<a class="dropdown-item" href="/articles/Hydra.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Blazor Hydra
+</a>
+<a class="dropdown-item" href="/articles/Inline-Dialog.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+The Blazor Inline Dialog Control
+</a>
+<a class="dropdown-item" href="/articles/Modal-Dialog.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+A Blazor Modal Dialog
+</a>
+<a class="dropdown-item" href="/articles/Policy-Based-Authorization.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Policy Base Authorization in Blazor
+</a>
+<a class="dropdown-item" href="/articles/ValidationFormState.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+A Blazor Validation Control
+</a>
+<a class="dropdown-item" href="/articles/XML-XSD-Serialization.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+XML XSD Serialization
+</a>
+</div>
+</li>
+<li class="nav-item dropdown no-arrow mx-1" >
+<a class="nav-link dropdown-toggle" href="#" id="ccea67ba-8c75-4961-a0a2-e239de2ceba0" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"  >
+<span class="mr-2 d-none d-lg-inline text-gray-100">Blazor Database Apps</span>
+</a>
+<div class=" dropdown-list dropdown-menu shadow animated--grow-in" aria-labelledby="ccea67ba-8c75-4961-a0a2-e239de2ceba0" >
+<a class="dropdown-item" href="/Building-a-Database-Application-in-Blazor/Building-a-Database-Application-in-Blazor-Part-1.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Building A Database Application In Blazor Part 1
+</a>
+<a class="dropdown-item" href="/Building-a-Database-Application-in-Blazor/Building-a-Database-Application-in-Blazor-Part-2.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Building A Database Application In Blazor Part 2
+</a>
+<a class="dropdown-item" href="/Building-a-Database-Application-in-Blazor/Building-a-Database-Application-in-Blazor-Part-3.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Building A Database Application In Blazor Part 3
+</a>
+<a class="dropdown-item" href="/Building-a-Database-Application-in-Blazor/Building-a-Database-Application-in-Blazor-Part-4.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Building A Database Application In Blazor Part 4
+</a>
+<a class="dropdown-item" href="/Building-a-Database-Application-in-Blazor/Building-a-Database-Application-in-Blazor-Part-5.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Building A Database Application In Blazor Part 5
+</a>
+<a class="dropdown-item" href="/Building-a-Database-Application-in-Blazor/Building-a-Database-Application-in-Blazor-Part-6.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Building A Database Application In Blazor Part 6
+</a>
+<a class="dropdown-item" href="/Building-a-Database-Application-in-Blazor/index.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Building a Database Application in Blazor
+</a>
+</div>
+</li>
+<li class="nav-item dropdown no-arrow mx-1" >
+<a class="nav-link dropdown-toggle" href="#" id="964fd7ae-3356-4811-bba6-1655296eb211" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"  >
+<span class="mr-2 d-none d-lg-inline text-gray-100">Building Blazor Applications</span>
+</a>
+<div class=" dropdown-list dropdown-menu shadow animated--grow-in" aria-labelledby="964fd7ae-3356-4811-bba6-1655296eb211" >
+<a class="dropdown-item" href="/Building-Blazor-Applications/Blazor-Async-UI-Events.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Blazor Async UI Events
+</a>
+<a class="dropdown-item" href="/Building-Blazor-Applications/Blazor-Bootstrap-Toaster.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Blazor Bootstrap Toaster
+</a>
+<a class="dropdown-item" href="/Building-Blazor-Applications/Blazor-Services.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Blazor Services
+</a>
+<a class="dropdown-item" href="/Building-Blazor-Applications/Building-A-Blazor-AutoComplete-Control.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Building A Blazor Autocomplete Control
+</a>
+<a class="dropdown-item" href="/Building-Blazor-Applications/Building-Wrapper-Components.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Building Wrapper Components
+</a>
+<a class="dropdown-item" href="/Building-Blazor-Applications/Component-Service-Manager.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+The Component Service Manager
+</a>
+<a class="dropdown-item" href="/Building-Blazor-Applications/DBContexts-In-Transient-Services.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Dbcontexts In Transient Services
+</a>
+<a class="dropdown-item" href="/Building-Blazor-Applications/DynamicCss.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Blazor Dynamic Stylesheets
+</a>
+<a class="dropdown-item" href="/Building-Blazor-Applications/For-ForEach-in-Blazor.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+For Foreach In Blazor
+</a>
+<a class="dropdown-item" href="/Building-Blazor-Applications/Leaner-Meaner-Greener-Components.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Leaner Meaner Greener Components
+</a>
+<a class="dropdown-item" href="/Building-Blazor-Applications/Notification-Service-Pattern.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Blazor Notification Service Pattern
+</a>
+<a class="dropdown-item" href="/Building-Blazor-Applications/Rethinking-The-Repository-Pattern.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Rethinking The Repository Pattern
+</a>
+<a class="dropdown-item" href="/Building-Blazor-Applications/The-Blazor-WASM-Hosted-Project.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+The Blazor WASM Hosted Project
+</a>
+<a class="dropdown-item" href="/Building-Blazor-Applications/Whats-Wrong-with-my-Component-Design.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Whats Wrong With My Component Design
+</a>
+<a class="dropdown-item" href="/Building-Blazor-Applications/The-Blazor-Component" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Building Blazor Applications\The Blazor Component
+</a>
+</div>
+</li>
+<li class="nav-item dropdown no-arrow mx-1" >
+<a class="nav-link dropdown-toggle" href="#" id="4d0f14e6-f5a6-42ec-b25d-6542b4f1b389" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"  >
+<span class="mr-2 d-none d-lg-inline text-gray-100">Design</span>
+</a>
+<div class=" dropdown-list dropdown-menu shadow animated--grow-in" aria-labelledby="4d0f14e6-f5a6-42ec-b25d-6542b4f1b389" >
+<a class="dropdown-item" href="/Design/Clean-Design-In-Blazor.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Clean Design Principles in Blazor Applications
+</a>
+<a class="dropdown-item" href="/Design/Clean-Design-Blazor-Template.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+A Blazor Clean Design Template
+</a>
+<a class="dropdown-item" href="/Design/Clean-Design-Blazor-Template-Solution-Structure.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Solution Structure in the Clean Design Blazor Template
+</a>
+<a class="dropdown-item" href="/Design/Clean-Design-Blazor-Template-DataServices.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Data Services in the Clean Design Blazor Template
+</a>
+<a class="dropdown-item" href="/Design/Clean-Design-Blazor-Template-UI.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+The UI in the Clean Design Blazor Template
+</a>
+<a class="dropdown-item" href="/Design/Clean-Design-Blazor-Template-Solution-Setup.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Solution Setup in the Clean Design Blazor Template
+</a>
+<a class="dropdown-item" href="/Design/Clean-Design-Blazor-Template-Testing.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Testing in the Clean Design Blazor Template
+</a>
+</div>
+</li>
+<li class="nav-item dropdown no-arrow mx-1" >
+<a class="nav-link dropdown-toggle" href="#" id="4fdc5b01-1d2c-4bb5-9585-7029adf7a1b0" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"  >
+<span class="mr-2 d-none d-lg-inline text-gray-100">Modern C#</span>
+</a>
+<div class=" dropdown-list dropdown-menu shadow animated--grow-in" aria-labelledby="4fdc5b01-1d2c-4bb5-9585-7029adf7a1b0" >
+<a class="dropdown-item" href="/Modern-Coding-Patterns/Nullable-And-VS-2022.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Nullable And VS 2022
+</a>
+</div>
+</li>
+</ul>
+
+    <div class="ms-5 me-5 ml-auto">
+        <h1>Cold Elm Coders</h1>
+    </div>
+</nav>
+
+
+    </div>
+    <!--End topbar-->
+    <!--Sidebar-->
+    <div id="sidebar">
+        
+<div class="article-info p-2" Published: 20-11-2022 >
+<div>Published: 20-11-2022</div>
+<div>Last Updated: 19-12-2022</div>
+<div>Author: Shaun Curtis</div>
+</div>
+
+        
+<h4 class="p-2">Table of Contents</h4>
+<ul class="TOC" >
+<li class="TOC-item TOC-item-0" >
+<a class="TOC-link" href="#">Top</a>
+<ul class="TOC TOC-0" >
+<li class="TOC-item TOC-item-1" >
+<ul class="TOC TOC-1" >
+<li class="TOC-item TOC-item-2" >
+<a class="TOC-link" href="#repos">Repos</a>
+</li>
+<li class="TOC-item TOC-item-2" >
+<a class="TOC-link" href="#coding-conventions">Coding Conventions</a>
+</li>
+<li class="TOC-item TOC-item-2" >
+<a class="TOC-link" href="#inputthrottler">InputThrottler</a>
+<ul class="TOC TOC-2" >
+<li class="TOC-item TOC-item-3" >
+<a class="TOC-link" href="#queueasync">QueueAsync</a>
+</li>
+<li class="TOC-item TOC-item-3" >
+<a class="TOC-link" href="#runqueueasync">RunQueueAsync</a>
+</li>
+<li class="TOC-item TOC-item-3" >
+<a class="TOC-link" href="#summary">Summary</a>
+</li>
+</ul>
+</li>
+<li class="TOC-item TOC-item-2" >
+<a class="TOC-link" href="#the-autocompletecomponent">The AutoCompleteComponent</a>
+<ul class="TOC TOC-2" >
+<li class="TOC-item TOC-item-3" >
+<a class="TOC-link" href="#improving-the-component-performance">Improving the Component Performance</a>
+</li>
+</ul>
+</li>
+<li class="TOC-item TOC-item-2" >
+<a class="TOC-link" href="#demo-page">Demo Page</a>
+</li>
+<li class="TOC-item TOC-item-2" >
+<a class="TOC-link" href="#appendix">Appendix</a>
+<ul class="TOC TOC-2" >
+<li class="TOC-item TOC-item-3" >
+<a class="TOC-link" href="#countryservice">CountryService</a>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+    </div>
+    <!--End Sidebar-->
+    <!-- Page Wrapper -->
+    <div id="wrapper">
+        <!-- Content Wrapper -->
+        <div id="content-wrapper" class="d-flex flex-column">
+            <!-- Main Content -->
+            <div id="content">
+                <!-- Topbar -->
+                <div id="article">
+                    <!-- Article -->
+                    
+<!-- Header -->
+<header class="ex-header-article">
+    <div class="container">
+        <div class="row pt-3 pb-3 border-bottom">
+            <div class="col">
+                
+<h1>Building a Blazor AutoComplete Control</h1>
+<div>How to build your own Blazor AutoComplete Control</div>
+
+            </div> <!-- end of col -->
+        </div> <!-- end of row -->
+    </div> <!-- end of container -->
+</header> <!-- end of ex-header -->
+<!-- end of header -->
+
+
+                    
+<!-- Article Container -->
+<div class="ex-basic-1 pt-4">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                
+
+        <p>Where a standard select was once the only solution, a typeahead/autocomplete control is one of those must have controls you need for a modern UX.  If you don't want to buy into a component library, you need to roll your own.</p>
+<p>This article shows you how.</p>
+<p>Html now has the <code>datalist</code> input control which gets us most of the way there.  But you need to handle user keyboard input.  You either:</p>
+<ol>
+<li>Pull in the full list of options on load and then do in component Linq operations on the collection to filter the list.  OK with smaller lists, but populating a search box with the contents of a languauge dictionary isn't going to work.</li>
+<li>Go back to your data store and retrieve a new list on each keypress.</li>
+</ol>
+<p>If you type &quot;uni&quot;, does the control lookup and refresh the list on every keystroke, or wait until you stop typing?  Is your search case-sensitive?  Are you restricting your search to the first three letters?  How do you know that &quot;u&quot; is not the only letter?  How do you know &quot;i&quot; is the last letter?</p>
+<p>If we respond to each keystroke, the user experience will depend on how quickly the control can fetch the data and update the display.  If the data pipeine is slower than typing speed, we build up a queue of requests: there may be perceptible delay while the data pipeline and UI catch up.</p>
+<p>We need a <em>De-Bouncer</em>.  For those unsure what I mean, we need to control the number of component refreshes and calls to the data pipeline caused by keyboard/mouse driven events.</p>
+<p><em>De-bouncing</em> is a mechanism to minimize this effect.  The normal technique uses a timer which is reset on each keypress and only executes the data pipeline request when the timer expires: often set at 300 millseconds.  Type &quot;uni&quot; quickly and it only does a lookup on &quot;i&quot;.  Type them slowly and it does a lookup on each keypress.</p>
+<p>It works, but the time taken to update is the timer + the query/refresh period.  We can do better.</p>
+<h2 id="repos">Repos</h2>
+<p>The repo for this article is here: <a href="https://github.com/ShaunCurtis/Blazr.Demo.TypeAhead">Blazr.Demo.TypeAhead</a></p>
+<h2 id="coding-conventions">Coding Conventions</h2>
+<ol>
+<li><code>Nullable</code> is enabled globally.  Null error handling relies on it.</li>
+<li>Net7.0.</li>
+<li>C# 11.</li>
+<li>Data objects are immutable: records.</li>
+<li><code>sealed</code> by default.</li>
+</ol>
+<h2 id="inputthrottler">InputThrottler</h2>
+<p>This is my de-bouncer.  No timer: it utilizes the built in functionality in the Async library.</p>
+<p>The class outline.</p>
+<pre><code class="language-csharp"><span class="hljs-keyword">public</span> <span class="hljs-keyword">sealed</span> <span class="hljs-keyword">class</span> <span class="hljs-title">InputThrottler</span>
+{
+    <span class="hljs-keyword">private</span> <span class="hljs-built_in">int</span> _backOff = <span class="hljs-number">0</span>;
+    <span class="hljs-keyword">private</span> Func&lt;Task&gt; _taskToRun;
+    <span class="hljs-keyword">private</span> Task _activeTask = Task.CompletedTask;
+    <span class="hljs-keyword">private</span> TaskCompletionSource&lt;<span class="hljs-built_in">bool</span>&gt;? _queuedTaskCompletionSource;
+    <span class="hljs-keyword">private</span> TaskCompletionSource&lt;<span class="hljs-built_in">bool</span>&gt;? _activeTaskCompletionSource;
+
+    <span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-title">InputThrottler</span>(<span class="hljs-params">Func&lt;Task&gt; toRun, <span class="hljs-built_in">int</span> backOff</span>)</span>;
+    <span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-keyword">async</span> Task <span class="hljs-title">RunQueueAsync</span>()</span>;
+    <span class="hljs-function"><span class="hljs-keyword">public</span> Task&lt;<span class="hljs-built_in">bool</span>&gt; <span class="hljs-title">QueueAsync</span>()</span>;
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> InputThrottler <span class="hljs-title">Create</span>(<span class="hljs-params">Func&lt;Task&gt; toRun, <span class="hljs-built_in">int</span> backOff</span>)</span>
+            =&gt; <span class="hljs-keyword">new</span> InputThrottler(toRun, backOff &gt; <span class="hljs-number">300</span> ? backOff : <span class="hljs-number">300</span>);
+}
+</code></pre>
+<p>Instantiation is restricted to a static <code>Create</code> method. There's no way to just &quot;new&quot; up an instance.</p>
+<p>The <code>Func</code> delegate is the actual method that gets called to refresh the data.  The method pattern is <code>Task MethodName()</code>.</p>
+<p>The backoff is the minimum update backoff period: the default value is set to 300 milliseconds.</p>
+<p>There are two private <code>TaskCompletionSource</code> global variables that track the running and queued requests.  If you haven't encountered <code>TaskCompletionSource</code> before, it's an object that provides manual creation and management of Tasks.  You'll see how it works in the code.</p>
+<p><code>_activeTask</code> references the <code>Task</code> for the current instance of <code>RunQueueAsync</code>.  It provides a mechanism to check if the queue is currently running or completed.</p>
+<h3 id="queueasync">QueueAsync</h3>
+<pre><code class="language-csharp"><span class="hljs-function"><span class="hljs-keyword">public</span> Task&lt;<span class="hljs-built_in">bool</span>&gt; <span class="hljs-title">QueueAsync</span>()</span>
+{
+</code></pre>
+<p>Get a reference to the currently queued CompletionTask.  It will be set to completed once replaced by a new CompletionTask.  It may be null.</p>
+<pre><code class="language-csharp">    <span class="hljs-keyword">var</span> oldCompletionTask = _queuedTaskCompletionSource;
+</code></pre>
+<p>Create a new CompletionTask and get a reference to it's <code>Task</code>.  Belt-and-braces stuff to make sure it's referenced before assigned to the active queue.</p>
+<pre><code class="language-csharp">    <span class="hljs-keyword">var</span> newCompletionTask = <span class="hljs-keyword">new</span> TaskCompletionSource&lt;<span class="hljs-built_in">bool</span>&gt;();
+    <span class="hljs-keyword">var</span> task = newCompletionTask.Task;
+</code></pre>
+<p>Switch out the CompletionTask reference assigned to the active queue.</p>
+<pre><code class="language-csharp">    <span class="hljs-comment">// replace _queuedTaskCompletionSource</span>
+    _queuedTaskCompletionSource = newCompletionTask;
+</code></pre>
+<p>Set the old CompletionTask to completed. Return <code>false</code>: nothing happened.</p>
+<pre><code class="language-csharp">    <span class="hljs-keyword">if</span> (oldCompletionTask <span class="hljs-keyword">is</span> <span class="hljs-keyword">not</span> <span class="hljs-literal">null</span>)
+        oldCompletionTask?.TrySetResult(<span class="hljs-literal">false</span>);
+</code></pre>
+<p>Is <code>_activeTask</code> not completed i.e. <code>RunQueueAsync</code> is running.  If not call <code>RunQueueAsync</code> and assign it's <code>Task</code> reference to <code>_activeTask</code>.</p>
+<pre><code class="language-csharp">    <span class="hljs-keyword">if</span> (_activeTask <span class="hljs-keyword">is</span> <span class="hljs-literal">null</span> || _activeTask.IsCompleted)
+        _activeTask = <span class="hljs-keyword">this</span>.RunQueueAsync();
+</code></pre>
+<p>Return the task associated with the new queued CompletionTask.</p>
+<pre><code class="language-csharp">    <span class="hljs-keyword">return</span> task;
+}
+</code></pre>
+<h3 id="runqueueasync">RunQueueAsync</h3>
+<pre><code class="language-csharp"><span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-keyword">async</span> Task <span class="hljs-title">RunQueueAsync</span>()</span>
+{
+</code></pre>
+<p>If the current CompletionTask is completed, release the reference to it.</p>
+<pre><code class="language-csharp">    <span class="hljs-keyword">if</span> (_activeTaskCompletionSource <span class="hljs-keyword">is</span> <span class="hljs-keyword">not</span> <span class="hljs-literal">null</span> &amp;&amp; _activeTaskCompletionSource.Task.IsCompleted)
+        _activeTaskCompletionSource = <span class="hljs-literal">null</span>;
+</code></pre>
+<p>If the current CompletionTask is running then everything is already in motion and there's nothing to do so return.</p>
+<pre><code class="language-csharp">    <span class="hljs-keyword">if</span> (_activeTaskCompletionSource <span class="hljs-keyword">is</span> <span class="hljs-keyword">not</span> <span class="hljs-literal">null</span>)
+        <span class="hljs-keyword">return</span>;
+</code></pre>
+<p>Use a <code>while</code> loop to keep the process running while there's a queued CompletionTask.</p>
+<pre><code class="language-csharp">    <span class="hljs-keyword">while</span> (_queuedTaskCompletionSource <span class="hljs-keyword">is</span> <span class="hljs-keyword">not</span> <span class="hljs-literal">null</span>)
+</code></pre>
+<p>If we're here, there's no active CompletionTask.  Assign a queued CompletionTask reference to the active CompletionTask and release queued CompletionTask reference.  The queue is now empty.</p>
+<pre><code class="language-csharp">        _activeTaskCompletionSource = _queuedTaskCompletionSource;
+        _queuedTaskCompletionSource = <span class="hljs-literal">null</span>;
+</code></pre>
+<p>Start a <code>Task.Delay</code> task set to delay for the backoff period, the main task in <code>_taskToRun</code>, and await both.  The actual backoff period will be the longer running of the two tasks.</p>
+<pre><code class="language-csharp">        <span class="hljs-keyword">var</span> backoffTask = Task.Delay(_backOff);
+        <span class="hljs-keyword">var</span> mainTask = _taskToRun.Invoke();
+        <span class="hljs-keyword">await</span> Task.WhenAll( <span class="hljs-keyword">new</span> Task[] { mainTask, backoffTask } );
+</code></pre>
+<p>The main task has completed so we set the active CompletionTask to completed and release the reference to it.  The return value is true: - we did something.</p>
+<pre><code class="language-csharp">        _activeTaskCompletionSource.TrySetResult(<span class="hljs-literal">true</span>);
+        _activeTaskCompletionSource = <span class="hljs-literal">null</span>;
+    }
+</code></pre>
+<p>Loop back to check if another request has been queued: there's been a UI event while we've been processing the last queued request.  If not complete.</p>
+<pre><code class="language-csharp">    <span class="hljs-keyword">return</span>;
+}
+</code></pre>
+<h3 id="summary">Summary</h3>
+<p>The object uses <code>TaskCompletionSource</code> instances to represent each request.  It passes the Task associated with the instance of <code>TaskCompletionSource</code> back to the caller.  The queued request, represented by the <code>TaskCompletionSource</code>, is either:</p>
+<ol>
+<li>Run by the queue handler.  The task is completed as true: we did something and you probably need to update the UI.</li>
+<li>Replaced by another request.  It's completed as false: no action needed.</li>
+</ol>
+<h2 id="the-autocompletecomponent">The AutoCompleteComponent</h2>
+<p>It has:</p>
+<ol>
+<li>The standard two bind parameters,</li>
+<li>a <code>Func</code> delegate to return a string collection based on a provided string,</li>
+<li>and the Css to apply to the input.</li>
+</ol>
+<pre><code class="language-csharp">[<span class="hljs-meta">Parameter</span>] <span class="hljs-keyword">public</span> <span class="hljs-built_in">string</span>? Value { <span class="hljs-keyword">get</span>; <span class="hljs-keyword">set</span>; }
+[<span class="hljs-meta">Parameter</span>] <span class="hljs-keyword">public</span> EventCallback&lt;<span class="hljs-built_in">string</span>?&gt; ValueChanged { <span class="hljs-keyword">get</span>; <span class="hljs-keyword">set</span>; }
+[<span class="hljs-meta">Parameter, EditorRequired</span>] <span class="hljs-keyword">public</span> Func&lt;<span class="hljs-built_in">string</span>?, Task&lt;IEnumerable&lt;<span class="hljs-built_in">string</span>&gt;&gt;&gt;? FilterItems { <span class="hljs-keyword">get</span>; <span class="hljs-keyword">set</span>; }
+[<span class="hljs-meta">Parameter</span>] <span class="hljs-keyword">public</span> <span class="hljs-built_in">string</span> CssClass { <span class="hljs-keyword">get</span>; <span class="hljs-keyword">set</span>; } = <span class="hljs-string">&quot;form-control mb-3&quot;</span>;
+</code></pre>
+<p>The private global variables:</p>
+<pre><code class="language-csharp"><span class="hljs-keyword">private</span> InputThrottler inputThrottler;
+<span class="hljs-keyword">private</span> <span class="hljs-built_in">string</span>? filterText;  <span class="hljs-comment">//The value we&#x27;ll get from oninput events</span>
+<span class="hljs-keyword">private</span> <span class="hljs-built_in">string</span> listid = Guid.NewGuid().ToString(); <span class="hljs-comment">//unique id for the datalist</span>
+<span class="hljs-keyword">private</span> IEnumerable&lt;<span class="hljs-built_in">string</span>&gt; items = Enumerable.Empty&lt;<span class="hljs-built_in">string</span>&gt;(); <span class="hljs-comment">//string list for the datalist</span>
+</code></pre>
+<p>A ctor to initialize the <code>InputThrottler</code>.</p>
+<pre><code class="language-csharp"><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">AutoCompleteControl</span>()</span>
+    =&gt; inputThrottler = InputThrottler.Create(GetFilteredItems, <span class="hljs-number">300</span>);
+</code></pre>
+<p><code>OnInitializedAsync</code> to get the initial filter list.  This may be an empty list.</p>
+<pre><code class="language-csharp"><span class="hljs-function"><span class="hljs-keyword">protected</span> <span class="hljs-keyword">override</span> Task <span class="hljs-title">OnInitializedAsync</span>()</span>
+    =&gt; GetFilteredItems();
+</code></pre>
+<p>The actual method to get the list items.  If the Parameter <code>FilterItems</code> is null set <code>items</code> to an empty collection, otherwise set <code>items</code> to the returned collection.</p>
+<pre><code class="language-csharp"><span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-keyword">async</span> Task <span class="hljs-title">GetFilteredItems</span>()</span>
+{
+    <span class="hljs-keyword">this</span>.Items = FilterItems <span class="hljs-keyword">is</span> <span class="hljs-literal">null</span>
+        ? Enumerable.Empty&lt;<span class="hljs-built_in">string</span>&gt;()
+        : <span class="hljs-keyword">await</span> FilterItems.Invoke(filterText);
+}
+</code></pre>
+<p>Method called by <code>@oninput</code>.  It sets <code>filterText</code> to the current string and then queues a request on <code>inputThrottler</code>.  If this is returned as true - <code>inputThrottler</code> didn't <em>cancel</em> the request - call <code>StateHasChanged</code> to update the component.  See the <em>Improving the Component Performance</em> to explain why we call <code>StateHasChanged</code>.</p>
+<pre><code class="language-csharp"><span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-keyword">async</span> <span class="hljs-keyword">void</span> <span class="hljs-title">OnSearchUpdated</span>(<span class="hljs-params">ChangeEventArgs e</span>)</span>
+{
+    <span class="hljs-keyword">this</span>.filterText = e.Value?.ToString() ?? <span class="hljs-built_in">string</span>.Empty;
+    <span class="hljs-keyword">if</span> (<span class="hljs-keyword">await</span> inputThrottler.QueueAsync())
+        StateHasChanged();
+}
+</code></pre>
+<p>The UI event handler for an input update invoking the bind <code>ValueChanged</code> callback.</p>
+<pre><code class="language-csharp"><span class="hljs-function"><span class="hljs-keyword">private</span> Task <span class="hljs-title">OnChange</span>(<span class="hljs-params">ChangeEventArgs e</span>)</span>
+    =&gt; <span class="hljs-keyword">this</span>.ValueChanged.InvokeAsync(e.Value?.ToString());
+</code></pre>
+<p>The UI markup code:</p>
+<pre><code class="language-html"><span class="hljs-tag">&lt;<span class="hljs-name">input</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;@CssClass&quot;</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;search&quot;</span> <span class="hljs-attr">value</span>=<span class="hljs-string">&quot;@this.Value&quot;</span> @<span class="hljs-attr">onchange</span>=<span class="hljs-string">this.OnChange</span> <span class="hljs-attr">list</span>=<span class="hljs-string">&quot;@listid&quot;</span> @<span class="hljs-attr">oninput</span>=<span class="hljs-string">this.OnSearchUpdated</span> /&gt;</span>
+
+<span class="hljs-tag">&lt;<span class="hljs-name">datalist</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;@listid&quot;</span>&gt;</span>
+    @foreach (var item in this.Items)
+    {
+            <span class="hljs-tag">&lt;<span class="hljs-name">option</span>&gt;</span>@item<span class="hljs-tag">&lt;/<span class="hljs-name">option</span>&gt;</span>
+    }
+<span class="hljs-tag">&lt;/<span class="hljs-name">datalist</span>&gt;</span>
+</code></pre>
+<h3 id="improving-the-component-performance">Improving the Component Performance</h3>
+<p>The component raises a UI event on every keystroke: <code>OnSearchUpdated</code> is called.  As we inherit from <code>ComponentBase</code>, this triggers two render events on the component: one before and one after the await yield.  We don't need them: they do nothing unless <code>inputThrottler.QueueAsync()</code> returns true.</p>
+<p>We can change this by implementing <code>IHandleEvent</code> and defining a custom <code>HandleEventAsync</code> that just invokes the method with no calls to <code>StateHasChanged</code>.  We call it manually when we need to.</p>
+<p>We can also <em>shortcircuit</em> the <code>OnAfterRenderAsync</code> handler as we aren't using it either.</p>
+<p>Here's how to do it:</p>
+<pre><code class="language-csharp">@implements IHandleEvent
+@implements IHandleAfterRender
+
+<span class="hljs-comment">//....</span>
+Task IHandleEvent.HandleEventAsync(EventCallbackWorkItem callback, <span class="hljs-built_in">object</span>? arg)
+    =&gt; callback.InvokeAsync(arg);
+
+Task IHandleAfterRender.OnAfterRenderAsync()
+    =&gt; Task.CompletedTask;
+</code></pre>
+<p>Finally we add a code behind file to seal the class: sealed objects are marginally quicker that open objects.  One of the <em>behind the scenes</em> changes in .Net7.0 was sealing as many classes as possible.</p>
+<pre><code class="language-csharp"><span class="hljs-keyword">public</span> <span class="hljs-keyword">sealed</span> <span class="hljs-keyword">partial</span> <span class="hljs-keyword">class</span> <span class="hljs-title">AutoCompleteControl</span>  {}
+</code></pre>
+<h2 id="demo-page">Demo Page</h2>
+<p>The code for the data pipeline is in the appendix.  This page demonstrates autocomplete on a country select control.  It's pretty self explanatory.  Either return the whole list if search is empty as done here, or return an empty list.</p>
+<pre><code class="language-html">@page &quot;/&quot;
+@page &quot;/Index&quot;
+@inject CountryService Service
+
+<span class="hljs-tag">&lt;<span class="hljs-name">PageTitle</span>&gt;</span>Index<span class="hljs-tag">&lt;/<span class="hljs-name">PageTitle</span>&gt;</span>
+
+<span class="hljs-tag">&lt;<span class="hljs-name">AutoCompleteControl</span> <span class="hljs-attr">FilterItems</span>=<span class="hljs-string">this.GetItems</span> @<span class="hljs-attr">bind-Value</span>=<span class="hljs-string">this.typeAheadText</span> /&gt;</span>
+
+<span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;alert alert-info&quot;</span>&gt;</span>
+    typeAheadText : @typeAheadText
+<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+</code></pre>
+<pre><code class="language-csharp">@code {
+    <span class="hljs-keyword">private</span> <span class="hljs-built_in">string</span>? typeAheadText;
+
+    <span class="hljs-keyword">private</span> IEnumerable&lt;Country&gt; filteredCountries = Enumerable.Empty&lt;Country&gt;();
+
+    <span class="hljs-keyword">private</span> <span class="hljs-keyword">async</span> Task&lt;IEnumerable&lt;<span class="hljs-built_in">string</span>&gt;&gt; GetItems(<span class="hljs-built_in">string</span> search)
+    {
+        <span class="hljs-keyword">var</span> list = <span class="hljs-keyword">await</span> <span class="hljs-keyword">this</span>.Service.FilteredCountries(search, <span class="hljs-literal">null</span>);
+        <span class="hljs-keyword">return</span> list.Select(item =&gt; item.Name).AsEnumerable();
+    }
+}
+</code></pre>
+<p>Code behind class:</p>
+<pre><code class="language-csharp"><span class="hljs-keyword">public</span> <span class="hljs-keyword">sealed</span> <span class="hljs-keyword">partial</span> <span class="hljs-keyword">class</span> <span class="hljs-title">Index</span> {}
+</code></pre>
+<h2 id="appendix">Appendix</h2>
+<p>The <em>Data Pipeline</em> for this article.</p>
+<h3 id="countryservice">CountryService</h3>
+<pre><code class="language-csharp"><span class="hljs-keyword">public</span> <span class="hljs-keyword">sealed</span> <span class="hljs-keyword">class</span> <span class="hljs-title">CountryService</span>
+{
+    <span class="hljs-keyword">private</span> <span class="hljs-keyword">readonly</span> HttpClient _httpClient;
+    <span class="hljs-keyword">private</span> List&lt;CountryData&gt; _baseDataSet = <span class="hljs-keyword">new</span> List&lt;CountryData&gt;();
+    <span class="hljs-keyword">private</span> ValueTask _loadTask;
+
+    <span class="hljs-keyword">public</span> IEnumerable&lt;Continent&gt; Continents =&gt; _continents;
+    <span class="hljs-keyword">public</span> IEnumerable&lt;Country&gt; Countries =&gt; _countries;
+
+    <span class="hljs-keyword">private</span> List&lt;Continent&gt; _continents = <span class="hljs-keyword">new</span>();
+    <span class="hljs-keyword">private</span> List&lt;Country&gt; _countries = <span class="hljs-keyword">new</span>();
+
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">CountryService</span>(<span class="hljs-params">HttpClient httpClient</span>)</span>
+    {
+        _httpClient = httpClient;
+        _loadTask = GetBaseData();
+    }
+
+    <span class="hljs-keyword">public</span> <span class="hljs-keyword">async</span> ValueTask&lt;IEnumerable&lt;Country&gt;&gt; FilteredCountries(<span class="hljs-built_in">string</span>? searchText, Guid? continentUid = <span class="hljs-literal">null</span>)
+        =&gt; <span class="hljs-keyword">await</span> <span class="hljs-keyword">this</span>.GetFilteredCountries(searchText, continentUid);
+
+    <span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-keyword">async</span> ValueTask <span class="hljs-title">GetBaseData</span>()</span>
+    {
+        <span class="hljs-comment">// source country file is https://github.com/samayo/country-json/blob/master/src/country-by-continent.json</span>
+        <span class="hljs-comment">// on my site it&#x27;s in wwwroot/sample-data/countries.json</span>
+        _baseDataSet = <span class="hljs-keyword">await</span> _httpClient.GetFromJsonAsync&lt;List&lt;CountryData&gt;&gt;(<span class="hljs-string">&quot;sample-data/countries.json&quot;</span>) ?? <span class="hljs-keyword">new</span> List&lt;CountryData&gt;();
+        <span class="hljs-keyword">var</span> distinctContinentNames = _baseDataSet.Select(item =&gt; item.Continent).Distinct().ToList();
+
+        <span class="hljs-keyword">foreach</span> (<span class="hljs-keyword">var</span> continent <span class="hljs-keyword">in</span> distinctContinentNames)
+            _continents.Add(<span class="hljs-keyword">new</span> Continent { Name = continent });
+
+        <span class="hljs-keyword">foreach</span> (<span class="hljs-keyword">var</span> continent <span class="hljs-keyword">in</span> _continents)
+        {
+            <span class="hljs-keyword">var</span> countryNamesInContinent = _baseDataSet.Where(item =&gt; item.Continent == continent.Name).Select(item =&gt; item.Country).ToList();
+
+            <span class="hljs-keyword">foreach</span> (<span class="hljs-keyword">var</span> countryName <span class="hljs-keyword">in</span> countryNamesInContinent)
+                _countries.Add(<span class="hljs-keyword">new</span> Country { Name = countryName, ContinentUid = continent.Uid });
+        }
+    }
+
+    <span class="hljs-keyword">private</span> <span class="hljs-keyword">async</span> ValueTask&lt;IEnumerable&lt;Country&gt;&gt; GetFilteredCountries(<span class="hljs-built_in">string</span>? searchText, Guid? continentUid = <span class="hljs-literal">null</span>)
+    {
+        <span class="hljs-comment">// Add in a yield to emulate async behaviour;</span>
+        <span class="hljs-keyword">await</span> Task.Delay(<span class="hljs-number">10</span>);
+        <span class="hljs-keyword">if</span> (<span class="hljs-built_in">string</span>.IsNullOrWhiteSpace(searchText))
+            <span class="hljs-keyword">return</span> continentUid <span class="hljs-keyword">is</span> <span class="hljs-literal">null</span>
+                ? _countries.OrderBy(item =&gt; item.Name).AsEnumerable()
+                : _countries.Where(item =&gt; item.ContinentUid == continentUid).OrderBy(item =&gt; item.Name).AsEnumerable();
+
+        <span class="hljs-keyword">return</span> continentUid <span class="hljs-keyword">is</span> <span class="hljs-literal">null</span> || continentUid == Guid.Empty
+            ? _countries.Where(item =&gt; item.Name.ToLower().Contains(searchText.ToLower())).OrderBy(item =&gt; item.Name).AsEnumerable()
+            : _countries.Where(item =&gt; item.Name.ToLower().Contains(searchText.ToLower()) &amp;&amp; item.ContinentUid == continentUid).OrderBy(item =&gt; item.Name).AsEnumerable();
+    }
+}
+</code></pre>
+<pre><code class="language-csharp"><span class="hljs-keyword">private</span> <span class="hljs-keyword">sealed</span> <span class="hljs-keyword">record</span> <span class="hljs-title">CountryData</span>
+{
+    <span class="hljs-keyword">public</span> required <span class="hljs-built_in">string</span> Country { <span class="hljs-keyword">get</span>; <span class="hljs-keyword">init</span>; }
+    <span class="hljs-keyword">public</span> required <span class="hljs-built_in">string</span> Continent { <span class="hljs-keyword">get</span>; <span class="hljs-keyword">init</span>; }
+}
+</code></pre>
+<pre><code class="language-csharp"><span class="hljs-keyword">public</span> <span class="hljs-keyword">sealed</span> <span class="hljs-keyword">record</span> <span class="hljs-title">Country</span>
+{
+    <span class="hljs-keyword">public</span> Guid Uid { <span class="hljs-keyword">get</span>; <span class="hljs-keyword">init</span>; } = Guid.NewGuid();
+    <span class="hljs-keyword">public</span> required Guid ContinentUid { <span class="hljs-keyword">get</span>; <span class="hljs-keyword">init</span>; }
+    <span class="hljs-keyword">public</span> required <span class="hljs-built_in">string</span> Name { <span class="hljs-keyword">get</span>; <span class="hljs-keyword">init</span>; }
+}
+</code></pre>
+<pre><code class="language-csharp"><span class="hljs-keyword">public</span> <span class="hljs-keyword">sealed</span> <span class="hljs-keyword">record</span> <span class="hljs-title">Continent</span>
+{
+    <span class="hljs-keyword">public</span> Guid Uid { <span class="hljs-keyword">get</span>; <span class="hljs-keyword">init</span>; } = Guid.NewGuid();
+    <span class="hljs-keyword">public</span> required <span class="hljs-built_in">string</span> Name { <span class="hljs-keyword">get</span>; <span class="hljs-keyword">init</span>; }
+}
+</code></pre>
+<p>Services Registration.  This is for Blazor Server</p>
+<pre><code class="language-csharp"><span class="hljs-comment">// Add services to the container.</span>
+builder.Services.AddRazorPages();
+builder.Services.AddServerSideBlazor();
+builder.Services.AddSingleton&lt;WeatherForecastService&gt;();
+builder.Services.AddTransient&lt;CountryService&gt;();
+{
+    <span class="hljs-keyword">var</span> services = builder.Services;
+
+    <span class="hljs-comment">// Server Side Blazor doesn&#x27;t register HttpClient by default</span>
+    <span class="hljs-comment">// Thanks to Robin Sue - Suchiman https://github.com/Suchiman/BlazorDualMode</span>
+    <span class="hljs-keyword">if</span> (!services.Any(x =&gt; x.ServiceType == <span class="hljs-keyword">typeof</span>(HttpClient)))
+    {
+        <span class="hljs-comment">// Setup HttpClient for server side in a client side compatible fashion</span>
+        services.AddScoped&lt;HttpClient&gt;(s =&gt;
+        {
+            <span class="hljs-comment">// Creating the URI helper needs to wait until the JS Runtime is initialized, so defer it.</span>
+            <span class="hljs-keyword">var</span> uriHelper = s.GetRequiredService&lt;NavigationManager&gt;();
+            <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> HttpClient
+            {
+                BaseAddress = <span class="hljs-keyword">new</span> Uri(uriHelper.BaseUri)
+            };
+        });
+    }
+}
+</code></pre>
+
+        
+        
+    
+
+            </div>
+        </div>
+    </div>
+</div>
+<!-- end of Article Container -->
+
+
+                </div>
+                <!-- End of Main Content -->
+            </div>
+            <!-- Footer -->
+            
+<!-- Copyright -->
+<footer class="sticky-footer bg-white">
+    <div class="container my-auto">
+        <div class="copyright text-center my-auto">
+            
+<span>Copyright &copy; Cold Elm Coders - 2022</span>
+
+        </div>
+    </div>
+</footer>
+<!-- end of copyright -->
+
+
+            <!-- End of Footer -->
+        </div>
+        <!-- End of Content Wrapper -->
+        
+<a class="scroll-to-top rounded" href="#page-top">
+    <i class="fas fa-angle-up"></i>
+</a>
+
+
+    </div>
+    <!-- End of Page Wrapper -->
+    <!-- Scripts -->
+    
+<!-- Scripts -->
+<!-- Bootstrap core JavaScript-->
+<script src="/assets/vendor/jquery/jquery.min.js"></script>
+<script src="/assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+<!-- Core plugin JavaScript-->
+<script src="/assets/vendor/jquery-easing/jquery.easing.min.js"></script>
+
+<!-- Custom scripts for all pages-->
+<script src="/assets/js/sb-admin-2.min.js"></script>
+
+
+</body>
+</html>

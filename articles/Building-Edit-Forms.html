@@ -1,0 +1,1053 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+<!-- SEO Meta Tags -->
+<meta name="description" content="Your description">
+<meta name="author" content="Your name">
+
+<!-- OG Meta Tags to improve the way the post looks when you share the page on Facebook, Twitter, LinkedIn -->
+<meta property="og:site_name" content="" /> <!-- website name -->
+<meta property="og:site" content="" /> <!-- website link -->
+<meta property="og:title" content="" /> <!-- title shown in the actual shared post -->
+<meta property="og:description" content="" /> <!-- description shown in the actual shared post -->
+<meta property="og:image" content="" /> <!-- image link, make sure it's jpg -->
+<meta property="og:url" content="" /> <!-- where do you want your post to link to -->
+<meta name="twitter:card" content="summary_large_image"> <!-- to have large image post format in Twitter -->
+
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+
+<meta name="description" content="How to build Blazor Edit Forms that manage state." >
+<meta name="author" content="Shaun Curtis" >
+
+
+
+<title>Managing Form Edit State in Blazor</title>
+
+
+<!-- Custom fonts for this template-->
+<link href="/assets/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+<link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+      rel="stylesheet">
+
+<!-- Custom styles for this template-->
+<link href="/assets/css/sb-admin-2.css" rel="stylesheet" type="text/css">
+<link href="/assets/css/site.css" rel="stylesheet" type="text/css">
+
+<!-- Favicon  -->
+<link rel="icon" href="/assets/images/favicon.png">
+
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/highlight.css">
+    <link rel="stylesheet" href="/assets/css/article.css" type="text/css">
+</head>
+<body id="page-top">
+    <!--topbar-->
+    <div id="topbar">
+        
+<!-- Topbar -->
+<nav class="navbar navbar-expand navbar-light topbar mb-4 static-top">
+    
+<ul class="navbar-nav" >
+<li class="nav-item" >
+<a class="nav-link " href="/index.html" role="button"  >
+<span class="mr-2 d-none d-lg-inline text-gray-100">Index</span>
+</a>
+</li>
+<li class="nav-item dropdown no-arrow mx-1" >
+<a class="nav-link dropdown-toggle" href="#" id="15e9b376-d29f-4f8b-950a-8c29dcf04143" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"  >
+<span class="mr-2 d-none d-lg-inline text-gray-100">Articles</span>
+</a>
+<div class=" dropdown-list dropdown-menu shadow animated--grow-in" aria-labelledby="15e9b376-d29f-4f8b-950a-8c29dcf04143" >
+<a class="dropdown-item" href="/articles/A-Flexible-App.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Creating a Dynamic Blazor App Component
+</a>
+<a class="dropdown-item" href="/articles/Async-Programming-in-DotNetCore.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Async Programming In Dotnetcore
+</a>
+<a class="dropdown-item" href="/articles/Blazor-AllinOne.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Blazor All In One - Multi SPA Hosting
+</a>
+<a class="dropdown-item" href="/articles/Blazor-Async-Programming.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Blazor Async Programming
+</a>
+<a class="dropdown-item" href="/articles/Blazor-Brick-By-Brick.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Blazor Brick By Brick
+</a>
+<a class="dropdown-item" href="/articles/Blazor-Components.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Blazor Components
+</a>
+<a class="dropdown-item" href="/articles/Blazor-CSS.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Blazor CSS
+</a>
+<a class="dropdown-item" href="/articles/Blazor-DataList-Control.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Blazor Datalist Control
+</a>
+<a class="dropdown-item" href="/articles/Blazor-Form-Validation.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Blazor Form Validation
+</a>
+<a class="dropdown-item" href="/articles/Building-Blazor-List-Components.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Building Blazor List Components and the Notification Pattern
+</a>
+<a class="dropdown-item" href="/articles/Building-Edit-Forms.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Building Edit Forms
+</a>
+<a class="dropdown-item" href="/articles/EditFormState.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+The Blazor EditFormState Control
+</a>
+<a class="dropdown-item" href="/articles/Hydra.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Blazor Hydra
+</a>
+<a class="dropdown-item" href="/articles/Inline-Dialog.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+The Blazor Inline Dialog Control
+</a>
+<a class="dropdown-item" href="/articles/Modal-Dialog.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+A Blazor Modal Dialog
+</a>
+<a class="dropdown-item" href="/articles/Policy-Based-Authorization.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Policy Base Authorization in Blazor
+</a>
+<a class="dropdown-item" href="/articles/ValidationFormState.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+A Blazor Validation Control
+</a>
+<a class="dropdown-item" href="/articles/XML-XSD-Serialization.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+XML XSD Serialization
+</a>
+</div>
+</li>
+<li class="nav-item dropdown no-arrow mx-1" >
+<a class="nav-link dropdown-toggle" href="#" id="3f87082d-3eb1-4792-b224-7f2c16a5391a" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"  >
+<span class="mr-2 d-none d-lg-inline text-gray-100">Blazor Database Apps</span>
+</a>
+<div class=" dropdown-list dropdown-menu shadow animated--grow-in" aria-labelledby="3f87082d-3eb1-4792-b224-7f2c16a5391a" >
+<a class="dropdown-item" href="/Building-a-Database-Application-in-Blazor/Building-a-Database-Application-in-Blazor-Part-1.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Building A Database Application In Blazor Part 1
+</a>
+<a class="dropdown-item" href="/Building-a-Database-Application-in-Blazor/Building-a-Database-Application-in-Blazor-Part-2.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Building A Database Application In Blazor Part 2
+</a>
+<a class="dropdown-item" href="/Building-a-Database-Application-in-Blazor/Building-a-Database-Application-in-Blazor-Part-3.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Building A Database Application In Blazor Part 3
+</a>
+<a class="dropdown-item" href="/Building-a-Database-Application-in-Blazor/Building-a-Database-Application-in-Blazor-Part-4.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Building A Database Application In Blazor Part 4
+</a>
+<a class="dropdown-item" href="/Building-a-Database-Application-in-Blazor/Building-a-Database-Application-in-Blazor-Part-5.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Building A Database Application In Blazor Part 5
+</a>
+<a class="dropdown-item" href="/Building-a-Database-Application-in-Blazor/Building-a-Database-Application-in-Blazor-Part-6.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Building A Database Application In Blazor Part 6
+</a>
+<a class="dropdown-item" href="/Building-a-Database-Application-in-Blazor/index.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Building a Database Application in Blazor
+</a>
+</div>
+</li>
+<li class="nav-item dropdown no-arrow mx-1" >
+<a class="nav-link dropdown-toggle" href="#" id="233ba4f5-ce89-4fd2-b5bf-8a3518192098" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"  >
+<span class="mr-2 d-none d-lg-inline text-gray-100">Building Blazor Applications</span>
+</a>
+<div class=" dropdown-list dropdown-menu shadow animated--grow-in" aria-labelledby="233ba4f5-ce89-4fd2-b5bf-8a3518192098" >
+<a class="dropdown-item" href="/Building-Blazor-Applications/Blazor-Async-UI-Events.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Blazor Async UI Events
+</a>
+<a class="dropdown-item" href="/Building-Blazor-Applications/Blazor-Bootstrap-Toaster.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Blazor Bootstrap Toaster
+</a>
+<a class="dropdown-item" href="/Building-Blazor-Applications/Blazor-Services.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Blazor Services
+</a>
+<a class="dropdown-item" href="/Building-Blazor-Applications/Building-A-Blazor-AutoComplete-Control.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Building A Blazor Autocomplete Control
+</a>
+<a class="dropdown-item" href="/Building-Blazor-Applications/Building-Wrapper-Components.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Building Wrapper Components
+</a>
+<a class="dropdown-item" href="/Building-Blazor-Applications/Component-Service-Manager.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+The Component Service Manager
+</a>
+<a class="dropdown-item" href="/Building-Blazor-Applications/DBContexts-In-Transient-Services.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Dbcontexts In Transient Services
+</a>
+<a class="dropdown-item" href="/Building-Blazor-Applications/DynamicCss.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Blazor Dynamic Stylesheets
+</a>
+<a class="dropdown-item" href="/Building-Blazor-Applications/For-ForEach-in-Blazor.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+For Foreach In Blazor
+</a>
+<a class="dropdown-item" href="/Building-Blazor-Applications/Leaner-Meaner-Greener-Components.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Leaner Meaner Greener Components
+</a>
+<a class="dropdown-item" href="/Building-Blazor-Applications/Notification-Service-Pattern.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Blazor Notification Service Pattern
+</a>
+<a class="dropdown-item" href="/Building-Blazor-Applications/Rethinking-The-Repository-Pattern.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Rethinking The Repository Pattern
+</a>
+<a class="dropdown-item" href="/Building-Blazor-Applications/The-Blazor-WASM-Hosted-Project.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+The Blazor WASM Hosted Project
+</a>
+<a class="dropdown-item" href="/Building-Blazor-Applications/Whats-Wrong-with-my-Component-Design.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Whats Wrong With My Component Design
+</a>
+<a class="dropdown-item" href="/Building-Blazor-Applications/The-Blazor-Component" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Building Blazor Applications\The Blazor Component
+</a>
+</div>
+</li>
+<li class="nav-item dropdown no-arrow mx-1" >
+<a class="nav-link dropdown-toggle" href="#" id="5b8a997d-c3e8-48f5-a515-a5f02b6e0027" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"  >
+<span class="mr-2 d-none d-lg-inline text-gray-100">Design</span>
+</a>
+<div class=" dropdown-list dropdown-menu shadow animated--grow-in" aria-labelledby="5b8a997d-c3e8-48f5-a515-a5f02b6e0027" >
+<a class="dropdown-item" href="/Design/Clean-Design-In-Blazor.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Clean Design Principles in Blazor Applications
+</a>
+<a class="dropdown-item" href="/Design/Clean-Design-Blazor-Template.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+A Blazor Clean Design Template
+</a>
+<a class="dropdown-item" href="/Design/Clean-Design-Blazor-Template-Solution-Structure.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Solution Structure in the Clean Design Blazor Template
+</a>
+<a class="dropdown-item" href="/Design/Clean-Design-Blazor-Template-DataServices.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Data Services in the Clean Design Blazor Template
+</a>
+<a class="dropdown-item" href="/Design/Clean-Design-Blazor-Template-UI.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+The UI in the Clean Design Blazor Template
+</a>
+<a class="dropdown-item" href="/Design/Clean-Design-Blazor-Template-Solution-Setup.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Solution Setup in the Clean Design Blazor Template
+</a>
+<a class="dropdown-item" href="/Design/Clean-Design-Blazor-Template-Testing.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Testing in the Clean Design Blazor Template
+</a>
+</div>
+</li>
+<li class="nav-item dropdown no-arrow mx-1" >
+<a class="nav-link dropdown-toggle" href="#" id="a016cd54-225a-492a-8a05-9acc89d4bcb3" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"  >
+<span class="mr-2 d-none d-lg-inline text-gray-100">Modern C#</span>
+</a>
+<div class=" dropdown-list dropdown-menu shadow animated--grow-in" aria-labelledby="a016cd54-225a-492a-8a05-9acc89d4bcb3" >
+<a class="dropdown-item" href="/Modern-Coding-Patterns/Nullable-And-VS-2022.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Nullable And VS 2022
+</a>
+</div>
+</li>
+</ul>
+
+    <div class="ms-5 me-5 ml-auto">
+        <h1>Cold Elm Coders</h1>
+    </div>
+</nav>
+
+
+    </div>
+    <!--End topbar-->
+    <!--Sidebar-->
+    <div id="sidebar">
+        
+<div class="article-info p-2" Published: 02-08-2021 >
+<div>Published: 02-08-2021</div>
+<div>Last Updated: 02-08-2021</div>
+<div>Author: Shaun Curtis</div>
+</div>
+
+        
+<h4 class="p-2">Table of Contents</h4>
+<ul class="TOC" >
+<li class="TOC-item TOC-item-0" >
+<a class="TOC-link" href="#">Top</a>
+<ul class="TOC TOC-0" >
+<li class="TOC-item TOC-item-1" >
+<ul class="TOC TOC-1" >
+<li class="TOC-item TOC-item-2" >
+<a class="TOC-link" href="#code-repository-and-demo-site">Code Repository and Demo Site</a>
+</li>
+<li class="TOC-item TOC-item-2" >
+<a class="TOC-link" href="#form-exits">Form Exits</a>
+</li>
+<li class="TOC-item TOC-item-2" >
+<a class="TOC-link" href="#blazor-and-navigation">Blazor and Navigation</a>
+</li>
+<li class="TOC-item TOC-item-2" >
+<a class="TOC-link" href="#the-options">The Options</a>
+<ul class="TOC TOC-2" >
+<li class="TOC-item TOC-item-3" >
+<a class="TOC-link" href="#the-javascript-option">The Javascript Option</a>
+</li>
+<li class="TOC-item TOC-item-3" >
+<a class="TOC-link" href="#the-navigation-manager-option">The Navigation Manager Option</a>
+</li>
+<li class="TOC-item TOC-item-3" >
+<a class="TOC-link" href="#the-router-option">The Router Option</a>
+</li>
+</ul>
+</li>
+<li class="TOC-item TOC-item-2" >
+<a class="TOC-link" href="#form-edit-state">Form Edit State</a>
+<ul class="TOC TOC-2" >
+<li class="TOC-item TOC-item-3" >
+<a class="TOC-link" href="#editstatecontext">EditStateContext</a>
+</li>
+</ul>
+</li>
+<li class="TOC-item TOC-item-2" >
+<a class="TOC-link" href="#the-navigation-lock-code">The Navigation Lock Code</a>
+<ul class="TOC TOC-2" >
+<li class="TOC-item TOC-item-3" >
+<a class="TOC-link" href="#the-navigationlock-component">The NavigationLock Component</a>
+</li>
+<li class="TOC-item TOC-item-3" >
+<a class="TOC-link" href="#sitejs">site.js</a>
+</li>
+<li class="TOC-item TOC-item-3" >
+<a class="TOC-link" href="#blazrnavigationmanager">BlazrNavigationManager</a>
+</li>
+<li class="TOC-item TOC-item-3" >
+<a class="TOC-link" href="#weatherforecasteditorform">WeatherForecastEditorForm</a>
+</li>
+</ul>
+</li>
+<li class="TOC-item TOC-item-2" >
+<a class="TOC-link" href="#the-infratructure-code">The Infratructure Code</a>
+</li>
+<li class="TOC-item TOC-item-2" >
+<a class="TOC-link" href="#mainlayoutrazor">MainLayout.razor</a>
+<ul class="TOC TOC-2" >
+<li class="TOC-item TOC-item-3" >
+<a class="TOC-link" href="#_layoutcshtmlindexhtml">_Layout.cshtml/index.html</a>
+</li>
+<li class="TOC-item TOC-item-3" >
+<a class="TOC-link" href="#services">Services</a>
+</li>
+</ul>
+</li>
+<li class="TOC-item TOC-item-2" >
+<a class="TOC-link" href="#using-blazrrouter">Using BlazrRouter</a>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+    </div>
+    <!--End Sidebar-->
+    <!-- Page Wrapper -->
+    <div id="wrapper">
+        <!-- Content Wrapper -->
+        <div id="content-wrapper" class="d-flex flex-column">
+            <!-- Main Content -->
+            <div id="content">
+                <!-- Topbar -->
+                <div id="article">
+                    <!-- Article -->
+                    
+<!-- Header -->
+<header class="ex-header-article">
+    <div class="container">
+        <div class="row pt-3 pb-3 border-bottom">
+            <div class="col">
+                
+<h1>Managing Form Edit State in Blazor</h1>
+<div>How to build Blazor Edit Forms that manage state.</div>
+
+            </div> <!-- end of col -->
+        </div> <!-- end of row -->
+    </div> <!-- end of container -->
+</header> <!-- end of ex-header -->
+<!-- end of header -->
+
+
+                    
+<!-- Article Container -->
+<div class="ex-basic-1 pt-4">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                
+
+        <p>To set the context of this article, there have been many discussions, articles and proposals since Blazor was first released on how to handle edit forms. Specifically how to stop, or at least warn, the user when leaving a dirty form. The problem is not specific to Blazor: all Single Page Applications and Web Sites face the same challenges.</p>
+<p>In a classic web form, every navigation is a <code>get</code> or a <code>post</code> back to the server. We can use the Browser <code>window.beforeunload</code> event to warn a user that they have unsaved data on the page. Not great, but at least something - we'll be using it later. This technique falls flat in SPAs. What looks like a navigation event isn't. The NavigationManager intercepts any navigation attempt from the page, triggers its own LocationChanged event and sinks the request. The Router, wired into this event, does its wizardry, and loads the new component set into the page. No real browser navigation takes place, so there's nothing for the browser's beforeunload event to catch.</p>
+<p>It's up to the programmer to write code that stops a user moving away from a dirty form. That's easier said than done when your application depends on the URL navigation pretext. Toolbars, navigation side bars and many buttons submit URLs to navigate around the application. Think of the out-of-the-box Blazor template. There's all the links in the left navigation, about in the top bar.</p>
+<p>Personally, I have a serious issue with the whole routing charade: an SPA is an application, not a website, but I appear to be a minority of one! This article is for the majority.</p>
+<p>All Blazor edit state solutions I've come across were cludges in one way or another, I've created more that one myself. What the community hoped for were changes in NetCore 5, specifically some extra functionality in NavigationManager to cancel or block navigation requests. That didn't happen: I don't think there was team concensus on the right solution, so we're back to square one.</p>
+<p>What I cover in this article is my latest approach to the problem. It's not perfect, but I don't think we will ever get a near perfect solution until we get some new browser standards allowing a switch to SPA mode and control over toolbar navigation.</p>
+<p>Our goal is to prevent navigation where possible i.e. lock the page, and where that fails hit the user with an exit option message.  No side doors!</p>
+<p><img src="https://shauncurtis.github.io/articles/assets/Edit-Forms/Dirty-App-Exit.png" alt="Dirty Editor"></p>
+<h2 id="code-repository-and-demo-site">Code Repository and Demo Site</h2>
+<p>The repository for the article is <a href="https://github.com/ShaunCurtis/Blazr.Demo.EditForm">here</a>.</p>
+<p>You can see the code in this article in action on my Blazr Database demo site is here - <a href="https://blazr-demo.azurewebsites.net/">Blazr.Demo Azure Site</a></p>
+<h2 id="form-exits">Form Exits</h2>
+<p>There are three (controlled) ways a user can exit a form:</p>
+<ol>
+<li><strong>Intra Form Navigation</strong> - Click on an Exit or other button in the form.</li>
+<li><strong>Intra Application Navigation</strong> - Click on a link in a navigation bar outside the form, click on the forward or back buttons on the browser.</li>
+<li><strong>Extra Application Navigation</strong> - entering a new Url in the address bar, clicking on a favourite, closing the browser Tab or application.</li>
+</ol>
+<p>We have no control over killing the browser - a reboot or system crash - so don't consider those here.</p>
+<h2 id="blazor-and-navigation">Blazor and Navigation</h2>
+<p>Blazor's Client side Javascript code registers event handlers for the various navigation events within the page and from the back/forward buttons.</p>
+<p>In Blazor Web Assembly, these events surface in DotNetCore code in JsInterop code:</p>
+<pre><code class="language-csharp"><div>[<span class="hljs-meta">JSInvokable(nameof(NotifyLocationChanged))</span>]
+<span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">NotifyLocationChanged</span>(<span class="hljs-params"><span class="hljs-keyword">string</span> uri, <span class="hljs-keyword">bool</span> isInterceptedLink</span>)</span>
+{
+    WebAssemblyNavigationManager.Instance.SetLocation(uri, isInterceptedLink);
+}
+</div></code></pre>
+<p>In Server the events get passed through the SignalR connection and surface:</p>
+<pre><code class="language-csharp"><div><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">async</span> ValueTask <span class="hljs-title">OnLocationChanged</span>(<span class="hljs-params"><span class="hljs-keyword">string</span> uri, <span class="hljs-keyword">bool</span> intercepted</span>)</span>
+{
+    <span class="hljs-keyword">var</span> circuitHost = <span class="hljs-keyword">await</span> GetActiveCircuitAsync();
+    <span class="hljs-keyword">if</span> (circuitHost == <span class="hljs-literal">null</span>)
+        <span class="hljs-keyword">return</span>;
+
+    _ = circuitHost.OnLocationChangedAsync(uri, intercepted);
+}
+</div></code></pre>
+<p>This calls the <code>CircuitHost</code> method:</p>
+<pre><code class="language-csharp"><div><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">async</span> Task <span class="hljs-title">OnLocationChangedAsync</span>(<span class="hljs-params"><span class="hljs-keyword">string</span> uri, <span class="hljs-keyword">bool</span> intercepted</span>)</span>
+{
+    <span class="hljs-keyword">await</span> Renderer.Dispatcher.InvokeAsync(() =&gt;
+    {
+        <span class="hljs-keyword">var</span> navigationManager = (RemoteNavigationManager)Services.GetRequiredService&lt;NavigationManager&gt;();
+        navigationManager.NotifyLocationChanged(uri, intercepted);
+    });
+ }
+<span class="hljs-comment">//lots of code missing to only show the relevant lines</span>
+</div></code></pre>
+<h2 id="the-options">The Options</h2>
+<h3 id="the-javascript-option">The Javascript Option</h3>
+<p>One possible approach to intercept and cancel the events that drive the Blazor code.</p>
+<p>The code block below shows one possibility.</p>
+<pre><code class="language-js"><div><span class="hljs-keyword">let</span> blazr_PreventNavigation = <span class="hljs-literal">false</span>;  <span class="hljs-comment">// main control bool to stop/allow navigation</span>
+<span class="hljs-keyword">let</span> idCounter = <span class="hljs-number">0</span>;
+<span class="hljs-keyword">let</span> lastHistoryItemId = <span class="hljs-number">0</span>; <span class="hljs-comment">//needed to detect back/forward, in popstate event handler</span>
+
+<span class="hljs-built_in">window</span>.blazr_setPageLock = <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">lock</span>) </span>{
+    blazr_PreventNavigation = lock;
+}
+
+<span class="hljs-built_in">window</span>.history.pushState = (<span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">basePushState</span>) </span>{
+    <span class="hljs-keyword">return</span> <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">...args</span>) </span>{
+        <span class="hljs-keyword">if</span> (blazr_PreventNavigation) {
+            <span class="hljs-keyword">return</span>;
+        }
+        basePushState.apply(<span class="hljs-built_in">this</span>, args);
+    }
+})(<span class="hljs-built_in">window</span>.history.pushState);
+
+<span class="hljs-built_in">window</span>.addEventListener(<span class="hljs-string">&#x27;beforeunload&#x27;</span>, <span class="hljs-function"><span class="hljs-params">e</span> =&gt;</span> {
+    <span class="hljs-keyword">if</span> (blazr_PreventNavigation) {
+        e.returnValue = <span class="hljs-string">&#x27;There are unsaved changes&#x27;</span>
+    }
+});
+
+<span class="hljs-built_in">window</span>.addEventListener(<span class="hljs-string">&#x27;load&#x27;</span>, <span class="hljs-function">() =&gt;</span> {
+    <span class="hljs-keyword">let</span> resetUrlRun = <span class="hljs-literal">false</span>;
+    <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">popStateListener</span>(<span class="hljs-params">e</span>) </span>{
+        <span class="hljs-keyword">if</span> (blazr_PreventNavigation) {
+            <span class="hljs-keyword">let</span> lockNavigation = <span class="hljs-literal">false</span>;
+
+            <span class="hljs-comment">//popstate can be triggered twice, but we want to show confirm dialog only once</span>
+            lockNavigation = blazr_PreventNavigation &amp;&amp; !resetUrlRun;
+
+            <span class="hljs-keyword">if</span> (lockNavigation) {
+                <span class="hljs-comment">//this will nearly always cancel Blazor navigation, but the url is already changed</span>
+                e.stopImmediatePropagation();
+                e.preventDefault();
+                e.returnValue = <span class="hljs-literal">false</span>;
+            }
+
+            <span class="hljs-keyword">if</span> (resetUrlRun) {
+                <span class="hljs-comment">//Resets resetUrlRun on second run</span>
+                resetUrlRun = <span class="hljs-literal">false</span>;
+            }
+
+            <span class="hljs-comment">// Only runs on the first pass through    </span>
+            <span class="hljs-keyword">if</span> (lockNavigation) {
+                <span class="hljs-comment">//detect back vs forward </span>
+                <span class="hljs-keyword">const</span> currentId = e.state &amp;&amp; e.state.__incrementalId;
+                <span class="hljs-keyword">const</span> navigatingForward = currentId &gt; lastHistoryItemId;
+
+                <span class="hljs-comment">//revert url</span>
+                <span class="hljs-keyword">if</span> (navigatingForward) {
+                    history.back();
+                }
+                <span class="hljs-keyword">else</span> {
+                    history.forward();
+                }
+                resetUrlRun = <span class="hljs-literal">true</span>;
+            }
+        }
+    }
+
+    <span class="hljs-built_in">window</span>.addEventListener(<span class="hljs-string">&#x27;popstate&#x27;</span>, popStateListener, { <span class="hljs-attr">capture</span>: <span class="hljs-literal">true</span> });
+
+    <span class="hljs-built_in">window</span>.history.pushState = (<span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">basePushState</span>) </span>{
+        <span class="hljs-keyword">return</span> <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">...args</span>) </span>{
+            <span class="hljs-keyword">if</span> (blazr_PreventNavigation) {
+                <span class="hljs-keyword">return</span>;
+            }
+            <span class="hljs-keyword">if</span> (!args[<span class="hljs-number">0</span>]) {
+                args[<span class="hljs-number">0</span>] = {};
+            }
+            lastHistoryItemId = history.state &amp;&amp; history.state.__incrementalId;
+            args[<span class="hljs-number">0</span>].__incrementalId = ++idCounter; <span class="hljs-comment">//track order of history items            </span>
+            basePushState.apply(<span class="hljs-built_in">this</span>, args);
+        }
+    })(<span class="hljs-built_in">window</span>.history.pushState);
+});
+</div></code></pre>
+<p>This code works most of the time in Blazor Server, but not in Web Assembly mode.  Unfortunately, unless someone knows how to make it 100%, I've discounted it for now.  The code is available in Repo for you to test and work with.</p>
+<h3 id="the-navigation-manager-option">The Navigation Manager Option</h3>
+<p>In Blazor Web Assembly, <code>NotifyLocationChanged</code> uses the static <code>WebAssemblyNavigationManager.Instance</code> to get the currently registered singleton instance and calls the <code>SetLocation</code> method on that instance.  Specifically, it doesn't access the instance through the DI container.  This is Web Assembly, so Scoped and Singleton are the same thing, it uses the &quot;Singleton&quot; pattern to access the only instance of <code>WebAssemblyNavigationManager</code> running in the browser container.</p>
+<p>We can exploit this in the WASM solution by &quot;unregistering&quot; <code>WebAssemblyNavigationManager</code> as the registered <code>NavigationManager</code> in the WASM DI container, and registering our own <code>BlazrNavigationManager</code> instead.  We re-register <code>WebAssemblyNavigationManager</code> as itself.</p>
+<p>Now all DI container services that use <code>NavigationManager</code>, register for <code>LocationChanged</code> on our <code>BlazrNavigationManager</code>.  The JSInterop events still surface though <code>WebAssemblyNavigationManager</code>, but now only <code>BlazrNavigationManager</code> is registered for the <code>LocationChanged</code> event on the <code>WebAssemblyNavigationManager</code> instance.  We now have control over whether or not we pass the event on.  Specifically, we now control <code>Router</code>.</p>
+<p>Unfortunately, Blazor server does things differently. <code>OnLocationChangedAsync</code> gets the registered service and expects it to be <code>RemoteNavigationManager</code> which is a sealed internal class.  No exploitable options here.  We have no way to get <code>Router</code> to register with our NavigationManager!</p>
+<h3 id="the-router-option">The Router Option</h3>
+<p>The third, and only bulletproof method, is a router that uses <code>BlazrNavigationManager</code>.  The code within the <em>Routing</em> directory and namespace does that.</p>
+<p><code>BlazrRouter</code> is a very lightly modified standard Router implementation.  The modifications are:</p>
+<ol>
+<li>Inject <code>BlazrNavigationManager</code> instead of <code>NavigationManager</code>.  The router then registers with the <code>BlazrNavigationManager</code> <code>LocationChanged</code> event and thus only receives location changed events it passes through.</li>
+<li>HotReload is disabled as the <code>HotReloadManager</code> is an internal class that can'r be access from outside it's parent assembly.</li>
+</ol>
+<p>You can review the code in the Repo.</p>
+<h2 id="form-edit-state">Form Edit State</h2>
+<p>The first step to controlling form exits is to manage the state of the form - is the data in the form different from the record?  There's nothing in out-of-the-box Blazor to do this: there's a very simplistic attempt in <code>EditContext</code>, but it's not fit-for-purpose.   We need an edit state manager.</p>
+<p><code>EditStateContext</code> implements the functionality to track the state of the current edit form.</p>
+<h3 id="editstatecontext">EditStateContext</h3>
+<p><code>EditStateContext</code> loads content from the <code>EditContext</code> Model into a <code>EditFieldCollection</code> of <code>EditField</code> objects.  This collection is populated when the form loads.  Individual edits are passed in by calling <code>NotifyFieldChanged</code>, and the <code>EditedValue</code> property of the correct <code>EditField</code> is updated.  <code>EditFieldCollection</code> exposes a <code>IsDirty</code> property which is true if any <code>EditField</code> is dirty i.e. <code>Value</code> does not equal <code>EditedValue</code>.</p>
+<p><code>EditStateContext</code> registers with <code>EditContext</code> for FieldChanges and calls <code>NotifyFieldChanged</code> whenever a field is updated.</p>
+<pre><code class="language-csharp"><div><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title">EditStateContext</span> : <span class="hljs-title">IDisposable</span>
+{
+    <span class="hljs-keyword">public</span> <span class="hljs-keyword">bool</span> IsDirty =&gt; EditFields.IsDirty;
+
+    <span class="hljs-keyword">public</span> <span class="hljs-keyword">event</span> EventHandler&lt;EditStateEventArgs&gt;? EditStateChanged;
+
+    <span class="hljs-keyword">private</span> EditFieldCollection EditFields = <span class="hljs-keyword">new</span> EditFieldCollection();
+
+    <span class="hljs-keyword">protected</span> EditContext? EditContext { <span class="hljs-keyword">get</span>; <span class="hljs-keyword">private</span> <span class="hljs-keyword">set</span>; }
+
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">EditStateContext</span>(<span class="hljs-params">EditContext editContext</span>)</span>
+        =&gt; <span class="hljs-keyword">this</span>.Load(editContext);
+
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">Load</span>(<span class="hljs-params">EditContext editContext</span>)</span>
+    {
+        <span class="hljs-keyword">this</span>.EditContext = editContext;
+        <span class="hljs-keyword">this</span>.LoadEditState();
+        <span class="hljs-keyword">this</span>.EditContext.OnFieldChanged += <span class="hljs-keyword">this</span>.FieldChanged;
+    }
+
+    <span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-keyword">void</span> <span class="hljs-title">LoadEditState</span>(<span class="hljs-params"></span>)</span>
+        =&gt; <span class="hljs-keyword">this</span>.GetEditFields();
+
+    <span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-keyword">void</span> <span class="hljs-title">GetEditFields</span>(<span class="hljs-params"></span>)</span>
+    {
+        <span class="hljs-keyword">var</span> model = <span class="hljs-keyword">this</span>.EditContext!.Model;
+        <span class="hljs-keyword">this</span>.EditFields.Clear();
+        <span class="hljs-keyword">if</span> (model <span class="hljs-keyword">is</span> not <span class="hljs-literal">null</span>)
+        {
+            <span class="hljs-keyword">var</span> props = model.GetType().GetProperties();
+            <span class="hljs-keyword">foreach</span> (<span class="hljs-keyword">var</span> prop <span class="hljs-keyword">in</span> props)
+            {
+                <span class="hljs-keyword">if</span> (prop.CanWrite)
+                {
+                    <span class="hljs-keyword">var</span> <span class="hljs-keyword">value</span> = prop.GetValue(model);
+                    EditFields.AddField(model, prop.Name, <span class="hljs-keyword">value</span>);
+                }
+            }
+        }
+    }
+    <span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-keyword">void</span> <span class="hljs-title">FieldChanged</span>(<span class="hljs-params"><span class="hljs-keyword">object</span>? sender, FieldChangedEventArgs e</span>)</span>
+        =&gt; <span class="hljs-keyword">this</span>.NotifyFieldChanged(e);
+
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">NotifyFieldChanged</span>(<span class="hljs-params">FieldChangedEventArgs e</span>)</span>
+    {
+        <span class="hljs-keyword">var</span> wasDirty = EditFields.IsDirty;
+
+        <span class="hljs-comment">// Get the PropertyInfo object for the model property</span>
+        <span class="hljs-comment">// Uses reflection to get property and value</span>
+        <span class="hljs-keyword">var</span> prop = e.FieldIdentifier.Model.GetType().GetProperty(e.FieldIdentifier.FieldName);
+        <span class="hljs-keyword">if</span> (prop != <span class="hljs-literal">null</span>)
+        {
+            <span class="hljs-comment">// Get the value for the property</span>
+            <span class="hljs-keyword">var</span> <span class="hljs-keyword">value</span> = prop.GetValue(e.FieldIdentifier.Model);
+
+            <span class="hljs-comment">// Sets the edit value in the EditField</span>
+            EditFields.SetField(e.FieldIdentifier.FieldName, <span class="hljs-keyword">value</span>);
+
+            <span class="hljs-comment">// Invokes EditStateChanged if changed</span>
+            <span class="hljs-keyword">var</span> isStateChange = (EditFields.IsDirty) != wasDirty;
+            <span class="hljs-keyword">if</span> (isStateChange)
+                <span class="hljs-keyword">this</span>.NotifyEditStateChanged();
+        }
+    }
+
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">NotifySaved</span>(<span class="hljs-params"></span>)</span>
+    {
+        <span class="hljs-keyword">var</span> currentState = <span class="hljs-keyword">this</span>.EditFields.IsDirty;
+        <span class="hljs-keyword">this</span>.LoadEditState();
+        <span class="hljs-keyword">if</span> (currentState)
+            NotifyEditStateChanged();
+    }
+
+    <span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-keyword">void</span> <span class="hljs-title">NotifyEditStateChanged</span>(<span class="hljs-params"></span>)</span>
+        =&gt; EditStateChanged?.Invoke(<span class="hljs-keyword">this</span>, EditStateEventArgs.NewArgs(EditFields?.IsDirty ?? <span class="hljs-literal">false</span>));
+
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">Dispose</span>(<span class="hljs-params"></span>)</span>
+    {
+        <span class="hljs-keyword">if</span> (<span class="hljs-keyword">this</span>.EditContext <span class="hljs-keyword">is</span> not <span class="hljs-literal">null</span>)
+            <span class="hljs-keyword">this</span>.EditContext.OnFieldChanged += <span class="hljs-keyword">this</span>.FieldChanged;
+    }
+}
+</div></code></pre>
+<h4 id="editstateeventargs">EditStateEventArgs</h4>
+<pre><code class="language-csharp"><div><span class="hljs-keyword">using</span> System;
+
+<span class="hljs-keyword">namespace</span> <span class="hljs-title">Blazr.EditForms</span>
+{
+    <span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title">EditStateEventArgs</span> : <span class="hljs-title">EventArgs</span>
+    {
+        <span class="hljs-keyword">public</span> <span class="hljs-keyword">bool</span> IsDirty { <span class="hljs-keyword">get</span>; <span class="hljs-keyword">set</span>; }
+
+        <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> EditStateEventArgs <span class="hljs-title">NewArgs</span>(<span class="hljs-params"><span class="hljs-keyword">bool</span> dirtyState</span>)</span>
+            =&gt; <span class="hljs-keyword">new</span> EditStateEventArgs { IsDirty = dirtyState };
+    }
+}
+</div></code></pre>
+<h4 id="editfield">EditField</h4>
+<p><code>EditField</code> looks like this.  All but <code>EditedValue</code> are <code>init</code> record type properties.</p>
+<pre><code class="language-csharp"><div>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title">EditField</span>
+    {
+        <span class="hljs-keyword">public</span> <span class="hljs-keyword">string</span> FieldName { <span class="hljs-keyword">get</span>; <span class="hljs-keyword">init</span>; }
+        <span class="hljs-keyword">public</span> Guid GUID { <span class="hljs-keyword">get</span>; <span class="hljs-keyword">init</span>; }
+        <span class="hljs-keyword">public</span> <span class="hljs-keyword">object</span> Value { <span class="hljs-keyword">get</span>; <span class="hljs-keyword">init</span>; }
+        <span class="hljs-keyword">public</span> <span class="hljs-keyword">object</span> EditedValue { <span class="hljs-keyword">get</span>; <span class="hljs-keyword">set</span>; }
+        <span class="hljs-keyword">public</span> <span class="hljs-keyword">object</span> Model { <span class="hljs-keyword">get</span>; <span class="hljs-keyword">init</span>; }
+
+        <span class="hljs-keyword">public</span> <span class="hljs-keyword">bool</span> IsDirty
+        {
+            <span class="hljs-keyword">get</span>
+            {
+                <span class="hljs-keyword">if</span> (Value != <span class="hljs-literal">null</span> &amp;&amp; EditedValue != <span class="hljs-literal">null</span>) <span class="hljs-keyword">return</span> !Value.Equals(EditedValue);
+                <span class="hljs-keyword">if</span> (Value <span class="hljs-keyword">is</span> <span class="hljs-literal">null</span> &amp;&amp; EditedValue <span class="hljs-keyword">is</span> <span class="hljs-literal">null</span>) <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;
+                <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;
+            }
+        }
+
+        <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">EditField</span>(<span class="hljs-params"><span class="hljs-keyword">object</span> model, <span class="hljs-keyword">string</span> fieldName, <span class="hljs-keyword">object</span> <span class="hljs-keyword">value</span></span>)</span>
+        {
+            <span class="hljs-keyword">this</span>.Model = model;
+            <span class="hljs-keyword">this</span>.FieldName = fieldName;
+            <span class="hljs-keyword">this</span>.Value = <span class="hljs-keyword">value</span>;
+            <span class="hljs-keyword">this</span>.EditedValue = <span class="hljs-keyword">value</span>;
+            <span class="hljs-keyword">this</span>.GUID = Guid.NewGuid();
+        }
+
+        <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">Reset</span>(<span class="hljs-params"></span>)</span>
+            =&gt; <span class="hljs-keyword">this</span>.EditedValue = <span class="hljs-keyword">this</span>.Value;
+    }
+</div></code></pre>
+<h4 id="editfieldcollection">EditFieldCollection</h4>
+<p><code>EditFieldCollection</code> implements <code>IEnumerable</code>.  It provides:</p>
+<ol>
+<li>An <code>IsDirty</code> property which checks the state of all the <code>EditFields</code> in the collection.</li>
+<li>A set of getters and setters for adding and setting the edit state.</li>
+</ol>
+<pre><code class="language-csharp"><div>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title">EditFieldCollection</span> : <span class="hljs-title">IEnumerable</span>
+    {
+        <span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-title">List</span>&lt;<span class="hljs-title">EditField</span>&gt; _items</span> = <span class="hljs-keyword">new</span> List&lt;EditField&gt;();
+        <span class="hljs-keyword">public</span> <span class="hljs-keyword">int</span> Count =&gt; _items.Count;
+        <span class="hljs-keyword">public</span> Action&lt;<span class="hljs-keyword">bool</span>&gt; FieldValueChanged;
+        <span class="hljs-keyword">public</span> <span class="hljs-keyword">bool</span> IsDirty =&gt; _items.Any(item =&gt; item.IsDirty);
+
+        <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">Clear</span>(<span class="hljs-params"></span>)</span>
+            =&gt; _items.Clear();
+
+        <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">ResetValues</span>(<span class="hljs-params"></span>)</span>
+            =&gt; _items.ForEach(item =&gt; item.Reset());
+..... lots of getters and setters and IEnumerator implementation code
+</div></code></pre>
+<h2 id="the-navigation-lock-code">The Navigation Lock Code</h2>
+<h3 id="the-navigationlock-component">The NavigationLock Component</h3>
+<p>Page locking is implemented in the UI through  the <code>NavigationLock</code> component.  It looks like this:</p>
+<pre><code class="language-csharp"><div><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title">NavigationLock</span> : <span class="hljs-title">ComponentBase</span>, <span class="hljs-title">IDisposable</span>
+{
+    [<span class="hljs-meta">Inject</span>] <span class="hljs-keyword">private</span> IJSRuntime? _js { <span class="hljs-keyword">get</span>; <span class="hljs-keyword">set</span>; }
+
+    [<span class="hljs-meta">Inject</span>] <span class="hljs-keyword">private</span> BlazrNavigationManager? blazrNavigationManager { <span class="hljs-keyword">get</span>; <span class="hljs-keyword">set</span>; }    
+    
+    [<span class="hljs-meta">Parameter</span>] <span class="hljs-keyword">public</span> RenderFragment? ChildContent { <span class="hljs-keyword">get</span>; <span class="hljs-keyword">set</span>; }
+
+    <span class="hljs-keyword">private</span> <span class="hljs-keyword">bool</span> locked;
+
+    <span class="hljs-function"><span class="hljs-keyword">protected</span> <span class="hljs-keyword">override</span> <span class="hljs-keyword">void</span> <span class="hljs-title">OnInitialized</span>(<span class="hljs-params"></span>)</span>
+        =&gt; blazrNavigationManager!.BeforeLocationChange += OnBeforeLocationChange;
+
+    <span class="hljs-function"><span class="hljs-keyword">protected</span> <span class="hljs-keyword">override</span> Task <span class="hljs-title">OnAfterRenderAsync</span>(<span class="hljs-params"><span class="hljs-keyword">bool</span> firstRender</span>)</span>
+    {
+        <span class="hljs-keyword">if</span> (firstRender)
+            SetPageLock();
+        <span class="hljs-keyword">return</span> Task.CompletedTask;
+    }
+
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">SetLock</span>(<span class="hljs-params"><span class="hljs-keyword">bool</span> locked</span>)</span>
+    {
+        <span class="hljs-keyword">this</span>.locked = locked;
+        <span class="hljs-keyword">this</span>.SetPageLock();
+    }
+
+    <span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-keyword">void</span> <span class="hljs-title">OnBeforeLocationChange</span>(<span class="hljs-params"><span class="hljs-keyword">object</span>? sender, NavigationData e</span>)</span>
+        =&gt; e.IsCanceled = <span class="hljs-keyword">this</span>.locked;
+
+    <span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-keyword">void</span> <span class="hljs-title">SetPageLock</span>(<span class="hljs-params"></span>)</span>
+        =&gt; _js!.InvokeAsync&lt;<span class="hljs-keyword">bool</span>&gt;(<span class="hljs-string">&quot;blazr_setPageLock&quot;</span>, locked);
+
+    <span class="hljs-function"><span class="hljs-keyword">protected</span> <span class="hljs-keyword">override</span> <span class="hljs-keyword">void</span> <span class="hljs-title">BuildRenderTree</span>(<span class="hljs-params">RenderTreeBuilder builder</span>)</span>
+    {
+        builder.OpenComponent&lt;CascadingValue&lt;NavigationLock&gt;&gt;(<span class="hljs-number">0</span>);
+        builder.AddAttribute(<span class="hljs-number">1</span>, <span class="hljs-string">&quot;Value&quot;</span>, <span class="hljs-keyword">this</span>);
+        builder.AddAttribute(<span class="hljs-number">2</span>, <span class="hljs-string">&quot;ChildContent&quot;</span>, <span class="hljs-keyword">this</span>.ChildContent);
+        builder.CloseComponent();
+    }
+
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">Dispose</span>(<span class="hljs-params"></span>)</span>
+        =&gt; blazrNavigationManager!.BeforeLocationChange -= OnBeforeLocationChange;
+}
+</div></code></pre>
+<p>It's default first load condition is unlocked.  It has a single public method <code>SetLock</code>.  This sets an internal state global variable and calls the Javascript <code>blazr_setPageLock</code> passing true/false to set or unset page locking.</p>
+<p>It injects the new <code>BlazrNavigationManager</code> and registers for the <code>OnBeforeLocationChange</code> event.  It sets <code>IsCancelled</code> on the <code>NavigationData</code> object it is passed to the lock state.  We'll see <code>BlazrNavigationManager</code> in a minute.</p>
+<p>The Component UI wraps the child content in a cascade of the component.</p>
+<h3 id="sitejs">site.js</h3>
+<p>The client side guts of the solution.  In essence we add listeners into the various browser navigation events and either allow or prevent event propogation.  The code is shown in full below.</p>
+<pre><code class="language-js"><div><span class="hljs-keyword">let</span> blazr_PreventNavigation = <span class="hljs-literal">false</span>;  <span class="hljs-comment">// main control bool to stop/allow navigation</span>
+
+<span class="hljs-built_in">window</span>.blazr_setPageLock = <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">lock</span>) </span>{
+    blazr_PreventNavigation = lock;
+}
+
+<span class="hljs-built_in">window</span>.addEventListener(<span class="hljs-string">&#x27;beforeunload&#x27;</span>, <span class="hljs-function"><span class="hljs-params">e</span> =&gt;</span> {
+    <span class="hljs-keyword">if</span> (blazr_PreventNavigation) {
+        e.returnValue = <span class="hljs-string">&#x27;There are unsaved changes in your form!&#x27;</span>
+    }
+});
+</div></code></pre>
+<h3 id="blazrnavigationmanager">BlazrNavigationManager</h3>
+<p><code>BlazrNavigationManager</code> replaces the normal Navigation Manager.</p>
+<p>It injects the standard Navigation Manager through Dependancy Injection as it's UnderlyingNavigationManager.  It registers on the <code>OnUnderlyingNavigationManager.LocationChanged</code> event.  The event handler invokes all registered delegates on it's <code>BeforeLocationChange</code> event.  If <code>NavigationData.IsCanceled</code> is true it sinks the event.  If not, it invokes it's own base class <code>LocationChanged</code> event though <code>NotifyLocationChanged</code>.</p>
+<p>If navigation is cancelled, it instigates a second Navigation event on the standard Navigation Manager to reset the Uri.</p>
+<pre><code class="language-csharp"><div><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title">BlazrNavigationManager</span> : <span class="hljs-title">NavigationManager</span>
+{
+    <span class="hljs-keyword">private</span> NavigationManager _UnderlyingNavigationManager;
+    <span class="hljs-keyword">private</span> <span class="hljs-keyword">bool</span> _isBlindNavigation = <span class="hljs-literal">false</span>;
+
+    <span class="hljs-keyword">public</span> <span class="hljs-keyword">event</span> EventHandler&lt;NavigationData&gt;? BeforeLocationChange;
+
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">BlazrNavigationManager</span>(<span class="hljs-params">NavigationManager? underlyingNavigationManager</span>)</span>
+    {
+        _UnderlyingNavigationManager = underlyingNavigationManager!;
+        <span class="hljs-keyword">base</span>.Initialize(underlyingNavigationManager!.BaseUri, underlyingNavigationManager.Uri);
+        _UnderlyingNavigationManager.LocationChanged += OnUnderlyingNavigationManagerLocationChanged;
+    }
+
+    <span class="hljs-function"><span class="hljs-keyword">protected</span> <span class="hljs-keyword">override</span> <span class="hljs-keyword">void</span> <span class="hljs-title">EnsureInitialized</span>(<span class="hljs-params"></span>)</span>
+    {
+        <span class="hljs-keyword">base</span>.Initialize(_UnderlyingNavigationManager.BaseUri, _UnderlyingNavigationManager.Uri);
+    }
+
+    <span class="hljs-function"><span class="hljs-keyword">protected</span> <span class="hljs-keyword">override</span> <span class="hljs-keyword">void</span> <span class="hljs-title">NavigateToCore</span>(<span class="hljs-params"><span class="hljs-keyword">string</span> uri, <span class="hljs-keyword">bool</span> forceLoad</span>)</span>
+    {
+        <span class="hljs-comment">// Call the underlying navigation manager.</span>
+        _UnderlyingNavigationManager.NavigateTo(uri, forceLoad);
+    }
+
+    <span class="hljs-function"><span class="hljs-keyword">private</span> NavigationData <span class="hljs-title">NotifyBeforeLocationChange</span>(<span class="hljs-params">LocationChangedEventArgs e</span>)</span>
+    {
+        <span class="hljs-keyword">var</span> navigation = <span class="hljs-keyword">new</span> NavigationData()
+        {
+            CurrentLocation = <span class="hljs-keyword">this</span>.Uri,
+            NewLocation = e.Location,
+            IsNavigationIntercepted = e.IsNavigationIntercepted,
+            IsCanceled = <span class="hljs-literal">false</span>
+        };
+        BeforeLocationChange?.Invoke(<span class="hljs-keyword">this</span>, navigation);
+        <span class="hljs-keyword">return</span> navigation;
+    }
+
+    <span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-keyword">void</span> <span class="hljs-title">OnUnderlyingNavigationManagerLocationChanged</span>(<span class="hljs-params"><span class="hljs-keyword">object</span>? sender, LocationChangedEventArgs e</span>)</span>
+    {
+        <span class="hljs-keyword">var</span> navigation = NotifyBeforeLocationChange(e);
+        <span class="hljs-comment">// Check our blind navigation flag.  If we are blind navigating</span>
+        <span class="hljs-comment">// we just set the flag back to false and exit</span>
+        <span class="hljs-keyword">if</span> (_isBlindNavigation)
+        {
+            _isBlindNavigation = <span class="hljs-literal">false</span>;
+            <span class="hljs-keyword">return</span>;
+        }
+
+        <span class="hljs-comment">// Navigation is cancelled</span>
+        <span class="hljs-comment">// we set the flag so we don&#x27;t create a loop with the dummy run</span>
+        <span class="hljs-keyword">if</span> (navigation.IsCanceled)
+        {
+            <span class="hljs-comment">// prevents a NavigateTo loop</span>
+            _isBlindNavigation = <span class="hljs-literal">true</span>;
+            <span class="hljs-comment">// Puts the link back - else it will change, but the page will not navigate.</span>
+            _UnderlyingNavigationManager.NavigateTo(<span class="hljs-keyword">this</span>.Uri, <span class="hljs-literal">false</span>);
+            <span class="hljs-keyword">return</span>;
+        }
+
+        <span class="hljs-comment">// Normal Navigation path</span>
+        <span class="hljs-comment">// <span class="hljs-doctag">NOTE:</span> We set the Uri before calling notify location changed, as it will use this uri property in its args.</span>
+        <span class="hljs-keyword">this</span>.Uri = e.Location;
+        <span class="hljs-comment">// Trigger the Location Changed event for all listeners including the Router</span>
+        <span class="hljs-keyword">this</span>.NotifyLocationChanged(e.IsNavigationIntercepted);
+        <span class="hljs-comment">// Belt and braces to ensure false </span>
+        _isBlindNavigation = <span class="hljs-literal">false</span>;
+    }
+}
+</div></code></pre>
+<h3 id="weatherforecasteditorform">WeatherForecastEditorForm</h3>
+<p>Our base editor form looks like this.  It's all UI controls which you can investigate in the Repo code.</p>
+<pre><code class="language-html"><div><span class="hljs-tag">&lt;<span class="hljs-name">UILoader</span> <span class="hljs-attr">State</span>=<span class="hljs-string">&quot;this.LoadState&quot;</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">FormViewTitle</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">h2</span>&gt;</span>Weather Forecast Editor<span class="hljs-tag">&lt;/<span class="hljs-name">h2</span>&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-name">FormViewTitle</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">EditForm</span> <span class="hljs-attr">EditContext</span>=<span class="hljs-string">&quot;this.editContent&quot;</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">UIContainer</span> <span class="hljs-attr">Size</span>=<span class="hljs-string">BootstrapSize.Fluid</span>&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-name">UIFormRow</span>&gt;</span>
+                <span class="hljs-tag">&lt;<span class="hljs-name">UIColumn</span> <span class="hljs-attr">Columns</span>=<span class="hljs-string">12</span> <span class="hljs-attr">MediumColumns</span>=<span class="hljs-string">6</span>&gt;</span>
+                    <span class="hljs-tag">&lt;<span class="hljs-name">FormEditControl</span> <span class="hljs-attr">Label</span>=<span class="hljs-string">&quot;Date&quot;</span> <span class="hljs-attr">ShowLabel</span>=<span class="hljs-string">&quot;true&quot;</span> @<span class="hljs-attr">bind-Value</span>=<span class="hljs-string">&quot;this.viewService.EditModel.Date&quot;</span> <span class="hljs-attr">ControlType</span>=<span class="hljs-string">&quot;typeof(InputDate&lt;DateTime&gt;)&quot;</span> <span class="hljs-attr">IsRequired</span>=<span class="hljs-string">&quot;true&quot;</span> <span class="hljs-attr">ShowValidation</span>=<span class="hljs-string">&quot;true&quot;</span> <span class="hljs-attr">HelperText</span>=<span class="hljs-string">&quot;Enter the Forecast Date&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">FormEditControl</span>&gt;</span>
+                <span class="hljs-tag">&lt;/<span class="hljs-name">UIColumn</span>&gt;</span>
+                <span class="hljs-tag">&lt;<span class="hljs-name">UIColumn</span> <span class="hljs-attr">Columns</span>=<span class="hljs-string">12</span> <span class="hljs-attr">MediumColumns</span>=<span class="hljs-string">6</span>&gt;</span>
+                    <span class="hljs-tag">&lt;<span class="hljs-name">FormEditControl</span> <span class="hljs-attr">Label</span>=<span class="hljs-string">&quot;Temperature <span class="hljs-symbol">&amp;deg;</span>C&quot;</span> <span class="hljs-attr">ShowLabel</span>=<span class="hljs-string">&quot;true&quot;</span> @<span class="hljs-attr">bind-Value</span>=<span class="hljs-string">&quot;this.viewService.EditModel.TemperatureC&quot;</span> <span class="hljs-attr">ControlType</span>=<span class="hljs-string">&quot;typeof(InputNumber&lt;int&gt;)&quot;</span> <span class="hljs-attr">IsRequired</span>=<span class="hljs-string">&quot;true&quot;</span> <span class="hljs-attr">ShowValidation</span>=<span class="hljs-string">&quot;true&quot;</span> <span class="hljs-attr">HelperText</span>=<span class="hljs-string">&quot;Enter the Temperature&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">FormEditControl</span>&gt;</span>
+                <span class="hljs-tag">&lt;/<span class="hljs-name">UIColumn</span>&gt;</span>
+            <span class="hljs-tag">&lt;/<span class="hljs-name">UIFormRow</span>&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-name">UIFormRow</span>&gt;</span>
+                <span class="hljs-tag">&lt;<span class="hljs-name">UIColumn</span> <span class="hljs-attr">Columns</span>=<span class="hljs-string">12</span>&gt;</span>
+                    <span class="hljs-tag">&lt;<span class="hljs-name">FormEditControl</span> <span class="hljs-attr">Label</span>=<span class="hljs-string">&quot;Summary&quot;</span> <span class="hljs-attr">ShowLabel</span>=<span class="hljs-string">&quot;true&quot;</span> @<span class="hljs-attr">bind-Value</span>=<span class="hljs-string">&quot;this.viewService.EditModel.Summary&quot;</span> <span class="hljs-attr">IsRequired</span>=<span class="hljs-string">&quot;true&quot;</span> <span class="hljs-attr">ShowValidation</span>=<span class="hljs-string">&quot;true&quot;</span> <span class="hljs-attr">HelperText</span>=<span class="hljs-string">&quot;Summarise the Weather&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">FormEditControl</span>&gt;</span>
+                <span class="hljs-tag">&lt;/<span class="hljs-name">UIColumn</span>&gt;</span>
+            <span class="hljs-tag">&lt;/<span class="hljs-name">UIFormRow</span>&gt;</span>
+        <span class="hljs-tag">&lt;/<span class="hljs-name">UIContainer</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">UIContainer</span> <span class="hljs-attr">Size</span>=<span class="hljs-string">BootstrapSize.Fluid</span>&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-name">UIFormRow</span>&gt;</span>
+                <span class="hljs-tag">&lt;<span class="hljs-name">UIColumn</span> <span class="hljs-attr">Columns</span>=<span class="hljs-string">12</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;text-end&quot;</span>&gt;</span>
+                    <span class="hljs-tag">&lt;<span class="hljs-name">UIButton</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;btn-success&quot;</span> <span class="hljs-attr">Disabled</span>=<span class="hljs-string">&quot;!this.isDirty&quot;</span> <span class="hljs-attr">ClickEvent</span>=<span class="hljs-string">&quot;this.SaveRecord&quot;</span>&gt;</span>Save<span class="hljs-tag">&lt;/<span class="hljs-name">UIButton</span>&gt;</span>
+                    <span class="hljs-tag">&lt;<span class="hljs-name">UIButton</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;btn-dark&quot;</span> <span class="hljs-attr">Show</span>=<span class="hljs-string">&quot;!this.isDirty&quot;</span> <span class="hljs-attr">ClickEvent</span>=<span class="hljs-string">&quot;this.Exit&quot;</span>&gt;</span>Exit<span class="hljs-tag">&lt;/<span class="hljs-name">UIButton</span>&gt;</span>
+                    <span class="hljs-tag">&lt;<span class="hljs-name">UIButton</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;btn-danger&quot;</span> <span class="hljs-attr">Show</span>=<span class="hljs-string">&quot;this.isDirty&quot;</span> <span class="hljs-attr">ClickEvent</span>=<span class="hljs-string">&quot;this.ExitWithoutSaving&quot;</span>&gt;</span>Exit Without Saving<span class="hljs-tag">&lt;/<span class="hljs-name">UIButton</span>&gt;</span>
+                <span class="hljs-tag">&lt;/<span class="hljs-name">UIColumn</span>&gt;</span>
+            <span class="hljs-tag">&lt;/<span class="hljs-name">UIFormRow</span>&gt;</span>
+        <span class="hljs-tag">&lt;/<span class="hljs-name">UIContainer</span>&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-name">EditForm</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">UILoader</span>&gt;</span>
+</div></code></pre>
+<p>And the code behind.</p>
+<p>Most of the code is in a <code>BaseEditForm</code>.</p>
+<p>The relevant section is in <code>OnInitializedAsync</code> where the <code>EditStateContext</code> is set up.  <code>OnEditStateChanged</code> importantly sets the lock on the Cascaded <code>NavigationLock</code>.</p>
+<pre><code class="language-csharp"><div><span class="hljs-keyword">public</span> <span class="hljs-keyword">partial</span> <span class="hljs-keyword">class</span> <span class="hljs-title">WeatherForecastEditForm</span> : <span class="hljs-title">BaseEditForm</span>, <span class="hljs-title">IDisposable</span>
+{
+    [<span class="hljs-meta">Inject</span>] <span class="hljs-keyword">private</span> WeatherForecastViewService? ViewService { <span class="hljs-keyword">get</span>; <span class="hljs-keyword">set</span>; }
+
+    <span class="hljs-keyword">private</span> WeatherForecastViewService viewService =&gt; <span class="hljs-keyword">this</span>.ViewService!;
+
+    <span class="hljs-function"><span class="hljs-keyword">protected</span> <span class="hljs-keyword">async</span> <span class="hljs-keyword">override</span> Task <span class="hljs-title">OnInitializedAsync</span>(<span class="hljs-params"></span>)</span>
+    {
+        <span class="hljs-keyword">base</span>.LoadState = ComponentState.Loading;
+        <span class="hljs-keyword">await</span> <span class="hljs-keyword">this</span>.viewService.GetForecastAsync(Id);
+        <span class="hljs-keyword">base</span>.editContent = <span class="hljs-keyword">new</span> EditContext(<span class="hljs-keyword">this</span>.viewService.EditModel);
+        <span class="hljs-keyword">base</span>.editStateContext = <span class="hljs-keyword">new</span> EditStateContext(<span class="hljs-keyword">base</span>.editContent);
+        <span class="hljs-keyword">base</span>.editStateContext.EditStateChanged += <span class="hljs-keyword">base</span>.OnEditStateChanged;
+        <span class="hljs-keyword">base</span>.LoadState = ComponentState.Loaded;
+    }
+
+    <span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-keyword">async</span> Task <span class="hljs-title">SaveRecord</span>(<span class="hljs-params"></span>)</span>
+    {
+        <span class="hljs-keyword">await</span> <span class="hljs-keyword">this</span>.viewService.UpdateRecordAsync();
+        <span class="hljs-keyword">base</span>.editStateContext?.NotifySaved();
+    }
+
+    <span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-keyword">async</span> Task <span class="hljs-title">AddRecord</span>(<span class="hljs-params"></span>)</span>
+    =&gt; <span class="hljs-keyword">await</span> <span class="hljs-keyword">this</span>.viewService.AddRecordAsync(
+        <span class="hljs-keyword">new</span> DcoWeatherForecast
+        {
+            Date = DateTime.Now,
+            Id = Guid.NewGuid(),
+            Summary = <span class="hljs-string">&quot;Balmy&quot;</span>,
+            TemperatureC = <span class="hljs-number">14</span>
+        });
+
+    <span class="hljs-function"><span class="hljs-keyword">protected</span> <span class="hljs-keyword">override</span> <span class="hljs-keyword">void</span> <span class="hljs-title">BaseExit</span>(<span class="hljs-params"></span>)</span>
+    =&gt; <span class="hljs-keyword">this</span>.NavManager?.NavigateTo(<span class="hljs-string">&quot;/weatherforecast&quot;</span>);
+
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">Dispose</span>(<span class="hljs-params"></span>)</span>
+    {
+        <span class="hljs-keyword">if</span> (<span class="hljs-keyword">base</span>.editStateContext <span class="hljs-keyword">is</span> not <span class="hljs-literal">null</span>)
+            <span class="hljs-keyword">base</span>.editStateContext.EditStateChanged -= <span class="hljs-keyword">base</span>.OnEditStateChanged;
+    }
+}
+</div></code></pre>
+<h2 id="the-infratructure-code">The Infratructure Code</h2>
+<h2 id="mainlayoutrazor">MainLayout.razor</h2>
+<p>The most common approach is to use the component in Layouts.  Here's the modified <code>MainLayout</code>.</p>
+<pre><code class="language-csharp"><div>&lt;div <span class="hljs-keyword">class</span>=<span class="hljs-string">&quot;page&quot;</span>&gt;
+    &lt;div <span class="hljs-keyword">class</span>=<span class="hljs-string">&quot;sidebar&quot;</span>&gt;
+        &lt;NavMenu /&gt;
+    &lt;/div&gt;
+
+    &lt;main&gt;
+        &lt;div <span class="hljs-keyword">class</span>=<span class="hljs-string">&quot;top-row px-4&quot;</span>&gt;
+            &lt;a href=<span class="hljs-string">&quot;https://docs.microsoft.com/aspnet/&quot;</span> target=<span class="hljs-string">&quot;_blank&quot;</span>&gt;About&lt;/a&gt;
+        &lt;/div&gt;
+
+        &lt;article <span class="hljs-keyword">class</span>=<span class="hljs-string">&quot;content px-4&quot;</span>&gt;
+            &lt;NavigationLock&gt;
+                @Body
+            &lt;/NavigationLock&gt;
+        &lt;/article&gt;
+    &lt;/main&gt;
+&lt;/div&gt;
+</div></code></pre>
+<p>The <code>Body</code> content is wrapped in the component, and the component cascaded, so is available to all pages/components that use the layout.</p>
+<h3 id="_layoutcshtmlindexhtml">_Layout.cshtml/index.html</h3>
+<p>Add the js script as the last script to load in either Layout.cshtml or index.html.</p>
+<p>Server</p>
+<pre><code class="language-html"><div><span class="hljs-tag">&lt;<span class="hljs-name">script</span> <span class="hljs-attr">src</span>=<span class="hljs-string">&quot;_framework/blazor.server.js&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">script</span> <span class="hljs-attr">src</span>=<span class="hljs-string">&quot;_content/Blazr.NavigationLocker/site.js&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span>
+</div></code></pre>
+<p>WASM</p>
+<pre><code class="language-html"><div><span class="hljs-tag">&lt;<span class="hljs-name">script</span> <span class="hljs-attr">src</span>=<span class="hljs-string">&quot;_framework/blazor.webassembly.js&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">script</span> <span class="hljs-attr">src</span>=<span class="hljs-string">&quot;_content/Blazr.NavigationLocker/site.js&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span>
+</div></code></pre>
+<h3 id="services">Services</h3>
+<p>Add the required services.</p>
+<p>Server</p>
+<pre><code class="language-csharp"><div>    services.AddBlazrNavigationLockerServerServices();
+</div></code></pre>
+<p>WASM</p>
+<pre><code class="language-csharp"><div>    services.AddBlazrNavigationLockerWASMServices();
+</div></code></pre>
+<h2 id="using-blazrrouter">Using BlazrRouter</h2>
+<p>To use <code>BlazrRouter</code> simply replace the standard router in <code>App.razor</code>.</p>
+<pre><code class="language-xml"><div><span class="hljs-tag">&lt;<span class="hljs-name">BlazrRouter</span> <span class="hljs-attr">AppAssembly</span>=<span class="hljs-string">&quot;@typeof(App).Assembly&quot;</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">Found</span> <span class="hljs-attr">Context</span>=<span class="hljs-string">&quot;routeData&quot;</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">RouteView</span> <span class="hljs-attr">RouteData</span>=<span class="hljs-string">&quot;@routeData&quot;</span> <span class="hljs-attr">DefaultLayout</span>=<span class="hljs-string">&quot;@typeof(MainLayout)&quot;</span> /&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">FocusOnNavigate</span> <span class="hljs-attr">RouteData</span>=<span class="hljs-string">&quot;@routeData&quot;</span> <span class="hljs-attr">Selector</span>=<span class="hljs-string">&quot;h1&quot;</span> /&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-name">Found</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">NotFound</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">PageTitle</span>&gt;</span>Not found<span class="hljs-tag">&lt;/<span class="hljs-name">PageTitle</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">LayoutView</span> <span class="hljs-attr">Layout</span>=<span class="hljs-string">&quot;@typeof(MainLayout)&quot;</span>&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-name">p</span> <span class="hljs-attr">role</span>=<span class="hljs-string">&quot;alert&quot;</span>&gt;</span>Sorry, there&#x27;s nothing at this address.<span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span>
+        <span class="hljs-tag">&lt;/<span class="hljs-name">LayoutView</span>&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-name">NotFound</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">BlazrRouter</span>&gt;</span>
+</div></code></pre>
+<p>You will need to register the services as above.</p>
+
+    
+
+            </div>
+        </div>
+    </div>
+</div>
+<!-- end of Article Container -->
+
+
+                </div>
+                <!-- End of Main Content -->
+            </div>
+            <!-- Footer -->
+            
+<!-- Copyright -->
+<footer class="sticky-footer bg-white">
+    <div class="container my-auto">
+        <div class="copyright text-center my-auto">
+            
+<span>Copyright &copy; Cold Elm Coders - 2022</span>
+
+        </div>
+    </div>
+</footer>
+<!-- end of copyright -->
+
+
+            <!-- End of Footer -->
+        </div>
+        <!-- End of Content Wrapper -->
+        
+<a class="scroll-to-top rounded" href="#page-top">
+    <i class="fas fa-angle-up"></i>
+</a>
+
+
+    </div>
+    <!-- End of Page Wrapper -->
+    <!-- Scripts -->
+    
+<!-- Scripts -->
+<!-- Bootstrap core JavaScript-->
+<script src="/assets/vendor/jquery/jquery.min.js"></script>
+<script src="/assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+<!-- Core plugin JavaScript-->
+<script src="/assets/vendor/jquery-easing/jquery.easing.min.js"></script>
+
+<!-- Custom scripts for all pages-->
+<script src="/assets/js/sb-admin-2.min.js"></script>
+
+
+</body>
+</html>

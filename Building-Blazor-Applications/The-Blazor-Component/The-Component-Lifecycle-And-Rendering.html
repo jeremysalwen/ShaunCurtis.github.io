@@ -1,0 +1,614 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+<!-- SEO Meta Tags -->
+<meta name="description" content="Your description">
+<meta name="author" content="Your name">
+
+<!-- OG Meta Tags to improve the way the post looks when you share the page on Facebook, Twitter, LinkedIn -->
+<meta property="og:site_name" content="" /> <!-- website name -->
+<meta property="og:site" content="" /> <!-- website link -->
+<meta property="og:title" content="" /> <!-- title shown in the actual shared post -->
+<meta property="og:description" content="" /> <!-- description shown in the actual shared post -->
+<meta property="og:image" content="" /> <!-- image link, make sure it's jpg -->
+<meta property="og:url" content="" /> <!-- where do you want your post to link to -->
+<meta name="twitter:card" content="summary_large_image"> <!-- to have large image post format in Twitter -->
+
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+
+<meta name="description" content="The Component Lifecycle And Rendering" >
+<meta name="author" content="Shaun Curtis" >
+
+
+
+<title>The Component Lifecycle And Rendering</title>
+
+
+<!-- Custom fonts for this template-->
+<link href="/assets/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+<link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+      rel="stylesheet">
+
+<!-- Custom styles for this template-->
+<link href="/assets/css/sb-admin-2.css" rel="stylesheet" type="text/css">
+<link href="/assets/css/site.css" rel="stylesheet" type="text/css">
+
+<!-- Favicon  -->
+<link rel="icon" href="/assets/images/favicon.png">
+
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/highlight.css">
+    <link rel="stylesheet" href="/assets/css/article.css" type="text/css">
+</head>
+<body id="page-top">
+    <!--topbar-->
+    <div id="topbar">
+        
+<!-- Topbar -->
+<nav class="navbar navbar-expand navbar-light topbar mb-4 static-top">
+    
+<ul class="navbar-nav" >
+<li class="nav-item" >
+<a class="nav-link " href="/index.html" role="button"  >
+<span class="mr-2 d-none d-lg-inline text-gray-100">Index</span>
+</a>
+</li>
+<li class="nav-item dropdown no-arrow mx-1" >
+<a class="nav-link dropdown-toggle" href="#" id="d0fd18c9-7670-4648-80a8-fe11a5afc65d" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"  >
+<span class="mr-2 d-none d-lg-inline text-gray-100">Articles</span>
+</a>
+<div class=" dropdown-list dropdown-menu shadow animated--grow-in" aria-labelledby="d0fd18c9-7670-4648-80a8-fe11a5afc65d" >
+<a class="dropdown-item" href="/articles/A-Flexible-App.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Creating a Dynamic Blazor App Component
+</a>
+<a class="dropdown-item" href="/articles/Async-Programming-in-DotNetCore.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Async Programming In Dotnetcore
+</a>
+<a class="dropdown-item" href="/articles/Blazor-AllinOne.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Blazor All In One - Multi SPA Hosting
+</a>
+<a class="dropdown-item" href="/articles/Blazor-Async-Programming.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Blazor Async Programming
+</a>
+<a class="dropdown-item" href="/articles/Blazor-Brick-By-Brick.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Blazor Brick By Brick
+</a>
+<a class="dropdown-item" href="/articles/Blazor-Components.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Blazor Components
+</a>
+<a class="dropdown-item" href="/articles/Blazor-CSS.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Blazor CSS
+</a>
+<a class="dropdown-item" href="/articles/Blazor-DataList-Control.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Blazor Datalist Control
+</a>
+<a class="dropdown-item" href="/articles/Blazor-Form-Validation.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Blazor Form Validation
+</a>
+<a class="dropdown-item" href="/articles/Building-Blazor-List-Components.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Building Blazor List Components and the Notification Pattern
+</a>
+<a class="dropdown-item" href="/articles/Building-Edit-Forms.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Building Edit Forms
+</a>
+<a class="dropdown-item" href="/articles/EditFormState.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+The Blazor EditFormState Control
+</a>
+<a class="dropdown-item" href="/articles/Hydra.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Blazor Hydra
+</a>
+<a class="dropdown-item" href="/articles/Inline-Dialog.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+The Blazor Inline Dialog Control
+</a>
+<a class="dropdown-item" href="/articles/Modal-Dialog.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+A Blazor Modal Dialog
+</a>
+<a class="dropdown-item" href="/articles/Policy-Based-Authorization.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Policy Base Authorization in Blazor
+</a>
+<a class="dropdown-item" href="/articles/ValidationFormState.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+A Blazor Validation Control
+</a>
+<a class="dropdown-item" href="/articles/XML-XSD-Serialization.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+XML XSD Serialization
+</a>
+</div>
+</li>
+<li class="nav-item dropdown no-arrow mx-1" >
+<a class="nav-link dropdown-toggle" href="#" id="d2aed346-7d59-4b53-afbe-1a6ee136d6c0" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"  >
+<span class="mr-2 d-none d-lg-inline text-gray-100">Blazor Database Apps</span>
+</a>
+<div class=" dropdown-list dropdown-menu shadow animated--grow-in" aria-labelledby="d2aed346-7d59-4b53-afbe-1a6ee136d6c0" >
+<a class="dropdown-item" href="/Building-a-Database-Application-in-Blazor/Building-a-Database-Application-in-Blazor-Part-1.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Building A Database Application In Blazor Part 1
+</a>
+<a class="dropdown-item" href="/Building-a-Database-Application-in-Blazor/Building-a-Database-Application-in-Blazor-Part-2.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Building A Database Application In Blazor Part 2
+</a>
+<a class="dropdown-item" href="/Building-a-Database-Application-in-Blazor/Building-a-Database-Application-in-Blazor-Part-3.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Building A Database Application In Blazor Part 3
+</a>
+<a class="dropdown-item" href="/Building-a-Database-Application-in-Blazor/Building-a-Database-Application-in-Blazor-Part-4.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Building A Database Application In Blazor Part 4
+</a>
+<a class="dropdown-item" href="/Building-a-Database-Application-in-Blazor/Building-a-Database-Application-in-Blazor-Part-5.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Building A Database Application In Blazor Part 5
+</a>
+<a class="dropdown-item" href="/Building-a-Database-Application-in-Blazor/Building-a-Database-Application-in-Blazor-Part-6.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Building A Database Application In Blazor Part 6
+</a>
+<a class="dropdown-item" href="/Building-a-Database-Application-in-Blazor/index.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Building a Database Application in Blazor
+</a>
+</div>
+</li>
+<li class="nav-item dropdown no-arrow mx-1" >
+<a class="nav-link dropdown-toggle" href="#" id="077cf2db-59d4-4c4e-a0ed-043fd9b2a1b3" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"  >
+<span class="mr-2 d-none d-lg-inline text-gray-100">Building Blazor Applications</span>
+</a>
+<div class=" dropdown-list dropdown-menu shadow animated--grow-in" aria-labelledby="077cf2db-59d4-4c4e-a0ed-043fd9b2a1b3" >
+<a class="dropdown-item" href="/Building-Blazor-Applications/Blazor-Async-UI-Events.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Blazor Async UI Events
+</a>
+<a class="dropdown-item" href="/Building-Blazor-Applications/Blazor-Bootstrap-Toaster.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Blazor Bootstrap Toaster
+</a>
+<a class="dropdown-item" href="/Building-Blazor-Applications/Blazor-Services.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Blazor Services
+</a>
+<a class="dropdown-item" href="/Building-Blazor-Applications/Building-A-Blazor-AutoComplete-Control.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Building A Blazor Autocomplete Control
+</a>
+<a class="dropdown-item" href="/Building-Blazor-Applications/Building-Wrapper-Components.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Building Wrapper Components
+</a>
+<a class="dropdown-item" href="/Building-Blazor-Applications/Component-Service-Manager.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+The Component Service Manager
+</a>
+<a class="dropdown-item" href="/Building-Blazor-Applications/DBContexts-In-Transient-Services.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Dbcontexts In Transient Services
+</a>
+<a class="dropdown-item" href="/Building-Blazor-Applications/DynamicCss.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Blazor Dynamic Stylesheets
+</a>
+<a class="dropdown-item" href="/Building-Blazor-Applications/For-ForEach-in-Blazor.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+For Foreach In Blazor
+</a>
+<a class="dropdown-item" href="/Building-Blazor-Applications/Leaner-Meaner-Greener-Components.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Leaner Meaner Greener Components
+</a>
+<a class="dropdown-item" href="/Building-Blazor-Applications/Notification-Service-Pattern.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Blazor Notification Service Pattern
+</a>
+<a class="dropdown-item" href="/Building-Blazor-Applications/Rethinking-The-Repository-Pattern.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Rethinking The Repository Pattern
+</a>
+<a class="dropdown-item" href="/Building-Blazor-Applications/The-Blazor-WASM-Hosted-Project.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+The Blazor WASM Hosted Project
+</a>
+<a class="dropdown-item" href="/Building-Blazor-Applications/Whats-Wrong-with-my-Component-Design.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Whats Wrong With My Component Design
+</a>
+<a class="dropdown-item" href="/Building-Blazor-Applications/The-Blazor-Component" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Building Blazor Applications\The Blazor Component
+</a>
+</div>
+</li>
+<li class="nav-item dropdown no-arrow mx-1" >
+<a class="nav-link dropdown-toggle" href="#" id="5458b706-205a-4eed-8e3a-91df653a334a" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"  >
+<span class="mr-2 d-none d-lg-inline text-gray-100">Design</span>
+</a>
+<div class=" dropdown-list dropdown-menu shadow animated--grow-in" aria-labelledby="5458b706-205a-4eed-8e3a-91df653a334a" >
+<a class="dropdown-item" href="/Design/Clean-Design-In-Blazor.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Clean Design Principles in Blazor Applications
+</a>
+<a class="dropdown-item" href="/Design/Clean-Design-Blazor-Template.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+A Blazor Clean Design Template
+</a>
+<a class="dropdown-item" href="/Design/Clean-Design-Blazor-Template-Solution-Structure.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Solution Structure in the Clean Design Blazor Template
+</a>
+<a class="dropdown-item" href="/Design/Clean-Design-Blazor-Template-DataServices.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Data Services in the Clean Design Blazor Template
+</a>
+<a class="dropdown-item" href="/Design/Clean-Design-Blazor-Template-UI.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+The UI in the Clean Design Blazor Template
+</a>
+<a class="dropdown-item" href="/Design/Clean-Design-Blazor-Template-Solution-Setup.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Solution Setup in the Clean Design Blazor Template
+</a>
+<a class="dropdown-item" href="/Design/Clean-Design-Blazor-Template-Testing.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Testing in the Clean Design Blazor Template
+</a>
+</div>
+</li>
+<li class="nav-item dropdown no-arrow mx-1" >
+<a class="nav-link dropdown-toggle" href="#" id="bceac080-cea6-4b0e-82d6-fed885d04b59" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"  >
+<span class="mr-2 d-none d-lg-inline text-gray-100">Modern C#</span>
+</a>
+<div class=" dropdown-list dropdown-menu shadow animated--grow-in" aria-labelledby="bceac080-cea6-4b0e-82d6-fed885d04b59" >
+<a class="dropdown-item" href="/Modern-Coding-Patterns/Nullable-And-VS-2022.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Nullable And VS 2022
+</a>
+</div>
+</li>
+</ul>
+
+    <div class="ms-5 me-5 ml-auto">
+        <h1>Cold Elm Coders</h1>
+    </div>
+</nav>
+
+
+    </div>
+    <!--End topbar-->
+    <!--Sidebar-->
+    <div id="sidebar">
+        
+<div class="article-info p-2" Published: 04-01-2022 >
+<div>Published: 04-01-2022</div>
+<div>Last Updated: 04-01-2022</div>
+<div>Author: Shaun Curtis</div>
+</div>
+
+        
+<h4 class="p-2">Table of Contents</h4>
+<ul class="TOC" >
+<li class="TOC-item TOC-item-0" >
+<a class="TOC-link" href="#">Top</a>
+<ul class="TOC TOC-0" >
+<li class="TOC-item TOC-item-1" >
+<ul class="TOC TOC-1" >
+<li class="TOC-item TOC-item-2" >
+<a class="TOC-link" href="#the-component-lifecycle">The Component Lifecycle</a>
+</li>
+<li class="TOC-item TOC-item-2" >
+<a class="TOC-link" href="#the-render-process">The Render Process</a>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+    </div>
+    <!--End Sidebar-->
+    <!-- Page Wrapper -->
+    <div id="wrapper">
+        <!-- Content Wrapper -->
+        <div id="content-wrapper" class="d-flex flex-column">
+            <!-- Main Content -->
+            <div id="content">
+                <!-- Topbar -->
+                <div id="article">
+                    <!-- Article -->
+                    
+<!-- Header -->
+<header class="ex-header-article">
+    <div class="container">
+        <div class="row pt-3 pb-3 border-bottom">
+            <div class="col">
+                
+<h1>The Component Lifecycle And Rendering</h1>
+<div>The Component Lifecycle And Rendering</div>
+
+            </div> <!-- end of col -->
+        </div> <!-- end of row -->
+    </div> <!-- end of container -->
+</header> <!-- end of ex-header -->
+<!-- end of header -->
+
+
+                    
+<!-- Article Container -->
+<div class="ex-basic-1 pt-4">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                
+
+        <p><a href="index.html">Back to the Index</a></p>
+<h2 id="the-component-lifecycle">The Component Lifecycle</h2>
+<p>The component liefcycle is managed by the Renderer.  You have no control over it.  You can't instanciate a component and pass it to the renderer, and you should never attempt to dispose a component.</p>
+<ol>
+<li>
+<p>The component is instanciated and the ctor is run.  This is often overlooked in components.  Once run, the parameters are in their default state and there's no <code>RenderHandle</code>.</p>
+</li>
+<li>
+<p>The Renderer calls <code>Attach</code> and passes in a <code>RenderHandle</code>.  This is the component's communications channel with the Renderer.  Save it to an internal field.</p>
+</li>
+<li>
+<p>The Renderer calls <code>SetParametersAsync</code> and passes in a <code>ParameterView</code> object.  This is the object the Renderer uses to manage the component's parameters.  This should be used in <code>SetParametersAsync</code> and released: don't save it to an internal field.</p>
+</li>
+<li>
+<p>The Renderer calls <code>SetParametersAsync</code> whenever the parent component renders and it detects the components parameters &quot;may have changed&quot;.</p>
+</li>
+<li>
+<p>At completion, if the component implements <code>IDisposable</code> or <code>IAsyncDisposable</code>, it calls it and then de-references the component.  The GC will then destroy the redundant object.</p>
+</li>
+</ol>
+<h2 id="the-render-process">The Render Process</h2>
+<p>Let's look in detail at how a simple page and component get rendered.</p>
+<p>The following Debug version of <code>MinimalBase</code> is used to log activity to the output.</p>
+<p>It:</p>
+<ol>
+<li>Logs the Ctor event.</li>
+<li>Logs when <code>SetParametersAsync</code> is called</li>
+<li>Logs when the Component <code>RenderFragment</code> is run by the Renderer.</li>
+<li>Implements <code>IDisposable</code> and logs when <code>Dispose</code> is run.</li>
+</ol>
+<pre><code class="language-csharp"><span class="hljs-keyword">public</span> <span class="hljs-keyword">abstract</span> <span class="hljs-keyword">class</span> <span class="hljs-title">MinimalDebugBase</span> : <span class="hljs-title">IComponent</span>, <span class="hljs-title">IDisposable</span>
+{
+    <span class="hljs-keyword">protected</span> RenderHandle renderHandle;
+    <span class="hljs-keyword">private</span> <span class="hljs-built_in">bool</span> _renderPending;
+    <span class="hljs-keyword">private</span> RenderFragment _componentFragment;
+    <span class="hljs-keyword">private</span> Guid Uid = Guid.NewGuid();
+    <span class="hljs-keyword">private</span> <span class="hljs-built_in">string</span> ClassName =&gt; <span class="hljs-keyword">this</span>.GetType().Name;
+    <span class="hljs-keyword">protected</span> <span class="hljs-keyword">virtual</span> <span class="hljs-built_in">bool</span> hide { <span class="hljs-keyword">get</span>; <span class="hljs-keyword">set</span>; }
+
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">MinimalDebugBase</span>()</span>
+    {
+        Debug.WriteLine(<span class="hljs-string">$&quot;<span class="hljs-subst">{ClassName}</span> - instance : <span class="hljs-subst">{Uid.ToString()}</span> Ctor at <span class="hljs-subst">{DateTime.Now.ToLongTimeString()}</span>&quot;</span>);
+        _componentFragment = (builder) =&gt;
+        {
+            _renderPending = <span class="hljs-literal">false</span>;
+            <span class="hljs-keyword">if</span> (!<span class="hljs-keyword">this</span>.hide)
+            {
+                Debug.WriteLine(<span class="hljs-string">$&quot;<span class="hljs-subst">{ClassName}</span> - instance : <span class="hljs-subst">{Uid.ToString()}</span> rendered at <span class="hljs-subst">{DateTime.Now.ToLongTimeString()}</span>&quot;</span>);
+                BuildRenderTree(builder);
+            }
+        };
+    }
+
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">Attach</span>(<span class="hljs-params">RenderHandle handle</span>)</span>
+        =&gt; renderHandle = handle;
+
+    <span class="hljs-function"><span class="hljs-keyword">public</span> Task <span class="hljs-title">SetParametersAsync</span>(<span class="hljs-params">ParameterView parameters</span>)</span>
+    {
+        parameters.SetParameterProperties(<span class="hljs-keyword">this</span>);
+        Debug.WriteLine(<span class="hljs-string">$&quot;<span class="hljs-subst">{ClassName}</span> - instance : <span class="hljs-subst">{Uid.ToString()}</span> parameters set at <span class="hljs-subst">{DateTime.Now.ToLongTimeString()}</span>&quot;</span>);
+        <span class="hljs-keyword">this</span>.RequestRender();
+        <span class="hljs-keyword">return</span> Task.CompletedTask;
+    }
+
+    <span class="hljs-function"><span class="hljs-keyword">protected</span> <span class="hljs-keyword">abstract</span> <span class="hljs-keyword">void</span> <span class="hljs-title">BuildRenderTree</span>(<span class="hljs-params">RenderTreeBuilder builder</span>)</span>;
+
+    <span class="hljs-function"><span class="hljs-keyword">protected</span> <span class="hljs-keyword">void</span> <span class="hljs-title">RequestRender</span>()</span>
+    {
+        <span class="hljs-keyword">if</span> (!_renderPending)
+        {
+            _renderPending = <span class="hljs-literal">true</span>;
+            <span class="hljs-keyword">this</span>.renderHandle.Render(_componentFragment);
+        }
+    }
+
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">Dispose</span>()</span>
+    {
+        Debug.WriteLine(<span class="hljs-string">$&quot;<span class="hljs-subst">{ClassName}</span> - instance : <span class="hljs-subst">{Uid.ToString()}</span> disposed at <span class="hljs-subst">{DateTime.Now.ToLongTimeString()}</span>&quot;</span>);
+    }
+}
+</code></pre>
+<p><strong>MinimalComponent.razor</strong></p>
+<pre><code class="language-csharp">@inherits MinimalDebugBase
+
+&lt;div <span class="hljs-keyword">class</span>=<span class="hljs-string">&quot;@CssClass&quot;</span>&gt;
+    &lt;h3&gt;MinimalComponent&lt;/h3&gt;
+    &lt;h4&gt;Rendered at @(DateTime.Now.ToLongTimeString())&lt;/h4&gt;
+    &lt;h5&gt;@(Uid.ToString())&lt;/h5&gt;
+&lt;/div&gt;
+
+@code {
+    [<span class="hljs-meta">Parameter</span>] <span class="hljs-keyword">public</span> <span class="hljs-built_in">bool</span> Hidden { <span class="hljs-keyword">get</span>; <span class="hljs-keyword">set</span>; }
+    [<span class="hljs-meta">Parameter</span>] <span class="hljs-keyword">public</span> <span class="hljs-built_in">string</span> CssClass { <span class="hljs-keyword">get</span>; <span class="hljs-keyword">set</span>; } = <span class="hljs-built_in">string</span>.Empty;
+    <span class="hljs-keyword">private</span> Guid Uid = Guid.NewGuid();
+    <span class="hljs-keyword">protected</span> <span class="hljs-keyword">override</span> <span class="hljs-built_in">bool</span> hide =&gt; <span class="hljs-keyword">this</span>.Hidden;
+}
+</code></pre>
+<p>And a page that demonstrstes various ways of showing and hiding components.</p>
+<pre><code class="language-csharp">@page <span class="hljs-string">&quot;/MinimalDebugTest&quot;</span>
+@inherits MinimalDebugBase
+
+&lt;BootstrapButton Colour=<span class="hljs-string">&quot;btn-primary&quot;</span> Text=<span class="hljs-string">&quot;@this.buttonText&quot;</span> Clicked=<span class="hljs-keyword">this</span>.Clicked /&gt;
+
+@if (!hidden)
+{
+    &lt;MinimalComponent CssClass=<span class="hljs-string">&quot;bg-danger text-white p-2 m-2&quot;</span> /&gt;
+}
+
+&lt;MinimalComponent Hidden=<span class="hljs-keyword">this</span>.hidden CssClass=<span class="hljs-string">&quot;bg-success text-white p-2 m-2&quot;</span> /&gt;
+
+&lt;MinimalComponent CssClass=<span class="hljs-string">&quot;@($&quot;</span>bg-dark text-white p<span class="hljs-number">-2</span> m<span class="hljs-number">-2</span> {<span class="hljs-keyword">this</span>.css}<span class="hljs-string">&quot;)&quot;</span> /&gt;
+
+&lt;style&gt;
+    .blazr-hide { display: none; }
+    .blazr-show { display: block; }
+&lt;/style&gt;
+
+@code {
+    <span class="hljs-keyword">private</span> <span class="hljs-built_in">bool</span> hidden;
+
+    <span class="hljs-keyword">private</span> <span class="hljs-built_in">string</span> css =&gt; hidden
+        ? <span class="hljs-string">&quot;blazr-hide&quot;</span>
+        : <span class="hljs-string">&quot;blazr-show&quot;</span>;
+
+    <span class="hljs-keyword">private</span> <span class="hljs-built_in">string</span> buttonText =&gt; hidden
+        ? <span class="hljs-string">&quot;Show&quot;</span>
+        : <span class="hljs-string">&quot;Hide&quot;</span>;
+
+    <span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-keyword">void</span> <span class="hljs-title">Clicked</span>()</span>
+    {
+        <span class="hljs-keyword">this</span>.hidden = !<span class="hljs-keyword">this</span>.hidden;
+        <span class="hljs-keyword">this</span>.RequestRender();
+    }
+}
+</code></pre>
+<p>The following log shows the sequences of events.</p>
+<p>The route is created and renders</p>
+<pre><code class="language-text">Test - instance : a68d5db7-90a1-4b35-9811-b5f18841c406 Ctor at 22:44:19
+Test - instance : a68d5db7-90a1-4b35-9811-b5f18841c406 parameters set at 22:44:19
+Test - instance : a68d5db7-90a1-4b35-9811-b5f18841c406 rendered at 22:44:19
+</code></pre>
+<p>The Route <code>RenderFragment</code> contains the three components which are all created and parameters set.</p>
+<pre><code class="language-text">MinimalComponent - instance : e19313df-a698-456d-ab97-2407ea138cc1 Ctor at 22:44:19
+MinimalComponent - instance : e19313df-a698-456d-ab97-2407ea138cc1 parameters set at 22:44:19
+MinimalComponent - instance : a868fc33-5475-430c-a7a8-c378de36c4d0 Ctor at 22:44:19
+MinimalComponent - instance : a868fc33-5475-430c-a7a8-c378de36c4d0 parameters set at 22:44:19
+MinimalComponent - instance : 5027d65d-fc85-45cb-894e-35c4650d9505 Ctor at 22:44:19
+MinimalComponent - instance : 5027d65d-fc85-45cb-894e-35c4650d9505 parameters set at 22:44:19
+</code></pre>
+<p>Finally the three component <code>RenderFragments</code> are run by the Renderer.</p>
+<pre><code class="language-text">MinimalComponent - instance : e19313df-a698-456d-ab97-2407ea138cc1 rendered at 22:44:19
+MinimalComponent - instance : a868fc33-5475-430c-a7a8-c378de36c4d0 rendered at 22:44:19
+MinimalComponent - instance : 5027d65d-fc85-45cb-894e-35c4650d9505 rendered at 22:44:19
+</code></pre>
+<p>Button Clicked to Hide Components</p>
+<pre><code class="language-text">Test - instance : a68d5db7-90a1-4b35-9811-b5f18841c406 rendered at 22:44:35
+MinimalComponent - instance : a868fc33-5475-430c-a7a8-c378de36c4d0 parameters set at 22:44:35
+MinimalComponent - instance : 5027d65d-fc85-45cb-894e-35c4650d9505 parameters set at 22:44:35
+MinimalComponent - instance : e19313df-a698-456d-ab97-2407ea138cc1 disposed at 22:44:35
+MinimalComponent - instance : 5027d65d-fc85-45cb-894e-35c4650d9505 rendered at 22:44:35
+</code></pre>
+<p>Button clicked to Show Components</p>
+<pre><code class="language-text">Test - instance : a68d5db7-90a1-4b35-9811-b5f18841c406 rendered at 22:44:41
+MinimalComponent - instance : e29082ac-70e8-4e73-835c-a05456e96c6c Ctor at 22:44:41
+MinimalComponent - instance : e29082ac-70e8-4e73-835c-a05456e96c6c parameters set at 22:44:41
+MinimalComponent - instance : a868fc33-5475-430c-a7a8-c378de36c4d0 parameters set at 22:44:41
+MinimalComponent - instance : 5027d65d-fc85-45cb-894e-35c4650d9505 parameters set at 22:44:41
+MinimalComponent - instance : e29082ac-70e8-4e73-835c-a05456e96c6c rendered at 22:44:41
+MinimalComponent - instance : a868fc33-5475-430c-a7a8-c378de36c4d0 rendered at 22:44:41
+MinimalComponent - instance : 5027d65d-fc85-45cb-894e-35c4650d9505 rendered at 22:44:41
+</code></pre>
+<p>Button clicked to leave the page</p>
+<pre><code class="language-text">Test - instance : a68d5db7-90a1-4b35-9811-b5f18841c406 disposed at 22:44:51
+MinimalComponent - instance : e29082ac-70e8-4e73-835c-a05456e96c6c disposed at 22:44:51
+MinimalComponent - instance : a868fc33-5475-430c-a7a8-c378de36c4d0 disposed at 22:44:51
+MinimalComponent - instance : 5027d65d-fc85-45cb-894e-35c4650d9505 disposed at 22:44:51
+</code></pre>
+<p>The diagram for Show looks like this:</p>
+<p><img src="\images\hide-components-1.png" alt="Show Diagram"></p>
+<p>And for Hide:</p>
+<p><img src="\images\hide-components-2.png" alt="Hide Diagram"></p>
+<p>The key differences between the three methods are:</p>
+<ol>
+<li>
+<p>The <code>@if...</code> logic in the main component builds and destroys a new component when the state changes.  If you had a component subtree here it would be built or destroyed every time the logiv changes.  It's an expensive operation.</p>
+</li>
+<li>
+<p>The <code>Hide</code> logic built into the component doesn't modify the component tree.  It just affects the UI output from the component.   As the component render logic is never run when <em>Hidden</em>, any null references aren't hit such as displaying a list that is null.</p>
+</li>
+<li>
+<p>The Css change only affects what's displayed.  The component still outputs the content, it's the browser DOM that hides it.  If the component render logic hits null references and doesn't have code to deal with them, it will generate an application error.</p>
+</li>
+</ol>
+
+        <script async src="https://cdn.jsdelivr.net/npm/katex-copytex@latest/dist/katex-copytex.min.js"></script>
+        
+    
+
+            </div>
+        </div>
+    </div>
+</div>
+<!-- end of Article Container -->
+
+
+                </div>
+                <!-- End of Main Content -->
+            </div>
+            <!-- Footer -->
+            
+<!-- Copyright -->
+<footer class="sticky-footer bg-white">
+    <div class="container my-auto">
+        <div class="copyright text-center my-auto">
+            
+<span>Copyright &copy; Cold Elm Coders - 2022</span>
+
+        </div>
+    </div>
+</footer>
+<!-- end of copyright -->
+
+
+            <!-- End of Footer -->
+        </div>
+        <!-- End of Content Wrapper -->
+        
+<a class="scroll-to-top rounded" href="#page-top">
+    <i class="fas fa-angle-up"></i>
+</a>
+
+
+    </div>
+    <!-- End of Page Wrapper -->
+    <!-- Scripts -->
+    
+<!-- Scripts -->
+<!-- Bootstrap core JavaScript-->
+<script src="/assets/vendor/jquery/jquery.min.js"></script>
+<script src="/assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+<!-- Core plugin JavaScript-->
+<script src="/assets/vendor/jquery-easing/jquery.easing.min.js"></script>
+
+<!-- Custom scripts for all pages-->
+<script src="/assets/js/sb-admin-2.min.js"></script>
+
+
+</body>
+</html>

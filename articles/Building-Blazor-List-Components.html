@@ -1,0 +1,1178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+<!-- SEO Meta Tags -->
+<meta name="description" content="Your description">
+<meta name="author" content="Your name">
+
+<!-- OG Meta Tags to improve the way the post looks when you share the page on Facebook, Twitter, LinkedIn -->
+<meta property="og:site_name" content="" /> <!-- website name -->
+<meta property="og:site" content="" /> <!-- website link -->
+<meta property="og:title" content="" /> <!-- title shown in the actual shared post -->
+<meta property="og:description" content="" /> <!-- description shown in the actual shared post -->
+<meta property="og:image" content="" /> <!-- image link, make sure it's jpg -->
+<meta property="og:url" content="" /> <!-- where do you want your post to link to -->
+<meta name="twitter:card" content="summary_large_image"> <!-- to have large image post format in Twitter -->
+
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+
+<meta name="description" content="This article looks at how to handle large lists in Blazor, decouple the data from the UI, and use the Notification Pattern to trigger updates in components." >
+<meta name="author" content="Shaun Curtis" >
+
+
+
+<title>Building Blazor List Components and the Notification Pattern</title>
+
+
+<!-- Custom fonts for this template-->
+<link href="/assets/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+<link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+      rel="stylesheet">
+
+<!-- Custom styles for this template-->
+<link href="/assets/css/sb-admin-2.css" rel="stylesheet" type="text/css">
+<link href="/assets/css/site.css" rel="stylesheet" type="text/css">
+
+<!-- Favicon  -->
+<link rel="icon" href="/assets/images/favicon.png">
+
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/highlight.css">
+    <link rel="stylesheet" href="/assets/css/article.css" type="text/css">
+</head>
+<body id="page-top">
+    <!--topbar-->
+    <div id="topbar">
+        
+<!-- Topbar -->
+<nav class="navbar navbar-expand navbar-light topbar mb-4 static-top">
+    
+<ul class="navbar-nav" >
+<li class="nav-item" >
+<a class="nav-link " href="/index.html" role="button"  >
+<span class="mr-2 d-none d-lg-inline text-gray-100">Index</span>
+</a>
+</li>
+<li class="nav-item dropdown no-arrow mx-1" >
+<a class="nav-link dropdown-toggle" href="#" id="558a4c73-fb4e-4f50-a8f9-9e992e0cfa91" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"  >
+<span class="mr-2 d-none d-lg-inline text-gray-100">Articles</span>
+</a>
+<div class=" dropdown-list dropdown-menu shadow animated--grow-in" aria-labelledby="558a4c73-fb4e-4f50-a8f9-9e992e0cfa91" >
+<a class="dropdown-item" href="/articles/A-Flexible-App.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Creating a Dynamic Blazor App Component
+</a>
+<a class="dropdown-item" href="/articles/Async-Programming-in-DotNetCore.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Async Programming In Dotnetcore
+</a>
+<a class="dropdown-item" href="/articles/Blazor-AllinOne.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Blazor All In One - Multi SPA Hosting
+</a>
+<a class="dropdown-item" href="/articles/Blazor-Async-Programming.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Blazor Async Programming
+</a>
+<a class="dropdown-item" href="/articles/Blazor-Brick-By-Brick.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Blazor Brick By Brick
+</a>
+<a class="dropdown-item" href="/articles/Blazor-Components.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Blazor Components
+</a>
+<a class="dropdown-item" href="/articles/Blazor-CSS.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Blazor CSS
+</a>
+<a class="dropdown-item" href="/articles/Blazor-DataList-Control.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Blazor Datalist Control
+</a>
+<a class="dropdown-item" href="/articles/Blazor-Form-Validation.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Blazor Form Validation
+</a>
+<a class="dropdown-item" href="/articles/Building-Blazor-List-Components.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Building Blazor List Components and the Notification Pattern
+</a>
+<a class="dropdown-item" href="/articles/Building-Edit-Forms.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Building Edit Forms
+</a>
+<a class="dropdown-item" href="/articles/EditFormState.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+The Blazor EditFormState Control
+</a>
+<a class="dropdown-item" href="/articles/Hydra.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Blazor Hydra
+</a>
+<a class="dropdown-item" href="/articles/Inline-Dialog.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+The Blazor Inline Dialog Control
+</a>
+<a class="dropdown-item" href="/articles/Modal-Dialog.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+A Blazor Modal Dialog
+</a>
+<a class="dropdown-item" href="/articles/Policy-Based-Authorization.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Policy Base Authorization in Blazor
+</a>
+<a class="dropdown-item" href="/articles/ValidationFormState.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+A Blazor Validation Control
+</a>
+<a class="dropdown-item" href="/articles/XML-XSD-Serialization.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+XML XSD Serialization
+</a>
+</div>
+</li>
+<li class="nav-item dropdown no-arrow mx-1" >
+<a class="nav-link dropdown-toggle" href="#" id="101c614b-8b9b-45d2-abb8-871b5adde97b" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"  >
+<span class="mr-2 d-none d-lg-inline text-gray-100">Blazor Database Apps</span>
+</a>
+<div class=" dropdown-list dropdown-menu shadow animated--grow-in" aria-labelledby="101c614b-8b9b-45d2-abb8-871b5adde97b" >
+<a class="dropdown-item" href="/Building-a-Database-Application-in-Blazor/Building-a-Database-Application-in-Blazor-Part-1.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Building A Database Application In Blazor Part 1
+</a>
+<a class="dropdown-item" href="/Building-a-Database-Application-in-Blazor/Building-a-Database-Application-in-Blazor-Part-2.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Building A Database Application In Blazor Part 2
+</a>
+<a class="dropdown-item" href="/Building-a-Database-Application-in-Blazor/Building-a-Database-Application-in-Blazor-Part-3.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Building A Database Application In Blazor Part 3
+</a>
+<a class="dropdown-item" href="/Building-a-Database-Application-in-Blazor/Building-a-Database-Application-in-Blazor-Part-4.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Building A Database Application In Blazor Part 4
+</a>
+<a class="dropdown-item" href="/Building-a-Database-Application-in-Blazor/Building-a-Database-Application-in-Blazor-Part-5.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Building A Database Application In Blazor Part 5
+</a>
+<a class="dropdown-item" href="/Building-a-Database-Application-in-Blazor/Building-a-Database-Application-in-Blazor-Part-6.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Building A Database Application In Blazor Part 6
+</a>
+<a class="dropdown-item" href="/Building-a-Database-Application-in-Blazor/index.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Building a Database Application in Blazor
+</a>
+</div>
+</li>
+<li class="nav-item dropdown no-arrow mx-1" >
+<a class="nav-link dropdown-toggle" href="#" id="d5120c20-199c-4050-a4f4-391ef182d8c6" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"  >
+<span class="mr-2 d-none d-lg-inline text-gray-100">Building Blazor Applications</span>
+</a>
+<div class=" dropdown-list dropdown-menu shadow animated--grow-in" aria-labelledby="d5120c20-199c-4050-a4f4-391ef182d8c6" >
+<a class="dropdown-item" href="/Building-Blazor-Applications/Blazor-Async-UI-Events.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Blazor Async UI Events
+</a>
+<a class="dropdown-item" href="/Building-Blazor-Applications/Blazor-Bootstrap-Toaster.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Blazor Bootstrap Toaster
+</a>
+<a class="dropdown-item" href="/Building-Blazor-Applications/Blazor-Services.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Blazor Services
+</a>
+<a class="dropdown-item" href="/Building-Blazor-Applications/Building-A-Blazor-AutoComplete-Control.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Building A Blazor Autocomplete Control
+</a>
+<a class="dropdown-item" href="/Building-Blazor-Applications/Building-Wrapper-Components.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Building Wrapper Components
+</a>
+<a class="dropdown-item" href="/Building-Blazor-Applications/Component-Service-Manager.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+The Component Service Manager
+</a>
+<a class="dropdown-item" href="/Building-Blazor-Applications/DBContexts-In-Transient-Services.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Dbcontexts In Transient Services
+</a>
+<a class="dropdown-item" href="/Building-Blazor-Applications/DynamicCss.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Blazor Dynamic Stylesheets
+</a>
+<a class="dropdown-item" href="/Building-Blazor-Applications/For-ForEach-in-Blazor.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+For Foreach In Blazor
+</a>
+<a class="dropdown-item" href="/Building-Blazor-Applications/Leaner-Meaner-Greener-Components.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Leaner Meaner Greener Components
+</a>
+<a class="dropdown-item" href="/Building-Blazor-Applications/Notification-Service-Pattern.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Blazor Notification Service Pattern
+</a>
+<a class="dropdown-item" href="/Building-Blazor-Applications/Rethinking-The-Repository-Pattern.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Rethinking The Repository Pattern
+</a>
+<a class="dropdown-item" href="/Building-Blazor-Applications/The-Blazor-WASM-Hosted-Project.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+The Blazor WASM Hosted Project
+</a>
+<a class="dropdown-item" href="/Building-Blazor-Applications/Whats-Wrong-with-my-Component-Design.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Whats Wrong With My Component Design
+</a>
+<a class="dropdown-item" href="/Building-Blazor-Applications/The-Blazor-Component" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Building Blazor Applications\The Blazor Component
+</a>
+</div>
+</li>
+<li class="nav-item dropdown no-arrow mx-1" >
+<a class="nav-link dropdown-toggle" href="#" id="fb5fda57-4250-48f3-aac5-b9311008c77e" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"  >
+<span class="mr-2 d-none d-lg-inline text-gray-100">Design</span>
+</a>
+<div class=" dropdown-list dropdown-menu shadow animated--grow-in" aria-labelledby="fb5fda57-4250-48f3-aac5-b9311008c77e" >
+<a class="dropdown-item" href="/Design/Clean-Design-In-Blazor.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Clean Design Principles in Blazor Applications
+</a>
+<a class="dropdown-item" href="/Design/Clean-Design-Blazor-Template.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+A Blazor Clean Design Template
+</a>
+<a class="dropdown-item" href="/Design/Clean-Design-Blazor-Template-Solution-Structure.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Solution Structure in the Clean Design Blazor Template
+</a>
+<a class="dropdown-item" href="/Design/Clean-Design-Blazor-Template-DataServices.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Data Services in the Clean Design Blazor Template
+</a>
+<a class="dropdown-item" href="/Design/Clean-Design-Blazor-Template-UI.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+The UI in the Clean Design Blazor Template
+</a>
+<a class="dropdown-item" href="/Design/Clean-Design-Blazor-Template-Solution-Setup.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Solution Setup in the Clean Design Blazor Template
+</a>
+<a class="dropdown-item" href="/Design/Clean-Design-Blazor-Template-Testing.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Testing in the Clean Design Blazor Template
+</a>
+</div>
+</li>
+<li class="nav-item dropdown no-arrow mx-1" >
+<a class="nav-link dropdown-toggle" href="#" id="bfe134d7-2dc9-4ecf-b2ac-ec34632974c8" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"  >
+<span class="mr-2 d-none d-lg-inline text-gray-100">Modern C#</span>
+</a>
+<div class=" dropdown-list dropdown-menu shadow animated--grow-in" aria-labelledby="bfe134d7-2dc9-4ecf-b2ac-ec34632974c8" >
+<a class="dropdown-item" href="/Modern-Coding-Patterns/Nullable-And-VS-2022.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Nullable And VS 2022
+</a>
+</div>
+</li>
+</ul>
+
+    <div class="ms-5 me-5 ml-auto">
+        <h1>Cold Elm Coders</h1>
+    </div>
+</nav>
+
+
+    </div>
+    <!--End topbar-->
+    <!--Sidebar-->
+    <div id="sidebar">
+        
+<div class="article-info p-2" Published: 28-02-2022 >
+<div>Published: 28-02-2022</div>
+<div>Last Updated: 28-02-2022</div>
+<div>Author: Shaun Curtis</div>
+</div>
+
+        
+<h4 class="p-2">Table of Contents</h4>
+<ul class="TOC" >
+<li class="TOC-item TOC-item-0" >
+<a class="TOC-link" href="#">Top</a>
+<ul class="TOC TOC-0" >
+<li class="TOC-item TOC-item-1" >
+<ul class="TOC TOC-1" >
+<li class="TOC-item TOC-item-2" >
+<a class="TOC-link" href="#overview">Overview</a>
+</li>
+<li class="TOC-item TOC-item-2" >
+<a class="TOC-link" href="#repo">Repo</a>
+</li>
+<li class="TOC-item TOC-item-2" >
+<a class="TOC-link" href="#refactoring-the-project">Refactoring the Project</a>
+<ul class="TOC TOC-2" >
+<li class="TOC-item TOC-item-3" >
+<a class="TOC-link" href="#weatherforecast">WeatherForecast</a>
+</li>
+<li class="TOC-item TOC-item-3" >
+<a class="TOC-link" href="#listoptions">ListOptions</a>
+</li>
+<li class="TOC-item TOC-item-3" >
+<a class="TOC-link" href="#weatherforecastdatastore">WeatherForecastDataStore</a>
+</li>
+<li class="TOC-item TOC-item-3" >
+<a class="TOC-link" href="#iweatherforecastdatabroker">IWeatherForecastDataBroker</a>
+</li>
+<li class="TOC-item TOC-item-3" >
+<a class="TOC-link" href="#weatherforecastserverdatabroker">WeatherForecastServerDataBroker</a>
+</li>
+<li class="TOC-item TOC-item-3" >
+<a class="TOC-link" href="#weatherforecastnotificationservice">WeatherForecastNotificationService</a>
+</li>
+<li class="TOC-item TOC-item-3" >
+<a class="TOC-link" href="#weatherforecastlistservice">WeatherForecastListService</a>
+</li>
+<li class="TOC-item TOC-item-3" >
+<a class="TOC-link" href="#weatherforecastcrudservice">WeatherForecastCrudService</a>
+</li>
+</ul>
+</li>
+<li class="TOC-item TOC-item-2" >
+<a class="TOC-link" href="#the-ui">The UI</a>
+<ul class="TOC TOC-2" >
+<li class="TOC-item TOC-item-3" >
+<a class="TOC-link" href="#fetchdata">FetchData</a>
+</li>
+</ul>
+</li>
+<li class="TOC-item TOC-item-2" >
+<a class="TOC-link" href="#paging">Paging</a>
+<ul class="TOC TOC-2" >
+<li class="TOC-item TOC-item-3" >
+<a class="TOC-link" href="#pagingcontrol">PagingControl</a>
+</li>
+</ul>
+</li>
+<li class="TOC-item TOC-item-2" >
+<a class="TOC-link" href="#fetchpageddata">FetchPagedData</a>
+<ul class="TOC TOC-2" >
+<li class="TOC-item TOC-item-3" >
+<a class="TOC-link" href="#how-it-works">How it Works</a>
+</li>
+</ul>
+</li>
+<li class="TOC-item TOC-item-2" >
+<a class="TOC-link" href="#wrap-up">Wrap up</a>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+    </div>
+    <!--End Sidebar-->
+    <!-- Page Wrapper -->
+    <div id="wrapper">
+        <!-- Content Wrapper -->
+        <div id="content-wrapper" class="d-flex flex-column">
+            <!-- Main Content -->
+            <div id="content">
+                <!-- Topbar -->
+                <div id="article">
+                    <!-- Article -->
+                    
+<!-- Header -->
+<header class="ex-header-article">
+    <div class="container">
+        <div class="row pt-3 pb-3 border-bottom">
+            <div class="col">
+                
+<h1>Building Blazor List Components and the Notification Pattern</h1>
+<div>This article looks at how to handle large lists in Blazor, decouple the data from the UI, and use the Notification Pattern to trigger updates in components.</div>
+
+            </div> <!-- end of col -->
+        </div> <!-- end of row -->
+    </div> <!-- end of container -->
+</header> <!-- end of ex-header -->
+<!-- end of header -->
+
+
+                    
+<!-- Article Container -->
+<div class="ex-basic-1 pt-4">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                
+
+        <h2 id="overview">Overview</h2>
+<p>This article looks at how to handle large lists in Blazor, decouple the data from the UI, and use the <em>Notification Pattern</em> to trigger updates in components.</p>
+<p>The starting solution for this article is the out-of-the-box Blazor Server template.</p>
+<h2 id="repo">Repo</h2>
+<p>The Github Repository for this project is <a href="https://github.com/ShaunCurtis/Blazr.Articles/tree/main/Blazr.Articles.Lists">Blazr.Articles.Lists</a></p>
+<h2 id="refactoring-the-project">Refactoring the Project</h2>
+<p>Our first step is to separate the code into three principle directory structures: Data, Core and UI.  Normally I would use three projects, but I'm keeping things simple in this article.  These represent the three primary domains in the simple Clean Design model.  We'll re-distribute the code as we progress.  Code in each domain resides in the domain namespace:  for example all <em>Core</em> code resides in <code>Blazr.Articles.Core</code>.</p>
+<h3 id="weatherforecast">WeatherForecast</h3>
+<p>Move to <em>Core</em> and:</p>
+<ol>
+<li>Change it to a <code>record</code> value object.</li>
+<li>Add a <code>WeatherForecastId</code> property as a <code>Guid</code>.</li>
+<li>Change all the properties to <code>{get; init;}</code>.</li>
+</ol>
+<pre><code class="language-csharp"><div><span class="hljs-keyword">namespace</span> <span class="hljs-title">Blazr.Articles.Core</span>;
+
+<span class="hljs-keyword">public</span> <span class="hljs-keyword">record</span> <span class="hljs-title">WeatherForecast</span>
+{
+    <span class="hljs-keyword">public</span> Guid WeatherForecastId {<span class="hljs-keyword">get</span>; <span class="hljs-keyword">init</span>;} = Guid.Empty;
+    <span class="hljs-keyword">public</span> DateTime Date { <span class="hljs-keyword">get</span>; <span class="hljs-keyword">init</span>; }
+    <span class="hljs-keyword">public</span> <span class="hljs-keyword">int</span> TemperatureC { <span class="hljs-keyword">get</span>; <span class="hljs-keyword">init</span>; }
+    <span class="hljs-keyword">public</span> <span class="hljs-keyword">int</span> TemperatureF =&gt; <span class="hljs-number">32</span> + (<span class="hljs-keyword">int</span>)(TemperatureC / <span class="hljs-number">0.5556</span>);
+    <span class="hljs-keyword">public</span> <span class="hljs-keyword">string</span>? Summary { <span class="hljs-keyword">get</span>; <span class="hljs-keyword">init</span>; }
+}
+</div></code></pre>
+<h3 id="listoptions">ListOptions</h3>
+<p>Add a <code>ListOptions</code> class to <em>Core</em>.  This class contains paging data: it's passed in any data pipeline request to define the dataset &quot;page&quot; to retrieve.  Code should never retrieve unconstrained lists from data sources - you never know how big the data set may grow.  Set the defaults to sensible maximum values.  The class has various constructors and setters we'll use later.</p>
+<pre><code class="language-csharp"><div><span class="hljs-keyword">using</span> Microsoft.AspNetCore.Components.Web.Virtualization;
+<span class="hljs-keyword">namespace</span> <span class="hljs-title">Blazr.Articles.Core</span>;
+
+<span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title">ListOptions</span>
+{
+    <span class="hljs-keyword">public</span> <span class="hljs-keyword">int</span> StartRecord { <span class="hljs-keyword">get</span>; <span class="hljs-keyword">set</span>; } = <span class="hljs-number">0</span>;
+    <span class="hljs-keyword">public</span> <span class="hljs-keyword">int</span> PageSize { <span class="hljs-keyword">get</span>; <span class="hljs-keyword">set</span>; } = <span class="hljs-number">1000</span>;
+    <span class="hljs-keyword">public</span> <span class="hljs-keyword">int</span> ListCount { <span class="hljs-keyword">get</span>; <span class="hljs-keyword">set</span>; }
+    <span class="hljs-keyword">public</span> <span class="hljs-keyword">int</span> Page =&gt; <span class="hljs-keyword">this</span>.StartRecord / <span class="hljs-keyword">this</span>.PageSize;
+
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">ListOptions</span>(<span class="hljs-params"></span>)</span> { }
+
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">ListOptions</span>(<span class="hljs-params"><span class="hljs-keyword">int</span> startRecord, <span class="hljs-keyword">int</span> pageSize</span>)</span>
+    {
+        <span class="hljs-keyword">this</span>.StartRecord = startRecord;
+        <span class="hljs-keyword">this</span>.PageSize = pageSize;
+    }
+
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">Set</span>(<span class="hljs-params">ListOptions options</span>)</span>
+    {
+        <span class="hljs-keyword">this</span>.PageSize = options.PageSize;
+        <span class="hljs-keyword">this</span>.StartRecord = options.StartRecord;
+    }
+
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">Set</span>(<span class="hljs-params">ItemsProviderRequest options</span>)</span>
+    {
+        <span class="hljs-keyword">this</span>.PageSize = options.Count;
+        <span class="hljs-keyword">this</span>.StartRecord = options.StartIndex;
+    }
+
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">SetPage</span>(<span class="hljs-params"><span class="hljs-keyword">int</span> pageno</span>)</span>
+        =&gt;  <span class="hljs-keyword">this</span>.StartRecord = pageno * <span class="hljs-keyword">this</span>.PageSize;
+
+    <span class="hljs-keyword">public</span> ListOptions Copy =&gt; <span class="hljs-keyword">new</span> ListOptions { 
+        StartRecord = <span class="hljs-keyword">this</span>.StartRecord, 
+        PageSize = <span class="hljs-keyword">this</span>.PageSize, 
+        ListCount = <span class="hljs-keyword">this</span>.ListCount
+    };
+}
+</div></code></pre>
+<h3 id="weatherforecastdatastore">WeatherForecastDataStore</h3>
+<p>Rename the <code>WeatherForcastService</code> to <code>WeatherForecastDataStore</code> and restructure it as follows.</p>
+<p>We:</p>
+<ol>
+<li>Generate a large data set on instantiation and assign it to an internal field.</li>
+<li>Add various public methods for List and CRUD operations.</li>
+<li>Maintain an internally consistent data set: data requests are passed copies, not references to internal objects.</li>
+<li>The data pipeline methods are all <code>ValueTask</code> based because they emulate real world asynchronous database operations.</li>
+</ol>
+<pre><code class="language-csharp"><div><span class="hljs-keyword">namespace</span> <span class="hljs-title">Blazr.Articles.Data</span>;
+<span class="hljs-keyword">using</span> Blazr.Articles.Core;
+
+<span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title">WeatherForecastDataStore</span>
+{
+    <span class="hljs-comment">// Internal list to hold the data set.</span>
+    <span class="hljs-keyword">private</span> List&lt;WeatherForecast&gt; _records;
+
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">WeatherForecastDataStore</span>(<span class="hljs-params"></span>)</span>
+    {
+        _records = GetForecasts();
+    }
+
+    <span class="hljs-keyword">private</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">readonly</span> <span class="hljs-keyword">string</span>[] Summaries = <span class="hljs-keyword">new</span>[]
+    {
+        <span class="hljs-string">&quot;Freezing&quot;</span>, <span class="hljs-string">&quot;Bracing&quot;</span>, <span class="hljs-string">&quot;Chilly&quot;</span>, <span class="hljs-string">&quot;Cool&quot;</span>, <span class="hljs-string">&quot;Mild&quot;</span>, <span class="hljs-string">&quot;Warm&quot;</span>, <span class="hljs-string">&quot;Balmy&quot;</span>, <span class="hljs-string">&quot;Hot&quot;</span>, <span class="hljs-string">&quot;Sweltering&quot;</span>, <span class="hljs-string">&quot;Scorching&quot;</span>
+    };
+
+    <span class="hljs-function"><span class="hljs-keyword">public</span> ValueTask&lt;<span class="hljs-keyword">bool</span>&gt; <span class="hljs-title">DeleteForecastAsync</span>(<span class="hljs-params">Guid Id</span>)</span> {
+        <span class="hljs-keyword">var</span> <span class="hljs-keyword">record</span> = _records.FirstOrDefault(item =&gt; item.WeatherForecastId == Id);
+        <span class="hljs-keyword">if</span> (<span class="hljs-keyword">record</span> <span class="hljs-title">is</span> <span class="hljs-title">not</span> <span class="hljs-title">null</span>)
+            _<span class="hljs-title">records.Remove</span>(<span class="hljs-title">record</span>);
+        <span class="hljs-keyword">return</span> ValueTask.FromResult(<span class="hljs-keyword">record</span> <span class="hljs-title">is</span> <span class="hljs-title">not</span> <span class="hljs-title">null</span>);
+    }
+
+    <span class="hljs-function"><span class="hljs-keyword">public</span> ValueTask&lt;<span class="hljs-keyword">bool</span>&gt; <span class="hljs-title">SaveForecastAsync</span>(<span class="hljs-params">WeatherForecast record</span>)</span>
+    {
+        <span class="hljs-keyword">var</span> isrecord = _records.Any(item =&gt; item.WeatherForecastId == record.WeatherForecastId);
+        <span class="hljs-keyword">if</span> (isrecord)
+            _records.Remove(record);
+        _records.Add(record with { });
+        <span class="hljs-keyword">return</span> ValueTask.FromResult(isrecord);
+    }
+
+    <span class="hljs-keyword">public</span> ValueTask&lt;List&lt;WeatherForecast&gt;&gt; GetForecastsAsync(ListOptions options)
+    {
+        <span class="hljs-keyword">var</span> list = _records
+            .OrderBy(item =&gt; item.Date)
+            .Skip(options.StartRecord)
+            .Take(options.PageSize)
+            .ToList();
+
+            <span class="hljs-keyword">var</span> newList = <span class="hljs-keyword">new</span>  List&lt;WeatherForecast&gt;();
+            list.ForEach(item =&gt; newList.Add(item with {}));
+
+            <span class="hljs-keyword">return</span> ValueTask.FromResult(newList);
+    }
+
+    <span class="hljs-function"><span class="hljs-keyword">public</span> ValueTask&lt;<span class="hljs-keyword">int</span>&gt; <span class="hljs-title">GetForecastCountAsync</span>(<span class="hljs-params"></span>)</span>
+        =&gt; ValueTask.FromResult(_records.Count);
+
+    <span class="hljs-function"><span class="hljs-keyword">private</span> List&lt;WeatherForecast&gt; <span class="hljs-title">GetForecasts</span>(<span class="hljs-params"></span>)</span>
+    {
+        <span class="hljs-keyword">return</span> Enumerable.Range(<span class="hljs-number">1</span>, <span class="hljs-number">200</span>).Select(index =&gt; <span class="hljs-keyword">new</span> WeatherForecast
+        {
+            WeatherForecastId = Guid.NewGuid(),
+            Date = DateTime.Now.AddDays(index),
+            TemperatureC = Random.Shared.Next(<span class="hljs-number">-20</span>, <span class="hljs-number">55</span>),
+            Summary = Summaries[Random.Shared.Next(Summaries.Length)]
+        }).ToList();
+    }
+}
+</div></code></pre>
+<h3 id="iweatherforecastdatabroker">IWeatherForecastDataBroker</h3>
+<p><code>IWeatherForecastDataBroker</code> defines the interface for the data pipeline connection between Core and Data domain code.  Add <code>IWeatherForecastDataBroker</code> to <em>Core</em>.  It defines the basic List and CRUD operations we implement for this article:</p>
+<ol>
+<li>Delete a record.</li>
+<li>Save a record.</li>
+<li>Get a record list.</li>
+<li>Get the total number of records.</li>
+</ol>
+<p>Note the simularity with the classic Repository pattern.</p>
+<pre><code class="language-csharp"><div><span class="hljs-keyword">namespace</span> <span class="hljs-title">Blazr.Articles.Core</span>;
+
+<span class="hljs-keyword">public</span> <span class="hljs-keyword">interface</span> <span class="hljs-title">IWeatherForecastDataBroker</span>
+{
+    <span class="hljs-keyword">public</span> ValueTask&lt;List&lt;WeatherForecast&gt;&gt; GetForecastsAsync(ListOptions options);
+    <span class="hljs-function"><span class="hljs-keyword">public</span> ValueTask&lt;<span class="hljs-keyword">int</span>&gt; <span class="hljs-title">GetForecastCountAsync</span>(<span class="hljs-params"></span>)</span>;
+    <span class="hljs-function"><span class="hljs-keyword">public</span> ValueTask&lt;<span class="hljs-keyword">bool</span>&gt; <span class="hljs-title">SaveForecastAsync</span>(<span class="hljs-params">WeatherForecast record</span>)</span>;
+    <span class="hljs-function"><span class="hljs-keyword">public</span> ValueTask&lt;<span class="hljs-keyword">bool</span>&gt; <span class="hljs-title">DeleteForecastAsync</span>(<span class="hljs-params">Guid Id</span>)</span>;
+}
+</div></code></pre>
+<h3 id="weatherforecastserverdatabroker">WeatherForecastServerDataBroker</h3>
+<p><code>WeatherForecastServerDataBroker</code> is the concrete server based implementation of <code>IWeatherForecastDataBroker</code>.  It's commonly known as a &quot;shim&quot;: a thin call through layer into the data store.  Add <code>WeatherForecastServerDataBroker</code> to <em>Data</em>.</p>
+<pre><code class="language-csharp"><div><span class="hljs-keyword">using</span> Blazr.Articles.Core;
+
+<span class="hljs-keyword">namespace</span> <span class="hljs-title">Blazr.Articles.Data</span>;
+
+<span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title">WeatherForecastServerDataBroker</span> : <span class="hljs-title">IWeatherForecastDataBroker</span>
+{
+    <span class="hljs-keyword">private</span> WeatherForecastDataStore _dataStore;
+
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">WeatherForecastServerDataBroker</span>(<span class="hljs-params">WeatherForecastDataStore weatherForecastDataStore</span>)</span>
+        =&gt; _dataStore = weatherForecastDataStore;
+
+    <span class="hljs-keyword">public</span> ValueTask&lt;List&lt;WeatherForecast&gt;&gt; GetForecastsAsync(ListOptions options)
+        =&gt; _dataStore.GetForecastsAsync(options);
+
+    <span class="hljs-function"><span class="hljs-keyword">public</span> ValueTask&lt;<span class="hljs-keyword">int</span>&gt; <span class="hljs-title">GetForecastCountAsync</span>(<span class="hljs-params"></span>)</span>
+        =&gt; _dataStore.GetForecastCountAsync();
+
+    <span class="hljs-function"><span class="hljs-keyword">public</span> ValueTask&lt;<span class="hljs-keyword">bool</span>&gt; <span class="hljs-title">SaveForecastAsync</span>(<span class="hljs-params">WeatherForecast record</span>)</span>
+        =&gt; _dataStore.SaveForecastAsync(<span class="hljs-keyword">record</span>);
+
+    <span class="hljs-function"><span class="hljs-keyword">public</span> ValueTask&lt;<span class="hljs-keyword">bool</span>&gt; <span class="hljs-title">DeleteForecastAsync</span>(<span class="hljs-params">Guid Id</span>)</span>
+        =&gt; _dataStore.DeleteForecastAsync(Id);
+}
+</div></code></pre>
+<h3 id="weatherforecastnotificationservice">WeatherForecastNotificationService</h3>
+<p><code>WeatherForecastNotificationService</code> is a simple service used by the data services to manage notifications: list updates and page changes.  There are two events triggered by two public notify methods.</p>
+<pre><code class="language-csharp"><div><span class="hljs-keyword">namespace</span> <span class="hljs-title">Blazr.Articles.Core</span>;
+
+<span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title">WeatherForecastNotificationService</span>
+{
+    <span class="hljs-keyword">public</span> <span class="hljs-keyword">event</span> EventHandler? ListUpdated;
+    <span class="hljs-keyword">public</span> <span class="hljs-keyword">event</span> EventHandler? ListPaged;
+
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">NotifyListUpdated</span>(<span class="hljs-params"><span class="hljs-keyword">object</span>? sender</span>)</span>
+        =&gt;  <span class="hljs-keyword">this</span>.ListUpdated?.Invoke(<span class="hljs-keyword">this</span>, EventArgs.Empty);
+
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">NotifyListPaged</span>(<span class="hljs-params"><span class="hljs-keyword">object</span>? sender, <span class="hljs-keyword">int</span> page</span>)</span>
+        =&gt;  <span class="hljs-keyword">this</span>.ListPaged?.Invoke(sender, <span class="hljs-keyword">new</span> PagingEventArgs(page));
+}
+</div></code></pre>
+<p><code>ListPagedEventArgs</code> is a derived <code>Eventargs</code> class:</p>
+<pre><code class="language-csharp"><div><span class="hljs-keyword">namespace</span> <span class="hljs-title">Blazr.Articles.Core</span>;
+
+<span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title">ListPagedEventArgs</span> : <span class="hljs-title">EventArgs</span>
+{
+    <span class="hljs-keyword">public</span> <span class="hljs-keyword">int</span> Page { <span class="hljs-keyword">get</span>; <span class="hljs-keyword">set</span>; }
+
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">ListPagedEventArgs</span>(<span class="hljs-params"><span class="hljs-keyword">int</span> page</span>)</span>
+        =&gt; <span class="hljs-keyword">this</span>.Page = page;
+}
+</div></code></pre>
+<h3 id="weatherforecastlistservice">WeatherForecastListService</h3>
+<p>This provides list management for the UI. <code>Records</code> is the exposed paged record set.  There are two <code>GetRecordsAsync</code> public methods:</p>
+<ol>
+<li>The first is used by the paging control and updates <code>Records</code>.</li>
+<li>The second is used by the <code>Virtualize</code> component and implements the <code>ItemsProviderDelegate</code> pattern.</li>
+</ol>
+<p>Both update the local <code>ListOptions</code> field, get the data set and raise the <code>ListPaged</code> event on the notification service.</p>
+<pre><code class="language-csharp"><div><span class="hljs-keyword">using</span> Microsoft.AspNetCore.Components.Web.Virtualization;
+<span class="hljs-keyword">namespace</span> <span class="hljs-title">Blazr.Articles.Core</span>;
+
+<span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title">WeatherForecastListService</span>
+{
+    <span class="hljs-keyword">private</span> IWeatherForecastDataBroker _weatherForecastDataBroker;
+    <span class="hljs-keyword">private</span> WeatherForecastNotificationService _notificationService;
+    <span class="hljs-keyword">public</span> <span class="hljs-keyword">readonly</span> ListOptions ListOptions = <span class="hljs-keyword">new</span> ListOptions();
+    <span class="hljs-keyword">public</span> List&lt;WeatherForecast&gt;? Records { <span class="hljs-keyword">get</span>; <span class="hljs-keyword">private</span> <span class="hljs-keyword">set</span>; }
+
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">WeatherForecastListService</span>(<span class="hljs-params">IWeatherForecastDataBroker weatherForecastDataBroker, WeatherForecastNotificationService weatherForecastNotificationService</span>)</span>
+    {
+        _weatherForecastDataBroker = weatherForecastDataBroker;
+        _notificationService = weatherForecastNotificationService;
+    }
+
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">async</span> ValueTask&lt;ListOptions&gt; <span class="hljs-title">GetRecordsAsync</span>(<span class="hljs-params">ListOptions options</span>)</span>
+    {
+        <span class="hljs-keyword">this</span>.ListOptions.Set(options);
+        <span class="hljs-keyword">await</span> <span class="hljs-keyword">this</span>.GetRecordsAsync();
+        <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>.ListOptions.Copy;
+    }
+
+    <span class="hljs-keyword">public</span> <span class="hljs-keyword">async</span> ValueTask&lt;ItemsProviderResult&lt;WeatherForecast&gt;&gt; GetRecordsAsync(ItemsProviderRequest request)
+    {
+        <span class="hljs-keyword">this</span>.ListOptions.Set(request);
+        <span class="hljs-keyword">await</span> <span class="hljs-keyword">this</span>.GetRecordsAsync();
+        <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> ItemsProviderResult&lt;WeatherForecast&gt;(<span class="hljs-keyword">this</span>.Records ?? <span class="hljs-keyword">new</span> List&lt;WeatherForecast&gt;(), <span class="hljs-keyword">this</span>.ListOptions.ListCount);
+    }
+
+    <span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-keyword">async</span> ValueTask <span class="hljs-title">GetRecordsAsync</span>(<span class="hljs-params"></span>)</span>
+    {
+        <span class="hljs-keyword">this</span>.Records = <span class="hljs-keyword">await</span> _weatherForecastDataBroker.GetForecastsAsync(<span class="hljs-keyword">this</span>.ListOptions);
+        <span class="hljs-keyword">this</span>.ListOptions.ListCount = <span class="hljs-keyword">await</span> _weatherForecastDataBroker.GetForecastCountAsync();
+        _notificationService.NotifyListPaged(<span class="hljs-keyword">this</span>, <span class="hljs-keyword">this</span>.ListOptions.Page);
+    }
+}
+</div></code></pre>
+<h3 id="weatherforecastcrudservice">WeatherForecastCrudService</h3>
+<p><code>WeatherForecastCrudService</code> contains the Crud services.</p>
+<p>Methods raise the appropriate events on the notification service.  This service is very simple here, but where the record is more complex and/or record editing is implemented, this class would maintain the working copy of the record.</p>
+<pre><code class="language-csharp"><div><span class="hljs-keyword">namespace</span> <span class="hljs-title">Blazr.Articles.Core</span>;
+
+<span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title">WeatherForecastCrudService</span>
+{
+    <span class="hljs-keyword">private</span> IWeatherForecastDataBroker _weatherForecastDataBroker;
+    <span class="hljs-keyword">private</span> WeatherForecastNotificationService _notificationService;
+
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">WeatherForecastCrudService</span>(<span class="hljs-params">IWeatherForecastDataBroker weatherForecastDataBroker, WeatherForecastNotificationService weatherForecastNotificationService</span>)</span>
+    {
+        _weatherForecastDataBroker = weatherForecastDataBroker;
+        _notificationService = weatherForecastNotificationService;
+    }
+
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">async</span> ValueTask <span class="hljs-title">DeleteRecordAsync</span>(<span class="hljs-params">Guid Id</span>)</span>
+    {
+        _ = <span class="hljs-keyword">await</span> _weatherForecastDataBroker.DeleteForecastAsync(Id);
+        _notificationService.NotifyListUpdated(<span class="hljs-keyword">this</span>);
+    }
+
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">async</span> ValueTask <span class="hljs-title">AddRecordAsync</span>(<span class="hljs-params">WeatherForecast record</span>)</span>
+    {
+        _ = <span class="hljs-keyword">await</span> _weatherForecastDataBroker.SaveForecastAsync(<span class="hljs-keyword">record</span>);
+        _notificationService.NotifyListUpdated(<span class="hljs-keyword">this</span>);
+    }
+}
+</div></code></pre>
+<p>This completes the data pipeline.</p>
+<h2 id="the-ui">The UI</h2>
+<p>First make a copy of <code>FetchData</code>.  Call it <code>FetchPagedData</code>, change the <code>Page</code> directive to <code>FetchPagedData</code> and add a link to the new poage to <code>NavMenu</code>.</p>
+<pre><code><code><div>&lt;div class=&quot;nav-item px-3&quot;&gt;
+    &lt;NavLink class=&quot;nav-link&quot; href=&quot;fetchpageddata&quot;&gt;
+        &lt;span class=&quot;oi oi-list-rich&quot; aria-hidden=&quot;true&quot;&gt;&lt;/span&gt; Paged data
+    &lt;/NavLink&gt;
+&lt;/div&gt;
+</div></code></code></pre>
+<h3 id="fetchdata">FetchData</h3>
+<p>We'll look at this in stages.</p>
+<p>The page:</p>
+<ol>
+<li>Implements <code>IDisposable</code>: events need disposing correctly.  The Renderer manages <code>IDisposable</code>.</li>
+<li>Injects the View and Notification Services.</li>
+</ol>
+<pre><code><code><div>@page &quot;/fetchdata&quot;
+@implements IDisposable
+@using Blazr.Articles.Core
+@inject WeatherForecastListService ListService
+@inject WeatherForecastCrudService CrudService
+@inject WeatherForecastNotificationService NotificationService
+</div></code></code></pre>
+<ol start="3">
+<li>Provides a private field to reference the UI <code>Virtualize</code> component.</li>
+<li><code>OnListUpdated</code> handles any list update events.  It calls <code>RefreshDataAsync</code> on the <code>Virtualize</code> component and <code>StateHasChanged</code> on the page component.</li>
+<li>Implements <code>Dispose</code> to unregister event handlers.</li>
+</ol>
+<pre><code><code><div>@code {
+    private Virtualize&lt;WeatherForecast&gt;? virtualizeComponent;
+
+    protected override void OnInitialized()
+        =&gt; this.NotificationService.ListUpdated += this.OnListUpdated;
+
+    private void OnListUpdated(object? sender, EventArgs e)
+    {
+        this.virtualizeComponent?.RefreshDataAsync();
+        this.InvokeAsync(StateHasChanged);
+    }
+
+    public void Dispose()
+        =&gt; this.NotificationService.ListUpdated += this.OnListUpdated;
+}
+</div></code></code></pre>
+<ol start="6">
+<li>Add and Delete UI event handlers wired up to the <code>WeatherForecastCrudService</code>.</li>
+</ol>
+<pre><code class="language-csharp"><div>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">async</span> Task <span class="hljs-title">AddRecord</span>(<span class="hljs-params"></span>)</span>
+    {
+        <span class="hljs-keyword">var</span> <span class="hljs-keyword">record</span> = <span class="hljs-keyword">new</span> WeatherForecast
+            {
+                WeatherForecastId = Guid.NewGuid(),
+                Date = DateTime.Now,
+                TemperatureC = <span class="hljs-number">20</span>,
+                Summary = <span class="hljs-string">&quot;Testing&quot;</span>
+            };
+        <span class="hljs-keyword">await</span> CrudService.AddRecordAsync(<span class="hljs-keyword">record</span>);
+    }
+
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">async</span> Task <span class="hljs-title">DeleteRecord</span>(<span class="hljs-params">Guid Id</span>)</span>
+        =&gt; <span class="hljs-keyword">await</span> CrudService.DeleteRecordAsync(Id);
+</div></code></pre>
+<p>On to the UI.</p>
+<p>We:</p>
+<ol>
+<li>Remove the list loading logic: this is handled by the <code>Virtualize</code> component.</li>
+<li>Add a delete button to the row template and a add record button at the top of the page.</li>
+<li>Add the <code>Virtualize</code> component as the row template, wired to the <code>WeatherForecastListService</code>method <code>GetRecordsAsync</code>.</li>
+</ol>
+<pre><code class="language-html"><div><span class="hljs-tag">&lt;<span class="hljs-name">h1</span>&gt;</span>Weather forecast<span class="hljs-tag">&lt;/<span class="hljs-name">h1</span>&gt;</span>
+
+<span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span>This component demonstrates fetching data from a service.<span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;container-fluid&quot;</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;col-12 text-end&quot;</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;btn btn-sm btn-dark&quot;</span> @<span class="hljs-attr">onclick</span>=<span class="hljs-string">&quot;this.AddRecord&quot;</span>&gt;</span>Add Record<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">table</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;table&quot;</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">thead</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">tr</span>&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-name">th</span>&gt;</span>Date<span class="hljs-tag">&lt;/<span class="hljs-name">th</span>&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-name">th</span>&gt;</span>Temp. (C)<span class="hljs-tag">&lt;/<span class="hljs-name">th</span>&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-name">th</span>&gt;</span>Temp. (F)<span class="hljs-tag">&lt;/<span class="hljs-name">th</span>&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-name">th</span>&gt;</span>Summary<span class="hljs-tag">&lt;/<span class="hljs-name">th</span>&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-name">th</span>&gt;</span>Actions<span class="hljs-tag">&lt;/<span class="hljs-name">th</span>&gt;</span>
+        <span class="hljs-tag">&lt;/<span class="hljs-name">tr</span>&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-name">thead</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">tbody</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">Virtualize</span> <span class="hljs-attr">TItem</span>=<span class="hljs-string">WeatherForecast</span> <span class="hljs-attr">Context</span>=<span class="hljs-string">forecast</span> <span class="hljs-attr">ItemsProvider</span>=<span class="hljs-string">this.ListService.GetRecordsAsync</span> @<span class="hljs-attr">ref</span>=<span class="hljs-string">this.virtualizeComponent</span>&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-name">tr</span>&gt;</span>
+                <span class="hljs-tag">&lt;<span class="hljs-name">td</span>&gt;</span>@forecast.Date.ToShortDateString()<span class="hljs-tag">&lt;/<span class="hljs-name">td</span>&gt;</span>
+                <span class="hljs-tag">&lt;<span class="hljs-name">td</span>&gt;</span>@forecast.TemperatureC<span class="hljs-tag">&lt;/<span class="hljs-name">td</span>&gt;</span>
+                <span class="hljs-tag">&lt;<span class="hljs-name">td</span>&gt;</span>@forecast.TemperatureF<span class="hljs-tag">&lt;/<span class="hljs-name">td</span>&gt;</span>
+                <span class="hljs-tag">&lt;<span class="hljs-name">td</span>&gt;</span>@forecast.Summary<span class="hljs-tag">&lt;/<span class="hljs-name">td</span>&gt;</span>
+                <span class="hljs-tag">&lt;<span class="hljs-name">td</span>&gt;</span>
+                    <span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;btn btn-sm btn-danger&quot;</span> @<span class="hljs-attr">onclick</span>=<span class="hljs-string">&quot;() =&gt; this.DeleteRecord(forecast.WeatherForecastId)&quot;</span>&gt;</span>Delete<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span>
+                <span class="hljs-tag">&lt;/<span class="hljs-name">td</span>&gt;</span>
+            <span class="hljs-tag">&lt;/<span class="hljs-name">tr</span>&gt;</span>
+        <span class="hljs-tag">&lt;/<span class="hljs-name">Virtualize</span>&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-name">tbody</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">table</span>&gt;</span>
+</div></code></pre>
+<h2 id="paging">Paging</h2>
+<p>First, a paging component.</p>
+<h3 id="pagingcontrol">PagingControl</h3>
+<p>There's a lot of simple maths based fields to calculate and manage the page and block information the display components need.  We'll skip those.</p>
+<p>The control follows the same pattern as <code>Virtualize</code>:</p>
+<ol>
+<li>The <code>ListOptions</code> class is used to pass and receive paging data.</li>
+<li>Uses a <code>Func</code> delegate, defined as a required Parameter, to call the paging provider.</li>
+<li>Provides a notification method for the parent to notify that the list has changed.</li>
+</ol>
+<p>The main methods are:</p>
+<ol>
+<li><code>GotToPageAsync(int page)</code> sets the new page and calls <code>SetPageAsync</code>.</li>
+<li><code>GotToPageAsync()</code> calls <code>SetPageAsync</code> with the current <code>ListOptions</code> data.</li>
+<li><code>SetPageAsync()</code> calls the <code>PagingProvider</code> and updates the list count on the result.</li>
+</ol>
+<pre><code class="language-csharp"><div><span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-keyword">async</span> Task <span class="hljs-title">GotToPageAsync</span>(<span class="hljs-params"><span class="hljs-keyword">int</span> page</span>)</span>
+{
+    <span class="hljs-keyword">if</span> (<span class="hljs-keyword">this</span>.PagingProvider <span class="hljs-keyword">is</span> not <span class="hljs-literal">null</span> &amp;&amp; page != <span class="hljs-keyword">this</span>.Page)
+    {
+        <span class="hljs-keyword">this</span>.Page = page;
+        <span class="hljs-keyword">await</span> GotToPageAsync();
+    }
+}
+
+<span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-keyword">async</span> Task <span class="hljs-title">GotToPageAsync</span>(<span class="hljs-params"></span>)</span>
+{
+    <span class="hljs-keyword">await</span> SetPageAsync();
+    <span class="hljs-keyword">this</span>.StateHasChanged();
+}
+
+<span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-keyword">async</span> Task <span class="hljs-title">SetPageAsync</span>(<span class="hljs-params"></span>)</span>
+{
+    <span class="hljs-keyword">if</span> (<span class="hljs-keyword">this</span>.PagingProvider <span class="hljs-keyword">is</span> not <span class="hljs-literal">null</span>)
+    {
+        <span class="hljs-keyword">var</span> options = <span class="hljs-keyword">await</span> PagingProvider(_listOptions);
+        <span class="hljs-keyword">this</span>.Page = options.Page;
+        <span class="hljs-keyword">this</span>.ListCount = options.ListCount;
+    }
+}
+</div></code></pre>
+<p><code>OnInitializedAsync</code> gets the current page.</p>
+<pre><code class="language-csharp"><div><span class="hljs-function"><span class="hljs-keyword">protected</span> <span class="hljs-keyword">async</span> <span class="hljs-keyword">override</span> Task <span class="hljs-title">OnInitializedAsync</span>(<span class="hljs-params"></span>)</span>
+    =&gt;  <span class="hljs-keyword">await</span> <span class="hljs-keyword">this</span>.SetPageAsync();
+</div></code></pre>
+<p>The full partial class looks like this:</p>
+<pre><code class="language-csharp"><div><span class="hljs-keyword">using</span> Blazr.Articles.Core;
+<span class="hljs-keyword">using</span> Microsoft.AspNetCore.Components;
+
+<span class="hljs-keyword">namespace</span> <span class="hljs-title">Blazr.Articles.UI</span>;
+
+<span class="hljs-keyword">public</span> <span class="hljs-keyword">partial</span> <span class="hljs-keyword">class</span> <span class="hljs-title">PagingControl</span>
+    : <span class="hljs-title">ComponentBase</span>
+{
+    <span class="hljs-keyword">private</span> ListOptions _listOptions =&gt; <span class="hljs-keyword">new</span> ListOptions() { PageSize = <span class="hljs-keyword">this</span>.PageSize, StartRecord = <span class="hljs-keyword">this</span>.ReadStartRecord };
+    <span class="hljs-keyword">private</span> <span class="hljs-keyword">int</span> Page = <span class="hljs-number">0</span>;
+    <span class="hljs-keyword">private</span> <span class="hljs-keyword">int</span> ListCount = <span class="hljs-number">0</span>;
+
+    [<span class="hljs-meta">Parameter</span>] <span class="hljs-keyword">public</span> <span class="hljs-keyword">int</span> PageSize { <span class="hljs-keyword">get</span>; <span class="hljs-keyword">set</span>; } = <span class="hljs-number">5</span>;
+
+    [<span class="hljs-meta">Parameter</span>] <span class="hljs-keyword">public</span> <span class="hljs-keyword">int</span> BlockSize { <span class="hljs-keyword">get</span>; <span class="hljs-keyword">set</span>; } = <span class="hljs-number">10</span>;
+
+    [<span class="hljs-meta">Parameter</span>][EditorRequired] <span class="hljs-keyword">public</span> Func&lt;ListOptions, ValueTask&lt;ListOptions&gt;&gt;? PagingProvider { <span class="hljs-keyword">get</span>; <span class="hljs-keyword">set</span>; }
+
+    [<span class="hljs-meta">Parameter</span>] <span class="hljs-keyword">public</span> <span class="hljs-keyword">bool</span> ShowPageOf { <span class="hljs-keyword">get</span>; <span class="hljs-keyword">set</span>; } = <span class="hljs-literal">true</span>;
+
+    <span class="hljs-function"><span class="hljs-keyword">protected</span> <span class="hljs-keyword">async</span> <span class="hljs-keyword">override</span> Task <span class="hljs-title">OnInitializedAsync</span>(<span class="hljs-params"></span>)</span>
+        =&gt;  <span class="hljs-keyword">await</span> <span class="hljs-keyword">this</span>.SetPageAsync();
+
+    <span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-keyword">async</span> Task <span class="hljs-title">SetPageAsync</span>(<span class="hljs-params"></span>)</span>
+    {
+        <span class="hljs-keyword">if</span> (<span class="hljs-keyword">this</span>.PagingProvider <span class="hljs-keyword">is</span> not <span class="hljs-literal">null</span>)
+        {
+            <span class="hljs-keyword">var</span> options = <span class="hljs-keyword">await</span> PagingProvider(_listOptions);
+            <span class="hljs-keyword">this</span>.Page = options.Page;
+            <span class="hljs-keyword">this</span>.ListCount = options.ListCount;
+        }
+    }
+
+    <span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-keyword">void</span> <span class="hljs-title">OnPagingReset</span>(<span class="hljs-params"><span class="hljs-keyword">object</span>? sender, PagingEventArgs e</span>)</span>
+    {
+        <span class="hljs-keyword">this</span>.Page = e.Page;
+        <span class="hljs-keyword">this</span>.InvokeAsync(StateHasChanged);
+    }
+
+    <span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-keyword">async</span> Task <span class="hljs-title">GotToPageAsync</span>(<span class="hljs-params"><span class="hljs-keyword">int</span> page</span>)</span>
+    {
+        <span class="hljs-keyword">if</span> (<span class="hljs-keyword">this</span>.PagingProvider <span class="hljs-keyword">is</span> not <span class="hljs-literal">null</span> &amp;&amp; page != <span class="hljs-keyword">this</span>.Page)
+        {
+            <span class="hljs-keyword">this</span>.Page = page;
+            <span class="hljs-keyword">await</span> GotToPageAsync();
+        }
+    }
+
+    <span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-keyword">async</span> Task <span class="hljs-title">GotToPageAsync</span>(<span class="hljs-params"></span>)</span>
+    {
+        <span class="hljs-keyword">await</span> SetPageAsync();
+        <span class="hljs-keyword">this</span>.StateHasChanged();
+    }
+
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">async</span> ValueTask <span class="hljs-title">NotifyListChangedAsync</span>(<span class="hljs-params"></span>)</span>
+        =&gt; <span class="hljs-keyword">await</span> GotToPageAsync();
+
+    <span class="hljs-keyword">private</span> <span class="hljs-keyword">int</span> DisplayPage =&gt; <span class="hljs-keyword">this</span>.Page + <span class="hljs-number">1</span>;
+
+    <span class="hljs-keyword">private</span> <span class="hljs-keyword">int</span> LastPage =&gt; PageSize == <span class="hljs-number">0</span> || ListCount == <span class="hljs-number">0</span>
+        ? <span class="hljs-number">0</span>
+        : ((<span class="hljs-keyword">int</span>)Math.Ceiling(Decimal.Divide(<span class="hljs-keyword">this</span>.ListCount, <span class="hljs-keyword">this</span>.PageSize))) - <span class="hljs-number">1</span>;
+
+    <span class="hljs-keyword">private</span> <span class="hljs-keyword">int</span> LastDisplayPage =&gt; <span class="hljs-keyword">this</span>.LastPage + <span class="hljs-number">1</span>;
+
+    <span class="hljs-keyword">private</span> <span class="hljs-keyword">int</span> ReadStartRecord =&gt; <span class="hljs-keyword">this</span>.Page * <span class="hljs-keyword">this</span>.PageSize;
+
+    <span class="hljs-keyword">private</span> <span class="hljs-keyword">int</span> Block =&gt; (<span class="hljs-keyword">int</span>)Math.Floor(Decimal.Divide(<span class="hljs-keyword">this</span>.Page, <span class="hljs-keyword">this</span>.BlockSize));
+
+    <span class="hljs-keyword">private</span> <span class="hljs-keyword">bool</span> AreBlocks =&gt; <span class="hljs-keyword">this</span>.ListCount &gt; <span class="hljs-keyword">this</span>.BlockSize * <span class="hljs-keyword">this</span>.PageSize;
+
+    <span class="hljs-keyword">private</span> <span class="hljs-keyword">int</span> BlockStartPage =&gt; <span class="hljs-keyword">this</span>.Block * <span class="hljs-keyword">this</span>.BlockSize;
+
+    <span class="hljs-keyword">private</span> <span class="hljs-keyword">int</span> BlockEndPage =&gt; <span class="hljs-keyword">this</span>.LastPage &gt; (<span class="hljs-keyword">this</span>.BlockStartPage + (BlockSize)) - <span class="hljs-number">1</span>
+        ? (<span class="hljs-keyword">this</span>.BlockStartPage + BlockSize) - <span class="hljs-number">1</span>
+        : <span class="hljs-keyword">this</span>.LastPage;
+
+    <span class="hljs-keyword">private</span> <span class="hljs-keyword">int</span> LastBlock =&gt; (<span class="hljs-keyword">int</span>)Math.Floor(Decimal.Divide(<span class="hljs-keyword">this</span>.LastPage, <span class="hljs-keyword">this</span>.BlockSize));
+
+    <span class="hljs-keyword">private</span> <span class="hljs-keyword">int</span> LastBlockStartPage =&gt; LastBlock * <span class="hljs-keyword">this</span>.BlockSize;
+
+    <span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-keyword">string</span> <span class="hljs-title">GetCss</span>(<span class="hljs-params"><span class="hljs-keyword">int</span> page</span>)</span>
+        =&gt; page == <span class="hljs-keyword">this</span>.Page ? <span class="hljs-string">&quot;btn-primary&quot;</span> : <span class="hljs-string">&quot;btn-secondary&quot;</span>;
+
+    <span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-keyword">async</span> Task <span class="hljs-title">MoveBlockAsync</span>(<span class="hljs-params"><span class="hljs-keyword">int</span> block</span>)</span>
+    {
+        <span class="hljs-keyword">var</span> _page = block <span class="hljs-keyword">switch</span>
+        {
+            <span class="hljs-keyword">int</span>.MaxValue =&gt; <span class="hljs-keyword">this</span>.LastBlockStartPage,
+            <span class="hljs-number">1</span> =&gt; <span class="hljs-keyword">this</span>.Block + <span class="hljs-number">1</span> &gt; LastBlock ? LastBlock * <span class="hljs-keyword">this</span>.BlockSize : <span class="hljs-keyword">this</span>.BlockStartPage + BlockSize,
+            <span class="hljs-number">-1</span> =&gt; <span class="hljs-keyword">this</span>.Block - <span class="hljs-number">1</span> &lt; <span class="hljs-number">0</span> ? <span class="hljs-number">0</span> : <span class="hljs-keyword">this</span>.BlockStartPage - BlockSize,
+            _ =&gt; <span class="hljs-number">0</span>
+        };
+        <span class="hljs-keyword">await</span> <span class="hljs-keyword">this</span>.GotToPageAsync(_page);
+    }
+
+    <span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-keyword">async</span> Task <span class="hljs-title">GoToBlockAsync</span>(<span class="hljs-params"><span class="hljs-keyword">int</span> block</span>)</span>
+        =&gt; <span class="hljs-keyword">await</span> <span class="hljs-keyword">this</span>.GotToPageAsync(block * <span class="hljs-keyword">this</span>.PageSize);
+}
+</div></code></pre>
+<p>And the Razor markup</p>
+<pre><code class="language-html"><div>@namespace Blazr.Articles.UI
+@implements IDisposable
+
+<span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;m-2 p-2&quot;</span>&gt;</span>
+    @if (this.AreBlocks)
+    {
+        <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;btn-group me-1&quot;</span> <span class="hljs-attr">role</span>=<span class="hljs-string">&quot;group&quot;</span> <span class="hljs-attr">aria-label</span>=<span class="hljs-string">&quot;Move Back Buttons&quot;</span>&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;button&quot;</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;btn btn-sm btn-dark&quot;</span> @<span class="hljs-attr">onclick</span>=<span class="hljs-string">&quot;() =&gt; this.MoveBlockAsync(int.MinValue)&quot;</span>&gt;</span>|<span class="hljs-symbol">&amp;lt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;button&quot;</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;btn btn-sm btn-dark&quot;</span> @<span class="hljs-attr">onclick</span>=<span class="hljs-string">&quot;() =&gt; this.MoveBlockAsync(-1)&quot;</span>&gt;</span><span class="hljs-symbol">&amp;lt;</span><span class="hljs-symbol">&amp;lt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span>
+        <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+    }
+    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;btn-group&quot;</span> <span class="hljs-attr">role</span>=<span class="hljs-string">&quot;group&quot;</span> <span class="hljs-attr">aria-label</span>=<span class="hljs-string">&quot;Page Buttons&quot;</span>&gt;</span>
+        @for (int page = this.BlockStartPage; page <span class="hljs-tag">&lt;<span class="hljs-name">=</span> <span class="hljs-attr">this.BlockEndPage</span>; <span class="hljs-attr">page</span>++)
+        {
+            <span class="hljs-attr">var</span> <span class="hljs-attr">pageno</span> = <span class="hljs-string">page;</span>
+            <span class="hljs-attr">var</span> <span class="hljs-attr">viewpageno</span> = <span class="hljs-string">page</span> + <span class="hljs-attr">1</span>;
+            &lt;<span class="hljs-attr">button</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;button&quot;</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;btn btn-sm @GetCss(pageno)&quot;</span> @<span class="hljs-attr">onclick</span>=<span class="hljs-string">&quot;() =&gt; this.GotToPageAsync(pageno)&quot;</span>&gt;</span>@viewpageno<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span>
+        }
+    <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+    @if (this.AreBlocks)
+    {
+        <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;btn-group ms-1&quot;</span> <span class="hljs-attr">role</span>=<span class="hljs-string">&quot;group&quot;</span> <span class="hljs-attr">aria-label</span>=<span class="hljs-string">&quot;Move Forward Buttons&quot;</span>&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;button&quot;</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;btn btn-sm btn-dark&quot;</span> @<span class="hljs-attr">onclick</span>=<span class="hljs-string">&quot;() =&gt; this.MoveBlockAsync(1)&quot;</span>&gt;</span><span class="hljs-symbol">&amp;gt;</span><span class="hljs-symbol">&amp;gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;button&quot;</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;btn btn-sm btn-dark&quot;</span> @<span class="hljs-attr">onclick</span>=<span class="hljs-string">&quot;() =&gt; this.MoveBlockAsync(int.MaxValue)&quot;</span>&gt;</span><span class="hljs-symbol">&amp;gt;</span>|<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span>
+        <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+    }
+    @if (this.ShowPageOf)
+    {
+        <span class="hljs-tag">&lt;<span class="hljs-name">span</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;mx-2&quot;</span>&gt;</span>Page @this.DisplayPage of @this.LastDisplayPage<span class="hljs-tag">&lt;/<span class="hljs-name">span</span>&gt;</span>
+    }
+<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+</div></code></pre>
+<h2 id="fetchpageddata">FetchPagedData</h2>
+<p>We'll look at this in stages.</p>
+<ol>
+<li>Implements <code>IDisposable</code>: events need disposing correctly.  The Renderer manages <code>IDisposable</code>.</li>
+<li>Injects the View and Notification Services.</li>
+</ol>
+<pre><code><code><div>@using Blazr.Articles.Core
+@using Blazr.Articles.UI
+@inject WeatherForecastListService ListService
+@inject WeatherForecastCrudService CrudService
+@inject WeatherForecastNotificationService NotificationService
+</div></code></code></pre>
+<ol start="3">
+<li>Provides a private field to reference the UI <code>PageControl</code> component.</li>
+<li><code>OnListUpdated</code> handles any list update events.  It calls <code>NotifyListChangedAsync</code> on the <code>PagingControl</code> component and <code>StateHasChanged</code> on the page component.</li>
+<li><code>OnListPaged</code> handles any paging events.  It invokes <code>StateHasChanged</code> on the page component.</li>
+<li>Implements <code>Dispose</code> to unregister event handlers.</li>
+</ol>
+<pre><code class="language-csharp"><div><span class="hljs-keyword">private</span> PagingControl? pagingControl;
+
+<span class="hljs-function"><span class="hljs-keyword">protected</span> <span class="hljs-keyword">override</span> <span class="hljs-keyword">void</span> <span class="hljs-title">OnInitialized</span>(<span class="hljs-params"></span>)</span>
+{
+    <span class="hljs-keyword">this</span>.NotificationService.ListUpdated += <span class="hljs-keyword">this</span>.OnListChanged;
+    <span class="hljs-keyword">this</span>.NotificationService.ListPaged += <span class="hljs-keyword">this</span>.OnListPaged;
+}
+
+<span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-keyword">void</span> <span class="hljs-title">OnListChanged</span>(<span class="hljs-params"><span class="hljs-keyword">object</span>? sender, EventArgs e</span>)</span>
+{
+    <span class="hljs-keyword">this</span>.pagingControl?.NotifyListChangedAsync();
+    <span class="hljs-keyword">this</span>.InvokeAsync(StateHasChanged);
+}
+
+<span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-keyword">void</span> <span class="hljs-title">OnListPaged</span>(<span class="hljs-params"><span class="hljs-keyword">object</span>? sender, EventArgs e</span>)</span>
+    =&gt; <span class="hljs-keyword">this</span>.InvokeAsync(StateHasChanged);
+
+<span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">Dispose</span>(<span class="hljs-params"></span>)</span>
+{
+    <span class="hljs-keyword">this</span>.NotificationService.ListUpdated += <span class="hljs-keyword">this</span>.OnListChanged;
+    <span class="hljs-keyword">this</span>.NotificationService.ListPaged += <span class="hljs-keyword">this</span>.OnListPaged;
+}
+</div></code></pre>
+<ol start="7">
+<li>Add and Delete UI event handlers wired up to the <code>WeatherForecastCrudService</code>.</li>
+</ol>
+<pre><code class="language-csharp"><div><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">async</span> Task <span class="hljs-title">AddRecord</span>(<span class="hljs-params"></span>)</span>
+{
+    <span class="hljs-keyword">var</span> <span class="hljs-keyword">record</span> = <span class="hljs-keyword">new</span> WeatherForecast
+        {
+            WeatherForecastId = Guid.NewGuid(),
+            Date = DateTime.Now,
+            TemperatureC = <span class="hljs-number">20</span>,
+            Summary = <span class="hljs-string">&quot;Testing&quot;</span>
+        };
+    <span class="hljs-keyword">await</span> CrudService.AddRecordAsync(<span class="hljs-keyword">record</span>);
+}
+
+<span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">async</span> Task <span class="hljs-title">DeleteRecord</span>(<span class="hljs-params">Guid Id</span>)</span>
+    =&gt; <span class="hljs-keyword">await</span> CrudService.DeleteRecordAsync(Id);
+</div></code></pre>
+<p>In the UI markup we:</p>
+<ol>
+<li>Add the paging control in a top bar along with the add button.</li>
+<li>Point the list loop to the service <code>Records</code> collection.</li>
+<li>Add the delete button to each row.</li>
+</ol>
+<pre><code class="language-html"><div>
+<span class="hljs-tag">&lt;<span class="hljs-name">h1</span>&gt;</span>Weather forecast<span class="hljs-tag">&lt;/<span class="hljs-name">h1</span>&gt;</span>
+
+<span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span>This component demonstrates fetching data from a service.<span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span>
+
+<span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;container-fluid&quot;</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;row&quot;</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;col-10&quot;</span>&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-name">PagingControl</span> <span class="hljs-attr">BlockSize</span>=<span class="hljs-string">10</span> <span class="hljs-attr">PageSize</span>=<span class="hljs-string">10</span> <span class="hljs-attr">PagingProvider</span>=<span class="hljs-string">this.ListService.GetRecordsAsync</span> @<span class="hljs-attr">ref</span>=<span class="hljs-string">this.pagingControl</span> /&gt;</span>
+        <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;col-2 text-end&quot;</span>&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;btn btn-sm btn-dark&quot;</span> @<span class="hljs-attr">onclick</span>=<span class="hljs-string">&quot;this.AddRecord&quot;</span>&gt;</span>Add Record<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span>
+        <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+@if (this.ListService.Records == null)
+{
+    <span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-name">em</span>&gt;</span>Loading...<span class="hljs-tag">&lt;/<span class="hljs-name">em</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span>
+}
+else
+{
+    <span class="hljs-tag">&lt;<span class="hljs-name">table</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;table&quot;</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">thead</span>&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-name">tr</span>&gt;</span>
+                <span class="hljs-tag">&lt;<span class="hljs-name">th</span>&gt;</span>Date<span class="hljs-tag">&lt;/<span class="hljs-name">th</span>&gt;</span>
+                <span class="hljs-tag">&lt;<span class="hljs-name">th</span>&gt;</span>Temp. (C)<span class="hljs-tag">&lt;/<span class="hljs-name">th</span>&gt;</span>
+                <span class="hljs-tag">&lt;<span class="hljs-name">th</span>&gt;</span>Temp. (F)<span class="hljs-tag">&lt;/<span class="hljs-name">th</span>&gt;</span>
+                <span class="hljs-tag">&lt;<span class="hljs-name">th</span>&gt;</span>Summary<span class="hljs-tag">&lt;/<span class="hljs-name">th</span>&gt;</span>
+                <span class="hljs-tag">&lt;<span class="hljs-name">th</span>&gt;</span>Actions<span class="hljs-tag">&lt;/<span class="hljs-name">th</span>&gt;</span>
+            <span class="hljs-tag">&lt;/<span class="hljs-name">tr</span>&gt;</span>
+        <span class="hljs-tag">&lt;/<span class="hljs-name">thead</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">tbody</span>&gt;</span>
+            @foreach (var forecast in this.ListService.Records)
+            {
+                <span class="hljs-tag">&lt;<span class="hljs-name">tr</span>&gt;</span>
+                    <span class="hljs-tag">&lt;<span class="hljs-name">td</span>&gt;</span>@forecast.Date.ToShortDateString()<span class="hljs-tag">&lt;/<span class="hljs-name">td</span>&gt;</span>
+                    <span class="hljs-tag">&lt;<span class="hljs-name">td</span>&gt;</span>@forecast.TemperatureC<span class="hljs-tag">&lt;/<span class="hljs-name">td</span>&gt;</span>
+                    <span class="hljs-tag">&lt;<span class="hljs-name">td</span>&gt;</span>@forecast.TemperatureF<span class="hljs-tag">&lt;/<span class="hljs-name">td</span>&gt;</span>
+                    <span class="hljs-tag">&lt;<span class="hljs-name">td</span>&gt;</span>@forecast.Summary<span class="hljs-tag">&lt;/<span class="hljs-name">td</span>&gt;</span>
+                    <span class="hljs-tag">&lt;<span class="hljs-name">td</span>&gt;</span>
+                        <span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;btn btn-sm btn-danger&quot;</span> @<span class="hljs-attr">onclick</span>=<span class="hljs-string">&quot;() =&gt; this.DeleteRecord(forecast.WeatherForecastId)&quot;</span>&gt;</span>Delete<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span>
+                    <span class="hljs-tag">&lt;/<span class="hljs-name">td</span>&gt;</span>
+                <span class="hljs-tag">&lt;/<span class="hljs-name">tr</span>&gt;</span>
+            }
+        <span class="hljs-tag">&lt;/<span class="hljs-name">tbody</span>&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-name">table</span>&gt;</span>
+}
+</div></code></pre>
+<h3 id="how-it-works">How it Works</h3>
+<h4 id="paging-1">Paging</h4>
+<ol>
+<li>When the page loads, the initial state wil be &quot;loading&quot;:  <code>WeatherForecastListService.Records</code> will be null.</li>
+<li>The <code>PagingControl</code> initializes, calling <code>SetPageAsync</code> and loading the first page.</li>
+<li><code>WeatherForecastListService.GetRecordsAsync</code> loads the initial lage of data into <code>Records</code> and raises the <code>NotifyListPaged</code> event on the notifciation service.</li>
+<li><code>OnListPaged</code> on <code>FetchPagedData</code> is called, which triggers a re-render.  <code>WeatherForecastListService.Records</code> now contains a dataset and is rendered.</li>
+</ol>
+<h4 id="adddelete-records">Add/Delete Records.</h4>
+<ol>
+<li>Add/Delete methods on the Crud Service raise the <code>ListUpdated</code> event on the notification service.</li>
+<li><code>OnListChanged</code> is called on <code>FetchPagedData</code> which calls <code>NotifyListChangedAsync</code> on the <code>PagingControl</code>.</li>
+<li>This triggers a reload of the current page and the <code>ListChanged</code> event which re-renders the main page.</li>
+</ol>
+<h2 id="wrap-up">Wrap up</h2>
+<p>That's it for this article.  We've explored:</p>
+<ol>
+<li>How to build the data pipeline on a fundimentally sounder foundation.</li>
+<li>How to separate the data from the UI.</li>
+<li>How to use the <code>Virtualize</code> component, linked into the data pipeline to load paged data.</li>
+<li>How to build a simple paging control that uses th same paging data pipeline infrastructure.</li>
+<li>How to use the <em>Notification</em> pattern to drive the UI update process.</li>
+</ol>
+<p>In a future article I'll look at how to upgrade the data pipeline for sorting and filtering operations, and how to buid a set of generic UI components to handle such operations.</p>
+
+    
+
+            </div>
+        </div>
+    </div>
+</div>
+<!-- end of Article Container -->
+
+
+                </div>
+                <!-- End of Main Content -->
+            </div>
+            <!-- Footer -->
+            
+<!-- Copyright -->
+<footer class="sticky-footer bg-white">
+    <div class="container my-auto">
+        <div class="copyright text-center my-auto">
+            
+<span>Copyright &copy; Cold Elm Coders - 2022</span>
+
+        </div>
+    </div>
+</footer>
+<!-- end of copyright -->
+
+
+            <!-- End of Footer -->
+        </div>
+        <!-- End of Content Wrapper -->
+        
+<a class="scroll-to-top rounded" href="#page-top">
+    <i class="fas fa-angle-up"></i>
+</a>
+
+
+    </div>
+    <!-- End of Page Wrapper -->
+    <!-- Scripts -->
+    
+<!-- Scripts -->
+<!-- Bootstrap core JavaScript-->
+<script src="/assets/vendor/jquery/jquery.min.js"></script>
+<script src="/assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+<!-- Core plugin JavaScript-->
+<script src="/assets/vendor/jquery-easing/jquery.easing.min.js"></script>
+
+<!-- Custom scripts for all pages-->
+<script src="/assets/js/sb-admin-2.min.js"></script>
+
+
+</body>
+</html>

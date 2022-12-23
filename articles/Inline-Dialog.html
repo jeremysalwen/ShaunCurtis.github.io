@@ -1,0 +1,649 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+<!-- SEO Meta Tags -->
+<meta name="description" content="Your description">
+<meta name="author" content="Your name">
+
+<!-- OG Meta Tags to improve the way the post looks when you share the page on Facebook, Twitter, LinkedIn -->
+<meta property="og:site_name" content="" /> <!-- website name -->
+<meta property="og:site" content="" /> <!-- website link -->
+<meta property="og:title" content="" /> <!-- title shown in the actual shared post -->
+<meta property="og:description" content="" /> <!-- description shown in the actual shared post -->
+<meta property="og:image" content="" /> <!-- image link, make sure it's jpg -->
+<meta property="og:url" content="" /> <!-- where do you want your post to link to -->
+<meta name="twitter:card" content="summary_large_image"> <!-- to have large image post format in Twitter -->
+
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+
+<meta name="description" content="A Blazor inline dialog control to lock all page controls except those within the form." >
+<meta name="author" content="Shaun Curtis" >
+
+
+
+<title>The Blazor Inline Dialog Control</title>
+
+
+<!-- Custom fonts for this template-->
+<link href="/assets/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+<link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+      rel="stylesheet">
+
+<!-- Custom styles for this template-->
+<link href="/assets/css/sb-admin-2.css" rel="stylesheet" type="text/css">
+<link href="/assets/css/site.css" rel="stylesheet" type="text/css">
+
+<!-- Favicon  -->
+<link rel="icon" href="/assets/images/favicon.png">
+
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/highlight.css">
+    <link rel="stylesheet" href="/assets/css/article.css" type="text/css">
+</head>
+<body id="page-top">
+    <!--topbar-->
+    <div id="topbar">
+        
+<!-- Topbar -->
+<nav class="navbar navbar-expand navbar-light topbar mb-4 static-top">
+    
+<ul class="navbar-nav" >
+<li class="nav-item" >
+<a class="nav-link " href="/index.html" role="button"  >
+<span class="mr-2 d-none d-lg-inline text-gray-100">Index</span>
+</a>
+</li>
+<li class="nav-item dropdown no-arrow mx-1" >
+<a class="nav-link dropdown-toggle" href="#" id="d63d9ebb-4af3-455b-8da0-1d86b75767eb" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"  >
+<span class="mr-2 d-none d-lg-inline text-gray-100">Articles</span>
+</a>
+<div class=" dropdown-list dropdown-menu shadow animated--grow-in" aria-labelledby="d63d9ebb-4af3-455b-8da0-1d86b75767eb" >
+<a class="dropdown-item" href="/articles/A-Flexible-App.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Creating a Dynamic Blazor App Component
+</a>
+<a class="dropdown-item" href="/articles/Async-Programming-in-DotNetCore.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Async Programming In Dotnetcore
+</a>
+<a class="dropdown-item" href="/articles/Blazor-AllinOne.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Blazor All In One - Multi SPA Hosting
+</a>
+<a class="dropdown-item" href="/articles/Blazor-Async-Programming.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Blazor Async Programming
+</a>
+<a class="dropdown-item" href="/articles/Blazor-Brick-By-Brick.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Blazor Brick By Brick
+</a>
+<a class="dropdown-item" href="/articles/Blazor-Components.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Blazor Components
+</a>
+<a class="dropdown-item" href="/articles/Blazor-CSS.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Blazor CSS
+</a>
+<a class="dropdown-item" href="/articles/Blazor-DataList-Control.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Blazor Datalist Control
+</a>
+<a class="dropdown-item" href="/articles/Blazor-Form-Validation.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Blazor Form Validation
+</a>
+<a class="dropdown-item" href="/articles/Building-Blazor-List-Components.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Building Blazor List Components and the Notification Pattern
+</a>
+<a class="dropdown-item" href="/articles/Building-Edit-Forms.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Building Edit Forms
+</a>
+<a class="dropdown-item" href="/articles/EditFormState.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+The Blazor EditFormState Control
+</a>
+<a class="dropdown-item" href="/articles/Hydra.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Blazor Hydra
+</a>
+<a class="dropdown-item" href="/articles/Inline-Dialog.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+The Blazor Inline Dialog Control
+</a>
+<a class="dropdown-item" href="/articles/Modal-Dialog.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+A Blazor Modal Dialog
+</a>
+<a class="dropdown-item" href="/articles/Policy-Based-Authorization.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Policy Base Authorization in Blazor
+</a>
+<a class="dropdown-item" href="/articles/ValidationFormState.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+A Blazor Validation Control
+</a>
+<a class="dropdown-item" href="/articles/XML-XSD-Serialization.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+XML XSD Serialization
+</a>
+</div>
+</li>
+<li class="nav-item dropdown no-arrow mx-1" >
+<a class="nav-link dropdown-toggle" href="#" id="dc5c91bd-79e6-44c3-b184-bc2f828127ab" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"  >
+<span class="mr-2 d-none d-lg-inline text-gray-100">Blazor Database Apps</span>
+</a>
+<div class=" dropdown-list dropdown-menu shadow animated--grow-in" aria-labelledby="dc5c91bd-79e6-44c3-b184-bc2f828127ab" >
+<a class="dropdown-item" href="/Building-a-Database-Application-in-Blazor/Building-a-Database-Application-in-Blazor-Part-1.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Building A Database Application In Blazor Part 1
+</a>
+<a class="dropdown-item" href="/Building-a-Database-Application-in-Blazor/Building-a-Database-Application-in-Blazor-Part-2.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Building A Database Application In Blazor Part 2
+</a>
+<a class="dropdown-item" href="/Building-a-Database-Application-in-Blazor/Building-a-Database-Application-in-Blazor-Part-3.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Building A Database Application In Blazor Part 3
+</a>
+<a class="dropdown-item" href="/Building-a-Database-Application-in-Blazor/Building-a-Database-Application-in-Blazor-Part-4.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Building A Database Application In Blazor Part 4
+</a>
+<a class="dropdown-item" href="/Building-a-Database-Application-in-Blazor/Building-a-Database-Application-in-Blazor-Part-5.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Building A Database Application In Blazor Part 5
+</a>
+<a class="dropdown-item" href="/Building-a-Database-Application-in-Blazor/Building-a-Database-Application-in-Blazor-Part-6.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Building A Database Application In Blazor Part 6
+</a>
+<a class="dropdown-item" href="/Building-a-Database-Application-in-Blazor/index.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Building a Database Application in Blazor
+</a>
+</div>
+</li>
+<li class="nav-item dropdown no-arrow mx-1" >
+<a class="nav-link dropdown-toggle" href="#" id="59b626bb-0cc8-4280-bf81-68b2f71c2e00" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"  >
+<span class="mr-2 d-none d-lg-inline text-gray-100">Building Blazor Applications</span>
+</a>
+<div class=" dropdown-list dropdown-menu shadow animated--grow-in" aria-labelledby="59b626bb-0cc8-4280-bf81-68b2f71c2e00" >
+<a class="dropdown-item" href="/Building-Blazor-Applications/Blazor-Async-UI-Events.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Blazor Async UI Events
+</a>
+<a class="dropdown-item" href="/Building-Blazor-Applications/Blazor-Bootstrap-Toaster.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Blazor Bootstrap Toaster
+</a>
+<a class="dropdown-item" href="/Building-Blazor-Applications/Blazor-Services.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Blazor Services
+</a>
+<a class="dropdown-item" href="/Building-Blazor-Applications/Building-A-Blazor-AutoComplete-Control.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Building A Blazor Autocomplete Control
+</a>
+<a class="dropdown-item" href="/Building-Blazor-Applications/Building-Wrapper-Components.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Building Wrapper Components
+</a>
+<a class="dropdown-item" href="/Building-Blazor-Applications/Component-Service-Manager.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+The Component Service Manager
+</a>
+<a class="dropdown-item" href="/Building-Blazor-Applications/DBContexts-In-Transient-Services.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Dbcontexts In Transient Services
+</a>
+<a class="dropdown-item" href="/Building-Blazor-Applications/DynamicCss.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Blazor Dynamic Stylesheets
+</a>
+<a class="dropdown-item" href="/Building-Blazor-Applications/For-ForEach-in-Blazor.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+For Foreach In Blazor
+</a>
+<a class="dropdown-item" href="/Building-Blazor-Applications/Leaner-Meaner-Greener-Components.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Leaner Meaner Greener Components
+</a>
+<a class="dropdown-item" href="/Building-Blazor-Applications/Notification-Service-Pattern.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Blazor Notification Service Pattern
+</a>
+<a class="dropdown-item" href="/Building-Blazor-Applications/Rethinking-The-Repository-Pattern.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Rethinking The Repository Pattern
+</a>
+<a class="dropdown-item" href="/Building-Blazor-Applications/The-Blazor-WASM-Hosted-Project.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+The Blazor WASM Hosted Project
+</a>
+<a class="dropdown-item" href="/Building-Blazor-Applications/Whats-Wrong-with-my-Component-Design.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Whats Wrong With My Component Design
+</a>
+<a class="dropdown-item" href="/Building-Blazor-Applications/The-Blazor-Component" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Building Blazor Applications\The Blazor Component
+</a>
+</div>
+</li>
+<li class="nav-item dropdown no-arrow mx-1" >
+<a class="nav-link dropdown-toggle" href="#" id="bb5f0533-7dec-4743-85cf-b85b6759a4f2" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"  >
+<span class="mr-2 d-none d-lg-inline text-gray-100">Design</span>
+</a>
+<div class=" dropdown-list dropdown-menu shadow animated--grow-in" aria-labelledby="bb5f0533-7dec-4743-85cf-b85b6759a4f2" >
+<a class="dropdown-item" href="/Design/Clean-Design-In-Blazor.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Clean Design Principles in Blazor Applications
+</a>
+<a class="dropdown-item" href="/Design/Clean-Design-Blazor-Template.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+A Blazor Clean Design Template
+</a>
+<a class="dropdown-item" href="/Design/Clean-Design-Blazor-Template-Solution-Structure.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Solution Structure in the Clean Design Blazor Template
+</a>
+<a class="dropdown-item" href="/Design/Clean-Design-Blazor-Template-DataServices.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Data Services in the Clean Design Blazor Template
+</a>
+<a class="dropdown-item" href="/Design/Clean-Design-Blazor-Template-UI.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+The UI in the Clean Design Blazor Template
+</a>
+<a class="dropdown-item" href="/Design/Clean-Design-Blazor-Template-Solution-Setup.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Solution Setup in the Clean Design Blazor Template
+</a>
+<a class="dropdown-item" href="/Design/Clean-Design-Blazor-Template-Testing.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Testing in the Clean Design Blazor Template
+</a>
+</div>
+</li>
+<li class="nav-item dropdown no-arrow mx-1" >
+<a class="nav-link dropdown-toggle" href="#" id="ea4383be-0d1c-4667-8d72-113506488b7f" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"  >
+<span class="mr-2 d-none d-lg-inline text-gray-100">Modern C#</span>
+</a>
+<div class=" dropdown-list dropdown-menu shadow animated--grow-in" aria-labelledby="ea4383be-0d1c-4667-8d72-113506488b7f" >
+<a class="dropdown-item" href="/Modern-Coding-Patterns/Nullable-And-VS-2022.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Nullable And VS 2022
+</a>
+</div>
+</li>
+</ul>
+
+    <div class="ms-5 me-5 ml-auto">
+        <h1>Cold Elm Coders</h1>
+    </div>
+</nav>
+
+
+    </div>
+    <!--End topbar-->
+    <!--Sidebar-->
+    <div id="sidebar">
+        
+<div class="article-info p-2" Published: 17-03-2021 >
+<div>Published: 17-03-2021</div>
+<div>Last Updated: 11-03-2021</div>
+<div>Author: Shaun Curtis</div>
+</div>
+
+        
+<h4 class="p-2">Table of Contents</h4>
+<ul class="TOC" >
+<li class="TOC-item TOC-item-0" >
+<a class="TOC-link" href="#">Top</a>
+<ul class="TOC TOC-0" >
+<li class="TOC-item TOC-item-1" >
+<ul class="TOC TOC-1" >
+<li class="TOC-item TOC-item-2" >
+<a class="TOC-link" href="#code-repository--links">Code Repository &amp; Links</a>
+</li>
+<li class="TOC-item TOC-item-2" >
+<a class="TOC-link" href="#related-articles">Related Articles</a>
+</li>
+<li class="TOC-item TOC-item-2" >
+<a class="TOC-link" href="#overview">Overview</a>
+</li>
+<li class="TOC-item TOC-item-2" >
+<a class="TOC-link" href="#inlinedialog">InLineDialog</a>
+</li>
+<li class="TOC-item TOC-item-2" >
+<a class="TOC-link" href="#wrap-up">Wrap Up</a>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+    </div>
+    <!--End Sidebar-->
+    <!-- Page Wrapper -->
+    <div id="wrapper">
+        <!-- Content Wrapper -->
+        <div id="content-wrapper" class="d-flex flex-column">
+            <!-- Main Content -->
+            <div id="content">
+                <!-- Topbar -->
+                <div id="article">
+                    <!-- Article -->
+                    
+<!-- Header -->
+<header class="ex-header-article">
+    <div class="container">
+        <div class="row pt-3 pb-3 border-bottom">
+            <div class="col">
+                
+<h1>The Blazor Inline Dialog Control</h1>
+<div>A Blazor inline dialog control to lock all page controls except those within the form.</div>
+
+            </div> <!-- end of col -->
+        </div> <!-- end of row -->
+    </div> <!-- end of container -->
+</header> <!-- end of ex-header -->
+<!-- end of header -->
+
+
+                    
+<!-- Article Container -->
+<div class="ex-basic-1 pt-4">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                
+
+        <p>This is the third in a series of articles describing a set of useful Blazor Edit controls that solve some of the current shortcomings in the out-of-the-box edit experience without the need to buy expensive toolkits.</p>
+<p>This article describes how to build a component that disables links, buttons the URL bar,... : everywhere except the content within the component.  While it can't stop the user navigating through the browser controls, it turns on the browser <code>beforeunload</code> event to force the &quot;Do you really want to leave this site?&quot; dialog box.  Everything is implemented with a relatively simple standard Blazor component and a small <code>js</code> file.</p>
+<p><img src="https://shauncurtis.github.io/articles/assets/Editor-Controls/inlinedialog.png" alt="Inline Dialog"></p>
+<h2 id="code-repository--links">Code Repository &amp; Links</h2>
+<p>The repository contains a project that implements the controls for all the articles in this series.  You can find it <a href="https://github.com/ShaunCurtis/Blazor.Database">here</a>.</p>
+<p>The example site is here <a href="https://cec-blazor-database.azurewebsites.net/">https://cec-blazor-database.azurewebsites.net/</a>.</p>
+<p>The example form described at this end of this article can be seen at <a href="https://cec-blazor-database.azurewebsites.net//inlinedialogeditor">https://cec-blazor-database.azurewebsites.net//inlinedialogeditor</a>.</p>
+<h2 id="related-articles">Related Articles</h2>
+<p>The three articles are:</p>
+<ul>
+<li><a href="https://shauncurtis.github.io/articles/EditFormState.html">Managing Edit form State</a></li>
+<li><a href="https://shauncurtis.github.io/articles/ValidationFormState.html">Managing Validation State</a></li>
+<li><a href="https://shauncurtis.github.io/articles/Inline-Dialog.html">The Inline Dialog Control</a></li>
+</ul>
+<p>There's also an article on building a Modal Dialog Editor <a href="https://shauncurtis.github.io/articles/Modal-Editor.html">here</a>.</p>
+<h2 id="overview">Overview</h2>
+<p>If you want to see the component in action, go to <a href="https://cec-blazor-database.azurewebsites.net//inlinedialogeditor">this page on my Demo Site</a>.  It's a basic mockup to demonstrate the functionality and extends the form used in the last two articles.  There's a typical Edit Form with the two extra controls covered in the previous articles:</p>
+<ol>
+<li><code>EditFormState</code> monitors the edit state of the <code>Model</code> data.</li>
+<li><code>ValidationFormState</code>- a form validator.</li>
+</ol>
+<p>The key bit of action is hooking up the <code>InlineDialog</code> control <code>Lock</code> to the form state.  <code>EditFormState</code> monitors the form state and invokes the  EventCallback <code>EditStateChanged</code> whenever a change takes place.  The page <code>EditStateChanged</code> event handler is registered with the <code>EditFormState.EditStateChanged</code> and updates <code>_isDirty</code> whenever the state changes.  If <code>EditFormState' is dirty, </code>InlineDialog` is locked.</p>
+<pre><code class="language-html"><div>@using Blazor.Database.Data
+@page &quot;/inlinedialogEditor&quot;
+
+    <span class="hljs-tag">&lt;<span class="hljs-name">InlineDialog</span> <span class="hljs-attr">Lock</span>=<span class="hljs-string">&quot;this._isDirty&quot;</span> <span class="hljs-attr">Transparent</span>=<span class="hljs-string">&quot;false&quot;</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">EditForm</span> <span class="hljs-attr">Model</span>=<span class="hljs-string">&quot;@Model&quot;</span> <span class="hljs-attr">OnValidSubmit</span>=<span class="hljs-string">&quot;@HandleValidSubmit&quot;</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;p-3&quot;</span>&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-name">EditFormState</span> @<span class="hljs-attr">ref</span>=<span class="hljs-string">&quot;editFormState&quot;</span> <span class="hljs-attr">EditStateChanged</span>=<span class="hljs-string">&quot;this.EditStateChanged&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">EditFormState</span>&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-name">ValidationFormState</span> @<span class="hljs-attr">ref</span>=<span class="hljs-string">&quot;validationFormState&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">ValidationFormState</span>&gt;</span>
+
+            <span class="hljs-tag">&lt;<span class="hljs-name">label</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;form-label&quot;</span>&gt;</span>ID:<span class="hljs-tag">&lt;/<span class="hljs-name">label</span>&gt;</span> 
+            <span class="hljs-tag">&lt;<span class="hljs-name">InputNumber</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;form-control&quot;</span> @<span class="hljs-attr">bind-Value</span>=<span class="hljs-string">&quot;Model.ID&quot;</span> /&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-name">label</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;form-label&quot;</span>&gt;</span>Date:<span class="hljs-tag">&lt;/<span class="hljs-name">label</span>&gt;</span> 
+            <span class="hljs-tag">&lt;<span class="hljs-name">InputDate</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;form-control&quot;</span> @<span class="hljs-attr">bind-Value</span>=<span class="hljs-string">&quot;Model.Date&quot;</span> /&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-name">ValidationMessage</span> <span class="hljs-attr">For</span>=<span class="hljs-string">&quot;@(() =&gt; Model.Date)&quot;</span> /&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-name">label</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;form-label&quot;</span>&gt;</span>Temp C:<span class="hljs-tag">&lt;/<span class="hljs-name">label</span>&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-name">InputNumber</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;form-control&quot;</span> @<span class="hljs-attr">bind-Value</span>=<span class="hljs-string">&quot;Model.TemperatureC&quot;</span> /&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-name">ValidationMessage</span> <span class="hljs-attr">For</span>=<span class="hljs-string">&quot;@(() =&gt; Model.TemperatureC)&quot;</span> /&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-name">label</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;form-label&quot;</span>&gt;</span>Summary:<span class="hljs-tag">&lt;/<span class="hljs-name">label</span>&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-name">InputText</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;form-control&quot;</span> @<span class="hljs-attr">bind-Value</span>=<span class="hljs-string">&quot;Model.Summary&quot;</span> /&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-name">ValidationMessage</span> <span class="hljs-attr">For</span>=<span class="hljs-string">&quot;@(() =&gt; Model.Summary)&quot;</span> /&gt;</span>
+
+            <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;mt-2&quot;</span>&gt;</span>
+                <span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span>Validation Messages:<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+                <span class="hljs-tag">&lt;<span class="hljs-name">ValidationSummary</span> /&gt;</span>
+            <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+
+            <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;text-right mt-2&quot;</span>&gt;</span>
+                <span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;btn @btnStateColour&quot;</span> <span class="hljs-attr">disabled</span>&gt;</span>@btnStateText<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span>
+                <span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;btn @btnValidColour&quot;</span> <span class="hljs-attr">disabled</span>&gt;</span>@btnValidText<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span>
+                <span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;btn btn-primary&quot;</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;submit&quot;</span> <span class="hljs-attr">disabled</span>=<span class="hljs-string">&quot;@_btnSubmitDisabled&quot;</span>&gt;</span>Submit<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span>
+            <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+
+        <span class="hljs-tag">&lt;/<span class="hljs-name">EditForm</span>&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-name">InlineDialog</span>&gt;</span>
+}
+</div></code></pre>
+<pre><code class="language-csharp"><div>    @code {
+        <span class="hljs-keyword">protected</span> <span class="hljs-keyword">bool</span> _isDirty = <span class="hljs-literal">false</span>;
+        <span class="hljs-keyword">protected</span> <span class="hljs-keyword">bool</span> _isValid =&gt; validationFormState?.IsValid ?? <span class="hljs-literal">true</span>;
+        <span class="hljs-keyword">protected</span> <span class="hljs-keyword">string</span> btnStateColour =&gt; _isDirty ? <span class="hljs-string">&quot;btn-danger&quot;</span> : <span class="hljs-string">&quot;btn-success&quot;</span>;
+        <span class="hljs-keyword">protected</span> <span class="hljs-keyword">string</span> btnStateText =&gt; _isDirty ? <span class="hljs-string">&quot;Dirty&quot;</span> : <span class="hljs-string">&quot;Clean&quot;</span>;
+        <span class="hljs-keyword">protected</span> <span class="hljs-keyword">string</span> btnValidColour =&gt; !_isValid ? <span class="hljs-string">&quot;btn-danger&quot;</span> : <span class="hljs-string">&quot;btn-success&quot;</span>;
+        <span class="hljs-keyword">protected</span> <span class="hljs-keyword">string</span> btnValidText =&gt; !_isValid ? <span class="hljs-string">&quot;Invalid&quot;</span> : <span class="hljs-string">&quot;Valid&quot;</span>;
+        <span class="hljs-keyword">protected</span> <span class="hljs-keyword">bool</span> _btnSubmitDisabled =&gt; !(_isValid &amp;&amp; _isDirty);
+
+        <span class="hljs-keyword">protected</span> EditFormState editFormState { <span class="hljs-keyword">get</span>; <span class="hljs-keyword">set</span>; }
+        <span class="hljs-keyword">protected</span> ValidationFormState validationFormState { <span class="hljs-keyword">get</span>; <span class="hljs-keyword">set</span>; }
+
+        <span class="hljs-keyword">private</span> WeatherForecast Model = <span class="hljs-keyword">new</span> WeatherForecast()
+        {
+            ID = <span class="hljs-number">1</span>,
+            Date = DateTime.Now,
+            TemperatureC = <span class="hljs-number">22</span>,
+            Summary = <span class="hljs-string">&quot;Balmy&quot;</span>
+        };
+
+        <span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-keyword">void</span> <span class="hljs-title">HandleValidSubmit</span>(<span class="hljs-params"></span>)</span>
+        {
+            <span class="hljs-keyword">this</span>.editFormState.UpdateState();
+        }
+
+        <span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-keyword">void</span> <span class="hljs-title">EditStateChanged</span>(<span class="hljs-params"><span class="hljs-keyword">bool</span> editstate</span>)</span>
+            =&gt; <span class="hljs-keyword">this</span>._isDirty = editstate;
+    }
+</div></code></pre>
+<h2 id="inlinedialog">InLineDialog</h2>
+<p>Lets look at the Parameters and public Properties first.</p>
+<ol>
+<li>We capture added attributes, though we only use <code>class</code>.</li>
+<li><code>Cascade</code> turns on/off parameter cascading of <code>this</code> i.e. the instance of <code>InlineDialog</code>. Default is <code>true</code>.</li>
+<li><code>Transparent</code> sets the background to either transparent or translucent.  The demo is set to transluscent so you can see it switch in and out.</li>
+<li><code>ChildContent</code> is the content between <code>&lt;InlineDialog&gt;</code> and <code>&lt;/InlineDialog&gt;</code>.</li>
+<li><code>IsLocked</code> is a read only Property for checking the component state.</li>
+</ol>
+<pre><code class="language-csharp"><div>[<span class="hljs-meta">Parameter(CaptureUnmatchedValues = true)</span>] <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">IDictionary</span>&lt;<span class="hljs-title">string</span>, <span class="hljs-title">object</span>&gt; AdditionalAttributes</span> { <span class="hljs-keyword">get</span>; <span class="hljs-keyword">set</span>; } = <span class="hljs-keyword">new</span> Dictionary&lt;<span class="hljs-keyword">string</span>, <span class="hljs-keyword">object</span>&gt;();
+[<span class="hljs-meta">Parameter</span>] <span class="hljs-keyword">public</span> <span class="hljs-keyword">bool</span> Cascade { <span class="hljs-keyword">get</span>; <span class="hljs-keyword">set</span>; } = <span class="hljs-literal">true</span>;
+[<span class="hljs-meta">Parameter</span>] <span class="hljs-keyword">public</span> <span class="hljs-keyword">bool</span> Transparent { <span class="hljs-keyword">get</span>; <span class="hljs-keyword">set</span>; } = <span class="hljs-literal">true</span>;
+[<span class="hljs-meta">Parameter</span>] <span class="hljs-keyword">public</span> RenderFragment ChildContent { <span class="hljs-keyword">get</span>; <span class="hljs-keyword">set</span>; }
+<span class="hljs-keyword">public</span> <span class="hljs-keyword">bool</span> IsLocked =&gt; <span class="hljs-keyword">this</span>._isLocked;
+</div></code></pre>
+<p>The private properties:</p>
+<ol>
+<li>Inject <code>IJSRuntime</code> to give access to the Javascript Interop and set/unset the browser <code>BeforeUnload</code> event.</li>
+<li><code>CssClass</code> builds the Html  <code>class</code> attribute for the component, combining any entered classes with those built by the component.</li>
+<li>The Css properties define the various Css options for <code>class</code>.</li>
+<li><code>_isLocked</code> in the private field for controlling lock state.</li>
+</ol>
+<pre><code class="language-csharp"><div>[<span class="hljs-meta">Inject</span>] <span class="hljs-keyword">private</span> IJSRuntime _js { <span class="hljs-keyword">get</span>; <span class="hljs-keyword">set</span>; }
+
+<span class="hljs-keyword">private</span> <span class="hljs-keyword">string</span> CssClass =&gt; (AdditionalAttributes != <span class="hljs-literal">null</span> &amp;&amp; AdditionalAttributes.TryGetValue(<span class="hljs-string">&quot;class&quot;</span>, <span class="hljs-keyword">out</span> <span class="hljs-keyword">var</span> obj))
+    ? <span class="hljs-string">$&quot;<span class="hljs-subst">{<span class="hljs-keyword">this</span>.frontcss}</span> <span class="hljs-subst">{ Convert.ToString(obj, CultureInfo.InvariantCulture)}</span>&quot;</span>
+    : <span class="hljs-keyword">this</span>.frontcss;
+
+<span class="hljs-keyword">private</span> <span class="hljs-keyword">string</span> backcss = <span class="hljs-keyword">string</span>.Empty;
+<span class="hljs-keyword">private</span> <span class="hljs-keyword">string</span> frontcss = <span class="hljs-keyword">string</span>.Empty;
+<span class="hljs-keyword">private</span> <span class="hljs-keyword">string</span> _backcss =&gt; <span class="hljs-keyword">this</span>.Transparent ? <span class="hljs-string">&quot;back-block-transparent&quot;</span> : <span class="hljs-string">&quot;back-block&quot;</span>;
+<span class="hljs-keyword">private</span> <span class="hljs-keyword">string</span> _frontcss =&gt; <span class="hljs-keyword">this</span>.Transparent ? <span class="hljs-string">&quot;fore-block-transparent&quot;</span> : <span class="hljs-string">&quot;fore-block&quot;</span>;
+<span class="hljs-keyword">private</span> <span class="hljs-keyword">string</span> __backcss =&gt; <span class="hljs-keyword">string</span>.Empty;
+<span class="hljs-keyword">private</span> <span class="hljs-keyword">string</span> __frontcss =&gt; <span class="hljs-keyword">string</span>.Empty;
+<span class="hljs-keyword">private</span> <span class="hljs-keyword">bool</span> _isLocked;
+</div></code></pre>
+<p>There are two public methods: <code>Lock</code> and <code>Unlock</code>.  These change the Css classes.  <code>SetPageExitCheck</code> interfaces with the Javascript functions to add or remove the <code>beforeunload</code> event on <code>Window</code>.  The code is show below.</p>
+<pre><code class="language-csharp"><div><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">Lock</span>(<span class="hljs-params"></span>)</span>
+{
+    <span class="hljs-keyword">this</span>._isLocked = <span class="hljs-literal">true</span>;
+    <span class="hljs-keyword">this</span>.backcss = <span class="hljs-keyword">this</span>._backcss;
+    <span class="hljs-keyword">this</span>.frontcss = <span class="hljs-keyword">this</span>._frontcss;
+    <span class="hljs-keyword">this</span>.SetPageExitCheck(<span class="hljs-literal">true</span>);
+    <span class="hljs-keyword">this</span>.InvokeAsync(StateHasChanged);
+}
+
+<span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">Unlock</span>(<span class="hljs-params"></span>)</span>
+{
+    <span class="hljs-keyword">this</span>._isLocked = <span class="hljs-literal">false</span>;
+    <span class="hljs-keyword">this</span>.backcss = <span class="hljs-keyword">this</span>.__backcss;
+    <span class="hljs-keyword">this</span>.frontcss = <span class="hljs-keyword">this</span>.__frontcss;
+    <span class="hljs-keyword">this</span>.SetPageExitCheck(<span class="hljs-literal">false</span>);
+    <span class="hljs-keyword">this</span>.InvokeAsync(StateHasChanged);
+}
+
+<span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-keyword">void</span> <span class="hljs-title">SetPageExitCheck</span>(<span class="hljs-params"><span class="hljs-keyword">bool</span> action</span>)</span>
+    =&gt; _js.InvokeAsync&lt;<span class="hljs-keyword">bool</span>&gt;(<span class="hljs-string">&quot;cecblazor_setEditorExitCheck&quot;</span>, action);
+</div></code></pre>
+<p>The Javascript in <em>site.js</em>:</p>
+<pre><code class="language-js"><div><span class="hljs-built_in">window</span>.cecblazor_setEditorExitCheck = <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">show</span>) </span>{
+    <span class="hljs-keyword">if</span> (show) {
+        <span class="hljs-built_in">window</span>.addEventListener(<span class="hljs-string">&quot;beforeunload&quot;</span>, cecblazor_showExitDialog);
+    }
+    <span class="hljs-keyword">else</span> {
+        <span class="hljs-built_in">window</span>.removeEventListener(<span class="hljs-string">&quot;beforeunload&quot;</span>, cecblazor_showExitDialog);
+    }
+}
+
+<span class="hljs-built_in">window</span>.cecblazor_showExitDialog = <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">event</span>) </span>{
+    event.preventDefault();
+    event.returnValue = <span class="hljs-string">&quot;There are unsaved changes on this page.  Do you want to leave?&quot;</span>;
+}
+</div></code></pre>
+<p>Moving on to the Razor for the component:</p>
+<ol>
+<li>We add a <code>div</code> with the Css class <code>_backcss</code>: this is either <em>back-block-transparent</em> or <em>back-block</em> when <code>Locked</code> or empty when <code>Unlocked</code>.</li>
+<li>We add a <code>div</code> with the Css class <code>_frontcss</code>: this is either <em>fore-block-transparent</em> or <em>fore-block</em> when <code>Locked</code> or empty when <code>Unlocked</code> combined with any <code>class</code> attribute value we have added to the component.</li>
+<li>We cascade <code>this</code> if <code>Cascade</code> is true.</li>
+</ol>
+<pre><code class="language-html"><div><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;@this.backcss&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+
+<span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;@this.CssClass&quot;</span>&gt;</span>
+    @if (this.Cascade)
+    {
+        <span class="hljs-tag">&lt;<span class="hljs-name">CascadingValue</span> <span class="hljs-attr">Value</span>=<span class="hljs-string">&quot;this&quot;</span>&gt;</span>
+            @this.ChildContent
+        <span class="hljs-tag">&lt;/<span class="hljs-name">CascadingValue</span>&gt;</span>
+    }
+    else
+    {
+        @this.ChildContent
+    }
+<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+</div></code></pre>
+<p>Moving on to the component Css, which is where the magic happens.  We implement a similar CSS technique to that used in modal dialogs, adding a transparent or translucent layer over the page content to <em>block</em> content below the layer, and place the contents of <code>InlineDialog</code> in front of that layer.  If you use a lot on z-index layers in your application, you may need to tweak the Z-index to make sure it sits on top.</p>
+<pre><code class="language-css"><div><span class="hljs-selector-tag">div</span><span class="hljs-selector-class">.back-block</span> {
+    <span class="hljs-attribute">display</span>: block;
+    <span class="hljs-attribute">position</span>: fixed;
+    <span class="hljs-attribute">z-index</span>: <span class="hljs-number">1</span>; <span class="hljs-comment">/* Sit on top */</span>
+    <span class="hljs-attribute">left</span>: <span class="hljs-number">0</span>;
+    <span class="hljs-attribute">top</span>: <span class="hljs-number">0</span>;
+    <span class="hljs-attribute">width</span>: <span class="hljs-number">100%</span>; <span class="hljs-comment">/* Full width */</span>
+    <span class="hljs-attribute">height</span>: <span class="hljs-number">100%</span>; <span class="hljs-comment">/* Full height */</span>
+    <span class="hljs-attribute">overflow</span>: auto; <span class="hljs-comment">/* Enable scroll if needed */</span>
+    <span class="hljs-attribute">background-color</span>: <span class="hljs-built_in">RGBA</span>(<span class="hljs-number">224</span>, <span class="hljs-number">224</span>, <span class="hljs-number">224</span>, <span class="hljs-number">0.4</span>);<span class="hljs-comment">/* the translucent effect*/</span>
+}
+
+<span class="hljs-selector-tag">div</span><span class="hljs-selector-class">.back-block-transparent</span> {
+    <span class="hljs-attribute">display</span>: block;
+    <span class="hljs-attribute">position</span>: fixed;
+    <span class="hljs-attribute">z-index</span>: <span class="hljs-number">1</span>; <span class="hljs-comment">/* Sit on top */</span>
+    <span class="hljs-attribute">left</span>: <span class="hljs-number">0</span>;
+    <span class="hljs-attribute">top</span>: <span class="hljs-number">0</span>;
+    <span class="hljs-attribute">width</span>: <span class="hljs-number">100%</span>; <span class="hljs-comment">/* Full width */</span>
+    <span class="hljs-attribute">height</span>: <span class="hljs-number">100%</span>; <span class="hljs-comment">/* Full height */</span>
+    <span class="hljs-attribute">overflow</span>: auto; <span class="hljs-comment">/* Enable scroll if needed */</span>
+    <span class="hljs-attribute">background-color</span>: transparent; 
+}
+
+<span class="hljs-selector-tag">div</span><span class="hljs-selector-class">.fore-block-transparent</span> {
+    <span class="hljs-attribute">display</span>: block;
+    <span class="hljs-attribute">position</span>: relative;
+    <span class="hljs-attribute">z-index</span>: <span class="hljs-number">2</span>; <span class="hljs-comment">/* Sit on top */</span>
+}
+
+<span class="hljs-selector-tag">div</span><span class="hljs-selector-class">.fore-block</span> {
+    <span class="hljs-attribute">display</span>: block;
+    <span class="hljs-attribute">position</span>: relative;
+    <span class="hljs-attribute">z-index</span>: <span class="hljs-number">2</span>; <span class="hljs-comment">/* Sit on top */</span>
+    <span class="hljs-attribute">background-color</span>: <span class="hljs-built_in">RGB</span>(<span class="hljs-number">255</span>, <span class="hljs-number">255</span>, <span class="hljs-number">255</span>);<span class="hljs-comment">/* need to set the colour, adjust as necessary */</span>
+}
+</div></code></pre>
+<h2 id="wrap-up">Wrap Up</h2>
+<p>This solution uses the same techniques used by modal dialogs in placing a barrier between the controls on the page and the contents of the control.  It's an <em>in place</em> modal dialog.  <code>Lock</code> inserts the barrier and <code>Unlock</code> removes it.  We add the Javascript Interop to turn on add off the <code>beforeunload</code> event on the browser.  Choose between a transparent or transluscent layer, or code your own CSS.</p>
+<p>Having developed many solutions to solve this problem, and written articles about them, I'm a little flabbergasted to finally find a solution that's this easy.  The best solutions are always the simplest!</p>
+
+    
+
+            </div>
+        </div>
+    </div>
+</div>
+<!-- end of Article Container -->
+
+
+                </div>
+                <!-- End of Main Content -->
+            </div>
+            <!-- Footer -->
+            
+<!-- Copyright -->
+<footer class="sticky-footer bg-white">
+    <div class="container my-auto">
+        <div class="copyright text-center my-auto">
+            
+<span>Copyright &copy; Cold Elm Coders - 2022</span>
+
+        </div>
+    </div>
+</footer>
+<!-- end of copyright -->
+
+
+            <!-- End of Footer -->
+        </div>
+        <!-- End of Content Wrapper -->
+        
+<a class="scroll-to-top rounded" href="#page-top">
+    <i class="fas fa-angle-up"></i>
+</a>
+
+
+    </div>
+    <!-- End of Page Wrapper -->
+    <!-- Scripts -->
+    
+<!-- Scripts -->
+<!-- Bootstrap core JavaScript-->
+<script src="/assets/vendor/jquery/jquery.min.js"></script>
+<script src="/assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+<!-- Core plugin JavaScript-->
+<script src="/assets/vendor/jquery-easing/jquery.easing.min.js"></script>
+
+<!-- Custom scripts for all pages-->
+<script src="/assets/js/sb-admin-2.min.js"></script>
+
+
+</body>
+</html>

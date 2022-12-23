@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+<!-- SEO Meta Tags -->
+<meta name="description" content="Your description">
+<meta name="author" content="Your name">
+
+<!-- OG Meta Tags to improve the way the post looks when you share the page on Facebook, Twitter, LinkedIn -->
+<meta property="og:site_name" content="" /> <!-- website name -->
+<meta property="og:site" content="" /> <!-- website link -->
+<meta property="og:title" content="" /> <!-- title shown in the actual shared post -->
+<meta property="og:description" content="" /> <!-- description shown in the actual shared post -->
+<meta property="og:image" content="" /> <!-- image link, make sure it's jpg -->
+<meta property="og:url" content="" /> <!-- where do you want your post to link to -->
+<meta name="twitter:card" content="summary_large_image"> <!-- to have large image post format in Twitter -->
+
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+
+<meta name="description" content="The Renderer and Events" >
+<meta name="author" content="Shaun Curtis" >
+
+
+
+<title>The Renderer and Events</title>
+
+
+<!-- Custom fonts for this template-->
+<link href="/assets/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+<link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+      rel="stylesheet">
+
+<!-- Custom styles for this template-->
+<link href="/assets/css/sb-admin-2.css" rel="stylesheet" type="text/css">
+<link href="/assets/css/site.css" rel="stylesheet" type="text/css">
+
+<!-- Favicon  -->
+<link rel="icon" href="/assets/images/favicon.png">
+
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/highlight.css">
+    <link rel="stylesheet" href="/assets/css/article.css" type="text/css">
+</head>
+<body id="page-top">
+    <!--topbar-->
+    <div id="topbar">
+        
+<!-- Topbar -->
+<nav class="navbar navbar-expand navbar-light topbar mb-4 static-top">
+    
+<ul class="navbar-nav" >
+<li class="nav-item" >
+<a class="nav-link " href="/index.html" role="button"  >
+<span class="mr-2 d-none d-lg-inline text-gray-100">Index</span>
+</a>
+</li>
+<li class="nav-item dropdown no-arrow mx-1" >
+<a class="nav-link dropdown-toggle" href="#" id="238a708e-fd4f-4c6d-bc8d-6bcc298f9851" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"  >
+<span class="mr-2 d-none d-lg-inline text-gray-100">Articles</span>
+</a>
+<div class=" dropdown-list dropdown-menu shadow animated--grow-in" aria-labelledby="238a708e-fd4f-4c6d-bc8d-6bcc298f9851" >
+<a class="dropdown-item" href="/articles/A-Flexible-App.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Creating a Dynamic Blazor App Component
+</a>
+<a class="dropdown-item" href="/articles/Async-Programming-in-DotNetCore.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Async Programming In Dotnetcore
+</a>
+<a class="dropdown-item" href="/articles/Blazor-AllinOne.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Blazor All In One - Multi SPA Hosting
+</a>
+<a class="dropdown-item" href="/articles/Blazor-Async-Programming.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Blazor Async Programming
+</a>
+<a class="dropdown-item" href="/articles/Blazor-Brick-By-Brick.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Blazor Brick By Brick
+</a>
+<a class="dropdown-item" href="/articles/Blazor-Components.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Blazor Components
+</a>
+<a class="dropdown-item" href="/articles/Blazor-CSS.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Blazor CSS
+</a>
+<a class="dropdown-item" href="/articles/Blazor-DataList-Control.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Blazor Datalist Control
+</a>
+<a class="dropdown-item" href="/articles/Blazor-Form-Validation.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Blazor Form Validation
+</a>
+<a class="dropdown-item" href="/articles/Building-Blazor-List-Components.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Building Blazor List Components and the Notification Pattern
+</a>
+<a class="dropdown-item" href="/articles/Building-Edit-Forms.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Building Edit Forms
+</a>
+<a class="dropdown-item" href="/articles/EditFormState.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+The Blazor EditFormState Control
+</a>
+<a class="dropdown-item" href="/articles/Hydra.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Blazor Hydra
+</a>
+<a class="dropdown-item" href="/articles/Inline-Dialog.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+The Blazor Inline Dialog Control
+</a>
+<a class="dropdown-item" href="/articles/Modal-Dialog.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+A Blazor Modal Dialog
+</a>
+<a class="dropdown-item" href="/articles/Policy-Based-Authorization.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Policy Base Authorization in Blazor
+</a>
+<a class="dropdown-item" href="/articles/ValidationFormState.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+A Blazor Validation Control
+</a>
+<a class="dropdown-item" href="/articles/XML-XSD-Serialization.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+XML XSD Serialization
+</a>
+</div>
+</li>
+<li class="nav-item dropdown no-arrow mx-1" >
+<a class="nav-link dropdown-toggle" href="#" id="7d752101-8083-4a2c-850b-e15a0459b471" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"  >
+<span class="mr-2 d-none d-lg-inline text-gray-100">Blazor Database Apps</span>
+</a>
+<div class=" dropdown-list dropdown-menu shadow animated--grow-in" aria-labelledby="7d752101-8083-4a2c-850b-e15a0459b471" >
+<a class="dropdown-item" href="/Building-a-Database-Application-in-Blazor/Building-a-Database-Application-in-Blazor-Part-1.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Building A Database Application In Blazor Part 1
+</a>
+<a class="dropdown-item" href="/Building-a-Database-Application-in-Blazor/Building-a-Database-Application-in-Blazor-Part-2.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Building A Database Application In Blazor Part 2
+</a>
+<a class="dropdown-item" href="/Building-a-Database-Application-in-Blazor/Building-a-Database-Application-in-Blazor-Part-3.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Building A Database Application In Blazor Part 3
+</a>
+<a class="dropdown-item" href="/Building-a-Database-Application-in-Blazor/Building-a-Database-Application-in-Blazor-Part-4.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Building A Database Application In Blazor Part 4
+</a>
+<a class="dropdown-item" href="/Building-a-Database-Application-in-Blazor/Building-a-Database-Application-in-Blazor-Part-5.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Building A Database Application In Blazor Part 5
+</a>
+<a class="dropdown-item" href="/Building-a-Database-Application-in-Blazor/Building-a-Database-Application-in-Blazor-Part-6.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Building A Database Application In Blazor Part 6
+</a>
+<a class="dropdown-item" href="/Building-a-Database-Application-in-Blazor/index.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Building a Database Application in Blazor
+</a>
+</div>
+</li>
+<li class="nav-item dropdown no-arrow mx-1" >
+<a class="nav-link dropdown-toggle" href="#" id="05ac4653-db78-4fcf-b07b-37040c9669a6" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"  >
+<span class="mr-2 d-none d-lg-inline text-gray-100">Building Blazor Applications</span>
+</a>
+<div class=" dropdown-list dropdown-menu shadow animated--grow-in" aria-labelledby="05ac4653-db78-4fcf-b07b-37040c9669a6" >
+<a class="dropdown-item" href="/Building-Blazor-Applications/Blazor-Async-UI-Events.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Blazor Async UI Events
+</a>
+<a class="dropdown-item" href="/Building-Blazor-Applications/Blazor-Bootstrap-Toaster.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Blazor Bootstrap Toaster
+</a>
+<a class="dropdown-item" href="/Building-Blazor-Applications/Blazor-Services.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Blazor Services
+</a>
+<a class="dropdown-item" href="/Building-Blazor-Applications/Building-A-Blazor-AutoComplete-Control.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Building A Blazor Autocomplete Control
+</a>
+<a class="dropdown-item" href="/Building-Blazor-Applications/Building-Wrapper-Components.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Building Wrapper Components
+</a>
+<a class="dropdown-item" href="/Building-Blazor-Applications/Component-Service-Manager.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+The Component Service Manager
+</a>
+<a class="dropdown-item" href="/Building-Blazor-Applications/DBContexts-In-Transient-Services.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Dbcontexts In Transient Services
+</a>
+<a class="dropdown-item" href="/Building-Blazor-Applications/DynamicCss.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Blazor Dynamic Stylesheets
+</a>
+<a class="dropdown-item" href="/Building-Blazor-Applications/For-ForEach-in-Blazor.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+For Foreach In Blazor
+</a>
+<a class="dropdown-item" href="/Building-Blazor-Applications/Leaner-Meaner-Greener-Components.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Leaner Meaner Greener Components
+</a>
+<a class="dropdown-item" href="/Building-Blazor-Applications/Notification-Service-Pattern.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Blazor Notification Service Pattern
+</a>
+<a class="dropdown-item" href="/Building-Blazor-Applications/Rethinking-The-Repository-Pattern.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Rethinking The Repository Pattern
+</a>
+<a class="dropdown-item" href="/Building-Blazor-Applications/The-Blazor-WASM-Hosted-Project.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+The Blazor WASM Hosted Project
+</a>
+<a class="dropdown-item" href="/Building-Blazor-Applications/Whats-Wrong-with-my-Component-Design.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Whats Wrong With My Component Design
+</a>
+<a class="dropdown-item" href="/Building-Blazor-Applications/The-Blazor-Component" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Building Blazor Applications\The Blazor Component
+</a>
+</div>
+</li>
+<li class="nav-item dropdown no-arrow mx-1" >
+<a class="nav-link dropdown-toggle" href="#" id="38b105b5-3ac4-45ed-9b7f-ea769c6c9b7a" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"  >
+<span class="mr-2 d-none d-lg-inline text-gray-100">Design</span>
+</a>
+<div class=" dropdown-list dropdown-menu shadow animated--grow-in" aria-labelledby="38b105b5-3ac4-45ed-9b7f-ea769c6c9b7a" >
+<a class="dropdown-item" href="/Design/Clean-Design-In-Blazor.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Clean Design Principles in Blazor Applications
+</a>
+<a class="dropdown-item" href="/Design/Clean-Design-Blazor-Template.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+A Blazor Clean Design Template
+</a>
+<a class="dropdown-item" href="/Design/Clean-Design-Blazor-Template-Solution-Structure.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Solution Structure in the Clean Design Blazor Template
+</a>
+<a class="dropdown-item" href="/Design/Clean-Design-Blazor-Template-DataServices.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Data Services in the Clean Design Blazor Template
+</a>
+<a class="dropdown-item" href="/Design/Clean-Design-Blazor-Template-UI.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+The UI in the Clean Design Blazor Template
+</a>
+<a class="dropdown-item" href="/Design/Clean-Design-Blazor-Template-Solution-Setup.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Solution Setup in the Clean Design Blazor Template
+</a>
+<a class="dropdown-item" href="/Design/Clean-Design-Blazor-Template-Testing.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Testing in the Clean Design Blazor Template
+</a>
+</div>
+</li>
+<li class="nav-item dropdown no-arrow mx-1" >
+<a class="nav-link dropdown-toggle" href="#" id="19a975a5-a2f5-45f2-bc38-c4c0710e6ab5" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"  >
+<span class="mr-2 d-none d-lg-inline text-gray-100">Modern C#</span>
+</a>
+<div class=" dropdown-list dropdown-menu shadow animated--grow-in" aria-labelledby="19a975a5-a2f5-45f2-bc38-c4c0710e6ab5" >
+<a class="dropdown-item" href="/Modern-Coding-Patterns/Nullable-And-VS-2022.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Nullable And VS 2022
+</a>
+</div>
+</li>
+</ul>
+
+    <div class="ms-5 me-5 ml-auto">
+        <h1>Cold Elm Coders</h1>
+    </div>
+</nav>
+
+
+    </div>
+    <!--End topbar-->
+    <!--Sidebar-->
+    <div id="sidebar">
+        
+<div class="article-info p-2" Published: 17-11-2022 >
+<div>Published: 17-11-2022</div>
+<div>Last Updated: 17-11-2022</div>
+<div>Author: Shaun Curtis</div>
+</div>
+
+        
+<h4 class="p-2">Table of Contents</h4>
+<ul class="TOC" >
+<li class="TOC-item TOC-item-0" >
+<a class="TOC-link" href="#">Top</a>
+<ul class="TOC TOC-0" >
+<li class="TOC-item TOC-item-1" >
+<ul class="TOC TOC-1" >
+<li class="TOC-item TOC-item-2" >
+<a class="TOC-link" href="#the-renderer-and-the-render-tree">The Renderer and the Render Tree</a>
+</li>
+<li class="TOC-item TOC-item-2" >
+<a class="TOC-link" href="#ui-events">UI Events</a>
+<ul class="TOC TOC-2" >
+<li class="TOC-item TOC-item-3" >
+<a class="TOC-link" href="#ihandleevent">IHandleEvent</a>
+</li>
+<li class="TOC-item TOC-item-3" >
+<a class="TOC-link" href="#ihandleafterrender">IHandleAfterRender</a>
+</li>
+<li class="TOC-item TOC-item-3" >
+<a class="TOC-link" href="#void-ui-events">Void UI Events</a>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+    </div>
+    <!--End Sidebar-->
+    <!-- Page Wrapper -->
+    <div id="wrapper">
+        <!-- Content Wrapper -->
+        <div id="content-wrapper" class="d-flex flex-column">
+            <!-- Main Content -->
+            <div id="content">
+                <!-- Topbar -->
+                <div id="article">
+                    <!-- Article -->
+                    
+<!-- Header -->
+<header class="ex-header-article">
+    <div class="container">
+        <div class="row pt-3 pb-3 border-bottom">
+            <div class="col">
+                
+<h1>The Renderer and Events</h1>
+<div>The Renderer and Events</div>
+
+            </div> <!-- end of col -->
+        </div> <!-- end of row -->
+    </div> <!-- end of container -->
+</header> <!-- end of ex-header -->
+<!-- end of header -->
+
+
+                    
+<!-- Article Container -->
+<div class="ex-basic-1 pt-4">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                
+
+        <p><a href="index.html">Back to the Index</a></p>
+<p>A detailed description of thr Render process is beyond the scope of this article, however you need a basic grasp of the concepts to understand the rendering process.</p>
+<p>To quote the MS Documentation:</p>
+<blockquote>
+<p>The <code>Renderer</code> provides mechanisms:</p>
+<ol>
+<li>For rendering hierarchies of <code>IComponent</code> instances;</li>
+<li>Dispatching events to them;</li>
+<li>Notifying when the user interface is being updated.</li>
+</ol>
+</blockquote>
+<h2 id="the-renderer-and-the-render-tree">The Renderer and the Render Tree</h2>
+<p>The <code>Renderer</code> and <code>RenderTree</code> reside in the Client Application in WASM and in the SignalR Hub Session in Server, i.e. one per connected Client Application.</p>
+<p>The UI - defined by html code in the DOM [Document Object Model] - is represented in the application as a <code>RenderTree</code> and managed by a <code>Renderer</code>. Think of the <code>RenderTree</code> as a tree with one or more components attached to each branch. Each component is a C# class  implementing the <code>IComponent</code> interface.</p>
+<p>The <code>Renderer</code> maintains a <code>RenderQueue</code> of <code>RenderFragments</code>.  Components submit <code>RenderFragments</code> to the queue.  The Renderer services this queue and invokes any queued render fragements.</p>
+<p>The <code>Renderer</code> has a diffing process that detects changes in the DOM caused by <code>RenderTree</code> updates.  It passes these changes to the client code to implement in the Browser DOM and update the displayed page.</p>
+<p>The diagram below is a visual representation of the render tree for the out-of-the-box Blazor template.</p>
+<p><img src="https://shauncurtis.github.io/articles/assets/Blazor-Components/Root-Render-Tree.png" alt="Root Render Tree"></p>
+<h2 id="ui-events">UI Events</h2>
+<p>The Render manages UI events, feeding registered events back from the DOM into the RenderTree component instances that defined them.</p>
+<p>Hidden away are two important interfaces that dictate how this happens.</p>
+<ul>
+<li><code>IHandleEvent</code></li>
+<li><code>IHandleAfterRender</code></li>
+</ul>
+<h3 id="ihandleevent">IHandleEvent</h3>
+<p>When the Renderer receives a registered UI event it either:</p>
+<ol>
+<li>Calls <code>IHandleEvent.HandleEventAsync</code> if the component implements <code>IHandleEvent</code>.</li>
+<li>Calls the handler directly.</li>
+</ol>
+<p><code>IHandleEvent</code> defines a single method.</p>
+<pre><code class="language-csharp">Task IHandleEvent.HandleEventAsync(EventCallbackWorkItem callback, <span class="hljs-built_in">object</span>? arg);
+</code></pre>
+<p><code>ComponentBase</code> implements the interface, with the two step call to <code>StateHasChanged</code>.  Ensure you're fundimental understandoing of this piece of code.  It will save you a lot of time in the future.</p>
+<pre><code class="language-csharp">Task IHandleEvent.HandleEventAsync(EventCallbackWorkItem callback, <span class="hljs-built_in">object</span>? arg)
+{
+    <span class="hljs-keyword">var</span> task = callback.InvokeAsync(arg);
+    <span class="hljs-keyword">var</span> shouldAwaitTask = task.Status != TaskStatus.RanToCompletion &amp;&amp;
+        task.Status != TaskStatus.Canceled;
+
+    <span class="hljs-comment">// After each event, we synchronously re-render (unless !ShouldRender())</span>
+    <span class="hljs-comment">// This just saves the developer the trouble of putting &quot;StateHasChanged();&quot;</span>
+    <span class="hljs-comment">// at the end of every event callback.</span>
+    StateHasChanged();
+
+    <span class="hljs-keyword">return</span> shouldAwaitTask ?
+        CallStateHasChangedOnAsyncCompletion(task) :
+        Task.CompletedTask;
+}
+
+<span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-keyword">async</span> Task <span class="hljs-title">CallStateHasChangedOnAsyncCompletion</span>(<span class="hljs-params">Task task</span>)</span>
+{
+    <span class="hljs-keyword">try</span>
+    {
+        <span class="hljs-keyword">await</span> task;
+    }
+    <span class="hljs-keyword">catch</span> <span class="hljs-comment">// avoiding exception filters for AOT runtime support</span>
+    {
+        <span class="hljs-comment">// Ignore exceptions from task cancellations, but don&#x27;t bother issuing a state change.</span>
+        <span class="hljs-keyword">if</span> (task.IsCanceled)
+            <span class="hljs-keyword">return</span>;
+        <span class="hljs-keyword">throw</span>;
+    }
+    StateHasChanged();
+}
+</code></pre>
+<p>If <code>IHandleEvent</code> is not implemented it simply calls the handler directly.</p>
+<pre><code class="language-csharp">Task <span class="hljs-keyword">async</span> IHandleEvent.HandleEventAsync(EventCallbackWorkItem callback, <span class="hljs-built_in">object</span>? arg)
+   =&gt; <span class="hljs-keyword">await</span> callback.InvokeAsync(arg);
+</code></pre>
+<h3 id="ihandleafterrender">IHandleAfterRender</h3>
+<p>When the component completes rendering the Renderer checks the compoment to see if it If a implements <code>IHandleAfterRender</code>the Renderer calls <code>HandleEventAsync</code>.  If it doesn't then the renderer doesn't track the event on the component and nothing happens.</p>
+<p><code>ComponentBase</code> implements the interface.</p>
+<pre><code class="language-csharp">Task IHandleEvent.HandleEventAsync(EventCallbackWorkItem callback, <span class="hljs-built_in">object</span>? arg)
+{
+    <span class="hljs-keyword">var</span> task = callback.InvokeAsync(arg);
+    <span class="hljs-keyword">var</span> shouldAwaitTask = task.Status != TaskStatus.RanToCompletion &amp;&amp;
+        task.Status != TaskStatus.Canceled;
+
+    <span class="hljs-comment">// After each event, we synchronously re-render (unless !ShouldRender())</span>
+    <span class="hljs-comment">// This just saves the developer the trouble of putting &quot;StateHasChanged();&quot;</span>
+    <span class="hljs-comment">// at the end of every event callback.</span>
+    StateHasChanged();
+
+    <span class="hljs-keyword">return</span> shouldAwaitTask ?
+        CallStateHasChangedOnAsyncCompletion(task) :
+        Task.CompletedTask;
+}
+</code></pre>
+<p>If <code>IHandleAfterRender</code> is not implemented then nothing happens.</p>
+<pre><code class="language-csharp">Task IHandleEvent.HandleEventAsync(EventCallbackWorkItem callback, <span class="hljs-built_in">object</span>? arg)
+   =&gt; <span class="hljs-keyword">return</span> Task.CompletedTask;
+</code></pre>
+<h3 id="void-ui-events">Void UI Events</h3>
+<p>The following code won't execute as expected in <code>ComponentBase</code>:</p>
+<pre><code class="language-csharp"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-keyword">async</span> <span class="hljs-title">ButtonClick</span>(<span class="hljs-params">MouseEventArgs e</span>)</span> 
+{
+  <span class="hljs-keyword">await</span> Task.Delay(<span class="hljs-number">2000</span>);
+  UpdateADisplayProperty();
+}
+</code></pre>
+<p>The DisplayProperty doesn't display the current value until another <code>StateHasChanged</code> events occurs.  Why? ButtonClick doesn't return anything, so there's no <code>Task</code> for the event handler to wait on.  On the <code>await</code> yield, it runs to completion running the final <code>StateHasChanged</code> before <code>UpdateADisplayProperty</code> completes.</p>
+<p>This is a band-aid fix - it's bad pactice, <strong>DON'T DO IT</strong>.</p>
+<pre><code class="language-csharp"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-keyword">async</span> <span class="hljs-title">ButtonClick</span>(<span class="hljs-params">MouseEventArgs e</span>)</span> 
+{
+  <span class="hljs-keyword">await</span> Task.Delay(<span class="hljs-number">2000</span>);
+  UpdateADisplayProperty();
+  StateHasChanged();
+}
+</code></pre>
+<p>The correct solution is:</p>
+<pre><code class="language-csharp"><span class="hljs-function">Task <span class="hljs-keyword">async</span> <span class="hljs-title">ButtonClick</span>(<span class="hljs-params">MouseEventArgs e</span>)</span> 
+{
+  <span class="hljs-keyword">await</span> Task.Delay(<span class="hljs-number">2000</span>);
+  UpdateADisplayProperty();
+}
+</code></pre>
+<p>Now the event handler has a <code>Task</code> to await and doesn't execute <code>StateHasChanged</code> until <code>ButtonClick</code> completes.</p>
+
+        
+        
+    
+
+            </div>
+        </div>
+    </div>
+</div>
+<!-- end of Article Container -->
+
+
+                </div>
+                <!-- End of Main Content -->
+            </div>
+            <!-- Footer -->
+            
+<!-- Copyright -->
+<footer class="sticky-footer bg-white">
+    <div class="container my-auto">
+        <div class="copyright text-center my-auto">
+            
+<span>Copyright &copy; Cold Elm Coders - 2022</span>
+
+        </div>
+    </div>
+</footer>
+<!-- end of copyright -->
+
+
+            <!-- End of Footer -->
+        </div>
+        <!-- End of Content Wrapper -->
+        
+<a class="scroll-to-top rounded" href="#page-top">
+    <i class="fas fa-angle-up"></i>
+</a>
+
+
+    </div>
+    <!-- End of Page Wrapper -->
+    <!-- Scripts -->
+    
+<!-- Scripts -->
+<!-- Bootstrap core JavaScript-->
+<script src="/assets/vendor/jquery/jquery.min.js"></script>
+<script src="/assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+<!-- Core plugin JavaScript-->
+<script src="/assets/vendor/jquery-easing/jquery.easing.min.js"></script>
+
+<!-- Custom scripts for all pages-->
+<script src="/assets/js/sb-admin-2.min.js"></script>
+
+
+</body>
+</html>
