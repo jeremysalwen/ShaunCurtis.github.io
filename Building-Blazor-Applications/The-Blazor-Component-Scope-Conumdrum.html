@@ -1,0 +1,891 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+<!-- SEO Meta Tags -->
+<meta name="description" content="Your description">
+<meta name="author" content="Your name">
+
+<!-- OG Meta Tags to improve the way the post looks when you share the page on Facebook, Twitter, LinkedIn -->
+<meta property="og:site_name" content="" /> <!-- website name -->
+<meta property="og:site" content="" /> <!-- website link -->
+<meta property="og:title" content="" /> <!-- title shown in the actual shared post -->
+<meta property="og:description" content="" /> <!-- description shown in the actual shared post -->
+<meta property="og:image" content="" /> <!-- image link, make sure it's jpg -->
+<meta property="og:url" content="" /> <!-- where do you want your post to link to -->
+<meta name="twitter:card" content="summary_large_image"> <!-- to have large image post format in Twitter -->
+
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+
+<meta name="description" content="Building a Service Manager for Blazor Components" >
+<meta name="author" content="Shaun Curtis" >
+
+
+
+<title>The Blazor Component Scope Conumdrum</title>
+
+
+<!-- Custom fonts for this template-->
+<link href="/assets/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+<link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+      rel="stylesheet">
+
+<!-- Custom styles for this template-->
+<link href="/assets/css/sb-admin-2.css" rel="stylesheet" type="text/css">
+<link href="/assets/css/site.css" rel="stylesheet" type="text/css">
+
+<!-- Favicon  -->
+<link rel="icon" href="/assets/images/favicon.png">
+
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/highlight.css">
+    <link rel="stylesheet" href="/assets/css/article.css" type="text/css">
+</head>
+<body id="page-top">
+    <!--topbar-->
+    <div id="topbar">
+        
+<!-- Topbar -->
+<nav class="navbar navbar-expand navbar-light topbar mb-4 static-top">
+    
+<ul class="navbar-nav" >
+<li class="nav-item" >
+<a class="nav-link " href="/index.html" role="button"  >
+<span class="mr-2 d-none d-lg-inline text-gray-100">Index</span>
+</a>
+</li>
+<li class="nav-item dropdown no-arrow mx-1" >
+<a class="nav-link dropdown-toggle" href="#" id="3e6b3d67-0862-4b20-bb34-c390508de3ad" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"  >
+<span class="mr-2 d-none d-lg-inline text-gray-100">Articles</span>
+</a>
+<div class=" dropdown-list dropdown-menu shadow animated--grow-in" aria-labelledby="3e6b3d67-0862-4b20-bb34-c390508de3ad" >
+<a class="dropdown-item" href="/articles/A-Flexible-App.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Creating a Dynamic Blazor App Component
+</a>
+<a class="dropdown-item" href="/articles/Async-Programming-in-DotNetCore.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Async Programming In Dotnetcore
+</a>
+<a class="dropdown-item" href="/articles/Blazor-AllinOne.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Blazor All In One - Multi SPA Hosting
+</a>
+<a class="dropdown-item" href="/articles/Blazor-Async-Programming.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Blazor Async Programming
+</a>
+<a class="dropdown-item" href="/articles/Blazor-Brick-By-Brick.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Blazor Brick By Brick
+</a>
+<a class="dropdown-item" href="/articles/Blazor-Components.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Blazor Components
+</a>
+<a class="dropdown-item" href="/articles/Blazor-CSS.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Blazor CSS
+</a>
+<a class="dropdown-item" href="/articles/Blazor-DataList-Control.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Blazor Datalist Control
+</a>
+<a class="dropdown-item" href="/articles/Blazor-Form-Validation.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Blazor Form Validation
+</a>
+<a class="dropdown-item" href="/articles/Building-Blazor-List-Components.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Building Blazor List Components and the Notification Pattern
+</a>
+<a class="dropdown-item" href="/articles/Building-Edit-Forms.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Building Edit Forms
+</a>
+<a class="dropdown-item" href="/articles/EditFormState.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+The Blazor EditFormState Control
+</a>
+<a class="dropdown-item" href="/articles/Hydra.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Blazor Hydra
+</a>
+<a class="dropdown-item" href="/articles/Inline-Dialog.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+The Blazor Inline Dialog Control
+</a>
+<a class="dropdown-item" href="/articles/Modal-Dialog.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+A Blazor Modal Dialog
+</a>
+<a class="dropdown-item" href="/articles/Policy-Based-Authorization.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Policy Base Authorization in Blazor
+</a>
+<a class="dropdown-item" href="/articles/ValidationFormState.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+A Blazor Validation Control
+</a>
+<a class="dropdown-item" href="/articles/XML-XSD-Serialization.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+XML XSD Serialization
+</a>
+</div>
+</li>
+<li class="nav-item dropdown no-arrow mx-1" >
+<a class="nav-link dropdown-toggle" href="#" id="1a2ad79a-a07e-48b2-bde5-9f680ac750d7" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"  >
+<span class="mr-2 d-none d-lg-inline text-gray-100">Blazor Database Apps</span>
+</a>
+<div class=" dropdown-list dropdown-menu shadow animated--grow-in" aria-labelledby="1a2ad79a-a07e-48b2-bde5-9f680ac750d7" >
+<a class="dropdown-item" href="/Building-a-Database-Application-in-Blazor/Building-a-Database-Application-in-Blazor-Part-1.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Building A Database Application In Blazor Part 1
+</a>
+<a class="dropdown-item" href="/Building-a-Database-Application-in-Blazor/Building-a-Database-Application-in-Blazor-Part-2.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Building A Database Application In Blazor Part 2
+</a>
+<a class="dropdown-item" href="/Building-a-Database-Application-in-Blazor/Building-a-Database-Application-in-Blazor-Part-3.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Building A Database Application In Blazor Part 3
+</a>
+<a class="dropdown-item" href="/Building-a-Database-Application-in-Blazor/Building-a-Database-Application-in-Blazor-Part-4.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Building A Database Application In Blazor Part 4
+</a>
+<a class="dropdown-item" href="/Building-a-Database-Application-in-Blazor/Building-a-Database-Application-in-Blazor-Part-5.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Building A Database Application In Blazor Part 5
+</a>
+<a class="dropdown-item" href="/Building-a-Database-Application-in-Blazor/Building-a-Database-Application-in-Blazor-Part-6.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Building A Database Application In Blazor Part 6
+</a>
+<a class="dropdown-item" href="/Building-a-Database-Application-in-Blazor/index.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Building a Database Application in Blazor
+</a>
+</div>
+</li>
+<li class="nav-item dropdown no-arrow mx-1" >
+<a class="nav-link dropdown-toggle" href="#" id="d6cbf822-ae9f-4b00-9327-cf68db0b0ee6" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"  >
+<span class="mr-2 d-none d-lg-inline text-gray-100">Building Blazor Applications</span>
+</a>
+<div class=" dropdown-list dropdown-menu shadow animated--grow-in" aria-labelledby="d6cbf822-ae9f-4b00-9327-cf68db0b0ee6" >
+<a class="dropdown-item" href="/Building-Blazor-Applications/Blazor-Async-UI-Events.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Blazor Async UI Events
+</a>
+<a class="dropdown-item" href="/Building-Blazor-Applications/Blazor-Bootstrap-Toaster.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Blazor Bootstrap Toaster
+</a>
+<a class="dropdown-item" href="/Building-Blazor-Applications/Blazor-Services.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Blazor Services
+</a>
+<a class="dropdown-item" href="/Building-Blazor-Applications/Building-A-Blazor-AutoComplete-Control.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Building A Blazor Autocomplete Control
+</a>
+<a class="dropdown-item" href="/Building-Blazor-Applications/Building-Wrapper-Components.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Building Wrapper Components
+</a>
+<a class="dropdown-item" href="/Building-Blazor-Applications/DBContexts-In-Transient-Services.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Dbcontexts In Transient Services
+</a>
+<a class="dropdown-item" href="/Building-Blazor-Applications/DynamicCss.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Blazor Dynamic Stylesheets
+</a>
+<a class="dropdown-item" href="/Building-Blazor-Applications/For-ForEach-in-Blazor.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+For Foreach In Blazor
+</a>
+<a class="dropdown-item" href="/Building-Blazor-Applications/Leaner-Meaner-Greener-Components.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Leaner Meaner Greener Components
+</a>
+<a class="dropdown-item" href="/Building-Blazor-Applications/Notification-Service-Pattern.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Blazor Notification Service Pattern
+</a>
+<a class="dropdown-item" href="/Building-Blazor-Applications/Rethinking-The-Repository-Pattern.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Rethinking The Repository Pattern
+</a>
+<a class="dropdown-item" href="/Building-Blazor-Applications/The-Blazor-Component-Scope-Conumdrum.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+The Blazor Component Scope Conumdrum
+</a>
+<a class="dropdown-item" href="/Building-Blazor-Applications/The-Blazor-WASM-Hosted-Project.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+The Blazor WASM Hosted Project
+</a>
+<a class="dropdown-item" href="/Building-Blazor-Applications/Whats-Wrong-with-my-Component-Design.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Whats Wrong With My Component Design
+</a>
+<a class="dropdown-item" href="/Building-Blazor-Applications/The-Blazor-Component" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Building Blazor Applications\The Blazor Component
+</a>
+</div>
+</li>
+<li class="nav-item dropdown no-arrow mx-1" >
+<a class="nav-link dropdown-toggle" href="#" id="b4c58418-2e8f-459d-b22a-5fc7d9fa8c38" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"  >
+<span class="mr-2 d-none d-lg-inline text-gray-100">Design</span>
+</a>
+<div class=" dropdown-list dropdown-menu shadow animated--grow-in" aria-labelledby="b4c58418-2e8f-459d-b22a-5fc7d9fa8c38" >
+<a class="dropdown-item" href="/Design/Clean-Design-In-Blazor.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Clean Design Principles in Blazor Applications
+</a>
+<a class="dropdown-item" href="/Design/Clean-Design-Blazor-Template.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+A Blazor Clean Design Template
+</a>
+<a class="dropdown-item" href="/Design/Clean-Design-Blazor-Template-Solution-Structure.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Solution Structure in the Clean Design Blazor Template
+</a>
+<a class="dropdown-item" href="/Design/Clean-Design-Blazor-Template-DataServices.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Data Services in the Clean Design Blazor Template
+</a>
+<a class="dropdown-item" href="/Design/Clean-Design-Blazor-Template-UI.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+The UI in the Clean Design Blazor Template
+</a>
+<a class="dropdown-item" href="/Design/Clean-Design-Blazor-Template-Solution-Setup.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Solution Setup in the Clean Design Blazor Template
+</a>
+<a class="dropdown-item" href="/Design/Clean-Design-Blazor-Template-Testing.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Testing in the Clean Design Blazor Template
+</a>
+</div>
+</li>
+<li class="nav-item dropdown no-arrow mx-1" >
+<a class="nav-link dropdown-toggle" href="#" id="5175d30f-3974-4253-bfa0-97275db93b09" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"  >
+<span class="mr-2 d-none d-lg-inline text-gray-100">Modern C#</span>
+</a>
+<div class=" dropdown-list dropdown-menu shadow animated--grow-in" aria-labelledby="5175d30f-3974-4253-bfa0-97275db93b09" >
+<a class="dropdown-item" href="/Modern-Coding-Patterns/Nullable-And-VS-2022.html" >
+<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
+Nullable And VS 2022
+</a>
+</div>
+</li>
+</ul>
+
+    <div class="ms-5 me-5 ml-auto">
+        <h1>Cold Elm Coders</h1>
+    </div>
+</nav>
+
+
+    </div>
+    <!--End topbar-->
+    <!--Sidebar-->
+    <div id="sidebar">
+        
+<div class="article-info p-2" Published: 23-12-2022 >
+<div>Published: 23-12-2022</div>
+<div>Last Updated: 26-12-2022</div>
+<div>Author: Shaun Curtis</div>
+</div>
+
+        
+<h4 class="p-2">Table of Contents</h4>
+<ul class="TOC" >
+<li class="TOC-item TOC-item-0" >
+<a class="TOC-link" href="#">Top</a>
+<ul class="TOC TOC-0" >
+<li class="TOC-item TOC-item-1" >
+<a class="TOC-link" href="#the-blazor-component-scope-conumdrum">The Blazor Component Scope Conumdrum</a>
+<ul class="TOC TOC-1" >
+<li class="TOC-item TOC-item-2" >
+<a class="TOC-link" href="#solving-the-conundrum">Solving the Conundrum</a>
+</li>
+<li class="TOC-item TOC-item-2" >
+<a class="TOC-link" href="#repo">Repo</a>
+</li>
+<li class="TOC-item TOC-item-2" >
+<a class="TOC-link" href="#componentserviceprovider-in-action">ComponentServiceProvider in Action</a>
+</li>
+<li class="TOC-item TOC-item-2" >
+<a class="TOC-link" href="#the-detail">The Detail</a>
+<ul class="TOC TOC-2" >
+<li class="TOC-item TOC-item-3" >
+<a class="TOC-link" href="#componentservice">ComponentService</a>
+</li>
+<li class="TOC-item TOC-item-3" >
+<a class="TOC-link" href="#componentserviceprovider">ComponentServiceProvider</a>
+</li>
+<li class="TOC-item TOC-item-3" >
+<a class="TOC-link" href="#componentserviceprovidercascade">ComponentServiceProviderCascade</a>
+</li>
+</ul>
+</li>
+<li class="TOC-item TOC-item-2" >
+<a class="TOC-link" href="#wrapping-up">Wrapping Up</a>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+    </div>
+    <!--End Sidebar-->
+    <!-- Page Wrapper -->
+    <div id="wrapper">
+        <!-- Content Wrapper -->
+        <div id="content-wrapper" class="d-flex flex-column">
+            <!-- Main Content -->
+            <div id="content">
+                <!-- Topbar -->
+                <div id="article">
+                    <!-- Article -->
+                    
+<!-- Header -->
+<header class="ex-header-article">
+    <div class="container">
+        <div class="row pt-3 pb-3 border-bottom">
+            <div class="col">
+                
+<h1>The Blazor Component Scope Conumdrum</h1>
+<div>Building a Service Manager for Blazor Components</div>
+
+            </div> <!-- end of col -->
+        </div> <!-- end of row -->
+    </div> <!-- end of container -->
+</header> <!-- end of ex-header -->
+<!-- end of header -->
+
+
+                    
+<!-- Article Container -->
+<div class="ex-basic-1 pt-4">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                
+
+        <h1 id="the-blazor-component-scope-conumdrum">The Blazor Component Scope Conumdrum</h1>
+<p>Apply good design practices to components, and you separate out the data management function from the display function.  A component such as <code>FetchData</code> in the demo project &quot;Fetches(Manages) the data AND displays it in a table&quot;.  There's an <strong>AND</strong> in there which is a very good indicator that <code>FetchData</code> has multiple concerns/responsibilities.</p>
+<p>Apply the <em>Single Responsibilty Principle</em> and you have two classes:</p>
+<ol>
+<li><code>WeatherForcastListForm</code> - a component that displays a list of WeatherForecasts</li>
+<li><code>WeatherForecastListPresenter</code> - an object that interfaces with the data pipeline to manage the list of WeatherForecasts.</li>
+</ol>
+<p><img src="\Building-Blazor-Applications\assets\The-Blazor-Component-Scope-Conumdrum\data-pipeline.png" alt="data pipleine"></p>
+<p>Taking those same design principles further, you inject an instance of <code>WeatherForecastListPresenter</code> into <code>WeatherForcastListForm</code> from the DI container with the same lifecycle scope as the form.</p>
+<p>In the DotNetCore Blazor framework that dictates <code>WeatherForecastListPresenter</code> as <em>Transient</em>.</p>
+<p>Unfortunately that's not a clean fit.</p>
+<ol>
+<li>
+<p>Sub-components in the Form can't use DI to access the same instance of <code>WeatherForecastListPresenter</code>.  It has to be cascaded to them.</p>
+</li>
+<li>
+<p>Any class implementing <code>IDisposable</code> or <code>IAsyncDisposable</code> should never be scoped as <em>Transient</em>.  The DI service container maintains a reference to the instance to <em>Dispose</em> it when the container itself is <em>Disposed</em>.  You create a &quot;memory leak&quot; in your application as copies of <code>WeatherForecastListPresenter</code> build up every time you visit the form.  They are only disposed when you close down or refresh you session with the application.</p>
+</li>
+</ol>
+<p><code>OwningComponentBase</code> was designed to fill this gap.  It creates it's own scoped service container which it disposes when the component is disposed.  You can create <em>Scoped</em> services that have the same scope as the component.</p>
+<p>Unfortunately it's fatally flawed by the inherent design of the current Service Container.</p>
+<p>Any <em>Scoped</em> services that your service depends on are created in the same container: it is after all just a <em>Scoped</em> container.  Take <code>AuthenticationService</code>.  The instance in the SPA scoped container is the one your service needs, but instead it gets a new one with no user information.  The same applies to Notification services, the NavigationManager and many others.  It's useless, except in very specific circumstances.</p>
+<h2 id="solving-the-conundrum">Solving the Conundrum</h2>
+<p>The fact is, we have a DotNetCore service container configuration designed around the old MVC server side model.  We have no scope, or a contaner to go with it, that matches the scope of a component.  Until Microsoft fixes the problem, we need a workaround.</p>
+<p>The <code>ComponentServiceProvider</code> I demonstrate below fills the gap.  It's not perfect, but for me it comes close enough to use in production.</p>
+<h2 id="repo">Repo</h2>
+<p>The repo and latest version of this article is here <a href="https://github.com/ShaunCurtis/Blazr.ComponentServiceManager">Blazr.ComponentServiceManager</a>.</p>
+<h2 id="componentserviceprovider-in-action">ComponentServiceProvider in Action</h2>
+<p>Here's a simple implementation to demonstate it in action.  The detailed design is in the next section.</p>
+<p>A simple Timer Service defined by an interface.</p>
+<pre><code class="language-csharp"><span class="hljs-keyword">public</span> <span class="hljs-keyword">interface</span> <span class="hljs-title">ITimeService</span>
+{
+    <span class="hljs-keyword">public</span> <span class="hljs-built_in">string</span> Message { <span class="hljs-keyword">get</span>;}
+    <span class="hljs-keyword">public</span> <span class="hljs-keyword">event</span> EventHandler? TimeChanged;
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">UpdateTime</span>()</span>;
+}
+</code></pre>
+<p>The concrete service with debug code to see instances created and disposed correctly.</p>
+<pre><code class="language-csharp"><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title">TimeService</span> : <span class="hljs-title">ITimeService</span>, <span class="hljs-title">IDisposable</span>, <span class="hljs-title">IAsyncDisposable</span>
+{
+    <span class="hljs-keyword">public</span> <span class="hljs-keyword">readonly</span> Guid InstanceId = Guid.NewGuid();
+    <span class="hljs-keyword">private</span> <span class="hljs-built_in">bool</span> asyncdisposedValue;
+    <span class="hljs-keyword">private</span> <span class="hljs-built_in">bool</span> disposedValue;
+
+    <span class="hljs-keyword">public</span> <span class="hljs-built_in">string</span> Message { <span class="hljs-keyword">get</span>; <span class="hljs-keyword">private</span> <span class="hljs-keyword">set</span>; } = DateTime.Now.ToLongTimeString();
+    <span class="hljs-keyword">public</span> <span class="hljs-keyword">event</span> EventHandler? TimeChanged;
+
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">TimeService</span>()</span>
+        =&gt; Debug.WriteLine(<span class="hljs-string">$&quot;TimeService - instance <span class="hljs-subst">{InstanceId}</span> created&quot;</span>);
+
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">UpdateTime</span>()</span>
+    {
+        Message = DateTime.Now.ToLongTimeString();
+        TimeChanged?.Invoke(<span class="hljs-keyword">this</span>, EventArgs.Empty);
+    }
+
+    <span class="hljs-function"><span class="hljs-keyword">public</span> ValueTask <span class="hljs-title">DisposeAsync</span>()</span>
+    {
+        <span class="hljs-keyword">if</span> (!asyncdisposedValue)
+            Debug.WriteLine(<span class="hljs-string">$&quot;TimeService - instance <span class="hljs-subst">{InstanceId}</span> async disposed&quot;</span>);
+
+        asyncdisposedValue = <span class="hljs-literal">true</span>;
+        <span class="hljs-keyword">return</span> ValueTask.CompletedTask;
+    }
+
+    <span class="hljs-function"><span class="hljs-keyword">protected</span> <span class="hljs-keyword">virtual</span> <span class="hljs-keyword">void</span> <span class="hljs-title">Dispose</span>(<span class="hljs-params"><span class="hljs-built_in">bool</span> disposing</span>)</span>
+    {
+        <span class="hljs-keyword">if</span> (!disposedValue)
+        {
+            <span class="hljs-keyword">if</span> (disposing)
+                Debug.WriteLine(<span class="hljs-string">$&quot;TimeService - instance <span class="hljs-subst">{InstanceId}</span> disposed&quot;</span>);
+
+            disposedValue = <span class="hljs-literal">true</span>;
+        }
+    }
+
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">Dispose</span>()</span>
+    {
+        Dispose(disposing: <span class="hljs-literal">true</span>);
+        GC.SuppressFinalize(<span class="hljs-keyword">this</span>);
+    }
+}
+</code></pre>
+<p>A set of components to display and update the <code>TimeService</code>. This is <code>AdvancedTimeStamp.razor</code>.  Note:</p>
+<ol>
+<li>The capture of a cascaded <code>Guid</code> named <code>ComponentServiceId</code>.</li>
+<li>The injection of <code>IComponentServiceProvider</code>.</li>
+<li>The private <code>ITimerService</code> global variable.</li>
+<li>The call to <code>serviceProvider.GetService&lt;ITimeService&gt;(ComponentServiceId)</code> to get the <code>ITimerService</code> instance.</li>
+</ol>
+<pre><code class="language-csharp">@namespace Blazr.UI
+@implements IDisposable
+
+&lt;div <span class="hljs-keyword">class</span>=<span class="hljs-string">&quot;bg-light p-2 m-2&quot;</span>&gt;
+
+    &lt;h3&gt;Advanced TimeStamp Component&lt;/h3&gt;
+
+    &lt;div <span class="hljs-keyword">class</span>=<span class="hljs-string">&quot;m-2&quot;</span>&gt;
+        &lt;button <span class="hljs-keyword">class</span>=<span class="hljs-string">&quot;btn btn-primary&quot;</span> @onclick=Clicked&gt;Update Timestamp&lt;/button&gt;
+    &lt;/div&gt;
+
+    &lt;div&gt;
+        @(timeService?.Message ?? <span class="hljs-string">&quot;No message set.&quot;</span>)
+    &lt;/div&gt;
+
+    &lt;div <span class="hljs-keyword">class</span>=<span class="hljs-string">&quot;mt-2 bg-dark text-white&quot;</span>&gt;
+        Parameters Set at at @this.ParametersChangedTimeStamp
+    &lt;/div&gt;
+
+&lt;/div&gt;
+
+@code {
+    [<span class="hljs-meta">CascadingParameter(Name = <span class="hljs-string">&quot;ComponentServiceId&quot;</span>)</span>] <span class="hljs-keyword">private</span> Guid ComponentServiceId { <span class="hljs-keyword">get</span>; <span class="hljs-keyword">set</span>; }
+
+    [<span class="hljs-meta">Inject</span>] <span class="hljs-keyword">private</span> IComponentServiceProvider serviceProvider { <span class="hljs-keyword">get</span>; <span class="hljs-keyword">set</span>; } = <span class="hljs-literal">default</span>!;
+
+    <span class="hljs-keyword">private</span> ITimeService? timeService;
+    <span class="hljs-keyword">private</span> <span class="hljs-built_in">string</span> ParametersChangedTimeStamp = <span class="hljs-string">&quot;Not Set&quot;</span>;
+
+    <span class="hljs-function"><span class="hljs-keyword">protected</span> <span class="hljs-keyword">override</span> <span class="hljs-keyword">void</span> <span class="hljs-title">OnInitialized</span>()</span>
+    {
+        timeService = serviceProvider.GetService&lt;ITimeService&gt;(ComponentServiceId);
+
+        <span class="hljs-keyword">if</span> (<span class="hljs-keyword">this</span>.timeService <span class="hljs-keyword">is</span> <span class="hljs-keyword">not</span> <span class="hljs-literal">null</span>)
+            timeService.TimeChanged += <span class="hljs-keyword">this</span>.OnUpdate;
+    }
+
+    <span class="hljs-function"><span class="hljs-keyword">protected</span> <span class="hljs-keyword">override</span> <span class="hljs-keyword">void</span> <span class="hljs-title">OnParametersSet</span>()</span>
+    {
+        Debug.WriteLine(<span class="hljs-string">&quot;AdvancedTimeStamp - Parameter Change&quot;</span>);
+        <span class="hljs-keyword">this</span>.ParametersChangedTimeStamp = DateTime.Now.ToLongTimeString();
+        <span class="hljs-keyword">base</span>.OnParametersSet();
+    }
+
+    <span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-keyword">void</span> <span class="hljs-title">OnUpdate</span>(<span class="hljs-params"><span class="hljs-built_in">object</span>? sender, EventArgs e</span>)</span>
+        =&gt; InvokeAsync(<span class="hljs-keyword">this</span>.StateHasChanged);
+
+    <span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-keyword">void</span> <span class="hljs-title">Clicked</span>()</span>
+      =&gt; timeService?.UpdateTime();
+
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">Dispose</span>()</span>
+    {
+        <span class="hljs-keyword">if</span> (<span class="hljs-keyword">this</span>.timeService <span class="hljs-keyword">is</span> <span class="hljs-keyword">not</span> <span class="hljs-literal">null</span>)
+            timeService.TimeChanged -= <span class="hljs-keyword">this</span>.OnUpdate;
+    }
+}
+</code></pre>
+<p>And our demo page.  Note it creates a Guid to uniquely identify this instance of the component, and passes it to the <code>ComponentServiceProviderCascade</code> component.</p>
+<pre><code class="language-csharp">@page <span class="hljs-string">&quot;/&quot;</span>
+&lt;PageTitle&gt;Index&lt;/PageTitle&gt;
+&lt;ComponentServiceProviderCascade ServiceType=<span class="hljs-string">&quot;typeof(ITimeService)&quot;</span> ComponentServiceId=<span class="hljs-string">&quot;this.ComponentServiceId&quot;</span>&gt;
+
+    &lt;h1&gt;Hello, world!&lt;/h1&gt;
+
+    Welcome to your <span class="hljs-keyword">new</span> app.
+
+    &lt;TimeStamp /&gt;
+
+    &lt;AdvancedTimeStamp /&gt;
+
+&lt;/ComponentServiceProviderCascade&gt;
+
+@code {
+    <span class="hljs-keyword">private</span> Guid ComponentServiceId = Guid.NewGuid();
+}
+</code></pre>
+<p>This version adds the <code>CostlyTimeStamp</code> and get's the <code>ITimeService</code> instance to cascade it.  Note the <em>Parameters Set</em> time stamp updates that demonstrate the <em>Render Cascade</em> issue with cascading objects.</p>
+<pre><code class="language-csharp">@page <span class="hljs-string">&quot;/&quot;</span>
+&lt;PageTitle&gt;Index&lt;/PageTitle&gt;
+&lt;ComponentServiceProviderCascade ServiceType=<span class="hljs-string">&quot;typeof(ITimeService)&quot;</span> ComponentServiceId=<span class="hljs-string">&quot;this.ComponentServiceId&quot;</span>&gt;
+
+    &lt;h1&gt;Hello, world!&lt;/h1&gt;
+
+    Welcome to your <span class="hljs-keyword">new</span> app.
+
+    &lt;TimeStamp /&gt;
+
+    &lt;AdvancedTimeStamp /&gt;
+
+&lt;/ComponentServiceProviderCascade&gt;
+
+&lt;CascadingValue Value=<span class="hljs-string">&quot;this.timeService&quot;</span>&gt;
+    &lt;CostlyTimeStamp /&gt;
+&lt;/CascadingValue&gt;
+
+@code {
+
+    [<span class="hljs-meta">Inject</span>] <span class="hljs-keyword">private</span> IComponentServiceProvider serviceProvider { <span class="hljs-keyword">get</span>; <span class="hljs-keyword">set</span>; } = <span class="hljs-literal">default</span>!;
+
+    <span class="hljs-keyword">private</span> ITimeService? timeService;
+    <span class="hljs-keyword">private</span> Guid ComponentServiceId = Guid.NewGuid();
+
+    <span class="hljs-function"><span class="hljs-keyword">protected</span> <span class="hljs-keyword">override</span> <span class="hljs-keyword">void</span> <span class="hljs-title">OnInitialized</span>()</span>
+        =&gt; timeService = serviceProvider.GetOrCreateService&lt;ITimeService&gt;(ComponentServiceId);
+}
+</code></pre>
+<h2 id="the-detail">The Detail</h2>
+<h3 id="componentservice">ComponentService</h3>
+<p>A record to represent the component service.</p>
+<pre><code class="language-csharp"><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">record</span> <span class="hljs-title">ComponentService</span>(<span class="hljs-params">Guid ComponentId, Type ServiceType, <span class="hljs-built_in">object</span> ServiceInstance</span>)</span>;
+</code></pre>
+<h3 id="componentserviceprovider">ComponentServiceProvider</h3>
+<p>The interface:</p>
+<pre><code class="language-csharp"><span class="hljs-keyword">public</span> <span class="hljs-keyword">interface</span> <span class="hljs-title">IComponentServiceProvider</span>
+{
+    <span class="hljs-keyword">public</span> <span class="hljs-built_in">object</span>? GetOrCreateService(Guid componentId, Type? serviceType);
+    <span class="hljs-keyword">public</span> TService? GetOrCreateService&lt;TService&gt;(Guid componentId);
+    <span class="hljs-keyword">public</span> <span class="hljs-built_in">object</span>? GetService(Guid componentId, Type serviceType);
+    <span class="hljs-keyword">public</span> TService? GetService&lt;TService&gt;(Guid componentId);
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-built_in">bool</span> <span class="hljs-title">TryGetService</span>&lt;<span class="hljs-title">TService</span>&gt;(<span class="hljs-params">Guid componentId, [NotNullWhen(<span class="hljs-literal">true</span></span>)] <span class="hljs-keyword">out</span> TService? <span class="hljs-keyword">value</span>)</span>;
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">ValueTask</span>&lt;<span class="hljs-title">bool</span>&gt; <span class="hljs-title">RemoveServiceAsync</span>&lt;<span class="hljs-title">TService</span>&gt;(<span class="hljs-params">Guid componentId</span>)</span>;
+    <span class="hljs-function"><span class="hljs-keyword">public</span> ValueTask&lt;<span class="hljs-built_in">bool</span>&gt; <span class="hljs-title">RemoveServiceAsync</span>(<span class="hljs-params">Guid componentId, Type serviceType</span>)</span>;
+}
+</code></pre>
+<p>The class:</p>
+<ol>
+<li>Implements <code>IComponentServiceProvider</code> and both <code>IDisposable</code> and <code>IAsyncDisposable</code> because it needs to dispose objects that may implement either.</li>
+<li>Defines the <code>IServiceProvider</code> in it's constructor.</li>
+<li>Creates an internal list of registered service objects.</li>
+<li>Creates <code>InstanceId</code> as a unique identifier used in debugging.</li>
+<li><code>asyncdisposedValue</code> and <code>disposedValue</code> provide disposal control.</li>
+</ol>
+<pre><code class="language-csharp"><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title">ComponentServiceManager</span> : <span class="hljs-title">IDisposable</span>, <span class="hljs-title">IAsyncDisposable</span>
+{
+    <span class="hljs-keyword">private</span> IServiceProvider _serviceProvider;
+    <span class="hljs-keyword">private</span> List&lt;ComponentService&gt; _componentServices = <span class="hljs-keyword">new</span> List&lt;ComponentService&gt;();
+    <span class="hljs-keyword">private</span> <span class="hljs-built_in">bool</span> asyncdisposedValue;
+    <span class="hljs-keyword">private</span> <span class="hljs-built_in">bool</span> disposedValue;
+    <span class="hljs-keyword">public</span> <span class="hljs-keyword">readonly</span> Guid InstanceId = Guid.NewGuid();
+
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">ComponentServiceManager</span>(<span class="hljs-params">IServiceProvider serviceProvider</span>)</span>
+    {
+        Debug.WriteLine(<span class="hljs-string">$&quot;ComponentServiceManager - instance <span class="hljs-subst">{InstanceId}</span> created&quot;</span>);
+        _serviceProvider = serviceProvider;
+    }
+</code></pre>
+<p><code>tryFindComponentService</code> is internal and defines the search Linq query for the service list.</p>
+<pre><code class="language-csharp"><span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-built_in">bool</span> <span class="hljs-title">tryFindComponentService</span>(<span class="hljs-params">Guid componentId, Type serviceType, [NotNullWhenAttribute(<span class="hljs-literal">true</span></span>)] <span class="hljs-keyword">out</span> ComponentService? result)</span>
+{
+    result = _componentServices.SingleOrDefault(item =&gt; item.ComponentId == componentId &amp;&amp; item.ServiceType == serviceType);
+    <span class="hljs-keyword">if</span> (<span class="hljs-function">result <span class="hljs-keyword">is</span> <span class="hljs-title">default</span>(<span class="hljs-params">ComponentService</span>))
+        <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span></span>;
+
+    <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;
+}
+</code></pre>
+<p>GetOrCreateService are two public methods that will attempt to create a new instance of a service if one doesn't currently exist.</p>
+<pre><code class="language-csharp"><span class="hljs-keyword">public</span> <span class="hljs-built_in">object</span>? GetOrCreateService(Guid componentId, Type? serviceType)
+    =&gt; getOrCreateService(componentId, serviceType);
+
+<span class="hljs-keyword">public</span> TService? GetOrCreateService&lt;TService&gt;(Guid componentId)
+{
+    <span class="hljs-keyword">var</span> service = <span class="hljs-keyword">this</span>.getOrCreateService(componentId, <span class="hljs-keyword">typeof</span>(TService));
+    <span class="hljs-keyword">return</span> service <span class="hljs-keyword">is</span> <span class="hljs-literal">null</span>
+        ? <span class="hljs-literal">default</span>
+        : (TService)service;
+}
+</code></pre>
+<p><code>getOrCreateService</code> is the internal method that does the work.  It checks if a service is already registered against the Guid.  If not it attempts to create a new instance.  <code>tryCreateService</code> uses the <code>ActivatorUtilities</code> static class to attempt to create instance.  This only works with <em>concrete</em> typoes, so will fail if <code>serviceType</code> is an interface definition.  <code>tryCreateInterfaceService</code> attempts to get the interface definition from the service container.  If it gets one it gets the concrete type and then uses that to crearte and instance with <code>ActivatorUtilities</code>.</p>
+<p>The end result is either a <code>null</code> or an instance of the type with the correctly injected instances from the SPA scoped service container.  A <em>Transient</em> service without any retained reference even if the object implements <code>IDisposable/IAsyncDisposable</code>.  Disposal is your responsibility.</p>
+<pre><code class="language-csharp"><span class="hljs-keyword">private</span> <span class="hljs-built_in">object</span>? getOrCreateService(Guid componentId, Type? serviceType)
+{
+    <span class="hljs-keyword">if</span> (serviceType <span class="hljs-keyword">is</span> <span class="hljs-literal">null</span> || componentId == Guid.Empty)
+        <span class="hljs-keyword">return</span> <span class="hljs-literal">null</span>;
+
+    <span class="hljs-comment">// Try getting the service from the collection</span>
+    <span class="hljs-keyword">if</span> (<span class="hljs-keyword">this</span>.tryFindComponentService(componentId, serviceType, <span class="hljs-keyword">out</span> ComponentService? service))
+        <span class="hljs-keyword">return</span> service.ServiceInstance;
+
+    <span class="hljs-comment">// Try creating the service</span>
+    <span class="hljs-keyword">if</span> (!<span class="hljs-keyword">this</span>.tryCreateService(serviceType, <span class="hljs-keyword">out</span> <span class="hljs-built_in">object</span>? newService))
+        <span class="hljs-keyword">this</span>.tryCreateInterfaceService(serviceType, <span class="hljs-keyword">out</span> newService);
+
+    <span class="hljs-keyword">if</span> (newService <span class="hljs-keyword">is</span> <span class="hljs-literal">null</span>)
+        <span class="hljs-keyword">return</span> <span class="hljs-literal">null</span>;
+
+    _componentServices.Add(<span class="hljs-keyword">new</span> ComponentService(componentId, serviceType, newService));
+
+    <span class="hljs-keyword">return</span> newService;
+}
+
+<span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-built_in">bool</span> <span class="hljs-title">tryCreateService</span>(<span class="hljs-params">Type serviceType, [NotNullWhen(<span class="hljs-literal">true</span></span>)] <span class="hljs-keyword">out</span> <span class="hljs-built_in">object</span>? service)</span>
+{
+    service = <span class="hljs-literal">null</span>;
+    <span class="hljs-keyword">try</span>
+    {
+        service = ActivatorUtilities.CreateInstance(_serviceProvider, serviceType);
+        <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;
+    }
+    <span class="hljs-keyword">catch</span>
+    {
+        <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;
+    }
+}
+
+<span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-built_in">bool</span> <span class="hljs-title">tryCreateInterfaceService</span>(<span class="hljs-params">Type serviceType, [NotNullWhen(<span class="hljs-literal">true</span></span>)] <span class="hljs-keyword">out</span> <span class="hljs-built_in">object</span>? service)</span>
+{
+    service = <span class="hljs-literal">null</span>;
+    <span class="hljs-keyword">var</span> concreteService = _serviceProvider.GetService(serviceType);
+    <span class="hljs-keyword">if</span> (concreteService <span class="hljs-keyword">is</span> <span class="hljs-literal">null</span>)
+        <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;
+
+    <span class="hljs-keyword">var</span> concreteInterfaceType = concreteService.GetType();
+
+    <span class="hljs-keyword">try</span>
+    {
+        service = ActivatorUtilities.CreateInstance(_serviceProvider, concreteInterfaceType);
+        <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;
+    }
+    <span class="hljs-keyword">catch</span>
+    {
+        <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;
+    }
+}
+</code></pre>
+<p>There are three <code>GetService</code> public methods and a single private <code>getService</code> to get the service from the internal collection.</p>
+<pre><code class="language-csharp"><span class="hljs-keyword">public</span> <span class="hljs-built_in">object</span>? GetService(Guid componentId, Type? serviceType)
+    =&gt; getService(componentId, serviceType);
+
+<span class="hljs-keyword">public</span> TService? GetService&lt;TService&gt;(Guid componentId)
+{
+    <span class="hljs-keyword">var</span> service = <span class="hljs-keyword">this</span>.getService(componentId, <span class="hljs-keyword">typeof</span>(TService));
+    <span class="hljs-keyword">return</span> service <span class="hljs-keyword">is</span> <span class="hljs-literal">null</span>
+        ? <span class="hljs-literal">default</span>
+        : (TService)service;
+}
+
+<span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-built_in">bool</span> <span class="hljs-title">TryGetService</span>&lt;<span class="hljs-title">TService</span>&gt;(<span class="hljs-params">Guid componentId, [NotNullWhen(<span class="hljs-literal">true</span></span>)] <span class="hljs-keyword">out</span> TService? <span class="hljs-keyword">value</span>)</span>
+{
+    <span class="hljs-keyword">var</span> result = getService(componentId, <span class="hljs-keyword">typeof</span>(TService));
+
+    <span class="hljs-keyword">value</span> = result <span class="hljs-keyword">is</span> <span class="hljs-literal">null</span>
+        ? <span class="hljs-literal">default</span>
+        : (TService)result;
+
+    <span class="hljs-keyword">return</span> result <span class="hljs-keyword">is</span> <span class="hljs-keyword">not</span> <span class="hljs-literal">null</span>;
+}
+
+<span class="hljs-keyword">private</span> <span class="hljs-built_in">object</span>? getService(Guid componentId, Type? serviceType)
+{
+    <span class="hljs-keyword">if</span> (serviceType <span class="hljs-keyword">is</span> <span class="hljs-literal">null</span> || componentId == Guid.Empty)
+        <span class="hljs-keyword">return</span> <span class="hljs-literal">null</span>;
+
+    <span class="hljs-keyword">if</span> (!<span class="hljs-keyword">this</span>.tryFindComponentService(componentId, serviceType, <span class="hljs-keyword">out</span> ComponentService? componentService))
+        <span class="hljs-keyword">return</span> <span class="hljs-literal">null</span>;
+
+    <span class="hljs-keyword">return</span> (componentService <span class="hljs-keyword">is</span> <span class="hljs-keyword">not</span> <span class="hljs-literal">null</span>)
+        ? componentService.ServiceInstance
+        : <span class="hljs-literal">null</span>;
+}
+</code></pre>
+<p><code>RemoveService</code> disposes the registered object if necessary and then removes it from the internal collection.</p>
+<pre><code class="language-csharp"><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">ValueTask</span>&lt;<span class="hljs-title">bool</span>&gt; <span class="hljs-title">RemoveServiceAsync</span>&lt;<span class="hljs-title">TService</span>&gt;(<span class="hljs-params">Guid componentId</span>)</span>
+    =&gt; removeServiceAsync(componentId, <span class="hljs-keyword">typeof</span>(TService));
+
+<span class="hljs-function"><span class="hljs-keyword">public</span> ValueTask&lt;<span class="hljs-built_in">bool</span>&gt; <span class="hljs-title">RemoveServiceAsync</span>(<span class="hljs-params">Guid componentId, Type serviceType</span>)</span>
+    =&gt; removeServiceAsync(componentId, serviceType);
+
+<span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-keyword">async</span> ValueTask&lt;<span class="hljs-built_in">bool</span>&gt; <span class="hljs-title">removeServiceAsync</span>(<span class="hljs-params">Guid componentId, Type serviceType</span>)</span>
+{
+    <span class="hljs-keyword">if</span> (!<span class="hljs-keyword">this</span>.tryFindComponentService(componentId, serviceType, <span class="hljs-keyword">out</span> ComponentService? componentService))
+        <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;
+
+    <span class="hljs-keyword">if</span> (componentService.ServiceInstance <span class="hljs-keyword">is</span> IDisposable disposable)
+        disposable.Dispose();
+
+    <span class="hljs-keyword">if</span> (componentService.ServiceInstance <span class="hljs-keyword">is</span> IAsyncDisposable asyncDisposable)
+        <span class="hljs-keyword">await</span> asyncDisposable.DisposeAsync();
+
+    _componentServices.Remove(componentService);
+
+    <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;
+}
+</code></pre>
+<p><code>Dispose</code> and <code>DisposeAsync</code> are called when the service is disposed.  They dispose all the remaining objects in the service collection.</p>
+<pre><code class="language-csharp"><span class="hljs-function"><span class="hljs-keyword">protected</span> <span class="hljs-keyword">virtual</span> <span class="hljs-keyword">void</span> <span class="hljs-title">Dispose</span>(<span class="hljs-params"><span class="hljs-built_in">bool</span> disposing</span>)</span>
+{
+    <span class="hljs-keyword">if</span> (disposedValue || !disposing)
+    {
+        disposedValue = <span class="hljs-literal">true</span>;
+        <span class="hljs-keyword">return</span>;
+    }
+
+    Debug.WriteLine(<span class="hljs-string">$&quot;ComponentServiceManager - instance <span class="hljs-subst">{InstanceId}</span> disposed&quot;</span>);
+
+    <span class="hljs-keyword">foreach</span> (<span class="hljs-keyword">var</span> componentService <span class="hljs-keyword">in</span> _componentServices)
+    {
+        <span class="hljs-keyword">if</span> (componentService.ServiceInstance <span class="hljs-keyword">is</span> IDisposable disposable)
+            disposable.Dispose();
+    }
+
+    disposedValue = <span class="hljs-literal">true</span>;
+}
+
+<span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">Dispose</span>()</span>
+{
+    Dispose(disposing: <span class="hljs-literal">true</span>);
+    GC.SuppressFinalize(<span class="hljs-keyword">this</span>);
+}
+
+<span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">async</span> ValueTask <span class="hljs-title">DisposeAsync</span>()</span>
+{
+    <span class="hljs-keyword">if</span> (asyncdisposedValue)
+        <span class="hljs-keyword">return</span>;
+
+    Debug.WriteLine(<span class="hljs-string">$&quot;ComponentServiceManager - instance <span class="hljs-subst">{InstanceId}</span> async disposed&quot;</span>);
+
+    <span class="hljs-keyword">foreach</span> (<span class="hljs-keyword">var</span> componentService <span class="hljs-keyword">in</span> _componentServices)
+    {
+        <span class="hljs-keyword">if</span> (componentService.ServiceInstance <span class="hljs-keyword">is</span> IAsyncDisposable asyncDisposable)
+            <span class="hljs-keyword">await</span> asyncDisposable.DisposeAsync();
+    }
+
+    asyncdisposedValue = <span class="hljs-literal">true</span>;
+}
+</code></pre>
+<h3 id="componentserviceprovidercascade">ComponentServiceProviderCascade</h3>
+<p><code>ComponentServiceProviderCascade</code> provides a wrapper to implement all the functionality necessary to properly manage the service creation and disposal.</p>
+<p><code>ServiceType</code> defines the shared service object.  <code>ComponentServiceId</code> either generates or is passed a Guid that uniquely defines the component context.  The component implements <code>IAsyncDisposable</code> to dispose of the service instance when the component is disposed (by the Renderer): <code>RemoveServiceAsync</code> is an <code>ansync</code> method.</p>
+<pre><code class="language-csharp">@implements IAsyncDisposable
+
+&lt;CascadingValue Name=<span class="hljs-string">&quot;ComponentServiceId&quot;</span> Value=<span class="hljs-string">&quot;this.ComponentServiceId&quot;</span>&gt;
+    @this.ChildContent
+&lt;/CascadingValue&gt;
+
+@code {
+    [<span class="hljs-meta">Parameter</span>] <span class="hljs-keyword">public</span> RenderFragment? ChildContent { <span class="hljs-keyword">get</span>; <span class="hljs-keyword">set</span>; }
+    [<span class="hljs-meta">Parameter</span>] <span class="hljs-keyword">public</span> Guid ComponentServiceId { <span class="hljs-keyword">get</span>; <span class="hljs-keyword">set</span>; } = Guid.NewGuid();
+    [<span class="hljs-meta">Parameter, EditorRequired</span>] <span class="hljs-keyword">public</span> Type? ServiceType { <span class="hljs-keyword">get</span>; <span class="hljs-keyword">set</span>; }
+    [<span class="hljs-meta">Inject</span>] <span class="hljs-keyword">private</span> IComponentServiceProvider serviceProvider { <span class="hljs-keyword">get</span>; <span class="hljs-keyword">set</span>; } = <span class="hljs-literal">default</span>!;
+
+    <span class="hljs-function"><span class="hljs-keyword">protected</span> <span class="hljs-keyword">override</span> <span class="hljs-keyword">void</span> <span class="hljs-title">OnInitialized</span>()</span>
+        =&gt; serviceProvider.GetOrCreateService(ComponentServiceId, ServiceType);
+
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">async</span> ValueTask <span class="hljs-title">DisposeAsync</span>()</span>
+    {
+        <span class="hljs-keyword">if</span> (<span class="hljs-keyword">this</span>.ServiceType <span class="hljs-keyword">is</span> <span class="hljs-keyword">not</span> <span class="hljs-literal">null</span>)
+            <span class="hljs-keyword">await</span> serviceProvider.RemoveServiceAsync(ComponentServiceId, <span class="hljs-keyword">this</span>.ServiceType);
+    }
+}
+</code></pre>
+<p>You can <code>unwrap</code> the cascade and do it yourself within the root component.  It's primary purpose is to implment the disposal.</p>
+<h2 id="wrapping-up">Wrapping Up</h2>
+<p>That's it, not rocket science.  Comments on improvements/things I've got wrong gratefully received.</p>
+<p>And my thought's on what we really need?</p>
+<p>Add a new scope - say <code>Component</code>.  Add a new container implementation called <code>ComponentScoped</code>.  It can be created from a <code>ScopedContainer</code> i.e. it's parent is a <code>ScopedContainer</code>.</p>
+<p>Add a new property based attribute <code>ComponentInjectAttribute</code> for components.</p>
+<p>Add an <code>IServiceComponent</code> interface that defines the necessary functionality for the Renderer.</p>
+<p>The Renderer understands the <code>IServiceComponent</code> context and <code>ComponentInject</code> and injects services from the correct container if a parent <code>IServiceComponent</code> container exists.</p>
+
+        <script async src="https://cdn.jsdelivr.net/npm/katex-copytex@latest/dist/katex-copytex.min.js"></script>
+        
+    
+
+            </div>
+        </div>
+    </div>
+</div>
+<!-- end of Article Container -->
+
+
+                </div>
+                <!-- End of Main Content -->
+            </div>
+            <!-- Footer -->
+            
+<!-- Copyright -->
+<footer class="sticky-footer bg-white">
+    <div class="container my-auto">
+        <div class="copyright text-center my-auto">
+            
+<span>Copyright &copy; Cold Elm Coders - 2022</span>
+
+        </div>
+    </div>
+</footer>
+<!-- end of copyright -->
+
+
+            <!-- End of Footer -->
+        </div>
+        <!-- End of Content Wrapper -->
+        
+<a class="scroll-to-top rounded" href="#page-top">
+    <i class="fas fa-angle-up"></i>
+</a>
+
+
+    </div>
+    <!-- End of Page Wrapper -->
+    <!-- Scripts -->
+    
+<!-- Scripts -->
+<!-- Bootstrap core JavaScript-->
+<script src="/assets/vendor/jquery/jquery.min.js"></script>
+<script src="/assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+<!-- Core plugin JavaScript-->
+<script src="/assets/vendor/jquery-easing/jquery.easing.min.js"></script>
+
+<!-- Custom scripts for all pages-->
+<script src="/assets/js/sb-admin-2.min.js"></script>
+
+
+</body>
+</html>
