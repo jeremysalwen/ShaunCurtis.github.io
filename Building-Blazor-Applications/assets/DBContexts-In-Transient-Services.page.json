@@ -1,8 +1,0 @@
-{
-  "Title": "Notes on DbContexts in Transient Services",
-  "Description": "Why You Shouldn't use DbContexts in Transient Services",
-  "PublishDate": "01-10-2020",
-  "LastUpdated": "01-10-2020",
-  "Layout":  "article.html",
-  "Author": "Shaun Curtis"
-}

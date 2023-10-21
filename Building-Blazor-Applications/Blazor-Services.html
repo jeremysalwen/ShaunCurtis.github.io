@@ -1,313 +1,46 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<html lang="en"><head><meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<base href="/">
 
-<!-- SEO Meta Tags -->
-<meta name="description" content="Your description">
-<meta name="author" content="Your name">
+	
 
-<!-- OG Meta Tags to improve the way the post looks when you share the page on Facebook, Twitter, LinkedIn -->
-<meta property="og:site_name" content="" /> <!-- website name -->
-<meta property="og:site" content="" /> <!-- website link -->
-<meta property="og:title" content="" /> <!-- title shown in the actual shared post -->
-<meta property="og:description" content="" /> <!-- description shown in the actual shared post -->
-<meta property="og:image" content="" /> <!-- image link, make sure it's jpg -->
-<meta property="og:url" content="" /> <!-- where do you want your post to link to -->
-<meta name="twitter:card" content="summary_large_image"> <!-- to have large image post format in Twitter -->
+	
 
-<meta charset="utf-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	
+	<link href="/resources/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+	<link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
 
+	
+	<link href="/resources/css/sb-admin-2.css" rel="stylesheet" type="text/css">
+	<link href="/resources/css/site.css" rel="stylesheet" type="text/css">
 
-<meta name="description" content="An examination of Blazor DI and Services," >
-<meta name="author" content="Shaun Curtis" >
+	
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/highlight.css">
+	<link rel="stylesheet" href="/resources/css/article.css" type="text/css">
 
+	
+	<link rel="icon" href="/images/favicon.png">
 
+	<title>Blazor Services</title>
+        <meta property="author" content="Shaun Curtis" />
+        <meta property="description" content="An examination of Blazor DI and Services." />
+    <meta property="og:site_name" content="Cold Elm Coders" />
+        <meta property="og:site" content="https://shauncurtis.github.io/" />
+        <meta property="og:title" content="Blazor Services" />
+        <meta property="og:description" content="An examination of Blazor DI and Services." /></head>
+<body><header class="navbar bg-dark p-2 text-large text-light"><section class="navbar-section  text-light"><a href="/" class="navbar-brand mr-2 text-large text-light p-2">Cold Elm Coders</a>
+			<a href="/Posts" class="btn btn-link text-light">Posts</a>
+			<a href="/Rants" class="btn btn-link text-light">Rants</a>
+			<a href="/Articles" class="btn btn-link text-light">Articles</a>
+			<a href="/Stories" class="btn btn-link text-light">Stories</a>
+			<a href="/about.html" class="btn btn-link text-light">About</a></section></header>
 
-<title>Blazor Services</title>
-
-
-<!-- Custom fonts for this template-->
-<link href="/assets/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
-<link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
-      rel="stylesheet">
-
-<!-- Custom styles for this template-->
-<link href="/assets/css/sb-admin-2.css" rel="stylesheet" type="text/css">
-<link href="/assets/css/site.css" rel="stylesheet" type="text/css">
-
-<!-- Favicon  -->
-<link rel="icon" href="/assets/images/favicon.png">
-
-
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/highlight.css">
-    <link rel="stylesheet" href="/assets/css/article.css" type="text/css">
-</head>
-<body id="page-top">
-    <!--topbar-->
-    <div id="topbar">
-        
-<!-- Topbar -->
-<nav class="navbar navbar-expand navbar-light topbar mb-4 static-top">
-    
-<ul class="navbar-nav" >
-<li class="nav-item" >
-<a class="nav-link " href="/index.html" role="button"  >
-<span class="mr-2 d-none d-lg-inline text-gray-100">Index</span>
-</a>
-</li>
-<li class="nav-item dropdown no-arrow mx-1" >
-<a class="nav-link dropdown-toggle" href="#" id="11ccdb46-de98-4440-ba0f-0f15f9541d95" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"  >
-<span class="mr-2 d-none d-lg-inline text-gray-100">Articles</span>
-</a>
-<div class=" dropdown-list dropdown-menu shadow animated--grow-in" aria-labelledby="11ccdb46-de98-4440-ba0f-0f15f9541d95" >
-<a class="dropdown-item" href="/articles/A-Flexible-App.html" >
-<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
-Creating a Dynamic Blazor App Component
-</a>
-<a class="dropdown-item" href="/articles/Async-Programming-in-DotNetCore.html" >
-<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
-Async Programming In Dotnetcore
-</a>
-<a class="dropdown-item" href="/articles/Blazor-AllinOne.html" >
-<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
-Blazor All In One - Multi SPA Hosting
-</a>
-<a class="dropdown-item" href="/articles/Blazor-Async-Programming.html" >
-<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
-Blazor Async Programming
-</a>
-<a class="dropdown-item" href="/articles/Blazor-Brick-By-Brick.html" >
-<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
-Blazor Brick By Brick
-</a>
-<a class="dropdown-item" href="/articles/Blazor-Components.html" >
-<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
-Blazor Components
-</a>
-<a class="dropdown-item" href="/articles/Blazor-CSS.html" >
-<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
-Blazor CSS
-</a>
-<a class="dropdown-item" href="/articles/Blazor-DataList-Control.html" >
-<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
-Blazor Datalist Control
-</a>
-<a class="dropdown-item" href="/articles/Blazor-Form-Validation.html" >
-<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
-Blazor Form Validation
-</a>
-<a class="dropdown-item" href="/articles/Building-Blazor-List-Components.html" >
-<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
-Building Blazor List Components and the Notification Pattern
-</a>
-<a class="dropdown-item" href="/articles/Building-Edit-Forms.html" >
-<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
-Building Edit Forms
-</a>
-<a class="dropdown-item" href="/articles/EditFormState.html" >
-<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
-The Blazor EditFormState Control
-</a>
-<a class="dropdown-item" href="/articles/Hydra.html" >
-<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
-Blazor Hydra
-</a>
-<a class="dropdown-item" href="/articles/Inline-Dialog.html" >
-<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
-The Blazor Inline Dialog Control
-</a>
-<a class="dropdown-item" href="/articles/Modal-Dialog.html" >
-<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
-A Blazor Modal Dialog
-</a>
-<a class="dropdown-item" href="/articles/Policy-Based-Authorization.html" >
-<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
-Policy Base Authorization in Blazor
-</a>
-<a class="dropdown-item" href="/articles/ValidationFormState.html" >
-<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
-A Blazor Validation Control
-</a>
-<a class="dropdown-item" href="/articles/XML-XSD-Serialization.html" >
-<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
-XML XSD Serialization
-</a>
-</div>
-</li>
-<li class="nav-item dropdown no-arrow mx-1" >
-<a class="nav-link dropdown-toggle" href="#" id="e85fb23a-07a6-45ec-86bb-aa8a89db964e" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"  >
-<span class="mr-2 d-none d-lg-inline text-gray-100">Blazor Database Apps</span>
-</a>
-<div class=" dropdown-list dropdown-menu shadow animated--grow-in" aria-labelledby="e85fb23a-07a6-45ec-86bb-aa8a89db964e" >
-<a class="dropdown-item" href="/Building-a-Database-Application-in-Blazor/Building-a-Database-Application-in-Blazor-Part-1.html" >
-<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
-Building A Database Application In Blazor Part 1
-</a>
-<a class="dropdown-item" href="/Building-a-Database-Application-in-Blazor/Building-a-Database-Application-in-Blazor-Part-2.html" >
-<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
-Building A Database Application In Blazor Part 2
-</a>
-<a class="dropdown-item" href="/Building-a-Database-Application-in-Blazor/Building-a-Database-Application-in-Blazor-Part-3.html" >
-<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
-Building A Database Application In Blazor Part 3
-</a>
-<a class="dropdown-item" href="/Building-a-Database-Application-in-Blazor/Building-a-Database-Application-in-Blazor-Part-4.html" >
-<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
-Building A Database Application In Blazor Part 4
-</a>
-<a class="dropdown-item" href="/Building-a-Database-Application-in-Blazor/Building-a-Database-Application-in-Blazor-Part-5.html" >
-<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
-Building A Database Application In Blazor Part 5
-</a>
-<a class="dropdown-item" href="/Building-a-Database-Application-in-Blazor/Building-a-Database-Application-in-Blazor-Part-6.html" >
-<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
-Building A Database Application In Blazor Part 6
-</a>
-<a class="dropdown-item" href="/Building-a-Database-Application-in-Blazor/index.html" >
-<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
-Building a Database Application in Blazor
-</a>
-</div>
-</li>
-<li class="nav-item dropdown no-arrow mx-1" >
-<a class="nav-link dropdown-toggle" href="#" id="2d84c48b-1a22-416f-9a5e-876c1403201a" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"  >
-<span class="mr-2 d-none d-lg-inline text-gray-100">Building Blazor Applications</span>
-</a>
-<div class=" dropdown-list dropdown-menu shadow animated--grow-in" aria-labelledby="2d84c48b-1a22-416f-9a5e-876c1403201a" >
-<a class="dropdown-item" href="/Building-Blazor-Applications/Blazor-Async-UI-Events.html" >
-<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
-Blazor Async UI Events
-</a>
-<a class="dropdown-item" href="/Building-Blazor-Applications/Blazor-Bootstrap-Toaster.html" >
-<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
-Blazor Bootstrap Toaster
-</a>
-<a class="dropdown-item" href="/Building-Blazor-Applications/Blazor-Services.html" >
-<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
-Blazor Services
-</a>
-<a class="dropdown-item" href="/Building-Blazor-Applications/Building-A-Blazor-AutoComplete-Control.html" >
-<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
-Building A Blazor Autocomplete Control
-</a>
-<a class="dropdown-item" href="/Building-Blazor-Applications/Building-Wrapper-Components.html" >
-<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
-Building Wrapper Components
-</a>
-<a class="dropdown-item" href="/Building-Blazor-Applications/DBContexts-In-Transient-Services.html" >
-<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
-Dbcontexts In Transient Services
-</a>
-<a class="dropdown-item" href="/Building-Blazor-Applications/DynamicCss.html" >
-<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
-Blazor Dynamic Stylesheets
-</a>
-<a class="dropdown-item" href="/Building-Blazor-Applications/For-ForEach-in-Blazor.html" >
-<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
-For Foreach In Blazor
-</a>
-<a class="dropdown-item" href="/Building-Blazor-Applications/Leaner-Meaner-Greener-Components.html" >
-<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
-Leaner Meaner Greener Components
-</a>
-<a class="dropdown-item" href="/Building-Blazor-Applications/Notification-Service-Pattern.html" >
-<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
-Blazor Notification Service Pattern
-</a>
-<a class="dropdown-item" href="/Building-Blazor-Applications/Rethinking-The-Repository-Pattern.html" >
-<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
-Rethinking The Repository Pattern
-</a>
-<a class="dropdown-item" href="/Building-Blazor-Applications/The-Blazor-Component-Scope-Conumdrum.html" >
-<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
-The Blazor Component Scope Conumdrum
-</a>
-<a class="dropdown-item" href="/Building-Blazor-Applications/The-Blazor-WASM-Hosted-Project.html" >
-<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
-The Blazor WASM Hosted Project
-</a>
-<a class="dropdown-item" href="/Building-Blazor-Applications/Whats-Wrong-with-my-Component-Design.html" >
-<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
-Whats Wrong With My Component Design
-</a>
-<a class="dropdown-item" href="/Building-Blazor-Applications/The-Blazor-Component" >
-<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
-Building Blazor Applications\The Blazor Component
-</a>
-</div>
-</li>
-<li class="nav-item dropdown no-arrow mx-1" >
-<a class="nav-link dropdown-toggle" href="#" id="9003f09c-4915-490f-b5f2-58315450194f" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"  >
-<span class="mr-2 d-none d-lg-inline text-gray-100">Design</span>
-</a>
-<div class=" dropdown-list dropdown-menu shadow animated--grow-in" aria-labelledby="9003f09c-4915-490f-b5f2-58315450194f" >
-<a class="dropdown-item" href="/Design/Clean-Design-In-Blazor.html" >
-<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
-Clean Design Principles in Blazor Applications
-</a>
-<a class="dropdown-item" href="/Design/Clean-Design-Blazor-Template.html" >
-<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
-A Blazor Clean Design Template
-</a>
-<a class="dropdown-item" href="/Design/Clean-Design-Blazor-Template-Solution-Structure.html" >
-<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
-Solution Structure in the Clean Design Blazor Template
-</a>
-<a class="dropdown-item" href="/Design/Clean-Design-Blazor-Template-DataServices.html" >
-<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
-Data Services in the Clean Design Blazor Template
-</a>
-<a class="dropdown-item" href="/Design/Clean-Design-Blazor-Template-UI.html" >
-<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
-The UI in the Clean Design Blazor Template
-</a>
-<a class="dropdown-item" href="/Design/Clean-Design-Blazor-Template-Solution-Setup.html" >
-<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
-Solution Setup in the Clean Design Blazor Template
-</a>
-<a class="dropdown-item" href="/Design/Clean-Design-Blazor-Template-Testing.html" >
-<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
-Testing in the Clean Design Blazor Template
-</a>
-</div>
-</li>
-<li class="nav-item dropdown no-arrow mx-1" >
-<a class="nav-link dropdown-toggle" href="#" id="3ae20896-7931-4bcd-a610-85a5aec67cf2" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"  >
-<span class="mr-2 d-none d-lg-inline text-gray-100">Modern C#</span>
-</a>
-<div class=" dropdown-list dropdown-menu shadow animated--grow-in" aria-labelledby="3ae20896-7931-4bcd-a610-85a5aec67cf2" >
-<a class="dropdown-item" href="/Modern-Coding-Patterns/Nullable-And-VS-2022.html" >
-<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
-Nullable And VS 2022
-</a>
-</div>
-</li>
-</ul>
-
-    <div class="ms-5 me-5 ml-auto">
-        <h1>Cold Elm Coders</h1>
-    </div>
-</nav>
-
-
-    </div>
-    <!--End topbar-->
-    <!--Sidebar-->
-    <div id="sidebar">
-        
-<div class="article-info p-2" Published: 04-01-2022 >
-<div>Published: 04-01-2022</div>
-<div>Last Updated: 04-01-2022</div>
-<div>Author: Shaun Curtis</div>
-</div>
-
-        
-<h4 class="p-2">Table of Contents</h4>
+	<div class="container-fluid"><div class="row"><div class="col-12 col-sm-3 col-lg-2 bg-light pt-2"><div class="article-info p-2"><div class="mb-2">Published: 04-Jan-2022</div>
+                <div class="mb-2">Updated: 04-Jan-2022</div>
+                <div class="mb-2">Author: Shaun Curtis</div></div>
+    <h4 class="p-2">Table of Contents</h4>
 <ul class="TOC" >
 <li class="TOC-item TOC-item-0" >
 <a class="TOC-link" href="#">Top</a>
@@ -315,32 +48,13 @@ Nullable And VS 2022
 <li class="TOC-item TOC-item-1" >
 <ul class="TOC TOC-1" >
 <li class="TOC-item TOC-item-2" >
-<a class="TOC-link" href="#dependancy-injection-containers">Dependancy Injection Containers</a>
+<a class="TOC-link" href="#dependency-injection-containers">Dependency Injection Containers</a>
 </li>
 <li class="TOC-item TOC-item-2" >
 <a class="TOC-link" href="#building-a-test-environment">Building a Test Environment</a>
-<ul class="TOC TOC-2" >
-<li class="TOC-item TOC-item-3" >
-<a class="TOC-link" href="#project">Project</a>
-</li>
-<li class="TOC-item TOC-item-3" >
-<a class="TOC-link" href="#services">Services</a>
-</li>
-<li class="TOC-item TOC-item-3" >
-<a class="TOC-link" href="#component">Component</a>
-</li>
-</ul>
 </li>
 <li class="TOC-item TOC-item-2" >
 <a class="TOC-link" href="#testing">Testing</a>
-<ul class="TOC TOC-2" >
-<li class="TOC-item TOC-item-3" >
-<a class="TOC-link" href="#the-logs">The Logs</a>
-</li>
-<li class="TOC-item TOC-item-3" >
-<a class="TOC-link" href="#solutions-to-the-transient-idisposable-issue">Solutions to the Transient <code>IDisposable</code> Issue</a>
-</li>
-</ul>
 </li>
 <li class="TOC-item TOC-item-2" >
 <a class="TOC-link" href="#wrap-up">Wrap Up</a>
@@ -350,45 +64,12 @@ Nullable And VS 2022
 </ul>
 </li>
 </ul>
-
-    </div>
-    <!--End Sidebar-->
-    <!-- Page Wrapper -->
-    <div id="wrapper">
-        <!-- Content Wrapper -->
-        <div id="content-wrapper" class="d-flex flex-column">
-            <!-- Main Content -->
-            <div id="content">
-                <!-- Topbar -->
-                <div id="article">
-                    <!-- Article -->
-                    
-<!-- Header -->
-<header class="ex-header-article">
-    <div class="container">
-        <div class="row pt-3 pb-3 border-bottom">
-            <div class="col">
-                
-<h1>Blazor Services</h1>
-<div>An examination of Blazor DI and Services,</div>
-
-            </div> <!-- end of col -->
-        </div> <!-- end of row -->
-    </div> <!-- end of container -->
-</header> <!-- end of ex-header -->
-<!-- end of header -->
-
-
-                    
-<!-- Article Container -->
-<div class="ex-basic-1 pt-4">
-    <div class="container">
-        <div class="row">
-            <div class="col-12">
-                
-
-        <p>This post looks at Blazor the Dependancy Injection Containers and examines the lifecycle of the services they provide.</p>
-<h2 id="dependancy-injection-containers">Dependancy Injection Containers</h2>
+</div>
+			
+			<div class="col-12 col-sm-9 col-lg-10 p-2"><div class="pt-2 pb-2 border-bottom mb-4 text-primary"><h1>Blazor Services</h1>
+            <div><small>An examination of Blazor DI and Services.</small></div></div>
+    <p>This post looks at Blazor the Dependency Injection Containers and examines the lifecycle of the services they provide.</p>
+<h2 id="dependency-injection-containers">Dependency Injection Containers</h2>
 <p>Blazor has three levels of service containers.  These are:</p>
 <p>Application Service Container.  This is held by the running instance of DotNetCore.  In the Blazor Server Context the <code>WebApplication</code>.  This contains all the Singleton Services.</p>
 <p>Blazor Hub Service Container.  This is held by the Blazor Hub Session for the running SPA: one per user Hub session.  This contains the normal Scoped and Transient Services.</p>
@@ -405,82 +86,82 @@ Nullable And VS 2022
 <p>Add a Blazor Server template project.</p>
 <h3 id="services">Services</h3>
 <p>Add the following classes to a new <em>Services</em> folder:</p>
-<pre><code class="language-csharp"><div><span class="hljs-keyword">namespace</span> <span class="hljs-title">Blazr</span>;
-<span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title">TransientService</span> : <span class="hljs-title">IDisposable</span>
+<pre><code class="language-csharp">namespace Blazr;
+public class TransientService : IDisposable
 {
-    <span class="hljs-keyword">public</span> <span class="hljs-keyword">readonly</span> Guid Id = Guid.NewGuid();
+    public readonly Guid Id = Guid.NewGuid();
 
-    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">TransientService</span>(<span class="hljs-params"></span>)</span>
+    public TransientService()
     {
-        Debug.WriteLine(<span class="hljs-string">$&quot;New Instance <span class="hljs-subst">{<span class="hljs-keyword">this</span>.GetType().Name}</span> - <span class="hljs-subst">{Id.ToString()}</span>&quot;</span>);
+        Debug.WriteLine($&quot;New Instance {this.GetType().Name} - {Id.ToString()}&quot;);
     }
 
-    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">Dispose</span>(<span class="hljs-params"></span>)</span>
-    =&gt; Debug.WriteLine(<span class="hljs-string">$&quot;Disposing <span class="hljs-subst">{<span class="hljs-keyword">this</span>.GetType().Name}</span> - <span class="hljs-subst">{Id.ToString()}</span>&quot;</span>);
+    public void Dispose()
+    =&gt; Debug.WriteLine($&quot;Disposing {this.GetType().Name} - {Id.ToString()}&quot;);
 }
-</div></code></pre>
-<pre><code class="language-csharp"><div><span class="hljs-keyword">namespace</span> <span class="hljs-title">Blazr</span>;
-<span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title">SingletonService</span> : <span class="hljs-title">IDisposable</span>
+</code></pre>
+<pre><code class="language-csharp">namespace Blazr;
+public class SingletonService : IDisposable
 {
-    <span class="hljs-keyword">public</span> <span class="hljs-keyword">readonly</span> Guid Id = Guid.NewGuid();
+    public readonly Guid Id = Guid.NewGuid();
 
-    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">SingletonService</span>(<span class="hljs-params"></span>)</span> 
+    public SingletonService() 
     {
-        Debug.WriteLine(<span class="hljs-string">$&quot;New Instance <span class="hljs-subst">{<span class="hljs-keyword">this</span>.GetType().Name}</span> - <span class="hljs-subst">{Id.ToString()}</span>&quot;</span>);
+        Debug.WriteLine($&quot;New Instance {this.GetType().Name} - {Id.ToString()}&quot;);
     }
 
-    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">Dispose</span>(<span class="hljs-params"></span>)</span>
-    =&gt; Debug.WriteLine(<span class="hljs-string">$&quot;Disposing <span class="hljs-subst">{<span class="hljs-keyword">this</span>.GetType().Name}</span> - <span class="hljs-subst">{Id.ToString()}</span>&quot;</span>);
+    public void Dispose()
+    =&gt; Debug.WriteLine($&quot;Disposing {this.GetType().Name} - {Id.ToString()}&quot;);
 }
-</div></code></pre>
-<pre><code class="language-csharp"><div><span class="hljs-keyword">namespace</span> <span class="hljs-title">Blazr</span>;
-<span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title">ScopedService</span> : <span class="hljs-title">IDisposable</span>
+</code></pre>
+<pre><code class="language-csharp">namespace Blazr;
+public class ScopedService : IDisposable
 {
-    <span class="hljs-keyword">public</span> <span class="hljs-keyword">readonly</span> Guid Id = Guid.NewGuid();
+    public readonly Guid Id = Guid.NewGuid();
 
-    <span class="hljs-keyword">public</span> <span class="hljs-keyword">readonly</span> SingletonService SingletonService;
+    public readonly SingletonService SingletonService;
 
-    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">ScopedService</span>(<span class="hljs-params">SingletonService singletonService</span>)</span>
+    public ScopedService(SingletonService singletonService)
     {
         SingletonService = singletonService;
-        Debug.WriteLine(<span class="hljs-string">$&quot;New Instance <span class="hljs-subst">{<span class="hljs-keyword">this</span>.GetType().Name}</span> - <span class="hljs-subst">{Id.ToString()}</span>&quot;</span>);
+        Debug.WriteLine($&quot;New Instance {this.GetType().Name} - {Id.ToString()}&quot;);
     }
 
-    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">Dispose</span>(<span class="hljs-params"></span>)</span>
-    =&gt; Debug.WriteLine(<span class="hljs-string">$&quot;Disposing <span class="hljs-subst">{<span class="hljs-keyword">this</span>.GetType().Name}</span> - <span class="hljs-subst">{Id.ToString()}</span>&quot;</span>);
+    public void Dispose()
+    =&gt; Debug.WriteLine($&quot;Disposing {this.GetType().Name} - {Id.ToString()}&quot;);
 }
-</div></code></pre>
+</code></pre>
 <p>Add these services to the the application services:</p>
-<pre><code class="language-csharp"><div><span class="hljs-comment">// Add services to the container.</span>
+<pre><code class="language-csharp">// Add services to the container.
 builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
 builder.Services.AddSingleton&lt;WeatherForecastService&gt;();
 builder.Services.AddSingleton&lt;SingletonService&gt;();
 builder.Services.AddScoped&lt;ScopedService&gt;();
 builder.Services.AddTransient&lt;TransientService&gt;();
-</div></code></pre>
+</code></pre>
 <h3 id="component">Component</h3>
 <p>Add <em>/Components/ServicesComponent.razor</em></p>
-<pre><code class="language-csharp"><div>@inherits OwningComponentBase&lt;ScopedService&gt;
+<pre><code class="language-csharp">@inherits OwningComponentBase&lt;ScopedService&gt;
 @namespace Blazr
 @using Microsoft.AspNetCore.Components.Web;
 
-&lt;div <span class="hljs-keyword">class</span>=<span class="hljs-string">&quot;bg-light p-3&quot;</span>&gt;
+&lt;div class=&quot;bg-light p-3&quot;&gt;
     &lt;h1&gt;Hello Blazor at @(time.ToLongTimeString())&lt;/h1&gt;
-    &lt;div <span class="hljs-keyword">class</span>=<span class="hljs-string">&quot;m-3&quot;</span>&gt;
-        Todays Message <span class="hljs-keyword">is</span> : @Message
+    &lt;div class=&quot;m-3&quot;&gt;
+        Todays Message is : @Message
     &lt;/div&gt;
-    &lt;div <span class="hljs-keyword">class</span>=<span class="hljs-string">&quot;m-3&quot;</span>&gt;
-        &lt;button <span class="hljs-keyword">class</span>=<span class="hljs-string">&quot;btn btn-primary&quot;</span> @onclick=<span class="hljs-string">&quot;GetTime&quot;</span>&gt;Set Time&lt;/button&gt;
+    &lt;div class=&quot;m-3&quot;&gt;
+        &lt;button class=&quot;btn btn-primary&quot; @onclick=&quot;GetTime&quot;&gt;Set Time&lt;/button&gt;
     &lt;/div&gt;
-    &lt;div <span class="hljs-keyword">class</span>=<span class="hljs-string">&quot;Container-fluid&quot;</span>&gt;
-        &lt;div <span class="hljs-keyword">class</span>=<span class="hljs-string">&quot;row bg-secondary text-white&quot;</span>&gt;
-            &lt;div <span class="hljs-keyword">class</span>=<span class="hljs-string">&quot;col-6 text-start&quot;</span>&gt;
+    &lt;div class=&quot;Container-fluid&quot;&gt;
+        &lt;div class=&quot;row bg-secondary text-white&quot;&gt;
+            &lt;div class=&quot;col-6 text-start&quot;&gt;
                 Singleton Service Id : @this.singletonService!.Id.ToString()&lt;br /&gt;
                 Scoped Service Id : @this.scopedService!.Id.ToString()&lt;br /&gt;
                 Transient Service Id : @this.transientService!.Id.ToString()&lt;br /&gt;
             &lt;/div&gt;
-            &lt;div <span class="hljs-keyword">class</span>=<span class="hljs-string">&quot;col-6 text-start&quot;</span>&gt;
+            &lt;div class=&quot;col-6 text-start&quot;&gt;
                 Owned Scoped Singleton Service Id : @this.Service.SingletonService.Id.ToString()&lt;br /&gt;
                 Owned Scoped Service Id : @this.Service.Id.ToString()&lt;br /&gt;
             &lt;/div&gt;
@@ -489,40 +170,40 @@ builder.Services.AddTransient&lt;TransientService&gt;();
 &lt;/div&gt;
 
 @code {
-    [<span class="hljs-meta">Parameter</span>] <span class="hljs-keyword">public</span> <span class="hljs-keyword">string</span> Message { <span class="hljs-keyword">get</span>; <span class="hljs-keyword">set</span>; } = <span class="hljs-keyword">string</span>.Empty;
+    [Parameter] public string Message { get; set; } = string.Empty;
 
-    [<span class="hljs-meta">Inject</span>] <span class="hljs-keyword">private</span> SingletonService? singletonService { <span class="hljs-keyword">get</span>; <span class="hljs-keyword">set</span>; }
+    [Inject] private SingletonService? singletonService { get; set; }
 
-    [<span class="hljs-meta">Inject</span>] <span class="hljs-keyword">private</span> ScopedService? scopedService { <span class="hljs-keyword">get</span>; <span class="hljs-keyword">set</span>; }
+    [Inject] private ScopedService? scopedService { get; set; }
 
-    [<span class="hljs-meta">Inject</span>] <span class="hljs-keyword">private</span> TransientService? transientService { <span class="hljs-keyword">get</span>; <span class="hljs-keyword">set</span>; }
+    [Inject] private TransientService? transientService { get; set; }
 
-    <span class="hljs-keyword">private</span> DateTime time = DateTime.Now;
+    private DateTime time = DateTime.Now;
 
-    <span class="hljs-function"><span class="hljs-keyword">protected</span> <span class="hljs-keyword">override</span> <span class="hljs-keyword">void</span> <span class="hljs-title">OnInitialized</span>(<span class="hljs-params"></span>)</span>
+    protected override void OnInitialized()
     =&gt; time = DateTime.Now;
 
-    <span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-keyword">void</span> <span class="hljs-title">GetTime</span>(<span class="hljs-params"></span>)</span>
+    private void GetTime()
     =&gt; time = DateTime.Now;
 }
-</div></code></pre>
+</code></pre>
 <p>Finally update <em>index.razor</em>: add the <code>ServicesComponent</code></p>
-<pre><code class="language-csharp"><div>@page <span class="hljs-string">&quot;/&quot;</span>
+<pre><code class="language-csharp">@page &quot;/&quot;
 
 &lt;PageTitle&gt;Index&lt;/PageTitle&gt;
 
 &lt;h1&gt;Hello, world!&lt;/h1&gt;
 
-Welcome to your <span class="hljs-keyword">new</span> app.
+Welcome to your new app.
 
-&lt;ServicesComponent Message=<span class="hljs-string">&quot;This is a Test Blazor Component&quot;</span> /&gt;
-</div></code></pre>
+&lt;ServicesComponent Message=&quot;This is a Test Blazor Component&quot; /&gt;
+</code></pre>
 <h2 id="testing">Testing</h2>
 <p>Run the project and examine the Debug Console.</p>
 <h3 id="the-logs">The Logs</h3>
 <p>The first section is the pre-render of the page by the server - this is the Index page.</p>
 <p>The only surviving service is the Singleton 7765.</p>
-<pre><code><code><div>New Instance SingletonService - 77655d43-53ce-484e-bb60-3a61d2a92412
+<pre><code>New Instance SingletonService - 77655d43-53ce-484e-bb60-3a61d2a92412
 New Instance ScopedService - 81895945-1e7d-400f-a15b-fb853bd62de4
 New Instance TransientService - f76d6dad-8493-4401-ba75-5ba5d153a686
 New Instance TransientService - beba3fd1-fa4d-47e1-8291-d2a33166d6d3
@@ -533,47 +214,47 @@ Disposing TransientService - f76d6dad-8493-4401-ba75-5ba5d153a686
 Disposing ScopedService - 81895945-1e7d-400f-a15b-fb853bd62de4
 Disposing ScopedService - 8b965aa9-22b2-4061-88a4-ac3893d95a31
 Disposing ScopedService - b436f1b0-ef28-4f35-8780-8dca3bc6365b
-</div></code></code></pre>
+</code></pre>
 <p>The next section is the actual first live render of <code>Index</code>.</p>
-<p><img src="https://shauncurtis.github.io/posts/assets/Blazor-Services/Blazor-Component.png" alt="Blazor-Component"></p>
+<p><img src="./assets/Blazor-Services/Blazor-Component.png" alt="Blazor-Component" /></p>
 <ol>
 <li>The singleton 7765 instance is the same throughout.</li>
 <li>The Scoped 0d58 instance is the normal Hub Session instance.  It's used by both instances of the component.</li>
 <li>There are two transient instances b258 and 5b7d.</li>
 <li>There are two scoped instances 3a1b and d57a created by the &quot;Owning&quot; components.</li>
 </ol>
-<pre><code><code><div>New Instance ScopedService - 0d5824a1-cc6e-4df0-8f58-42f0c08c7313
+<pre><code>New Instance ScopedService - 0d5824a1-cc6e-4df0-8f58-42f0c08c7313
 New Instance TransientService - b2581dd9-abf4-4cdb-86e9-14cdf707550f
 New Instance TransientService - 5b7d992c-0abc-4157-945f-eb8ab57e23a8
 New Instance ScopedService - 3a1b5c67-92ec-42d7-b7f5-3454da4ba4ec
 New Instance ScopedService - d57a6c8b-7464-48f3-b52c-45fe4f6bd53a
-</div></code></code></pre>
+</code></pre>
 <p>When we navigate to <code>Counter</code>:</p>
 <ol>
 <li>The two scoped instances 3a1b and d57a created by the &quot;Owning&quot; components are disposed.</li>
 </ol>
-<pre><code><code><div>Disposing ScopedService - 3a1b5c67-92ec-42d7-b7f5-3454da4ba4ec
+<pre><code>Disposing ScopedService - 3a1b5c67-92ec-42d7-b7f5-3454da4ba4ec
 Disposing ScopedService - d57a6c8b-7464-48f3-b52c-45fe4f6bd53a
-</div></code></code></pre>
+</code></pre>
 <p>When we navigate back to <code>Index</code></p>
-<p><img src="https://shauncurtis.github.io/posts/assets/Blazor-Services/Blazor-Component-Routed.png" alt="Blazor-Component"></p>
+<p><img src="./assets/Blazor-Services/Blazor-Component-Routed.png" alt="Blazor-Component" /></p>
 <ol>
 <li>The singleton 7765 instance is the same.</li>
 <li>The Scoped 0d58 instance is the same normal Hub Session instance.</li>
 <li>There are two new transient instances 4056 and affb.</li>
 <li>There are two new scoped instances 2d11 and 36b9 created by the &quot;Owning&quot; components.</li>
 </ol>
-<pre><code><code><div>New Instance TransientService - 4056a2cf-b9ae-4067-8704-36724318a077
+<pre><code>New Instance TransientService - 4056a2cf-b9ae-4067-8704-36724318a077
 New Instance TransientService - affb563d-741a-49da-8747-080574f47eeb
 New Instance ScopedService - 2d11acf4-1334-49c0-a64b-1a85bdfba506
 New Instance ScopedService - 36b9370c-3663-489c-88cf-367b7ef401d3
-</div></code></code></pre>
+</code></pre>
 <p>Pretty much as you would expect.  But, what happened to those two Transient instances in the first render - b258 and 5b7d?  Why haven't they been disposed?  The same will be true of 4056 and affb on the second visit to <code>Index</code>.</p>
 <p>The answer lies in how the Service Container deals with object instances that implement <code>IDisposable</code>.</p>
 <p>Normal Transient service instances are created in the ciontainer, and the reference to the instance handed to the requester.  The container keeps no reference to the instance.  When the Instance goes out of scope with it's owner - normally the component being destroyed, the garbage collector also destroys the service instance: it has no references.</p>
 <p><code>IDisposable</code> Transient services on the other hand need disposing.  Someone has to call <code>Dispose</code> on the instance, the garbage collector certainly doesn't!  So the DI container holds a reference to all <code>IDisposable</code> instances it creates.  When the requester now gets destroyed, the <code>IDisposable</code> Transient instance is still referenced by the DI container and thus not destroyed by the garbage collector.  So when do they get disposed.</p>
 <p>To demonstrate I visited <code>Index</code> several times to build up a pot of Transient instances.  I then hit F5 to restart the SPA session.  At this point you will see this:  all the Transient instances being disposed.</p>
-<pre><code><code><div>Disposing TransientService - 55db7e96-54fa-4ada-8a32-940fa3f7c506
+<pre><code>Disposing TransientService - 55db7e96-54fa-4ada-8a32-940fa3f7c506
 Disposing TransientService - 38e99d73-95c5-4818-869f-bf530c1e3a14
 Disposing TransientService - 4b92d54c-0c2b-4ebb-a610-6c4fdf44bea4
 Disposing TransientService - 9b552c10-2d74-4eae-9245-8126ed38e1a2
@@ -589,7 +270,7 @@ Disposing TransientService - affb563d-741a-49da-8747-080574f47eeb
 Disposing TransientService - 4056a2cf-b9ae-4067-8704-36724318a077
 Disposing TransientService - 5b7d992c-0abc-4157-945f-eb8ab57e23a8
 Disposing TransientService - b2581dd9-abf4-4cdb-86e9-14cdf707550f
-</div></code></code></pre>
+</code></pre>
 <p>Restarting the SPA session, or just killing it by navigating away from the SPA, closes the Hub session and with it the Hub Session DI container.  The clean up process when the hub session closes disposes of the DI container, which causes the DI container to call <code>Dispose</code> on all service instances in its &quot;Needs Disposing&quot; list.  This includes all the orphaned Transient instances.</p>
 <p>You may not think this is too desperate, but it all depends on what those Transient Services do.</p>
 <p>Imagine one that does a database lookup and creates a database context instance to do it.  And that instance is &quot;disposed&quot; through <code>IDisposable</code>.  You could soon have many &quot;open&quot; database sessions, eating up a lot of memory and database resources.</p>
@@ -599,81 +280,32 @@ Disposing TransientService - b2581dd9-abf4-4cdb-86e9-14cdf707550f
 <li>Only use such services in <code>OwningComponentBase</code> DI containers.  There's a little more work involved, but they are then disposed when the component is destroyed.</li>
 </ol>
 <p>Here's a slightly different implementation of <code>ServicesComponent</code>.  The <code>TransientService</code> instance is now running in the component DI container.</p>
-<pre><code class="language-csharp"><div>@code {
-    [<span class="hljs-meta">Parameter</span>] <span class="hljs-keyword">public</span> <span class="hljs-keyword">string</span> Message { <span class="hljs-keyword">get</span>; <span class="hljs-keyword">set</span>; } = <span class="hljs-keyword">string</span>.Empty;
+<pre><code class="language-csharp">@code {
+    [Parameter] public string Message { get; set; } = string.Empty;
 
-    [<span class="hljs-meta">Inject</span>] <span class="hljs-keyword">private</span> SingletonService? singletonService { <span class="hljs-keyword">get</span>; <span class="hljs-keyword">set</span>; }
+    [Inject] private SingletonService? singletonService { get; set; }
 
-    [<span class="hljs-meta">Inject</span>] <span class="hljs-keyword">private</span> ScopedService? scopedService { <span class="hljs-keyword">get</span>; <span class="hljs-keyword">set</span>; }
+    [Inject] private ScopedService? scopedService { get; set; }
 
-    <span class="hljs-keyword">private</span> TransientService? transientService { <span class="hljs-keyword">get</span>; <span class="hljs-keyword">set</span>; }
+    private TransientService? transientService { get; set; }
 
-    <span class="hljs-keyword">private</span> DateTime time = DateTime.Now;
+    private DateTime time = DateTime.Now;
 
-    <span class="hljs-function"><span class="hljs-keyword">protected</span> <span class="hljs-keyword">override</span> <span class="hljs-keyword">void</span> <span class="hljs-title">OnInitialized</span>(<span class="hljs-params"></span>)</span>
+    protected override void OnInitialized()
     {
         time = DateTime.Now;
         transientService = ScopedServices.GetRequiredService&lt;TransientService&gt;();
     }
 
-    <span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-keyword">void</span> <span class="hljs-title">GetTime</span>(<span class="hljs-params"></span>)</span>
+    private void GetTime()
     =&gt; time = DateTime.Now;
 }
-</div></code></pre>
+</code></pre>
 <h2 id="wrap-up">Wrap Up</h2>
-<p>Hopefully you're a little more enlightened about Blazor and AspNetCore Dependancy Injection and Services.</p>
-
-    
-
-            </div>
-        </div>
-    </div>
-</div>
-<!-- end of Article Container -->
+<p>Hopefully you're a little more enlightened about Blazor and AspNetCore Dependency Injection and Services.</p>
+</div></div></div></body></html>
 
 
-                </div>
-                <!-- End of Main Content -->
-            </div>
-            <!-- Footer -->
-            
-<!-- Copyright -->
-<footer class="sticky-footer bg-white">
-    <div class="container my-auto">
-        <div class="copyright text-center my-auto">
-            
-<span>Copyright &copy; Cold Elm Coders - 2022</span>
-
-        </div>
-    </div>
-</footer>
-<!-- end of copyright -->
 
 
-            <!-- End of Footer -->
-        </div>
-        <!-- End of Content Wrapper -->
-        
-<a class="scroll-to-top rounded" href="#page-top">
-    <i class="fas fa-angle-up"></i>
-</a>
 
-
-    </div>
-    <!-- End of Page Wrapper -->
-    <!-- Scripts -->
-    
-<!-- Scripts -->
-<!-- Bootstrap core JavaScript-->
-<script src="/assets/vendor/jquery/jquery.min.js"></script>
-<script src="/assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-
-<!-- Core plugin JavaScript-->
-<script src="/assets/vendor/jquery-easing/jquery.easing.min.js"></script>
-
-<!-- Custom scripts for all pages-->
-<script src="/assets/js/sb-admin-2.min.js"></script>
-
-
-</body>
-</html>

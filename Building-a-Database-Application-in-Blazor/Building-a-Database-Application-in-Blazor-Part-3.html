@@ -1,313 +1,46 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<html lang="en"><head><meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<base href="/">
 
-<!-- SEO Meta Tags -->
-<meta name="description" content="Your description">
-<meta name="author" content="Your name">
+	
 
-<!-- OG Meta Tags to improve the way the post looks when you share the page on Facebook, Twitter, LinkedIn -->
-<meta property="og:site_name" content="" /> <!-- website name -->
-<meta property="og:site" content="" /> <!-- website link -->
-<meta property="og:title" content="" /> <!-- title shown in the actual shared post -->
-<meta property="og:description" content="" /> <!-- description shown in the actual shared post -->
-<meta property="og:image" content="" /> <!-- image link, make sure it's jpg -->
-<meta property="og:url" content="" /> <!-- where do you want your post to link to -->
-<meta name="twitter:card" content="summary_large_image"> <!-- to have large image post format in Twitter -->
+	
 
-<meta charset="utf-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	
+	<link href="/resources/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+	<link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
 
+	
+	<link href="/resources/css/sb-admin-2.css" rel="stylesheet" type="text/css">
+	<link href="/resources/css/site.css" rel="stylesheet" type="text/css">
 
-<meta name="description" content="This article describes building the Edit and View UI components for a Blazor Database Application." >
-<meta name="author" content="Shaun Curtis" >
+	
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/highlight.css">
+	<link rel="stylesheet" href="/resources/css/article.css" type="text/css">
 
+	
+	<link rel="icon" href="/images/favicon.png">
 
+	<title>Building Edit and View UI Components</title>
+        <meta property="author" content="Shaun Curtis" />
+        <meta property="description" content="This article describes building the Edit and View UI components for a Blazor Database Application." />
+    <meta property="og:site_name" content="Cold Elm Coders" />
+        <meta property="og:site" content="https://shauncurtis.github.io/" />
+        <meta property="og:title" content="Building Edit and View UI Components" />
+        <meta property="og:description" content="This article describes building the Edit and View UI components for a Blazor Database Application." /></head>
+<body><header class="navbar bg-dark p-2 text-large text-light"><section class="navbar-section  text-light"><a href="/" class="navbar-brand mr-2 text-large text-light p-2">Cold Elm Coders</a>
+			<a href="/Posts" class="btn btn-link text-light">Posts</a>
+			<a href="/Rants" class="btn btn-link text-light">Rants</a>
+			<a href="/Articles" class="btn btn-link text-light">Articles</a>
+			<a href="/Stories" class="btn btn-link text-light">Stories</a>
+			<a href="/about.html" class="btn btn-link text-light">About</a></section></header>
 
-<title>Part 3 - A Blazor Database Template - Building Edit and View UI Components</title>
-
-
-<!-- Custom fonts for this template-->
-<link href="/assets/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
-<link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
-      rel="stylesheet">
-
-<!-- Custom styles for this template-->
-<link href="/assets/css/sb-admin-2.css" rel="stylesheet" type="text/css">
-<link href="/assets/css/site.css" rel="stylesheet" type="text/css">
-
-<!-- Favicon  -->
-<link rel="icon" href="/assets/images/favicon.png">
-
-
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/highlight.css">
-    <link rel="stylesheet" href="/assets/css/article.css" type="text/css">
-</head>
-<body id="page-top">
-    <!--topbar-->
-    <div id="topbar">
-        
-<!-- Topbar -->
-<nav class="navbar navbar-expand navbar-light topbar mb-4 static-top">
-    
-<ul class="navbar-nav" >
-<li class="nav-item" >
-<a class="nav-link " href="/index.html" role="button"  >
-<span class="mr-2 d-none d-lg-inline text-gray-100">Index</span>
-</a>
-</li>
-<li class="nav-item dropdown no-arrow mx-1" >
-<a class="nav-link dropdown-toggle" href="#" id="7a19c700-db57-43e7-a9a3-bc43ffdd2158" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"  >
-<span class="mr-2 d-none d-lg-inline text-gray-100">Articles</span>
-</a>
-<div class=" dropdown-list dropdown-menu shadow animated--grow-in" aria-labelledby="7a19c700-db57-43e7-a9a3-bc43ffdd2158" >
-<a class="dropdown-item" href="/articles/A-Flexible-App.html" >
-<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
-Creating a Dynamic Blazor App Component
-</a>
-<a class="dropdown-item" href="/articles/Async-Programming-in-DotNetCore.html" >
-<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
-Async Programming In Dotnetcore
-</a>
-<a class="dropdown-item" href="/articles/Blazor-AllinOne.html" >
-<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
-Blazor All In One - Multi SPA Hosting
-</a>
-<a class="dropdown-item" href="/articles/Blazor-Async-Programming.html" >
-<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
-Blazor Async Programming
-</a>
-<a class="dropdown-item" href="/articles/Blazor-Brick-By-Brick.html" >
-<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
-Blazor Brick By Brick
-</a>
-<a class="dropdown-item" href="/articles/Blazor-Components.html" >
-<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
-Blazor Components
-</a>
-<a class="dropdown-item" href="/articles/Blazor-CSS.html" >
-<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
-Blazor CSS
-</a>
-<a class="dropdown-item" href="/articles/Blazor-DataList-Control.html" >
-<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
-Blazor Datalist Control
-</a>
-<a class="dropdown-item" href="/articles/Blazor-Form-Validation.html" >
-<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
-Blazor Form Validation
-</a>
-<a class="dropdown-item" href="/articles/Building-Blazor-List-Components.html" >
-<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
-Building Blazor List Components and the Notification Pattern
-</a>
-<a class="dropdown-item" href="/articles/Building-Edit-Forms.html" >
-<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
-Building Edit Forms
-</a>
-<a class="dropdown-item" href="/articles/EditFormState.html" >
-<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
-The Blazor EditFormState Control
-</a>
-<a class="dropdown-item" href="/articles/Hydra.html" >
-<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
-Blazor Hydra
-</a>
-<a class="dropdown-item" href="/articles/Inline-Dialog.html" >
-<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
-The Blazor Inline Dialog Control
-</a>
-<a class="dropdown-item" href="/articles/Modal-Dialog.html" >
-<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
-A Blazor Modal Dialog
-</a>
-<a class="dropdown-item" href="/articles/Policy-Based-Authorization.html" >
-<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
-Policy Base Authorization in Blazor
-</a>
-<a class="dropdown-item" href="/articles/ValidationFormState.html" >
-<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
-A Blazor Validation Control
-</a>
-<a class="dropdown-item" href="/articles/XML-XSD-Serialization.html" >
-<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
-XML XSD Serialization
-</a>
-</div>
-</li>
-<li class="nav-item dropdown no-arrow mx-1" >
-<a class="nav-link dropdown-toggle" href="#" id="b430dc6d-d13a-4039-83cd-275f8793bd72" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"  >
-<span class="mr-2 d-none d-lg-inline text-gray-100">Blazor Database Apps</span>
-</a>
-<div class=" dropdown-list dropdown-menu shadow animated--grow-in" aria-labelledby="b430dc6d-d13a-4039-83cd-275f8793bd72" >
-<a class="dropdown-item" href="/Building-a-Database-Application-in-Blazor/Building-a-Database-Application-in-Blazor-Part-1.html" >
-<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
-Building A Database Application In Blazor Part 1
-</a>
-<a class="dropdown-item" href="/Building-a-Database-Application-in-Blazor/Building-a-Database-Application-in-Blazor-Part-2.html" >
-<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
-Building A Database Application In Blazor Part 2
-</a>
-<a class="dropdown-item" href="/Building-a-Database-Application-in-Blazor/Building-a-Database-Application-in-Blazor-Part-3.html" >
-<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
-Building A Database Application In Blazor Part 3
-</a>
-<a class="dropdown-item" href="/Building-a-Database-Application-in-Blazor/Building-a-Database-Application-in-Blazor-Part-4.html" >
-<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
-Building A Database Application In Blazor Part 4
-</a>
-<a class="dropdown-item" href="/Building-a-Database-Application-in-Blazor/Building-a-Database-Application-in-Blazor-Part-5.html" >
-<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
-Building A Database Application In Blazor Part 5
-</a>
-<a class="dropdown-item" href="/Building-a-Database-Application-in-Blazor/Building-a-Database-Application-in-Blazor-Part-6.html" >
-<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
-Building A Database Application In Blazor Part 6
-</a>
-<a class="dropdown-item" href="/Building-a-Database-Application-in-Blazor/index.html" >
-<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
-Building a Database Application in Blazor
-</a>
-</div>
-</li>
-<li class="nav-item dropdown no-arrow mx-1" >
-<a class="nav-link dropdown-toggle" href="#" id="01e00830-81f2-4242-a803-8ac467b8de20" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"  >
-<span class="mr-2 d-none d-lg-inline text-gray-100">Building Blazor Applications</span>
-</a>
-<div class=" dropdown-list dropdown-menu shadow animated--grow-in" aria-labelledby="01e00830-81f2-4242-a803-8ac467b8de20" >
-<a class="dropdown-item" href="/Building-Blazor-Applications/Blazor-Async-UI-Events.html" >
-<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
-Blazor Async UI Events
-</a>
-<a class="dropdown-item" href="/Building-Blazor-Applications/Blazor-Bootstrap-Toaster.html" >
-<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
-Blazor Bootstrap Toaster
-</a>
-<a class="dropdown-item" href="/Building-Blazor-Applications/Blazor-Services.html" >
-<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
-Blazor Services
-</a>
-<a class="dropdown-item" href="/Building-Blazor-Applications/Building-A-Blazor-AutoComplete-Control.html" >
-<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
-Building A Blazor Autocomplete Control
-</a>
-<a class="dropdown-item" href="/Building-Blazor-Applications/Building-Wrapper-Components.html" >
-<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
-Building Wrapper Components
-</a>
-<a class="dropdown-item" href="/Building-Blazor-Applications/DBContexts-In-Transient-Services.html" >
-<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
-Dbcontexts In Transient Services
-</a>
-<a class="dropdown-item" href="/Building-Blazor-Applications/DynamicCss.html" >
-<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
-Blazor Dynamic Stylesheets
-</a>
-<a class="dropdown-item" href="/Building-Blazor-Applications/For-ForEach-in-Blazor.html" >
-<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
-For Foreach In Blazor
-</a>
-<a class="dropdown-item" href="/Building-Blazor-Applications/Leaner-Meaner-Greener-Components.html" >
-<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
-Leaner Meaner Greener Components
-</a>
-<a class="dropdown-item" href="/Building-Blazor-Applications/Notification-Service-Pattern.html" >
-<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
-Blazor Notification Service Pattern
-</a>
-<a class="dropdown-item" href="/Building-Blazor-Applications/Rethinking-The-Repository-Pattern.html" >
-<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
-Rethinking The Repository Pattern
-</a>
-<a class="dropdown-item" href="/Building-Blazor-Applications/The-Blazor-Component-Scope-Conumdrum.html" >
-<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
-The Blazor Component Scope Conumdrum
-</a>
-<a class="dropdown-item" href="/Building-Blazor-Applications/The-Blazor-WASM-Hosted-Project.html" >
-<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
-The Blazor WASM Hosted Project
-</a>
-<a class="dropdown-item" href="/Building-Blazor-Applications/Whats-Wrong-with-my-Component-Design.html" >
-<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
-Whats Wrong With My Component Design
-</a>
-<a class="dropdown-item" href="/Building-Blazor-Applications/The-Blazor-Component" >
-<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
-Building Blazor Applications\The Blazor Component
-</a>
-</div>
-</li>
-<li class="nav-item dropdown no-arrow mx-1" >
-<a class="nav-link dropdown-toggle" href="#" id="2016a4f4-0e36-40a6-a376-e65b8272f1a5" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"  >
-<span class="mr-2 d-none d-lg-inline text-gray-100">Design</span>
-</a>
-<div class=" dropdown-list dropdown-menu shadow animated--grow-in" aria-labelledby="2016a4f4-0e36-40a6-a376-e65b8272f1a5" >
-<a class="dropdown-item" href="/Design/Clean-Design-In-Blazor.html" >
-<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
-Clean Design Principles in Blazor Applications
-</a>
-<a class="dropdown-item" href="/Design/Clean-Design-Blazor-Template.html" >
-<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
-A Blazor Clean Design Template
-</a>
-<a class="dropdown-item" href="/Design/Clean-Design-Blazor-Template-Solution-Structure.html" >
-<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
-Solution Structure in the Clean Design Blazor Template
-</a>
-<a class="dropdown-item" href="/Design/Clean-Design-Blazor-Template-DataServices.html" >
-<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
-Data Services in the Clean Design Blazor Template
-</a>
-<a class="dropdown-item" href="/Design/Clean-Design-Blazor-Template-UI.html" >
-<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
-The UI in the Clean Design Blazor Template
-</a>
-<a class="dropdown-item" href="/Design/Clean-Design-Blazor-Template-Solution-Setup.html" >
-<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
-Solution Setup in the Clean Design Blazor Template
-</a>
-<a class="dropdown-item" href="/Design/Clean-Design-Blazor-Template-Testing.html" >
-<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
-Testing in the Clean Design Blazor Template
-</a>
-</div>
-</li>
-<li class="nav-item dropdown no-arrow mx-1" >
-<a class="nav-link dropdown-toggle" href="#" id="3a83179e-8861-4e30-ac07-528e4ad57d75" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"  >
-<span class="mr-2 d-none d-lg-inline text-gray-100">Modern C#</span>
-</a>
-<div class=" dropdown-list dropdown-menu shadow animated--grow-in" aria-labelledby="3a83179e-8861-4e30-ac07-528e4ad57d75" >
-<a class="dropdown-item" href="/Modern-Coding-Patterns/Nullable-And-VS-2022.html" >
-<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
-Nullable And VS 2022
-</a>
-</div>
-</li>
-</ul>
-
-    <div class="ms-5 me-5 ml-auto">
-        <h1>Cold Elm Coders</h1>
-    </div>
-</nav>
-
-
-    </div>
-    <!--End topbar-->
-    <!--Sidebar-->
-    <div id="sidebar">
-        
-<div class="article-info p-2" Published: 15-09-2020 >
-<div>Published: 15-09-2020</div>
-<div>Last Updated: 04-07-2021</div>
-<div>Author: Shaun Curtis</div>
-</div>
-
-        
-<h4 class="p-2">Table of Contents</h4>
+	<div class="container-fluid"><div class="row"><div class="col-12 col-sm-3 col-lg-2 bg-light pt-2"><div class="article-info p-2"><div class="mb-2">Published: 07-Jul-2021</div>
+                <div class="mb-2">Updated: 07-Jul-2021</div>
+                <div class="mb-2">Author: Shaun Curtis</div></div>
+    <h4 class="p-2">Table of Contents</h4>
 <ul class="TOC" >
 <li class="TOC-item TOC-item-0" >
 <a class="TOC-link" href="#">Top</a>
@@ -315,35 +48,13 @@ Nullable And VS 2022
 <li class="TOC-item TOC-item-1" >
 <ul class="TOC TOC-1" >
 <li class="TOC-item TOC-item-2" >
-<a class="TOC-link" href="#introduction">Introduction</a>
-</li>
-<li class="TOC-item TOC-item-2" >
 <a class="TOC-link" href="#sample-project-code-and-demo-site">Sample Project, Code and Demo Site</a>
 </li>
 <li class="TOC-item TOC-item-2" >
 <a class="TOC-link" href="#the-base-forms">The Base Forms</a>
-<ul class="TOC TOC-2" >
-<li class="TOC-item TOC-item-3" >
-<a class="TOC-link" href="#recordformbase">RecordFormBase</a>
-</li>
-<li class="TOC-item TOC-item-3" >
-<a class="TOC-link" href="#editrecordformbase">EditRecordFormBase</a>
-</li>
-<li class="TOC-item TOC-item-3" >
-<a class="TOC-link" href="#edit-state-management">Edit State Management</a>
-</li>
-</ul>
 </li>
 <li class="TOC-item TOC-item-2" >
 <a class="TOC-link" href="#implementing-forms">Implementing Forms</a>
-<ul class="TOC TOC-2" >
-<li class="TOC-item TOC-item-3" >
-<a class="TOC-link" href="#weatherforecastviewerform">WeatherForecastViewerForm</a>
-</li>
-<li class="TOC-item TOC-item-3" >
-<a class="TOC-link" href="#weatherforecasteditorform">WeatherForecastEditorForm</a>
-</li>
-</ul>
 </li>
 <li class="TOC-item TOC-item-2" >
 <a class="TOC-link" href="#routeview-implementations">RouteView Implementations</a>
@@ -359,46 +70,16 @@ Nullable And VS 2022
 </ul>
 </li>
 </ul>
-
+</div>
+			
+			<div class="col-12 col-sm-9 col-lg-10 p-2"><div class="pt-2 pb-2 border-bottom mb-4 text-primary"><h1>Building Edit and View UI Components</h1>
+            <div><small>This article describes building the Edit and View UI components for a Blazor Database Application.</small></div></div>
+    <div class="mb-2"><h3>Document List</h3>
+        <ul><li><a href="/Building-a-Database-Application-in-Blazor/Building-a-Database-Application-in-Blazor-Part-1.html">Project Structure and Framework</a></li><li><a href="/Stories/Building-a-Database-Application-in-Blazor/Index.html">Building a Database Application in Blazor</a></li><li><a href="/Building-a-Database-Application-in-Blazor/Building-a-Database-Application-in-Blazor-Part-2.html">Building the Services</a></li><li><a href="/Building-a-Database-Application-in-Blazor/Building-a-Database-Application-in-Blazor-Part-3.html">Building Edit and View UI Components</a></li><li><a href="/Building-a-Database-Application-in-Blazor/Building-a-Database-Application-in-Blazor-Part-4.html">Building thw UI Components</a></li><li><a href="/Building-a-Database-Application-in-Blazor/Building-a-Database-Application-in-Blazor-Part-5.html">View Components - CRUD List Operations in the UI</a></li></ul></div>
+    <div class="md-danger">
+        This set of articles and code base is out of date. They don't reflect my current framework. Use them at your risk.
     </div>
-    <!--End Sidebar-->
-    <!-- Page Wrapper -->
-    <div id="wrapper">
-        <!-- Content Wrapper -->
-        <div id="content-wrapper" class="d-flex flex-column">
-            <!-- Main Content -->
-            <div id="content">
-                <!-- Topbar -->
-                <div id="article">
-                    <!-- Article -->
-                    
-<!-- Header -->
-<header class="ex-header-article">
-    <div class="container">
-        <div class="row pt-3 pb-3 border-bottom">
-            <div class="col">
-                
-<h1>Part 3 - A Blazor Database Template - Building Edit and View UI Components</h1>
-<div>This article describes building the Edit and View UI components for a Blazor Database Application.</div>
-
-            </div> <!-- end of col -->
-        </div> <!-- end of row -->
-    </div> <!-- end of container -->
-</header> <!-- end of ex-header -->
-<!-- end of header -->
-
-
-                    
-<!-- Article Container -->
-<div class="ex-basic-1 pt-4">
-    <div class="container">
-        <div class="row">
-            <div class="col-12">
-                
-
-        <div class="alert alert-danger">This set of articles and code base is out of date. They don't reflect my current framework. Use them at your risk.</div>
-<h2 id="introduction">Introduction</h2>
-<p>This is the third in a series of articles looking at how to build and structure a Database Application in Blazor. The articles so far are:</p>
+    <p>This is the third in a series of articles looking at how to build and structure a Database Application in Blazor. The articles so far are:</p>
 <ol>
 <li>Project Structure and Framework.</li>
 <li>Services - Building the CRUD Data Layers.</li>
@@ -412,14 +93,14 @@ Nullable And VS 2022
 <p>The repository for the articles has moved to <a href="https://github.com/ShaunCurtis/Blazor.Database">Blazor.Database Repository</a>.  All previous repos are obselete and will be removed shortly.</p>
 <p>There's a SQL script in /SQL in the repository for building the database.</p>
 <p>The demo site has changed now the Server and WASM have been combined.  The site starts in Server mode - <a href="https://cec-blazor-database.azurewebsites.net/">https://cec-blazor-database.azurewebsites.net/</a>.</p>
-<p>The List Form
-<img src="file:////siteimages/Articles/Database/FetchData-List.png" alt="Weather Forecast Viewer"></p>
-<p>The Modal Viewer
-<img src="file:////siteimages/Articles/Database/WeatherForecast-Viewer.png" alt="Weather Forecast Viewer"></p>
-<p>The Inline Editor
-<img src="file:////siteimages/Articles/Database/WeatherForecast-Editor.png" alt="Weather Forecast Viewer"></p>
-<p>Edit State Control
-<img src="file:////siteimages/Articles/Database/Editor-dirty-Exit.png" alt="Weather Forecast Viewer"></p>
+<h4 id="the-list-form">The List Form</h4>
+<p><img src="./assets/Database/FetchData-List.png" alt="Weather Forecast Viewer" /></p>
+<h4 id="the-modal-viewer">The Modal Viewer</h4>
+<p><img src="./assets/Database/WeatherForecast-Viewer.png" alt="Weather Forecast Viewer" /></p>
+<h4 id="the-inline-editor">The Inline Editor</h4>
+<p><img src="./assets/Database/WeatherForecast-Editor.png" alt="Weather Forecast Viewer" /></p>
+<h4 id="edit-state-control">Edit State Control</h4>
+<p><img src="./assets/Database/Editor-dirty-Exit.png" alt="Weather Forecast Viewer" /></p>
 <p>Several custom controls are used in the forms.  The detail on these is covered in separate articles:</p>
 <p>Code Project Articles:</p>
 <ul>
@@ -430,7 +111,7 @@ Nullable And VS 2022
 </ul>
 <p>This Repo Originals:</p>
 <ul>
-<li><a href="articles/Building-Edit-Forms.html">EditFormState</a></li>
+<li><a href="/articles/Building-Edit-Forms.html">EditFormState</a></li>
 <li><a href="/articles/validationformstate.html">EditValidationState Control</a></li>
 <li><a href="/articles/inline-dialog.html">InlineDialog Control</a></li>
 <li><a href="/articles/bootstrap-modal-dialog.html">ModalDialog Control</a></li>
@@ -456,61 +137,61 @@ Nullable And VS 2022
 </li>
 </ol>
 <p>Namespace : <em>Razr.SPA.Components</em></p>
-<pre><code class="language-csharp"><div><span class="hljs-comment">// Namespace: *Razr.SPA.Components*</span>
-<span class="hljs-comment">// Domain: UI Domain</span>
-<span class="hljs-comment">// File: Blazr.SPA/Forms/RecordFormBase.cs</span>
-<span class="hljs-keyword">public</span> <span class="hljs-keyword">abstract</span> <span class="hljs-keyword">class</span> <span class="hljs-title">RecordFormBase</span>&lt;<span class="hljs-title">TRecord</span>&gt; :
-    <span class="hljs-title">ComponentBase</span>
-    <span class="hljs-keyword">where</span> <span class="hljs-title">TRecord</span> : <span class="hljs-keyword">class</span>, <span class="hljs-title">IDbRecord</span>&lt;<span class="hljs-title">TRecord</span>&gt;, <span class="hljs-title">new</span>()
+<pre><code class="language-csharp">// Namespace: *Razr.SPA.Components*
+// Domain: UI Domain
+// File: Blazr.SPA/Forms/RecordFormBase.cs
+public abstract class RecordFormBase&lt;TRecord&gt; :
+    ComponentBase
+    where TRecord : class, IDbRecord&lt;TRecord&gt;, new()
 {
-    [<span class="hljs-meta">CascadingParameter</span>] <span class="hljs-keyword">public</span> IModalDialog Modal { <span class="hljs-keyword">get</span>; <span class="hljs-keyword">set</span>; }
-    [<span class="hljs-meta">Parameter</span>] <span class="hljs-keyword">public</span> Guid ID { <span class="hljs-keyword">get</span>; <span class="hljs-keyword">set</span>; } = Guid.Empty;
-    [<span class="hljs-meta">Parameter</span>] <span class="hljs-keyword">public</span> EventCallback ExitAction { <span class="hljs-keyword">get</span>; <span class="hljs-keyword">set</span>; }
+    [CascadingParameter] public IModalDialog Modal { get; set; }
+    [Parameter] public Guid ID { get; set; } = Guid.Empty;
+    [Parameter] public EventCallback ExitAction { get; set; }
 
-    [<span class="hljs-meta">Inject</span>] <span class="hljs-keyword">protected</span> NavigationManager NavManager { <span class="hljs-keyword">get</span>; <span class="hljs-keyword">set</span>; }
+    [Inject] protected NavigationManager NavManager { get; set; }
 
-    <span class="hljs-keyword">protected</span> IModelViewService&lt;TRecord&gt; Service { <span class="hljs-keyword">get</span>; <span class="hljs-keyword">set</span>; }
-    <span class="hljs-keyword">protected</span> <span class="hljs-keyword">virtual</span> <span class="hljs-built_in">bool</span> IsLoaded =&gt; <span class="hljs-keyword">this</span>.Service != <span class="hljs-literal">null</span> &amp;&amp; <span class="hljs-keyword">this</span>.Service.Record != <span class="hljs-literal">null</span>;
-    <span class="hljs-keyword">protected</span> <span class="hljs-keyword">virtual</span> ComponentState LoadState =&gt; IsLoaded ? ComponentState.Loaded : ComponentState.Loading;
-    <span class="hljs-keyword">protected</span> <span class="hljs-keyword">virtual</span> <span class="hljs-built_in">bool</span> HasServices =&gt; <span class="hljs-keyword">this</span>.Service != <span class="hljs-literal">null</span>;
-    <span class="hljs-keyword">protected</span> <span class="hljs-built_in">bool</span> IsModal =&gt; <span class="hljs-keyword">this</span>.Modal != <span class="hljs-literal">null</span>;
-    <span class="hljs-keyword">protected</span> Guid _modalId { <span class="hljs-keyword">get</span>; <span class="hljs-keyword">set</span>; } = Guid.Empty;
-    <span class="hljs-keyword">protected</span> Guid _Id =&gt; TryGetModalID() ? _modalId : <span class="hljs-keyword">this</span>.ID;
+    protected IModelViewService&lt;TRecord&gt; Service { get; set; }
+    protected virtual bool IsLoaded =&gt; this.Service != null &amp;&amp; this.Service.Record != null;
+    protected virtual ComponentState LoadState =&gt; IsLoaded ? ComponentState.Loaded : ComponentState.Loading;
+    protected virtual bool HasServices =&gt; this.Service != null;
+    protected bool IsModal =&gt; this.Modal != null;
+    protected Guid _modalId { get; set; } = Guid.Empty;
+    protected Guid _Id =&gt; TryGetModalID() ? _modalId : this.ID;
 
-    <span class="hljs-function"><span class="hljs-keyword">protected</span> <span class="hljs-keyword">async</span> <span class="hljs-keyword">override</span> Task <span class="hljs-title">OnInitializedAsync</span>(<span class="hljs-params"></span>)</span>
+    protected async override Task OnInitializedAsync()
     {
-        <span class="hljs-comment">// Get the record</span>
-        <span class="hljs-keyword">await</span> LoadRecordAsync();
-        <span class="hljs-keyword">await</span> <span class="hljs-keyword">base</span>.OnInitializedAsync();
+        // Get the record
+        await LoadRecordAsync();
+        await base.OnInitializedAsync();
     }
 
-    <span class="hljs-function"><span class="hljs-keyword">protected</span> <span class="hljs-keyword">virtual</span> <span class="hljs-keyword">async</span> Task <span class="hljs-title">LoadRecordAsync</span>(<span class="hljs-params"></span>)</span>
-        =&gt; <span class="hljs-keyword">await</span> <span class="hljs-keyword">this</span>.Service.GetRecordAsync(<span class="hljs-keyword">this</span>._Id);
+    protected virtual async Task LoadRecordAsync()
+        =&gt; await this.Service.GetRecordAsync(this._Id);
 
-    <span class="hljs-function"><span class="hljs-keyword">protected</span> <span class="hljs-keyword">virtual</span> <span class="hljs-built_in">bool</span> <span class="hljs-title">TryGetModalID</span>(<span class="hljs-params"></span>)</span>
+    protected virtual bool TryGetModalID()
     {
-        <span class="hljs-keyword">if</span> (<span class="hljs-keyword">this</span>.IsModal &amp;&amp; <span class="hljs-keyword">this</span>.Modal.Options.TryGet&lt;Guid&gt;(<span class="hljs-string">&quot;Id&quot;</span>, <span class="hljs-keyword">out</span> Guid <span class="hljs-keyword">value</span>))
+        if (this.IsModal &amp;&amp; this.Modal.Options.TryGet&lt;Guid&gt;(&quot;Id&quot;, out Guid value))
         {
-            <span class="hljs-keyword">this</span>._modalId = <span class="hljs-keyword">value</span>;
-            <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;
+            this._modalId = value;
+            return true;
         }
-        <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;
+        return false;
     }
 
-    <span class="hljs-function"><span class="hljs-keyword">protected</span> <span class="hljs-keyword">virtual</span> <span class="hljs-keyword">async</span> Task <span class="hljs-title">Exit</span>(<span class="hljs-params"></span>)</span>
+    protected virtual async Task Exit()
     {
-        <span class="hljs-comment">// If we&#x27;re in a modal context, call Close on the cascaded Modal object</span>
-        <span class="hljs-keyword">if</span> (<span class="hljs-keyword">this</span>.IsModal)
-            <span class="hljs-keyword">this</span>.Modal.Close(ModalResult.OK());
-        <span class="hljs-comment">// If there&#x27;s a delegate registered on the ExitAction, execute it. </span>
-        <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (ExitAction.HasDelegate)
-            <span class="hljs-keyword">await</span> ExitAction.InvokeAsync();
-        <span class="hljs-comment">// else fallback action is to navigate to root</span>
-        <span class="hljs-keyword">else</span>
-            <span class="hljs-keyword">this</span>.NavManager.NavigateTo(<span class="hljs-string">&quot;/&quot;</span>);
+        // If we're in a modal context, call Close on the cascaded Modal object
+        if (this.IsModal)
+            this.Modal.Close(ModalResult.OK());
+        // If there's a delegate registered on the ExitAction, execute it. 
+        else if (ExitAction.HasDelegate)
+            await ExitAction.InvokeAsync();
+        // else fallback action is to navigate to root
+        else
+            this.NavManager.NavigateTo(&quot;/&quot;);
     }
 }
-</div></code></pre>
+</code></pre>
 <h3 id="editrecordformbase">EditRecordFormBase</h3>
 <p><code>EditRecordFormBase</code> is the base editor form. It inherits from <code>RecordFormBase</code> and implements editing functionality. <code>TEditRecord</code> is the editable class for <code>TRecord</code>.</p>
 <p>It:</p>
@@ -522,132 +203,132 @@ Nullable And VS 2022
 <li>Saves the record.</li>
 </ol>
 <p>The form &quot;locks&quot; the browser page when the form is dirty.</p>
-<pre><code class="language-csharp"><div><span class="hljs-comment">// Namespace: *Razr.SPA.Components*</span>
-<span class="hljs-comment">// Domain: UI Domain</span>
-<span class="hljs-comment">// File: Blazr.SPA/Forms/EditRecordFormBase.cs</span>
-<span class="hljs-keyword">public</span> <span class="hljs-keyword">abstract</span> <span class="hljs-keyword">class</span> <span class="hljs-title">EditRecordFormBase</span>&lt;<span class="hljs-title">TRecord</span>, <span class="hljs-title">TEditRecord</span>&gt; :
-    <span class="hljs-title">RecordFormBase</span>&lt;<span class="hljs-title">TRecord</span>&gt;,
-    <span class="hljs-title">IDisposable</span>
-    <span class="hljs-keyword">where</span> <span class="hljs-title">TRecord</span> : <span class="hljs-keyword">class</span>, <span class="hljs-title">IDbRecord</span>&lt;<span class="hljs-title">TRecord</span>&gt;, <span class="hljs-title">new</span>()
-    <span class="hljs-keyword">where</span> <span class="hljs-title">TEditRecord</span> : <span class="hljs-keyword">class</span>, <span class="hljs-title">IEditRecord</span>&lt;<span class="hljs-title">TRecord</span>&gt;, <span class="hljs-title">new</span>()
+<pre><code class="language-csharp">// Namespace: *Razr.SPA.Components*
+// Domain: UI Domain
+// File: Blazr.SPA/Forms/EditRecordFormBase.cs
+public abstract class EditRecordFormBase&lt;TRecord, TEditRecord&gt; :
+    RecordFormBase&lt;TRecord&gt;,
+    IDisposable
+    where TRecord : class, IDbRecord&lt;TRecord&gt;, new()
+    where TEditRecord : class, IEditRecord&lt;TRecord&gt;, new()
 {
-    [<span class="hljs-meta">Inject</span>] <span class="hljs-keyword">private</span> IJSRuntime _js { <span class="hljs-keyword">get</span>; <span class="hljs-keyword">set</span>; }
-    [<span class="hljs-meta">Inject</span>] <span class="hljs-keyword">protected</span> EditStateService EditStateService { <span class="hljs-keyword">get</span>; <span class="hljs-keyword">set</span>; }
+    [Inject] private IJSRuntime _js { get; set; }
+    [Inject] protected EditStateService EditStateService { get; set; }
 
-    <span class="hljs-keyword">protected</span> EditContext EditContext { <span class="hljs-keyword">get</span>; <span class="hljs-keyword">set</span>; }
-    <span class="hljs-keyword">protected</span> <span class="hljs-built_in">bool</span> IsDirty =&gt; <span class="hljs-keyword">this</span>.EditStateService.IsDirty;
-    <span class="hljs-keyword">protected</span> <span class="hljs-keyword">virtual</span> <span class="hljs-built_in">string</span> FormUrl { <span class="hljs-keyword">get</span>; <span class="hljs-keyword">set</span>; }
-    <span class="hljs-keyword">protected</span> TEditRecord Model { <span class="hljs-keyword">get</span>; <span class="hljs-keyword">set</span>; }
+    protected EditContext EditContext { get; set; }
+    protected bool IsDirty =&gt; this.EditStateService.IsDirty;
+    protected virtual string FormUrl { get; set; }
+    protected TEditRecord Model { get; set; }
 
-    <span class="hljs-comment">// Set of boolean properties/fields used in the razor code and methods to track </span>
-    <span class="hljs-comment">// state in the form or disable/show/hide buttons.</span>
-    <span class="hljs-keyword">protected</span> <span class="hljs-built_in">bool</span> _isNew =&gt; <span class="hljs-keyword">this</span>.Service?.IsNewRecord ?? <span class="hljs-literal">true</span>;
-    <span class="hljs-keyword">protected</span> <span class="hljs-built_in">bool</span> _isValid { <span class="hljs-keyword">get</span>; <span class="hljs-keyword">set</span>; } = <span class="hljs-literal">true</span>;
-    <span class="hljs-keyword">protected</span> <span class="hljs-built_in">bool</span> _saveDisabled =&gt; !<span class="hljs-keyword">this</span>.IsDirty || !<span class="hljs-keyword">this</span>._isValid;
-    <span class="hljs-keyword">protected</span> <span class="hljs-built_in">bool</span> _deleteDisabled =&gt; <span class="hljs-keyword">this</span>._isNew || <span class="hljs-keyword">this</span>._confirmDelete || <span class="hljs-keyword">this</span>.IsDirty;
-    <span class="hljs-keyword">protected</span> <span class="hljs-built_in">bool</span> _isLoaded { <span class="hljs-keyword">get</span>; <span class="hljs-keyword">set</span>; } = <span class="hljs-literal">false</span>;
-    <span class="hljs-keyword">protected</span> <span class="hljs-built_in">bool</span> _dirtyExit =&gt; <span class="hljs-keyword">this</span>.IsDirty;
-    <span class="hljs-keyword">protected</span> <span class="hljs-built_in">bool</span> _confirmDelete { <span class="hljs-keyword">get</span>; <span class="hljs-keyword">set</span>; } = <span class="hljs-literal">false</span>;
-    <span class="hljs-keyword">protected</span> <span class="hljs-built_in">bool</span> _isInlineDirty =&gt; (!<span class="hljs-keyword">this</span>.IsModal) &amp;&amp; <span class="hljs-keyword">this</span>.IsDirty;
-    <span class="hljs-keyword">protected</span> <span class="hljs-built_in">string</span> _saveButtonText =&gt; <span class="hljs-keyword">this</span>._isNew ? <span class="hljs-string">&quot;Save&quot;</span> : <span class="hljs-string">&quot;Update&quot;</span>;
-    <span class="hljs-keyword">protected</span> <span class="hljs-keyword">override</span> ComponentState LoadState =&gt; _isLoaded ? ComponentState.Loaded : ComponentState.Loading;
+    // Set of boolean properties/fields used in the razor code and methods to track 
+    // state in the form or disable/show/hide buttons.
+    protected bool _isNew =&gt; this.Service?.IsNewRecord ?? true;
+    protected bool _isValid { get; set; } = true;
+    protected bool _saveDisabled =&gt; !this.IsDirty || !this._isValid;
+    protected bool _deleteDisabled =&gt; this._isNew || this._confirmDelete || this.IsDirty;
+    protected bool _isLoaded { get; set; } = false;
+    protected bool _dirtyExit =&gt; this.IsDirty;
+    protected bool _confirmDelete { get; set; } = false;
+    protected bool _isInlineDirty =&gt; (!this.IsModal) &amp;&amp; this.IsDirty;
+    protected string _saveButtonText =&gt; this._isNew ? &quot;Save&quot; : &quot;Update&quot;;
+    protected override ComponentState LoadState =&gt; _isLoaded ? ComponentState.Loaded : ComponentState.Loading;
 
-    <span class="hljs-function"><span class="hljs-keyword">protected</span> <span class="hljs-keyword">override</span> <span class="hljs-keyword">async</span> Task <span class="hljs-title">LoadRecordAsync</span>(<span class="hljs-params"></span>)</span>
+    protected override async Task LoadRecordAsync()
     {
-        _isLoaded = <span class="hljs-literal">false</span>;
-        <span class="hljs-comment">// Get the ID either from a ModalDialog Options or the Id Parameter and set the local id</span>
-        <span class="hljs-keyword">var</span> id = <span class="hljs-keyword">this</span>._Id;
-        <span class="hljs-comment">// Check if we have a dirty form reload and if so get the Id from the EditStateService</span>
-        <span class="hljs-keyword">if</span> (<span class="hljs-keyword">this</span>.EditStateService.IsDirty)
-            id = (Guid)<span class="hljs-keyword">this</span>.EditStateService.RecordID;
-        <span class="hljs-comment">// Get the record</span>
-        <span class="hljs-keyword">await</span> <span class="hljs-keyword">this</span>.Service.GetRecordAsync(id);
-        <span class="hljs-comment">// Get a new Edit class instance, populate it from the record and assign it to the EditContext</span>
-        <span class="hljs-keyword">this</span>.Model = <span class="hljs-keyword">new</span> TEditRecord();
-        <span class="hljs-keyword">this</span>.Model.Populate(<span class="hljs-keyword">this</span>.Service.Record);
-        <span class="hljs-keyword">this</span>.EditContext = <span class="hljs-keyword">new</span> EditContext(<span class="hljs-keyword">this</span>.Model);
-        <span class="hljs-comment">// Set up the EditStateService FirmUrl and Record Id</span>
-        <span class="hljs-keyword">this</span>.EditStateService.EditFormUrl = FormUrl ?? NavManager.Uri;
-        <span class="hljs-keyword">this</span>.EditStateService.RecordID = id;
-        _isLoaded = <span class="hljs-literal">true</span>;
-        <span class="hljs-comment">// wire up the events</span>
-        <span class="hljs-keyword">this</span>.EditContext.OnFieldChanged += FieldChanged;
-        <span class="hljs-keyword">this</span>.EditStateService.EditStateChanged += OnEditStateChanged;
-        <span class="hljs-comment">// if we have a dirty record or are editing an existing record, run validation</span>
-        <span class="hljs-keyword">if</span> (!<span class="hljs-keyword">this</span>._isNew)
-            <span class="hljs-keyword">this</span>.EditContext.Validate();
+        _isLoaded = false;
+        // Get the ID either from a ModalDialog Options or the Id Parameter and set the local id
+        var id = this._Id;
+        // Check if we have a dirty form reload and if so get the Id from the EditStateService
+        if (this.EditStateService.IsDirty)
+            id = (Guid)this.EditStateService.RecordID;
+        // Get the record
+        await this.Service.GetRecordAsync(id);
+        // Get a new Edit class instance, populate it from the record and assign it to the EditContext
+        this.Model = new TEditRecord();
+        this.Model.Populate(this.Service.Record);
+        this.EditContext = new EditContext(this.Model);
+        // Set up the EditStateService FirmUrl and Record Id
+        this.EditStateService.EditFormUrl = FormUrl ?? NavManager.Uri;
+        this.EditStateService.RecordID = id;
+        _isLoaded = true;
+        // wire up the events
+        this.EditContext.OnFieldChanged += FieldChanged;
+        this.EditStateService.EditStateChanged += OnEditStateChanged;
+        // if we have a dirty record or are editing an existing record, run validation
+        if (!this._isNew)
+            this.EditContext.Validate();
     }
 
-    <span class="hljs-function"><span class="hljs-keyword">protected</span> <span class="hljs-keyword">void</span> <span class="hljs-title">FieldChanged</span>(<span class="hljs-params"><span class="hljs-built_in">object</span> sender, FieldChangedEventArgs e</span>)</span>
-        =&gt;  <span class="hljs-keyword">this</span>._confirmDelete = <span class="hljs-literal">false</span>;
+    protected void FieldChanged(object sender, FieldChangedEventArgs e)
+        =&gt;  this._confirmDelete = false;
 
-    <span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-keyword">void</span> <span class="hljs-title">OnEditStateChanged</span>(<span class="hljs-params"><span class="hljs-built_in">object</span> sender, EditStateEventArgs e</span>)</span>
+    private void OnEditStateChanged(object sender, EditStateEventArgs e)
     {
-        <span class="hljs-keyword">if</span> (<span class="hljs-keyword">this</span>.IsModal) <span class="hljs-keyword">this</span>.Modal.Lock(e.IsDirty);
-        <span class="hljs-keyword">this</span>.InvokeAsync(StateHasChanged);
+        if (this.IsModal) this.Modal.Lock(e.IsDirty);
+        this.InvokeAsync(StateHasChanged);
     }
 
-    <span class="hljs-function"><span class="hljs-keyword">protected</span> <span class="hljs-keyword">void</span> <span class="hljs-title">ValidStateChanged</span>(<span class="hljs-params"><span class="hljs-built_in">bool</span> valid</span>)</span>
-        =&gt; <span class="hljs-keyword">this</span>._isValid = valid;
+    protected void ValidStateChanged(bool valid)
+        =&gt; this._isValid = valid;
 
-    <span class="hljs-function"><span class="hljs-keyword">protected</span> <span class="hljs-keyword">async</span> Task <span class="hljs-title">HandleValidSubmit</span>(<span class="hljs-params"></span>)</span>
+    protected async Task HandleValidSubmit()
     {
-        <span class="hljs-comment">// Get the readonly record to submit</span>
-        <span class="hljs-keyword">var</span> rec = <span class="hljs-keyword">this</span>.Model.GetRecord();
-        <span class="hljs-comment">// Save the record</span>
-        <span class="hljs-keyword">await</span> <span class="hljs-keyword">this</span>.Service.SaveRecordAsync(rec);
-        <span class="hljs-comment">// Update the EditStateService to clean</span>
-        <span class="hljs-keyword">this</span>.EditStateService.NotifyRecordSaved();
-        <span class="hljs-comment">// Render the component</span>
-        <span class="hljs-keyword">await</span> <span class="hljs-keyword">this</span>.InvokeAsync(<span class="hljs-keyword">this</span>.StateHasChanged);
+        // Get the readonly record to submit
+        var rec = this.Model.GetRecord();
+        // Save the record
+        await this.Service.SaveRecordAsync(rec);
+        // Update the EditStateService to clean
+        this.EditStateService.NotifyRecordSaved();
+        // Render the component
+        await this.InvokeAsync(this.StateHasChanged);
     }
 
-    <span class="hljs-function"><span class="hljs-keyword">protected</span> <span class="hljs-keyword">void</span> <span class="hljs-title">ResetToRecord</span>(<span class="hljs-params"></span>)</span>
-        =&gt;  <span class="hljs-keyword">this</span>.Model.Populate(<span class="hljs-keyword">this</span>.Service.Record);
+    protected void ResetToRecord()
+        =&gt;  this.Model.Populate(this.Service.Record);
 
-    <span class="hljs-function"><span class="hljs-keyword">protected</span> <span class="hljs-keyword">void</span> <span class="hljs-title">Delete</span>(<span class="hljs-params"></span>)</span>
+    protected void Delete()
     {
-        <span class="hljs-keyword">if</span> (!<span class="hljs-keyword">this</span>._isNew)
-            <span class="hljs-keyword">this</span>._confirmDelete = <span class="hljs-literal">true</span>;
+        if (!this._isNew)
+            this._confirmDelete = true;
     }
 
-    <span class="hljs-function"><span class="hljs-keyword">protected</span> <span class="hljs-keyword">async</span> Task <span class="hljs-title">ConfirmDelete</span>(<span class="hljs-params"></span>)</span>
+    protected async Task ConfirmDelete()
     {
-        <span class="hljs-keyword">if</span> (<span class="hljs-keyword">this</span>._confirmDelete)
+        if (this._confirmDelete)
         {
-            <span class="hljs-keyword">await</span> <span class="hljs-keyword">this</span>.Service.DeleteRecordAsync();
-            <span class="hljs-keyword">await</span> <span class="hljs-keyword">this</span>.DoExit();
+            await this.Service.DeleteRecordAsync();
+            await this.DoExit();
         }
     }
 
-    <span class="hljs-function"><span class="hljs-keyword">protected</span> <span class="hljs-keyword">async</span> Task <span class="hljs-title">ConfirmExit</span>(<span class="hljs-params"></span>)</span>
+    protected async Task ConfirmExit()
     {
-        <span class="hljs-keyword">this</span>.EditStateService.ResetEditState();
-        <span class="hljs-keyword">this</span>.SetPageExitCheck(<span class="hljs-literal">false</span>);
-        <span class="hljs-keyword">await</span> <span class="hljs-keyword">this</span>.DoExit();
+        this.EditStateService.ResetEditState();
+        this.SetPageExitCheck(false);
+        await this.DoExit();
     }
 
-    <span class="hljs-function"><span class="hljs-keyword">protected</span> <span class="hljs-keyword">async</span> Task <span class="hljs-title">DoExit</span>(<span class="hljs-params">ModalResult result = <span class="hljs-literal">null</span></span>)</span>
+    protected async Task DoExit(ModalResult result = null)
     {
         result ??= ModalResult.OK();
-        <span class="hljs-keyword">if</span> (<span class="hljs-keyword">this</span>.IsModal)
-            <span class="hljs-keyword">this</span>.Modal.Close(result);
-        <span class="hljs-keyword">if</span> (ExitAction.HasDelegate)
-            <span class="hljs-keyword">await</span> ExitAction.InvokeAsync();
-        <span class="hljs-keyword">else</span>
-            <span class="hljs-keyword">this</span>.NavManager.NavigateTo(<span class="hljs-string">&quot;/&quot;</span>);
+        if (this.IsModal)
+            this.Modal.Close(result);
+        if (ExitAction.HasDelegate)
+            await ExitAction.InvokeAsync();
+        else
+            this.NavManager.NavigateTo(&quot;/&quot;);
     }
 
-    <span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-keyword">void</span> <span class="hljs-title">SetPageExitCheck</span>(<span class="hljs-params"><span class="hljs-built_in">bool</span> action</span>)</span>
-        =&gt; _js.InvokeAsync&lt;<span class="hljs-built_in">bool</span>&gt;(<span class="hljs-string">&quot;cecblazor_setEditorExitCheck&quot;</span>, action);
+    private void SetPageExitCheck(bool action)
+        =&gt; _js.InvokeAsync&lt;bool&gt;(&quot;cecblazor_setEditorExitCheck&quot;, action);
 
-    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">Dispose</span>(<span class="hljs-params"></span>)</span>
+    public void Dispose()
     {
-        <span class="hljs-keyword">if</span> (<span class="hljs-keyword">this</span>.EditContext != <span class="hljs-literal">null</span>)
-            <span class="hljs-keyword">this</span>.EditContext.OnFieldChanged -= FieldChanged;
+        if (this.EditContext != null)
+            this.EditContext.OnFieldChanged -= FieldChanged;
     }
 }
-</div></code></pre>
+</code></pre>
 <h3 id="edit-state-management">Edit State Management</h3>
 <p>The Edit state is managed through three classes:</p>
 <ol>
@@ -656,32 +337,32 @@ Nullable And VS 2022
 <li><code>RouteViewManager</code> - a replace component for <code>RouteView</code> in <code>App</code>.  It injects <code>EditStateService</code> and loads a custom &quot;Are You Sure You want to Exit the Form&quot; form if <code>EditStateService</code> has a dirty form.</li>
 </ol>
 <p>There's also a Js script that's loaded in the base page <em>site.js</em>.</p>
-<pre><code class="language-js"><div><span class="hljs-comment">// File: Blazr.SPA/wwwroot/site.js</span>
-<span class="hljs-built_in">window</span>.cecblazor_setEditorExitCheck = <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">show</span>) </span>{
-    <span class="hljs-keyword">if</span> (show) {
-        <span class="hljs-built_in">window</span>.addEventListener(<span class="hljs-string">&quot;beforeunload&quot;</span>, cecblazor_showExitDialog);
+<pre><code class="language-js">// File: Blazr.SPA/wwwroot/site.js
+window.cecblazor_setEditorExitCheck = function (show) {
+    if (show) {
+        window.addEventListener(&quot;beforeunload&quot;, cecblazor_showExitDialog);
     }
-    <span class="hljs-keyword">else</span> {
-        <span class="hljs-built_in">window</span>.removeEventListener(<span class="hljs-string">&quot;beforeunload&quot;</span>, cecblazor_showExitDialog);
+    else {
+        window.removeEventListener(&quot;beforeunload&quot;, cecblazor_showExitDialog);
     }
 }
 
-<span class="hljs-built_in">window</span>.cecblazor_showExitDialog = <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">event</span>) </span>{
+window.cecblazor_showExitDialog = function (event) {
     event.preventDefault();
-    event.returnValue = <span class="hljs-string">&quot;There are unsaved changes on this page.  Do you want to leave?&quot;</span>;
+    event.returnValue = &quot;There are unsaved changes on this page.  Do you want to leave?&quot;;
 }
-</div></code></pre>
+</code></pre>
 <p>You can see the C# interface method in <code>EditRecordFormBase</code> above and being called in <code>ConfirmExit</code>.</p>
-<pre><code class="language-csharp"><div><span class="hljs-function"><span class="hljs-keyword">protected</span> <span class="hljs-keyword">async</span> Task <span class="hljs-title">ConfirmExit</span>(<span class="hljs-params"></span>)</span>
+<pre><code class="language-csharp">protected async Task ConfirmExit()
 {
-    <span class="hljs-keyword">this</span>.EditStateService.ResetEditState();
-    <span class="hljs-keyword">this</span>.SetPageExitCheck(<span class="hljs-literal">false</span>);
-    <span class="hljs-keyword">await</span> <span class="hljs-keyword">this</span>.DoExit();
+    this.EditStateService.ResetEditState();
+    this.SetPageExitCheck(false);
+    await this.DoExit();
 }
 
-<span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-keyword">void</span> <span class="hljs-title">SetPageExitCheck</span>(<span class="hljs-params"><span class="hljs-built_in">bool</span> action</span>)</span>
-    =&gt; _js.InvokeAsync&lt;<span class="hljs-built_in">bool</span>&gt;(<span class="hljs-string">&quot;cecblazor_setEditorExitCheck&quot;</span>, action);
-</div></code></pre>
+private void SetPageExitCheck(bool action)
+    =&gt; _js.InvokeAsync&lt;bool&gt;(&quot;cecblazor_setEditorExitCheck&quot;, action);
+</code></pre>
 <h2 id="implementing-forms">Implementing Forms</h2>
 <h3 id="weatherforecastviewerform">WeatherForecastViewerForm</h3>
 <p>The code for the <code>WeatherForecastViewerForm</code> is pretty simple.</p>
@@ -689,17 +370,17 @@ Nullable And VS 2022
 <li>Inherit from <code>RecordFormBase</code> and set <code>TRecord</code> as <code>WeatherForecast</code>.</li>
 <li>Get the <code>WeatherForecastViewService</code> and assign it to the base <code>Service</code> property.</li>
 </ol>
-<pre><code class="language-csharp"><div><span class="hljs-keyword">public</span> <span class="hljs-keyword">partial</span> <span class="hljs-keyword">class</span> <span class="hljs-title">WeatherForecastViewerForm</span> : <span class="hljs-title">RecordFormBase</span>&lt;<span class="hljs-title">WeatherForecast</span>&gt;
+<pre><code class="language-csharp">public partial class WeatherForecastViewerForm : RecordFormBase&lt;WeatherForecast&gt;
 {
-    [<span class="hljs-meta">Inject</span>] <span class="hljs-keyword">private</span> WeatherForecastViewService ViewService { <span class="hljs-keyword">get</span>; <span class="hljs-keyword">set</span>; }
+    [Inject] private WeatherForecastViewService ViewService { get; set; }
 
-    <span class="hljs-function"><span class="hljs-keyword">protected</span> <span class="hljs-keyword">async</span> <span class="hljs-keyword">override</span> Task <span class="hljs-title">OnInitializedAsync</span>(<span class="hljs-params"></span>)</span>
+    protected async override Task OnInitializedAsync()
     {
-        <span class="hljs-keyword">this</span>.Service = <span class="hljs-keyword">this</span>.ViewService;
-        <span class="hljs-keyword">await</span> <span class="hljs-keyword">base</span>.OnInitializedAsync();
+        this.Service = this.ViewService;
+        await base.OnInitializedAsync();
     }
 }
-</div></code></pre>
+</code></pre>
 <p>The majority of the code is component markup in the Razor file.</p>
 <ol>
 <li>There's no Html code, it's all components.  We'll look at UI components in detail on the next article.</li>
@@ -707,32 +388,32 @@ Nullable And VS 2022
 <li>Column size dictated control size.</li>
 <li><code>UILoader</code> only loads it's content when we have a record to display.</li>
 </ol>
-<pre><code class="language-html"><div>@namespace Blazr.Database.Forms
-@inherits RecordFormBase<span class="hljs-tag">&lt;<span class="hljs-name">WeatherForecast</span>&gt;</span>
+<pre><code class="language-html">@namespace Blazr.Database.Forms
+@inherits RecordFormBase&lt;WeatherForecast&gt;
 
-<span class="hljs-tag">&lt;<span class="hljs-name">UIContainer</span>&gt;</span>
-    <span class="hljs-tag">&lt;<span class="hljs-name">UIFormRow</span>&gt;</span>
-        <span class="hljs-tag">&lt;<span class="hljs-name">UIColumn</span>&gt;</span>
-            <span class="hljs-tag">&lt;<span class="hljs-name">h2</span>&gt;</span>Weather Forecast Viewer<span class="hljs-tag">&lt;/<span class="hljs-name">h2</span>&gt;</span>
-        <span class="hljs-tag">&lt;/<span class="hljs-name">UIColumn</span>&gt;</span>
-    <span class="hljs-tag">&lt;/<span class="hljs-name">UIFormRow</span>&gt;</span>
-<span class="hljs-tag">&lt;/<span class="hljs-name">UIContainer</span>&gt;</span>
-<span class="hljs-tag">&lt;<span class="hljs-name">UILoader</span> <span class="hljs-attr">State</span>=<span class="hljs-string">&quot;this.LoadState&quot;</span>&gt;</span>
-    <span class="hljs-tag">&lt;<span class="hljs-name">UIContainer</span>&gt;</span>
-        <span class="hljs-tag">&lt;<span class="hljs-name">FormViewControl</span> <span class="hljs-attr">Label</span>=<span class="hljs-string">&quot;Date&quot;</span> <span class="hljs-attr">Value</span>=<span class="hljs-string">&quot;@this.ViewService.Record.Date.LocalDateTime.ToShortDateString()&quot;</span> <span class="hljs-attr">IsRow</span>=<span class="hljs-string">&quot;true&quot;</span> <span class="hljs-attr">ControlCols</span>=<span class="hljs-string">&quot;7&quot;</span> /&gt;</span>
-        <span class="hljs-tag">&lt;<span class="hljs-name">FormViewControl</span> <span class="hljs-attr">Label</span>=<span class="hljs-string">&quot;Temperature <span class="hljs-symbol">&amp;deg;</span>C&quot;</span> <span class="hljs-attr">Value</span>=<span class="hljs-string">&quot;@this.ViewService.Record.TemperatureC.ToString()&quot;</span> <span class="hljs-attr">IsRow</span>=<span class="hljs-string">&quot;true&quot;</span> <span class="hljs-attr">ControlCols</span>=<span class="hljs-string">&quot;7&quot;</span> /&gt;</span>
-        <span class="hljs-tag">&lt;<span class="hljs-name">FormViewControl</span> <span class="hljs-attr">Label</span>=<span class="hljs-string">&quot;Temperature <span class="hljs-symbol">&amp;deg;</span>F&quot;</span> <span class="hljs-attr">Value</span>=<span class="hljs-string">&quot;@this.ViewService.Record.TemperatureF.ToString()&quot;</span> <span class="hljs-attr">IsRow</span>=<span class="hljs-string">&quot;true&quot;</span> <span class="hljs-attr">ControlCols</span>=<span class="hljs-string">&quot;7&quot;</span> /&gt;</span>
-        <span class="hljs-tag">&lt;<span class="hljs-name">FormViewControl</span> <span class="hljs-attr">Label</span>=<span class="hljs-string">&quot;Summary&quot;</span> <span class="hljs-attr">Value</span>=<span class="hljs-string">&quot;@this.ViewService.Record.Summary&quot;</span> <span class="hljs-attr">IsRow</span>=<span class="hljs-string">&quot;true&quot;</span> <span class="hljs-attr">ControlCols</span>=<span class="hljs-string">&quot;7&quot;</span> /&gt;</span>
-    <span class="hljs-tag">&lt;/<span class="hljs-name">UIContainer</span>&gt;</span>
-<span class="hljs-tag">&lt;/<span class="hljs-name">UILoader</span>&gt;</span>
-<span class="hljs-tag">&lt;<span class="hljs-name">UIContainer</span>&gt;</span>
-    <span class="hljs-tag">&lt;<span class="hljs-name">UIFormRow</span>&gt;</span>
-        <span class="hljs-tag">&lt;<span class="hljs-name">UIButtonColumn</span>&gt;</span>
-            <span class="hljs-tag">&lt;<span class="hljs-name">UIButton</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;button&quot;</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;btn-secondary&quot;</span> <span class="hljs-attr">ClickEvent</span>=<span class="hljs-string">&quot;this.Exit&quot;</span>&gt;</span>Exit<span class="hljs-tag">&lt;/<span class="hljs-name">UIButton</span>&gt;</span>
-        <span class="hljs-tag">&lt;/<span class="hljs-name">UIButtonColumn</span>&gt;</span>
-    <span class="hljs-tag">&lt;/<span class="hljs-name">UIFormRow</span>&gt;</span>
-<span class="hljs-tag">&lt;/<span class="hljs-name">UIContainer</span>&gt;</span>
-</div></code></pre>
+&lt;UIContainer&gt;
+    &lt;UIFormRow&gt;
+        &lt;UIColumn&gt;
+            &lt;h2&gt;Weather Forecast Viewer&lt;/h2&gt;
+        &lt;/UIColumn&gt;
+    &lt;/UIFormRow&gt;
+&lt;/UIContainer&gt;
+&lt;UILoader State=&quot;this.LoadState&quot;&gt;
+    &lt;UIContainer&gt;
+        &lt;FormViewControl Label=&quot;Date&quot; Value=&quot;@this.ViewService.Record.Date.LocalDateTime.ToShortDateString()&quot; IsRow=&quot;true&quot; ControlCols=&quot;7&quot; /&gt;
+        &lt;FormViewControl Label=&quot;Temperature &amp;deg;C&quot; Value=&quot;@this.ViewService.Record.TemperatureC.ToString()&quot; IsRow=&quot;true&quot; ControlCols=&quot;7&quot; /&gt;
+        &lt;FormViewControl Label=&quot;Temperature &amp;deg;F&quot; Value=&quot;@this.ViewService.Record.TemperatureF.ToString()&quot; IsRow=&quot;true&quot; ControlCols=&quot;7&quot; /&gt;
+        &lt;FormViewControl Label=&quot;Summary&quot; Value=&quot;@this.ViewService.Record.Summary&quot; IsRow=&quot;true&quot; ControlCols=&quot;7&quot; /&gt;
+    &lt;/UIContainer&gt;
+&lt;/UILoader&gt;
+&lt;UIContainer&gt;
+    &lt;UIFormRow&gt;
+        &lt;UIButtonColumn&gt;
+            &lt;UIButton type=&quot;button&quot; class=&quot;btn-secondary&quot; ClickEvent=&quot;this.Exit&quot;&gt;Exit&lt;/UIButton&gt;
+        &lt;/UIButtonColumn&gt;
+    &lt;/UIFormRow&gt;
+&lt;/UIContainer&gt;
+</code></pre>
 <h3 id="weatherforecasteditorform">WeatherForecastEditorForm</h3>
 <p><code>WeatherForecastEditorForm</code> is similar to <code>WeatherForecastViewerForm</code>.</p>
 <p>The code is again pretty simple.</p>
@@ -740,19 +421,19 @@ Nullable And VS 2022
 <li>Inherit from <code>EditRecordFormBase</code> and set <code>TRecord</code> as <code>WeatherForecast</code> and <code>TEditRecord</code> as <code>EditWeatherForecast</code>.</li>
 <li>Get the <code>WeatherForecastViewService</code> and assign it to the base <code>Service</code> property.</li>
 </ol>
-<pre><code class="language-csharp"><div><span class="hljs-keyword">public</span> <span class="hljs-keyword">partial</span> <span class="hljs-keyword">class</span> <span class="hljs-title">WeatherForecastEditorForm</span> : <span class="hljs-title">EditRecordFormBase</span>&lt;<span class="hljs-title">WeatherForecast</span>, <span class="hljs-title">EditWeatherForecast</span>&gt;
+<pre><code class="language-csharp">public partial class WeatherForecastEditorForm : EditRecordFormBase&lt;WeatherForecast, EditWeatherForecast&gt;
 {
 
-    [<span class="hljs-meta">Inject</span>] <span class="hljs-keyword">private</span> WeatherForecastViewService ViewService { <span class="hljs-keyword">get</span>; <span class="hljs-keyword">set</span>; }
+    [Inject] private WeatherForecastViewService ViewService { get; set; }
 
-    <span class="hljs-function"><span class="hljs-keyword">protected</span> <span class="hljs-keyword">async</span> <span class="hljs-keyword">override</span> Task <span class="hljs-title">OnInitializedAsync</span>(<span class="hljs-params"></span>)</span>
+    protected async override Task OnInitializedAsync()
     {
-        <span class="hljs-comment">//this.FormUrl = &quot;/Weather/Edit&quot;;</span>
-        <span class="hljs-keyword">this</span>.Service = ViewService;
-        <span class="hljs-keyword">await</span> LoadRecordAsync();
+        //this.FormUrl = &quot;/Weather/Edit&quot;;
+        this.Service = ViewService;
+        await LoadRecordAsync();
     }
 }
-</div></code></pre>
+</code></pre>
 <p>The Razor file is shown below.  It's based on the standard Blazor EditForm with some additional controls.  The same comments made on the Viewer apply here.  In addition:</p>
 <ol>
 <li><code>InlineDialog</code> is a form locking control.  It's enabled by the <code>_isInlineDirty</code> property.  Go to the demo site and edit a record to see it in action. It's only enabled when the form isn't in a modal context.</li>
@@ -761,45 +442,45 @@ Nullable And VS 2022
 <li>The buttons are tied to the boolean control properties to manage their state.</li>
 </ol>
 <p>The custom controls are covered in separate articles referenced in the Links section.</p>
-<pre><code class="language-html"><div>@namespace Blazr.Database.Forms
+<pre><code class="language-html">@namespace Blazr.Database.Forms
 @inherits EditRecordFormBase&lt;WeatherForecast, EditWeatherForecast&gt;
 
-<span class="hljs-tag">&lt;<span class="hljs-name">InlineDialog</span> <span class="hljs-attr">Lock</span>=<span class="hljs-string">&quot;this._isInlineDirty&quot;</span> <span class="hljs-attr">Transparent</span>=<span class="hljs-string">&quot;false&quot;</span>&gt;</span>
-    <span class="hljs-tag">&lt;<span class="hljs-name">FormViewTitle</span>&gt;</span>
-        <span class="hljs-tag">&lt;<span class="hljs-name">h2</span>&gt;</span>Weather Forecast Editor<span class="hljs-tag">&lt;/<span class="hljs-name">h2</span>&gt;</span>
-    <span class="hljs-tag">&lt;/<span class="hljs-name">FormViewTitle</span>&gt;</span>
-    <span class="hljs-tag">&lt;<span class="hljs-name">UILoader</span> <span class="hljs-attr">State</span>=<span class="hljs-string">&quot;this.LoadState&quot;</span>&gt;</span>
-        <span class="hljs-tag">&lt;<span class="hljs-name">EditForm</span> <span class="hljs-attr">EditContext</span>=<span class="hljs-string">&quot;this.EditContext&quot;</span> <span class="hljs-attr">OnValidSubmit</span>=<span class="hljs-string">&quot;HandleValidSubmit&quot;</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot; px-2 py-3&quot;</span>&gt;</span>
-            <span class="hljs-tag">&lt;<span class="hljs-name">EditFormState</span>/&gt;</span>
-            <span class="hljs-tag">&lt;<span class="hljs-name">ValidationFormState</span> <span class="hljs-attr">ValidStateChanged</span>=<span class="hljs-string">&quot;this.ValidStateChanged&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">ValidationFormState</span>&gt;</span>
-            <span class="hljs-tag">&lt;<span class="hljs-name">UIContainer</span>&gt;</span>
-                <span class="hljs-tag">&lt;<span class="hljs-name">FormViewRow</span> <span class="hljs-attr">Title</span>=<span class="hljs-string">&quot;Unique ID&quot;</span> <span class="hljs-attr">Value</span>=<span class="hljs-string">&quot;@this.Model.ID.ToString()&quot;</span> /&gt;</span>
-                <span class="hljs-tag">&lt;<span class="hljs-name">UIFormRow</span>&gt;</span>
-                    <span class="hljs-tag">&lt;<span class="hljs-name">UIColumn</span> <span class="hljs-attr">MediumColumns</span>=<span class="hljs-string">&quot;6&quot;</span> <span class="hljs-attr">Columns</span>=<span class="hljs-string">12</span>&gt;</span>
-                        <span class="hljs-tag">&lt;<span class="hljs-name">FormEditControl</span> <span class="hljs-attr">Label</span>=<span class="hljs-string">&quot;Date&quot;</span> <span class="hljs-attr">ShowLabel</span>=<span class="hljs-string">&quot;true&quot;</span> @<span class="hljs-attr">bind-Value</span>=<span class="hljs-string">&quot;this.Model.Date&quot;</span> <span class="hljs-attr">ControlType</span>=<span class="hljs-string">&quot;typeof(InputDate&lt;DateTimeOffset&gt;)&quot;</span> <span class="hljs-attr">IsRequired</span>=<span class="hljs-string">&quot;true&quot;</span> <span class="hljs-attr">ShowValidation</span>=<span class="hljs-string">&quot;true&quot;</span> <span class="hljs-attr">HelperText</span>=<span class="hljs-string">&quot;Enter the Forecast Date&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">FormEditControl</span>&gt;</span>
-                    <span class="hljs-tag">&lt;/<span class="hljs-name">UIColumn</span>&gt;</span>
-                    <span class="hljs-tag">&lt;<span class="hljs-name">UIColumn</span> <span class="hljs-attr">MediumColumns</span>=<span class="hljs-string">&quot;6&quot;</span> <span class="hljs-attr">Columns</span>=<span class="hljs-string">12</span>&gt;</span>
-                        <span class="hljs-tag">&lt;<span class="hljs-name">FormEditControl</span> <span class="hljs-attr">Label</span>=<span class="hljs-string">&quot;Temperature <span class="hljs-symbol">&amp;deg;</span>C&quot;</span> <span class="hljs-attr">ShowLabel</span>=<span class="hljs-string">&quot;true&quot;</span> @<span class="hljs-attr">bind-Value</span>=<span class="hljs-string">&quot;this.Model.TemperatureC&quot;</span> <span class="hljs-attr">ControlType</span>=<span class="hljs-string">&quot;typeof(InputNumber&lt;int&gt;)&quot;</span> <span class="hljs-attr">IsRequired</span>=<span class="hljs-string">&quot;true&quot;</span> <span class="hljs-attr">ShowValidation</span>=<span class="hljs-string">&quot;true&quot;</span> <span class="hljs-attr">HelperText</span>=<span class="hljs-string">&quot;Enter the Temperature&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">FormEditControl</span>&gt;</span>
-                    <span class="hljs-tag">&lt;/<span class="hljs-name">UIColumn</span>&gt;</span>
-                <span class="hljs-tag">&lt;/<span class="hljs-name">UIFormRow</span>&gt;</span>
-                <span class="hljs-tag">&lt;<span class="hljs-name">UIFormRow</span>&gt;</span>
-                    <span class="hljs-tag">&lt;<span class="hljs-name">UIColumn</span> <span class="hljs-attr">MediumColumns</span>=<span class="hljs-string">&quot;12&quot;</span> <span class="hljs-attr">Columns</span>=<span class="hljs-string">12</span>&gt;</span>
-                        <span class="hljs-tag">&lt;<span class="hljs-name">FormEditControl</span> <span class="hljs-attr">Label</span>=<span class="hljs-string">&quot;Summary&quot;</span> <span class="hljs-attr">ShowLabel</span>=<span class="hljs-string">&quot;true&quot;</span> @<span class="hljs-attr">bind-Value</span>=<span class="hljs-string">&quot;this.Model.Summary&quot;</span> <span class="hljs-attr">IsRequired</span>=<span class="hljs-string">&quot;true&quot;</span> <span class="hljs-attr">ShowValidation</span>=<span class="hljs-string">&quot;true&quot;</span> <span class="hljs-attr">HelperText</span>=<span class="hljs-string">&quot;Summarise the Weather&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">FormEditControl</span>&gt;</span>
-                    <span class="hljs-tag">&lt;/<span class="hljs-name">UIColumn</span>&gt;</span>
-                <span class="hljs-tag">&lt;/<span class="hljs-name">UIFormRow</span>&gt;</span>
-            <span class="hljs-tag">&lt;/<span class="hljs-name">UIContainer</span>&gt;</span>
-            <span class="hljs-tag">&lt;<span class="hljs-name">FormEditButtons</span> <span class="hljs-attr">ContainerSize</span>=<span class="hljs-string">&quot;BootstrapSize.XLarge&quot;</span>&gt;</span>
-                <span class="hljs-tag">&lt;<span class="hljs-name">UIButton</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;button&quot;</span> <span class="hljs-attr">Show</span>=<span class="hljs-string">&quot;true&quot;</span> <span class="hljs-attr">Disabled</span>=<span class="hljs-string">&quot;this._deleteDisabled&quot;</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;btn-outline-danger&quot;</span> <span class="hljs-attr">ClickEvent</span>=<span class="hljs-string">&quot;() =&gt; Delete()&quot;</span>&gt;</span>Delete<span class="hljs-tag">&lt;/<span class="hljs-name">UIButton</span>&gt;</span>
-                <span class="hljs-tag">&lt;<span class="hljs-name">UIButton</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;button&quot;</span> <span class="hljs-attr">Show</span>=<span class="hljs-string">&quot;this._confirmDelete&quot;</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;btn-danger&quot;</span> <span class="hljs-attr">ClickEvent</span>=<span class="hljs-string">&quot;() =&gt; this.ConfirmDelete()&quot;</span>&gt;</span>Confirm Delete<span class="hljs-tag">&lt;/<span class="hljs-name">UIButton</span>&gt;</span>
-                <span class="hljs-tag">&lt;<span class="hljs-name">UIButton</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;button&quot;</span> <span class="hljs-attr">Show</span>=<span class="hljs-string">&quot;this.IsDirty&quot;</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;btn-outline-warning&quot;</span> <span class="hljs-attr">ClickEvent</span>=<span class="hljs-string">&quot;() =&gt; this.ResetToRecord()&quot;</span>&gt;</span>Reset<span class="hljs-tag">&lt;/<span class="hljs-name">UIButton</span>&gt;</span>
-                <span class="hljs-tag">&lt;<span class="hljs-name">UIButton</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;submit&quot;</span> <span class="hljs-attr">Show</span>=<span class="hljs-string">&quot;true&quot;</span> <span class="hljs-attr">Disabled</span>=<span class="hljs-string">&quot;this._saveDisabled&quot;</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;btn-success&quot;</span>&gt;</span>@this._saveButtonText<span class="hljs-tag">&lt;/<span class="hljs-name">UIButton</span>&gt;</span>
-                <span class="hljs-tag">&lt;<span class="hljs-name">UIButton</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;button&quot;</span> <span class="hljs-attr">Show</span>=<span class="hljs-string">&quot;this.IsDirty&quot;</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;btn-danger&quot;</span> <span class="hljs-attr">ClickEvent</span>=<span class="hljs-string">&quot;() =&gt; this.ConfirmExit()&quot;</span>&gt;</span>Exit Without Saving<span class="hljs-tag">&lt;/<span class="hljs-name">UIButton</span>&gt;</span>
-                <span class="hljs-tag">&lt;<span class="hljs-name">UIButton</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;button&quot;</span> <span class="hljs-attr">Show</span>=<span class="hljs-string">&quot;!this.IsDirty&quot;</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;btn-dark&quot;</span> <span class="hljs-attr">ClickEvent</span>=<span class="hljs-string">&quot;() =&gt; this.Exit()&quot;</span>&gt;</span>Exit<span class="hljs-tag">&lt;/<span class="hljs-name">UIButton</span>&gt;</span>
-            <span class="hljs-tag">&lt;/<span class="hljs-name">FormEditButtons</span>&gt;</span>
-        <span class="hljs-tag">&lt;/<span class="hljs-name">EditForm</span>&gt;</span>
-    <span class="hljs-tag">&lt;/<span class="hljs-name">UILoader</span>&gt;</span>
-<span class="hljs-tag">&lt;/<span class="hljs-name">InlineDialog</span>&gt;</span>
-</div></code></pre>
+&lt;InlineDialog Lock=&quot;this._isInlineDirty&quot; Transparent=&quot;false&quot;&gt;
+    &lt;FormViewTitle&gt;
+        &lt;h2&gt;Weather Forecast Editor&lt;/h2&gt;
+    &lt;/FormViewTitle&gt;
+    &lt;UILoader State=&quot;this.LoadState&quot;&gt;
+        &lt;EditForm EditContext=&quot;this.EditContext&quot; OnValidSubmit=&quot;HandleValidSubmit&quot; class=&quot; px-2 py-3&quot;&gt;
+            &lt;EditFormState/&gt;
+            &lt;ValidationFormState ValidStateChanged=&quot;this.ValidStateChanged&quot;&gt;&lt;/ValidationFormState&gt;
+            &lt;UIContainer&gt;
+                &lt;FormViewRow Title=&quot;Unique ID&quot; Value=&quot;@this.Model.ID.ToString()&quot; /&gt;
+                &lt;UIFormRow&gt;
+                    &lt;UIColumn MediumColumns=&quot;6&quot; Columns=12&gt;
+                        &lt;FormEditControl Label=&quot;Date&quot; ShowLabel=&quot;true&quot; @bind-Value=&quot;this.Model.Date&quot; ControlType=&quot;typeof(InputDate&lt;DateTimeOffset&gt;)&quot; IsRequired=&quot;true&quot; ShowValidation=&quot;true&quot; HelperText=&quot;Enter the Forecast Date&quot;&gt;&lt;/FormEditControl&gt;
+                    &lt;/UIColumn&gt;
+                    &lt;UIColumn MediumColumns=&quot;6&quot; Columns=12&gt;
+                        &lt;FormEditControl Label=&quot;Temperature &amp;deg;C&quot; ShowLabel=&quot;true&quot; @bind-Value=&quot;this.Model.TemperatureC&quot; ControlType=&quot;typeof(InputNumber&lt;int&gt;)&quot; IsRequired=&quot;true&quot; ShowValidation=&quot;true&quot; HelperText=&quot;Enter the Temperature&quot;&gt;&lt;/FormEditControl&gt;
+                    &lt;/UIColumn&gt;
+                &lt;/UIFormRow&gt;
+                &lt;UIFormRow&gt;
+                    &lt;UIColumn MediumColumns=&quot;12&quot; Columns=12&gt;
+                        &lt;FormEditControl Label=&quot;Summary&quot; ShowLabel=&quot;true&quot; @bind-Value=&quot;this.Model.Summary&quot; IsRequired=&quot;true&quot; ShowValidation=&quot;true&quot; HelperText=&quot;Summarise the Weather&quot;&gt;&lt;/FormEditControl&gt;
+                    &lt;/UIColumn&gt;
+                &lt;/UIFormRow&gt;
+            &lt;/UIContainer&gt;
+            &lt;FormEditButtons ContainerSize=&quot;BootstrapSize.XLarge&quot;&gt;
+                &lt;UIButton type=&quot;button&quot; Show=&quot;true&quot; Disabled=&quot;this._deleteDisabled&quot; class=&quot;btn-outline-danger&quot; ClickEvent=&quot;() =&gt; Delete()&quot;&gt;Delete&lt;/UIButton&gt;
+                &lt;UIButton type=&quot;button&quot; Show=&quot;this._confirmDelete&quot; class=&quot;btn-danger&quot; ClickEvent=&quot;() =&gt; this.ConfirmDelete()&quot;&gt;Confirm Delete&lt;/UIButton&gt;
+                &lt;UIButton type=&quot;button&quot; Show=&quot;this.IsDirty&quot; class=&quot;btn-outline-warning&quot; ClickEvent=&quot;() =&gt; this.ResetToRecord()&quot;&gt;Reset&lt;/UIButton&gt;
+                &lt;UIButton type=&quot;submit&quot; Show=&quot;true&quot; Disabled=&quot;this._saveDisabled&quot; class=&quot;btn-success&quot;&gt;@this._saveButtonText&lt;/UIButton&gt;
+                &lt;UIButton type=&quot;button&quot; Show=&quot;this.IsDirty&quot; class=&quot;btn-danger&quot; ClickEvent=&quot;() =&gt; this.ConfirmExit()&quot;&gt;Exit Without Saving&lt;/UIButton&gt;
+                &lt;UIButton type=&quot;button&quot; Show=&quot;!this.IsDirty&quot; class=&quot;btn-dark&quot; ClickEvent=&quot;() =&gt; this.Exit()&quot;&gt;Exit&lt;/UIButton&gt;
+            &lt;/FormEditButtons&gt;
+        &lt;/EditForm&gt;
+    &lt;/UILoader&gt;
+&lt;/InlineDialog&gt;
+</code></pre>
 <h2 id="routeview-implementations">RouteView Implementations</h2>
 <p>The RouteView implementation of the viewer is shown below.</p>
 <ol>
@@ -807,11 +488,11 @@ Nullable And VS 2022
 <li>Declares the form <code>WeatherForecastViewerForm</code>.</li>
 <li>Passes the <code>ID</code> to the form and attaches a delegate to <code>ExitAction</code> which returns to the <em>fetchdata</em> view.</li>
 </ol>
-<pre><code class="language-html"><div>// WeatherViewer.razor
+<pre><code class="language-html">// WeatherViewer.razor
 @page &quot;/weather/view/{ID:guid}&quot;
 @namespace Blazr.Database.RouteViews
 
-<span class="hljs-tag">&lt;<span class="hljs-name">WeatherForecastViewerForm</span> <span class="hljs-attr">ID</span>=<span class="hljs-string">&quot;this.ID&quot;</span> <span class="hljs-attr">ExitAction</span>=<span class="hljs-string">&quot;this.ExitToList&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">WeatherForecastViewerForm</span>&gt;</span>
+&lt;WeatherForecastViewerForm ID=&quot;this.ID&quot; ExitAction=&quot;this.ExitToList&quot;&gt;&lt;/WeatherForecastViewerForm&gt;
 
 @code {
     [Parameter] public Guid ID { get; set; }
@@ -822,13 +503,13 @@ Nullable And VS 2022
         =&gt; this.NavManager.NavigateTo(&quot;/fetchdata&quot;);
 
 }
-</div></code></pre>
+</code></pre>
 <p>The editor is exactly the same, but declares the form <code>WeatherForecastEditorForm</code>.</p>
-<pre><code class="language-html"><div>// WeatherEditor.razor
+<pre><code class="language-html">// WeatherEditor.razor
 @page &quot;/weather/edit/{ID:guid}&quot;
 @namespace Blazr.Database.RouteViews
 
-<span class="hljs-tag">&lt;<span class="hljs-name">WeatherForecastEditorForm</span> <span class="hljs-attr">ID</span>=<span class="hljs-string">&quot;this.ID&quot;</span> <span class="hljs-attr">ExitAction</span>=<span class="hljs-string">&quot;this.ExitToList&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">WeatherForecastEditorForm</span>&gt;</span>
+&lt;WeatherForecastEditorForm ID=&quot;this.ID&quot; ExitAction=&quot;this.ExitToList&quot;&gt;&lt;/WeatherForecastEditorForm&gt;
 
 @code {
 
@@ -839,9 +520,9 @@ Nullable And VS 2022
     private void ExitToList()
         =&gt; this.NavManager.NavigateTo(&quot;/fetchdata&quot;);
 }
-</div></code></pre>
+</code></pre>
 <h2 id="wrap-up">Wrap Up</h2>
-<p>That wraps up this article.  We've shown how to build boilerplate code into base forms and how to implement viewer and editor forms.  We'll look in more detail at the list forms and how the viewer and editors are called in a separate article.<br>
+<p>That wraps up this article.  We've shown how to build boilerplate code into base forms and how to implement viewer and editor forms.  We'll look in more detail at the list forms and how the viewer and editors are called in a separate article.<br />
 Some key points to note:</p>
 <ol>
 <li>The Blazor Server and Blazor WASM code is the same.</li>
@@ -858,60 +539,9 @@ Some key points to note:</p>
 <li>24-June-2021: revisions to data layers.</li>
 <li>06-Aug-2012: revisions to reflect the project and library remodelling to the domain model.</li>
 </ul>
-
-        
-        
-    
-
-            </div>
-        </div>
-    </div>
-</div>
-<!-- end of Article Container -->
+</div></div></div></body></html>
 
 
-                </div>
-                <!-- End of Main Content -->
-            </div>
-            <!-- Footer -->
-            
-<!-- Copyright -->
-<footer class="sticky-footer bg-white">
-    <div class="container my-auto">
-        <div class="copyright text-center my-auto">
-            
-<span>Copyright &copy; Cold Elm Coders - 2022</span>
-
-        </div>
-    </div>
-</footer>
-<!-- end of copyright -->
 
 
-            <!-- End of Footer -->
-        </div>
-        <!-- End of Content Wrapper -->
-        
-<a class="scroll-to-top rounded" href="#page-top">
-    <i class="fas fa-angle-up"></i>
-</a>
 
-
-    </div>
-    <!-- End of Page Wrapper -->
-    <!-- Scripts -->
-    
-<!-- Scripts -->
-<!-- Bootstrap core JavaScript-->
-<script src="/assets/vendor/jquery/jquery.min.js"></script>
-<script src="/assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-
-<!-- Core plugin JavaScript-->
-<script src="/assets/vendor/jquery-easing/jquery.easing.min.js"></script>
-
-<!-- Custom scripts for all pages-->
-<script src="/assets/js/sb-admin-2.min.js"></script>
-
-
-</body>
-</html>

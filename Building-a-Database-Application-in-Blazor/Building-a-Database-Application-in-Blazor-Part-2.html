@@ -1,313 +1,46 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<html lang="en"><head><meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<base href="/">
 
-<!-- SEO Meta Tags -->
-<meta name="description" content="Your description">
-<meta name="author" content="Your name">
+	
 
-<!-- OG Meta Tags to improve the way the post looks when you share the page on Facebook, Twitter, LinkedIn -->
-<meta property="og:site_name" content="" /> <!-- website name -->
-<meta property="og:site" content="" /> <!-- website link -->
-<meta property="og:title" content="" /> <!-- title shown in the actual shared post -->
-<meta property="og:description" content="" /> <!-- description shown in the actual shared post -->
-<meta property="og:image" content="" /> <!-- image link, make sure it's jpg -->
-<meta property="og:url" content="" /> <!-- where do you want your post to link to -->
-<meta name="twitter:card" content="summary_large_image"> <!-- to have large image post format in Twitter -->
+	
 
-<meta charset="utf-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	
+	<link href="/resources/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+	<link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
 
+	
+	<link href="/resources/css/sb-admin-2.css" rel="stylesheet" type="text/css">
+	<link href="/resources/css/site.css" rel="stylesheet" type="text/css">
 
-<meta name="description" content="This article describes building the CRUDL data services for a Blazor Database Application." >
-<meta name="author" content="Shaun Curtis" >
+	
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/highlight.css">
+	<link rel="stylesheet" href="/resources/css/article.css" type="text/css">
 
+	
+	<link rel="icon" href="/images/favicon.png">
 
+	<title>Building the Services</title>
+        <meta property="author" content="Shaun Curtis" />
+        <meta property="description" content="This article describes building the CRUDL data services for a Blazor Database Application." />
+    <meta property="og:site_name" content="Cold Elm Coders" />
+        <meta property="og:site" content="https://shauncurtis.github.io/" />
+        <meta property="og:title" content="Building the Services" />
+        <meta property="og:description" content="This article describes building the CRUDL data services for a Blazor Database Application." /></head>
+<body><header class="navbar bg-dark p-2 text-large text-light"><section class="navbar-section  text-light"><a href="/" class="navbar-brand mr-2 text-large text-light p-2">Cold Elm Coders</a>
+			<a href="/Posts" class="btn btn-link text-light">Posts</a>
+			<a href="/Rants" class="btn btn-link text-light">Rants</a>
+			<a href="/Articles" class="btn btn-link text-light">Articles</a>
+			<a href="/Stories" class="btn btn-link text-light">Stories</a>
+			<a href="/about.html" class="btn btn-link text-light">About</a></section></header>
 
-<title>Part 2 - A Blazor Database Template - Building the Services</title>
-
-
-<!-- Custom fonts for this template-->
-<link href="/assets/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
-<link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
-      rel="stylesheet">
-
-<!-- Custom styles for this template-->
-<link href="/assets/css/sb-admin-2.css" rel="stylesheet" type="text/css">
-<link href="/assets/css/site.css" rel="stylesheet" type="text/css">
-
-<!-- Favicon  -->
-<link rel="icon" href="/assets/images/favicon.png">
-
-
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/highlight.css">
-    <link rel="stylesheet" href="/assets/css/article.css" type="text/css">
-</head>
-<body id="page-top">
-    <!--topbar-->
-    <div id="topbar">
-        
-<!-- Topbar -->
-<nav class="navbar navbar-expand navbar-light topbar mb-4 static-top">
-    
-<ul class="navbar-nav" >
-<li class="nav-item" >
-<a class="nav-link " href="/index.html" role="button"  >
-<span class="mr-2 d-none d-lg-inline text-gray-100">Index</span>
-</a>
-</li>
-<li class="nav-item dropdown no-arrow mx-1" >
-<a class="nav-link dropdown-toggle" href="#" id="4de2c7e8-ece0-4ced-aa25-10662ba29c99" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"  >
-<span class="mr-2 d-none d-lg-inline text-gray-100">Articles</span>
-</a>
-<div class=" dropdown-list dropdown-menu shadow animated--grow-in" aria-labelledby="4de2c7e8-ece0-4ced-aa25-10662ba29c99" >
-<a class="dropdown-item" href="/articles/A-Flexible-App.html" >
-<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
-Creating a Dynamic Blazor App Component
-</a>
-<a class="dropdown-item" href="/articles/Async-Programming-in-DotNetCore.html" >
-<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
-Async Programming In Dotnetcore
-</a>
-<a class="dropdown-item" href="/articles/Blazor-AllinOne.html" >
-<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
-Blazor All In One - Multi SPA Hosting
-</a>
-<a class="dropdown-item" href="/articles/Blazor-Async-Programming.html" >
-<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
-Blazor Async Programming
-</a>
-<a class="dropdown-item" href="/articles/Blazor-Brick-By-Brick.html" >
-<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
-Blazor Brick By Brick
-</a>
-<a class="dropdown-item" href="/articles/Blazor-Components.html" >
-<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
-Blazor Components
-</a>
-<a class="dropdown-item" href="/articles/Blazor-CSS.html" >
-<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
-Blazor CSS
-</a>
-<a class="dropdown-item" href="/articles/Blazor-DataList-Control.html" >
-<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
-Blazor Datalist Control
-</a>
-<a class="dropdown-item" href="/articles/Blazor-Form-Validation.html" >
-<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
-Blazor Form Validation
-</a>
-<a class="dropdown-item" href="/articles/Building-Blazor-List-Components.html" >
-<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
-Building Blazor List Components and the Notification Pattern
-</a>
-<a class="dropdown-item" href="/articles/Building-Edit-Forms.html" >
-<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
-Building Edit Forms
-</a>
-<a class="dropdown-item" href="/articles/EditFormState.html" >
-<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
-The Blazor EditFormState Control
-</a>
-<a class="dropdown-item" href="/articles/Hydra.html" >
-<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
-Blazor Hydra
-</a>
-<a class="dropdown-item" href="/articles/Inline-Dialog.html" >
-<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
-The Blazor Inline Dialog Control
-</a>
-<a class="dropdown-item" href="/articles/Modal-Dialog.html" >
-<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
-A Blazor Modal Dialog
-</a>
-<a class="dropdown-item" href="/articles/Policy-Based-Authorization.html" >
-<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
-Policy Base Authorization in Blazor
-</a>
-<a class="dropdown-item" href="/articles/ValidationFormState.html" >
-<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
-A Blazor Validation Control
-</a>
-<a class="dropdown-item" href="/articles/XML-XSD-Serialization.html" >
-<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
-XML XSD Serialization
-</a>
-</div>
-</li>
-<li class="nav-item dropdown no-arrow mx-1" >
-<a class="nav-link dropdown-toggle" href="#" id="e24a2e26-1e03-48c0-977a-6976bd88b5fd" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"  >
-<span class="mr-2 d-none d-lg-inline text-gray-100">Blazor Database Apps</span>
-</a>
-<div class=" dropdown-list dropdown-menu shadow animated--grow-in" aria-labelledby="e24a2e26-1e03-48c0-977a-6976bd88b5fd" >
-<a class="dropdown-item" href="/Building-a-Database-Application-in-Blazor/Building-a-Database-Application-in-Blazor-Part-1.html" >
-<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
-Building A Database Application In Blazor Part 1
-</a>
-<a class="dropdown-item" href="/Building-a-Database-Application-in-Blazor/Building-a-Database-Application-in-Blazor-Part-2.html" >
-<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
-Building A Database Application In Blazor Part 2
-</a>
-<a class="dropdown-item" href="/Building-a-Database-Application-in-Blazor/Building-a-Database-Application-in-Blazor-Part-3.html" >
-<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
-Building A Database Application In Blazor Part 3
-</a>
-<a class="dropdown-item" href="/Building-a-Database-Application-in-Blazor/Building-a-Database-Application-in-Blazor-Part-4.html" >
-<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
-Building A Database Application In Blazor Part 4
-</a>
-<a class="dropdown-item" href="/Building-a-Database-Application-in-Blazor/Building-a-Database-Application-in-Blazor-Part-5.html" >
-<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
-Building A Database Application In Blazor Part 5
-</a>
-<a class="dropdown-item" href="/Building-a-Database-Application-in-Blazor/Building-a-Database-Application-in-Blazor-Part-6.html" >
-<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
-Building A Database Application In Blazor Part 6
-</a>
-<a class="dropdown-item" href="/Building-a-Database-Application-in-Blazor/index.html" >
-<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
-Building a Database Application in Blazor
-</a>
-</div>
-</li>
-<li class="nav-item dropdown no-arrow mx-1" >
-<a class="nav-link dropdown-toggle" href="#" id="76a9f148-69c6-42eb-ada0-47eb0966a748" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"  >
-<span class="mr-2 d-none d-lg-inline text-gray-100">Building Blazor Applications</span>
-</a>
-<div class=" dropdown-list dropdown-menu shadow animated--grow-in" aria-labelledby="76a9f148-69c6-42eb-ada0-47eb0966a748" >
-<a class="dropdown-item" href="/Building-Blazor-Applications/Blazor-Async-UI-Events.html" >
-<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
-Blazor Async UI Events
-</a>
-<a class="dropdown-item" href="/Building-Blazor-Applications/Blazor-Bootstrap-Toaster.html" >
-<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
-Blazor Bootstrap Toaster
-</a>
-<a class="dropdown-item" href="/Building-Blazor-Applications/Blazor-Services.html" >
-<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
-Blazor Services
-</a>
-<a class="dropdown-item" href="/Building-Blazor-Applications/Building-A-Blazor-AutoComplete-Control.html" >
-<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
-Building A Blazor Autocomplete Control
-</a>
-<a class="dropdown-item" href="/Building-Blazor-Applications/Building-Wrapper-Components.html" >
-<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
-Building Wrapper Components
-</a>
-<a class="dropdown-item" href="/Building-Blazor-Applications/DBContexts-In-Transient-Services.html" >
-<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
-Dbcontexts In Transient Services
-</a>
-<a class="dropdown-item" href="/Building-Blazor-Applications/DynamicCss.html" >
-<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
-Blazor Dynamic Stylesheets
-</a>
-<a class="dropdown-item" href="/Building-Blazor-Applications/For-ForEach-in-Blazor.html" >
-<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
-For Foreach In Blazor
-</a>
-<a class="dropdown-item" href="/Building-Blazor-Applications/Leaner-Meaner-Greener-Components.html" >
-<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
-Leaner Meaner Greener Components
-</a>
-<a class="dropdown-item" href="/Building-Blazor-Applications/Notification-Service-Pattern.html" >
-<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
-Blazor Notification Service Pattern
-</a>
-<a class="dropdown-item" href="/Building-Blazor-Applications/Rethinking-The-Repository-Pattern.html" >
-<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
-Rethinking The Repository Pattern
-</a>
-<a class="dropdown-item" href="/Building-Blazor-Applications/The-Blazor-Component-Scope-Conumdrum.html" >
-<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
-The Blazor Component Scope Conumdrum
-</a>
-<a class="dropdown-item" href="/Building-Blazor-Applications/The-Blazor-WASM-Hosted-Project.html" >
-<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
-The Blazor WASM Hosted Project
-</a>
-<a class="dropdown-item" href="/Building-Blazor-Applications/Whats-Wrong-with-my-Component-Design.html" >
-<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
-Whats Wrong With My Component Design
-</a>
-<a class="dropdown-item" href="/Building-Blazor-Applications/The-Blazor-Component" >
-<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
-Building Blazor Applications\The Blazor Component
-</a>
-</div>
-</li>
-<li class="nav-item dropdown no-arrow mx-1" >
-<a class="nav-link dropdown-toggle" href="#" id="eaf87f13-a453-421a-9745-1a826064d0d9" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"  >
-<span class="mr-2 d-none d-lg-inline text-gray-100">Design</span>
-</a>
-<div class=" dropdown-list dropdown-menu shadow animated--grow-in" aria-labelledby="eaf87f13-a453-421a-9745-1a826064d0d9" >
-<a class="dropdown-item" href="/Design/Clean-Design-In-Blazor.html" >
-<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
-Clean Design Principles in Blazor Applications
-</a>
-<a class="dropdown-item" href="/Design/Clean-Design-Blazor-Template.html" >
-<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
-A Blazor Clean Design Template
-</a>
-<a class="dropdown-item" href="/Design/Clean-Design-Blazor-Template-Solution-Structure.html" >
-<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
-Solution Structure in the Clean Design Blazor Template
-</a>
-<a class="dropdown-item" href="/Design/Clean-Design-Blazor-Template-DataServices.html" >
-<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
-Data Services in the Clean Design Blazor Template
-</a>
-<a class="dropdown-item" href="/Design/Clean-Design-Blazor-Template-UI.html" >
-<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
-The UI in the Clean Design Blazor Template
-</a>
-<a class="dropdown-item" href="/Design/Clean-Design-Blazor-Template-Solution-Setup.html" >
-<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
-Solution Setup in the Clean Design Blazor Template
-</a>
-<a class="dropdown-item" href="/Design/Clean-Design-Blazor-Template-Testing.html" >
-<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
-Testing in the Clean Design Blazor Template
-</a>
-</div>
-</li>
-<li class="nav-item dropdown no-arrow mx-1" >
-<a class="nav-link dropdown-toggle" href="#" id="374f7786-2698-4f3c-af62-78ebe25ade18" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"  >
-<span class="mr-2 d-none d-lg-inline text-gray-100">Modern C#</span>
-</a>
-<div class=" dropdown-list dropdown-menu shadow animated--grow-in" aria-labelledby="374f7786-2698-4f3c-af62-78ebe25ade18" >
-<a class="dropdown-item" href="/Modern-Coding-Patterns/Nullable-And-VS-2022.html" >
-<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
-Nullable And VS 2022
-</a>
-</div>
-</li>
-</ul>
-
-    <div class="ms-5 me-5 ml-auto">
-        <h1>Cold Elm Coders</h1>
-    </div>
-</nav>
-
-
-    </div>
-    <!--End topbar-->
-    <!--Sidebar-->
-    <div id="sidebar">
-        
-<div class="article-info p-2" Published: 15-09-2020 >
-<div>Published: 15-09-2020</div>
-<div>Last Updated: 04-07-2021</div>
-<div>Author: Shaun Curtis</div>
-</div>
-
-        
-<h4 class="p-2">Table of Contents</h4>
+	<div class="container-fluid"><div class="row"><div class="col-12 col-sm-3 col-lg-2 bg-light pt-2"><div class="article-info p-2"><div class="mb-2">Published: 07-Jul-2021</div>
+                <div class="mb-2">Updated: 07-Jul-2021</div>
+                <div class="mb-2">Author: Shaun Curtis</div></div>
+    <h4 class="p-2">Table of Contents</h4>
 <ul class="TOC" >
 <li class="TOC-item TOC-item-0" >
 <a class="TOC-link" href="#">Top</a>
@@ -322,43 +55,18 @@ Nullable And VS 2022
 </li>
 <li class="TOC-item TOC-item-2" >
 <a class="TOC-link" href="#services">Services</a>
-<ul class="TOC TOC-2" >
-<li class="TOC-item TOC-item-3" >
-<a class="TOC-link" href="#generics">Generics</a>
-</li>
-</ul>
 </li>
 <li class="TOC-item TOC-item-2" >
 <a class="TOC-link" href="#data-access">Data Access</a>
-<ul class="TOC TOC-2" >
-<li class="TOC-item TOC-item-3" >
-<a class="TOC-link" href="#dbtaskresult">DbTaskResult</a>
-</li>
-</ul>
 </li>
 <li class="TOC-item TOC-item-2" >
 <a class="TOC-link" href="#data-classes">Data Classes</a>
-<ul class="TOC TOC-2" >
-<li class="TOC-item TOC-item-3" >
-<a class="TOC-link" href="#weatherforecast">WeatherForecast</a>
-</li>
-</ul>
 </li>
 <li class="TOC-item TOC-item-2" >
 <a class="TOC-link" href="#the-data-access-tier">The Data Access Tier</a>
-<ul class="TOC TOC-2" >
-<li class="TOC-item TOC-item-3" >
-<a class="TOC-link" href="#data-brokers">Data Brokers</a>
-</li>
-</ul>
 </li>
 <li class="TOC-item TOC-item-2" >
 <a class="TOC-link" href="#connector-services">Connector Services</a>
-<ul class="TOC TOC-2" >
-<li class="TOC-item TOC-item-3" >
-<a class="TOC-link" href="#view-services">View Services</a>
-</li>
-</ul>
 </li>
 <li class="TOC-item TOC-item-2" >
 <a class="TOC-link" href="#wrap-up">Wrap Up</a>
@@ -371,45 +79,16 @@ Nullable And VS 2022
 </ul>
 </li>
 </ul>
-
+</div>
+			
+			<div class="col-12 col-sm-9 col-lg-10 p-2"><div class="pt-2 pb-2 border-bottom mb-4 text-primary"><h1>Building the Services</h1>
+            <div><small>This article describes building the CRUDL data services for a Blazor Database Application.</small></div></div>
+    <div class="mb-2"><h3>Document List</h3>
+        <ul><li><a href="/Building-a-Database-Application-in-Blazor/Building-a-Database-Application-in-Blazor-Part-1.html">Project Structure and Framework</a></li><li><a href="/Stories/Building-a-Database-Application-in-Blazor/Index.html">Building a Database Application in Blazor</a></li><li><a href="/Building-a-Database-Application-in-Blazor/Building-a-Database-Application-in-Blazor-Part-2.html">Building the Services</a></li><li><a href="/Building-a-Database-Application-in-Blazor/Building-a-Database-Application-in-Blazor-Part-3.html">Building Edit and View UI Components</a></li><li><a href="/Building-a-Database-Application-in-Blazor/Building-a-Database-Application-in-Blazor-Part-4.html">Building thw UI Components</a></li><li><a href="/Building-a-Database-Application-in-Blazor/Building-a-Database-Application-in-Blazor-Part-5.html">View Components - CRUD List Operations in the UI</a></li></ul></div>
+    <div class="md-danger">
+        This set of articles and code base is out of date. They don't reflect my current framework. Use them at your risk.
     </div>
-    <!--End Sidebar-->
-    <!-- Page Wrapper -->
-    <div id="wrapper">
-        <!-- Content Wrapper -->
-        <div id="content-wrapper" class="d-flex flex-column">
-            <!-- Main Content -->
-            <div id="content">
-                <!-- Topbar -->
-                <div id="article">
-                    <!-- Article -->
-                    
-<!-- Header -->
-<header class="ex-header-article">
-    <div class="container">
-        <div class="row pt-3 pb-3 border-bottom">
-            <div class="col">
-                
-<h1>Part 2 - A Blazor Database Template - Building the Services</h1>
-<div>This article describes building the CRUDL data services for a Blazor Database Application.</div>
-
-            </div> <!-- end of col -->
-        </div> <!-- end of row -->
-    </div> <!-- end of container -->
-</header> <!-- end of ex-header -->
-<!-- end of header -->
-
-
-                    
-<!-- Article Container -->
-<div class="ex-basic-1 pt-4">
-    <div class="container">
-        <div class="row">
-            <div class="col-12">
-                
-
-        <div class="alert alert-danger">This set of articles and code base is out of date. They don't reflect my current framework. Use them at your risk.</div>
-<p>This the second article in a series on Building Blazor Database Applications.  It describes the Data and Core Domain boilerplate code used to make deploying application specific data services simple.  It is a total rewrite from earlier releases.</p>
+    <p>This the second article in a series on Building Blazor Database Applications.  It describes the Data and Core Domain boilerplate code used to make deploying application specific data services simple.  It is a total rewrite from earlier releases.</p>
 <p>The articles in the series are:</p>
 <ol>
 <li>Project Structure and Framework.</li>
@@ -424,19 +103,19 @@ Nullable And VS 2022
 <p>The demo site has changed now the Server and WASM have been combined.  The site starts in Server mode - <a href="https://cec-blazor-database.azurewebsites.net/">https://cec-blazor-database.azurewebsites.net/</a>.</p>
 <h2 id="objective">Objective</h2>
 <p>Our goal: build library code so declaring a standard UI View service is as simple as this:</p>
-<pre><code class="language-csharp"><div><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title">WeatherForecastViewService</span> : <span class="hljs-title">BaseModelViewService</span>&lt;<span class="hljs-title">WeatherForecast</span>&gt;, <span class="hljs-title">IModelViewService</span>&lt;<span class="hljs-title">WeatherForecast</span>&gt;
+<pre><code class="language-csharp">public class WeatherForecastViewService : BaseModelViewService&lt;WeatherForecast&gt;, IModelViewService&lt;WeatherForecast&gt;
 {
-    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">WeatherForecastViewService</span>(<span class="hljs-params">IDataServiceConnector dataServiceConnector</span>) : <span class="hljs-title">base</span>(<span class="hljs-params">dataServiceConnector</span>)</span> { }
+    public WeatherForecastViewService(IDataServiceConnector dataServiceConnector) : base(dataServiceConnector) { }
 }
-</div></code></pre>
+</code></pre>
 <p>And declaring a database <code>DbContext</code> that looks like:</p>
-<pre><code class="language-csharp"><div>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title">MSSQLWeatherDbContext</span> : <span class="hljs-title">DbContext</span>
+<pre><code class="language-csharp">    public class MSSQLWeatherDbContext : DbContext
     {
-        <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">MSSQLWeatherDbContext</span>(<span class="hljs-params">DbContextOptions&lt;MSSQLWeatherDbContext&gt; options</span>) : <span class="hljs-title">base</span>(<span class="hljs-params">options</span>)</span> {}
+        public MSSQLWeatherDbContext(DbContextOptions&lt;MSSQLWeatherDbContext&gt; options) : base(options) {}
 
-        <span class="hljs-keyword">public</span> DbSet&lt;WeatherForecast&gt; WeatherForecast { <span class="hljs-keyword">get</span>; <span class="hljs-keyword">set</span>; }
+        public DbSet&lt;WeatherForecast&gt; WeatherForecast { get; set; }
     }
-</div></code></pre>
+</code></pre>
 <p>Our process for adding a new database entity is:</p>
 <ol>
 <li>Add the necessary table/view to the database.</li>
@@ -458,60 +137,60 @@ Nullable And VS 2022
 <li>Blazor WASM in <code>Program.cs</code>.</li>
 </ol>
 <p>This solution uses a set of Service Collection extension methods such as <code>AddInMemoryApplicationServices</code> to logically organise the solution services.</p>
-<pre><code class="language-csharp"><div><span class="hljs-comment">// Blazr.Database.Web/startup.cs</span>
-<span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">ConfigureServices</span>(<span class="hljs-params">IServiceCollection services</span>)</span>
+<pre><code class="language-csharp">// Blazr.Database.Web/startup.cs
+public void ConfigureServices(IServiceCollection services)
 {
     services.AddRazorPages();
     services.AddServerSideBlazor();
-    <span class="hljs-comment">// the local application Services defined in ServiceCollectionExtensions.cs</span>
-    <span class="hljs-comment">// services.AddApplicationServices(this.Configuration);</span>
-    services.AddInMemoryApplicationServices(<span class="hljs-keyword">this</span>.Configuration);
+    // the local application Services defined in ServiceCollectionExtensions.cs
+    // services.AddApplicationServices(this.Configuration);
+    services.AddInMemoryApplicationServices(this.Configuration);
 }
-</div></code></pre>
+</code></pre>
 <p>Extensions are declared as a static extension methods in a static class.  Various methods are shown below.</p>
-<pre><code class="language-csharp"><div><span class="hljs-comment">//Blazr.Database/Extensions/ServiceCollectionExtensions.cs</span>
-<span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">class</span> <span class="hljs-title">ServiceCollectionExtensions</span>
+<pre><code class="language-csharp">//Blazr.Database/Extensions/ServiceCollectionExtensions.cs
+public static class ServiceCollectionExtensions
 {
-    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> IServiceCollection <span class="hljs-title">AddWASMApplicationServices</span>(<span class="hljs-params"><span class="hljs-keyword">this</span> IServiceCollection services</span>)</span>
+    public static IServiceCollection AddWASMApplicationServices(this IServiceCollection services)
     {
         services.AddScoped&lt;IDataBroker, APIDataBroker&gt;();
         AddCommonServices(services);
 
-        <span class="hljs-keyword">return</span> services;
+        return services;
     }
-    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> IServiceCollection <span class="hljs-title">AddSQLServerApplicationServices</span>(<span class="hljs-params"><span class="hljs-keyword">this</span> IServiceCollection services, IConfiguration configuration</span>)</span>
+    public static IServiceCollection AddSQLServerApplicationServices(this IServiceCollection services, IConfiguration configuration)
     {
-        <span class="hljs-comment">// Local MS SQL DB Setup</span>
-        <span class="hljs-keyword">var</span> dbContext = configuration.GetValue&lt;<span class="hljs-built_in">string</span>&gt;(<span class="hljs-string">&quot;Configuration:DBContext&quot;</span>);
+        // Local MS SQL DB Setup
+        var dbContext = configuration.GetValue&lt;string&gt;(&quot;Configuration:DBContext&quot;);
         services.AddDbContextFactory&lt;MSSQLWeatherDbContext&gt;(options =&gt; options.UseSqlServer(dbContext), ServiceLifetime.Singleton);
         services.AddSingleton&lt;IDataBroker, WeatherSQLDataBroker&gt;();
         AddCommonServices(services);
 
-        <span class="hljs-keyword">return</span> services;
+        return services;
     }
 
-    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> IServiceCollection <span class="hljs-title">AddSQLiteServerApplicationServices</span>(<span class="hljs-params"><span class="hljs-keyword">this</span> IServiceCollection services, IConfiguration configuration</span>)</span>
+    public static IServiceCollection AddSQLiteServerApplicationServices(this IServiceCollection services, IConfiguration configuration)
     {
-        <span class="hljs-comment">// In Memory SQLite DB Setup</span>
-        <span class="hljs-keyword">var</span> memdbContext = <span class="hljs-string">&quot;Data Source=:memory:&quot;</span>;
+        // In Memory SQLite DB Setup
+        var memdbContext = &quot;Data Source=:memory:&quot;;
         services.AddDbContextFactory&lt;SQLiteWeatherDbContext&gt;(options =&gt; options.UseSqlite(memdbContext), ServiceLifetime.Singleton);
         services.AddSingleton&lt;IDataBroker, WeatherSQLiteDataBroker&gt;();
         AddCommonServices(services);
 
-        <span class="hljs-keyword">return</span> services;
+        return services;
     }
 
-    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> IServiceCollection <span class="hljs-title">AddInMemoryServerApplicationServices</span>(<span class="hljs-params"><span class="hljs-keyword">this</span> IServiceCollection services, IConfiguration configuration</span>)</span>
+    public static IServiceCollection AddInMemoryServerApplicationServices(this IServiceCollection services, IConfiguration configuration)
     {
-        <span class="hljs-comment">// In Memory Datastore Setup</span>
+        // In Memory Datastore Setup
         services.AddSingleton&lt;IInMemoryDataStore, InMemoryWeatherDataStore&gt;();
         services.AddSingleton&lt;IDataBroker, WeatherInMemoryDataBroker&gt;();
         AddCommonServices(services);
 
-        <span class="hljs-keyword">return</span> services;
+        return services;
     }
 
-    <span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">AddCommonServices</span>(<span class="hljs-params"><span class="hljs-keyword">this</span> IServiceCollection services</span>)</span>
+    private static void AddCommonServices(this IServiceCollection services)
     {
         services.AddBlazorSPA();
         services.AddScoped&lt;ILogger, Logger&lt;LoggingBroker&gt;&gt;();
@@ -521,19 +200,19 @@ Nullable And VS 2022
         services.AddScoped&lt;WeatherForecastViewService&gt;();
     }
 }
-</div></code></pre>
+</code></pre>
 <p>The WASM project <code>program.cs</code> setup looks like this:</p>
-<pre><code class="language-csharp"><div><span class="hljs-comment">// program.cs</span>
-<span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">async</span> Task <span class="hljs-title">Main</span>(<span class="hljs-params"><span class="hljs-built_in">string</span>[] args</span>)</span>
+<pre><code class="language-csharp">// program.cs
+public static async Task Main(string[] args)
 {
     .....
-    <span class="hljs-comment">// Added here as we don&#x27;t have access to builder in AddApplicationServices</span>
-    builder.Services.AddScoped(sp =&gt; <span class="hljs-keyword">new</span> HttpClient { BaseAddress = <span class="hljs-keyword">new</span> Uri(builder.HostEnvironment.BaseAddress) });
-    <span class="hljs-comment">// the Services for the Application</span>
+    // Added here as we don't have access to builder in AddApplicationServices
+    builder.Services.AddScoped(sp =&gt; new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
+    // the Services for the Application
     builder.Services.AddWASMApplicationServices();
     .....
 }
-</div></code></pre>
+</code></pre>
 <p>Points:</p>
 <ol>
 <li>There's an <code>IServiceCollection</code> extension method for each project/library to encapsulate the specific services needed for the project.</li>
@@ -549,16 +228,16 @@ Nullable And VS 2022
 <li><code>TDbContext</code> is the database context. It must inherit from the <code>DbContext</code> class.</li>
 </ol>
 <p>Class declarations look like this:</p>
-<pre><code class="language-csharp"><div><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title">ServerDataBroker</span>&lt;<span class="hljs-title">TDbContext</span>&gt; :
-    <span class="hljs-title">BaseDataBroker</span>,
-    <span class="hljs-title">IDataBroker</span>
-    <span class="hljs-keyword">where</span> <span class="hljs-title">TDbContext</span> : <span class="hljs-title">DbContext</span>
+<pre><code class="language-csharp">public class ServerDataBroker&lt;TDbContext&gt; :
+    BaseDataBroker,
+    IDataBroker
+    where TDbContext : DbContext
 ......
-    <span class="hljs-comment">// example method template  </span>
-    <span class="hljs-title">public</span> <span class="hljs-title">virtual</span> <span class="hljs-title">ValueTask</span>&lt;<span class="hljs-title">TRecord</span>&gt; <span class="hljs-title">SelectRecordAsync</span>&lt;<span class="hljs-title">TRecord</span>&gt;(<span class="hljs-title">Guid</span> <span class="hljs-title">id</span>) <span class="hljs-keyword">where</span> <span class="hljs-title">TRecord</span> : <span class="hljs-keyword">class</span>, <span class="hljs-title">IDbRecord</span>&lt;<span class="hljs-title">TRecord</span>&gt;, <span class="hljs-title">new</span>()
-        =&gt; ValueTask.FromResult(<span class="hljs-keyword">new</span> TRecord());
+    // example method template  
+    public virtual ValueTask&lt;TRecord&gt; SelectRecordAsync&lt;TRecord&gt;(Guid id) where TRecord : class, IDbRecord&lt;TRecord&gt;, new()
+        =&gt; ValueTask.FromResult(new TRecord());
 
-</div></code></pre>
+</code></pre>
 <h2 id="data-access">Data Access</h2>
 <p>Before diving into the detail, let's look at the main CRUD methods we implement:</p>
 <ol>
@@ -573,14 +252,14 @@ Nullable And VS 2022
 <p>Keep these in mind as we work through this article.</p>
 <h3 id="dbtaskresult">DbTaskResult</h3>
 <p>Data layer CUD operations return a <code>DbTaskResult</code> object.  Most properties are self-evident.  It's designed to be consumed by the UI to build CSS Framework entities such as Alerts and Toasts.</p>
-<pre><code class="language-csharp"><div><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title">DbTaskResult</span>
+<pre><code class="language-csharp">public class DbTaskResult
 {
-    <span class="hljs-keyword">public</span> <span class="hljs-built_in">string</span> Message { <span class="hljs-keyword">get</span>; <span class="hljs-keyword">set</span>; } = <span class="hljs-literal">null</span>;
-    <span class="hljs-keyword">public</span> MessageType Type { <span class="hljs-keyword">get</span>; <span class="hljs-keyword">set</span>; } = MessageType.None;
-    <span class="hljs-keyword">public</span> <span class="hljs-built_in">bool</span> IsOK { <span class="hljs-keyword">get</span>; <span class="hljs-keyword">set</span>; } = <span class="hljs-literal">true</span>;
-    <span class="hljs-keyword">public</span> <span class="hljs-built_in">object</span> Data { <span class="hljs-keyword">get</span>; <span class="hljs-keyword">set</span>; } = <span class="hljs-literal">null</span>;
+    public string Message { get; set; } = null;
+    public MessageType Type { get; set; } = MessageType.None;
+    public bool IsOK { get; set; } = true;
+    public object Data { get; set; } = null;
 }
-</div></code></pre>
+</code></pre>
 <h2 id="data-classes">Data Classes</h2>
 <p>Data classes implement <code>IDbRecord</code>.  All reside in the Core Domain - <em>Blazr.Database.Core</em>.</p>
 <ol>
@@ -588,36 +267,36 @@ Nullable And VS 2022
 <li><code>DisplayName</code> provides a generic name for the record.  We use this in titles, lookup lists and other UI components.</li>
 <li><code>GetDbSetName()</code> provides a method of defining a <code>DbSet</code> name other that the record name.  By default it gets the set name.</li>
 </ol>
-<pre><code class="language-csharp"><div><span class="hljs-keyword">public</span> <span class="hljs-keyword">interface</span> <span class="hljs-title">IDbRecord</span>&lt;<span class="hljs-title">TRecord</span>&gt; 
-    <span class="hljs-keyword">where</span> <span class="hljs-title">TRecord</span> : <span class="hljs-keyword">class</span>, <span class="hljs-title">IDbRecord</span>&lt;<span class="hljs-title">TRecord</span>&gt;, <span class="hljs-title">new</span>()
+<pre><code class="language-csharp">public interface IDbRecord&lt;TRecord&gt; 
+    where TRecord : class, IDbRecord&lt;TRecord&gt;, new()
 {
-    <span class="hljs-keyword">public</span> Guid ID { <span class="hljs-keyword">get</span>; }
-    <span class="hljs-keyword">public</span> <span class="hljs-built_in">string</span> DisplayName { <span class="hljs-keyword">get</span>; }
-    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-built_in">string</span> <span class="hljs-title">GetDbSetName</span>(<span class="hljs-params"></span>)</span> =&gt; <span class="hljs-keyword">new</span> TRecord().GetType().Name;
+    public Guid ID { get; }
+    public string DisplayName { get; }
+    public string GetDbSetName() =&gt; new TRecord().GetType().Name;
 }
-</div></code></pre>
+</code></pre>
 <p>Edit classes implement <code>IEditRecord</code> and <code>IValidation</code></p>
 <ol>
 <li><code>ID</code> is a <code>Guid</code>, a unique Identity field for the record.</li>
 <li><code>Populate()</code> populates the instance from the provided <code>TRecord</code>.</li>
 <li><code>GetRecord()</code> gets a new <code>TRecord</code> from the class instance.</li>
 </ol>
-<pre><code class="language-csharp"><div><span class="hljs-keyword">public</span> <span class="hljs-keyword">interface</span> <span class="hljs-title">IEditRecord</span>&lt;<span class="hljs-title">TRecord</span>&gt;
-    <span class="hljs-keyword">where</span> <span class="hljs-title">TRecord</span> : <span class="hljs-keyword">class</span>, <span class="hljs-title">IDbRecord</span>&lt;<span class="hljs-title">TRecord</span>&gt;, <span class="hljs-title">new</span>()
+<pre><code class="language-csharp">public interface IEditRecord&lt;TRecord&gt;
+    where TRecord : class, IDbRecord&lt;TRecord&gt;, new()
 {
-    <span class="hljs-keyword">public</span> Guid ID { <span class="hljs-keyword">get</span>; }
+    public Guid ID { get; }
 
-    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">Populate</span>(<span class="hljs-params">IDbRecord&lt;TRecord&gt; dbRecord</span>)</span>;
+    public void Populate(IDbRecord&lt;TRecord&gt; dbRecord);
 
-    <span class="hljs-function"><span class="hljs-keyword">public</span> TRecord <span class="hljs-title">GetRecord</span>(<span class="hljs-params"></span>)</span>;
+    public TRecord GetRecord();
 }
-</div></code></pre>
+</code></pre>
 <p>More about Validation later.</p>
-<pre><code class="language-csharp"><div><span class="hljs-keyword">public</span> <span class="hljs-keyword">interface</span> <span class="hljs-title">IValidation</span>
+<pre><code class="language-csharp">public interface IValidation
 {
-    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-built_in">bool</span> <span class="hljs-title">Validate</span>(<span class="hljs-params">ValidationMessageStore validationMessageStore, <span class="hljs-built_in">string</span> fieldname, <span class="hljs-built_in">object</span> model = <span class="hljs-literal">null</span></span>)</span>;
+    public bool Validate(ValidationMessageStore validationMessageStore, string fieldname, object model = null);
 }
-</div></code></pre>
+</code></pre>
 <h3 id="weatherforecast">WeatherForecast</h3>
 <p>Here's the dataclass for a WeatherForecast data entity.</p>
 <p>Points:</p>
@@ -626,24 +305,24 @@ Nullable And VS 2022
 <li>Implementation of <code>IDbRecord</code>.</li>
 <li>Defined as a <code>record</code> with immutable properties.</li>
 </ol>
-<pre><code class="language-csharp"><div><span class="hljs-keyword">public</span> <span class="hljs-keyword">record</span> <span class="hljs-title">WeatherForecast</span> : <span class="hljs-title">IDbRecord</span>&lt;<span class="hljs-title">WeatherForecast</span>&gt;
+<pre><code class="language-csharp">public record WeatherForecast : IDbRecord&lt;WeatherForecast&gt;
 {
-    [<span class="hljs-meta">Key</span>] <span class="hljs-keyword">public</span> Guid ID { <span class="hljs-keyword">get</span>; <span class="hljs-keyword">init</span>; } = Guid.Empty;
+    [Key] public Guid ID { get; init; } = Guid.Empty;
 
-    <span class="hljs-keyword">public</span> DateTimeOffset Date { <span class="hljs-keyword">get</span>; <span class="hljs-keyword">init</span>; } = DateTimeOffset.Now;
+    public DateTimeOffset Date { get; init; } = DateTimeOffset.Now;
 
-    <span class="hljs-keyword">public</span> <span class="hljs-built_in">int</span> TemperatureC { <span class="hljs-keyword">get</span>; <span class="hljs-keyword">init</span>; } = <span class="hljs-number">0</span>;
+    public int TemperatureC { get; init; } = 0;
 
-    <span class="hljs-keyword">public</span> <span class="hljs-built_in">string</span> Summary { <span class="hljs-keyword">get</span>; <span class="hljs-keyword">init</span>; } = <span class="hljs-built_in">string</span>.Empty;
+    public string Summary { get; init; } = string.Empty;
 
-    [<span class="hljs-meta">NotMapped</span>] <span class="hljs-keyword">public</span> <span class="hljs-built_in">int</span> TemperatureF =&gt; <span class="hljs-number">32</span> + (<span class="hljs-built_in">int</span>)(TemperatureC / <span class="hljs-number">0.5556</span>);
+    [NotMapped] public int TemperatureF =&gt; 32 + (int)(TemperatureC / 0.5556);
 
-    [<span class="hljs-meta">NotMapped</span>] <span class="hljs-keyword">public</span> <span class="hljs-built_in">string</span> DisplayName =&gt; <span class="hljs-string">$&quot;Weather Forecast for <span class="hljs-subst">{<span class="hljs-keyword">this</span>.Date.LocalDateTime.ToShortDateString()}</span> &quot;</span>;
+    [NotMapped] public string DisplayName =&gt; $&quot;Weather Forecast for {this.Date.LocalDateTime.ToShortDateString()} &quot;;
 
-    <span class="hljs-comment">// A long string field to demo using a max row in a data table</span>
-    [<span class="hljs-meta">NotMapped</span>] <span class="hljs-keyword">public</span> <span class="hljs-built_in">string</span> Description =&gt; <span class="hljs-string">$&quot;The Weather Forecast for this <span class="hljs-subst">{<span class="hljs-keyword">this</span>.Date.DayOfWeek}</span>, the <span class="hljs-subst">{<span class="hljs-keyword">this</span>.Date.Day}</span> of the month <span class="hljs-subst">{<span class="hljs-keyword">this</span>.Date.Month}</span> in the year of <span class="hljs-subst">{<span class="hljs-keyword">this</span>.Date.Year}</span> is <span class="hljs-subst">{<span class="hljs-keyword">this</span>.Summary}</span>.  From the font of all knowledge!&quot;</span>;
+    // A long string field to demo using a max row in a data table
+    [NotMapped] public string Description =&gt; $&quot;The Weather Forecast for this {this.Date.DayOfWeek}, the {this.Date.Day} of the month {this.Date.Month} in the year of {this.Date.Year} is {this.Summary}.  From the font of all knowledge!&quot;;
 }
-</div></code></pre>
+</code></pre>
 <p>And the editable version - <code>EditWeatherForecast</code>.</p>
 <p>Points:</p>
 <ol>
@@ -653,665 +332,665 @@ Nullable And VS 2022
 <li><code>Populate</code> populates the current class with data from a <code>WeatherForecast</code>.</li>
 <li><code>Validate</code> runs the configured validations on the class properties. More later.</li>
 </ol>
-<pre><code class="language-csharp"><div><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title">EditWeatherForecast</span> : <span class="hljs-title">IValidation</span>, <span class="hljs-title">IEditRecord</span>&lt;<span class="hljs-title">WeatherForecast</span>&gt;
+<pre><code class="language-csharp">public class EditWeatherForecast : IValidation, IEditRecord&lt;WeatherForecast&gt;
 {
-    <span class="hljs-keyword">public</span> Guid ID { <span class="hljs-keyword">get</span>; <span class="hljs-keyword">set</span>; } = Guid.Empty;
+    public Guid ID { get; set; } = Guid.Empty;
 
-    <span class="hljs-keyword">public</span> DateTimeOffset Date { <span class="hljs-keyword">get</span>; <span class="hljs-keyword">set</span>; } = DateTimeOffset.Now;
+    public DateTimeOffset Date { get; set; } = DateTimeOffset.Now;
 
-    <span class="hljs-keyword">public</span> <span class="hljs-built_in">int</span> TemperatureC { <span class="hljs-keyword">get</span>; <span class="hljs-keyword">set</span>; } = <span class="hljs-number">0</span>;
+    public int TemperatureC { get; set; } = 0;
 
-    <span class="hljs-keyword">public</span> <span class="hljs-built_in">int</span> TemperatureF =&gt; <span class="hljs-number">32</span> + (<span class="hljs-built_in">int</span>)(TemperatureC / <span class="hljs-number">0.5556</span>);
+    public int TemperatureF =&gt; 32 + (int)(TemperatureC / 0.5556);
 
-    <span class="hljs-keyword">public</span> <span class="hljs-built_in">string</span> Summary { <span class="hljs-keyword">get</span>; <span class="hljs-keyword">set</span>; } = <span class="hljs-built_in">string</span>.Empty;
+    public string Summary { get; set; } = string.Empty;
 
-    <span class="hljs-keyword">public</span> Guid GUID { <span class="hljs-keyword">get</span>; <span class="hljs-keyword">init</span>; } = Guid.NewGuid();
+    public Guid GUID { get; init; } = Guid.NewGuid();
 
-    <span class="hljs-keyword">public</span> <span class="hljs-built_in">string</span> DisplayName =&gt; <span class="hljs-string">$&quot;Weather Forecast for <span class="hljs-subst">{<span class="hljs-keyword">this</span>.Date.LocalDateTime.ToShortDateString()}</span> &quot;</span>;
+    public string DisplayName =&gt; $&quot;Weather Forecast for {this.Date.LocalDateTime.ToShortDateString()} &quot;;
 
-    <span class="hljs-function"><span class="hljs-keyword">public</span> WeatherForecast <span class="hljs-title">GetRecord</span>(<span class="hljs-params"></span>)</span> =&gt; <span class="hljs-keyword">new</span> WeatherForecast
+    public WeatherForecast GetRecord() =&gt; new WeatherForecast
     {
-        ID = <span class="hljs-keyword">this</span>.ID,
-        Date = <span class="hljs-keyword">this</span>.Date,
-        TemperatureC = <span class="hljs-keyword">this</span>.TemperatureC,
-        Summary = <span class="hljs-keyword">this</span>.Summary
+        ID = this.ID,
+        Date = this.Date,
+        TemperatureC = this.TemperatureC,
+        Summary = this.Summary
     };
 
-    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">Populate</span>(<span class="hljs-params">IDbRecord&lt;WeatherForecast&gt; dbRecord</span>)</span>
+    public void Populate(IDbRecord&lt;WeatherForecast&gt; dbRecord)
     {
-        <span class="hljs-keyword">var</span> rec = (WeatherForecast)dbRecord;
-        <span class="hljs-keyword">this</span>.ID = rec.ID;
-        <span class="hljs-keyword">this</span>.Date = rec.Date;
-        <span class="hljs-keyword">this</span>.TemperatureC = rec.TemperatureC;
-        <span class="hljs-keyword">this</span>.Summary = rec.Summary;
+        var rec = (WeatherForecast)dbRecord;
+        this.ID = rec.ID;
+        this.Date = rec.Date;
+        this.TemperatureC = rec.TemperatureC;
+        this.Summary = rec.Summary;
     }
 
-    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-built_in">bool</span> <span class="hljs-title">Validate</span>(<span class="hljs-params">ValidationMessageStore validationMessageStore, <span class="hljs-built_in">string</span> fieldname, <span class="hljs-built_in">object</span> model = <span class="hljs-literal">null</span></span>)</span>
+    public bool Validate(ValidationMessageStore validationMessageStore, string fieldname, object model = null)
     {
-        model = model ?? <span class="hljs-keyword">this</span>;
-        <span class="hljs-built_in">bool</span> trip = <span class="hljs-literal">false</span>;
+        model = model ?? this;
+        bool trip = false;
 
-        <span class="hljs-keyword">this</span>.Summary.Validation(<span class="hljs-string">&quot;Summary&quot;</span>, model, validationMessageStore)
-            .LongerThan(<span class="hljs-number">2</span>, <span class="hljs-string">&quot;Your description needs to be a little longer! 3 letters minimum&quot;</span>)
-            .Validate(<span class="hljs-keyword">ref</span> trip, fieldname);
+        this.Summary.Validation(&quot;Summary&quot;, model, validationMessageStore)
+            .LongerThan(2, &quot;Your description needs to be a little longer! 3 letters minimum&quot;)
+            .Validate(ref trip, fieldname);
 
-        <span class="hljs-keyword">this</span>.Date.Validation(<span class="hljs-string">&quot;Date&quot;</span>, model, validationMessageStore)
-            .NotDefault(<span class="hljs-string">&quot;You must select a date&quot;</span>)
-            .LessThan(DateTime.Now.AddMonths(<span class="hljs-number">1</span>), <span class="hljs-literal">true</span>, <span class="hljs-string">&quot;Date can only be up to 1 month ahead&quot;</span>)
-            .Validate(<span class="hljs-keyword">ref</span> trip, fieldname);
+        this.Date.Validation(&quot;Date&quot;, model, validationMessageStore)
+            .NotDefault(&quot;You must select a date&quot;)
+            .LessThan(DateTime.Now.AddMonths(1), true, &quot;Date can only be up to 1 month ahead&quot;)
+            .Validate(ref trip, fieldname);
 
-        <span class="hljs-keyword">this</span>.TemperatureC.Validation(<span class="hljs-string">&quot;TemperatureC&quot;</span>, model, validationMessageStore)
-            .LessThan(<span class="hljs-number">70</span>, <span class="hljs-string">&quot;The temperature must be less than 70C&quot;</span>)
-            .GreaterThan(<span class="hljs-number">-60</span>, <span class="hljs-string">&quot;The temperature must be greater than -60C&quot;</span>)
-            .Validate(<span class="hljs-keyword">ref</span> trip, fieldname);
+        this.TemperatureC.Validation(&quot;TemperatureC&quot;, model, validationMessageStore)
+            .LessThan(70, &quot;The temperature must be less than 70C&quot;)
+            .GreaterThan(-60, &quot;The temperature must be greater than -60C&quot;)
+            .Validate(ref trip, fieldname);
 
-        <span class="hljs-keyword">return</span> !trip;
+        return !trip;
     }
 
 }
-</div></code></pre>
+</code></pre>
 <h2 id="the-data-access-tier">The Data Access Tier</h2>
 <p>The application implements two Entity Framework <code>DBContext</code> classes and one <code>InMemoryDataStore</code>.  All reside in the Data Domain - <em>Blazr.Database.Data</em>.</p>
 <h4 id="mssqlweatherdbcontext">MSSQLWeatherDbContext</h4>
 <p>The class is  basic, creating a <code>DbSet</code> per dataclass.  The DBSet either must be the same name as the dataclass, or the record <code>GetDbSetName</code> must return the correct <code>DbSet</code> name.</p>
-<pre><code class="language-csharp"><div>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title">MSSQLWeatherDbContext</span> : <span class="hljs-title">DbContext</span>
+<pre><code class="language-csharp">    public class MSSQLWeatherDbContext : DbContext
     {
-        <span class="hljs-keyword">private</span> <span class="hljs-keyword">readonly</span> Guid _id;
+        private readonly Guid _id;
 
-        <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">LocalWeatherDbContext</span>(<span class="hljs-params">DbContextOptions&lt;LocalWeatherDbContext&gt; options</span>)
-            : <span class="hljs-title">base</span>(<span class="hljs-params">options</span>)</span>
+        public LocalWeatherDbContext(DbContextOptions&lt;LocalWeatherDbContext&gt; options)
+            : base(options)
             =&gt; _id = Guid.NewGuid();
 
-        <span class="hljs-keyword">public</span> DbSet&lt;WeatherForecast&gt; WeatherForecast { <span class="hljs-keyword">get</span>; <span class="hljs-keyword">set</span>; }
+        public DbSet&lt;WeatherForecast&gt; WeatherForecast { get; set; }
     }
-</div></code></pre>
+</code></pre>
 <h4 id="sqliteweatherdbcontext">SQLiteWeatherDBContext</h4>
 <p>The application implements a single Entity Framework <code>DbContext</code>, and a builder to build out the datbase instance and populate with data.</p>
-<pre><code class="language-csharp"><div><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title">SQLiteWeatherDbContext</span> : <span class="hljs-title">DbContext</span>
+<pre><code class="language-csharp">public class SQLiteWeatherDbContext : DbContext
 {
-    <span class="hljs-comment"><span class="hljs-doctag">///</span> <span class="hljs-doctag">&lt;summary&gt;</span></span>
-    <span class="hljs-comment"><span class="hljs-doctag">///</span> New Method - creates a guid in case we need to track it</span>
-    <span class="hljs-comment"><span class="hljs-doctag">///</span> <span class="hljs-doctag">&lt;/summary&gt;</span></span>
-    <span class="hljs-comment"><span class="hljs-doctag">///</span> <span class="hljs-doctag">&lt;param name=&quot;options&quot;&gt;</span><span class="hljs-doctag">&lt;/param&gt;</span></span>
-    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">SQLiteWeatherDbContext</span>(<span class="hljs-params">DbContextOptions&lt;SQLiteWeatherDbContext&gt; options</span>)
-        : <span class="hljs-title">base</span>(<span class="hljs-params">options</span>)</span>
-          =&gt; <span class="hljs-keyword">this</span>.BuildInMemoryDatabase();
+    /// &lt;summary&gt;
+    /// New Method - creates a guid in case we need to track it
+    /// &lt;/summary&gt;
+    /// &lt;param name=&quot;options&quot;&gt;&lt;/param&gt;
+    public SQLiteWeatherDbContext(DbContextOptions&lt;SQLiteWeatherDbContext&gt; options)
+        : base(options)
+          =&gt; this.BuildInMemoryDatabase();
 
-    <span class="hljs-comment"><span class="hljs-doctag">///</span> <span class="hljs-doctag">&lt;summary&gt;</span></span>
-    <span class="hljs-comment"><span class="hljs-doctag">///</span> DbSet for the <span class="hljs-doctag">&lt;see cref=&quot;DbWeatherForecast&quot;/&gt;</span> record</span>
-    <span class="hljs-comment"><span class="hljs-doctag">///</span> <span class="hljs-doctag">&lt;/summary&gt;</span></span>
-    <span class="hljs-keyword">public</span> DbSet&lt;WeatherForecast&gt; WeatherForecast { <span class="hljs-keyword">get</span>; <span class="hljs-keyword">set</span>; }
+    /// &lt;summary&gt;
+    /// DbSet for the &lt;see cref=&quot;DbWeatherForecast&quot;/&gt; record
+    /// &lt;/summary&gt;
+    public DbSet&lt;WeatherForecast&gt; WeatherForecast { get; set; }
 
-    <span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-keyword">void</span> <span class="hljs-title">BuildInMemoryDatabase</span>(<span class="hljs-params"></span>)</span>
+    private void BuildInMemoryDatabase()
     {
-        <span class="hljs-keyword">var</span> conn = <span class="hljs-keyword">this</span>.Database.GetDbConnection();
+        var conn = this.Database.GetDbConnection();
         conn.Open();
-        <span class="hljs-keyword">var</span> cmd = conn.CreateCommand();
-        cmd.CommandText = <span class="hljs-string">&quot;CREATE TABLE [WeatherForecast]([ID] UNIQUEIDENTIFIER PRIMARY KEY, [Date] [smalldatetime] NOT NULL, [TemperatureC] [int] NOT NULL, [Summary] [varchar](255) NULL)&quot;</span>;
+        var cmd = conn.CreateCommand();
+        cmd.CommandText = &quot;CREATE TABLE [WeatherForecast]([ID] UNIQUEIDENTIFIER PRIMARY KEY, [Date] [smalldatetime] NOT NULL, [TemperatureC] [int] NOT NULL, [Summary] [varchar](255) NULL)&quot;;
         cmd.ExecuteNonQuery();
-        <span class="hljs-keyword">foreach</span> (<span class="hljs-keyword">var</span> forecast <span class="hljs-keyword">in</span> <span class="hljs-keyword">this</span>.NewForecasts)
+        foreach (var forecast in this.NewForecasts)
         {
-            cmd.CommandText = <span class="hljs-string">$&quot;INSERT INTO WeatherForecast([ID], [Date], [TemperatureC], [Summary]) VALUES(<span class="hljs-subst">{Guid.NewGuid()}</span> ,&#x27;<span class="hljs-subst">{forecast.Date.LocalDateTime.ToLongDateString()}</span>&#x27;, <span class="hljs-subst">{forecast.TemperatureC}</span>, &#x27;<span class="hljs-subst">{forecast.Summary}</span>&#x27;)&quot;</span>;
+            cmd.CommandText = $&quot;INSERT INTO WeatherForecast([ID], [Date], [TemperatureC], [Summary]) VALUES({Guid.NewGuid()} ,'{forecast.Date.LocalDateTime.ToLongDateString()}', {forecast.TemperatureC}, '{forecast.Summary}')&quot;;
             cmd.ExecuteNonQuery();
         }
     }
 
-    <span class="hljs-keyword">private</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">readonly</span> <span class="hljs-built_in">string</span>[] Summaries = <span class="hljs-keyword">new</span>[]
+    private static readonly string[] Summaries = new[]
     {
-        <span class="hljs-string">&quot;Freezing&quot;</span>, <span class="hljs-string">&quot;Bracing&quot;</span>, <span class="hljs-string">&quot;Chilly&quot;</span>, <span class="hljs-string">&quot;Cool&quot;</span>, <span class="hljs-string">&quot;Mild&quot;</span>, <span class="hljs-string">&quot;Warm&quot;</span>, <span class="hljs-string">&quot;Balmy&quot;</span>, <span class="hljs-string">&quot;Hot&quot;</span>, <span class="hljs-string">&quot;Sweltering&quot;</span>, <span class="hljs-string">&quot;Scorching&quot;</span>
+        &quot;Freezing&quot;, &quot;Bracing&quot;, &quot;Chilly&quot;, &quot;Cool&quot;, &quot;Mild&quot;, &quot;Warm&quot;, &quot;Balmy&quot;, &quot;Hot&quot;, &quot;Sweltering&quot;, &quot;Scorching&quot;
     };
 
-    <span class="hljs-keyword">private</span> List&lt;WeatherForecast&gt; NewForecasts
+    private List&lt;WeatherForecast&gt; NewForecasts
     {
-        <span class="hljs-keyword">get</span>
+        get
         {
-            <span class="hljs-keyword">var</span> rng = <span class="hljs-keyword">new</span> Random();
+            var rng = new Random();
 
-            <span class="hljs-keyword">return</span> Enumerable.Range(<span class="hljs-number">1</span>, <span class="hljs-number">80</span>).Select(index =&gt; <span class="hljs-keyword">new</span> WeatherForecast
+            return Enumerable.Range(1, 80).Select(index =&gt; new WeatherForecast
             {
-                <span class="hljs-comment">//ID = index,</span>
+                //ID = index,
                 Date = DateTime.Now.AddDays(index),
-                TemperatureC = rng.Next(<span class="hljs-number">-20</span>, <span class="hljs-number">55</span>),
+                TemperatureC = rng.Next(-20, 55),
                 Summary = Summaries[rng.Next(Summaries.Length)]
             }).ToList();
         }
     }
 }
-</div></code></pre>
+</code></pre>
 <h4 id="inmemoryweatherdbcontext">InMemoryWeatherDBContext</h4>
-<pre><code class="language-csharp"><div><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title">InMemoryWeatherDataStore</span> : <span class="hljs-title">IInMemoryDataStore</span>
+<pre><code class="language-csharp">public class InMemoryWeatherDataStore : IInMemoryDataStore
 {
-    <span class="hljs-keyword">public</span> InMemoryDataSet&lt;WeatherForecast&gt; WeatherForecast { <span class="hljs-keyword">get</span>; <span class="hljs-keyword">set</span>; }
+    public InMemoryDataSet&lt;WeatherForecast&gt; WeatherForecast { get; set; }
 
-    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">InMemoryWeatherDataStore</span>(<span class="hljs-params"></span>)</span>
+    public InMemoryWeatherDataStore()
     {
-        <span class="hljs-keyword">this</span>.WeatherForecast = <span class="hljs-keyword">new</span> InMemoryDataSet&lt;WeatherForecast&gt;();
+        this.WeatherForecast = new InMemoryDataSet&lt;WeatherForecast&gt;();
         WeatherForecast.LoadData(LoadWeatherForecastData());
     }
 
-    <span class="hljs-function"><span class="hljs-keyword">public</span> List&lt;WeatherForecast&gt; <span class="hljs-title">LoadWeatherForecastData</span>(<span class="hljs-params"></span>)</span>
+    public List&lt;WeatherForecast&gt; LoadWeatherForecastData()
     {
-        <span class="hljs-keyword">var</span> summaries = <span class="hljs-keyword">new</span>[] {
-            <span class="hljs-string">&quot;Freezing&quot;</span>, <span class="hljs-string">&quot;Bracing&quot;</span>, <span class="hljs-string">&quot;Chilly&quot;</span>, <span class="hljs-string">&quot;Cool&quot;</span>, <span class="hljs-string">&quot;Mild&quot;</span>, <span class="hljs-string">&quot;Warm&quot;</span>, <span class="hljs-string">&quot;Balmy&quot;</span>, <span class="hljs-string">&quot;Hot&quot;</span>, <span class="hljs-string">&quot;Sweltering&quot;</span>, <span class="hljs-string">&quot;Scorching&quot;</span>
+        var summaries = new[] {
+            &quot;Freezing&quot;, &quot;Bracing&quot;, &quot;Chilly&quot;, &quot;Cool&quot;, &quot;Mild&quot;, &quot;Warm&quot;, &quot;Balmy&quot;, &quot;Hot&quot;, &quot;Sweltering&quot;, &quot;Scorching&quot;
         };
-        <span class="hljs-keyword">var</span> rng = <span class="hljs-keyword">new</span> Random();
+        var rng = new Random();
 
-        <span class="hljs-keyword">return</span> Enumerable.Range(<span class="hljs-number">1</span>, <span class="hljs-number">80</span>).Select(index =&gt; <span class="hljs-keyword">new</span> WeatherForecast
+        return Enumerable.Range(1, 80).Select(index =&gt; new WeatherForecast
         {
             ID = Guid.NewGuid(),
             Date = DateTime.Now.AddDays(index),
-            TemperatureC = rng.Next(<span class="hljs-number">-20</span>, <span class="hljs-number">55</span>),
+            TemperatureC = rng.Next(-20, 55),
             Summary = summaries[rng.Next(summaries.Length)]
         }).ToList();
     }
 
-    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">InMemoryDataSet</span>&lt;<span class="hljs-title">TRecord</span>&gt; <span class="hljs-title">GetDataSet</span>&lt;<span class="hljs-title">TRecord</span>&gt;(<span class="hljs-params"></span>) <span class="hljs-keyword">where</span> TRecord : <span class="hljs-keyword">class</span>, IDbRecord&lt;TRecord&gt;, <span class="hljs-keyword">new</span>(<span class="hljs-params"></span>)</span>
+    public InMemoryDataSet&lt;TRecord&gt; GetDataSet&lt;TRecord&gt;() where TRecord : class, IDbRecord&lt;TRecord&gt;, new()
     {
-        <span class="hljs-keyword">var</span> dbSetName = <span class="hljs-keyword">new</span> TRecord().GetDbSetName();
-        <span class="hljs-comment">// Get the property info object for the DbSet </span>
-        <span class="hljs-keyword">var</span> pinfo = <span class="hljs-keyword">this</span>.GetType().GetProperty(dbSetName);
-        InMemoryDataSet&lt;TRecord&gt; dbSet = <span class="hljs-literal">null</span>;
-        Debug.Assert(pinfo != <span class="hljs-literal">null</span>);
-        <span class="hljs-comment">// Get the property DbSet</span>
-        <span class="hljs-keyword">try</span>
+        var dbSetName = new TRecord().GetDbSetName();
+        // Get the property info object for the DbSet 
+        var pinfo = this.GetType().GetProperty(dbSetName);
+        InMemoryDataSet&lt;TRecord&gt; dbSet = null;
+        Debug.Assert(pinfo != null);
+        // Get the property DbSet
+        try
         {
-            dbSet = (InMemoryDataSet&lt;TRecord&gt;)pinfo.GetValue(<span class="hljs-keyword">this</span>);
+            dbSet = (InMemoryDataSet&lt;TRecord&gt;)pinfo.GetValue(this);
         }
         catch
         {
-            <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> InvalidOperationException(<span class="hljs-string">$&quot;<span class="hljs-subst">{dbSetName}</span> does not have a matching DBset &quot;</span>);
+            throw new InvalidOperationException($&quot;{dbSetName} does not have a matching DBset &quot;);
         }
-        Debug.Assert(dbSet != <span class="hljs-literal">null</span>);
-        <span class="hljs-keyword">return</span> dbSet;
+        Debug.Assert(dbSet != null);
+        return dbSet;
     }
 }
-</div></code></pre>
+</code></pre>
 <h4 id="dbcontextextensions">DbContextExtensions</h4>
 <p>We're using generics, so our methods only know about <code>TRecord</code> and the <code>IDbRecord</code> interface.  We therefore need a methodology to get the correct <code>DbSet</code>.  We use either a naming convention - the name of the record, the DbSet and the Table/View is the same - or declare the <code>DbSet</code> name in the record class through <code>GetDbSetName</code>.  We implement the method to get the <code>DbSet</code> as an extension method on <code>DbContext</code>.</p>
 <p>The method uses reflection to find the <code>DbSet</code> for <code>TRecord</code>.</p>
-<pre><code class="language-csharp"><div><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-title">DbSet</span>&lt;<span class="hljs-title">TRecord</span>&gt; <span class="hljs-title">GetDbSet</span>&lt;<span class="hljs-title">TRecord</span>&gt;(<span class="hljs-params"><span class="hljs-keyword">this</span> DbContext context</span>) <span class="hljs-keyword">where</span> TRecord : <span class="hljs-keyword">class</span>, IDbRecord&lt;TRecord&gt;, <span class="hljs-keyword">new</span>(<span class="hljs-params"></span>)</span>
+<pre><code class="language-csharp">public static DbSet&lt;TRecord&gt; GetDbSet&lt;TRecord&gt;(this DbContext context) where TRecord : class, IDbRecord&lt;TRecord&gt;, new()
 {
-    <span class="hljs-keyword">var</span> dbSetName = <span class="hljs-keyword">new</span> TRecord().GetDbSetName();
-    <span class="hljs-comment">// Get the property info object for the DbSet </span>
-    <span class="hljs-keyword">var</span> pinfo = context.GetType().GetProperty(dbSetName);
-    DbSet&lt;TRecord&gt; dbSet = <span class="hljs-literal">null</span>;
-    Debug.Assert(pinfo != <span class="hljs-literal">null</span>);
-    <span class="hljs-comment">// Get the property DbSet</span>
-    <span class="hljs-keyword">try</span>
+    var dbSetName = new TRecord().GetDbSetName();
+    // Get the property info object for the DbSet 
+    var pinfo = context.GetType().GetProperty(dbSetName);
+    DbSet&lt;TRecord&gt; dbSet = null;
+    Debug.Assert(pinfo != null);
+    // Get the property DbSet
+    try
     {
         dbSet = (DbSet&lt;TRecord&gt;)pinfo.GetValue(context);
     }
     catch
     {
-        <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> InvalidOperationException(<span class="hljs-string">$&quot;<span class="hljs-subst">{dbSetName}</span> does not have a matching DBset &quot;</span>);
+        throw new InvalidOperationException($&quot;{dbSetName} does not have a matching DBset &quot;);
     }
-    Debug.Assert(dbSet != <span class="hljs-literal">null</span>);
-    <span class="hljs-keyword">return</span> dbSet;
+    Debug.Assert(dbSet != null);
+    return dbSet;
 }
-</div></code></pre>
+</code></pre>
 <h3 id="data-brokers">Data Brokers</h3>
 <p><code>IDataBroker</code> resides in the Core Domain - <em>Blazr.SPA.Core</em> - defining the interface the Core Domain Connectors use.  The implementations all reside in the Data Domain - <em>Blazr.SPA.Data</em>.</p>
 <h4 id="idatabroker">IDataBroker</h4>
 <p><code>IDataBroker</code> defines the base CRUD methods DataServices must implement.  Brokers are services defined in the Services container using the interface and consumed through the interface.  Note <code>TRecord</code> with it's constraints is defined at method level.  <code>SelectPagedRecordsAsync</code> uses a <code>RecordPagingData</code> object which we'll look at in article 5.</p>
-<pre><code class="language-csharp"><div>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">interface</span> <span class="hljs-title">IDataBroker</span>
+<pre><code class="language-csharp">    public interface IDataBroker
     {
-        <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">ValueTask</span>&lt;<span class="hljs-title">List</span>&lt;<span class="hljs-title">TRecord</span>&gt;&gt; <span class="hljs-title">SelectAllRecordsAsync</span>&lt;<span class="hljs-title">TRecord</span>&gt;(<span class="hljs-params"></span>) <span class="hljs-keyword">where</span> TRecord : <span class="hljs-keyword">class</span>, IDbRecord&lt;TRecord&gt;, <span class="hljs-keyword">new</span>(<span class="hljs-params"></span>)</span>;
+        public ValueTask&lt;List&lt;TRecord&gt;&gt; SelectAllRecordsAsync&lt;TRecord&gt;() where TRecord : class, IDbRecord&lt;TRecord&gt;, new();
         
-        <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">ValueTask</span>&lt;<span class="hljs-title">List</span>&lt;<span class="hljs-title">TRecord</span>&gt;&gt; <span class="hljs-title">SelectPagedRecordsAsync</span>&lt;<span class="hljs-title">TRecord</span>&gt;(<span class="hljs-params">RecordPagingData pagingData</span>) <span class="hljs-keyword">where</span> TRecord : <span class="hljs-keyword">class</span>, IDbRecord&lt;TRecord&gt;, <span class="hljs-keyword">new</span>(<span class="hljs-params"></span>)</span>;
+        public ValueTask&lt;List&lt;TRecord&gt;&gt; SelectPagedRecordsAsync&lt;TRecord&gt;(RecordPagingData pagingData) where TRecord : class, IDbRecord&lt;TRecord&gt;, new();
         
-        <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">ValueTask</span>&lt;<span class="hljs-title">TRecord</span>&gt; <span class="hljs-title">SelectRecordAsync</span>&lt;<span class="hljs-title">TRecord</span>&gt;(<span class="hljs-params">Guid id</span>) <span class="hljs-keyword">where</span> TRecord : <span class="hljs-keyword">class</span>, IDbRecord&lt;TRecord&gt;, <span class="hljs-keyword">new</span>(<span class="hljs-params"></span>)</span>;
+        public ValueTask&lt;TRecord&gt; SelectRecordAsync&lt;TRecord&gt;(Guid id) where TRecord : class, IDbRecord&lt;TRecord&gt;, new();
         
-        <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">ValueTask</span>&lt;<span class="hljs-title">int</span>&gt; <span class="hljs-title">SelectRecordListCountAsync</span>&lt;<span class="hljs-title">TRecord</span>&gt;(<span class="hljs-params"></span>) <span class="hljs-keyword">where</span> TRecord : <span class="hljs-keyword">class</span>, IDbRecord&lt;TRecord&gt;, <span class="hljs-keyword">new</span>(<span class="hljs-params"></span>)</span>;
+        public ValueTask&lt;int&gt; SelectRecordListCountAsync&lt;TRecord&gt;() where TRecord : class, IDbRecord&lt;TRecord&gt;, new();
         
-        <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">ValueTask</span>&lt;<span class="hljs-title">DbTaskResult</span>&gt; <span class="hljs-title">UpdateRecordAsync</span>&lt;<span class="hljs-title">TRecord</span>&gt;(<span class="hljs-params">TRecord <span class="hljs-keyword">record</span></span>) <span class="hljs-keyword">where</span> TRecord : <span class="hljs-keyword">class</span>, IDbRecord&lt;TRecord&gt;, <span class="hljs-keyword">new</span>(<span class="hljs-params"></span>)</span>;
+        public ValueTask&lt;DbTaskResult&gt; UpdateRecordAsync&lt;TRecord&gt;(TRecord record) where TRecord : class, IDbRecord&lt;TRecord&gt;, new();
         
-        <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">ValueTask</span>&lt;<span class="hljs-title">DbTaskResult</span>&gt; <span class="hljs-title">InsertRecordAsync</span>&lt;<span class="hljs-title">TRecord</span>&gt;(<span class="hljs-params">TRecord <span class="hljs-keyword">record</span></span>) <span class="hljs-keyword">where</span> TRecord : <span class="hljs-keyword">class</span>, IDbRecord&lt;TRecord&gt;, <span class="hljs-keyword">new</span>(<span class="hljs-params"></span>)</span>;
+        public ValueTask&lt;DbTaskResult&gt; InsertRecordAsync&lt;TRecord&gt;(TRecord record) where TRecord : class, IDbRecord&lt;TRecord&gt;, new();
         
-        <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">ValueTask</span>&lt;<span class="hljs-title">DbTaskResult</span>&gt; <span class="hljs-title">DeleteRecordAsync</span>&lt;<span class="hljs-title">TRecord</span>&gt;(<span class="hljs-params">TRecord <span class="hljs-keyword">record</span></span>) <span class="hljs-keyword">where</span> TRecord : <span class="hljs-keyword">class</span>, IDbRecord&lt;TRecord&gt;, <span class="hljs-keyword">new</span>(<span class="hljs-params"></span>)</span>;
+        public ValueTask&lt;DbTaskResult&gt; DeleteRecordAsync&lt;TRecord&gt;(TRecord record) where TRecord : class, IDbRecord&lt;TRecord&gt;, new();
     }
-</div></code></pre>
+</code></pre>
 <h4 id="basedatabroker">BaseDataBroker</h4>
 <p><code>BaseDataBroker</code> is abstract implementation of <code>IDataBroker</code>.  It provides default records, lists or <em>not implemented</em> <code>DBTaskResult</code> messages.</p>
-<pre><code class="language-csharp"><div>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">abstract</span> <span class="hljs-keyword">class</span> <span class="hljs-title">BaseDataBroker</span>: <span class="hljs-title">IDataBroker</span>
+<pre><code class="language-csharp">    public abstract class BaseDataBroker: IDataBroker
     {
-        <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">virtual</span> <span class="hljs-title">ValueTask</span>&lt;<span class="hljs-title">List</span>&lt;<span class="hljs-title">TRecord</span>&gt;&gt; <span class="hljs-title">SelectAllRecordsAsync</span>&lt;<span class="hljs-title">TRecord</span>&gt;(<span class="hljs-params"></span>) <span class="hljs-keyword">where</span> TRecord : <span class="hljs-keyword">class</span>, IDbRecord&lt;TRecord&gt;, <span class="hljs-keyword">new</span>(<span class="hljs-params"></span>)</span>
-            =&gt; ValueTask.FromResult(<span class="hljs-keyword">new</span> List&lt;TRecord&gt;());
+        public virtual ValueTask&lt;List&lt;TRecord&gt;&gt; SelectAllRecordsAsync&lt;TRecord&gt;() where TRecord : class, IDbRecord&lt;TRecord&gt;, new()
+            =&gt; ValueTask.FromResult(new List&lt;TRecord&gt;());
         
-        <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">virtual</span> <span class="hljs-title">ValueTask</span>&lt;<span class="hljs-title">List</span>&lt;<span class="hljs-title">TRecord</span>&gt;&gt; <span class="hljs-title">SelectPagedRecordsAsync</span>&lt;<span class="hljs-title">TRecord</span>&gt;(<span class="hljs-params">RecordPagingData paginatorData</span>) <span class="hljs-keyword">where</span> TRecord : <span class="hljs-keyword">class</span>, IDbRecord&lt;TRecord&gt;, <span class="hljs-keyword">new</span>(<span class="hljs-params"></span>)</span>
-            =&gt; ValueTask.FromResult(<span class="hljs-keyword">new</span> List&lt;TRecord&gt;());
+        public virtual ValueTask&lt;List&lt;TRecord&gt;&gt; SelectPagedRecordsAsync&lt;TRecord&gt;(RecordPagingData paginatorData) where TRecord : class, IDbRecord&lt;TRecord&gt;, new()
+            =&gt; ValueTask.FromResult(new List&lt;TRecord&gt;());
         
-        <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">virtual</span> <span class="hljs-title">ValueTask</span>&lt;<span class="hljs-title">TRecord</span>&gt; <span class="hljs-title">SelectRecordAsync</span>&lt;<span class="hljs-title">TRecord</span>&gt;(<span class="hljs-params">Guid id</span>) <span class="hljs-keyword">where</span> TRecord : <span class="hljs-keyword">class</span>, IDbRecord&lt;TRecord&gt;, <span class="hljs-keyword">new</span>(<span class="hljs-params"></span>)</span>
-            =&gt; ValueTask.FromResult(<span class="hljs-keyword">new</span> TRecord());
+        public virtual ValueTask&lt;TRecord&gt; SelectRecordAsync&lt;TRecord&gt;(Guid id) where TRecord : class, IDbRecord&lt;TRecord&gt;, new()
+            =&gt; ValueTask.FromResult(new TRecord());
         
-        <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">virtual</span> <span class="hljs-title">ValueTask</span>&lt;<span class="hljs-title">int</span>&gt; <span class="hljs-title">SelectRecordListCountAsync</span>&lt;<span class="hljs-title">TRecord</span>&gt;(<span class="hljs-params"></span>) <span class="hljs-keyword">where</span> TRecord : <span class="hljs-keyword">class</span>, IDbRecord&lt;TRecord&gt;, <span class="hljs-keyword">new</span>(<span class="hljs-params"></span>)</span>
-            =&gt; ValueTask.FromResult(<span class="hljs-number">0</span>);
+        public virtual ValueTask&lt;int&gt; SelectRecordListCountAsync&lt;TRecord&gt;() where TRecord : class, IDbRecord&lt;TRecord&gt;, new()
+            =&gt; ValueTask.FromResult(0);
         
-        <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">virtual</span> <span class="hljs-title">ValueTask</span>&lt;<span class="hljs-title">DbTaskResult</span>&gt; <span class="hljs-title">UpdateRecordAsync</span>&lt;<span class="hljs-title">TRecord</span>&gt;(<span class="hljs-params">TRecord <span class="hljs-keyword">record</span></span>) <span class="hljs-keyword">where</span> TRecord : <span class="hljs-keyword">class</span>, IDbRecord&lt;TRecord&gt;, <span class="hljs-keyword">new</span>(<span class="hljs-params"></span>)</span>
-            =&gt; ValueTask.FromResult(<span class="hljs-keyword">new</span> DbTaskResult() { IsOK = <span class="hljs-literal">false</span>, Type = MessageType.NotImplemented, Message = <span class="hljs-string">&quot;Method not implemented&quot;</span> });
+        public virtual ValueTask&lt;DbTaskResult&gt; UpdateRecordAsync&lt;TRecord&gt;(TRecord record) where TRecord : class, IDbRecord&lt;TRecord&gt;, new()
+            =&gt; ValueTask.FromResult(new DbTaskResult() { IsOK = false, Type = MessageType.NotImplemented, Message = &quot;Method not implemented&quot; });
         
-        <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">virtual</span> <span class="hljs-title">ValueTask</span>&lt;<span class="hljs-title">DbTaskResult</span>&gt; <span class="hljs-title">InsertRecordAsync</span>&lt;<span class="hljs-title">TRecord</span>&gt;(<span class="hljs-params">TRecord <span class="hljs-keyword">record</span></span>) <span class="hljs-keyword">where</span> TRecord : <span class="hljs-keyword">class</span>, IDbRecord&lt;TRecord&gt;, <span class="hljs-keyword">new</span>(<span class="hljs-params"></span>)</span>
-            =&gt; ValueTask.FromResult(<span class="hljs-keyword">new</span> DbTaskResult() { IsOK = <span class="hljs-literal">false</span>, Type = MessageType.NotImplemented, Message = <span class="hljs-string">&quot;Method not implemented&quot;</span> });
+        public virtual ValueTask&lt;DbTaskResult&gt; InsertRecordAsync&lt;TRecord&gt;(TRecord record) where TRecord : class, IDbRecord&lt;TRecord&gt;, new()
+            =&gt; ValueTask.FromResult(new DbTaskResult() { IsOK = false, Type = MessageType.NotImplemented, Message = &quot;Method not implemented&quot; });
         
-        <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">virtual</span> <span class="hljs-title">ValueTask</span>&lt;<span class="hljs-title">DbTaskResult</span>&gt; <span class="hljs-title">DeleteRecordAsync</span>&lt;<span class="hljs-title">TRecord</span>&gt;(<span class="hljs-params">TRecord <span class="hljs-keyword">record</span></span>) <span class="hljs-keyword">where</span> TRecord : <span class="hljs-keyword">class</span>, IDbRecord&lt;TRecord&gt;, <span class="hljs-keyword">new</span>(<span class="hljs-params"></span>)</span>
-            =&gt; ValueTask.FromResult(<span class="hljs-keyword">new</span> DbTaskResult() { IsOK = <span class="hljs-literal">false</span>, Type = MessageType.NotImplemented, Message = <span class="hljs-string">&quot;Method not implemented&quot;</span> });
+        public virtual ValueTask&lt;DbTaskResult&gt; DeleteRecordAsync&lt;TRecord&gt;(TRecord record) where TRecord : class, IDbRecord&lt;TRecord&gt;, new()
+            =&gt; ValueTask.FromResult(new DbTaskResult() { IsOK = false, Type = MessageType.NotImplemented, Message = &quot;Method not implemented&quot; });
     }
-</div></code></pre>
+</code></pre>
 <h4 id="sqlserverdatabroker">SQLServerDataBroker</h4>
 <p>This is the concrete server-side implementation.  Each database operation is implemented using separate <code>DbContext</code> instances.  Note <code>GetDBSet</code> used to get the correct DBSet for <code>TRecord</code>.</p>
-<pre><code class="language-csharp"><div><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title">SQLServerDataBroker</span>&lt;<span class="hljs-title">TDbContext</span>&gt; :
-    <span class="hljs-title">BaseDataBroker</span>,
-    <span class="hljs-title">IDataBroker</span>
-    <span class="hljs-keyword">where</span> <span class="hljs-title">TDbContext</span> : <span class="hljs-title">DbContext</span>
+<pre><code class="language-csharp">public class SQLServerDataBroker&lt;TDbContext&gt; :
+    BaseDataBroker,
+    IDataBroker
+    where TDbContext : DbContext
 {
-    <span class="hljs-keyword">protected</span> <span class="hljs-keyword">virtual</span> IDbContextFactory&lt;TDbContext&gt; DBContext { <span class="hljs-keyword">get</span>; <span class="hljs-keyword">set</span>; } = <span class="hljs-literal">null</span>;
+    protected virtual IDbContextFactory&lt;TDbContext&gt; DBContext { get; set; } = null;
 
-    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">SQLServerDataBroker</span>(<span class="hljs-params">IConfiguration configuration, IDbContextFactory&lt;TDbContext&gt; dbContext</span>)</span>
-        =&gt; <span class="hljs-keyword">this</span>.DBContext = dbContext;
+    public SQLServerDataBroker(IConfiguration configuration, IDbContextFactory&lt;TDbContext&gt; dbContext)
+        =&gt; this.DBContext = dbContext;
 
-    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">override</span> <span class="hljs-keyword">async</span> <span class="hljs-title">ValueTask</span>&lt;<span class="hljs-title">List</span>&lt;<span class="hljs-title">TRecord</span>&gt;&gt; <span class="hljs-title">SelectAllRecordsAsync</span>&lt;<span class="hljs-title">TRecord</span>&gt;(<span class="hljs-params"></span>)</span>
+    public override async ValueTask&lt;List&lt;TRecord&gt;&gt; SelectAllRecordsAsync&lt;TRecord&gt;()
     {
-        <span class="hljs-keyword">using</span> <span class="hljs-keyword">var</span> dbContext = <span class="hljs-keyword">this</span>.DBContext.CreateDbContext();
-        <span class="hljs-keyword">var</span> list = <span class="hljs-keyword">await</span> dbContext
+        using var dbContext = this.DBContext.CreateDbContext();
+        var list = await dbContext
         .GetDbSet&lt;TRecord&gt;()
         .ToListAsync() 
-        ?? <span class="hljs-keyword">new</span> List&lt;TRecord&gt;();
-        <span class="hljs-keyword">return</span> list;
+        ?? new List&lt;TRecord&gt;();
+        return list;
     }
 
-    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">override</span> <span class="hljs-keyword">async</span> <span class="hljs-title">ValueTask</span>&lt;<span class="hljs-title">List</span>&lt;<span class="hljs-title">TRecord</span>&gt;&gt; <span class="hljs-title">SelectPagedRecordsAsync</span>&lt;<span class="hljs-title">TRecord</span>&gt;(<span class="hljs-params">RecordPagingData pagingData</span>)</span>
+    public override async ValueTask&lt;List&lt;TRecord&gt;&gt; SelectPagedRecordsAsync&lt;TRecord&gt;(RecordPagingData pagingData)
     {
-        <span class="hljs-keyword">using</span> <span class="hljs-keyword">var</span> dbContext = <span class="hljs-keyword">this</span>.DBContext.CreateDbContext();
-        <span class="hljs-keyword">var</span> dbset = dbContext
+        using var dbContext = this.DBContext.CreateDbContext();
+        var dbset = dbContext
             .GetDbSet&lt;TRecord&gt;();
 
-        <span class="hljs-keyword">var</span> isSortable = <span class="hljs-keyword">typeof</span>(TRecord).GetProperty(pagingData.SortColumn) != <span class="hljs-literal">null</span>;
+        var isSortable = typeof(TRecord).GetProperty(pagingData.SortColumn) != null;
         List&lt;TRecord&gt; list;
-        <span class="hljs-keyword">if</span> (pagingData.Sort &amp;&amp; isSortable)
+        if (pagingData.Sort &amp;&amp; isSortable)
         {
-            list = <span class="hljs-keyword">await</span> dbset
-                .OrderBy(pagingData.SortDescending ? <span class="hljs-string">$&quot;<span class="hljs-subst">{pagingData.SortColumn}</span> descending&quot;</span> : pagingData.SortColumn)
+            list = await dbset
+                .OrderBy(pagingData.SortDescending ? $&quot;{pagingData.SortColumn} descending&quot; : pagingData.SortColumn)
                 .Skip(pagingData.StartRecord)
                 .Take(pagingData.PageSize)
                 .ToListAsync() 
-                ?? <span class="hljs-keyword">new</span> List&lt;TRecord&gt;();
+                ?? new List&lt;TRecord&gt;();
         }
-        <span class="hljs-keyword">else</span>
+        else
         {
-            list = <span class="hljs-keyword">await</span> dbset
+            list = await dbset
                 .Skip(pagingData.StartRecord)
                 .Take(pagingData.PageSize)
                 .ToListAsync() 
-                ?? <span class="hljs-keyword">new</span> List&lt;TRecord&gt;();
+                ?? new List&lt;TRecord&gt;();
         }
-        <span class="hljs-keyword">return</span> list;
+        return list;
     }
 
-    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">override</span> <span class="hljs-keyword">async</span> <span class="hljs-title">ValueTask</span>&lt;<span class="hljs-title">TRecord</span>&gt; <span class="hljs-title">SelectRecordAsync</span>&lt;<span class="hljs-title">TRecord</span>&gt;(<span class="hljs-params">Guid id</span>)</span>
+    public override async ValueTask&lt;TRecord&gt; SelectRecordAsync&lt;TRecord&gt;(Guid id)
     {
-        <span class="hljs-keyword">using</span> <span class="hljs-keyword">var</span> dbContext = <span class="hljs-keyword">this</span>.DBContext.CreateDbContext();
-        <span class="hljs-keyword">var</span> list = <span class="hljs-keyword">await</span> dbContext
+        using var dbContext = this.DBContext.CreateDbContext();
+        var list = await dbContext
             .GetDbSet&lt;TRecord&gt;()
-            .FirstOrDefaultAsync(item =&gt; ((IDbRecord&lt;TRecord&gt;)item).ID == id) ?? <span class="hljs-literal">default</span>;
+            .FirstOrDefaultAsync(item =&gt; ((IDbRecord&lt;TRecord&gt;)item).ID == id) ?? default;
 
-        <span class="hljs-keyword">return</span> list;
+        return list;
     }
 
-    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">override</span> <span class="hljs-keyword">async</span> <span class="hljs-title">ValueTask</span>&lt;<span class="hljs-title">int</span>&gt; <span class="hljs-title">SelectRecordListCountAsync</span>&lt;<span class="hljs-title">TRecord</span>&gt;(<span class="hljs-params"></span>)</span>
+    public override async ValueTask&lt;int&gt; SelectRecordListCountAsync&lt;TRecord&gt;()
     {
-        <span class="hljs-keyword">using</span> <span class="hljs-keyword">var</span> dbContext = <span class="hljs-keyword">this</span>.DBContext.CreateDbContext();
-        <span class="hljs-keyword">var</span> count = <span class="hljs-keyword">await</span> dbContext
+        using var dbContext = this.DBContext.CreateDbContext();
+        var count = await dbContext
             .GetDbSet&lt;TRecord&gt;()
             .CountAsync();
 
-        <span class="hljs-keyword">return</span> count;
+        return count;
     }
 
-    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">override</span> <span class="hljs-keyword">async</span> <span class="hljs-title">ValueTask</span>&lt;<span class="hljs-title">DbTaskResult</span>&gt; <span class="hljs-title">UpdateRecordAsync</span>&lt;<span class="hljs-title">TRecord</span>&gt;(<span class="hljs-params">TRecord <span class="hljs-keyword">record</span></span>)</span>
+    public override async ValueTask&lt;DbTaskResult&gt; UpdateRecordAsync&lt;TRecord&gt;(TRecord record)
     {
-        <span class="hljs-keyword">using</span> <span class="hljs-keyword">var</span> context = <span class="hljs-keyword">this</span>.DBContext.CreateDbContext();
-        context.Entry(<span class="hljs-keyword">record</span>).<span class="hljs-title">State</span> = EntityState.Modified;
-        <span class="hljs-keyword">var</span> result = <span class="hljs-keyword">await</span> <span class="hljs-keyword">this</span>.UpdateContext(context);
-        <span class="hljs-keyword">return</span> result;
+        using var context = this.DBContext.CreateDbContext();
+        context.Entry(record).State = EntityState.Modified;
+        var result = await this.UpdateContext(context);
+        return result;
     }
 
-    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">override</span> <span class="hljs-keyword">async</span> <span class="hljs-title">ValueTask</span>&lt;<span class="hljs-title">DbTaskResult</span>&gt; <span class="hljs-title">InsertRecordAsync</span>&lt;<span class="hljs-title">TRecord</span>&gt;(<span class="hljs-params">TRecord <span class="hljs-keyword">record</span></span>)</span>
+    public override async ValueTask&lt;DbTaskResult&gt; InsertRecordAsync&lt;TRecord&gt;(TRecord record)
     {
-        <span class="hljs-keyword">using</span> <span class="hljs-keyword">var</span> context = <span class="hljs-keyword">this</span>.DBContext.CreateDbContext();
-        context.GetDbSet&lt;TRecord&gt;().Add(<span class="hljs-keyword">record</span>);
-        <span class="hljs-keyword">var</span> result = <span class="hljs-keyword">await</span> <span class="hljs-keyword">this</span>.UpdateContext(context);
-        <span class="hljs-keyword">return</span> result;
+        using var context = this.DBContext.CreateDbContext();
+        context.GetDbSet&lt;TRecord&gt;().Add(record);
+        var result = await this.UpdateContext(context);
+        return result;
     }
 
-    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">override</span> <span class="hljs-keyword">async</span> <span class="hljs-title">ValueTask</span>&lt;<span class="hljs-title">DbTaskResult</span>&gt; <span class="hljs-title">DeleteRecordAsync</span>&lt;<span class="hljs-title">TRecord</span>&gt;(<span class="hljs-params">TRecord <span class="hljs-keyword">record</span></span>)</span>
+    public override async ValueTask&lt;DbTaskResult&gt; DeleteRecordAsync&lt;TRecord&gt;(TRecord record)
     {
-        <span class="hljs-keyword">using</span> <span class="hljs-keyword">var</span> context = <span class="hljs-keyword">this</span>.DBContext.CreateDbContext();
-        context.Entry(<span class="hljs-keyword">record</span>).<span class="hljs-title">State</span> = EntityState.Deleted;
-        <span class="hljs-keyword">var</span> result = <span class="hljs-keyword">await</span> <span class="hljs-keyword">this</span>.UpdateContext(context);
-        <span class="hljs-keyword">return</span> result;
+        using var context = this.DBContext.CreateDbContext();
+        context.Entry(record).State = EntityState.Deleted;
+        var result = await this.UpdateContext(context);
+        return result;
     }
 
-    <span class="hljs-comment"><span class="hljs-doctag">///</span> Helper method to update the context and return a DBTaskResult</span>
-    <span class="hljs-function"><span class="hljs-keyword">protected</span> <span class="hljs-keyword">async</span> Task&lt;DbTaskResult&gt; <span class="hljs-title">UpdateContext</span>(<span class="hljs-params">DbContext context</span>)</span>
-        =&gt; <span class="hljs-keyword">await</span> context.SaveChangesAsync() &gt; <span class="hljs-number">0</span> ? DbTaskResult.OK() : DbTaskResult.NotOK();
+    /// Helper method to update the context and return a DBTaskResult
+    protected async Task&lt;DbTaskResult&gt; UpdateContext(DbContext context)
+        =&gt; await context.SaveChangesAsync() &gt; 0 ? DbTaskResult.OK() : DbTaskResult.NotOK();
 }
-</div></code></pre>
+</code></pre>
 <h4 id="sqlitedatabroker">SQLiteDataBroker</h4>
 <p>This is the concrete server-side implementation.  All database operations use a single <code>DbContext</code> instances.  Note <code>GetDBSet</code> gets the correct DBSet for <code>TRecord</code>.</p>
-<pre><code class="language-csharp"><div><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title">SQLiteDataBroker</span>&lt;<span class="hljs-title">TDbContext</span>&gt; :
-    <span class="hljs-title">BaseDataBroker</span>,
-    <span class="hljs-title">IDataBroker</span>
-    <span class="hljs-keyword">where</span> <span class="hljs-title">TDbContext</span> : <span class="hljs-title">DbContext</span>
+<pre><code class="language-csharp">public class SQLiteDataBroker&lt;TDbContext&gt; :
+    BaseDataBroker,
+    IDataBroker
+    where TDbContext : DbContext
 {
 
-    <span class="hljs-keyword">protected</span> <span class="hljs-keyword">virtual</span> IDbContextFactory&lt;TDbContext&gt; DBContext { <span class="hljs-keyword">get</span>; <span class="hljs-keyword">set</span>; } = <span class="hljs-literal">null</span>;
+    protected virtual IDbContextFactory&lt;TDbContext&gt; DBContext { get; set; } = null;
 
-    <span class="hljs-keyword">private</span> DbContext _dbContext;
+    private DbContext _dbContext;
 
-    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">SQLiteDataBroker</span>(<span class="hljs-params">IConfiguration configuration, IDbContextFactory&lt;TDbContext&gt; dbContext</span>)</span>
+    public SQLiteDataBroker(IConfiguration configuration, IDbContextFactory&lt;TDbContext&gt; dbContext)
     {
-        <span class="hljs-keyword">this</span>.DBContext = dbContext;
-        _dbContext = <span class="hljs-keyword">this</span>.DBContext.CreateDbContext();
-        <span class="hljs-comment">// Debug.WriteLine($&quot;==&gt; New Instance {this.ToString()} ID:{this.ServiceID.ToString()} &quot;);</span>
+        this.DBContext = dbContext;
+        _dbContext = this.DBContext.CreateDbContext();
+        // Debug.WriteLine($&quot;==&gt; New Instance {this.ToString()} ID:{this.ServiceID.ToString()} &quot;);
     }
 
-    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">override</span> <span class="hljs-keyword">async</span> <span class="hljs-title">ValueTask</span>&lt;<span class="hljs-title">List</span>&lt;<span class="hljs-title">TRecord</span>&gt;&gt; <span class="hljs-title">SelectAllRecordsAsync</span>&lt;<span class="hljs-title">TRecord</span>&gt;(<span class="hljs-params"></span>)</span>
+    public override async ValueTask&lt;List&lt;TRecord&gt;&gt; SelectAllRecordsAsync&lt;TRecord&gt;()
     {
-        <span class="hljs-keyword">var</span> dbset = _dbContext.GetDbSet&lt;TRecord&gt;();
-        <span class="hljs-keyword">return</span> <span class="hljs-keyword">await</span> dbset.ToListAsync() ?? <span class="hljs-keyword">new</span> List&lt;TRecord&gt;();
+        var dbset = _dbContext.GetDbSet&lt;TRecord&gt;();
+        return await dbset.ToListAsync() ?? new List&lt;TRecord&gt;();
     }
 
-    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">override</span> <span class="hljs-keyword">async</span> <span class="hljs-title">ValueTask</span>&lt;<span class="hljs-title">List</span>&lt;<span class="hljs-title">TRecord</span>&gt;&gt; <span class="hljs-title">SelectPagedRecordsAsync</span>&lt;<span class="hljs-title">TRecord</span>&gt;(<span class="hljs-params">RecordPagingData paginatorData</span>)</span>
+    public override async ValueTask&lt;List&lt;TRecord&gt;&gt; SelectPagedRecordsAsync&lt;TRecord&gt;(RecordPagingData paginatorData)
     {
-        <span class="hljs-keyword">var</span> dbset = _dbContext.GetDbSet&lt;TRecord&gt;();
-        <span class="hljs-keyword">var</span> isSortable = <span class="hljs-keyword">typeof</span>(TRecord).GetProperty(pagingData.SortColumn) != <span class="hljs-literal">null</span>;
-        <span class="hljs-keyword">if</span> (pagingData.Sort &amp;&amp; isSortable)
+        var dbset = _dbContext.GetDbSet&lt;TRecord&gt;();
+        var isSortable = typeof(TRecord).GetProperty(pagingData.SortColumn) != null;
+        if (pagingData.Sort &amp;&amp; isSortable)
         {
-            <span class="hljs-keyword">var</span> list = <span class="hljs-keyword">await</span> dbset
-                .OrderBy(pagingData.SortDescending ? <span class="hljs-string">$&quot;<span class="hljs-subst">{pagingData.SortColumn}</span> descending&quot;</span> : pagingData.SortColumn)
+            var list = await dbset
+                .OrderBy(pagingData.SortDescending ? $&quot;{pagingData.SortColumn} descending&quot; : pagingData.SortColumn)
                 .Skip(pagingData.StartRecord)
-                .Take(pagingData.PageSize).ToListAsync() ?? <span class="hljs-keyword">new</span> List&lt;TRecord&gt;();
-            <span class="hljs-keyword">return</span> list;
+                .Take(pagingData.PageSize).ToListAsync() ?? new List&lt;TRecord&gt;();
+            return list;
         }
-        <span class="hljs-keyword">else</span>
+        else
         {
-            <span class="hljs-keyword">var</span> list = <span class="hljs-keyword">await</span> dbset
+            var list = await dbset
                 .Skip(pagingData.StartRecord)
-                .Take(pagingData.PageSize).ToListAsync() ?? <span class="hljs-keyword">new</span> List&lt;TRecord&gt;();
-            <span class="hljs-keyword">return</span> list;
+                .Take(pagingData.PageSize).ToListAsync() ?? new List&lt;TRecord&gt;();
+            return list;
         }
     }
 
-    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">override</span> <span class="hljs-keyword">async</span> <span class="hljs-title">ValueTask</span>&lt;<span class="hljs-title">TRecord</span>&gt; <span class="hljs-title">SelectRecordAsync</span>&lt;<span class="hljs-title">TRecord</span>&gt;(<span class="hljs-params">Guid id</span>)</span>
+    public override async ValueTask&lt;TRecord&gt; SelectRecordAsync&lt;TRecord&gt;(Guid id)
     {
-        <span class="hljs-keyword">var</span> dbset = _dbContext.GetDbSet&lt;TRecord&gt;();
-        <span class="hljs-keyword">return</span> <span class="hljs-keyword">await</span> dbset.FirstOrDefaultAsync(item =&gt; ((IDbRecord&lt;TRecord&gt;)item).ID == id) ?? <span class="hljs-literal">default</span>;
+        var dbset = _dbContext.GetDbSet&lt;TRecord&gt;();
+        return await dbset.FirstOrDefaultAsync(item =&gt; ((IDbRecord&lt;TRecord&gt;)item).ID == id) ?? default;
     }
 
-    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">override</span> <span class="hljs-keyword">async</span> <span class="hljs-title">ValueTask</span>&lt;<span class="hljs-title">int</span>&gt; <span class="hljs-title">SelectRecordListCountAsync</span>&lt;<span class="hljs-title">TRecord</span>&gt;(<span class="hljs-params"></span>)</span>
+    public override async ValueTask&lt;int&gt; SelectRecordListCountAsync&lt;TRecord&gt;()
     {
-        <span class="hljs-keyword">var</span> dbset = _dbContext.GetDbSet&lt;TRecord&gt;();
-        <span class="hljs-keyword">return</span> <span class="hljs-keyword">await</span> dbset.CountAsync();
+        var dbset = _dbContext.GetDbSet&lt;TRecord&gt;();
+        return await dbset.CountAsync();
     }
 
-    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">override</span> <span class="hljs-keyword">async</span> <span class="hljs-title">ValueTask</span>&lt;<span class="hljs-title">DbTaskResult</span>&gt; <span class="hljs-title">UpdateRecordAsync</span>&lt;<span class="hljs-title">TRecord</span>&gt;(<span class="hljs-params">TRecord <span class="hljs-keyword">record</span></span>)</span>
+    public override async ValueTask&lt;DbTaskResult&gt; UpdateRecordAsync&lt;TRecord&gt;(TRecord record)
     {
-        _dbContext.Entry(<span class="hljs-keyword">record</span>).<span class="hljs-title">State</span> = EntityState.Modified;
-        <span class="hljs-keyword">var</span> x = <span class="hljs-keyword">await</span> _dbContext.SaveChangesAsync();
-        <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> DbTaskResult() { IsOK = <span class="hljs-literal">true</span>, Type = MessageType.Success };
+        _dbContext.Entry(record).State = EntityState.Modified;
+        var x = await _dbContext.SaveChangesAsync();
+        return new DbTaskResult() { IsOK = true, Type = MessageType.Success };
     }
 
-    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">override</span> <span class="hljs-keyword">async</span> <span class="hljs-title">ValueTask</span>&lt;<span class="hljs-title">DbTaskResult</span>&gt; <span class="hljs-title">InsertRecordAsync</span>&lt;<span class="hljs-title">TRecord</span>&gt;(<span class="hljs-params">TRecord <span class="hljs-keyword">record</span></span>)</span>
+    public override async ValueTask&lt;DbTaskResult&gt; InsertRecordAsync&lt;TRecord&gt;(TRecord record)
     {
-        <span class="hljs-keyword">var</span> dbset = _dbContext.GetDbSet&lt;TRecord&gt;();
-        dbset.Add(<span class="hljs-keyword">record</span>);
-        <span class="hljs-keyword">var</span> x = <span class="hljs-keyword">await</span> _dbContext.SaveChangesAsync();
-        <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> DbTaskResult() { IsOK = <span class="hljs-literal">true</span>, Type = MessageType.Success };
+        var dbset = _dbContext.GetDbSet&lt;TRecord&gt;();
+        dbset.Add(record);
+        var x = await _dbContext.SaveChangesAsync();
+        return new DbTaskResult() { IsOK = true, Type = MessageType.Success };
     }
 
-    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">override</span> <span class="hljs-keyword">async</span> <span class="hljs-title">ValueTask</span>&lt;<span class="hljs-title">DbTaskResult</span>&gt; <span class="hljs-title">DeleteRecordAsync</span>&lt;<span class="hljs-title">TRecord</span>&gt;(<span class="hljs-params">TRecord <span class="hljs-keyword">record</span></span>)</span>
+    public override async ValueTask&lt;DbTaskResult&gt; DeleteRecordAsync&lt;TRecord&gt;(TRecord record)
     {
-        _dbContext.Entry(<span class="hljs-keyword">record</span>).<span class="hljs-title">State</span> = EntityState.Deleted;
-        <span class="hljs-keyword">var</span> x = <span class="hljs-keyword">await</span> _dbContext.SaveChangesAsync();
-        <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> DbTaskResult() { IsOK = <span class="hljs-literal">true</span>, Type = MessageType.Success };
+        _dbContext.Entry(record).State = EntityState.Deleted;
+        var x = await _dbContext.SaveChangesAsync();
+        return new DbTaskResult() { IsOK = true, Type = MessageType.Success };
     }
 }
-</div></code></pre>
+</code></pre>
 <h4 id="inmemorydatastorebroker">InMemoryDataStoreBroker</h4>
 <p>This provides a datastore for demo sites and testing.</p>
-<pre><code class="language-csharp"><div><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title">InMemoryDataStoreBroker</span>&lt;<span class="hljs-title">TContext</span>&gt; :
-    <span class="hljs-title">BaseDataBroker</span>,
-    <span class="hljs-title">IDataBroker</span>
-    <span class="hljs-keyword">where</span> <span class="hljs-title">TContext</span> : <span class="hljs-title">IInMemoryDataStore</span>
+<pre><code class="language-csharp">public class InMemoryDataStoreBroker&lt;TContext&gt; :
+    BaseDataBroker,
+    IDataBroker
+    where TContext : IInMemoryDataStore
 {
-    <span class="hljs-keyword">protected</span> <span class="hljs-keyword">virtual</span> IInMemoryDataStore DataContext { <span class="hljs-keyword">get</span>; <span class="hljs-keyword">set</span>; } = <span class="hljs-literal">null</span>;
+    protected virtual IInMemoryDataStore DataContext { get; set; } = null;
 
-    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">InMemoryDataStoreBroker</span>(<span class="hljs-params">IInMemoryDataStore dataContext</span>)</span>
-        =&gt; <span class="hljs-keyword">this</span>.DataContext = dataContext;
+    public InMemoryDataStoreBroker(IInMemoryDataStore dataContext)
+        =&gt; this.DataContext = dataContext;
 
-    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">override</span> <span class="hljs-title">ValueTask</span>&lt;<span class="hljs-title">List</span>&lt;<span class="hljs-title">TRecord</span>&gt;&gt; <span class="hljs-title">SelectAllRecordsAsync</span>&lt;<span class="hljs-title">TRecord</span>&gt;(<span class="hljs-params"></span>)</span>
+    public override ValueTask&lt;List&lt;TRecord&gt;&gt; SelectAllRecordsAsync&lt;TRecord&gt;()
         =&gt; ValueTask.FromResult&lt;List&lt;TRecord&gt;&gt;(DataContext
         .GetDataSet&lt;TRecord&gt;()
         .ToList());
 
-    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">override</span> <span class="hljs-title">ValueTask</span>&lt;<span class="hljs-title">List</span>&lt;<span class="hljs-title">TRecord</span>&gt;&gt; <span class="hljs-title">SelectPagedRecordsAsync</span>&lt;<span class="hljs-title">TRecord</span>&gt;(<span class="hljs-params">RecordPagingData paginatorData</span>)</span>
+    public override ValueTask&lt;List&lt;TRecord&gt;&gt; SelectPagedRecordsAsync&lt;TRecord&gt;(RecordPagingData paginatorData)
     {
-        <span class="hljs-keyword">var</span> dbSet = DataContext
+        var dbSet = DataContext
             .GetDataSet&lt;TRecord&gt;()
             .ToList();
-        <span class="hljs-keyword">if</span> (pagingData.Sort)
+        if (pagingData.Sort)
         {
             dbSet = dbSet
                 .AsQueryable()
-                .OrderBy(pagingData.SortDescending ? <span class="hljs-string">$&quot;<span class="hljs-subst">{pagingData.SortColumn}</span> descending&quot;</span> : pagingData.SortColumn)
+                .OrderBy(pagingData.SortDescending ? $&quot;{pagingData.SortColumn} descending&quot; : pagingData.SortColumn)
                 .ToList();
         }
-        <span class="hljs-keyword">return</span> ValueTask.FromResult ( dbSet
+        return ValueTask.FromResult ( dbSet
             .Skip(pagingData.StartRecord)
             .Take(pagingData.PageSize)
             .ToList()
             );
     }
 
-    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">override</span> <span class="hljs-title">ValueTask</span>&lt;<span class="hljs-title">TRecord</span>&gt; <span class="hljs-title">SelectRecordAsync</span>&lt;<span class="hljs-title">TRecord</span>&gt;(<span class="hljs-params">Guid id</span>)</span>
+    public override ValueTask&lt;TRecord&gt; SelectRecordAsync&lt;TRecord&gt;(Guid id)
         =&gt; ValueTask.FromResult&lt;TRecord&gt;(DataContext
             .GetDataSet&lt;TRecord&gt;()
             .FirstOrDefault(item =&gt; ((IDbRecord&lt;TRecord&gt;)item).ID == id));
 
-    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">override</span> <span class="hljs-title">ValueTask</span>&lt;<span class="hljs-title">int</span>&gt; <span class="hljs-title">SelectRecordListCountAsync</span>&lt;<span class="hljs-title">TRecord</span>&gt;(<span class="hljs-params"></span>)</span>
-        =&gt; ValueTask.FromResult&lt;<span class="hljs-built_in">int</span>&gt;(DataContext
+    public override ValueTask&lt;int&gt; SelectRecordListCountAsync&lt;TRecord&gt;()
+        =&gt; ValueTask.FromResult&lt;int&gt;(DataContext
             .GetDataSet&lt;TRecord&gt;()
             .Count());
 
-    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">override</span> <span class="hljs-title">ValueTask</span>&lt;<span class="hljs-title">DbTaskResult</span>&gt; <span class="hljs-title">UpdateRecordAsync</span>&lt;<span class="hljs-title">TRecord</span>&gt;(<span class="hljs-params">TRecord <span class="hljs-keyword">record</span></span>)</span>
+    public override ValueTask&lt;DbTaskResult&gt; UpdateRecordAsync&lt;TRecord&gt;(TRecord record)
     {
-        <span class="hljs-keyword">var</span> result = <span class="hljs-keyword">this</span>.DataContext.GetDataSet&lt;TRecord&gt;().Update(<span class="hljs-keyword">record</span>);
-        <span class="hljs-keyword">var</span> dbResult = <span class="hljs-keyword">new</span> DbTaskResult() { IsOK = result, Message = <span class="hljs-string">&quot;Record Updated&quot;</span> };
-        <span class="hljs-keyword">return</span> ValueTask.FromResult&lt;DbTaskResult&gt;(dbResult);
+        var result = this.DataContext.GetDataSet&lt;TRecord&gt;().Update(record);
+        var dbResult = new DbTaskResult() { IsOK = result, Message = &quot;Record Updated&quot; };
+        return ValueTask.FromResult&lt;DbTaskResult&gt;(dbResult);
     }
 
-    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">override</span> <span class="hljs-title">ValueTask</span>&lt;<span class="hljs-title">DbTaskResult</span>&gt; <span class="hljs-title">InsertRecordAsync</span>&lt;<span class="hljs-title">TRecord</span>&gt;(<span class="hljs-params">TRecord <span class="hljs-keyword">record</span></span>)</span>
+    public override ValueTask&lt;DbTaskResult&gt; InsertRecordAsync&lt;TRecord&gt;(TRecord record)
     {
-        <span class="hljs-keyword">var</span> result = <span class="hljs-keyword">this</span>.DataContext.GetDataSet&lt;TRecord&gt;().Insert(<span class="hljs-keyword">record</span>);
-        <span class="hljs-keyword">var</span> dbResult = <span class="hljs-keyword">new</span> DbTaskResult() { IsOK = result, Message = <span class="hljs-string">&quot;Record Added&quot;</span> };
-        <span class="hljs-keyword">return</span> ValueTask.FromResult&lt;DbTaskResult&gt;(dbResult);
+        var result = this.DataContext.GetDataSet&lt;TRecord&gt;().Insert(record);
+        var dbResult = new DbTaskResult() { IsOK = result, Message = &quot;Record Added&quot; };
+        return ValueTask.FromResult&lt;DbTaskResult&gt;(dbResult);
     }
 
-    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">override</span> <span class="hljs-title">ValueTask</span>&lt;<span class="hljs-title">DbTaskResult</span>&gt; <span class="hljs-title">DeleteRecordAsync</span>&lt;<span class="hljs-title">TRecord</span>&gt;(<span class="hljs-params">TRecord <span class="hljs-keyword">record</span></span>)</span>
+    public override ValueTask&lt;DbTaskResult&gt; DeleteRecordAsync&lt;TRecord&gt;(TRecord record)
     {
-        <span class="hljs-keyword">var</span> result = <span class="hljs-keyword">this</span>.DataContext.GetDataSet&lt;TRecord&gt;().Delete(<span class="hljs-keyword">record</span>);
-        <span class="hljs-keyword">var</span> dbResult = <span class="hljs-keyword">new</span> DbTaskResult() { IsOK = result, Message = <span class="hljs-string">&quot;Record Deleted&quot;</span> };
-        <span class="hljs-keyword">return</span> ValueTask.FromResult&lt;DbTaskResult&gt;(dbResult);
+        var result = this.DataContext.GetDataSet&lt;TRecord&gt;().Delete(record);
+        var dbResult = new DbTaskResult() { IsOK = result, Message = &quot;Record Deleted&quot; };
+        return ValueTask.FromResult&lt;DbTaskResult&gt;(dbResult);
     }
 }
-</div></code></pre>
+</code></pre>
 <h4 id="apidatabroker">APIDataBroker</h4>
 <p>The <code>APIDataBroker</code> looks a little different.  It implements the interface, but uses <code>HttpClient</code> to get/post requests to the API on the server.</p>
 <p>The service map looks like this:</p>
 <p>View Service =&gt; APIDataBroker =&gt; API Controller =&gt; ServerDataBroker =&gt; DBContext</p>
-<pre><code class="language-csharp"><div><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title">APIDataBroker</span> : <span class="hljs-title">BaseDataBroker</span>, <span class="hljs-title">IDataBroker</span>
+<pre><code class="language-csharp">public class APIDataBroker : BaseDataBroker, IDataBroker
 {
-    <span class="hljs-keyword">protected</span> HttpClient HttpClient { <span class="hljs-keyword">get</span>; <span class="hljs-keyword">set</span>; }
+    protected HttpClient HttpClient { get; set; }
 
-    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">APIDataBroker</span>(<span class="hljs-params">IConfiguration configuration, HttpClient httpClient</span>)</span>
-        =&gt; <span class="hljs-keyword">this</span>.HttpClient = httpClient;
+    public APIDataBroker(IConfiguration configuration, HttpClient httpClient)
+        =&gt; this.HttpClient = httpClient;
 
-    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">override</span> <span class="hljs-keyword">async</span> <span class="hljs-title">ValueTask</span>&lt;<span class="hljs-title">List</span>&lt;<span class="hljs-title">TRecord</span>&gt;&gt; <span class="hljs-title">SelectAllRecordsAsync</span>&lt;<span class="hljs-title">TRecord</span>&gt;(<span class="hljs-params"></span>)</span>
-        =&gt; <span class="hljs-keyword">await</span> <span class="hljs-keyword">this</span>.HttpClient.GetFromJsonAsync&lt;List&lt;TRecord&gt;&gt;(<span class="hljs-string">$&quot;/api/<span class="hljs-subst">{GetRecordName&lt;TRecord&gt;()}</span>/list&quot;</span>);
+    public override async ValueTask&lt;List&lt;TRecord&gt;&gt; SelectAllRecordsAsync&lt;TRecord&gt;()
+        =&gt; await this.HttpClient.GetFromJsonAsync&lt;List&lt;TRecord&gt;&gt;($&quot;/api/{GetRecordName&lt;TRecord&gt;()}/list&quot;);
 
-    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">override</span> <span class="hljs-keyword">async</span> <span class="hljs-title">ValueTask</span>&lt;<span class="hljs-title">List</span>&lt;<span class="hljs-title">TRecord</span>&gt;&gt; <span class="hljs-title">SelectPagedRecordsAsync</span>&lt;<span class="hljs-title">TRecord</span>&gt;(<span class="hljs-params">RecordPagingData paginatorData</span>)</span>
+    public override async ValueTask&lt;List&lt;TRecord&gt;&gt; SelectPagedRecordsAsync&lt;TRecord&gt;(RecordPagingData paginatorData)
     {
-        <span class="hljs-keyword">var</span> response = <span class="hljs-keyword">await</span> <span class="hljs-keyword">this</span>.HttpClient.PostAsJsonAsync(<span class="hljs-string">$&quot;/api/<span class="hljs-subst">{GetRecordName&lt;TRecord&gt;()}</span>/listpaged&quot;</span>, paginatorData);
-        <span class="hljs-keyword">return</span> <span class="hljs-keyword">await</span> response.Content.ReadFromJsonAsync&lt;List&lt;TRecord&gt;&gt;();
+        var response = await this.HttpClient.PostAsJsonAsync($&quot;/api/{GetRecordName&lt;TRecord&gt;()}/listpaged&quot;, paginatorData);
+        return await response.Content.ReadFromJsonAsync&lt;List&lt;TRecord&gt;&gt;();
     }
 
-    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">override</span> <span class="hljs-keyword">async</span> <span class="hljs-title">ValueTask</span>&lt;<span class="hljs-title">TRecord</span>&gt; <span class="hljs-title">SelectRecordAsync</span>&lt;<span class="hljs-title">TRecord</span>&gt;(<span class="hljs-params">Guid id</span>)</span>
+    public override async ValueTask&lt;TRecord&gt; SelectRecordAsync&lt;TRecord&gt;(Guid id)
     {
-        <span class="hljs-keyword">var</span> response = <span class="hljs-keyword">await</span> <span class="hljs-keyword">this</span>.HttpClient.PostAsJsonAsync(<span class="hljs-string">$&quot;/api/<span class="hljs-subst">{GetRecordName&lt;TRecord&gt;()}</span>/read&quot;</span>, id);
-        <span class="hljs-keyword">var</span> result = <span class="hljs-keyword">await</span> response.Content.ReadFromJsonAsync&lt;TRecord&gt;();
-        <span class="hljs-keyword">return</span> result;
+        var response = await this.HttpClient.PostAsJsonAsync($&quot;/api/{GetRecordName&lt;TRecord&gt;()}/read&quot;, id);
+        var result = await response.Content.ReadFromJsonAsync&lt;TRecord&gt;();
+        return result;
     }
 
-    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">override</span> <span class="hljs-keyword">async</span> <span class="hljs-title">ValueTask</span>&lt;<span class="hljs-title">int</span>&gt; <span class="hljs-title">SelectRecordListCountAsync</span>&lt;<span class="hljs-title">TRecord</span>&gt;(<span class="hljs-params"></span>)</span>
-        =&gt; <span class="hljs-keyword">await</span> <span class="hljs-keyword">this</span>.HttpClient.GetFromJsonAsync&lt;<span class="hljs-built_in">int</span>&gt;(<span class="hljs-string">$&quot;/api/<span class="hljs-subst">{GetRecordName&lt;TRecord&gt;()}</span>/count&quot;</span>);
+    public override async ValueTask&lt;int&gt; SelectRecordListCountAsync&lt;TRecord&gt;()
+        =&gt; await this.HttpClient.GetFromJsonAsync&lt;int&gt;($&quot;/api/{GetRecordName&lt;TRecord&gt;()}/count&quot;);
 
-    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">override</span> <span class="hljs-keyword">async</span> <span class="hljs-title">ValueTask</span>&lt;<span class="hljs-title">DbTaskResult</span>&gt; <span class="hljs-title">UpdateRecordAsync</span>&lt;<span class="hljs-title">TRecord</span>&gt;(<span class="hljs-params">TRecord <span class="hljs-keyword">record</span></span>)</span>
+    public override async ValueTask&lt;DbTaskResult&gt; UpdateRecordAsync&lt;TRecord&gt;(TRecord record)
     {
-        <span class="hljs-keyword">var</span> response = <span class="hljs-keyword">await</span> <span class="hljs-keyword">this</span>.HttpClient.PostAsJsonAsync&lt;TRecord&gt;(<span class="hljs-string">$&quot;/api/<span class="hljs-subst">{GetRecordName&lt;TRecord&gt;()}</span>/update&quot;</span>, <span class="hljs-keyword">record</span>);
-        <span class="hljs-keyword">var</span> result = <span class="hljs-keyword">await</span> response.Content.ReadFromJsonAsync&lt;DbTaskResult&gt;();
-        <span class="hljs-keyword">return</span> result;
+        var response = await this.HttpClient.PostAsJsonAsync&lt;TRecord&gt;($&quot;/api/{GetRecordName&lt;TRecord&gt;()}/update&quot;, record);
+        var result = await response.Content.ReadFromJsonAsync&lt;DbTaskResult&gt;();
+        return result;
     }
 
-    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">override</span> <span class="hljs-keyword">async</span> <span class="hljs-title">ValueTask</span>&lt;<span class="hljs-title">DbTaskResult</span>&gt; <span class="hljs-title">InsertRecordAsync</span>&lt;<span class="hljs-title">TRecord</span>&gt;(<span class="hljs-params">TRecord <span class="hljs-keyword">record</span></span>)</span>
+    public override async ValueTask&lt;DbTaskResult&gt; InsertRecordAsync&lt;TRecord&gt;(TRecord record)
     {
-        <span class="hljs-keyword">var</span> response = <span class="hljs-keyword">await</span> <span class="hljs-keyword">this</span>.HttpClient.PostAsJsonAsync&lt;TRecord&gt;(<span class="hljs-string">$&quot;/api/<span class="hljs-subst">{GetRecordName&lt;TRecord&gt;()}</span>/create&quot;</span>, <span class="hljs-keyword">record</span>);
-        <span class="hljs-keyword">var</span> result = <span class="hljs-keyword">await</span> response.Content.ReadFromJsonAsync&lt;DbTaskResult&gt;();
-        <span class="hljs-keyword">return</span> result;
+        var response = await this.HttpClient.PostAsJsonAsync&lt;TRecord&gt;($&quot;/api/{GetRecordName&lt;TRecord&gt;()}/create&quot;, record);
+        var result = await response.Content.ReadFromJsonAsync&lt;DbTaskResult&gt;();
+        return result;
     }
 
-    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">override</span> <span class="hljs-keyword">async</span> <span class="hljs-title">ValueTask</span>&lt;<span class="hljs-title">DbTaskResult</span>&gt; <span class="hljs-title">DeleteRecordAsync</span>&lt;<span class="hljs-title">TRecord</span>&gt;(<span class="hljs-params">TRecord <span class="hljs-keyword">record</span></span>)</span>
+    public override async ValueTask&lt;DbTaskResult&gt; DeleteRecordAsync&lt;TRecord&gt;(TRecord record)
     {
-        <span class="hljs-keyword">var</span> response = <span class="hljs-keyword">await</span> <span class="hljs-keyword">this</span>.HttpClient.PostAsJsonAsync&lt;TRecord&gt;(<span class="hljs-string">$&quot;/api/<span class="hljs-subst">{GetRecordName&lt;TRecord&gt;()}</span>/update&quot;</span>, <span class="hljs-keyword">record</span>);
-        <span class="hljs-keyword">var</span> result = <span class="hljs-keyword">await</span> response.Content.ReadFromJsonAsync&lt;DbTaskResult&gt;();
-        <span class="hljs-keyword">return</span> result;
+        var response = await this.HttpClient.PostAsJsonAsync&lt;TRecord&gt;($&quot;/api/{GetRecordName&lt;TRecord&gt;()}/update&quot;, record);
+        var result = await response.Content.ReadFromJsonAsync&lt;DbTaskResult&gt;();
+        return result;
     }
 
-    <span class="hljs-function"><span class="hljs-keyword">protected</span> <span class="hljs-built_in">string</span> <span class="hljs-title">GetRecordName</span>&lt;<span class="hljs-title">TRecord</span>&gt;(<span class="hljs-params"></span>) <span class="hljs-keyword">where</span> TRecord : <span class="hljs-keyword">class</span>, <span class="hljs-keyword">new</span>(<span class="hljs-params"></span>)</span>
-        =&gt; <span class="hljs-keyword">new</span> TRecord().GetType().Name;
+    protected string GetRecordName&lt;TRecord&gt;() where TRecord : class, new()
+        =&gt; new TRecord().GetType().Name;
 
 }
-</div></code></pre>
+</code></pre>
 <h4 id="api-controllers">API Controllers</h4>
 <p>Controllers are implemented in a specific project - <em>Blazr.Database.Controllers</em>, one per DataClass.  They reside in the Data Domain, but can't reside in the project used to to build the WASM executables as they require the <code>Microsoft.AsnNetCore.App</code> framework.</p>
 <p>The WeatherForecast Controller is shown below.  It routes requests through the <code>IDataBroker</code> registered service.</p>
-<pre><code class="language-csharp"><div>[<span class="hljs-meta">ApiController</span>]
-<span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title">WeatherForecastController</span> : <span class="hljs-title">ControllerBase</span>
+<pre><code class="language-csharp">[ApiController]
+public class WeatherForecastController : ControllerBase
 {
-    <span class="hljs-keyword">protected</span> IDataBroker DataService { <span class="hljs-keyword">get</span>; <span class="hljs-keyword">set</span>; }
-    <span class="hljs-keyword">private</span> <span class="hljs-keyword">readonly</span> ILogger&lt;WeatherForecastController&gt; logger;
+    protected IDataBroker DataService { get; set; }
+    private readonly ILogger&lt;WeatherForecastController&gt; logger;
 
-    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">WeatherForecastController</span>(<span class="hljs-params">ILogger&lt;WeatherForecastController&gt; logger, IDataBroker dataService</span>)</span>
+    public WeatherForecastController(ILogger&lt;WeatherForecastController&gt; logger, IDataBroker dataService)
     {
-        <span class="hljs-keyword">this</span>.DataService = dataService;
-        <span class="hljs-keyword">this</span>.logger = logger;
+        this.DataService = dataService;
+        this.logger = logger;
     }
 
-    [<span class="hljs-meta">MVC.Route(<span class="hljs-meta-string">&quot;/api/weatherforecast/list&quot;</span>)</span>]
-    [<span class="hljs-meta">HttpGet</span>]
-    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">async</span> <span class="hljs-title">Task</span>&lt;<span class="hljs-title">List</span>&lt;<span class="hljs-title">WeatherForecast</span>&gt;&gt; <span class="hljs-title">GetList</span>(<span class="hljs-params"></span>)</span> =&gt; <span class="hljs-keyword">await</span> DataService.SelectAllRecordsAsync&lt;WeatherForecast&gt;();
+    [MVC.Route(&quot;/api/weatherforecast/list&quot;)]
+    [HttpGet]
+    public async Task&lt;List&lt;WeatherForecast&gt;&gt; GetList() =&gt; await DataService.SelectAllRecordsAsync&lt;WeatherForecast&gt;();
 
-    [<span class="hljs-meta">MVC.Route(<span class="hljs-meta-string">&quot;/api/weatherforecast/listpaged&quot;</span>)</span>]
-    [<span class="hljs-meta">HttpPost</span>]
-    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">async</span> <span class="hljs-title">Task</span>&lt;<span class="hljs-title">List</span>&lt;<span class="hljs-title">WeatherForecast</span>&gt;&gt; <span class="hljs-title">Read</span>(<span class="hljs-params">[FromBody] RecordPagingData data</span>)</span> =&gt; <span class="hljs-keyword">await</span> DataService.SelectPagedRecordsAsync&lt;WeatherForecast&gt;(data);
+    [MVC.Route(&quot;/api/weatherforecast/listpaged&quot;)]
+    [HttpPost]
+    public async Task&lt;List&lt;WeatherForecast&gt;&gt; Read([FromBody] RecordPagingData data) =&gt; await DataService.SelectPagedRecordsAsync&lt;WeatherForecast&gt;(data);
 
-    [<span class="hljs-meta">MVC.Route(<span class="hljs-meta-string">&quot;/api/weatherforecast/count&quot;</span>)</span>]
-    [<span class="hljs-meta">HttpGet</span>]
-    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">async</span> <span class="hljs-title">Task</span>&lt;<span class="hljs-title">int</span>&gt; <span class="hljs-title">Count</span>(<span class="hljs-params"></span>)</span> =&gt; <span class="hljs-keyword">await</span> DataService.SelectRecordListCountAsync&lt;WeatherForecast&gt;();
+    [MVC.Route(&quot;/api/weatherforecast/count&quot;)]
+    [HttpGet]
+    public async Task&lt;int&gt; Count() =&gt; await DataService.SelectRecordListCountAsync&lt;WeatherForecast&gt;();
 
-    [<span class="hljs-meta">MVC.Route(<span class="hljs-meta-string">&quot;/api/weatherforecast/get&quot;</span>)</span>]
-    [<span class="hljs-meta">HttpGet</span>]
-    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">async</span> <span class="hljs-title">Task</span>&lt;<span class="hljs-title">WeatherForecast</span>&gt; <span class="hljs-title">GetRec</span>(<span class="hljs-params">Guid id</span>)</span> =&gt; <span class="hljs-keyword">await</span> DataService.SelectRecordAsync&lt;WeatherForecast&gt;(id);
+    [MVC.Route(&quot;/api/weatherforecast/get&quot;)]
+    [HttpGet]
+    public async Task&lt;WeatherForecast&gt; GetRec(Guid id) =&gt; await DataService.SelectRecordAsync&lt;WeatherForecast&gt;(id);
 
-    [<span class="hljs-meta">MVC.Route(<span class="hljs-meta-string">&quot;/api/weatherforecast/read&quot;</span>)</span>]
-    [<span class="hljs-meta">HttpPost</span>]
-    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">async</span> <span class="hljs-title">Task</span>&lt;<span class="hljs-title">WeatherForecast</span>&gt; <span class="hljs-title">Read</span>(<span class="hljs-params">[FromBody] Guid id</span>)</span> =&gt; <span class="hljs-keyword">await</span> DataService.SelectRecordAsync&lt;WeatherForecast&gt;(id);
+    [MVC.Route(&quot;/api/weatherforecast/read&quot;)]
+    [HttpPost]
+    public async Task&lt;WeatherForecast&gt; Read([FromBody] Guid id) =&gt; await DataService.SelectRecordAsync&lt;WeatherForecast&gt;(id);
 
-    [<span class="hljs-meta">MVC.Route(<span class="hljs-meta-string">&quot;weatherforecast/update&quot;</span>)</span>]
-    [<span class="hljs-meta">HttpPost</span>]
-    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">async</span> <span class="hljs-title">Task</span>&lt;<span class="hljs-title">DbTaskResult</span>&gt; <span class="hljs-title">Update</span>(<span class="hljs-params">[FromBody]WeatherForecast <span class="hljs-keyword">record</span></span>)</span> =&gt; <span class="hljs-keyword">await</span> DataService.UpdateRecordAsync&lt;WeatherForecast&gt;(<span class="hljs-keyword">record</span>);
+    [MVC.Route(&quot;weatherforecast/update&quot;)]
+    [HttpPost]
+    public async Task&lt;DbTaskResult&gt; Update([FromBody]WeatherForecast record) =&gt; await DataService.UpdateRecordAsync&lt;WeatherForecast&gt;(record);
 
-    [<span class="hljs-meta">MVC.Route(<span class="hljs-meta-string">&quot;weatherforecast/create&quot;</span>)</span>]
-    [<span class="hljs-meta">HttpPost</span>]
-    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">async</span> <span class="hljs-title">Task</span>&lt;<span class="hljs-title">DbTaskResult</span>&gt; <span class="hljs-title">Create</span>(<span class="hljs-params">[FromBody]WeatherForecast <span class="hljs-keyword">record</span></span>)</span> =&gt; <span class="hljs-keyword">await</span> DataService.CreateRecordAsync&lt;WeatherForecast&gt;(<span class="hljs-keyword">record</span>);
+    [MVC.Route(&quot;weatherforecast/create&quot;)]
+    [HttpPost]
+    public async Task&lt;DbTaskResult&gt; Create([FromBody]WeatherForecast record) =&gt; await DataService.CreateRecordAsync&lt;WeatherForecast&gt;(record);
 
-    [<span class="hljs-meta">MVC.Route(<span class="hljs-meta-string">&quot;weatherforecast/delete&quot;</span>)</span>]
-    [<span class="hljs-meta">HttpPost</span>]
-    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">async</span> <span class="hljs-title">Task</span>&lt;<span class="hljs-title">DbTaskResult</span>&gt; <span class="hljs-title">Delete</span>(<span class="hljs-params">[FromBody] WeatherForecast <span class="hljs-keyword">record</span></span>)</span> =&gt; <span class="hljs-keyword">await</span> DataService.DeleteRecordAsync&lt;WeatherForecast&gt;(<span class="hljs-keyword">record</span>);
+    [MVC.Route(&quot;weatherforecast/delete&quot;)]
+    [HttpPost]
+    public async Task&lt;DbTaskResult&gt; Delete([FromBody] WeatherForecast record) =&gt; await DataService.DeleteRecordAsync&lt;WeatherForecast&gt;(record);
     }
-</div></code></pre>
+</code></pre>
 <h2 id="connector-services">Connector Services</h2>
 <p>Connectors are the Core Domain interface to the Data Domain.  They talk to Brokers.  All the code resides in <code>ModelDataServiceConnector</code>.</p>
 <h4 id="idataserviceconnector">IDataServiceConnector</h4>
 <p><code>IDataServiceConnector</code> defines the common interface.</p>
-<pre><code class="language-csharp"><div><span class="hljs-keyword">public</span> <span class="hljs-keyword">interface</span> <span class="hljs-title">IDataServiceConnector</span>
+<pre><code class="language-csharp">public interface IDataServiceConnector
 {
-    <span class="hljs-function"><span class="hljs-title">ValueTask</span>&lt;<span class="hljs-title">DbTaskResult</span>&gt; <span class="hljs-title">AddRecordAsync</span>&lt;<span class="hljs-title">TModel</span>&gt;(<span class="hljs-params">TModel model</span>) <span class="hljs-keyword">where</span> TModel : <span class="hljs-keyword">class</span>, IDbRecord&lt;TModel&gt;, <span class="hljs-keyword">new</span>(<span class="hljs-params"></span>)</span>;
+    ValueTask&lt;DbTaskResult&gt; AddRecordAsync&lt;TModel&gt;(TModel model) where TModel : class, IDbRecord&lt;TModel&gt;, new();
 
-    <span class="hljs-function"><span class="hljs-title">ValueTask</span>&lt;<span class="hljs-title">TModel</span>&gt; <span class="hljs-title">GetRecordByIdAsync</span>&lt;<span class="hljs-title">TModel</span>&gt;(<span class="hljs-params">Guid ModelId</span>) <span class="hljs-keyword">where</span> TModel : <span class="hljs-keyword">class</span>, IDbRecord&lt;TModel&gt;, <span class="hljs-keyword">new</span>(<span class="hljs-params"></span>)</span>;
+    ValueTask&lt;TModel&gt; GetRecordByIdAsync&lt;TModel&gt;(Guid ModelId) where TModel : class, IDbRecord&lt;TModel&gt;, new();
 
-    <span class="hljs-function"><span class="hljs-title">ValueTask</span>&lt;<span class="hljs-title">DbTaskResult</span>&gt; <span class="hljs-title">ModifyRecordAsync</span>&lt;<span class="hljs-title">TModel</span>&gt;(<span class="hljs-params">TModel model</span>) <span class="hljs-keyword">where</span> TModel : <span class="hljs-keyword">class</span>, IDbRecord&lt;TModel&gt;, <span class="hljs-keyword">new</span>(<span class="hljs-params"></span>)</span>;
+    ValueTask&lt;DbTaskResult&gt; ModifyRecordAsync&lt;TModel&gt;(TModel model) where TModel : class, IDbRecord&lt;TModel&gt;, new();
 
-    <span class="hljs-function"><span class="hljs-title">ValueTask</span>&lt;<span class="hljs-title">DbTaskResult</span>&gt; <span class="hljs-title">RemoveRecordAsync</span>&lt;<span class="hljs-title">TModel</span>&gt;(<span class="hljs-params">TModel model</span>) <span class="hljs-keyword">where</span> TModel : <span class="hljs-keyword">class</span>, IDbRecord&lt;TModel&gt;, <span class="hljs-keyword">new</span>(<span class="hljs-params"></span>)</span>;
+    ValueTask&lt;DbTaskResult&gt; RemoveRecordAsync&lt;TModel&gt;(TModel model) where TModel : class, IDbRecord&lt;TModel&gt;, new();
 
-    <span class="hljs-function"><span class="hljs-title">ValueTask</span>&lt;<span class="hljs-title">int</span>&gt; <span class="hljs-title">GetRecordCountAsync</span>&lt;<span class="hljs-title">TModel</span>&gt;(<span class="hljs-params"></span>) <span class="hljs-keyword">where</span> TModel : <span class="hljs-keyword">class</span>, IDbRecord&lt;TModel&gt;, <span class="hljs-keyword">new</span>(<span class="hljs-params"></span>)</span>;
+    ValueTask&lt;int&gt; GetRecordCountAsync&lt;TModel&gt;() where TModel : class, IDbRecord&lt;TModel&gt;, new();
 
-    ValueTask&lt;List&lt;TModel&gt;&gt; GetAllRecordsAsync&lt;TModel&gt;() <span class="hljs-keyword">where</span> TModel : <span class="hljs-keyword">class</span>, <span class="hljs-title">IDbRecord</span>&lt;<span class="hljs-title">TModel</span>&gt;, <span class="hljs-title">new</span>();
+    ValueTask&lt;List&lt;TModel&gt;&gt; GetAllRecordsAsync&lt;TModel&gt;() where TModel : class, IDbRecord&lt;TModel&gt;, new();
 
-    ValueTask&lt;List&lt;TModel&gt;&gt; GetPagedRecordsAsync&lt;TModel&gt;(RecordPagingData paginatorData) <span class="hljs-keyword">where</span> TModel : <span class="hljs-keyword">class</span>, <span class="hljs-title">IDbRecord</span>&lt;<span class="hljs-title">TModel</span>&gt;, <span class="hljs-title">new</span>();
+    ValueTask&lt;List&lt;TModel&gt;&gt; GetPagedRecordsAsync&lt;TModel&gt;(RecordPagingData paginatorData) where TModel : class, IDbRecord&lt;TModel&gt;, new();
 }
-</div></code></pre>
+</code></pre>
 <h4 id="modeldataserviceconnector">ModelDataServiceConnector</h4>
 <p><code>ModelDataServiceConnector</code> implements the interface and connects to the defined <code>IDataBroker</code> defined service.</p>
-<pre><code class="language-csharp"><div><span class="hljs-keyword">public</span> <span class="hljs-keyword">abstract</span> <span class="hljs-keyword">class</span> <span class="hljs-title">ModelDataServiceConnector</span> : <span class="hljs-title">IDataServiceConnector</span>
+<pre><code class="language-csharp">public abstract class ModelDataServiceConnector : IDataServiceConnector
 
 {
-    <span class="hljs-keyword">private</span> <span class="hljs-keyword">readonly</span> IDataBroker dataBroker;
-    <span class="hljs-keyword">private</span> <span class="hljs-keyword">readonly</span> ILoggingBroker loggingBroker;
+    private readonly IDataBroker dataBroker;
+    private readonly ILoggingBroker loggingBroker;
 
-    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">ModelDataServiceConnector</span>(<span class="hljs-params">IDataBroker dataBroker, ILoggingBroker loggingBroker</span>)</span>
+    public ModelDataServiceConnector(IDataBroker dataBroker, ILoggingBroker loggingBroker)
     {
-        <span class="hljs-keyword">this</span>.dataBroker = dataBroker;
-        <span class="hljs-keyword">this</span>.loggingBroker = loggingBroker;
+        this.dataBroker = dataBroker;
+        this.loggingBroker = loggingBroker;
     }
 
-    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">async</span> <span class="hljs-title">ValueTask</span>&lt;<span class="hljs-title">DbTaskResult</span>&gt; <span class="hljs-title">AddRecordAsync</span>&lt;<span class="hljs-title">TModel</span>&gt;(<span class="hljs-params">TModel model</span>) <span class="hljs-keyword">where</span> TModel : <span class="hljs-keyword">class</span>, IDbRecord&lt;TModel&gt;, <span class="hljs-keyword">new</span>(<span class="hljs-params"></span>)</span>
-        =&gt; <span class="hljs-keyword">await</span> <span class="hljs-keyword">this</span>.dataBroker.InsertRecordAsync&lt;TModel&gt;(model);
+    public async ValueTask&lt;DbTaskResult&gt; AddRecordAsync&lt;TModel&gt;(TModel model) where TModel : class, IDbRecord&lt;TModel&gt;, new()
+        =&gt; await this.dataBroker.InsertRecordAsync&lt;TModel&gt;(model);
 
-    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">async</span> <span class="hljs-title">ValueTask</span>&lt;<span class="hljs-title">List</span>&lt;<span class="hljs-title">TModel</span>&gt;&gt; <span class="hljs-title">GetAllRecordsAsync</span>&lt;<span class="hljs-title">TModel</span>&gt;(<span class="hljs-params"></span>) <span class="hljs-keyword">where</span> TModel : <span class="hljs-keyword">class</span>, IDbRecord&lt;TModel&gt;, <span class="hljs-keyword">new</span>(<span class="hljs-params"></span>)</span>
-        =&gt; <span class="hljs-keyword">await</span> <span class="hljs-keyword">this</span>.dataBroker.SelectAllRecordsAsync&lt;TModel&gt;();
+    public async ValueTask&lt;List&lt;TModel&gt;&gt; GetAllRecordsAsync&lt;TModel&gt;() where TModel : class, IDbRecord&lt;TModel&gt;, new()
+        =&gt; await this.dataBroker.SelectAllRecordsAsync&lt;TModel&gt;();
 
-    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">async</span> <span class="hljs-title">ValueTask</span>&lt;<span class="hljs-title">List</span>&lt;<span class="hljs-title">TModel</span>&gt;&gt; <span class="hljs-title">GetPagedRecordsAsync</span>&lt;<span class="hljs-title">TModel</span>&gt;(<span class="hljs-params">RecordPagingData pagingData</span>) <span class="hljs-keyword">where</span> TModel : <span class="hljs-keyword">class</span>, IDbRecord&lt;TModel&gt;, <span class="hljs-keyword">new</span>(<span class="hljs-params"></span>)</span>
-        =&gt; <span class="hljs-keyword">await</span> <span class="hljs-keyword">this</span>.dataBroker.SelectPagedRecordsAsync&lt;TModel&gt;(pagingData);
+    public async ValueTask&lt;List&lt;TModel&gt;&gt; GetPagedRecordsAsync&lt;TModel&gt;(RecordPagingData pagingData) where TModel : class, IDbRecord&lt;TModel&gt;, new()
+        =&gt; await this.dataBroker.SelectPagedRecordsAsync&lt;TModel&gt;(pagingData);
 
-    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">async</span> <span class="hljs-title">ValueTask</span>&lt;<span class="hljs-title">TModel</span>&gt; <span class="hljs-title">GetRecordByIdAsync</span>&lt;<span class="hljs-title">TModel</span>&gt;(<span class="hljs-params">Guid modelId</span>) <span class="hljs-keyword">where</span> TModel : <span class="hljs-keyword">class</span>, IDbRecord&lt;TModel&gt;, <span class="hljs-keyword">new</span>(<span class="hljs-params"></span>)</span>
-        =&gt; <span class="hljs-keyword">await</span> <span class="hljs-keyword">this</span>.dataBroker.SelectRecordAsync&lt;TModel&gt;(modelId);
+    public async ValueTask&lt;TModel&gt; GetRecordByIdAsync&lt;TModel&gt;(Guid modelId) where TModel : class, IDbRecord&lt;TModel&gt;, new()
+        =&gt; await this.dataBroker.SelectRecordAsync&lt;TModel&gt;(modelId);
 
-    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">async</span> <span class="hljs-title">ValueTask</span>&lt;<span class="hljs-title">DbTaskResult</span>&gt; <span class="hljs-title">ModifyRecordAsync</span>&lt;<span class="hljs-title">TModel</span>&gt;(<span class="hljs-params">TModel model</span>) <span class="hljs-keyword">where</span> TModel : <span class="hljs-keyword">class</span>, IDbRecord&lt;TModel&gt;, <span class="hljs-keyword">new</span>(<span class="hljs-params"></span>)</span>
-        =&gt; <span class="hljs-keyword">await</span> <span class="hljs-keyword">this</span>.dataBroker.UpdateRecordAsync&lt;TModel&gt;(model);
+    public async ValueTask&lt;DbTaskResult&gt; ModifyRecordAsync&lt;TModel&gt;(TModel model) where TModel : class, IDbRecord&lt;TModel&gt;, new()
+        =&gt; await this.dataBroker.UpdateRecordAsync&lt;TModel&gt;(model);
 
-    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">async</span> <span class="hljs-title">ValueTask</span>&lt;<span class="hljs-title">DbTaskResult</span>&gt; <span class="hljs-title">RemoveRecordAsync</span>&lt;<span class="hljs-title">TModel</span>&gt;(<span class="hljs-params">TModel model</span>) <span class="hljs-keyword">where</span> TModel : <span class="hljs-keyword">class</span>, IDbRecord&lt;TModel&gt;, <span class="hljs-keyword">new</span>(<span class="hljs-params"></span>)</span>
-        =&gt; <span class="hljs-keyword">await</span> <span class="hljs-keyword">this</span>.dataBroker.DeleteRecordAsync&lt;TModel&gt;(model);
+    public async ValueTask&lt;DbTaskResult&gt; RemoveRecordAsync&lt;TModel&gt;(TModel model) where TModel : class, IDbRecord&lt;TModel&gt;, new()
+        =&gt; await this.dataBroker.DeleteRecordAsync&lt;TModel&gt;(model);
 
-    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">async</span> <span class="hljs-title">ValueTask</span>&lt;<span class="hljs-title">int</span>&gt; <span class="hljs-title">GetRecordCountAsync</span>&lt;<span class="hljs-title">TModel</span>&gt;(<span class="hljs-params"></span>) <span class="hljs-keyword">where</span> TModel : <span class="hljs-keyword">class</span>, IDbRecord&lt;TModel&gt;, <span class="hljs-keyword">new</span>(<span class="hljs-params"></span>)</span>
-        =&gt; <span class="hljs-keyword">await</span> <span class="hljs-keyword">this</span>.dataBroker.SelectRecordListCountAsync&lt;TModel&gt;();
+    public async ValueTask&lt;int&gt; GetRecordCountAsync&lt;TModel&gt;() where TModel : class, IDbRecord&lt;TModel&gt;, new()
+        =&gt; await this.dataBroker.SelectRecordListCountAsync&lt;TModel&gt;();
 }
-</div></code></pre>
+</code></pre>
 <h4 id="weatherdataserviceconnector">WeatherDataServiceConnector</h4>
 <p>The actual project implementation.</p>
-<pre><code class="language-csharp"><div><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title">WeatherDataServiceConnector</span> : <span class="hljs-title">ModelDataServiceConnector</span>
+<pre><code class="language-csharp">public class WeatherDataServiceConnector : ModelDataServiceConnector
 {
-    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">WeatherDataServiceConnector</span>(<span class="hljs-params">IDataBroker dataBroker, ILoggingBroker loggingBroker</span>) : <span class="hljs-title">base</span>(<span class="hljs-params">dataBroker, loggingBroker</span>)</span> { }
+    public WeatherDataServiceConnector(IDataBroker dataBroker, ILoggingBroker loggingBroker) : base(dataBroker, loggingBroker) { }
 }
-</div></code></pre>
+</code></pre>
 <h3 id="view-services">View Services</h3>
 <p>View Services are the classes that represent the application core logic.  The UI view uses view services to interact with data.  The key mindset is no data structures in the UI.  If the UI refers to some data, the data resides in a View Service, and the UI accesses that data through a view.</p>
 <p>In data driven applications View Services come in three basic flavours:</p>
@@ -1331,184 +1010,184 @@ Nullable And VS 2022
 <li>Reset methods to reset the service/record/list.</li>
 <li>CRUDL methods that update/use the current record/list.</li>
 </ol>
-<pre><code class="language-csharp"><div><span class="hljs-keyword">public</span> <span class="hljs-keyword">interface</span> <span class="hljs-title">IModelViewService</span>&lt;<span class="hljs-title">TRecord</span>&gt;
-    <span class="hljs-keyword">where</span> <span class="hljs-title">TRecord</span> : <span class="hljs-keyword">class</span>, <span class="hljs-title">new</span>()
+<pre><code class="language-csharp">public interface IModelViewService&lt;TRecord&gt;
+    where TRecord : class, new()
 {
-    <span class="hljs-keyword">public</span> Guid Id { <span class="hljs-keyword">get</span>; }
-    <span class="hljs-keyword">public</span> TRecord Record { <span class="hljs-keyword">get</span>; }
-    <span class="hljs-keyword">public</span> List&lt;TRecord&gt; Records { <span class="hljs-keyword">get</span>; }
-    <span class="hljs-keyword">public</span> <span class="hljs-built_in">int</span> RecordCount { <span class="hljs-keyword">get</span>; }
-    <span class="hljs-keyword">public</span> DbTaskResult DbResult { <span class="hljs-keyword">get</span>; }
-    <span class="hljs-keyword">public</span> RecordPager RecordPager { <span class="hljs-keyword">get</span>; }
-    <span class="hljs-keyword">public</span> <span class="hljs-built_in">bool</span> IsRecord { <span class="hljs-keyword">get</span>; }
-    <span class="hljs-keyword">public</span> <span class="hljs-built_in">bool</span> HasRecords { <span class="hljs-keyword">get</span>; }
-    <span class="hljs-keyword">public</span> <span class="hljs-built_in">bool</span> IsNewRecord { <span class="hljs-keyword">get</span>; }
+    public Guid Id { get; }
+    public TRecord Record { get; }
+    public List&lt;TRecord&gt; Records { get; }
+    public int RecordCount { get; }
+    public DbTaskResult DbResult { get; }
+    public RecordPager RecordPager { get; }
+    public bool IsRecord { get; }
+    public bool HasRecords { get; }
+    public bool IsNewRecord { get; }
 
-    <span class="hljs-keyword">public</span> <span class="hljs-keyword">event</span> EventHandler RecordHasChanged;
-    <span class="hljs-keyword">public</span> <span class="hljs-keyword">event</span> EventHandler ListHasChanged;
+    public event EventHandler RecordHasChanged;
+    public event EventHandler ListHasChanged;
 
-    <span class="hljs-function"><span class="hljs-keyword">public</span> ValueTask <span class="hljs-title">ResetServiceAsync</span>(<span class="hljs-params"></span>)</span>;
-    <span class="hljs-function"><span class="hljs-keyword">public</span> ValueTask <span class="hljs-title">ResetRecordAsync</span>(<span class="hljs-params"></span>)</span>;
-    <span class="hljs-function"><span class="hljs-keyword">public</span> ValueTask <span class="hljs-title">ResetListAsync</span>(<span class="hljs-params"></span>)</span>;
-    <span class="hljs-function"><span class="hljs-keyword">public</span> ValueTask <span class="hljs-title">GetRecordsAsync</span>(<span class="hljs-params"></span>)</span>;
-    <span class="hljs-function"><span class="hljs-keyword">public</span> ValueTask&lt;<span class="hljs-built_in">bool</span>&gt; <span class="hljs-title">SaveRecordAsync</span>(<span class="hljs-params">TRecord <span class="hljs-keyword">record</span></span>)</span>;
-    <span class="hljs-function"><span class="hljs-keyword">public</span> ValueTask&lt;<span class="hljs-built_in">bool</span>&gt; <span class="hljs-title">GetRecordAsync</span>(<span class="hljs-params">Guid id</span>)</span>;
-    <span class="hljs-function"><span class="hljs-keyword">public</span> ValueTask&lt;<span class="hljs-built_in">bool</span>&gt; <span class="hljs-title">NewRecordAsync</span>(<span class="hljs-params"></span>)</span>;
-    <span class="hljs-function"><span class="hljs-keyword">public</span> ValueTask&lt;<span class="hljs-built_in">bool</span>&gt; <span class="hljs-title">DeleteRecordAsync</span>(<span class="hljs-params"></span>)</span>;
+    public ValueTask ResetServiceAsync();
+    public ValueTask ResetRecordAsync();
+    public ValueTask ResetListAsync();
+    public ValueTask GetRecordsAsync();
+    public ValueTask&lt;bool&gt; SaveRecordAsync(TRecord record);
+    public ValueTask&lt;bool&gt; GetRecordAsync(Guid id);
+    public ValueTask&lt;bool&gt; NewRecordAsync();
+    public ValueTask&lt;bool&gt; DeleteRecordAsync();
 }
-</div></code></pre>
+</code></pre>
 <h4 id="basemodelviewservice">BaseModelViewService</h4>
 <p><code>BaseModelViewService</code> implements <code>IModelViewService</code>.  It contains all the boilerplate code.</p>
-<pre><code class="language-csharp"><div><span class="hljs-keyword">public</span> <span class="hljs-keyword">abstract</span> <span class="hljs-keyword">class</span> <span class="hljs-title">BaseModelViewService</span>&lt;<span class="hljs-title">TRecord</span>&gt; :
-    <span class="hljs-title">IDisposable</span>,
-    <span class="hljs-title">IModelViewService</span>&lt;<span class="hljs-title">TRecord</span>&gt;
-    <span class="hljs-keyword">where</span> <span class="hljs-title">TRecord</span> : <span class="hljs-keyword">class</span>, <span class="hljs-title">IDbRecord</span>&lt;<span class="hljs-title">TRecord</span>&gt;, <span class="hljs-title">new</span>()
+<pre><code class="language-csharp">public abstract class BaseModelViewService&lt;TRecord&gt; :
+    IDisposable,
+    IModelViewService&lt;TRecord&gt;
+    where TRecord : class, IDbRecord&lt;TRecord&gt;, new()
 {
-    <span class="hljs-keyword">public</span> Guid Id { <span class="hljs-keyword">get</span>; } = Guid.NewGuid();
+    public Guid Id { get; } = Guid.NewGuid();
 
-    <span class="hljs-keyword">public</span> TRecord Record
+    public TRecord Record
     {
-        <span class="hljs-keyword">get</span> =&gt; _record;
-        <span class="hljs-keyword">private</span> <span class="hljs-keyword">set</span>
+        get =&gt; _record;
+        private set
         {
-            <span class="hljs-keyword">this</span>._record = <span class="hljs-keyword">value</span>;
-            <span class="hljs-keyword">this</span>.RecordHasChanged?.Invoke(<span class="hljs-keyword">value</span>, EventArgs.Empty);
+            this._record = value;
+            this.RecordHasChanged?.Invoke(value, EventArgs.Empty);
         }
     }
-    <span class="hljs-keyword">private</span> TRecord _record = <span class="hljs-literal">null</span>;
+    private TRecord _record = null;
 
-    <span class="hljs-keyword">public</span> List&lt;TRecord&gt; Records
+    public List&lt;TRecord&gt; Records
     {
-        <span class="hljs-keyword">get</span> =&gt; _records;
-        <span class="hljs-keyword">private</span> <span class="hljs-keyword">set</span>
+        get =&gt; _records;
+        private set
         {
-            <span class="hljs-keyword">this</span>._records = <span class="hljs-keyword">value</span>;
-            <span class="hljs-keyword">this</span>.ListHasChanged?.Invoke(<span class="hljs-keyword">value</span>, EventArgs.Empty);
+            this._records = value;
+            this.ListHasChanged?.Invoke(value, EventArgs.Empty);
         }
     }
-    <span class="hljs-keyword">private</span> List&lt;TRecord&gt; _records = <span class="hljs-literal">null</span>;
+    private List&lt;TRecord&gt; _records = null;
 
-    <span class="hljs-keyword">public</span> DbTaskResult DbResult { <span class="hljs-keyword">get</span>; <span class="hljs-keyword">set</span>; } = <span class="hljs-keyword">new</span> DbTaskResult();
+    public DbTaskResult DbResult { get; set; } = new DbTaskResult();
 
-    <span class="hljs-keyword">public</span> RecordPager RecordPager { <span class="hljs-keyword">get</span>; <span class="hljs-keyword">private</span> <span class="hljs-keyword">set</span>; }
+    public RecordPager RecordPager { get; private set; }
 
-    <span class="hljs-keyword">public</span> <span class="hljs-built_in">bool</span> HasRecord =&gt; <span class="hljs-keyword">this</span>.Record != <span class="hljs-literal">null</span>;
+    public bool HasRecord =&gt; this.Record != null;
 
-    <span class="hljs-keyword">public</span> <span class="hljs-built_in">bool</span> HasRecords =&gt; <span class="hljs-keyword">this</span>.Records != <span class="hljs-literal">null</span> &amp;&amp; <span class="hljs-keyword">this</span>.Records.Count &gt; <span class="hljs-number">0</span>;
+    public bool HasRecords =&gt; this.Records != null &amp;&amp; this.Records.Count &gt; 0;
 
-    <span class="hljs-keyword">public</span> <span class="hljs-built_in">bool</span> IsNewRecord { <span class="hljs-keyword">get</span>; <span class="hljs-keyword">protected</span> <span class="hljs-keyword">set</span>; } = <span class="hljs-literal">true</span>;
+    public bool IsNewRecord { get; protected set; } = true;
 
-    <span class="hljs-keyword">protected</span> IDataServiceConnector DataServiceConnector { <span class="hljs-keyword">get</span>; <span class="hljs-keyword">set</span>; }
+    protected IDataServiceConnector DataServiceConnector { get; set; }
 
-    <span class="hljs-keyword">public</span> <span class="hljs-built_in">int</span> RecordCount =&gt; <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> NotImplementedException();
+    public int RecordCount =&gt; throw new NotImplementedException();
 
-    <span class="hljs-keyword">public</span> <span class="hljs-keyword">event</span> EventHandler RecordHasChanged;
+    public event EventHandler RecordHasChanged;
 
-    <span class="hljs-keyword">public</span> <span class="hljs-keyword">event</span> EventHandler ListHasChanged;
+    public event EventHandler ListHasChanged;
 
-    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">BaseModelViewService</span>(<span class="hljs-params">IDataServiceConnector dataServiceConnector</span>)</span>
+    public BaseModelViewService(IDataServiceConnector dataServiceConnector)
     {
-        <span class="hljs-keyword">this</span>.DataServiceConnector = dataServiceConnector;
-        <span class="hljs-keyword">this</span>.RecordPager = <span class="hljs-keyword">new</span> RecordPager(<span class="hljs-number">10</span>, <span class="hljs-number">5</span>);
-        <span class="hljs-keyword">this</span>.RecordPager.PageChanged += <span class="hljs-keyword">this</span>.OnPageChanged;
+        this.DataServiceConnector = dataServiceConnector;
+        this.RecordPager = new RecordPager(10, 5);
+        this.RecordPager.PageChanged += this.OnPageChanged;
     }
 
-    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">SetRecord</span>(<span class="hljs-params">TRecord <span class="hljs-keyword">record</span></span>)</span>
+    public void SetRecord(TRecord record)
     {
-        <span class="hljs-keyword">this</span>.Record = <span class="hljs-keyword">record</span>;
+        this.Record = record;
     }
 
-    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">async</span> ValueTask <span class="hljs-title">ResetServiceAsync</span>(<span class="hljs-params"></span>)</span>
+    public async ValueTask ResetServiceAsync()
     {
-        <span class="hljs-keyword">await</span> <span class="hljs-keyword">this</span>.ResetListAsync();
-        <span class="hljs-keyword">await</span> <span class="hljs-keyword">this</span>.ResetRecordAsync();
+        await this.ResetListAsync();
+        await this.ResetRecordAsync();
     }
 
-    <span class="hljs-function"><span class="hljs-keyword">public</span> ValueTask <span class="hljs-title">ResetListAsync</span>(<span class="hljs-params"></span>)</span>
+    public ValueTask ResetListAsync()
     {
-        <span class="hljs-keyword">this</span>.Records = <span class="hljs-literal">null</span>;
-        <span class="hljs-keyword">return</span> ValueTask.CompletedTask;
+        this.Records = null;
+        return ValueTask.CompletedTask;
     }
 
-    <span class="hljs-function"><span class="hljs-keyword">public</span> ValueTask <span class="hljs-title">ResetRecordAsync</span>(<span class="hljs-params"></span>)</span>
+    public ValueTask ResetRecordAsync()
     {
-        <span class="hljs-keyword">this</span>.Record = <span class="hljs-literal">null</span>;
-        <span class="hljs-keyword">this</span>.IsNewRecord = <span class="hljs-literal">false</span>;
-        <span class="hljs-keyword">return</span> ValueTask.CompletedTask;
+        this.Record = null;
+        this.IsNewRecord = false;
+        return ValueTask.CompletedTask;
     }
 
-    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">async</span> ValueTask <span class="hljs-title">GetRecordsAsync</span>(<span class="hljs-params"></span>)</span>
+    public async ValueTask GetRecordsAsync()
     {
-        <span class="hljs-keyword">this</span>.Records = <span class="hljs-keyword">await</span> DataServiceConnector.GetPagedRecordsAsync&lt;TRecord&gt;(<span class="hljs-keyword">this</span>.RecordPager.GetData);
-        <span class="hljs-keyword">this</span>.RecordPager.RecordCount = <span class="hljs-keyword">await</span> GetRecordListCountAsync();
-        <span class="hljs-keyword">this</span>.ListHasChanged?.Invoke(<span class="hljs-literal">null</span>, EventArgs.Empty);
+        this.Records = await DataServiceConnector.GetPagedRecordsAsync&lt;TRecord&gt;(this.RecordPager.GetData);
+        this.RecordPager.RecordCount = await GetRecordListCountAsync();
+        this.ListHasChanged?.Invoke(null, EventArgs.Empty);
     }
 
-    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">async</span> ValueTask&lt;<span class="hljs-built_in">bool</span>&gt; <span class="hljs-title">GetRecordAsync</span>(<span class="hljs-params">Guid id</span>)</span>
+    public async ValueTask&lt;bool&gt; GetRecordAsync(Guid id)
     {
-        <span class="hljs-keyword">if</span> (!id.Equals(Guid.Empty))
+        if (!id.Equals(Guid.Empty))
         {
-            <span class="hljs-keyword">this</span>.IsNewRecord = <span class="hljs-literal">false</span>;
-            <span class="hljs-keyword">this</span>.Record = <span class="hljs-keyword">await</span> DataServiceConnector.GetRecordByIdAsync&lt;TRecord&gt;(id);
+            this.IsNewRecord = false;
+            this.Record = await DataServiceConnector.GetRecordByIdAsync&lt;TRecord&gt;(id);
         }
-        <span class="hljs-keyword">else</span>
+        else
         {
-            <span class="hljs-keyword">this</span>.Record = <span class="hljs-keyword">new</span> TRecord();
-            <span class="hljs-keyword">this</span>.IsNewRecord = <span class="hljs-literal">true</span>;
+            this.Record = new TRecord();
+            this.IsNewRecord = true;
         }
-        <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>.IsRecord;
+        return this.IsRecord;
     }
 
-    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">async</span> ValueTask&lt;<span class="hljs-built_in">int</span>&gt; <span class="hljs-title">GetRecordListCountAsync</span>(<span class="hljs-params"></span>)</span>
-        =&gt; <span class="hljs-keyword">await</span> DataServiceConnector.GetRecordCountAsync&lt;TRecord&gt;();
+    public async ValueTask&lt;int&gt; GetRecordListCountAsync()
+        =&gt; await DataServiceConnector.GetRecordCountAsync&lt;TRecord&gt;();
 
-    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">async</span> ValueTask&lt;<span class="hljs-built_in">bool</span>&gt; <span class="hljs-title">SaveRecordAsync</span>(<span class="hljs-params">TRecord <span class="hljs-keyword">record</span></span>)</span>
+    public async ValueTask&lt;bool&gt; SaveRecordAsync(TRecord record)
     {
-        <span class="hljs-keyword">if</span> (<span class="hljs-keyword">this</span>.IsNewRecord)
-            <span class="hljs-keyword">this</span>.DbResult = <span class="hljs-keyword">await</span> DataServiceConnector.AddRecordAsync&lt;TRecord&gt;(<span class="hljs-keyword">record</span>);
-        <span class="hljs-keyword">else</span>
-            <span class="hljs-keyword">this</span>.DbResult = <span class="hljs-keyword">await</span> DataServiceConnector.ModifyRecordAsync(<span class="hljs-keyword">record</span>);
-        <span class="hljs-keyword">await</span> <span class="hljs-keyword">this</span>.GetRecordsAsync();
-        <span class="hljs-keyword">this</span>.IsNewRecord = <span class="hljs-literal">false</span>;
-        <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>.DbResult.IsOK;
+        if (this.IsNewRecord)
+            this.DbResult = await DataServiceConnector.AddRecordAsync&lt;TRecord&gt;(record);
+        else
+            this.DbResult = await DataServiceConnector.ModifyRecordAsync(record);
+        await this.GetRecordsAsync();
+        this.IsNewRecord = false;
+        return this.DbResult.IsOK;
     }
 
-    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">async</span> ValueTask&lt;<span class="hljs-built_in">bool</span>&gt; <span class="hljs-title">DeleteRecordAsync</span>(<span class="hljs-params"></span>)</span>
+    public async ValueTask&lt;bool&gt; DeleteRecordAsync()
     {
-        <span class="hljs-keyword">this</span>.DbResult = <span class="hljs-keyword">await</span> DataServiceConnector.RemoveRecordAsync&lt;TRecord&gt;(<span class="hljs-keyword">this</span>.Record);
-        <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>.DbResult.IsOK;
+        this.DbResult = await DataServiceConnector.RemoveRecordAsync&lt;TRecord&gt;(this.Record);
+        return this.DbResult.IsOK;
     }
 
-    <span class="hljs-function"><span class="hljs-keyword">protected</span> <span class="hljs-keyword">async</span> <span class="hljs-keyword">void</span> <span class="hljs-title">OnPageChanged</span>(<span class="hljs-params"><span class="hljs-built_in">object</span> sender, EventArgs e</span>)</span>
-        =&gt; <span class="hljs-keyword">await</span> <span class="hljs-keyword">this</span>.GetRecordsAsync();
+    protected async void OnPageChanged(object sender, EventArgs e)
+        =&gt; await this.GetRecordsAsync();
 
-    <span class="hljs-function"><span class="hljs-keyword">protected</span> <span class="hljs-keyword">void</span> <span class="hljs-title">NotifyRecordChanged</span>(<span class="hljs-params"><span class="hljs-built_in">object</span> sender, EventArgs e</span>)</span>
-        =&gt; <span class="hljs-keyword">this</span>.RecordHasChanged?.Invoke(sender, e);
+    protected void NotifyRecordChanged(object sender, EventArgs e)
+        =&gt; this.RecordHasChanged?.Invoke(sender, e);
 
-    <span class="hljs-function"><span class="hljs-keyword">protected</span> <span class="hljs-keyword">void</span> <span class="hljs-title">NotifyListChanged</span>(<span class="hljs-params"><span class="hljs-built_in">object</span> sender, EventArgs e</span>)</span>
-        =&gt; <span class="hljs-keyword">this</span>.ListHasChanged?.Invoke(sender, e);
+    protected void NotifyListChanged(object sender, EventArgs e)
+        =&gt; this.ListHasChanged?.Invoke(sender, e);
 
-    <span class="hljs-function"><span class="hljs-keyword">public</span> ValueTask&lt;<span class="hljs-built_in">bool</span>&gt; <span class="hljs-title">NewRecordAsync</span>(<span class="hljs-params"></span>)</span>
+    public ValueTask&lt;bool&gt; NewRecordAsync()
     {
-        <span class="hljs-keyword">this</span>.Record = <span class="hljs-keyword">new</span> TRecord();
-        <span class="hljs-keyword">this</span>.IsNewRecord = <span class="hljs-literal">true</span>;
-        <span class="hljs-keyword">return</span> ValueTask.FromResult(<span class="hljs-literal">false</span>);
+        this.Record = new TRecord();
+        this.IsNewRecord = true;
+        return ValueTask.FromResult(false);
     }
 
-    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">virtual</span> <span class="hljs-keyword">void</span> <span class="hljs-title">Dispose</span>(<span class="hljs-params"></span>)</span>
+    public virtual void Dispose()
     {
     }
 }
-</div></code></pre>
+</code></pre>
 <h4 id="weatherforecastviewservice">WeatherForecastViewService</h4>
 <p>The boilerplating payback comes in the declaration of <code>WeatherForecastViewService</code>:</p>
-<pre><code class="language-csharp"><div><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title">WeatherForecastViewService</span> : 
-    <span class="hljs-title">BaseModelViewService</span>&lt;<span class="hljs-title">WeatherForecast</span>&gt;, 
-    <span class="hljs-title">IModelViewService</span>&lt;<span class="hljs-title">WeatherForecast</span>&gt;
+<pre><code class="language-csharp">public class WeatherForecastViewService : 
+    BaseModelViewService&lt;WeatherForecast&gt;, 
+    IModelViewService&lt;WeatherForecast&gt;
 {
-    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">WeatherForecastViewService</span>(<span class="hljs-params">IDataServiceConnector dataServiceConnector</span>) : <span class="hljs-title">base</span>(<span class="hljs-params">dataServiceConnector</span>)</span> { }
+    public WeatherForecastViewService(IDataServiceConnector dataServiceConnector) : base(dataServiceConnector) { }
 }
-</div></code></pre>
+</code></pre>
 <h2 id="wrap-up">Wrap Up</h2>
 <p>This article shows how the data services can be built using a set of abstract classes implementing boilerplate code for CRUDL operations.  I've purposely kept error checking in the code to a minimum, to make it much more readable.  You can implement as little or as much as you like.</p>
 <p>Some key points to note:</p>
@@ -1528,60 +1207,9 @@ Nullable And VS 2022
 <li>24-June-2021: revisions to data layers.</li>
 <li>06-Aug-2012: revisions to reflect the project and library remodelling to the domain model.</li>
 </ul>
-
-        <script async src="https://cdn.jsdelivr.net/npm/katex-copytex@latest/dist/katex-copytex.min.js"></script>
-        
-    
-
-            </div>
-        </div>
-    </div>
-</div>
-<!-- end of Article Container -->
+</div></div></div></body></html>
 
 
-                </div>
-                <!-- End of Main Content -->
-            </div>
-            <!-- Footer -->
-            
-<!-- Copyright -->
-<footer class="sticky-footer bg-white">
-    <div class="container my-auto">
-        <div class="copyright text-center my-auto">
-            
-<span>Copyright &copy; Cold Elm Coders - 2022</span>
-
-        </div>
-    </div>
-</footer>
-<!-- end of copyright -->
 
 
-            <!-- End of Footer -->
-        </div>
-        <!-- End of Content Wrapper -->
-        
-<a class="scroll-to-top rounded" href="#page-top">
-    <i class="fas fa-angle-up"></i>
-</a>
 
-
-    </div>
-    <!-- End of Page Wrapper -->
-    <!-- Scripts -->
-    
-<!-- Scripts -->
-<!-- Bootstrap core JavaScript-->
-<script src="/assets/vendor/jquery/jquery.min.js"></script>
-<script src="/assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-
-<!-- Core plugin JavaScript-->
-<script src="/assets/vendor/jquery-easing/jquery.easing.min.js"></script>
-
-<!-- Custom scripts for all pages-->
-<script src="/assets/js/sb-admin-2.min.js"></script>
-
-
-</body>
-</html>

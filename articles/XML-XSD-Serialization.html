@@ -1,313 +1,46 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<html lang="en"><head><meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<base href="/">
 
-<!-- SEO Meta Tags -->
-<meta name="description" content="Your description">
-<meta name="author" content="Your name">
+	
 
-<!-- OG Meta Tags to improve the way the post looks when you share the page on Facebook, Twitter, LinkedIn -->
-<meta property="og:site_name" content="" /> <!-- website name -->
-<meta property="og:site" content="" /> <!-- website link -->
-<meta property="og:title" content="" /> <!-- title shown in the actual shared post -->
-<meta property="og:description" content="" /> <!-- description shown in the actual shared post -->
-<meta property="og:image" content="" /> <!-- image link, make sure it's jpg -->
-<meta property="og:url" content="" /> <!-- where do you want your post to link to -->
-<meta name="twitter:card" content="summary_large_image"> <!-- to have large image post format in Twitter -->
+	
 
-<meta charset="utf-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	
+	<link href="/resources/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+	<link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
 
+	
+	<link href="/resources/css/sb-admin-2.css" rel="stylesheet" type="text/css">
+	<link href="/resources/css/site.css" rel="stylesheet" type="text/css">
 
-<meta name="description" content="A quick method to Deserialize Data with a XSD definition" >
-<meta name="author" content="Shaun Curtis" >
+	
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/highlight.css">
+	<link rel="stylesheet" href="/resources/css/article.css" type="text/css">
 
+	
+	<link rel="icon" href="/images/favicon.png">
 
+	<title>DotNetCore XML/XSD Serialization</title>
+        <meta property="author" content="Shaun Curtis" />
+        <meta property="description" content="A quick method to Deserialize Data with a XSD definition" />
+    <meta property="og:site_name" content="Cold Elm Coders" />
+        <meta property="og:site" content="https://shauncurtis.github.io/" />
+        <meta property="og:title" content="DotNetCore XML/XSD Serialization" />
+        <meta property="og:description" content="A quick method to Deserialize Data with a XSD definition" /></head>
+<body><header class="navbar bg-dark p-2 text-large text-light"><section class="navbar-section  text-light"><a href="/" class="navbar-brand mr-2 text-large text-light p-2">Cold Elm Coders</a>
+			<a href="/Posts" class="btn btn-link text-light">Posts</a>
+			<a href="/Rants" class="btn btn-link text-light">Rants</a>
+			<a href="/Articles" class="btn btn-link text-light">Articles</a>
+			<a href="/Stories" class="btn btn-link text-light">Stories</a>
+			<a href="/about.html" class="btn btn-link text-light">About</a></section></header>
 
-<title>DotNetCore XML/XSD Serialization</title>
-
-
-<!-- Custom fonts for this template-->
-<link href="/assets/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
-<link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
-      rel="stylesheet">
-
-<!-- Custom styles for this template-->
-<link href="/assets/css/sb-admin-2.css" rel="stylesheet" type="text/css">
-<link href="/assets/css/site.css" rel="stylesheet" type="text/css">
-
-<!-- Favicon  -->
-<link rel="icon" href="/assets/images/favicon.png">
-
-
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/highlight.css">
-    <link rel="stylesheet" href="/assets/css/article.css" type="text/css">
-</head>
-<body id="page-top">
-    <!--topbar-->
-    <div id="topbar">
-        
-<!-- Topbar -->
-<nav class="navbar navbar-expand navbar-light topbar mb-4 static-top">
-    
-<ul class="navbar-nav" >
-<li class="nav-item" >
-<a class="nav-link " href="/index.html" role="button"  >
-<span class="mr-2 d-none d-lg-inline text-gray-100">Index</span>
-</a>
-</li>
-<li class="nav-item dropdown no-arrow mx-1" >
-<a class="nav-link dropdown-toggle" href="#" id="4515398f-56ce-48d7-8710-0bc4f100b3f5" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"  >
-<span class="mr-2 d-none d-lg-inline text-gray-100">Articles</span>
-</a>
-<div class=" dropdown-list dropdown-menu shadow animated--grow-in" aria-labelledby="4515398f-56ce-48d7-8710-0bc4f100b3f5" >
-<a class="dropdown-item" href="/articles/A-Flexible-App.html" >
-<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
-Creating a Dynamic Blazor App Component
-</a>
-<a class="dropdown-item" href="/articles/Async-Programming-in-DotNetCore.html" >
-<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
-Async Programming In Dotnetcore
-</a>
-<a class="dropdown-item" href="/articles/Blazor-AllinOne.html" >
-<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
-Blazor All In One - Multi SPA Hosting
-</a>
-<a class="dropdown-item" href="/articles/Blazor-Async-Programming.html" >
-<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
-Blazor Async Programming
-</a>
-<a class="dropdown-item" href="/articles/Blazor-Brick-By-Brick.html" >
-<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
-Blazor Brick By Brick
-</a>
-<a class="dropdown-item" href="/articles/Blazor-Components.html" >
-<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
-Blazor Components
-</a>
-<a class="dropdown-item" href="/articles/Blazor-CSS.html" >
-<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
-Blazor CSS
-</a>
-<a class="dropdown-item" href="/articles/Blazor-DataList-Control.html" >
-<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
-Blazor Datalist Control
-</a>
-<a class="dropdown-item" href="/articles/Blazor-Form-Validation.html" >
-<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
-Blazor Form Validation
-</a>
-<a class="dropdown-item" href="/articles/Building-Blazor-List-Components.html" >
-<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
-Building Blazor List Components and the Notification Pattern
-</a>
-<a class="dropdown-item" href="/articles/Building-Edit-Forms.html" >
-<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
-Building Edit Forms
-</a>
-<a class="dropdown-item" href="/articles/EditFormState.html" >
-<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
-The Blazor EditFormState Control
-</a>
-<a class="dropdown-item" href="/articles/Hydra.html" >
-<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
-Blazor Hydra
-</a>
-<a class="dropdown-item" href="/articles/Inline-Dialog.html" >
-<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
-The Blazor Inline Dialog Control
-</a>
-<a class="dropdown-item" href="/articles/Modal-Dialog.html" >
-<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
-A Blazor Modal Dialog
-</a>
-<a class="dropdown-item" href="/articles/Policy-Based-Authorization.html" >
-<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
-Policy Base Authorization in Blazor
-</a>
-<a class="dropdown-item" href="/articles/ValidationFormState.html" >
-<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
-A Blazor Validation Control
-</a>
-<a class="dropdown-item" href="/articles/XML-XSD-Serialization.html" >
-<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
-XML XSD Serialization
-</a>
-</div>
-</li>
-<li class="nav-item dropdown no-arrow mx-1" >
-<a class="nav-link dropdown-toggle" href="#" id="58b17f74-0106-420b-a3a2-4a9672118915" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"  >
-<span class="mr-2 d-none d-lg-inline text-gray-100">Blazor Database Apps</span>
-</a>
-<div class=" dropdown-list dropdown-menu shadow animated--grow-in" aria-labelledby="58b17f74-0106-420b-a3a2-4a9672118915" >
-<a class="dropdown-item" href="/Building-a-Database-Application-in-Blazor/Building-a-Database-Application-in-Blazor-Part-1.html" >
-<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
-Building A Database Application In Blazor Part 1
-</a>
-<a class="dropdown-item" href="/Building-a-Database-Application-in-Blazor/Building-a-Database-Application-in-Blazor-Part-2.html" >
-<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
-Building A Database Application In Blazor Part 2
-</a>
-<a class="dropdown-item" href="/Building-a-Database-Application-in-Blazor/Building-a-Database-Application-in-Blazor-Part-3.html" >
-<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
-Building A Database Application In Blazor Part 3
-</a>
-<a class="dropdown-item" href="/Building-a-Database-Application-in-Blazor/Building-a-Database-Application-in-Blazor-Part-4.html" >
-<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
-Building A Database Application In Blazor Part 4
-</a>
-<a class="dropdown-item" href="/Building-a-Database-Application-in-Blazor/Building-a-Database-Application-in-Blazor-Part-5.html" >
-<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
-Building A Database Application In Blazor Part 5
-</a>
-<a class="dropdown-item" href="/Building-a-Database-Application-in-Blazor/Building-a-Database-Application-in-Blazor-Part-6.html" >
-<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
-Building A Database Application In Blazor Part 6
-</a>
-<a class="dropdown-item" href="/Building-a-Database-Application-in-Blazor/index.html" >
-<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
-Building a Database Application in Blazor
-</a>
-</div>
-</li>
-<li class="nav-item dropdown no-arrow mx-1" >
-<a class="nav-link dropdown-toggle" href="#" id="f94fe1c5-30a4-4006-8867-051aa1bd1917" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"  >
-<span class="mr-2 d-none d-lg-inline text-gray-100">Building Blazor Applications</span>
-</a>
-<div class=" dropdown-list dropdown-menu shadow animated--grow-in" aria-labelledby="f94fe1c5-30a4-4006-8867-051aa1bd1917" >
-<a class="dropdown-item" href="/Building-Blazor-Applications/Blazor-Async-UI-Events.html" >
-<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
-Blazor Async UI Events
-</a>
-<a class="dropdown-item" href="/Building-Blazor-Applications/Blazor-Bootstrap-Toaster.html" >
-<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
-Blazor Bootstrap Toaster
-</a>
-<a class="dropdown-item" href="/Building-Blazor-Applications/Blazor-Services.html" >
-<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
-Blazor Services
-</a>
-<a class="dropdown-item" href="/Building-Blazor-Applications/Building-A-Blazor-AutoComplete-Control.html" >
-<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
-Building A Blazor Autocomplete Control
-</a>
-<a class="dropdown-item" href="/Building-Blazor-Applications/Building-Wrapper-Components.html" >
-<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
-Building Wrapper Components
-</a>
-<a class="dropdown-item" href="/Building-Blazor-Applications/DBContexts-In-Transient-Services.html" >
-<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
-Dbcontexts In Transient Services
-</a>
-<a class="dropdown-item" href="/Building-Blazor-Applications/DynamicCss.html" >
-<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
-Blazor Dynamic Stylesheets
-</a>
-<a class="dropdown-item" href="/Building-Blazor-Applications/For-ForEach-in-Blazor.html" >
-<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
-For Foreach In Blazor
-</a>
-<a class="dropdown-item" href="/Building-Blazor-Applications/Leaner-Meaner-Greener-Components.html" >
-<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
-Leaner Meaner Greener Components
-</a>
-<a class="dropdown-item" href="/Building-Blazor-Applications/Notification-Service-Pattern.html" >
-<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
-Blazor Notification Service Pattern
-</a>
-<a class="dropdown-item" href="/Building-Blazor-Applications/Rethinking-The-Repository-Pattern.html" >
-<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
-Rethinking The Repository Pattern
-</a>
-<a class="dropdown-item" href="/Building-Blazor-Applications/The-Blazor-Component-Scope-Conumdrum.html" >
-<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
-The Blazor Component Scope Conumdrum
-</a>
-<a class="dropdown-item" href="/Building-Blazor-Applications/The-Blazor-WASM-Hosted-Project.html" >
-<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
-The Blazor WASM Hosted Project
-</a>
-<a class="dropdown-item" href="/Building-Blazor-Applications/Whats-Wrong-with-my-Component-Design.html" >
-<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
-Whats Wrong With My Component Design
-</a>
-<a class="dropdown-item" href="/Building-Blazor-Applications/The-Blazor-Component" >
-<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
-Building Blazor Applications\The Blazor Component
-</a>
-</div>
-</li>
-<li class="nav-item dropdown no-arrow mx-1" >
-<a class="nav-link dropdown-toggle" href="#" id="af12eb16-1b22-44b2-a8c6-5882e882b981" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"  >
-<span class="mr-2 d-none d-lg-inline text-gray-100">Design</span>
-</a>
-<div class=" dropdown-list dropdown-menu shadow animated--grow-in" aria-labelledby="af12eb16-1b22-44b2-a8c6-5882e882b981" >
-<a class="dropdown-item" href="/Design/Clean-Design-In-Blazor.html" >
-<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
-Clean Design Principles in Blazor Applications
-</a>
-<a class="dropdown-item" href="/Design/Clean-Design-Blazor-Template.html" >
-<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
-A Blazor Clean Design Template
-</a>
-<a class="dropdown-item" href="/Design/Clean-Design-Blazor-Template-Solution-Structure.html" >
-<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
-Solution Structure in the Clean Design Blazor Template
-</a>
-<a class="dropdown-item" href="/Design/Clean-Design-Blazor-Template-DataServices.html" >
-<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
-Data Services in the Clean Design Blazor Template
-</a>
-<a class="dropdown-item" href="/Design/Clean-Design-Blazor-Template-UI.html" >
-<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
-The UI in the Clean Design Blazor Template
-</a>
-<a class="dropdown-item" href="/Design/Clean-Design-Blazor-Template-Solution-Setup.html" >
-<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
-Solution Setup in the Clean Design Blazor Template
-</a>
-<a class="dropdown-item" href="/Design/Clean-Design-Blazor-Template-Testing.html" >
-<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
-Testing in the Clean Design Blazor Template
-</a>
-</div>
-</li>
-<li class="nav-item dropdown no-arrow mx-1" >
-<a class="nav-link dropdown-toggle" href="#" id="05e2dc59-8c55-42ae-8f36-8118794e7272" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"  >
-<span class="mr-2 d-none d-lg-inline text-gray-100">Modern C#</span>
-</a>
-<div class=" dropdown-list dropdown-menu shadow animated--grow-in" aria-labelledby="05e2dc59-8c55-42ae-8f36-8118794e7272" >
-<a class="dropdown-item" href="/Modern-Coding-Patterns/Nullable-And-VS-2022.html" >
-<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
-Nullable And VS 2022
-</a>
-</div>
-</li>
-</ul>
-
-    <div class="ms-5 me-5 ml-auto">
-        <h1>Cold Elm Coders</h1>
-    </div>
-</nav>
-
-
-    </div>
-    <!--End topbar-->
-    <!--Sidebar-->
-    <div id="sidebar">
-        
-<div class="article-info p-2" Published: 26-02-2021 >
-<div>Published: 26-02-2021</div>
-<div>Last Updated: 26-02-2021</div>
-<div>Author: Shaun Curtis</div>
-</div>
-
-        
-<h4 class="p-2">Table of Contents</h4>
+	<div class="container-fluid"><div class="row"><div class="col-12 col-sm-3 col-lg-2 bg-light pt-2"><div class="article-info p-2"><div class="mb-2">Published: 26-Feb-2021</div>
+                <div class="mb-2">Updated: 26-Feb-2021</div>
+                <div class="mb-2">Author: Shaun Curtis</div></div>
+    <h4 class="p-2">Table of Contents</h4>
 <ul class="TOC" >
 <li class="TOC-item TOC-item-0" >
 <a class="TOC-link" href="#">Top</a>
@@ -319,55 +52,17 @@ Nullable And VS 2022
 </li>
 <li class="TOC-item TOC-item-2" >
 <a class="TOC-link" href="#import-code">Import Code</a>
-<ul class="TOC TOC-2" >
-<li class="TOC-item TOC-item-3" >
-<a class="TOC-link" href="#testing-output">Testing Output</a>
 </li>
 </ul>
 </li>
 </ul>
 </li>
 </ul>
-</li>
-</ul>
-
-    </div>
-    <!--End Sidebar-->
-    <!-- Page Wrapper -->
-    <div id="wrapper">
-        <!-- Content Wrapper -->
-        <div id="content-wrapper" class="d-flex flex-column">
-            <!-- Main Content -->
-            <div id="content">
-                <!-- Topbar -->
-                <div id="article">
-                    <!-- Article -->
-                    
-<!-- Header -->
-<header class="ex-header-article">
-    <div class="container">
-        <div class="row pt-3 pb-3 border-bottom">
-            <div class="col">
-                
-<h1>DotNetCore XML/XSD Serialization</h1>
-<div>A quick method to Deserialize Data with a XSD definition</div>
-
-            </div> <!-- end of col -->
-        </div> <!-- end of row -->
-    </div> <!-- end of container -->
-</header> <!-- end of ex-header -->
-<!-- end of header -->
-
-
-                    
-<!-- Article Container -->
-<div class="ex-basic-1 pt-4">
-    <div class="container">
-        <div class="row">
-            <div class="col-12">
-                
-
-        <p>There are plenty of articles on the web showing you how to serialize/Deserialize XML - some good, but most just re-gurgitation of the same content.  I'm not going to do that here.  Almost nobody covers how to do it quickly in scenarios where you have a XSD XML definition file.</p>
+</div>
+			
+			<div class="col-12 col-sm-9 col-lg-10 p-2"><div class="pt-2 pb-2 border-bottom mb-4 text-primary"><h1>DotNetCore XML/XSD Serialization</h1>
+            <div><small>A quick method to Deserialize Data with a XSD definition</small></div></div>
+    <p>There are plenty of articles on the web showing you how to serialize/Deserialize XML - some good, but most just re-gurgitation of the same content.  I'm not going to do that here.  Almost nobody covers how to do it quickly in scenarios where you have a XSD XML definition file.</p>
 <p><a href="https://github.com/ShaunCurtis/GPXReader">There's a Github Repository here</a> to accompany this article.</p>
 <p>To demonstrate the process we're going to import GPX files.  These are XML formatted files with a <em>gpx</em> extension.  <a href="https://www.topografix.com/GPX/1/1/">The detailed XSD definition is here</a>.</p>
 <p>One look at the definition will tell you how complex and detailed the GPX standard is, and how much effort would be required to code and test the classes manually.  Luckily Microsoft provide a little known tool to automate the process, buried away in the Windows SDK - <em>XSD.exe</em>.</p>
@@ -379,22 +74,22 @@ Nullable And VS 2022
 <li>Open a console/powershell window, and change to the <em>XSD.exe</em> directory.</li>
 <li>Run <em>XSD.exe</em> against the xsd file.  Note I've set the output to the input directory.</li>
 </ol>
-<pre><code class="language-powershell"><div>.\xsd.exe <span class="hljs-string">&quot;D:\Documents\GitHub\GPXReader\Gpx\gpx.xsd&quot;</span> /c /outputdir:<span class="hljs-string">&quot;D:\Documents\GitHub\GpxReader\Gpx&quot;</span>
-</div></code></pre>
+<pre><code class="language-powershell">.\xsd.exe &quot;D:\Documents\GitHub\GPXReader\Gpx\gpx.xsd&quot; /c /outputdir:&quot;D:\Documents\GitHub\GpxReader\Gpx&quot;
+</code></pre>
 <p>The result should be (I've added the separation ============= to make it clearer):</p>
-<pre><code class="language-powershell"><div><span class="hljs-built_in">PS</span> C:\Program Files (x86)\Microsoft SDKs\Windows\v10.<span class="hljs-number">0</span>A\bin\NETFX <span class="hljs-number">4.8</span> Tools&gt; .\xsd.exe <span class="hljs-string">&quot;D:\Documents\GitHub\GPXReader\Gpx\gpx.xsd&quot;</span> /c /outputdir:<span class="hljs-string">&quot;D:\Documents\GitHub\GPXReader\Gpx&quot;</span>
+<pre><code class="language-powershell">PS C:\Program Files (x86)\Microsoft SDKs\Windows\v10.0A\bin\NETFX 4.8 Tools&gt; .\xsd.exe &quot;D:\Documents\GitHub\GPXReader\Gpx\gpx.xsd&quot; /c /outputdir:&quot;D:\Documents\GitHub\GPXReader\Gpx&quot;
 
 ==========================================================
-Microsoft (<span class="hljs-built_in">R</span>) Xml Schemas/DataTypes support utility
-<span class="hljs-function">[<span class="hljs-type">Microsoft</span> (<span class="hljs-type">R</span>) <span class="hljs-type">.NET</span> <span class="hljs-type">Framework</span>, <span class="hljs-type">Version</span> <span class="hljs-number">4.8</span><span class="hljs-type">.3928.0</span>]</span>
+Microsoft (R) Xml Schemas/DataTypes support utility
+[Microsoft (R) .NET Framework, Version 4.8.3928.0]
 Copyright (C) Microsoft Corporation. All rights reserved.
-Writing file <span class="hljs-string">&#x27;D:\Documents\GitHub\GPXReader\Gpx\gpx.cs&#x27;</span>.
+Writing file 'D:\Documents\GitHub\GPXReader\Gpx\gpx.cs'.
 
 ===========================================================
-<span class="hljs-built_in">PS</span> C:\Program Files (x86)\Microsoft SDKs\Windows\v10.<span class="hljs-number">0</span>A\bin\NETFX <span class="hljs-number">4.8</span> Tools&gt;
-</div></code></pre>
+PS C:\Program Files (x86)\Microsoft SDKs\Windows\v10.0A\bin\NETFX 4.8 Tools&gt;
+</code></pre>
 <p>In the project you should now see:</p>
-<p><img src="https://github.com/ShaunCurtis/GPXReader/blob/master/images/GPX-class.png?raw=true" alt="gpxclass"></p>
+<p><img src="https://github.com/ShaunCurtis/GPXReader/blob/master/images/GPX-class.png?raw=true" alt="gpxclass" /></p>
 <p>Don't be tempted into a renaming exercice (I don't like those class names either!).  Think about your code maintainence process if the definition gets updated.</p>
 <h2 id="import-code">Import Code</h2>
 <p>We now need a simple Importer Class to show we're importing data correctly.  The methods are all <code>static</code> and use streams because <code>XmlSerializer</code> uses streams not strings.</p>
@@ -413,159 +108,110 @@ Writing file <span class="hljs-string">&#x27;D:\Documents\GitHub\GPXReader\Gpx\g
 <li>Flushes the <code>StreamWriter</code> to write data to the file.</li>
 <li>Object disposal is handled by <code>using</code>.</li>
 </ol>
-<pre><code class="language-csharp"><div><span class="hljs-keyword">using</span> System;
-<span class="hljs-keyword">using</span> System.IO;
-<span class="hljs-keyword">using</span> System.Xml.Serialization;
+<pre><code class="language-csharp">using System;
+using System.IO;
+using System.Xml.Serialization;
 
-<span class="hljs-keyword">namespace</span> <span class="hljs-title">GPXReader</span>
+namespace GPXReader
 {
-    <span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title">GPXReader</span>
+    public class GPXReader
     {
-        <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> gpxType <span class="hljs-title">ReadFile</span>(<span class="hljs-params">Uri url</span>)</span>
+        public static gpxType ReadFile(Uri url)
         {
-            gpxType gpxdata = <span class="hljs-literal">null</span>;
-            <span class="hljs-keyword">try</span>
+            gpxType gpxdata = null;
+            try
             {
-                <span class="hljs-keyword">using</span> (StreamReader reader = <span class="hljs-keyword">new</span> StreamReader(url.AbsolutePath))
+                using (StreamReader reader = new StreamReader(url.AbsolutePath))
                 {
-                    XmlSerializer serializer = <span class="hljs-keyword">new</span> XmlSerializer(<span class="hljs-keyword">typeof</span>(gpxType), <span class="hljs-string">&quot;http://www.topografix.com/GPX/1/1&quot;</span>);
-                    gpxdata = serializer.Deserialize(reader) <span class="hljs-keyword">as</span> gpxType;
+                    XmlSerializer serializer = new XmlSerializer(typeof(gpxType), &quot;http://www.topografix.com/GPX/1/1&quot;);
+                    gpxdata = serializer.Deserialize(reader) as gpxType;
                 }
             }
-            <span class="hljs-keyword">catch</span> (Exception e)
+            catch (Exception e)
             {
-                Console.WriteLine(<span class="hljs-string">$&quot;An Error has occurred accessing file <span class="hljs-subst">{url.AbsolutePath}</span>.<span class="hljs-subst">{Environment.NewLine}</span> Details:<span class="hljs-subst">{Environment.NewLine}</span> <span class="hljs-subst">{e.StackTrace}</span>.&quot;</span>);
+                Console.WriteLine($&quot;An Error has occurred accessing file {url.AbsolutePath}.{Environment.NewLine} Details:{Environment.NewLine} {e.StackTrace}.&quot;);
             }
-            <span class="hljs-keyword">return</span> gpxdata;
+            return gpxdata;
         }
         
-        <span class="hljs-comment">//  Bool return version</span>
-        <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">bool</span> <span class="hljs-title">ReadFile</span>(<span class="hljs-params">Uri url, <span class="hljs-keyword">out</span> gpxType gpxdata</span>)</span>
+        //  Bool return version
+        public static bool ReadFile(Uri url, out gpxType gpxdata)
         {
-            gpxdata = <span class="hljs-literal">null</span>;
-            <span class="hljs-keyword">try</span>
+            gpxdata = null;
+            try
             {
-                <span class="hljs-keyword">using</span> (StreamReader reader = <span class="hljs-keyword">new</span> StreamReader(url.AbsolutePath))
+                using (StreamReader reader = new StreamReader(url.AbsolutePath))
                 {
-                    XmlSerializer serializer = <span class="hljs-keyword">new</span> XmlSerializer(<span class="hljs-keyword">typeof</span>(gpxType), <span class="hljs-string">&quot;http://www.topografix.com/GPX/1/1&quot;</span>);
-                    gpxdata = serializer.Deserialize(reader) <span class="hljs-keyword">as</span> gpxType;
-                    <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;
+                    XmlSerializer serializer = new XmlSerializer(typeof(gpxType), &quot;http://www.topografix.com/GPX/1/1&quot;);
+                    gpxdata = serializer.Deserialize(reader) as gpxType;
+                    return true;
                 }
             }
-            <span class="hljs-keyword">catch</span> (Exception e)
+            catch (Exception e)
             {
-                Console.WriteLine(<span class="hljs-string">$&quot;An Error has occurred accessing file <span class="hljs-subst">{url.AbsolutePath}</span>.<span class="hljs-subst">{Environment.NewLine}</span> Details:<span class="hljs-subst">{Environment.NewLine}</span> <span class="hljs-subst">{e.StackTrace}</span>.&quot;</span>);
+                Console.WriteLine($&quot;An Error has occurred accessing file {url.AbsolutePath}.{Environment.NewLine} Details:{Environment.NewLine} {e.StackTrace}.&quot;);
             }
-            <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;
+            return false;
         }
 
-        <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">bool</span> <span class="hljs-title">WriteFile</span>(<span class="hljs-params">gpxType data, Uri url</span>)</span>
+        public static bool WriteFile(gpxType data, Uri url)
         {
-            <span class="hljs-keyword">try</span>
+            try
             {
-                <span class="hljs-keyword">using</span> (StreamWriter writer = <span class="hljs-keyword">new</span> StreamWriter(url.AbsolutePath, <span class="hljs-literal">false</span>))
+                using (StreamWriter writer = new StreamWriter(url.AbsolutePath, false))
                 {
-                    XmlSerializer serializer = <span class="hljs-keyword">new</span> XmlSerializer(<span class="hljs-keyword">typeof</span>(gpxType), <span class="hljs-string">&quot;http://www.topografix.com/GPX/1/1&quot;</span>);
+                    XmlSerializer serializer = new XmlSerializer(typeof(gpxType), &quot;http://www.topografix.com/GPX/1/1&quot;);
                     serializer.Serialize(writer, data);
                     writer.Flush();
-                    <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;
+                    return true;
                 }
             }
-            <span class="hljs-keyword">catch</span> (Exception e)
+            catch (Exception e)
             {
-                Console.WriteLine(<span class="hljs-string">$&quot;An Error has occurred accessing file <span class="hljs-subst">{url.AbsolutePath}</span>.<span class="hljs-subst">{Environment.NewLine}</span> Details:<span class="hljs-subst">{Environment.NewLine}</span> <span class="hljs-subst">{e.StackTrace}</span>.&quot;</span>);
+                Console.WriteLine($&quot;An Error has occurred accessing file {url.AbsolutePath}.{Environment.NewLine} Details:{Environment.NewLine} {e.StackTrace}.&quot;);
             }
-            <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;
+            return false;
         }
 
     }
 }
-</div></code></pre>
+</code></pre>
 <p>I've added a fairly complex gpx file (imported from Google Maps) to the project.</p>
 <p>Finally we build a simple <code>Program</code> like this:</p>
-<pre><code class="language-csharp"><div><span class="hljs-keyword">using</span> System;
+<pre><code class="language-csharp">using System;
 
-<span class="hljs-keyword">namespace</span> <span class="hljs-title">GPXReader</span>
+namespace GPXReader
 {
-    <span class="hljs-keyword">class</span> <span class="hljs-title">Program</span>
+    class Program
     {
-        <span class="hljs-function"><span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">Main</span>(<span class="hljs-params"><span class="hljs-keyword">string</span>[] args</span>)</span>
+        static void Main(string[] args)
         {
-            Console.WriteLine(<span class="hljs-string">&quot;GPX Reader&quot;</span>);
+            Console.WriteLine(&quot;GPX Reader&quot;);
 
-            <span class="hljs-keyword">var</span> data = GPXReader.ReadFile(<span class="hljs-keyword">new</span> Uri(<span class="hljs-string">$&quot;D:/Documents/GitHub/GPXReader/gpx/Test.gpx&quot;</span>));
+            var data = GPXReader.ReadFile(new Uri($&quot;D:/Documents/GitHub/GPXReader/gpx/Test.gpx&quot;));
 
-            Console.WriteLine(<span class="hljs-string">$&quot;Read file&quot;</span>);
+            Console.WriteLine($&quot;Read file&quot;);
 
-            <span class="hljs-comment">// Set Break point here to view the imported file</span>
+            // Set Break point here to view the imported file
 
-            Console.WriteLine(<span class="hljs-string">$&quot;Writing output file&quot;</span>);
+            Console.WriteLine($&quot;Writing output file&quot;);
 
-            GPXReader.WriteFile(data, <span class="hljs-keyword">new</span> Uri(<span class="hljs-string">$&quot;D:/Documents/GitHub/GPXReader/gpx/output.gpx&quot;</span>));
+            GPXReader.WriteFile(data, new Uri($&quot;D:/Documents/GitHub/GPXReader/gpx/output.gpx&quot;));
 
-            Console.WriteLine(<span class="hljs-string">&quot;Complete&quot;</span>);
+            Console.WriteLine(&quot;Complete&quot;);
         }
     }
 }
-</div></code></pre>
+</code></pre>
 <p>The project looks like this:</p>
-<p><img src="https://github.com/ShaunCurtis/GPXReader/blob/master/images/project-view.png?raw=true" alt="data view"></p>
+<p><img src="https://github.com/ShaunCurtis/GPXReader/blob/master/images/project-view.png?raw=true" alt="data view" /></p>
 <h3 id="testing-output">Testing Output</h3>
 <p>Run the project with a breakpoint set and explore the created <code>data</code> object.</p>
-<p><img src="https://github.com/ShaunCurtis/GPXReader/blob/master/images/Object-Local.png?raw=true" alt="data view"></p>
+<p><img src="https://github.com/ShaunCurtis/GPXReader/blob/master/images/Object-Local.png?raw=true" alt="data view" /></p>
 <p>That's it.</p>
-
-    
-
-            </div>
-        </div>
-    </div>
-</div>
-<!-- end of Article Container -->
+</div></div></div></body></html>
 
 
-                </div>
-                <!-- End of Main Content -->
-            </div>
-            <!-- Footer -->
-            
-<!-- Copyright -->
-<footer class="sticky-footer bg-white">
-    <div class="container my-auto">
-        <div class="copyright text-center my-auto">
-            
-<span>Copyright &copy; Cold Elm Coders - 2022</span>
-
-        </div>
-    </div>
-</footer>
-<!-- end of copyright -->
 
 
-            <!-- End of Footer -->
-        </div>
-        <!-- End of Content Wrapper -->
-        
-<a class="scroll-to-top rounded" href="#page-top">
-    <i class="fas fa-angle-up"></i>
-</a>
 
-
-    </div>
-    <!-- End of Page Wrapper -->
-    <!-- Scripts -->
-    
-<!-- Scripts -->
-<!-- Bootstrap core JavaScript-->
-<script src="/assets/vendor/jquery/jquery.min.js"></script>
-<script src="/assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-
-<!-- Core plugin JavaScript-->
-<script src="/assets/vendor/jquery-easing/jquery.easing.min.js"></script>
-
-<!-- Custom scripts for all pages-->
-<script src="/assets/js/sb-admin-2.min.js"></script>
-
-
-</body>
-</html>

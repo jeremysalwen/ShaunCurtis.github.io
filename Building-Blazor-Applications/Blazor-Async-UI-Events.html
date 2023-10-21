@@ -1,313 +1,46 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<html lang="en"><head><meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<base href="/">
 
-<!-- SEO Meta Tags -->
-<meta name="description" content="Your description">
-<meta name="author" content="Your name">
+	
 
-<!-- OG Meta Tags to improve the way the post looks when you share the page on Facebook, Twitter, LinkedIn -->
-<meta property="og:site_name" content="" /> <!-- website name -->
-<meta property="og:site" content="" /> <!-- website link -->
-<meta property="og:title" content="" /> <!-- title shown in the actual shared post -->
-<meta property="og:description" content="" /> <!-- description shown in the actual shared post -->
-<meta property="og:image" content="" /> <!-- image link, make sure it's jpg -->
-<meta property="og:url" content="" /> <!-- where do you want your post to link to -->
-<meta name="twitter:card" content="summary_large_image"> <!-- to have large image post format in Twitter -->
+	
 
-<meta charset="utf-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	
+	<link href="/resources/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+	<link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
 
+	
+	<link href="/resources/css/sb-admin-2.css" rel="stylesheet" type="text/css">
+	<link href="/resources/css/site.css" rel="stylesheet" type="text/css">
 
-<meta name="description" content="What Async patterns to use for UI events in Blazor" >
-<meta name="author" content="Shaun Curtis" >
+	
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/highlight.css">
+	<link rel="stylesheet" href="/resources/css/article.css" type="text/css">
 
+	
+	<link rel="icon" href="/images/favicon.png">
 
+	<title>Blazor Async Behaviour on UI Events</title>
+        <meta property="author" content="Shaun Curtis" />
+        <meta property="description" content="What Async patterns to use for UI events in Blazor." />
+    <meta property="og:site_name" content="Cold Elm Coders" />
+        <meta property="og:site" content="https://shauncurtis.github.io/" />
+        <meta property="og:title" content="Blazor Async Behaviour on UI Events" />
+        <meta property="og:description" content="What Async patterns to use for UI events in Blazor." /></head>
+<body><header class="navbar bg-dark p-2 text-large text-light"><section class="navbar-section  text-light"><a href="/" class="navbar-brand mr-2 text-large text-light p-2">Cold Elm Coders</a>
+			<a href="/Posts" class="btn btn-link text-light">Posts</a>
+			<a href="/Rants" class="btn btn-link text-light">Rants</a>
+			<a href="/Articles" class="btn btn-link text-light">Articles</a>
+			<a href="/Stories" class="btn btn-link text-light">Stories</a>
+			<a href="/about.html" class="btn btn-link text-light">About</a></section></header>
 
-<title>Blazor Async Behaviour on UI Events</title>
-
-
-<!-- Custom fonts for this template-->
-<link href="/assets/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
-<link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
-      rel="stylesheet">
-
-<!-- Custom styles for this template-->
-<link href="/assets/css/sb-admin-2.css" rel="stylesheet" type="text/css">
-<link href="/assets/css/site.css" rel="stylesheet" type="text/css">
-
-<!-- Favicon  -->
-<link rel="icon" href="/assets/images/favicon.png">
-
-
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/highlight.css">
-    <link rel="stylesheet" href="/assets/css/article.css" type="text/css">
-</head>
-<body id="page-top">
-    <!--topbar-->
-    <div id="topbar">
-        
-<!-- Topbar -->
-<nav class="navbar navbar-expand navbar-light topbar mb-4 static-top">
-    
-<ul class="navbar-nav" >
-<li class="nav-item" >
-<a class="nav-link " href="/index.html" role="button"  >
-<span class="mr-2 d-none d-lg-inline text-gray-100">Index</span>
-</a>
-</li>
-<li class="nav-item dropdown no-arrow mx-1" >
-<a class="nav-link dropdown-toggle" href="#" id="7a74e85b-eca9-4f06-b887-4cfcb7512fb3" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"  >
-<span class="mr-2 d-none d-lg-inline text-gray-100">Articles</span>
-</a>
-<div class=" dropdown-list dropdown-menu shadow animated--grow-in" aria-labelledby="7a74e85b-eca9-4f06-b887-4cfcb7512fb3" >
-<a class="dropdown-item" href="/articles/A-Flexible-App.html" >
-<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
-Creating a Dynamic Blazor App Component
-</a>
-<a class="dropdown-item" href="/articles/Async-Programming-in-DotNetCore.html" >
-<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
-Async Programming In Dotnetcore
-</a>
-<a class="dropdown-item" href="/articles/Blazor-AllinOne.html" >
-<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
-Blazor All In One - Multi SPA Hosting
-</a>
-<a class="dropdown-item" href="/articles/Blazor-Async-Programming.html" >
-<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
-Blazor Async Programming
-</a>
-<a class="dropdown-item" href="/articles/Blazor-Brick-By-Brick.html" >
-<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
-Blazor Brick By Brick
-</a>
-<a class="dropdown-item" href="/articles/Blazor-Components.html" >
-<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
-Blazor Components
-</a>
-<a class="dropdown-item" href="/articles/Blazor-CSS.html" >
-<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
-Blazor CSS
-</a>
-<a class="dropdown-item" href="/articles/Blazor-DataList-Control.html" >
-<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
-Blazor Datalist Control
-</a>
-<a class="dropdown-item" href="/articles/Blazor-Form-Validation.html" >
-<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
-Blazor Form Validation
-</a>
-<a class="dropdown-item" href="/articles/Building-Blazor-List-Components.html" >
-<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
-Building Blazor List Components and the Notification Pattern
-</a>
-<a class="dropdown-item" href="/articles/Building-Edit-Forms.html" >
-<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
-Building Edit Forms
-</a>
-<a class="dropdown-item" href="/articles/EditFormState.html" >
-<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
-The Blazor EditFormState Control
-</a>
-<a class="dropdown-item" href="/articles/Hydra.html" >
-<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
-Blazor Hydra
-</a>
-<a class="dropdown-item" href="/articles/Inline-Dialog.html" >
-<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
-The Blazor Inline Dialog Control
-</a>
-<a class="dropdown-item" href="/articles/Modal-Dialog.html" >
-<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
-A Blazor Modal Dialog
-</a>
-<a class="dropdown-item" href="/articles/Policy-Based-Authorization.html" >
-<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
-Policy Base Authorization in Blazor
-</a>
-<a class="dropdown-item" href="/articles/ValidationFormState.html" >
-<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
-A Blazor Validation Control
-</a>
-<a class="dropdown-item" href="/articles/XML-XSD-Serialization.html" >
-<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
-XML XSD Serialization
-</a>
-</div>
-</li>
-<li class="nav-item dropdown no-arrow mx-1" >
-<a class="nav-link dropdown-toggle" href="#" id="f5fe0038-c481-4fa6-8deb-b78222cdfe66" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"  >
-<span class="mr-2 d-none d-lg-inline text-gray-100">Blazor Database Apps</span>
-</a>
-<div class=" dropdown-list dropdown-menu shadow animated--grow-in" aria-labelledby="f5fe0038-c481-4fa6-8deb-b78222cdfe66" >
-<a class="dropdown-item" href="/Building-a-Database-Application-in-Blazor/Building-a-Database-Application-in-Blazor-Part-1.html" >
-<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
-Building A Database Application In Blazor Part 1
-</a>
-<a class="dropdown-item" href="/Building-a-Database-Application-in-Blazor/Building-a-Database-Application-in-Blazor-Part-2.html" >
-<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
-Building A Database Application In Blazor Part 2
-</a>
-<a class="dropdown-item" href="/Building-a-Database-Application-in-Blazor/Building-a-Database-Application-in-Blazor-Part-3.html" >
-<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
-Building A Database Application In Blazor Part 3
-</a>
-<a class="dropdown-item" href="/Building-a-Database-Application-in-Blazor/Building-a-Database-Application-in-Blazor-Part-4.html" >
-<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
-Building A Database Application In Blazor Part 4
-</a>
-<a class="dropdown-item" href="/Building-a-Database-Application-in-Blazor/Building-a-Database-Application-in-Blazor-Part-5.html" >
-<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
-Building A Database Application In Blazor Part 5
-</a>
-<a class="dropdown-item" href="/Building-a-Database-Application-in-Blazor/Building-a-Database-Application-in-Blazor-Part-6.html" >
-<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
-Building A Database Application In Blazor Part 6
-</a>
-<a class="dropdown-item" href="/Building-a-Database-Application-in-Blazor/index.html" >
-<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
-Building a Database Application in Blazor
-</a>
-</div>
-</li>
-<li class="nav-item dropdown no-arrow mx-1" >
-<a class="nav-link dropdown-toggle" href="#" id="dae842ba-9891-4e89-bedc-be00f91badef" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"  >
-<span class="mr-2 d-none d-lg-inline text-gray-100">Building Blazor Applications</span>
-</a>
-<div class=" dropdown-list dropdown-menu shadow animated--grow-in" aria-labelledby="dae842ba-9891-4e89-bedc-be00f91badef" >
-<a class="dropdown-item" href="/Building-Blazor-Applications/Blazor-Async-UI-Events.html" >
-<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
-Blazor Async UI Events
-</a>
-<a class="dropdown-item" href="/Building-Blazor-Applications/Blazor-Bootstrap-Toaster.html" >
-<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
-Blazor Bootstrap Toaster
-</a>
-<a class="dropdown-item" href="/Building-Blazor-Applications/Blazor-Services.html" >
-<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
-Blazor Services
-</a>
-<a class="dropdown-item" href="/Building-Blazor-Applications/Building-A-Blazor-AutoComplete-Control.html" >
-<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
-Building A Blazor Autocomplete Control
-</a>
-<a class="dropdown-item" href="/Building-Blazor-Applications/Building-Wrapper-Components.html" >
-<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
-Building Wrapper Components
-</a>
-<a class="dropdown-item" href="/Building-Blazor-Applications/DBContexts-In-Transient-Services.html" >
-<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
-Dbcontexts In Transient Services
-</a>
-<a class="dropdown-item" href="/Building-Blazor-Applications/DynamicCss.html" >
-<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
-Blazor Dynamic Stylesheets
-</a>
-<a class="dropdown-item" href="/Building-Blazor-Applications/For-ForEach-in-Blazor.html" >
-<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
-For Foreach In Blazor
-</a>
-<a class="dropdown-item" href="/Building-Blazor-Applications/Leaner-Meaner-Greener-Components.html" >
-<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
-Leaner Meaner Greener Components
-</a>
-<a class="dropdown-item" href="/Building-Blazor-Applications/Notification-Service-Pattern.html" >
-<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
-Blazor Notification Service Pattern
-</a>
-<a class="dropdown-item" href="/Building-Blazor-Applications/Rethinking-The-Repository-Pattern.html" >
-<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
-Rethinking The Repository Pattern
-</a>
-<a class="dropdown-item" href="/Building-Blazor-Applications/The-Blazor-Component-Scope-Conumdrum.html" >
-<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
-The Blazor Component Scope Conumdrum
-</a>
-<a class="dropdown-item" href="/Building-Blazor-Applications/The-Blazor-WASM-Hosted-Project.html" >
-<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
-The Blazor WASM Hosted Project
-</a>
-<a class="dropdown-item" href="/Building-Blazor-Applications/Whats-Wrong-with-my-Component-Design.html" >
-<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
-Whats Wrong With My Component Design
-</a>
-<a class="dropdown-item" href="/Building-Blazor-Applications/The-Blazor-Component" >
-<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
-Building Blazor Applications\The Blazor Component
-</a>
-</div>
-</li>
-<li class="nav-item dropdown no-arrow mx-1" >
-<a class="nav-link dropdown-toggle" href="#" id="d4b3ab5b-26d1-4334-8c8e-225123b096b4" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"  >
-<span class="mr-2 d-none d-lg-inline text-gray-100">Design</span>
-</a>
-<div class=" dropdown-list dropdown-menu shadow animated--grow-in" aria-labelledby="d4b3ab5b-26d1-4334-8c8e-225123b096b4" >
-<a class="dropdown-item" href="/Design/Clean-Design-In-Blazor.html" >
-<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
-Clean Design Principles in Blazor Applications
-</a>
-<a class="dropdown-item" href="/Design/Clean-Design-Blazor-Template.html" >
-<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
-A Blazor Clean Design Template
-</a>
-<a class="dropdown-item" href="/Design/Clean-Design-Blazor-Template-Solution-Structure.html" >
-<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
-Solution Structure in the Clean Design Blazor Template
-</a>
-<a class="dropdown-item" href="/Design/Clean-Design-Blazor-Template-DataServices.html" >
-<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
-Data Services in the Clean Design Blazor Template
-</a>
-<a class="dropdown-item" href="/Design/Clean-Design-Blazor-Template-UI.html" >
-<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
-The UI in the Clean Design Blazor Template
-</a>
-<a class="dropdown-item" href="/Design/Clean-Design-Blazor-Template-Solution-Setup.html" >
-<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
-Solution Setup in the Clean Design Blazor Template
-</a>
-<a class="dropdown-item" href="/Design/Clean-Design-Blazor-Template-Testing.html" >
-<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
-Testing in the Clean Design Blazor Template
-</a>
-</div>
-</li>
-<li class="nav-item dropdown no-arrow mx-1" >
-<a class="nav-link dropdown-toggle" href="#" id="ba1ad160-261a-425c-8aa2-497fbb646768" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"  >
-<span class="mr-2 d-none d-lg-inline text-gray-100">Modern C#</span>
-</a>
-<div class=" dropdown-list dropdown-menu shadow animated--grow-in" aria-labelledby="ba1ad160-261a-425c-8aa2-497fbb646768" >
-<a class="dropdown-item" href="/Modern-Coding-Patterns/Nullable-And-VS-2022.html" >
-<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
-Nullable And VS 2022
-</a>
-</div>
-</li>
-</ul>
-
-    <div class="ms-5 me-5 ml-auto">
-        <h1>Cold Elm Coders</h1>
-    </div>
-</nav>
-
-
-    </div>
-    <!--End topbar-->
-    <!--Sidebar-->
-    <div id="sidebar">
-        
-<div class="article-info p-2" Published: 01-10-2020 >
-<div>Published: 01-10-2020</div>
-<div>Last Updated: 01-10-2020</div>
-<div>Author: Shaun Curtis</div>
-</div>
-
-        
-<h4 class="p-2">Table of Contents</h4>
+	<div class="container-fluid"><div class="row"><div class="col-12 col-sm-3 col-lg-2 bg-light pt-2"><div class="article-info p-2"><div class="mb-2">Published: 01-Oct-2020</div>
+                <div class="mb-2">Updated: 01-Oct-2020</div>
+                <div class="mb-2">Author: Shaun Curtis</div></div>
+    <h4 class="p-2">Table of Contents</h4>
 <ul class="TOC" >
 <li class="TOC-item TOC-item-0" >
 <a class="TOC-link" href="#">Top</a>
@@ -315,7 +48,7 @@ Nullable And VS 2022
 <li class="TOC-item TOC-item-1" >
 <ul class="TOC TOC-1" >
 <li class="TOC-item TOC-item-2" >
-<a class="TOC-link" href="#testrazor">Test.Razor</a>
+<a class="TOC-link" href="#test.razor">Test.Razor</a>
 </li>
 <li class="TOC-item TOC-item-2" >
 <a class="TOC-link" href="#the-void-pattern">The Void Pattern</a>
@@ -337,276 +70,194 @@ Nullable And VS 2022
 </ul>
 </li>
 </ul>
-
-    </div>
-    <!--End Sidebar-->
-    <!-- Page Wrapper -->
-    <div id="wrapper">
-        <!-- Content Wrapper -->
-        <div id="content-wrapper" class="d-flex flex-column">
-            <!-- Main Content -->
-            <div id="content">
-                <!-- Topbar -->
-                <div id="article">
-                    <!-- Article -->
-                    
-<!-- Header -->
-<header class="ex-header-article">
-    <div class="container">
-        <div class="row pt-3 pb-3 border-bottom">
-            <div class="col">
-                
-<h1>Blazor Async Behaviour on UI Events</h1>
-<div>What Async patterns to use for UI events in Blazor</div>
-
-            </div> <!-- end of col -->
-        </div> <!-- end of row -->
-    </div> <!-- end of container -->
-</header> <!-- end of ex-header -->
-<!-- end of header -->
-
-
-                    
-<!-- Article Container -->
-<div class="ex-basic-1 pt-4">
-    <div class="container">
-        <div class="row">
-            <div class="col-12">
-                
-
-        <p>This short post describes how Blazor handles UI events and the programming patterns you should use.</p>
+</div>
+			
+			<div class="col-12 col-sm-9 col-lg-10 p-2"><div class="pt-2 pb-2 border-bottom mb-4 text-primary"><h1>Blazor Async Behaviour on UI Events</h1>
+            <div><small>What Async patterns to use for UI events in Blazor.</small></div></div>
+    <p>This short post describes how Blazor handles UI events and the programming patterns you should use.</p>
 <p>The classic asynchronous pattern for events is the &quot;fire and forget&quot; pattern:</p>
-<pre><code class="language-csharp"><div><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">EventHandlerMethod</span>(<span class="hljs-params">args</span>)
-<span class="hljs-comment">// or</span>
-<span class="hljs-keyword">async</span> <span class="hljs-keyword">void</span> <span class="hljs-title">EventHandlerMethod</span>(<span class="hljs-params">args</span>)
-</span></div></code></pre>
+<pre><code class="language-csharp">void EventHandlerMethod(args)
+// or
+async void EventHandlerMethod(args)
+</code></pre>
 <p>The the event caller doesn't expect a return, so the event handler method should return a <code>void</code>.</p>
 <p>Blazor UI <em>events</em> aren't fire and forget.  They're loaded by the Blazor runtime onto the <code>SynchronisationContext</code> thread and look something like:</p>
-<pre><code class="language-csharp"><div><span class="hljs-keyword">var</span> task = InvokeAsync(EventMethod);
+<pre><code class="language-csharp">var task = InvokeAsync(EventMethod);
 StateHasChanged();
-<span class="hljs-keyword">if</span> (!task.IsCompleted)
+if (!task.IsCompleted)
 {
-    <span class="hljs-keyword">await</span> task;
+    await task;
     StateHasChanged();
 }
-</div></code></pre>
+</code></pre>
 <p>The event handler is called and awaited and then <code>StateHasChanged</code> is called on the component that owns the event.  This ensures that whatever actions the event caused are captured in the re-render event.</p>
-<h2 id="testrazor">Test.Razor</h2>
+<h2 id="test.razor">Test.Razor</h2>
 <p>We need a test page with some support code:</p>
-<pre><code class="language-html"><div><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;container m-2 px-3 p-t bg-light&quot;</span>&gt;</span>
-    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;row pt-2&quot;</span>&gt;</span>
-        <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;col-12&quot;</span>&gt;</span>
-            <span class="hljs-tag">&lt;<span class="hljs-name">h3</span>&gt;</span>Event Buttons<span class="hljs-tag">&lt;/<span class="hljs-name">h3</span>&gt;</span>
-        <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
-    <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
-    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;row pt-2&quot;</span>&gt;</span>
-        <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;col-6&quot;</span>&gt;</span>
+<pre><code class="language-html">&lt;div class=&quot;container m-2 px-3 p-t bg-light&quot;&gt;
+    &lt;div class=&quot;row pt-2&quot;&gt;
+        &lt;div class=&quot;col-12&quot;&gt;
+            &lt;h3&gt;Event Buttons&lt;/h3&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+    &lt;div class=&quot;row pt-2&quot;&gt;
+        &lt;div class=&quot;col-6&quot;&gt;
             @value1
-        <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
-        <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;col-6&quot;</span>&gt;</span>
-            <span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;btn btn-primary&quot;</span> @<span class="hljs-attr">onclick</span>=<span class="hljs-string">&quot;this.OnClick&quot;</span>&gt;</span>Click<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span>
-        <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
-    <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
-<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
-</div></code></pre>
-<pre><code class="language-csharp"><div>@code {
-    <span class="hljs-keyword">private</span> <span class="hljs-keyword">string</span> value1 = <span class="hljs-string">&quot;not set&quot;</span>;
+        &lt;/div&gt;
+        &lt;div class=&quot;col-6&quot;&gt;
+            &lt;button class=&quot;btn btn-primary&quot; @onclick=&quot;this.OnClick&quot;&gt;Click&lt;/button&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+&lt;/div&gt;
+</code></pre>
+<pre><code class="language-csharp">@code {
+    private string value1 = &quot;not set&quot;;
 }
-</div></code></pre>
+</code></pre>
 <h2 id="the-void-pattern">The Void Pattern</h2>
 <p>Let's look at a simple void pattern example that works:</p>
-<pre><code class="language-csharp"><div><span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-keyword">void</span> <span class="hljs-title">OnClick</span>(<span class="hljs-params">MouseEventArgs e</span>)</span>
+<pre><code class="language-csharp">private void OnClick(MouseEventArgs e)
 {
-    value1 = <span class="hljs-string">&quot;Onclick started&quot;</span>;
-        <span class="hljs-comment">// run some synchronous code</span>
-    value1 = <span class="hljs-string">&quot;Onclick complete&quot;</span>;
+    value1 = &quot;Onclick started&quot;;
+        // run some synchronous code
+    value1 = &quot;Onclick complete&quot;;
 }
-</div></code></pre>
+</code></pre>
 <p>Why?  All the code is synchronous.  The event handler completes before <code>StateHasChanged</code> is called.
 This works fine, <code>Value1</code> has the correct value.</p>
 <p>Now lets add an async method into <code>OnClick</code> that still works.</p>
-<pre><code class="language-csharp"><div>@code {
-    <span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-keyword">async</span> <span class="hljs-keyword">void</span> <span class="hljs-title">Onclick</span>(<span class="hljs-params">MouseEventArgs e</span>)</span>
+<pre><code class="language-csharp">@code {
+    private async void Onclick(MouseEventArgs e)
     {
-        value1 = <span class="hljs-string">&quot;Onclick started&quot;</span>;
-        <span class="hljs-keyword">await</span> DoSomethingAsync();
-        value1 = <span class="hljs-string">&quot;Onclick complete&quot;</span>;
+        value1 = &quot;Onclick started&quot;;
+        await DoSomethingAsync();
+        value1 = &quot;Onclick complete&quot;;
     }
 
-    <span class="hljs-function"><span class="hljs-keyword">private</span> Task <span class="hljs-title">DoSomethingAsync</span>(<span class="hljs-params"></span>)</span>
+    private Task DoSomethingAsync()
     {
-        <span class="hljs-comment">// some sync code</span>
-        <span class="hljs-keyword">return</span> Task.CompletedTask;
+        // some sync code
+        return Task.CompletedTask;
     }
 }
-</div></code></pre>
+</code></pre>
 <p>Why?  All the code is still synchronous.  <code>DoSomethingAsync</code> may return a <code>Task</code> but it doesn't yield.  The event handler completes before <code>StateHasChanged</code> is called.</p>
 <p>Finally let's make <code>DoSomethingAsync</code> yield - such as doing an API call or getting data from a database - and see the problem.</p>
-<pre><code class="language-csharp"><div><span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-keyword">async</span> <span class="hljs-keyword">void</span> <span class="hljs-title">OnClick</span>(<span class="hljs-params">MouseEventArgs e</span>)</span>
+<pre><code class="language-csharp">private async void OnClick(MouseEventArgs e)
 {
-    value1 = <span class="hljs-string">&quot;Onclick started&quot;</span>;
-    <span class="hljs-keyword">await</span> DoSomethingAsync();
-    value1 = <span class="hljs-string">&quot;Onclick complete&quot;</span>;
+    value1 = &quot;Onclick started&quot;;
+    await DoSomethingAsync();
+    value1 = &quot;Onclick complete&quot;;
 }
 
-<span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-keyword">async</span> Task <span class="hljs-title">DoSomethingAsync</span>(<span class="hljs-params"></span>)</span>
-    =&gt; <span class="hljs-keyword">await</span> Task.Yield();
-</div></code></pre>
+private async Task DoSomethingAsync()
+    =&gt; await Task.Yield();
+</code></pre>
 <p>Why?  <code>DoSomethingAsync</code> yields back to <code>OnClick</code> before it completes.  <code>OnClick</code> yields back to the Blazor event which has nothing to wait on - <code>OnClick</code> returned a <code>void</code> - so runs to completion and calls <code>StateHasChanged</code>.  The Blazor event completes before <code>OnClick</code> completes.</p>
 <p>The temptation is to add a call the <code>StateHasChanged</code> like this:</p>
-<pre><code class="language-csharp"><div><span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-keyword">async</span> <span class="hljs-keyword">void</span> <span class="hljs-title">OnClick</span>(<span class="hljs-params">MouseEventArgs e</span>)</span>
+<pre><code class="language-csharp">private async void OnClick(MouseEventArgs e)
 {
-    value1 = <span class="hljs-string">&quot;Onclick started&quot;</span>;
-    <span class="hljs-keyword">await</span> DoSomethingAsync();
-    value1 = <span class="hljs-string">&quot;Onclick complete&quot;</span>;
+    value1 = &quot;Onclick started&quot;;
+    await DoSomethingAsync();
+    value1 = &quot;Onclick complete&quot;;
     StateHasChanged();
 }
-</div></code></pre>
+</code></pre>
 <p>Which is not the eight answer!</p>
 <h2 id="the-task-pattern">The Task Pattern</h2>
 <p>This is the final async code above changed so <code>OnClick</code> returns a Task.  This now works correctly.</p>
-<pre><code class="language-csharp"><div><span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-keyword">async</span> Task <span class="hljs-title">OnClick</span>(<span class="hljs-params">MouseEventArgs e</span>)</span>
+<pre><code class="language-csharp">private async Task OnClick(MouseEventArgs e)
 {
-    value1 = <span class="hljs-string">&quot;Onclick started&quot;</span>;
-    <span class="hljs-keyword">await</span> DoSomethingAsync();
-    value1 = <span class="hljs-string">&quot;Onclick complete&quot;</span>;
+    value1 = &quot;Onclick started&quot;;
+    await DoSomethingAsync();
+    value1 = &quot;Onclick complete&quot;;
 }
 
-<span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-keyword">async</span> Task <span class="hljs-title">DoSomethingAsync</span>(<span class="hljs-params"></span>)</span>
-    =&gt; <span class="hljs-keyword">await</span> Task.Yield();
-</div></code></pre>
+private async Task DoSomethingAsync()
+    =&gt; await Task.Yield();
+</code></pre>
 <p>Why? The Blazor event now has a Task to wait on and only runs <code>StateHasChanged</code> when <code>OnClick</code> returns a completed Task.</p>
 <h2 id="the-await-task-pattern">The Await Task Pattern</h2>
 <p>You will see the following pattern used on html element events:</p>
-<pre><code class="language-csharp"><div>&lt;button <span class="hljs-keyword">class</span>=<span class="hljs-string">&quot;btn btn-warning&quot;</span> @onclick=<span class="hljs-string">&quot;async (e) =&gt; await this.OnClick(e)&quot;</span>&gt;Click&lt;/button&gt;
-</div></code></pre>
+<pre><code class="language-csharp">&lt;button class=&quot;btn btn-warning&quot; @onclick=&quot;async (e) =&gt; await this.OnClick(e)&quot;&gt;Click&lt;/button&gt;
+</code></pre>
 <p>This isn't required.  It's overkill, wrapping a <code>Task</code> in a <code>Task</code>.</p>
 <h2 id="component-events-and-eventcallbacks">Component Events and EventCallbacks</h2>
 <p>A common error is:</p>
-<pre><code class="language-csharp"><div>&lt;MyComponent @onclick=<span class="hljs-string">&quot;() =&gt; OnClick()&quot;</span>&gt;Hello&lt;MyComponent&gt;
-</div></code></pre>
+<pre><code class="language-csharp">&lt;MyComponent @onclick=&quot;() =&gt; OnClick()&quot;&gt;Hello&lt;MyComponent&gt;
+</code></pre>
 <p>Components aren't html elements.  There's no <code>OnClick</code> event on <code>MyComponent</code> unless you've created an EventCallback.</p>
 <p>The code below is for a simple button control.</p>
-<pre><code class="language-csharp"><div><span class="hljs-comment">// UIButton.razor</span>
-&lt;button <span class="hljs-keyword">class</span>=<span class="hljs-string">&quot;btn btn-warning&quot;</span> @onclick=<span class="hljs-string">&quot;this.BtnClick&quot;</span>&gt;@ChildContent&lt;/button&gt;
+<pre><code class="language-csharp">// UIButton.razor
+&lt;button class=&quot;btn btn-warning&quot; @onclick=&quot;this.BtnClick&quot;&gt;@ChildContent&lt;/button&gt;
 
 @code {
-    [<span class="hljs-meta">Parameter</span>] <span class="hljs-keyword">public</span> EventCallback&lt;MouseEventArgs&gt; OnClick { <span class="hljs-keyword">get</span>; <span class="hljs-keyword">set</span>; }
-    [<span class="hljs-meta">Parameter</span>] <span class="hljs-keyword">public</span> RenderFragment ChildContent { <span class="hljs-keyword">get</span>; <span class="hljs-keyword">set</span>; }
+    [Parameter] public EventCallback&lt;MouseEventArgs&gt; OnClick { get; set; }
+    [Parameter] public RenderFragment ChildContent { get; set; }
 
-    <span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-keyword">async</span> Task <span class="hljs-title">BtnClick</span>(<span class="hljs-params">MouseEventArgs e</span>)</span>
-        =&gt; <span class="hljs-keyword">await</span> OnClick.InvokeAsync(e);
+    private async Task BtnClick(MouseEventArgs e)
+        =&gt; await OnClick.InvokeAsync(e);
 }
-</div></code></pre>
+</code></pre>
 <p>Note that the <code>BtnClick</code> event handler uses the <code>Task</code> pattern, invokes the EventCallback asynchronously and waits it.</p>
 <p>The <em>Test.razor</em> code looks like this:</p>
-<pre><code class="language-html"><div><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;row pt-2&quot;</span>&gt;</span>
-    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;col-6&quot;</span>&gt;</span>
+<pre><code class="language-html">&lt;div class=&quot;row pt-2&quot;&gt;
+    &lt;div class=&quot;col-6&quot;&gt;
         @value5
-    <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
-    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;col-6&quot;</span>&gt;</span>
-        <span class="hljs-tag">&lt;<span class="hljs-name">UIButton</span> <span class="hljs-attr">OnClick</span>=<span class="hljs-string">&quot;OnclickComponent&quot;</span>&gt;</span>click me<span class="hljs-tag">&lt;/<span class="hljs-name">UIButton</span>&gt;</span>
-    <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
-<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
-</div></code></pre>
-<pre><code class="language-csharp"><div><span class="hljs-keyword">private</span> <span class="hljs-keyword">string</span> value5 = <span class="hljs-string">&quot;notset&quot;</span>;
+    &lt;/div&gt;
+    &lt;div class=&quot;col-6&quot;&gt;
+        &lt;UIButton OnClick=&quot;OnclickComponent&quot;&gt;click me&lt;/UIButton&gt;
+    &lt;/div&gt;
+&lt;/div&gt;
+</code></pre>
+<pre><code class="language-csharp">private string value5 = &quot;notset&quot;;
 
-<span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-keyword">async</span> Task <span class="hljs-title">OnclickComponent</span>(<span class="hljs-params">MouseEventArgs e</span>)</span>
+private async Task OnclickComponent(MouseEventArgs e)
 {
-    value5 = <span class="hljs-string">&quot;Onclick started&quot;</span>;
-    <span class="hljs-keyword">await</span> Task.Delay(<span class="hljs-number">2000</span>);
-    <span class="hljs-keyword">await</span> DoSomethingAsync();
-    value5 = <span class="hljs-string">&quot;Onclick complete&quot;</span>;
+    value5 = &quot;Onclick started&quot;;
+    await Task.Delay(2000);
+    await DoSomethingAsync();
+    value5 = &quot;Onclick complete&quot;;
 }
-</div></code></pre>
+</code></pre>
 <p>The parent <code>OnclickComponent</code> delegate registered with the <code>OnClick</code> EventCallback passes an awaitable Task back to the component.  It's <code>async</code> and <code>Task</code> based all the way.</p>
 <h2 id="when-to-use-the-void-pattern">When to use the Void Pattern</h2>
 <p>Only use the void pattern on true class based events.  The code below shows a simple service which generates a new randon number when <code>NewNumber</code> is called and triggers the <code>NumberChanged</code> event when the number changes.</p>
-<pre><code class="language-csharp"><div><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title">RandomNumberService</span>
+<pre><code class="language-csharp">public class RandomNumberService
 {
-    <span class="hljs-keyword">public</span> <span class="hljs-keyword">int</span> Value =&gt; _Value;
-    <span class="hljs-keyword">private</span> <span class="hljs-keyword">int</span> _Value = <span class="hljs-number">0</span>;
-    <span class="hljs-keyword">public</span> <span class="hljs-keyword">event</span> EventHandler NumberChanged;
+    public int Value =&gt; _Value;
+    private int _Value = 0;
+    public event EventHandler NumberChanged;
 
-    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">NewNumber</span>(<span class="hljs-params"></span>)</span>
+    public void NewNumber()
     {
-        <span class="hljs-keyword">var</span> rand = <span class="hljs-keyword">new</span> Random();
-        NotifyNumberChanged(rand.Next(<span class="hljs-number">0</span>, <span class="hljs-number">100</span>));
+        var rand = new Random();
+        NotifyNumberChanged(rand.Next(0, 100));
     }
 
-    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">NotifyNumberChanged</span>(<span class="hljs-params"><span class="hljs-keyword">int</span> <span class="hljs-keyword">value</span></span>)</span>
+    public void NotifyNumberChanged(int value)
     {
-        <span class="hljs-keyword">if</span> (!<span class="hljs-keyword">value</span>.Equals(_Value))
+        if (!value.Equals(_Value))
         {
-            _Value = <span class="hljs-keyword">value</span>;
-            <span class="hljs-comment">// only trigger event if it has delegates registered</span>
-            NumberChanged?.Invoke(<span class="hljs-keyword">this</span>, EventArgs.Empty);
+            _Value = value;
+            // only trigger event if it has delegates registered
+            NumberChanged?.Invoke(this, EventArgs.Empty);
         }
     }
 }
-</div></code></pre>
+</code></pre>
 <p>And the code that registers for the event.  Note that <code>OnNumberChange</code> invokes <code>StateHasChanged</code> rather than calling it directly.  You don't know which thread the service code is being executed on, so you need to ensure <code>StateHasChanged</code> is run on the UI thread.  <code>InvokeAsync</code> - a public <code>ComponentBase</code> method - ensures that it is.</p>
-<pre><code class="language-csharp"><div><span class="hljs-function"><span class="hljs-keyword">protected</span> <span class="hljs-keyword">override</span> Task <span class="hljs-title">OnInitializedAsync</span>(<span class="hljs-params"></span>)</span>
+<pre><code class="language-csharp">protected override Task OnInitializedAsync()
 {
-    <span class="hljs-keyword">this</span>.RdmService.NumberChanged += <span class="hljs-keyword">this</span>.OnNumberChange;
-    <span class="hljs-keyword">return</span> <span class="hljs-keyword">base</span>.OnInitializedAsync();
+    this.RdmService.NumberChanged += this.OnNumberChange;
+    return base.OnInitializedAsync();
 }
 
-<span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-keyword">void</span> <span class="hljs-title">OnNumberChange</span>(<span class="hljs-params"><span class="hljs-keyword">object</span> sender, EventArgs e</span>)</span>
-    =&gt; <span class="hljs-keyword">this</span>.InvokeAsync(StateHasChanged);
-</div></code></pre>
-
-    
-
-            </div>
-        </div>
-    </div>
-</div>
-<!-- end of Article Container -->
+private void OnNumberChange(object sender, EventArgs e)
+    =&gt; this.InvokeAsync(StateHasChanged);
+</code></pre>
+</div></div></div></body></html>
 
 
-                </div>
-                <!-- End of Main Content -->
-            </div>
-            <!-- Footer -->
-            
-<!-- Copyright -->
-<footer class="sticky-footer bg-white">
-    <div class="container my-auto">
-        <div class="copyright text-center my-auto">
-            
-<span>Copyright &copy; Cold Elm Coders - 2022</span>
-
-        </div>
-    </div>
-</footer>
-<!-- end of copyright -->
 
 
-            <!-- End of Footer -->
-        </div>
-        <!-- End of Content Wrapper -->
-        
-<a class="scroll-to-top rounded" href="#page-top">
-    <i class="fas fa-angle-up"></i>
-</a>
 
-
-    </div>
-    <!-- End of Page Wrapper -->
-    <!-- Scripts -->
-    
-<!-- Scripts -->
-<!-- Bootstrap core JavaScript-->
-<script src="/assets/vendor/jquery/jquery.min.js"></script>
-<script src="/assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-
-<!-- Core plugin JavaScript-->
-<script src="/assets/vendor/jquery-easing/jquery.easing.min.js"></script>
-
-<!-- Custom scripts for all pages-->
-<script src="/assets/js/sb-admin-2.min.js"></script>
-
-
-</body>
-</html>

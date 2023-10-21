@@ -1,313 +1,46 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<html lang="en"><head><meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<base href="/">
 
-<!-- SEO Meta Tags -->
-<meta name="description" content="Your description">
-<meta name="author" content="Your name">
+	
 
-<!-- OG Meta Tags to improve the way the post looks when you share the page on Facebook, Twitter, LinkedIn -->
-<meta property="og:site_name" content="" /> <!-- website name -->
-<meta property="og:site" content="" /> <!-- website link -->
-<meta property="og:title" content="" /> <!-- title shown in the actual shared post -->
-<meta property="og:description" content="" /> <!-- description shown in the actual shared post -->
-<meta property="og:image" content="" /> <!-- image link, make sure it's jpg -->
-<meta property="og:url" content="" /> <!-- where do you want your post to link to -->
-<meta name="twitter:card" content="summary_large_image"> <!-- to have large image post format in Twitter -->
+	
 
-<meta charset="utf-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	
+	<link href="/resources/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+	<link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
 
+	
+	<link href="/resources/css/sb-admin-2.css" rel="stylesheet" type="text/css">
+	<link href="/resources/css/site.css" rel="stylesheet" type="text/css">
 
-<meta name="description" content="Building a Blazor Bootstrap Toaster" >
-<meta name="author" content="Shaun Curtis" >
+	
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/highlight.css">
+	<link rel="stylesheet" href="/resources/css/article.css" type="text/css">
 
+	
+	<link rel="icon" href="/images/favicon.png">
 
+	<title>Blazor Bootstrap Toaster</title>
+        <meta property="author" content="Shaun Curtis" />
+        <meta property="description" content="Building a Blazor Bootstrap Toaster." />
+    <meta property="og:site_name" content="Cold Elm Coders" />
+        <meta property="og:site" content="https://shauncurtis.github.io/" />
+        <meta property="og:title" content="Blazor Bootstrap Toaster" />
+        <meta property="og:description" content="Building a Blazor Bootstrap Toaster." /></head>
+<body><header class="navbar bg-dark p-2 text-large text-light"><section class="navbar-section  text-light"><a href="/" class="navbar-brand mr-2 text-large text-light p-2">Cold Elm Coders</a>
+			<a href="/Posts" class="btn btn-link text-light">Posts</a>
+			<a href="/Rants" class="btn btn-link text-light">Rants</a>
+			<a href="/Articles" class="btn btn-link text-light">Articles</a>
+			<a href="/Stories" class="btn btn-link text-light">Stories</a>
+			<a href="/about.html" class="btn btn-link text-light">About</a></section></header>
 
-<title>Blazor Bootstrap Toaster</title>
-
-
-<!-- Custom fonts for this template-->
-<link href="/assets/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
-<link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
-      rel="stylesheet">
-
-<!-- Custom styles for this template-->
-<link href="/assets/css/sb-admin-2.css" rel="stylesheet" type="text/css">
-<link href="/assets/css/site.css" rel="stylesheet" type="text/css">
-
-<!-- Favicon  -->
-<link rel="icon" href="/assets/images/favicon.png">
-
-
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/highlight.css">
-    <link rel="stylesheet" href="/assets/css/article.css" type="text/css">
-</head>
-<body id="page-top">
-    <!--topbar-->
-    <div id="topbar">
-        
-<!-- Topbar -->
-<nav class="navbar navbar-expand navbar-light topbar mb-4 static-top">
-    
-<ul class="navbar-nav" >
-<li class="nav-item" >
-<a class="nav-link " href="/index.html" role="button"  >
-<span class="mr-2 d-none d-lg-inline text-gray-100">Index</span>
-</a>
-</li>
-<li class="nav-item dropdown no-arrow mx-1" >
-<a class="nav-link dropdown-toggle" href="#" id="6aaa248e-38c8-4541-a146-81cf60259a2e" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"  >
-<span class="mr-2 d-none d-lg-inline text-gray-100">Articles</span>
-</a>
-<div class=" dropdown-list dropdown-menu shadow animated--grow-in" aria-labelledby="6aaa248e-38c8-4541-a146-81cf60259a2e" >
-<a class="dropdown-item" href="/articles/A-Flexible-App.html" >
-<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
-Creating a Dynamic Blazor App Component
-</a>
-<a class="dropdown-item" href="/articles/Async-Programming-in-DotNetCore.html" >
-<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
-Async Programming In Dotnetcore
-</a>
-<a class="dropdown-item" href="/articles/Blazor-AllinOne.html" >
-<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
-Blazor All In One - Multi SPA Hosting
-</a>
-<a class="dropdown-item" href="/articles/Blazor-Async-Programming.html" >
-<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
-Blazor Async Programming
-</a>
-<a class="dropdown-item" href="/articles/Blazor-Brick-By-Brick.html" >
-<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
-Blazor Brick By Brick
-</a>
-<a class="dropdown-item" href="/articles/Blazor-Components.html" >
-<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
-Blazor Components
-</a>
-<a class="dropdown-item" href="/articles/Blazor-CSS.html" >
-<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
-Blazor CSS
-</a>
-<a class="dropdown-item" href="/articles/Blazor-DataList-Control.html" >
-<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
-Blazor Datalist Control
-</a>
-<a class="dropdown-item" href="/articles/Blazor-Form-Validation.html" >
-<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
-Blazor Form Validation
-</a>
-<a class="dropdown-item" href="/articles/Building-Blazor-List-Components.html" >
-<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
-Building Blazor List Components and the Notification Pattern
-</a>
-<a class="dropdown-item" href="/articles/Building-Edit-Forms.html" >
-<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
-Building Edit Forms
-</a>
-<a class="dropdown-item" href="/articles/EditFormState.html" >
-<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
-The Blazor EditFormState Control
-</a>
-<a class="dropdown-item" href="/articles/Hydra.html" >
-<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
-Blazor Hydra
-</a>
-<a class="dropdown-item" href="/articles/Inline-Dialog.html" >
-<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
-The Blazor Inline Dialog Control
-</a>
-<a class="dropdown-item" href="/articles/Modal-Dialog.html" >
-<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
-A Blazor Modal Dialog
-</a>
-<a class="dropdown-item" href="/articles/Policy-Based-Authorization.html" >
-<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
-Policy Base Authorization in Blazor
-</a>
-<a class="dropdown-item" href="/articles/ValidationFormState.html" >
-<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
-A Blazor Validation Control
-</a>
-<a class="dropdown-item" href="/articles/XML-XSD-Serialization.html" >
-<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
-XML XSD Serialization
-</a>
-</div>
-</li>
-<li class="nav-item dropdown no-arrow mx-1" >
-<a class="nav-link dropdown-toggle" href="#" id="d2a7a67a-bc55-4268-9946-921cfdbc7404" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"  >
-<span class="mr-2 d-none d-lg-inline text-gray-100">Blazor Database Apps</span>
-</a>
-<div class=" dropdown-list dropdown-menu shadow animated--grow-in" aria-labelledby="d2a7a67a-bc55-4268-9946-921cfdbc7404" >
-<a class="dropdown-item" href="/Building-a-Database-Application-in-Blazor/Building-a-Database-Application-in-Blazor-Part-1.html" >
-<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
-Building A Database Application In Blazor Part 1
-</a>
-<a class="dropdown-item" href="/Building-a-Database-Application-in-Blazor/Building-a-Database-Application-in-Blazor-Part-2.html" >
-<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
-Building A Database Application In Blazor Part 2
-</a>
-<a class="dropdown-item" href="/Building-a-Database-Application-in-Blazor/Building-a-Database-Application-in-Blazor-Part-3.html" >
-<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
-Building A Database Application In Blazor Part 3
-</a>
-<a class="dropdown-item" href="/Building-a-Database-Application-in-Blazor/Building-a-Database-Application-in-Blazor-Part-4.html" >
-<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
-Building A Database Application In Blazor Part 4
-</a>
-<a class="dropdown-item" href="/Building-a-Database-Application-in-Blazor/Building-a-Database-Application-in-Blazor-Part-5.html" >
-<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
-Building A Database Application In Blazor Part 5
-</a>
-<a class="dropdown-item" href="/Building-a-Database-Application-in-Blazor/Building-a-Database-Application-in-Blazor-Part-6.html" >
-<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
-Building A Database Application In Blazor Part 6
-</a>
-<a class="dropdown-item" href="/Building-a-Database-Application-in-Blazor/index.html" >
-<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
-Building a Database Application in Blazor
-</a>
-</div>
-</li>
-<li class="nav-item dropdown no-arrow mx-1" >
-<a class="nav-link dropdown-toggle" href="#" id="7617e861-9dce-45f8-8a70-1fb5c4acf032" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"  >
-<span class="mr-2 d-none d-lg-inline text-gray-100">Building Blazor Applications</span>
-</a>
-<div class=" dropdown-list dropdown-menu shadow animated--grow-in" aria-labelledby="7617e861-9dce-45f8-8a70-1fb5c4acf032" >
-<a class="dropdown-item" href="/Building-Blazor-Applications/Blazor-Async-UI-Events.html" >
-<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
-Blazor Async UI Events
-</a>
-<a class="dropdown-item" href="/Building-Blazor-Applications/Blazor-Bootstrap-Toaster.html" >
-<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
-Blazor Bootstrap Toaster
-</a>
-<a class="dropdown-item" href="/Building-Blazor-Applications/Blazor-Services.html" >
-<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
-Blazor Services
-</a>
-<a class="dropdown-item" href="/Building-Blazor-Applications/Building-A-Blazor-AutoComplete-Control.html" >
-<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
-Building A Blazor Autocomplete Control
-</a>
-<a class="dropdown-item" href="/Building-Blazor-Applications/Building-Wrapper-Components.html" >
-<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
-Building Wrapper Components
-</a>
-<a class="dropdown-item" href="/Building-Blazor-Applications/DBContexts-In-Transient-Services.html" >
-<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
-Dbcontexts In Transient Services
-</a>
-<a class="dropdown-item" href="/Building-Blazor-Applications/DynamicCss.html" >
-<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
-Blazor Dynamic Stylesheets
-</a>
-<a class="dropdown-item" href="/Building-Blazor-Applications/For-ForEach-in-Blazor.html" >
-<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
-For Foreach In Blazor
-</a>
-<a class="dropdown-item" href="/Building-Blazor-Applications/Leaner-Meaner-Greener-Components.html" >
-<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
-Leaner Meaner Greener Components
-</a>
-<a class="dropdown-item" href="/Building-Blazor-Applications/Notification-Service-Pattern.html" >
-<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
-Blazor Notification Service Pattern
-</a>
-<a class="dropdown-item" href="/Building-Blazor-Applications/Rethinking-The-Repository-Pattern.html" >
-<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
-Rethinking The Repository Pattern
-</a>
-<a class="dropdown-item" href="/Building-Blazor-Applications/The-Blazor-Component-Scope-Conumdrum.html" >
-<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
-The Blazor Component Scope Conumdrum
-</a>
-<a class="dropdown-item" href="/Building-Blazor-Applications/The-Blazor-WASM-Hosted-Project.html" >
-<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
-The Blazor WASM Hosted Project
-</a>
-<a class="dropdown-item" href="/Building-Blazor-Applications/Whats-Wrong-with-my-Component-Design.html" >
-<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
-Whats Wrong With My Component Design
-</a>
-<a class="dropdown-item" href="/Building-Blazor-Applications/The-Blazor-Component" >
-<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
-Building Blazor Applications\The Blazor Component
-</a>
-</div>
-</li>
-<li class="nav-item dropdown no-arrow mx-1" >
-<a class="nav-link dropdown-toggle" href="#" id="b67d1b51-cf72-4f69-852f-824725f968d9" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"  >
-<span class="mr-2 d-none d-lg-inline text-gray-100">Design</span>
-</a>
-<div class=" dropdown-list dropdown-menu shadow animated--grow-in" aria-labelledby="b67d1b51-cf72-4f69-852f-824725f968d9" >
-<a class="dropdown-item" href="/Design/Clean-Design-In-Blazor.html" >
-<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
-Clean Design Principles in Blazor Applications
-</a>
-<a class="dropdown-item" href="/Design/Clean-Design-Blazor-Template.html" >
-<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
-A Blazor Clean Design Template
-</a>
-<a class="dropdown-item" href="/Design/Clean-Design-Blazor-Template-Solution-Structure.html" >
-<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
-Solution Structure in the Clean Design Blazor Template
-</a>
-<a class="dropdown-item" href="/Design/Clean-Design-Blazor-Template-DataServices.html" >
-<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
-Data Services in the Clean Design Blazor Template
-</a>
-<a class="dropdown-item" href="/Design/Clean-Design-Blazor-Template-UI.html" >
-<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
-The UI in the Clean Design Blazor Template
-</a>
-<a class="dropdown-item" href="/Design/Clean-Design-Blazor-Template-Solution-Setup.html" >
-<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
-Solution Setup in the Clean Design Blazor Template
-</a>
-<a class="dropdown-item" href="/Design/Clean-Design-Blazor-Template-Testing.html" >
-<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
-Testing in the Clean Design Blazor Template
-</a>
-</div>
-</li>
-<li class="nav-item dropdown no-arrow mx-1" >
-<a class="nav-link dropdown-toggle" href="#" id="2f9140f9-74ce-493b-8702-4a7c0c3d6731" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"  >
-<span class="mr-2 d-none d-lg-inline text-gray-100">Modern C#</span>
-</a>
-<div class=" dropdown-list dropdown-menu shadow animated--grow-in" aria-labelledby="2f9140f9-74ce-493b-8702-4a7c0c3d6731" >
-<a class="dropdown-item" href="/Modern-Coding-Patterns/Nullable-And-VS-2022.html" >
-<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
-Nullable And VS 2022
-</a>
-</div>
-</li>
-</ul>
-
-    <div class="ms-5 me-5 ml-auto">
-        <h1>Cold Elm Coders</h1>
-    </div>
-</nav>
-
-
-    </div>
-    <!--End topbar-->
-    <!--Sidebar-->
-    <div id="sidebar">
-        
-<div class="article-info p-2" Published: 01-01-2022 >
-<div>Published: 01-01-2022</div>
-<div>Last Updated: 01-01-2022</div>
-<div>Author: Shaun Curtis</div>
-</div>
-
-        
-<h4 class="p-2">Table of Contents</h4>
+	<div class="container-fluid"><div class="row"><div class="col-12 col-sm-3 col-lg-2 bg-light pt-2"><div class="article-info p-2"><div class="mb-2">Published: 01-Jan-2022</div>
+                <div class="mb-2">Updated: 01-Jan-2022</div>
+                <div class="mb-2">Author: Shaun Curtis</div></div>
+    <h4 class="p-2">Table of Contents</h4>
 <ul class="TOC" >
 <li class="TOC-item TOC-item-0" >
 <a class="TOC-link" href="#">Top</a>
@@ -316,197 +49,205 @@ Nullable And VS 2022
 <ul class="TOC TOC-1" >
 <li class="TOC-item TOC-item-2" >
 <a class="TOC-link" href="#repo-and-demo-site">Repo and Demo Site</a>
-<ul class="TOC TOC-2" >
-<li class="TOC-item TOC-item-3" >
-<a class="TOC-link" href="#toast">Toast</a>
 </li>
-<li class="TOC-item TOC-item-3" >
-<a class="TOC-link" href="#toaster-service">Toaster Service</a>
-</li>
-<li class="TOC-item TOC-item-3" >
-<a class="TOC-link" href="#toaster">Toaster</a>
-</li>
-</ul>
+<li class="TOC-item TOC-item-2" >
+<a class="TOC-link" href="#code-classes">Code Classes</a>
 </li>
 <li class="TOC-item TOC-item-2" >
 <a class="TOC-link" href="#implementing">Implementing</a>
 </li>
-</ul>
+<li class="TOC-item TOC-item-2" >
+<a class="TOC-link" href="#wrap-up">Wrap Up</a>
 </li>
 </ul>
 </li>
 </ul>
-
-    </div>
-    <!--End Sidebar-->
-    <!-- Page Wrapper -->
-    <div id="wrapper">
-        <!-- Content Wrapper -->
-        <div id="content-wrapper" class="d-flex flex-column">
-            <!-- Main Content -->
-            <div id="content">
-                <!-- Topbar -->
-                <div id="article">
-                    <!-- Article -->
-                    
-<!-- Header -->
-<header class="ex-header-article">
-    <div class="container">
-        <div class="row pt-3 pb-3 border-bottom">
-            <div class="col">
-                
-<h1>Blazor Bootstrap Toaster</h1>
-<div>Building a Blazor Bootstrap Toaster</div>
-
-            </div> <!-- end of col -->
-        </div> <!-- end of row -->
-    </div> <!-- end of container -->
-</header> <!-- end of ex-header -->
-<!-- end of header -->
-
-
-                    
-<!-- Article Container -->
-<div class="ex-basic-1 pt-4">
-    <div class="container">
-        <div class="row">
-            <div class="col-12">
-                
-
-        <h2 id="repo-and-demo-site">Repo and Demo Site</h2>
-<p>You can find the code in my <a href="https://github.com/ShaunCurtis/Blazr.Demo.Database">Blazr.Demo.Database Repo</a>.  Search the repo for the relevant files.</p>
-<ul>
-<li>The Service files are in <em>Blazr.Core/Services/Toaster</em>.</li>
-<li>The Component is in <em>Blazr.UI.Bootstrap/Components/Toaster</em>.</li>
+</li>
 </ul>
+</div>
+			
+			<div class="col-12 col-sm-9 col-lg-10 p-2"><div class="pt-2 pb-2 border-bottom mb-4 text-primary"><h1>Blazor Bootstrap Toaster</h1>
+            <div><small>Building a Blazor Bootstrap Toaster.</small></div></div>
+    <p>This article shows how to build a simple Bootstrap Toaster in Blazor.</p>
+<p>It demonstrates several programming principles and coding patterns that are applicable in almost all Blazor applications.</p>
+<ol>
+<li><p><strong>Separation of Concerns</strong> - Data doesn't belong in the UI.  The Toaster UI component contains no data or data management.  It job is to display toasts.</p>
+</li>
+<li><p><strong>The Blazor Show/Hide Pattern</strong> - I was reluctant to call this a pattern, but the number of times I've see programmers trying to achieve this with JSInterop changed my mind.  This pattern implements CSS framework <code>.Show()</code> and <code>.Hide()</code> Javascript functionality in C# in the component.</p>
+</li>
+<li><p><strong>The Blazor Notification Pattern</strong> - decouples UI components from the underlying data that drive their behaviour using events.</p>
+</li>
+<li><p><strong>Value Objects</strong> - Modern design emphasises the use of value objects wherever appropriate.</p>
+</li>
+</ol>
+<h2 id="repo-and-demo-site">Repo and Demo Site</h2>
+<p>You can find the code in my <a href="https://github.com/ShaunCurtis/Blazr.Demo.Toaster">Blazr.Demo.Toaster Repo</a>.</p>
 <p>A demo site can be found here at <a href="https://blazr-demo-database-server.azurewebsites.net">https://blazr-demo-database-server.azurewebsites.net</a></p>
-<p><img src="https://shauncurtis.github.io/posts/assets/Toaster/Toaster-Startup.png" alt="Example"></p>
+<p><img src="./assets/Toaster/Toaster-Startup.png" alt="Example" /></p>
+<h2 id="code-classes">Code Classes</h2>
 <h3 id="toast">Toast</h3>
-<p>First <code>Toast</code>, declared as a <code>record</code>.  <code>TTD</code> - Time To Die - defines the expiration time for the Toast.</p>
-<pre><code class="language-csharp"><div><span class="hljs-keyword">public</span> <span class="hljs-keyword">record</span> <span class="hljs-title">Toast</span>
-{
-    <span class="hljs-keyword">public</span> Guid Id = Guid.NewGuid();
-    <span class="hljs-keyword">public</span> <span class="hljs-keyword">string</span> Title { <span class="hljs-keyword">get</span>; <span class="hljs-keyword">init</span>; } = <span class="hljs-keyword">string</span>.Empty;
-    <span class="hljs-keyword">public</span> <span class="hljs-keyword">string</span> Message { <span class="hljs-keyword">get</span>; <span class="hljs-keyword">init</span>; } = <span class="hljs-keyword">string</span>.Empty;
-    <span class="hljs-keyword">public</span> MessageColour MessageColour { <span class="hljs-keyword">get</span>; <span class="hljs-keyword">init</span>; } = MessageColour.Primary;
-    <span class="hljs-keyword">public</span> DateTimeOffset Posted = DateTimeOffset.Now;
-    <span class="hljs-keyword">public</span> DateTimeOffset TTD { <span class="hljs-keyword">get</span>; <span class="hljs-keyword">init</span>; } = DateTimeOffset.Now.AddSeconds(<span class="hljs-number">30</span>);
-    <span class="hljs-keyword">public</span> <span class="hljs-keyword">bool</span> IsBurnt =&gt; TTD &lt; DateTimeOffset.Now;
-    <span class="hljs-keyword">private</span> TimeSpan elapsedTime =&gt; Posted - DateTimeOffset.Now;
-
-    <span class="hljs-keyword">public</span> <span class="hljs-keyword">string</span> ElapsedTimeText =&gt;
-        elapsedTime.Seconds &gt; <span class="hljs-number">60</span>
-        ? <span class="hljs-string">$&quot;posted <span class="hljs-subst">{-elapsedTime.Minutes}</span> mins ago&quot;</span>
-        : <span class="hljs-string">$&quot;posted <span class="hljs-subst">{-elapsedTime.Seconds}</span> secs ago&quot;</span>;
-
-
-    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> Toast <span class="hljs-title">NewTTD</span>(<span class="hljs-params"><span class="hljs-keyword">string</span> title, <span class="hljs-keyword">string</span> message, MessageColour messageColour, <span class="hljs-keyword">int</span> secsToLive</span>)</span>
-        =&gt; <span class="hljs-keyword">new</span> Toast
-        {
-            Title = title,
-            Message = message,
-            MessageColour = messageColour,
-            TTD = DateTimeOffset.Now.AddSeconds(secsToLive)
-        };
-}
-</div></code></pre>
-<p><code>MessageColour</code> is an <code>enum</code>, based on the fairly standard Css Framework nomenclature.</p>
-<pre><code class="language-csharp"><div><span class="hljs-keyword">public</span> <span class="hljs-keyword">enum</span> MessageColour
+<p>First an <code>enum</code> for the message colour.  It uses Bootstrap nomenclature directly to make building Css strings simple.</p>
+<pre><code class="language-csharp">public enum MessageColour
 {
     Primary, Secondary, Dark, Light, Success, Danger, Warning, Info
 }
-</div></code></pre>
-<h3 id="toaster-service">Toaster Service</h3>
-<p><code>ToasterService</code> is a DI service to hold and manage Toasts.  It has a private list to hold the toasts with add and clear methods.  There's a timer to trigger <code>ClearTTDs</code> to clear out expired toasts and if necessary raise the <code>ToasterChanged</code> event.  It also raises the <code>ToasterTimerElapsed</code> event on each cycle.</p>
-<pre><code class="language-csharp"><div><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title">ToasterService</span> : <span class="hljs-title">IDisposable</span>
+</code></pre>
+<p><code>Toast</code> is declared as a value object.  Once we've created an instance, we have no reason to change it.</p>
+<ol>
+<li>Toast is declared as a <code>record</code>.</li>
+<li>There are five public properties that are used by the UI to display the toast. All are declared as immutable  with <code>{ get; init; }</code>.</li>
+<li><code>TimeToBurn</code> uses <code>DateTimeOffset</code> to give time zone independent absolute time.</li>
+</ol>
+<pre><code class="language-csharp">public record Toast
 {
-    <span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-keyword">readonly</span> <span class="hljs-title">List</span>&lt;<span class="hljs-title">Toast</span>&gt; _toastList</span> = <span class="hljs-keyword">new</span> List&lt;Toast&gt;();
-    <span class="hljs-keyword">private</span> System.Timers.Timer _timer = <span class="hljs-keyword">new</span> System.Timers.Timer();
-    <span class="hljs-keyword">public</span> <span class="hljs-keyword">event</span> EventHandler? ToasterChanged;
-    <span class="hljs-keyword">public</span> <span class="hljs-keyword">event</span> EventHandler? ToasterTimerElapsed;
-    <span class="hljs-keyword">public</span> <span class="hljs-keyword">bool</span> HasToasts =&gt; _toastList.Count &gt; <span class="hljs-number">0</span>;
+    public Guid Id = Guid.NewGuid();
+    public string Title { get; init; } = string.Empty;
+    public string Message { get; init; } = string.Empty;
+    public MessageColour MessageColour { get; init; } = MessageColour.Primary;
+    public DateTimeOffset TimeToBurn { get; init; } = DateTimeOffset.Now.AddSeconds(30);
+</code></pre>
+<p>Next:</p>
+<ol>
+<li><code>Posted</code> is a object creation timestamp.</li>
+<li><code>IsBurnt</code> is a bool to check toast expiration.</li>
+<li><code>elapsedTime</code> is used to build <code>ElapsedTimeText</code>.</li>
+<li><code>ElapsedTimeText</code> is used by the UI Component.</li>
+</ol>
+<pre><code class="language-csharp">public readonly DateTimeOffset Posted = DateTimeOffset.Now;
+public bool IsBurnt =&gt; TimeToBurn &lt; DateTimeOffset.Now;
+private TimeSpan elapsedTime =&gt; Posted - DateTimeOffset.Now;
 
-    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">ToasterService</span>(<span class="hljs-params"></span>)</span>
+public string ElapsedTimeText =&gt;
+    elapsedTime.Seconds &gt; 60
+    ? $&quot;posted {-elapsedTime.Minutes} mins ago&quot;
+    : $&quot;posted {-elapsedTime.Seconds} secs ago&quot;;
+</code></pre>
+<p>Finally a static constructor helper method.</p>
+<pre><code class="language-csharp">public static Toast NewToast(string title, string message, MessageColour messageColour, int secsToLive)
+    =&gt; new Toast
     {
-        AddToast(<span class="hljs-keyword">new</span> Toast { Title = <span class="hljs-string">&quot;Welcome Toast&quot;</span>, Message = <span class="hljs-string">&quot;Welcome to this Application.  I&#x27;ll disappear after 15 seconds.&quot;</span>, TTD = DateTimeOffset.Now.AddSeconds(<span class="hljs-number">10</span>) });
-        _timer.Interval = <span class="hljs-number">5000</span>;
-        _timer.AutoReset = <span class="hljs-literal">true</span>;
-        _timer.Elapsed += <span class="hljs-keyword">this</span>.TimerElapsed;
-        _timer.Start();
-    }
-
-    <span class="hljs-function"><span class="hljs-keyword">public</span> List&lt;Toast&gt; <span class="hljs-title">GetToasts</span>(<span class="hljs-params"></span>)</span>
+        Title = title,
+        Message = message,
+        MessageColour = messageColour,
+        TimeToBurn = DateTimeOffset.Now.AddSeconds(secsToLive)
+    };
+</code></pre>
+<h3 id="toaster-service">Toaster Service</h3>
+<p><code>ToasterService</code> is a Dependancy Injection service that holds and manages Toasts.  It has a private list to hold the toasts with add and clear methods.  There's a timer to trigger <code>ClearBurntToast</code> to clear out expired toasts and if necessary raise the <code>ToasterChanged</code> event.  It also raises the <code>ToasterTimerElapsed</code> event on each timer cycle.</p>
+<ol>
+<li>It's a standard class.</li>
+<li>Implements <code>IDisposable</code> as it registers an event handler with the timer that needs disposing correctly.</li>
+<li>Has a read only private collection of <code>Toast</code> instances.  The list is managed internally.</li>
+<li>Has an internal timer that drives the classic service behaviour.</li>
+</ol>
+<pre><code class="language-csharp">public class ToasterService : IDisposable
+{
+    private readonly List&lt;Toast&gt; _toastList = new List&lt;Toast&gt;();
+    private System.Timers.Timer _timer = new System.Timers.Timer();
+</code></pre>
+<p>There are two public events that other services or UI components can subscribe to.</p>
+<ol>
+<li><code>ToasterChanged</code> is raised whenever the toast list is changed.</li>
+<li><code>ToasterTimerElapsed</code> is raised on each timer loop.</li>
+<li><code>HasToasts</code> is a simple status bool.</li>
+</ol>
+<pre><code class="language-csharp">
+    public event EventHandler? ToasterChanged;
+    public event EventHandler? ToasterTimerElapsed;
+    public bool HasToasts =&gt; _toastList.Count &gt; 0;
+</code></pre>
+<p><code>ClearBurntToast</code> is our toast list management method.  It checks to see it there's any burnt toast.  It there is it clears them out and raises the <code>ToasterChanged</code> event.</p>
+<pre><code class="language-csharp">    private bool ClearBurntToast()
     {
-        ClearTTDs();
-        <span class="hljs-keyword">return</span> _toastList;
-    }
-
-    <span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-keyword">void</span> <span class="hljs-title">TimerElapsed</span>(<span class="hljs-params"><span class="hljs-keyword">object</span>? sender, ElapsedEventArgs e</span>)</span>
-    { 
-        <span class="hljs-keyword">this</span>.ClearTTDs();
-        <span class="hljs-keyword">this</span>.ToasterTimerElapsed?.Invoke(<span class="hljs-keyword">this</span>, EventArgs.Empty);
-    }
-
-    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">AddToast</span>(<span class="hljs-params">Toast toast</span>)</span>
-    {
-        _toastList.Add(toast);
-        <span class="hljs-comment">// only raise the ToasterChanged event if it hasn&#x27;t already been raised by ClearTTDs</span>
-        <span class="hljs-keyword">if</span> (!<span class="hljs-keyword">this</span>.ClearTTDs())
-            <span class="hljs-keyword">this</span>.ToasterChanged?.Invoke(<span class="hljs-keyword">this</span>, EventArgs.Empty);
-    }
-
-    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">ClearToast</span>(<span class="hljs-params">Toast toast</span>)</span>
-    {
-        <span class="hljs-keyword">if</span> (_toastList.Contains(toast))
-        {
-            _toastList.Remove(toast);
-            <span class="hljs-comment">// only raise the ToasterChanged event if it hasn&#x27;t already been raised by ClearTTDs</span>
-            <span class="hljs-keyword">if</span> (!<span class="hljs-keyword">this</span>.ClearTTDs())
-                <span class="hljs-keyword">this</span>.ToasterChanged?.Invoke(<span class="hljs-keyword">this</span>, EventArgs.Empty);
-        }
-    }
-
-    <span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-keyword">bool</span> <span class="hljs-title">ClearTTDs</span>(<span class="hljs-params"></span>)</span>
-    {
-        <span class="hljs-keyword">var</span> toastsToDelete = _toastList.Where(item =&gt; item.IsBurnt).ToList();
-        <span class="hljs-keyword">if</span> (toastsToDelete <span class="hljs-keyword">is</span> not <span class="hljs-literal">null</span> &amp;&amp; toastsToDelete.Count &gt; <span class="hljs-number">0</span>)
+        var toastsToDelete = _toastList.Where(item =&gt; item.IsBurnt).ToList();
+        if (toastsToDelete is not null &amp;&amp; toastsToDelete.Count &gt; 0)
         {
             toastsToDelete.ForEach(toast =&gt; _toastList.Remove(toast));
-            <span class="hljs-keyword">this</span>.ToasterChanged?.Invoke(<span class="hljs-keyword">this</span>, EventArgs.Empty);
-            <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;
+            this.ToasterChanged?.Invoke(this, EventArgs.Empty);
+            return true;
         }
-        <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;
+        return false;
+    }
+</code></pre>
+<p><code>TimerElapsed</code> is our event handler for the timer elapsed event.  It clears any burnt toast and raises the <code>ToasterTimerElapsed</code> event.</p>
+<pre><code class="language-csharp">    private void TimerElapsed(object? sender, ElapsedEventArgs e)
+    { 
+        this.ClearBurntToast();
+        this.ToasterTimerElapsed?.Invoke(this, EventArgs.Empty);
+    }
+</code></pre>
+<p>The constructor adds a welcome <code>Toast</code>, sets up the timer and registers the event handler.</p>
+<pre><code class="language-csharp">    public ToasterService()
+    {
+        AddToast(new Toast { Title = &quot;Welcome Toast&quot;, Message = &quot;Welcome to this Application.  I'll disappear after 15 seconds.&quot;, TTD = DateTimeOffset.Now.AddSeconds(10) });
+        _timer.Interval = 5000;
+        _timer.AutoReset = true;
+        _timer.Elapsed += this.TimerElapsed;
+        _timer.Start();
+    }
+</code></pre>
+<p>The <em>CRUD</em> type operations are self explanatory. Each calls <code>ClearBurntToast</code> to run the management method.</p>
+<pre><code class="language-csharp">
+    public List&lt;Toast&gt; GetToasts()
+    {
+        ClearBurntToast();
+        return _toastList;
     }
 
-    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">Dispose</span>(<span class="hljs-params"></span>)</span>
+    public void AddToast(Toast toast)
     {
-        <span class="hljs-keyword">if</span> (_timer <span class="hljs-keyword">is</span> not <span class="hljs-literal">null</span>)
+        _toastList.Add(toast);
+        // only raise the ToasterChanged event if it hasn't already been raised by ClearBurntToast
+        if (!this.ClearBurntToast())
+            this.ToasterChanged?.Invoke(this, EventArgs.Empty);
+    }
+
+    public void ClearToast(Toast toast)
+    {
+        if (_toastList.Contains(toast))
         {
-            _timer.Elapsed += <span class="hljs-keyword">this</span>.TimerElapsed;
+            _toastList.Remove(toast);
+            // only raise the ToasterChanged event if it hasn't already been raised by ClearBurntToast
+            if (!this.ClearBurntToast())
+                this.ToasterChanged?.Invoke(this, EventArgs.Empty);
+        }
+    }
+</code></pre>
+<p>Finally the <code>Dispose</code> method clears the timer event handler.</p>
+<pre><code class="language-csharp">    public void Dispose()
+    {
+        if (_timer is not null)
+        {
+            _timer.Elapsed += this.TimerElapsed;
             _timer.Stop();
         }
     }
 }
-</div></code></pre>
-<p><code>ToasterService</code> can run as either a <code>Scoped</code> or <code>Singleton</code> service, depending on what you're using it for.</p>
+</code></pre>
+<p><code>ToasterService</code> can run as either a <code>Scoped</code> or <code>Singleton</code> service, depending on what you're want it to do.</p>
 <h3 id="toaster">Toaster</h3>
-<p><code>Toaster</code> is the UI component to display toasts.</p>
-<p>The razor markup implements the Bootstrap Toast markup, with a loop to add each toast.  The markup will display the toasts stacked in the top right.</p>
-<pre><code class="language-csharp"><div>@implements IDisposable
-@if (<span class="hljs-keyword">this</span>.toasterService.HasToasts)
+<p><code>Toaster</code> is the UI component.</p>
+<p>The razor markup implements the Bootstrap Toast markup, with a <code>foreach</code> loop to add each toast.  The markup will display the toasts stacked in the top right.</p>
+<ol>
+<li>The component checks if there's anything to display - <code>this.toasterService.HasToasts</code>.  If not then no content is rendered -  the Blazor Show/Hide Pattern.</li>
+<li><code>@_toastCss</code> gets the correct Css string for the message colour.</li>
+<li>The close <strong>X</strong> calls <code>this.ClearToast(toast)</code> to remove a toast.</li>
+</ol>
+<pre><code class="language-csharp">@implements IDisposable
+@if (this.toasterService.HasToasts)
 {
-    &lt;div <span class="hljs-keyword">class</span>=<span class="hljs-string">&quot;&quot;</span>&gt;
-        &lt;div <span class="hljs-keyword">class</span>=<span class="hljs-string">&quot;toast-container position-absolute top-0 end-0 mt-5 pt-5 pe-2&quot;</span>&gt;
-            @foreach (<span class="hljs-keyword">var</span> toast <span class="hljs-keyword">in</span> <span class="hljs-keyword">this</span>.toasterService.GetToasts())
+    &lt;div class=&quot;&quot;&gt;
+        &lt;div class=&quot;toast-container position-absolute top-0 end-0 mt-5 pt-5 pe-2&quot;&gt;
+            @foreach (var toast in this.toasterService.GetToasts())
             {
-                <span class="hljs-keyword">var</span> _toastCss = toastCss(toast);
-                &lt;div <span class="hljs-keyword">class</span>=<span class="hljs-string">&quot;toast show&quot;</span> role=<span class="hljs-string">&quot;alert&quot;</span> aria-live=<span class="hljs-string">&quot;assertive&quot;</span> aria-atomic=<span class="hljs-string">&quot;true&quot;</span>&gt;
-                    &lt;div <span class="hljs-keyword">class</span>=<span class="hljs-string">&quot;toast-header @_toastCss&quot;</span>&gt;
-                        &lt;strong <span class="hljs-keyword">class</span>=<span class="hljs-string">&quot;me-auto&quot;</span>&gt;@toast.Title&lt;/strong&gt;
-                        &lt;small <span class="hljs-keyword">class</span>=<span class="hljs-string">&quot;@_toastCss&quot;</span>&gt;@toast.ElapsedTimeText&lt;/small&gt;
-                        &lt;button type=<span class="hljs-string">&quot;button&quot;</span> <span class="hljs-keyword">class</span>=<span class="hljs-string">&quot;btn-close btn-close-white&quot;</span> aria-label=<span class="hljs-string">&quot;Close&quot;</span> @onclick=<span class="hljs-string">&quot;() =&gt; this.ClearToast(toast)&quot;</span>&gt;&lt;/button&gt;
+                var _toastCss = toastCss(toast);
+                &lt;div class=&quot;toast show&quot; role=&quot;alert&quot; aria-live=&quot;assertive&quot; aria-atomic=&quot;true&quot;&gt;
+                    &lt;div class=&quot;toast-header @_toastCss&quot;&gt;
+                        &lt;strong class=&quot;me-auto&quot;&gt;@toast.Title&lt;/strong&gt;
+                        &lt;small class=&quot;@_toastCss&quot;&gt;@toast.ElapsedTimeText&lt;/small&gt;
+                        &lt;button type=&quot;button&quot; class=&quot;btn-close btn-close-white&quot; aria-label=&quot;Close&quot; @onclick=&quot;() =&gt; this.ClearToast(toast)&quot;&gt;&lt;/button&gt;
                     &lt;/div&gt;
-                    &lt;div <span class="hljs-keyword">class</span>=<span class="hljs-string">&quot;toast-body&quot;</span>&gt;
+                    &lt;div class=&quot;toast-body&quot;&gt;
                         @toast.Message
                     &lt;/div&gt;
                 &lt;/div&gt;
@@ -514,120 +255,98 @@ Nullable And VS 2022
         &lt;/div&gt;
     &lt;/div&gt;
 }
-</div></code></pre>
-<p>The code:</p>
-<ul>
-<li>injects the <code>ToasterService</code></li>
-<li>Wires up event handlers to the two events.  These simply invoke <code>StateHasChanged</code> to re-render the component.  Note <code>StateHasChanged</code> is invoked on the UI thread: in Blazor Server the timer is probably running on another thread.</li>
-<li>Clears a toast if the X is clicked.</li>
-<li>Works out the correct CSS for the colour.</li>
-</ul>
-<pre><code class="language-csharp"><div><span class="hljs-keyword">public</span> <span class="hljs-keyword">partial</span> <span class="hljs-keyword">class</span> <span class="hljs-title">Toaster</span> : <span class="hljs-title">ComponentBase</span>, <span class="hljs-title">IDisposable</span>
+</code></pre>
+<p>The code behind class:</p>
+<ol>
+<li>Inherits from <code>ComponentBase</code> and implements <code>IDisposable</code> to unhook event handlers.</li>
+<li>Injects the <code>ToasterService</code>.</li>
+<li>Creates a second null forgiving reference to the <code>ToasterService</code>.  We're in the nullable world, but the C# compiler doesn't know <code>ToasterService</code> can't be null, so we create a second null forgiving reference so we don't need to null forgive ever time we use the <code>ToasterService</code> instance.</li>
+</ol>
+<pre><code class="language-csharp">public partial class Toaster : ComponentBase, IDisposable
 {
-    [<span class="hljs-meta">Inject</span>] <span class="hljs-keyword">private</span> ToasterService? _toasterService { <span class="hljs-keyword">get</span>; <span class="hljs-keyword">set</span>; }
+    [Inject] private ToasterService? _toasterService { get; set; }
 
-    <span class="hljs-keyword">private</span> ToasterService toasterService =&gt; _toasterService!;
-
-    <span class="hljs-function"><span class="hljs-keyword">protected</span> <span class="hljs-keyword">override</span> <span class="hljs-keyword">void</span> <span class="hljs-title">OnInitialized</span>(<span class="hljs-params"></span>)</span>
+    private ToasterService toasterService =&gt; _toasterService!;
+</code></pre>
+<p><code>ToastChanged</code> is the event handler for the <code>ToasterService</code> events.  It invokes <code>StateHasChanged</code> on the UI thread.</p>
+<pre><code class="language-csharp">    private void ToastChanged(object? sender, EventArgs e)
+        =&gt; this.InvokeAsync(this.StateHasChanged);
+</code></pre>
+<p><code>OnInitialized</code> registers the two <code>ToasterService</code> events to <code>ToastChanged</code>, and <code>Dispose</code> removes them.</p>
+<pre><code class="language-csharp">    protected override void OnInitialized()
     { 
-        <span class="hljs-keyword">this</span>.toasterService.ToasterChanged += ToastChanged;
-        <span class="hljs-keyword">this</span>.toasterService.ToasterTimerElapsed += ToastChanged;
+        this.toasterService.ToasterChanged += ToastChanged;
+        this.toasterService.ToasterTimerElapsed += ToastChanged;
     }
 
-    <span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-keyword">void</span> <span class="hljs-title">ClearToast</span>(<span class="hljs-params">Toast toast</span>)</span>
+    public void Dispose()
+    { 
+        this.toasterService.ToasterChanged -= ToastChanged;
+        this.toasterService.ToasterTimerElapsed -= ToastChanged;
+    }
+</code></pre>
+<p>Finally <code>ClearToast</code> clears the selected toast from the service and <code>toastCss</code> gets the toast background colour.</p>
+<pre><code class="language-csharp">    private void ClearToast(Toast toast)
         =&gt; toasterService.ClearToast(toast);
 
-    <span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-keyword">void</span> <span class="hljs-title">ToastChanged</span>(<span class="hljs-params"><span class="hljs-keyword">object</span>? sender, EventArgs e</span>)</span>
-        =&gt; <span class="hljs-keyword">this</span>.InvokeAsync(<span class="hljs-keyword">this</span>.StateHasChanged);
-
-    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">Dispose</span>(<span class="hljs-params"></span>)</span>
-    { 
-        <span class="hljs-keyword">this</span>.toasterService.ToasterChanged -= ToastChanged;
-        <span class="hljs-keyword">this</span>.toasterService.ToasterTimerElapsed -= ToastChanged;
-    }
-
-    <span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-keyword">string</span> <span class="hljs-title">toastCss</span>(<span class="hljs-params">Toast toast</span>)</span>
+    private string toastCss(Toast toast)
     {
-        <span class="hljs-keyword">var</span> colour = Enum.GetName(<span class="hljs-keyword">typeof</span>(MessageColour), toast.MessageColour)?.ToLower();
-        <span class="hljs-keyword">return</span> toast.MessageColour <span class="hljs-keyword">switch</span>
+        var colour = Enum.GetName(typeof(MessageColour), toast.MessageColour)?.ToLower();
+        return toast.MessageColour switch
         {
-            MessageColour.Light =&gt; <span class="hljs-string">&quot;bg-light&quot;</span>,
-            _ =&gt; <span class="hljs-string">$&quot;bg-<span class="hljs-subst">{colour}</span> text-white&quot;</span>
+            MessageColour.Light =&gt; &quot;bg-light&quot;,
+            _ =&gt; $&quot;bg-{colour} text-white&quot;
         };
     }
 }
-</div></code></pre>
+</code></pre>
 <h2 id="implementing">Implementing</h2>
 <ol>
-<li>
-<p>Add <code>ToasterService</code> to the DI service container in Program.</p>
+<li><p>Add <code>ToasterService</code> to the DI service container in Program.</p>
 </li>
-<li>
-<p>Add the component to either <code>Layout</code> or <code>App</code> or whereever you wish to use it.</p>
+<li><p>Add the component to either <code>Layout</code> or <code>App</code> or wherever you wish to use it.</p>
 </li>
 </ol>
-<pre><code class="language-xml"><div><span class="hljs-tag">&lt;<span class="hljs-name">CascadingAuthenticationState</span>&gt;</span>
-    <span class="hljs-tag">&lt;<span class="hljs-name">Router</span> <span class="hljs-attr">AppAssembly</span>=<span class="hljs-string">&quot;@typeof(App).Assembly&quot;</span> <span class="hljs-attr">PreferExactMatches</span>=<span class="hljs-string">&quot;@true&quot;</span>&gt;</span>
+<pre><code class="language-xml">&lt;CascadingAuthenticationState&gt;
+    &lt;Router AppAssembly=&quot;@typeof(App).Assembly&quot; PreferExactMatches=&quot;@true&quot;&gt;
     ....
-    <span class="hljs-tag">&lt;/<span class="hljs-name">Router</span>&gt;</span>
-<span class="hljs-tag">&lt;/<span class="hljs-name">CascadingAuthenticationState</span>&gt;</span>
-<span class="hljs-tag">&lt;<span class="hljs-name">Toaster</span> /&gt;</span>
-</div></code></pre>
+    &lt;/Router&gt;
+&lt;/CascadingAuthenticationState&gt;
+&lt;Toaster /&gt;
+</code></pre>
 <ol start="3">
-<li>Inject the service into any pages you want to raise toasts, and call <code>AddToast</code>.</li>
+<li>Inject the service into any pages where you want to raise toasts, and call <code>AddToast</code>.  The example below shows a demo <code>Index</code> page.</li>
 </ol>
+<pre><code class="language-csharp">@page &quot;/&quot;
 
+&lt;PageTitle&gt;Index&lt;/PageTitle&gt;
+
+&lt;h1&gt;Hello, world!&lt;/h1&gt;
+
+Welcome to your new app.
+
+&lt;SurveyPrompt Title=&quot;How is Blazor working for you?&quot; /&gt;
+&lt;div class=&quot;m-2 p-2&quot;&gt;
+    &lt;button class=&quot;btn btn-primary&quot; @onclick=&quot;AddToast&quot; &gt;Add a Toast&lt;/button&gt;
+&lt;/div&gt;
+
+@code {
+    [Inject] private ToasterService? _toasterService {get; set;}
     
+    private ToasterService toasterService =&gt; _toasterService!;
 
-            </div>
-        </div>
-    </div>
-</div>
-<!-- end of Article Container -->
-
-
-                </div>
-                <!-- End of Main Content -->
-            </div>
-            <!-- Footer -->
-            
-<!-- Copyright -->
-<footer class="sticky-footer bg-white">
-    <div class="container my-auto">
-        <div class="copyright text-center my-auto">
-            
-<span>Copyright &copy; Cold Elm Coders - 2022</span>
-
-        </div>
-    </div>
-</footer>
-<!-- end of copyright -->
+    private void AddToast()
+    =&gt; toasterService.AddToast(Toast.NewToast(&quot;Hello World&quot;, &quot;Hello from Blazor&quot;, MessageColour.Info, 30));
+}
+</code></pre>
+<h2 id="wrap-up">Wrap Up</h2>
+<p>The design demonstrates a clean separation of data from UI.  All data handling happens in <code>ToasterService</code>.  <code>Toaster</code> uses references to the data objects in <code>ToasterService</code>.</p>
+<p>The Blazor notification pattern is used to update the UI whenever the toast list changes.  <code>Toaster</code> registers an event handler with the two <code>ToasterService</code> events which re-renders the component whenever an event occurs.</p>
+<p><code>Toaster</code> demonstrates how to show and hide UI markup based on state.</p>
+<p><code>Toast</code> is a value object.  It simplifies equality checking (we don't do any here) and ensures toasts can't be modified once created.</p>
+</div></div></div></body></html>
 
 
-            <!-- End of Footer -->
-        </div>
-        <!-- End of Content Wrapper -->
-        
-<a class="scroll-to-top rounded" href="#page-top">
-    <i class="fas fa-angle-up"></i>
-</a>
 
 
-    </div>
-    <!-- End of Page Wrapper -->
-    <!-- Scripts -->
-    
-<!-- Scripts -->
-<!-- Bootstrap core JavaScript-->
-<script src="/assets/vendor/jquery/jquery.min.js"></script>
-<script src="/assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
-<!-- Core plugin JavaScript-->
-<script src="/assets/vendor/jquery-easing/jquery.easing.min.js"></script>
-
-<!-- Custom scripts for all pages-->
-<script src="/assets/js/sb-admin-2.min.js"></script>
-
-
-</body>
-</html>

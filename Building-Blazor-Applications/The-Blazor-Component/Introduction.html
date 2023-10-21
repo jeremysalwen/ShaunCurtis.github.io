@@ -1,313 +1,46 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<html lang="en"><head><meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<base href="/">
 
-<!-- SEO Meta Tags -->
-<meta name="description" content="Your description">
-<meta name="author" content="Your name">
+	
 
-<!-- OG Meta Tags to improve the way the post looks when you share the page on Facebook, Twitter, LinkedIn -->
-<meta property="og:site_name" content="" /> <!-- website name -->
-<meta property="og:site" content="" /> <!-- website link -->
-<meta property="og:title" content="" /> <!-- title shown in the actual shared post -->
-<meta property="og:description" content="" /> <!-- description shown in the actual shared post -->
-<meta property="og:image" content="" /> <!-- image link, make sure it's jpg -->
-<meta property="og:url" content="" /> <!-- where do you want your post to link to -->
-<meta name="twitter:card" content="summary_large_image"> <!-- to have large image post format in Twitter -->
+	
 
-<meta charset="utf-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	
+	<link href="/resources/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+	<link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
 
+	
+	<link href="/resources/css/sb-admin-2.css" rel="stylesheet" type="text/css">
+	<link href="/resources/css/site.css" rel="stylesheet" type="text/css">
 
-<meta name="description" content="An Introduction to the Blazor Component" >
-<meta name="author" content="Shaun Curtis" >
+	
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/highlight.css">
+	<link rel="stylesheet" href="/resources/css/article.css" type="text/css">
 
+	
+	<link rel="icon" href="/images/favicon.png">
 
+	<title>Introduction</title>
+        <meta property="author" content="Shaun Curtis" />
+        <meta property="description" content="Exploring the Out-of-the-Box ComponentBase." />
+    <meta property="og:site_name" content="Cold Elm Coders" />
+        <meta property="og:site" content="https://shauncurtis.github.io/" />
+        <meta property="og:title" content="Introduction" />
+        <meta property="og:description" content="Exploring the Out-of-the-Box ComponentBase." /></head>
+<body><header class="navbar bg-dark p-2 text-large text-light"><section class="navbar-section  text-light"><a href="/" class="navbar-brand mr-2 text-large text-light p-2">Cold Elm Coders</a>
+			<a href="/Posts" class="btn btn-link text-light">Posts</a>
+			<a href="/Rants" class="btn btn-link text-light">Rants</a>
+			<a href="/Articles" class="btn btn-link text-light">Articles</a>
+			<a href="/Stories" class="btn btn-link text-light">Stories</a>
+			<a href="/about.html" class="btn btn-link text-light">About</a></section></header>
 
-<title>Introduction</title>
-
-
-<!-- Custom fonts for this template-->
-<link href="/assets/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
-<link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
-      rel="stylesheet">
-
-<!-- Custom styles for this template-->
-<link href="/assets/css/sb-admin-2.css" rel="stylesheet" type="text/css">
-<link href="/assets/css/site.css" rel="stylesheet" type="text/css">
-
-<!-- Favicon  -->
-<link rel="icon" href="/assets/images/favicon.png">
-
-
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/highlight.css">
-    <link rel="stylesheet" href="/assets/css/article.css" type="text/css">
-</head>
-<body id="page-top">
-    <!--topbar-->
-    <div id="topbar">
-        
-<!-- Topbar -->
-<nav class="navbar navbar-expand navbar-light topbar mb-4 static-top">
-    
-<ul class="navbar-nav" >
-<li class="nav-item" >
-<a class="nav-link " href="/index.html" role="button"  >
-<span class="mr-2 d-none d-lg-inline text-gray-100">Index</span>
-</a>
-</li>
-<li class="nav-item dropdown no-arrow mx-1" >
-<a class="nav-link dropdown-toggle" href="#" id="18d6f53f-d55f-42ed-9377-07a6b82a8566" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"  >
-<span class="mr-2 d-none d-lg-inline text-gray-100">Articles</span>
-</a>
-<div class=" dropdown-list dropdown-menu shadow animated--grow-in" aria-labelledby="18d6f53f-d55f-42ed-9377-07a6b82a8566" >
-<a class="dropdown-item" href="/articles/A-Flexible-App.html" >
-<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
-Creating a Dynamic Blazor App Component
-</a>
-<a class="dropdown-item" href="/articles/Async-Programming-in-DotNetCore.html" >
-<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
-Async Programming In Dotnetcore
-</a>
-<a class="dropdown-item" href="/articles/Blazor-AllinOne.html" >
-<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
-Blazor All In One - Multi SPA Hosting
-</a>
-<a class="dropdown-item" href="/articles/Blazor-Async-Programming.html" >
-<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
-Blazor Async Programming
-</a>
-<a class="dropdown-item" href="/articles/Blazor-Brick-By-Brick.html" >
-<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
-Blazor Brick By Brick
-</a>
-<a class="dropdown-item" href="/articles/Blazor-Components.html" >
-<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
-Blazor Components
-</a>
-<a class="dropdown-item" href="/articles/Blazor-CSS.html" >
-<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
-Blazor CSS
-</a>
-<a class="dropdown-item" href="/articles/Blazor-DataList-Control.html" >
-<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
-Blazor Datalist Control
-</a>
-<a class="dropdown-item" href="/articles/Blazor-Form-Validation.html" >
-<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
-Blazor Form Validation
-</a>
-<a class="dropdown-item" href="/articles/Building-Blazor-List-Components.html" >
-<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
-Building Blazor List Components and the Notification Pattern
-</a>
-<a class="dropdown-item" href="/articles/Building-Edit-Forms.html" >
-<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
-Building Edit Forms
-</a>
-<a class="dropdown-item" href="/articles/EditFormState.html" >
-<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
-The Blazor EditFormState Control
-</a>
-<a class="dropdown-item" href="/articles/Hydra.html" >
-<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
-Blazor Hydra
-</a>
-<a class="dropdown-item" href="/articles/Inline-Dialog.html" >
-<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
-The Blazor Inline Dialog Control
-</a>
-<a class="dropdown-item" href="/articles/Modal-Dialog.html" >
-<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
-A Blazor Modal Dialog
-</a>
-<a class="dropdown-item" href="/articles/Policy-Based-Authorization.html" >
-<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
-Policy Base Authorization in Blazor
-</a>
-<a class="dropdown-item" href="/articles/ValidationFormState.html" >
-<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
-A Blazor Validation Control
-</a>
-<a class="dropdown-item" href="/articles/XML-XSD-Serialization.html" >
-<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
-XML XSD Serialization
-</a>
-</div>
-</li>
-<li class="nav-item dropdown no-arrow mx-1" >
-<a class="nav-link dropdown-toggle" href="#" id="b983d63d-f446-4031-8e68-5137ddf137c1" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"  >
-<span class="mr-2 d-none d-lg-inline text-gray-100">Blazor Database Apps</span>
-</a>
-<div class=" dropdown-list dropdown-menu shadow animated--grow-in" aria-labelledby="b983d63d-f446-4031-8e68-5137ddf137c1" >
-<a class="dropdown-item" href="/Building-a-Database-Application-in-Blazor/Building-a-Database-Application-in-Blazor-Part-1.html" >
-<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
-Building A Database Application In Blazor Part 1
-</a>
-<a class="dropdown-item" href="/Building-a-Database-Application-in-Blazor/Building-a-Database-Application-in-Blazor-Part-2.html" >
-<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
-Building A Database Application In Blazor Part 2
-</a>
-<a class="dropdown-item" href="/Building-a-Database-Application-in-Blazor/Building-a-Database-Application-in-Blazor-Part-3.html" >
-<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
-Building A Database Application In Blazor Part 3
-</a>
-<a class="dropdown-item" href="/Building-a-Database-Application-in-Blazor/Building-a-Database-Application-in-Blazor-Part-4.html" >
-<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
-Building A Database Application In Blazor Part 4
-</a>
-<a class="dropdown-item" href="/Building-a-Database-Application-in-Blazor/Building-a-Database-Application-in-Blazor-Part-5.html" >
-<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
-Building A Database Application In Blazor Part 5
-</a>
-<a class="dropdown-item" href="/Building-a-Database-Application-in-Blazor/Building-a-Database-Application-in-Blazor-Part-6.html" >
-<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
-Building A Database Application In Blazor Part 6
-</a>
-<a class="dropdown-item" href="/Building-a-Database-Application-in-Blazor/index.html" >
-<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
-Building a Database Application in Blazor
-</a>
-</div>
-</li>
-<li class="nav-item dropdown no-arrow mx-1" >
-<a class="nav-link dropdown-toggle" href="#" id="bb8bc4fe-19a5-4a85-aad3-0a50c5c6807f" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"  >
-<span class="mr-2 d-none d-lg-inline text-gray-100">Building Blazor Applications</span>
-</a>
-<div class=" dropdown-list dropdown-menu shadow animated--grow-in" aria-labelledby="bb8bc4fe-19a5-4a85-aad3-0a50c5c6807f" >
-<a class="dropdown-item" href="/Building-Blazor-Applications/Blazor-Async-UI-Events.html" >
-<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
-Blazor Async UI Events
-</a>
-<a class="dropdown-item" href="/Building-Blazor-Applications/Blazor-Bootstrap-Toaster.html" >
-<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
-Blazor Bootstrap Toaster
-</a>
-<a class="dropdown-item" href="/Building-Blazor-Applications/Blazor-Services.html" >
-<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
-Blazor Services
-</a>
-<a class="dropdown-item" href="/Building-Blazor-Applications/Building-A-Blazor-AutoComplete-Control.html" >
-<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
-Building A Blazor Autocomplete Control
-</a>
-<a class="dropdown-item" href="/Building-Blazor-Applications/Building-Wrapper-Components.html" >
-<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
-Building Wrapper Components
-</a>
-<a class="dropdown-item" href="/Building-Blazor-Applications/DBContexts-In-Transient-Services.html" >
-<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
-Dbcontexts In Transient Services
-</a>
-<a class="dropdown-item" href="/Building-Blazor-Applications/DynamicCss.html" >
-<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
-Blazor Dynamic Stylesheets
-</a>
-<a class="dropdown-item" href="/Building-Blazor-Applications/For-ForEach-in-Blazor.html" >
-<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
-For Foreach In Blazor
-</a>
-<a class="dropdown-item" href="/Building-Blazor-Applications/Leaner-Meaner-Greener-Components.html" >
-<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
-Leaner Meaner Greener Components
-</a>
-<a class="dropdown-item" href="/Building-Blazor-Applications/Notification-Service-Pattern.html" >
-<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
-Blazor Notification Service Pattern
-</a>
-<a class="dropdown-item" href="/Building-Blazor-Applications/Rethinking-The-Repository-Pattern.html" >
-<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
-Rethinking The Repository Pattern
-</a>
-<a class="dropdown-item" href="/Building-Blazor-Applications/The-Blazor-Component-Scope-Conumdrum.html" >
-<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
-The Blazor Component Scope Conumdrum
-</a>
-<a class="dropdown-item" href="/Building-Blazor-Applications/The-Blazor-WASM-Hosted-Project.html" >
-<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
-The Blazor WASM Hosted Project
-</a>
-<a class="dropdown-item" href="/Building-Blazor-Applications/Whats-Wrong-with-my-Component-Design.html" >
-<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
-Whats Wrong With My Component Design
-</a>
-<a class="dropdown-item" href="/Building-Blazor-Applications/The-Blazor-Component" >
-<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
-Building Blazor Applications\The Blazor Component
-</a>
-</div>
-</li>
-<li class="nav-item dropdown no-arrow mx-1" >
-<a class="nav-link dropdown-toggle" href="#" id="43d3db36-2c59-46e6-a448-0e0cfbfbc9a5" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"  >
-<span class="mr-2 d-none d-lg-inline text-gray-100">Design</span>
-</a>
-<div class=" dropdown-list dropdown-menu shadow animated--grow-in" aria-labelledby="43d3db36-2c59-46e6-a448-0e0cfbfbc9a5" >
-<a class="dropdown-item" href="/Design/Clean-Design-In-Blazor.html" >
-<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
-Clean Design Principles in Blazor Applications
-</a>
-<a class="dropdown-item" href="/Design/Clean-Design-Blazor-Template.html" >
-<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
-A Blazor Clean Design Template
-</a>
-<a class="dropdown-item" href="/Design/Clean-Design-Blazor-Template-Solution-Structure.html" >
-<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
-Solution Structure in the Clean Design Blazor Template
-</a>
-<a class="dropdown-item" href="/Design/Clean-Design-Blazor-Template-DataServices.html" >
-<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
-Data Services in the Clean Design Blazor Template
-</a>
-<a class="dropdown-item" href="/Design/Clean-Design-Blazor-Template-UI.html" >
-<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
-The UI in the Clean Design Blazor Template
-</a>
-<a class="dropdown-item" href="/Design/Clean-Design-Blazor-Template-Solution-Setup.html" >
-<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
-Solution Setup in the Clean Design Blazor Template
-</a>
-<a class="dropdown-item" href="/Design/Clean-Design-Blazor-Template-Testing.html" >
-<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
-Testing in the Clean Design Blazor Template
-</a>
-</div>
-</li>
-<li class="nav-item dropdown no-arrow mx-1" >
-<a class="nav-link dropdown-toggle" href="#" id="df711e7c-2064-472f-8912-75c9e79bd005" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"  >
-<span class="mr-2 d-none d-lg-inline text-gray-100">Modern C#</span>
-</a>
-<div class=" dropdown-list dropdown-menu shadow animated--grow-in" aria-labelledby="df711e7c-2064-472f-8912-75c9e79bd005" >
-<a class="dropdown-item" href="/Modern-Coding-Patterns/Nullable-And-VS-2022.html" >
-<i class="fas fa-file-alt fa-sm fa-fw mr-2 text-gray-600"></i>
-Nullable And VS 2022
-</a>
-</div>
-</li>
-</ul>
-
-    <div class="ms-5 me-5 ml-auto">
-        <h1>Cold Elm Coders</h1>
-    </div>
-</nav>
-
-
-    </div>
-    <!--End topbar-->
-    <!--Sidebar-->
-    <div id="sidebar">
-        
-<div class="article-info p-2" Published: 17-11-2022 >
-<div>Published: 17-11-2022</div>
-<div>Last Updated: 17-11-2022</div>
-<div>Author: Shaun Curtis</div>
-</div>
-
-        
-<h4 class="p-2">Table of Contents</h4>
+	<div class="container-fluid"><div class="row"><div class="col-12 col-sm-3 col-lg-2 bg-light pt-2"><div class="article-info p-2"><div class="mb-2">Published: 17-Nov-2022</div>
+                <div class="mb-2">Updated: 17-Nov-2022</div>
+                <div class="mb-2">Author: Shaun Curtis</div></div>
+    <h4 class="p-2">Table of Contents</h4>
 <ul class="TOC" >
 <li class="TOC-item TOC-item-0" >
 <a class="TOC-link" href="#">Top</a>
@@ -319,65 +52,19 @@ Nullable And VS 2022
 </li>
 <li class="TOC-item TOC-item-2" >
 <a class="TOC-link" href="#the-blazor-ui">The Blazor UI</a>
-<ul class="TOC TOC-2" >
-<li class="TOC-item TOC-item-3" >
-<a class="TOC-link" href="#blazor-server">Blazor Server</a>
-</li>
-<li class="TOC-item TOC-item-3" >
-<a class="TOC-link" href="#blazor-web-assembly">Blazor Web Assembly</a>
-</li>
-<li class="TOC-item TOC-item-3" >
-<a class="TOC-link" href="#apprazor">App.razor</a>
-</li>
-<li class="TOC-item TOC-item-3" >
-<a class="TOC-link" href="#routed-components">Routed Components</a>
 </li>
 </ul>
 </li>
 </ul>
 </li>
 </ul>
-</li>
-</ul>
-
-    </div>
-    <!--End Sidebar-->
-    <!-- Page Wrapper -->
-    <div id="wrapper">
-        <!-- Content Wrapper -->
-        <div id="content-wrapper" class="d-flex flex-column">
-            <!-- Main Content -->
-            <div id="content">
-                <!-- Topbar -->
-                <div id="article">
-                    <!-- Article -->
-                    
-<!-- Header -->
-<header class="ex-header-article">
-    <div class="container">
-        <div class="row pt-3 pb-3 border-bottom">
-            <div class="col">
-                
-<h1>Introduction</h1>
-<div>An Introduction to the Blazor Component</div>
-
-            </div> <!-- end of col -->
-        </div> <!-- end of row -->
-    </div> <!-- end of container -->
-</header> <!-- end of ex-header -->
-<!-- end of header -->
-
-
-                    
-<!-- Article Container -->
-<div class="ex-basic-1 pt-4">
-    <div class="container">
-        <div class="row">
-            <div class="col-12">
-                
-
-        <p><a href="index.html">Back to the Index</a></p>
-<p>This article will attempt to answer the following questions:</p>
+</div>
+			
+			<div class="col-12 col-sm-9 col-lg-10 p-2"><div class="pt-2 pb-2 border-bottom mb-4 text-primary"><h1>Introduction</h1>
+            <div><small>Exploring the Out-of-the-Box ComponentBase.</small></div></div>
+    <div class="mb-2"><h3>Document List</h3>
+        <ul><li><a href="/Building-Blazor-Applications/The-Blazor-Component/Introduction.html">Introduction</a></li><li><a href="/Building-Blazor-Applications/The-Blazor-Component/The-Supporting-Cast.html">The Supporting Cast</a></li><li><a href="/Building-Blazor-Applications/The-Blazor-Component/The-Minimal-Component.html">The Minimal Component</a></li><li><a href="/Building-Blazor-Applications/The-Blazor-Component/The-Component-Lifecycle-And-Rendering.html">The Component Lifecycle And Rendering</a></li><li><a href="/Building-Blazor-Applications/The-Blazor-Component/Razor-Components.html">Razor Components</a></li><li><a href="/Building-Blazor-Applications/The-Blazor-Component/ComponentBase.html">ComponentBase</a></li><li><a href="/Building-Blazor-Applications/The-Blazor-Component/The-Renderer-And-Events.html">The Renderer and Events</a></li><li><a href="/Building-Blazor-Applications/The-Blazor-Component/Important-Less-Doumented-Information-And-Final-Observations.html">Important Less Documented Information And Final Observations</a></li></ul></div>
+    <p>This article will attempt to answer the following questions:</p>
 <ol>
 <li>Want is a component?</li>
 <li>How do components work?</li>
@@ -397,22 +84,22 @@ Nullable And VS 2022
 <li>It will compile and work.</li>
 </ol>
 <p>Try it. You won't see anything because it has no visible html output.</p>
-<pre><code class="language-csharp"><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title">TotallyMinimal</span> : <span class="hljs-title">IComponent</span>
+<pre><code class="language-csharp">public class TotallyMinimal : IComponent
 {
-    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">Attach</span>(<span class="hljs-params">RenderHandle handle</span>)</span>
+    public void Attach(RenderHandle handle)
     { }
 
-    <span class="hljs-function"><span class="hljs-keyword">public</span> Task <span class="hljs-title">SetParametersAsync</span>(<span class="hljs-params">ParameterView parameters</span>)</span>
+    public Task SetParametersAsync(ParameterView parameters)
         =&gt;  Task.CompletedTask;
 }
 </code></pre>
 <p>To get output, add a line of code to <code>Attach</code>.</p>
-<pre><code class="language-csharp"><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title">Minimal</span> : <span class="hljs-title">IComponent</span>
+<pre><code class="language-csharp">public class Minimal : IComponent
 {
-    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">Attach</span>(<span class="hljs-params">RenderHandle handle</span>)</span>
-        =&gt;  handle.Render( (builder) =&gt; builder.AddMarkupContent(<span class="hljs-number">0</span>, <span class="hljs-string">&quot;&lt;h1&gt;Hello from Minimal&lt;/h1&gt;&quot;</span>) );
+    public void Attach(RenderHandle handle)
+        =&gt;  handle.Render( (builder) =&gt; builder.AddMarkupContent(0, &quot;&lt;h1&gt;Hello from Minimal&lt;/h1&gt;&quot;) );
 
-    <span class="hljs-function"><span class="hljs-keyword">public</span> Task <span class="hljs-title">SetParametersAsync</span>(<span class="hljs-params">ParameterView parameters</span>)</span>
+    public Task SetParametersAsync(ParameterView parameters)
         =&gt; Task.CompletedTask;
 }
 </code></pre>
@@ -423,46 +110,46 @@ Nullable And VS 2022
 <p>This section provides a quick look at the differences between the two and how those differences affect UI development.</p>
 <h3 id="blazor-server">Blazor Server</h3>
 <p>Blazor Server defines the <code>&lt;app&gt;</code> component in the initial server/html page.  It looks like this:</p>
-<pre><code class="language-html"><span class="hljs-tag">&lt;<span class="hljs-name">app</span>&gt;</span>
-    <span class="hljs-tag">&lt;<span class="hljs-name">component</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;typeof(App)&quot;</span> <span class="hljs-attr">render-mode</span>=<span class="hljs-string">&quot;ServerPrerendered&quot;</span> /&gt;</span>
-<span class="hljs-tag">&lt;/<span class="hljs-name">app</span>&gt;</span>
+<pre><code class="language-html">&lt;app&gt;
+    &lt;component type=&quot;typeof(App)&quot; render-mode=&quot;ServerPrerendered&quot; /&gt;
+&lt;/app&gt;
 </code></pre>
 <p><code>type</code> defines the root component class - in this case <code>App</code> and <code>render-mode</code> defines how the initial server-side render process runs.  You can read about that elsewhere.  The only important point to understand is: if it pre-renders, the load page will be rendered twice on initial load - once by the server to build a static version of the page, and then a second time by Hub Session when it builds the live page for the browser client code.  This only occurs for the intial load page: every page therafter is loaded once.</p>
 <p>The browser client code gets loaded by:</p>
-<pre><code class="language-html"><span class="hljs-tag">&lt;<span class="hljs-name">script</span> <span class="hljs-attr">src</span>=<span class="hljs-string">&quot;_framework/blazor.server.js&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span>
+<pre><code class="language-html">&lt;script src=&quot;_framework/blazor.server.js&quot;&gt;&lt;/script&gt;
 </code></pre>
 <p>This is not the WASM code.  It's JS code to interact with the browser DOM and Hub session over SignalR.</p>
 <p>Once <em>blazor.server.js</em> loads, the Blazor client JS application runs in the browser page and establishes a SignalR session with the server.  To complete the initial load, the Blazor Client Application calls the Blazor Hub Session and requests a complete server render of the root component.  It applies the resultant DOM changes to the browser DOM.</p>
 <p>The diagram below shows how a render request is passed to the displayed page.</p>
-<p><img src="https://shauncurtis.github.io/articles/assets/Blazor-Components/Server-Render.png" alt="Server Rendering"></p>
+<p><img src="./assets/The-Blazor-Component/Server-Render.png" alt="Server Rendering" /></p>
 <h3 id="blazor-web-assembly">Blazor Web Assembly</h3>
 <p>In Blazor Web Assembly the browser receives an Html page with a defined <code>div</code> placeholder where the root component should load:</p>
-<pre><code class="language-html"><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;app&quot;</span>&gt;</span>
+<pre><code class="language-html">&lt;div id=&quot;app&quot;&gt;
     ....
-<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+&lt;/div&gt;
 </code></pre>
 <p>The Client Application is loaded when this script is run:</p>
-<pre><code class="language-html"><span class="hljs-tag">&lt;<span class="hljs-name">script</span> <span class="hljs-attr">src</span>=<span class="hljs-string">&quot;_framework/blazor.webassembly.js&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span>
+<pre><code class="language-html">&lt;script src=&quot;_framework/blazor.webassembly.js&quot;&gt;&lt;/script&gt;
 </code></pre>
 <p>Once the WASM code is loaded, it runs <code>program</code>.</p>
-<pre><code class="language-csharp">builder.RootComponents.Add&lt;App&gt;(<span class="hljs-string">&quot;#app&quot;</span>);
+<pre><code class="language-csharp">builder.RootComponents.Add&lt;App&gt;(&quot;#app&quot;);
 </code></pre>
 <p>The code tells the Renderer that the <code>App</code> class component is the root component for the <code>RenderTree</code> and to load it's DOM into the <code>app</code> element in the browser DOM.</p>
-<p><img src="https://shauncurtis.github.io/articles/assets/Blazor-Components/Web-Assembly-Render.png" alt="Server Rendering"></p>
+<p><img src="./assets/The-Blazor-Component/Web-Assembly-Render.png" alt="Server Rendering" /></p>
 <p>Although the process by which the root component is defined and loaded is different, there's no difference between a WebAssembly and Server root component or any sub-component.  They are the same components.</p>
-<h3 id="apprazor">App.razor</h3>
+<h3 id="app.razor">App.razor</h3>
 <p><em>App.razor</em> is the &quot;standard&quot; root component.  It can be any <code>IComponent</code> defined class.</p>
 <p><code>App</code> looks like this:</p>
-<pre><code class="language-html"><span class="hljs-tag">&lt;<span class="hljs-name">Router</span> <span class="hljs-attr">AppAssembly</span>=<span class="hljs-string">&quot;@typeof(Program).Assembly&quot;</span>&gt;</span>
-    <span class="hljs-tag">&lt;<span class="hljs-name">Found</span> <span class="hljs-attr">Context</span>=<span class="hljs-string">&quot;routeData&quot;</span>&gt;</span>
-        <span class="hljs-tag">&lt;<span class="hljs-name">RouteView</span> <span class="hljs-attr">RouteData</span>=<span class="hljs-string">&quot;@routeData&quot;</span> <span class="hljs-attr">DefaultLayout</span>=<span class="hljs-string">&quot;@typeof(MainLayout)&quot;</span> /&gt;</span>
-    <span class="hljs-tag">&lt;/<span class="hljs-name">Found</span>&gt;</span>
-    <span class="hljs-tag">&lt;<span class="hljs-name">NotFound</span>&gt;</span>
-        <span class="hljs-tag">&lt;<span class="hljs-name">LayoutView</span> <span class="hljs-attr">Layout</span>=<span class="hljs-string">&quot;@typeof(MainLayout)&quot;</span>&gt;</span>
-            <span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span>Sorry, there&#x27;s nothing at this address.<span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span>
-        <span class="hljs-tag">&lt;/<span class="hljs-name">LayoutView</span>&gt;</span>
-    <span class="hljs-tag">&lt;/<span class="hljs-name">NotFound</span>&gt;</span>
-<span class="hljs-tag">&lt;/<span class="hljs-name">Router</span>&gt;</span>
+<pre><code class="language-html">&lt;Router AppAssembly=&quot;@typeof(Program).Assembly&quot;&gt;
+    &lt;Found Context=&quot;routeData&quot;&gt;
+        &lt;RouteView RouteData=&quot;@routeData&quot; DefaultLayout=&quot;@typeof(MainLayout)&quot; /&gt;
+    &lt;/Found&gt;
+    &lt;NotFound&gt;
+        &lt;LayoutView Layout=&quot;@typeof(MainLayout)&quot;&gt;
+            &lt;p&gt;Sorry, there's nothing at this address.&lt;/p&gt;
+        &lt;/LayoutView&gt;
+    &lt;/NotFound&gt;
+&lt;/Router&gt;
 </code></pre>
 <p>It's a Razor component defining one child component, <code>Router</code>.  <code>Router</code> has two <code>RenderFragments</code>, <code>Found</code> and <code>NotFound</code>.</p>
 <h4 id="found">Found</h4>
@@ -480,9 +167,9 @@ Nullable And VS 2022
 @layout MainLayout
 </code></pre>
 <p>Or directly on classes like this:</p>
-<pre><code class="language-csharp">[<span class="hljs-meta">LayoutAttribute(typeof(MainLayout))</span>]
-[<span class="hljs-meta">RouteAttribute(<span class="hljs-string">&quot;/helloworld&quot;</span>)</span>]
-<span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title">RendererComponent</span> : <span class="hljs-title">IComponent</span> {}
+<pre><code class="language-csharp">[LayoutAttribute(typeof(MainLayout))]
+[RouteAttribute(&quot;/helloworld&quot;)]
+public class RendererComponent : IComponent {}
 </code></pre>
 <p>It's a serious misconception to think routed components are web pages. if you do you will:</p>
 <ul>
@@ -490,60 +177,9 @@ Nullable And VS 2022
 <li>get confused when routed components don't behave like a page.</li>
 </ul>
 <p>Many web page properties and concepts don't apply to routed components.</p>
-
-        
-        
-    
-
-            </div>
-        </div>
-    </div>
-</div>
-<!-- end of Article Container -->
+</div></div></div></body></html>
 
 
-                </div>
-                <!-- End of Main Content -->
-            </div>
-            <!-- Footer -->
-            
-<!-- Copyright -->
-<footer class="sticky-footer bg-white">
-    <div class="container my-auto">
-        <div class="copyright text-center my-auto">
-            
-<span>Copyright &copy; Cold Elm Coders - 2022</span>
-
-        </div>
-    </div>
-</footer>
-<!-- end of copyright -->
 
 
-            <!-- End of Footer -->
-        </div>
-        <!-- End of Content Wrapper -->
-        
-<a class="scroll-to-top rounded" href="#page-top">
-    <i class="fas fa-angle-up"></i>
-</a>
 
-
-    </div>
-    <!-- End of Page Wrapper -->
-    <!-- Scripts -->
-    
-<!-- Scripts -->
-<!-- Bootstrap core JavaScript-->
-<script src="/assets/vendor/jquery/jquery.min.js"></script>
-<script src="/assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-
-<!-- Core plugin JavaScript-->
-<script src="/assets/vendor/jquery-easing/jquery.easing.min.js"></script>
-
-<!-- Custom scripts for all pages-->
-<script src="/assets/js/sb-admin-2.min.js"></script>
-
-
-</body>
-</html>
