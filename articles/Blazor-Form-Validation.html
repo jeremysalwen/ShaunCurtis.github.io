@@ -101,16 +101,17 @@
 <p>There's also an article on building a Modal Dialog Editor <a href="https://shauncurtis.github.io/articles/Modal-Editor.html">here</a>.</p>
 <h2 id="the-blazor-edit-setting">The Blazor Edit Setting</h2>
 <p>To begin lets look at the out-of-the-box form controls and how validation works.  A classic form looks something like this:</p>
-<pre><code class="language-html">&lt;EditForm Model=&quot;@exampleModel&quot; OnValidSubmit=&quot;@HandleValidSubmit&quot;&gt;
-    &lt;DataAnnotationsValidator /&gt;
-    &lt;ValidationSummary /&gt;
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+<span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">EditForm</span> <span style="color:#FF0000;">Model</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;@exampleModel&quot;</span> <span style="color:#FF0000;">OnValidSubmit</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;@HandleValidSubmit&quot;</span><span style="color:#569CD6;">&gt;</span>
+    <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">DataAnnotationsValidator</span> <span style="color:#569CD6;">/&gt;</span>
+    <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">ValidationSummary</span> <span style="color:#569CD6;">/&gt;</span>
 
-    &lt;InputText id=&quot;name&quot; @bind-Value=&quot;exampleModel.Name&quot; /&gt;
-    &lt;ValidationMessage For=&quot;@(() =&gt; exampleModel.Name)&quot; /&gt;
+    <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">InputText</span> <span style="color:#FF0000;">id</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;name&quot; @bind-Value=&quot;exampleModel.Name&quot;</span> <span style="color:#569CD6;">/&gt;</span>
+    <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">ValidationMessage</span> <span style="color:#FF0000;">For</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;@(() =&gt; exampleModel.Name)&quot;</span> <span style="color:#569CD6;">/&gt;</span>
 
-    &lt;button type=&quot;submit&quot;&gt;Submit&lt;/button&gt;
-&lt;/EditForm&gt;
-</code></pre>
+    <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">button</span> <span style="color:#FF0000;">type</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;submit&quot;</span><span style="color:#569CD6;">&gt;</span>Submit<span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">button</span><span style="color:#569CD6;">&gt;</span>
+<span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">EditForm</span><span style="color:#569CD6;">&gt;</span>
+</pre></div>
 <p>The first article describes the basic interacts of <code>EditForm</code> and <code>EditContext</code> so we'll skip that and concentrate on the validation process.</p>
 <p>When the user clicks on the <em>Submit</em> button, <code>EditForm</code> either:</p>
 <ol>
@@ -140,114 +141,116 @@ protected ValidationMessageStore ValidationMessageStore { get; set; }
 protected object Model { get; set; }
 </code></pre>
 <p>The constructor populates the validator</p>
-<pre><code class="language-csharp">public Validator(T value, string fieldName, object model, ValidationMessageStore validationMessageStore, string message)
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+<span style="color:#569CD6;">public</span> Validator(T value, <span style="color:#569CD6;">string</span> fieldName, <span style="color:#569CD6;">object</span> model, ValidationMessageStore validationMessageStore, <span style="color:#569CD6;">string</span> message)
 {
-    this.FieldName = fieldName;
-    this.Value = value;
-    this.Model = model;
-    this.ValidationMessageStore = validationMessageStore;
-    this.DefaultMessage = string.IsNullOrWhiteSpace(message) ? this.DefaultMessage : message;
+    <span style="color:#569CD6;">this</span>.FieldName = fieldName;
+    <span style="color:#569CD6;">this</span>.Value = value;
+    <span style="color:#569CD6;">this</span>.Model = model;
+    <span style="color:#569CD6;">this</span>.ValidationMessageStore = validationMessageStore;
+    <span style="color:#569CD6;">this</span>.DefaultMessage = <span style="color:#569CD6;">string</span>.IsNullOrWhiteSpace(message) ? <span style="color:#569CD6;">this</span>.DefaultMessage : message;
 }
-</code></pre>
+</pre></div>
 <p>There are two <code>Validate</code> methods: a public method for external usage and a protected one for specific validators to override.</p>
-<pre><code class="language-csharp">
-public virtual bool Validate(ref bool tripwire, string fieldname, string message = null)
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+
+<span style="color:#569CD6;">public</span> <span style="color:#569CD6;">virtual</span> <span style="color:#569CD6;">bool</span> Validate(<span style="color:#569CD6;">ref</span> <span style="color:#569CD6;">bool</span> tripwire, <span style="color:#569CD6;">string</span> fieldname, <span style="color:#569CD6;">string</span> message = <span style="color:#569CD6;">null</span>)
 {
-    if (string.IsNullOrEmpty(fieldname) || this.FieldName.Equals(fieldname))
+    <span style="color:#569CD6;">if</span> (<span style="color:#569CD6;">string</span>.IsNullOrEmpty(fieldname) || <span style="color:#569CD6;">this</span>.FieldName.Equals(fieldname))
     {
-        this.Validate(message);
-        if (!this.IsValid)
-            tripwire = true;
+        <span style="color:#569CD6;">this</span>.Validate(message);
+        <span style="color:#569CD6;">if</span> (!<span style="color:#569CD6;">this</span>.IsValid)
+            tripwire = <span style="color:#569CD6;">true</span>;
     }
-    else this.Trip = false;
-    return this.IsValid;
+    <span style="color:#569CD6;">else</span> <span style="color:#569CD6;">this</span>.Trip = <span style="color:#569CD6;">false</span>;
+    <span style="color:#569CD6;">return</span> <span style="color:#569CD6;">this</span>.IsValid;
 }
-</code></pre>
-<pre><code class="language-csharp">protected virtual bool Validate(string message = null)
+</pre></div><div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+<span style="color:#569CD6;">protected</span> <span style="color:#569CD6;">virtual</span> <span style="color:#569CD6;">bool</span> Validate(<span style="color:#569CD6;">string</span> message = <span style="color:#569CD6;">null</span>)
 {
-    if (!this.IsValid)
+    <span style="color:#569CD6;">if</span> (!<span style="color:#569CD6;">this</span>.IsValid)
     {
-        message ??= this.DefaultMessage;
-        // Check if we've logged specific messages.  If not add the default message
-        if (this.Messages.Count == 0) Messages.Add(message);
-        //set up a FieldIdentifier and add the message to the Edit Context ValidationMessageStore
-        var fi = new FieldIdentifier(this.Model, this.FieldName);
-        this.ValidationMessageStore.Add(fi, this.Messages);
+        message ??= <span style="color:#569CD6;">this</span>.DefaultMessage;
+        <span style="color:#57A64A;">// Check if we&#39;ve logged specific messages.  If not add the default message</span>
+        <span style="color:#569CD6;">if</span> (<span style="color:#569CD6;">this</span>.Messages.Count == <span style="color:#B5CEA8;">0</span>) Messages.Add(message);
+        <span style="color:#57A64A;">//set up a FieldIdentifier and add the message to the Edit Context ValidationMessageStore</span>
+        <span style="color:#569CD6;">var</span> fi = <span style="color:#569CD6;">new</span> FieldIdentifier(<span style="color:#569CD6;">this</span>.Model, <span style="color:#569CD6;">this</span>.FieldName);
+        <span style="color:#569CD6;">this</span>.ValidationMessageStore.Add(fi, <span style="color:#569CD6;">this</span>.Messages);
     }
-    return this.IsValid;
+    <span style="color:#569CD6;">return</span> <span style="color:#569CD6;">this</span>.IsValid;
 }
 
-protected void LogMessage(string message)
+<span style="color:#569CD6;">protected</span> <span style="color:#569CD6;">void</span> LogMessage(<span style="color:#569CD6;">string</span> message)
 {
-    if (!string.IsNullOrWhiteSpace(message)) Messages.Add(message);
+    <span style="color:#569CD6;">if</span> (!<span style="color:#569CD6;">string</span>.IsNullOrWhiteSpace(message)) Messages.Add(message);
 }
-</code></pre>
-<h4 id="stringvalidator">StringValidator</h4>
+</pre></div><h4 id="stringvalidator">StringValidator</h4>
 <p>Let's look at <code>StringValidator</code> as an example implementation of a validator.  The full set of validators is in the Repo.  There are two classes:</p>
 <ol>
 <li><code>StringValidatorExtensions</code> is a static class declaring as an extension method to <code>string</code>.</li>
 <li><code>StringValidator</code> is a implementation of <code>Validator</code> specifically for strings.</li>
 </ol>
 <p><code>StringValidatorExtensions</code> declares a single static extension method <code>Validation</code> for <code>string</code>.  It returns a <code>StringValidator</code> instance.  Call <code>StringValidator</code> on any string to initialise a validation chain.</p>
-<pre><code class="language-csharp">public static class StringValidatorExtensions
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+<span style="color:#569CD6;">public</span> <span style="color:#569CD6;">static</span> <span style="color:#569CD6;">class</span> StringValidatorExtensions
 {
-    public static StringValidator Validation(this string value, string fieldName, object model, ValidationMessageStore validationMessageStore, string message = null)
+    <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">static</span> StringValidator Validation(<span style="color:#569CD6;">this</span> <span style="color:#569CD6;">string</span> value, <span style="color:#569CD6;">string</span> fieldName, <span style="color:#569CD6;">object</span> model, ValidationMessageStore validationMessageStore, <span style="color:#569CD6;">string</span> message = <span style="color:#569CD6;">null</span>)
     {
-        var validation = new StringValidator(value, fieldName, model, validationMessageStore, message);
-        return validation;
+        <span style="color:#569CD6;">var</span> validation = <span style="color:#569CD6;">new</span> StringValidator(value, fieldName, model, validationMessageStore, message);
+        <span style="color:#569CD6;">return</span> validation;
     }
 }
-</code></pre>
+</pre></div>
 <p><code>StringValidator</code> inherits from <code>Validator</code> and declares the specific validation chain methods for strings.  Each runs it's test.  If validation fails it logs any provided message to the message store and trips the tripwire.  Finally it returns <code>this</code>.  For strings, we have two length methods and a RegEx method to cover most circumstances.</p>
-<pre><code class="language-csharp">public class StringValidator : Validator&lt;string&gt;
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+<span style="color:#569CD6;">public</span> <span style="color:#569CD6;">class</span> StringValidator : Validator&lt;<span style="color:#569CD6;">string</span>&gt;
 {
-    public StringValidator(string value, string fieldName, object model, ValidationMessageStore validationMessageStore, string message) : base(value, fieldName, model, validationMessageStore, message) { }
+    <span style="color:#569CD6;">public</span> StringValidator(<span style="color:#569CD6;">string</span> value, <span style="color:#569CD6;">string</span> fieldName, <span style="color:#569CD6;">object</span> model, ValidationMessageStore validationMessageStore, <span style="color:#569CD6;">string</span> message) : <span style="color:#569CD6;">base</span>(value, fieldName, model, validationMessageStore, message) { }
 
-    /// Check of the string is longer than test
-    public StringValidator LongerThan(int test, string message = null)
+    <span style="color:#608B4E;">///</span><span style="color:#608B4E;"> Check of the string is longer than test</span>
+    <span style="color:#569CD6;">public</span> StringValidator LongerThan(<span style="color:#569CD6;">int</span> test, <span style="color:#569CD6;">string</span> message = <span style="color:#569CD6;">null</span>)
     {
-        if (string.IsNullOrEmpty(this.Value) || !(this.Value.Length &gt; test))
+        <span style="color:#569CD6;">if</span> (<span style="color:#569CD6;">string</span>.IsNullOrEmpty(<span style="color:#569CD6;">this</span>.Value) || !(<span style="color:#569CD6;">this</span>.Value.Length &gt; test))
         {
-            Trip = true;
+            Trip = <span style="color:#569CD6;">true</span>;
             LogMessage(message);
         }
-        return this;
+        <span style="color:#569CD6;">return</span> <span style="color:#569CD6;">this</span>;
     }
 
-    /// Check if the string is shorter than
-    public StringValidator ShorterThan(int test, string message = null)
+    <span style="color:#608B4E;">///</span><span style="color:#608B4E;"> Check if the string is shorter than</span>
+    <span style="color:#569CD6;">public</span> StringValidator ShorterThan(<span style="color:#569CD6;">int</span> test, <span style="color:#569CD6;">string</span> message = <span style="color:#569CD6;">null</span>)
     {
             
-        if (string.IsNullOrEmpty(this.Value) || !(this.Value.Length &lt; test))
+        <span style="color:#569CD6;">if</span> (<span style="color:#569CD6;">string</span>.IsNullOrEmpty(<span style="color:#569CD6;">this</span>.Value) || !(<span style="color:#569CD6;">this</span>.Value.Length &lt; test))
         {
-            Trip = true;
+            Trip = <span style="color:#569CD6;">true</span>;
             LogMessage(message);
         }
-        return this;
+        <span style="color:#569CD6;">return</span> <span style="color:#569CD6;">this</span>;
     }
 
-    /// Check if the string is matches a RegEx pattern
-    public StringValidator Matches(string pattern, string message = null)
+    <span style="color:#608B4E;">///</span><span style="color:#608B4E;"> Check if the string is matches a RegEx pattern</span>
+    <span style="color:#569CD6;">public</span> StringValidator Matches(<span style="color:#569CD6;">string</span> pattern, <span style="color:#569CD6;">string</span> message = <span style="color:#569CD6;">null</span>)
     {
-        if (!string.IsNullOrWhiteSpace(this.Value))
+        <span style="color:#569CD6;">if</span> (!<span style="color:#569CD6;">string</span>.IsNullOrWhiteSpace(<span style="color:#569CD6;">this</span>.Value))
         {
-            var match = Regex.Match(this.Value, pattern);
-            if (match.Success &amp;&amp; match.Value.Equals(this.Value)) return this;
+            <span style="color:#569CD6;">var</span> match = Regex.Match(<span style="color:#569CD6;">this</span>.Value, pattern);
+            <span style="color:#569CD6;">if</span> (match.Success &amp;&amp; match.Value.Equals(<span style="color:#569CD6;">this</span>.Value)) <span style="color:#569CD6;">return</span> <span style="color:#569CD6;">this</span>;
         }
-        this.Trip = true;
+        <span style="color:#569CD6;">this</span>.Trip = <span style="color:#569CD6;">true</span>;
         LogMessage(message);
-        return this;
+        <span style="color:#569CD6;">return</span> <span style="color:#569CD6;">this</span>;
     }
 }
-</code></pre>
-<h4 id="ivalidation">IValidation</h4>
+</pre></div><h4 id="ivalidation">IValidation</h4>
 <p>The  <code>IValidation</code> interface looks like this.  It simply defines a <code>Validate</code> method.</p>
-<pre><code class="language-csharp">public interface IValidation
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+<span style="color:#569CD6;">public</span> <span style="color:#569CD6;">interface</span> IValidation
 {
-    public bool Validate(ValidationMessageStore validationMessageStore, string fieldname, object model = null);
+    <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">bool</span> Validate(ValidationMessageStore validationMessageStore, <span style="color:#569CD6;">string</span> fieldname, <span style="color:#569CD6;">object</span> model = <span style="color:#569CD6;">null</span>);
 }
-</code></pre>
-<h3 id="weatherforecast">WeatherForecast</h3>
+</pre></div><h3 id="weatherforecast">WeatherForecast</h3>
 <p><code>WeatherForecast</code> is a typical data class.</p>
 <ol>
 <li>It implements <code>IValidation</code> so the control can run validation.</li>
@@ -260,39 +263,39 @@ protected void LogMessage(string message)
 <li>Calls one or more validation chain methods.</li>
 <li>Calls <code>Validate</code> to log any validation messages to the <code>ValidationMessageStore</code> on <code>EditContext</code> and if necessary trip the tripwire.</li>
 </ol>
-<pre><code class="language-csharp">public class WeatherForecast : IValidation
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+<span style="color:#569CD6;">public</span> <span style="color:#569CD6;">class</span> WeatherForecast : IValidation
 {
-    public int ID { get; set; } = -1;
-    public DateTime Date { get; set; } = DateTime.Now;
-    public int TemperatureC { get; set; } = 0;
-    [NotMapped] public int TemperatureF =&gt; 32 + (int)(TemperatureC / 0.5556);
-    public string Summary { get; set; } = string.Empty;
+    <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">int</span> ID { <span style="color:#569CD6;">get</span>; <span style="color:#569CD6;">set</span>; } = -<span style="color:#B5CEA8;">1</span>;
+    <span style="color:#569CD6;">public</span> DateTime Date { <span style="color:#569CD6;">get</span>; <span style="color:#569CD6;">set</span>; } = DateTime.Now;
+    <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">int</span> TemperatureC { <span style="color:#569CD6;">get</span>; <span style="color:#569CD6;">set</span>; } = <span style="color:#B5CEA8;">0</span>;
+    [NotMapped] <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">int</span> TemperatureF =&gt; <span style="color:#B5CEA8;">32</span> + (<span style="color:#569CD6;">int</span>)(TemperatureC / <span style="color:#B5CEA8;">0</span>.<span style="color:#B5CEA8;">5556</span>);
+    <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">string</span> Summary { <span style="color:#569CD6;">get</span>; <span style="color:#569CD6;">set</span>; } = <span style="color:#569CD6;">string</span>.Empty;
 
-    public bool Validate(ValidationMessageStore validationMessageStore, string fieldname, object model = null)
+    <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">bool</span> Validate(ValidationMessageStore validationMessageStore, <span style="color:#569CD6;">string</span> fieldname, <span style="color:#569CD6;">object</span> model = <span style="color:#569CD6;">null</span>)
     {
-        model = model ?? this;
-        bool trip = false;
+        model = model ?? <span style="color:#569CD6;">this</span>;
+        <span style="color:#569CD6;">bool</span> trip = <span style="color:#569CD6;">false</span>;
 
-        this.Summary.Validation(&quot;Summary&quot;, model, validationMessageStore)
-            .LongerThan(2, &quot;Your description needs to be a little longer! 3 letters minimum&quot;)
-            .Validate(ref trip, fieldname);
+        <span style="color:#569CD6;">this</span>.Summary.Validation(<span style="color:#D69D85;">&quot;Summary&quot;</span>, model, validationMessageStore)
+            .LongerThan(<span style="color:#B5CEA8;">2</span>, <span style="color:#D69D85;">&quot;Your description needs to be a little longer! 3 letters minimum&quot;</span>)
+            .Validate(<span style="color:#569CD6;">ref</span> trip, fieldname);
 
-        this.Date.Validation(&quot;Date&quot;, model, validationMessageStore)
-            .NotDefault(&quot;You must select a date&quot;)
-            .LessThan(DateTime.Now.AddMonths(1), true, &quot;Date can only be up to 1 month ahead&quot;)
-            .Validate(ref trip, fieldname);
+        <span style="color:#569CD6;">this</span>.Date.Validation(<span style="color:#D69D85;">&quot;Date&quot;</span>, model, validationMessageStore)
+            .NotDefault(<span style="color:#D69D85;">&quot;You must select a date&quot;</span>)
+            .LessThan(DateTime.Now.AddMonths(<span style="color:#B5CEA8;">1</span>), <span style="color:#569CD6;">true</span>, <span style="color:#D69D85;">&quot;Date can only be up to 1 month ahead&quot;</span>)
+            .Validate(<span style="color:#569CD6;">ref</span> trip, fieldname);
 
-        this.TemperatureC.Validation(&quot;TemperatureC&quot;, model, validationMessageStore)
-            .LessThan(70, &quot;The temperature must be less than 70C&quot;)
-            .GreaterThan(-60, &quot;The temperature must be greater than -60C&quot;)
-            .Validate(ref trip, fieldname);
+        <span style="color:#569CD6;">this</span>.TemperatureC.Validation(<span style="color:#D69D85;">&quot;TemperatureC&quot;</span>, model, validationMessageStore)
+            .LessThan(<span style="color:#B5CEA8;">70</span>, <span style="color:#D69D85;">&quot;The temperature must be less than 70C&quot;</span>)
+            .GreaterThan(-<span style="color:#B5CEA8;">60</span>, <span style="color:#D69D85;">&quot;The temperature must be greater than -60C&quot;</span>)
+            .Validate(<span style="color:#569CD6;">ref</span> trip, fieldname);
 
-        return !trip;
+        <span style="color:#569CD6;">return</span> !trip;
     }
 
 }
-</code></pre>
-<h2 id="validationformstate-control">ValidationFormState Control</h2>
+</pre></div><h2 id="validationformstate-control">ValidationFormState Control</h2>
 <p>The <code>ValidationFormState</code> control replaces the basic Validator provided with Blazor.</p>
 <ol>
 <li>It captures the cascaded <code>EditContext</code>.</li>
@@ -303,156 +306,160 @@ protected void LogMessage(string message)
 <li><code>validating</code> is a boolean field to ensure we don't stack validations.</li>
 <li><code>disposedValue</code> is part of the <code>IDisposable</code> implementation.</li>
 </ol>
-<pre><code class="language-csharp">    [CascadingParameter] public EditContext EditContext { get; set; }
-    [Parameter] public bool DoValidationOnFieldChange { get; set; } = true;
-    [Parameter] public EventCallback&lt;bool&gt; ValidStateChanged { get; set; }
-    public bool IsValid =&gt; !EditContext?.GetValidationMessages().Any() ?? true;
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+    [CascadingParameter] <span style="color:#569CD6;">public</span> EditContext EditContext { <span style="color:#569CD6;">get</span>; <span style="color:#569CD6;">set</span>; }
+    [Parameter] <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">bool</span> DoValidationOnFieldChange { <span style="color:#569CD6;">get</span>; <span style="color:#569CD6;">set</span>; } = <span style="color:#569CD6;">true</span>;
+    [Parameter] <span style="color:#569CD6;">public</span> EventCallback&lt;<span style="color:#569CD6;">bool</span>&gt; ValidStateChanged { <span style="color:#569CD6;">get</span>; <span style="color:#569CD6;">set</span>; }
+    <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">bool</span> IsValid =&gt; !EditContext?.GetValidationMessages().Any() ?? <span style="color:#569CD6;">true</span>;
 
-    private ValidationMessageStore validationMessageStore;
-    private bool validating = false;
-    private bool disposedValue;
-</code></pre>
+    <span style="color:#569CD6;">private</span> ValidationMessageStore validationMessageStore;
+    <span style="color:#569CD6;">private</span> <span style="color:#569CD6;">bool</span> validating = <span style="color:#569CD6;">false</span>;
+    <span style="color:#569CD6;">private</span> <span style="color:#569CD6;">bool</span> disposedValue;
+</pre></div>
 <p>When the component initializes it gets the <code>ValidationMessageStore</code> from <code>EditContext</code>.  It checks if it's running field level validation, and if so registers <code>FieldChanged</code> with <code>EditContext.OnFieldChanged</code> event. Finally it registers <code>ValidationRequested</code> with <code>EditContext.OnValidationRequested</code>.</p>
-<pre><code class="language-csharp">    protected override Task OnInitializedAsync()
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+    <span style="color:#569CD6;">protected</span> <span style="color:#569CD6;">override</span> Task OnInitializedAsync()
     {
-        Debug.Assert(this.EditContext != null);
+        Debug.Assert(<span style="color:#569CD6;">this</span>.EditContext != <span style="color:#569CD6;">null</span>);
 
-        if (this.EditContext != null)
+        <span style="color:#569CD6;">if</span> (<span style="color:#569CD6;">this</span>.EditContext != <span style="color:#569CD6;">null</span>)
         {
-            // Get the Validation Message Store from the EditContext
-            this.validationMessageStore = new ValidationMessageStore(this.EditContext);
-            // Wires up to the EditContext OnFieldChanged event
-            if (this.DoValidationOnFieldChange)
-                this.EditContext.OnFieldChanged += FieldChanged;
-            // Wires up to the Editcontext OnValidationRequested event
-            this.EditContext.OnValidationRequested += ValidationRequested;
+            <span style="color:#57A64A;">// Get the Validation Message Store from the EditContext</span>
+            <span style="color:#569CD6;">this</span>.validationMessageStore = <span style="color:#569CD6;">new</span> ValidationMessageStore(<span style="color:#569CD6;">this</span>.EditContext);
+            <span style="color:#57A64A;">// Wires up to the EditContext OnFieldChanged event</span>
+            <span style="color:#569CD6;">if</span> (<span style="color:#569CD6;">this</span>.DoValidationOnFieldChange)
+                <span style="color:#569CD6;">this</span>.EditContext.OnFieldChanged += FieldChanged;
+            <span style="color:#57A64A;">// Wires up to the Editcontext OnValidationRequested event</span>
+            <span style="color:#569CD6;">this</span>.EditContext.OnValidationRequested += ValidationRequested;
         }
-        return Task.CompletedTask;
+        <span style="color:#569CD6;">return</span> Task.CompletedTask;
     }
-</code></pre>
+</pre></div>
 <p>The two event handlers call <code>Validate</code>, one with and one without the field name.</p>
-<pre><code class="language-csharp">private void FieldChanged(object sender, FieldChangedEventArgs e)
-    =&gt; this.Validate(e.FieldIdentifier.FieldName);
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+<span style="color:#569CD6;">private</span> <span style="color:#569CD6;">void</span> FieldChanged(<span style="color:#569CD6;">object</span> sender, FieldChangedEventArgs e)
+    =&gt; <span style="color:#569CD6;">this</span>.Validate(e.FieldIdentifier.FieldName);
 
-private void ValidationRequested(object sender, ValidationRequestedEventArgs e)
-    =&gt; this.Validate();
-</code></pre>
+<span style="color:#569CD6;">private</span> <span style="color:#569CD6;">void</span> ValidationRequested(<span style="color:#569CD6;">object</span> sender, ValidationRequestedEventArgs e)
+    =&gt; <span style="color:#569CD6;">this</span>.Validate();
+</pre></div>
 <p>The comments within <code>Validate</code> explain what it's doing.  It casts the <code>Model</code> as an IValidator and check if it's valid.  if so it calls the <code>Validate</code> method on the interface. We've seen <em>model</em>.<code>Validate</code> in the <code>WesatherForecast</code> data class.  When it passes a <code>fieldname</code> to <code>Validate</code> it only clears any validation messages for that specific <code>fieldname</code>.</p>
-<pre><code class="language-csharp">private void Validate(string fieldname = null)
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+<span style="color:#569CD6;">private</span> <span style="color:#569CD6;">void</span> Validate(<span style="color:#569CD6;">string</span> fieldname = <span style="color:#569CD6;">null</span>)
 {
-    // Checks to see if the Model implements IValidation
-    var validator = this.EditContext.Model as IValidation;
-    if (validator != null || !this.validating)
+    <span style="color:#57A64A;">// Checks to see if the Model implements IValidation</span>
+    <span style="color:#569CD6;">var</span> validator = <span style="color:#569CD6;">this</span>.EditContext.Model <span style="color:#569CD6;">as</span> IValidation;
+    <span style="color:#569CD6;">if</span> (validator != <span style="color:#569CD6;">null</span> || !<span style="color:#569CD6;">this</span>.validating)
     {
-        this.validating = true;
-        // Check if we are doing a field level or form level validation
-        // Form level - clear all validation messages
-        // Field level - clear any field specific validation messages
-        if (string.IsNullOrEmpty(fieldname))
-            this.validationMessageStore.Clear();
-        else
-            validationMessageStore.Clear(new FieldIdentifier(this.EditContext.Model, fieldname));
-        // Run the IValidation interface Validate method
-        validator.Validate(validationMessageStore, fieldname, this.EditContext.Model);
-        // Notify the EditContext that the Validation State has changed - 
-        // This precipitates a OnValidationStateChanged event which the validation message controls are all plugged into
-        this.EditContext.NotifyValidationStateChanged();
-        // Invoke ValidationStateChanged
-        this.ValidStateChanged.InvokeAsync(this.IsValid);
-        this.validating = false;
+        <span style="color:#569CD6;">this</span>.validating = <span style="color:#569CD6;">true</span>;
+        <span style="color:#57A64A;">// Check if we are doing a field level or form level validation</span>
+        <span style="color:#57A64A;">// Form level - clear all validation messages</span>
+        <span style="color:#57A64A;">// Field level - clear any field specific validation messages</span>
+        <span style="color:#569CD6;">if</span> (<span style="color:#569CD6;">string</span>.IsNullOrEmpty(fieldname))
+            <span style="color:#569CD6;">this</span>.validationMessageStore.Clear();
+        <span style="color:#569CD6;">else</span>
+            validationMessageStore.Clear(<span style="color:#569CD6;">new</span> FieldIdentifier(<span style="color:#569CD6;">this</span>.EditContext.Model, fieldname));
+        <span style="color:#57A64A;">// Run the IValidation interface Validate method</span>
+        validator.Validate(validationMessageStore, fieldname, <span style="color:#569CD6;">this</span>.EditContext.Model);
+        <span style="color:#57A64A;">// Notify the EditContext that the Validation State has changed - </span>
+        <span style="color:#57A64A;">// This precipitates a OnValidationStateChanged event which the validation message controls are all plugged into</span>
+        <span style="color:#569CD6;">this</span>.EditContext.NotifyValidationStateChanged();
+        <span style="color:#57A64A;">// Invoke ValidationStateChanged</span>
+        <span style="color:#569CD6;">this</span>.ValidStateChanged.InvokeAsync(<span style="color:#569CD6;">this</span>.IsValid);
+        <span style="color:#569CD6;">this</span>.validating = <span style="color:#569CD6;">false</span>;
     }
 }
-</code></pre>
+</pre></div>
 <p>The rest of the code consists of utility methods and <code>IDisposable</code> implementation.</p>
-<pre><code class="language-csharp">
-        /// &lt;summary&gt;
-        /// Method to clear the Validation and Edit State 
-        /// &lt;/summary&gt;
-        public void Clear()
-            =&gt; this.validationMessageStore.Clear();
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
 
-        // IDisposable Implementation
-        protected virtual void Dispose(bool disposing)
+        <span style="color:#608B4E;">///</span> <span style="color:#608B4E;">&lt;summary&gt;</span>
+        <span style="color:#608B4E;">///</span><span style="color:#608B4E;"> Method to clear the Validation and Edit State </span>
+        <span style="color:#608B4E;">///</span> <span style="color:#608B4E;">&lt;/summary&gt;</span>
+        <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">void</span> Clear()
+            =&gt; <span style="color:#569CD6;">this</span>.validationMessageStore.Clear();
+
+        <span style="color:#57A64A;">// IDisposable Implementation</span>
+        <span style="color:#569CD6;">protected</span> <span style="color:#569CD6;">virtual</span> <span style="color:#569CD6;">void</span> Dispose(<span style="color:#569CD6;">bool</span> disposing)
         {
-            if (!disposedValue)
+            <span style="color:#569CD6;">if</span> (!disposedValue)
             {
-                if (disposing)
+                <span style="color:#569CD6;">if</span> (disposing)
                 {
-                    if (this.EditContext != null)
+                    <span style="color:#569CD6;">if</span> (<span style="color:#569CD6;">this</span>.EditContext != <span style="color:#569CD6;">null</span>)
                     {
-                        this.EditContext.OnFieldChanged -= this.FieldChanged;
-                        this.EditContext.OnValidationRequested -= this.ValidationRequested;
+                        <span style="color:#569CD6;">this</span>.EditContext.OnFieldChanged -= <span style="color:#569CD6;">this</span>.FieldChanged;
+                        <span style="color:#569CD6;">this</span>.EditContext.OnValidationRequested -= <span style="color:#569CD6;">this</span>.ValidationRequested;
                     }
                 }
-                disposedValue = true;
+                disposedValue = <span style="color:#569CD6;">true</span>;
             }
         }
 
-        public void Dispose()
+        <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">void</span> Dispose()
         {
-            // Do not change this code. Put cleanup code in 'Dispose(bool disposing)' method
-            Dispose(disposing: true);
-            GC.SuppressFinalize(this);
+            <span style="color:#57A64A;">// Do not change this code. Put cleanup code in &#39;Dispose(bool disposing)&#39; method</span>
+            Dispose(disposing: <span style="color:#569CD6;">true</span>);
+            GC.SuppressFinalize(<span style="color:#569CD6;">this</span>);
         }
-</code></pre>
-<h2 id="a-simple-implementation">A Simple Implementation</h2>
+</pre></div><h2 id="a-simple-implementation">A Simple Implementation</h2>
 <p><img src="https://shauncurtis.github.io/articles/assets/Editor-Controls/ValidationFormState.png" alt="EditForm" /></p>
 <p>To test the component, here's a simple test page.</p>
 <p>Change the temperature up and down and you should see the buttons change colour and Text, and enabled/disabled state.  Change the Temperature to 200 to get a validation message.</p>
 <p>You can see this at <a href="https://cec-blazor-database.azurewebsites.net//validationeditor">https://cec-blazor-database.azurewebsites.net//validationeditor</a>.</p>
-<pre><code class="language-html">@using Blazor.Database.Data
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+@using Blazor.Database.Data
 @page &quot;/validationeditor&quot;
 
-&lt;EditForm Model=&quot;@Model&quot; OnValidSubmit=&quot;@HandleValidSubmit&quot;&gt;
-    &lt;EditFormState @ref=&quot;editFormState&quot; EditStateChanged=&quot;this.EditStateChanged&quot;&gt;&lt;/EditFormState&gt;
-    &lt;ValidationFormState @ref=&quot;validationFormState&quot;&gt;&lt;/ValidationFormState&gt;
+<span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">EditForm</span> <span style="color:#FF0000;">Model</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;@Model&quot;</span> <span style="color:#FF0000;">OnValidSubmit</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;@HandleValidSubmit&quot;</span><span style="color:#569CD6;">&gt;</span>
+    &lt;EditFormState @ref=&quot;editFormState&quot; EditStateChanged=&quot;this.EditStateChanged&quot;&gt;<span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">EditFormState</span><span style="color:#569CD6;">&gt;</span>
+    &lt;ValidationFormState @ref=&quot;validationFormState&quot;&gt;<span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">ValidationFormState</span><span style="color:#569CD6;">&gt;</span>
 
-    &lt;label class=&quot;form-label&quot;&gt;ID:&lt;/label&gt; &lt;InputNumber class=&quot;form-control&quot; @bind-Value=&quot;Model.ID&quot; /&gt;
-    &lt;label class=&quot;form-label&quot;&gt;Date:&lt;/label&gt; &lt;InputDate class=&quot;form-control&quot; @bind-Value=&quot;Model.Date&quot; /&gt;&lt;ValidationMessage For=&quot;@(() =&gt; Model.Date)&quot; /&gt;
-    &lt;label class=&quot;form-label&quot;&gt;Temp C:&lt;/label&gt; &lt;InputNumber class=&quot;form-control&quot; @bind-Value=&quot;Model.TemperatureC&quot; /&gt;&lt;ValidationMessage For=&quot;@(() =&gt; Model.TemperatureC)&quot; /&gt;
-    &lt;label class=&quot;form-label&quot;&gt;Summary:&lt;/label&gt; &lt;InputText class=&quot;form-control&quot; @bind-Value=&quot;Model.Summary&quot; /&gt;&lt;ValidationMessage For=&quot;@(() =&gt; Model.Summary)&quot; /&gt;
+    <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">label</span> <span style="color:#FF0000;">class</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;form-label&quot;</span><span style="color:#569CD6;">&gt;</span>ID:<span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">label</span><span style="color:#569CD6;">&gt;</span> <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">InputNumber</span> <span style="color:#FF0000;">class</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;form-control&quot; @bind-Value=&quot;Model.ID&quot;</span> <span style="color:#569CD6;">/&gt;</span>
+    <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">label</span> <span style="color:#FF0000;">class</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;form-label&quot;</span><span style="color:#569CD6;">&gt;</span>Date:<span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">label</span><span style="color:#569CD6;">&gt;</span> <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">InputDate</span> <span style="color:#FF0000;">class</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;form-control&quot; @bind-Value=&quot;Model.Date&quot;</span> <span style="color:#569CD6;">/&gt;</span><span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">ValidationMessage</span> <span style="color:#FF0000;">For</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;@(() =&gt; Model.Date)&quot;</span> <span style="color:#569CD6;">/&gt;</span>
+    <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">label</span> <span style="color:#FF0000;">class</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;form-label&quot;</span><span style="color:#569CD6;">&gt;</span>Temp C:<span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">label</span><span style="color:#569CD6;">&gt;</span> <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">InputNumber</span> <span style="color:#FF0000;">class</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;form-control&quot; @bind-Value=&quot;Model.TemperatureC&quot;</span> <span style="color:#569CD6;">/&gt;</span><span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">ValidationMessage</span> <span style="color:#FF0000;">For</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;@(() =&gt; Model.TemperatureC)&quot;</span> <span style="color:#569CD6;">/&gt;</span>
+    <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">label</span> <span style="color:#FF0000;">class</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;form-label&quot;</span><span style="color:#569CD6;">&gt;</span>Summary:<span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">label</span><span style="color:#569CD6;">&gt;</span> <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">InputText</span> <span style="color:#FF0000;">class</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;form-control&quot; @bind-Value=&quot;Model.Summary&quot;</span> <span style="color:#569CD6;">/&gt;</span><span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">ValidationMessage</span> <span style="color:#FF0000;">For</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;@(() =&gt; Model.Summary)&quot;</span> <span style="color:#569CD6;">/&gt;</span>
 
-    &lt;div class=&quot;mt-2&quot;&gt;
-        &lt;div&gt;Validation Messages:&lt;/div&gt;
-        &lt;ValidationSummary /&gt;
-    &lt;/div&gt;
+    <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">div</span> <span style="color:#FF0000;">class</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;mt-2&quot;</span><span style="color:#569CD6;">&gt;</span>
+        <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">div</span><span style="color:#569CD6;">&gt;</span>Validation Messages:<span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">div</span><span style="color:#569CD6;">&gt;</span>
+        <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">ValidationSummary</span> <span style="color:#569CD6;">/&gt;</span>
+    <span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">div</span><span style="color:#569CD6;">&gt;</span>
 
-    &lt;div class=&quot;text-right mt-2&quot;&gt;
-        &lt;button class=&quot;btn @btnStateColour&quot; disabled&gt;@btnStateText&lt;/button&gt;
-        &lt;button class=&quot;btn @btnValidColour&quot; disabled&gt;@btnValidText&lt;/button&gt;
-        &lt;button class=&quot;btn btn-primary&quot; type=&quot;submit&quot; disabled=&quot;@_btnSubmitDisabled&quot;&gt;Submit&lt;/button&gt;
-    &lt;/div&gt;
+    <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">div</span> <span style="color:#FF0000;">class</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;text-right mt-2&quot;</span><span style="color:#569CD6;">&gt;</span>
+        <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">button</span> <span style="color:#FF0000;">class</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;btn @btnStateColour&quot;</span> <span style="color:#FF0000;">disabled</span><span style="color:#569CD6;">&gt;</span>@btnStateText<span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">button</span><span style="color:#569CD6;">&gt;</span>
+        <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">button</span> <span style="color:#FF0000;">class</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;btn @btnValidColour&quot;</span> <span style="color:#FF0000;">disabled</span><span style="color:#569CD6;">&gt;</span>@btnValidText<span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">button</span><span style="color:#569CD6;">&gt;</span>
+        <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">button</span> <span style="color:#FF0000;">class</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;btn btn-primary&quot;</span> <span style="color:#FF0000;">type</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;submit&quot;</span> <span style="color:#FF0000;">disabled</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;@_btnSubmitDisabled&quot;</span><span style="color:#569CD6;">&gt;</span>Submit<span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">button</span><span style="color:#569CD6;">&gt;</span>
+    <span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">div</span><span style="color:#569CD6;">&gt;</span>
 
-&lt;/EditForm&gt;
-</code></pre>
-<pre><code class="language-csharp">@code {
-    protected bool _isDirty = false;
-    protected bool _isValid =&gt; validationFormState?.IsValid ?? true;
-    protected string btnStateColour =&gt; _isDirty ? &quot;btn-danger&quot; : &quot;btn-success&quot;;
-    protected string btnStateText =&gt; _isDirty ? &quot;Dirty&quot; : &quot;Clean&quot;;
-    protected string btnValidColour =&gt; !_isValid ? &quot;btn-danger&quot; : &quot;btn-success&quot;;
-    protected string btnValidText =&gt; !_isValid ? &quot;Invalid&quot; : &quot;Valid&quot;;
-    protected bool _btnSubmitDisabled =&gt; !(_isValid &amp;&amp; _isDirty);
+<span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">EditForm</span><span style="color:#569CD6;">&gt;</span>
+</pre></div><div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+@code {
+    <span style="color:#569CD6;">protected</span> <span style="color:#569CD6;">bool</span> _isDirty = <span style="color:#569CD6;">false</span>;
+    <span style="color:#569CD6;">protected</span> <span style="color:#569CD6;">bool</span> _isValid =&gt; validationFormState?.IsValid ?? <span style="color:#569CD6;">true</span>;
+    <span style="color:#569CD6;">protected</span> <span style="color:#569CD6;">string</span> btnStateColour =&gt; _isDirty ? <span style="color:#D69D85;">&quot;btn-danger&quot;</span> : <span style="color:#D69D85;">&quot;btn-success&quot;</span>;
+    <span style="color:#569CD6;">protected</span> <span style="color:#569CD6;">string</span> btnStateText =&gt; _isDirty ? <span style="color:#D69D85;">&quot;Dirty&quot;</span> : <span style="color:#D69D85;">&quot;Clean&quot;</span>;
+    <span style="color:#569CD6;">protected</span> <span style="color:#569CD6;">string</span> btnValidColour =&gt; !_isValid ? <span style="color:#D69D85;">&quot;btn-danger&quot;</span> : <span style="color:#D69D85;">&quot;btn-success&quot;</span>;
+    <span style="color:#569CD6;">protected</span> <span style="color:#569CD6;">string</span> btnValidText =&gt; !_isValid ? <span style="color:#D69D85;">&quot;Invalid&quot;</span> : <span style="color:#D69D85;">&quot;Valid&quot;</span>;
+    <span style="color:#569CD6;">protected</span> <span style="color:#569CD6;">bool</span> _btnSubmitDisabled =&gt; !(_isValid &amp;&amp; _isDirty);
 
-    protected EditFormState editFormState { get; set; }
-    protected ValidationFormState validationFormState { get; set; }
+    <span style="color:#569CD6;">protected</span> EditFormState editFormState { <span style="color:#569CD6;">get</span>; <span style="color:#569CD6;">set</span>; }
+    <span style="color:#569CD6;">protected</span> ValidationFormState validationFormState { <span style="color:#569CD6;">get</span>; <span style="color:#569CD6;">set</span>; }
 
-    private WeatherForecast Model = new WeatherForecast()
+    <span style="color:#569CD6;">private</span> WeatherForecast Model = <span style="color:#569CD6;">new</span> WeatherForecast()
     {
-        ID = 1,
+        ID = <span style="color:#B5CEA8;">1</span>,
         Date = DateTime.Now,
-        TemperatureC = 22,
-        Summary = &quot;Balmy&quot;
+        TemperatureC = <span style="color:#B5CEA8;">22</span>,
+        Summary = <span style="color:#D69D85;">&quot;Balmy&quot;</span>
     };
 
-    private void HandleValidSubmit()
-        =&gt; this.editFormState.UpdateState();
+    <span style="color:#569CD6;">private</span> <span style="color:#569CD6;">void</span> HandleValidSubmit()
+        =&gt; <span style="color:#569CD6;">this</span>.editFormState.UpdateState();
 
-    private void EditStateChanged(bool editstate)
-        =&gt; this._isDirty = editstate;
+    <span style="color:#569CD6;">private</span> <span style="color:#569CD6;">void</span> EditStateChanged(<span style="color:#569CD6;">bool</span> editstate)
+        =&gt; <span style="color:#569CD6;">this</span>._isDirty = editstate;
 }
-</code></pre>
-<h2 id="wrap-up">Wrap Up</h2>
+</pre></div><h2 id="wrap-up">Wrap Up</h2>
 <p>Hopefully I've explained how validation works and how to build a simple, but comprehensive and extensible validation system.</p>
 <p>The most common problem with validation is <code>ValidationMessage</code> controls not showing messages.  There are normally two reasons for this:</p>
 <ol>

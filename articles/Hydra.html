@@ -114,8 +114,9 @@
 <p>If you look at the code repository and the test site you'll see a project call <em>Hydra</em>.  This is the host web site.  It's an out-of-the-box AspNetCore Pages template web site.</p>
 <p>Lets look at <em>Startup.cs</em>.</p>
 <p>AspNetCore has an Inversion Of Control/Dependancy Injection <em>Services</em> container defined by <code>IServiceCollection</code>.  If you are unsure what an IOC/DI container is, then do some background reading.  We configure this in <code>ConfigureServices</code>.</p>
-<pre><code class="language-csharp">    // This method gets called by the runtime. Use this method to add services to the container.
-    public void ConfigureServices(IServiceCollection services)
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+    <span style="color:#57A64A;">// This method gets called by the runtime. Use this method to add services to the container.</span>
+    <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">void</span> ConfigureServices(IServiceCollection services)
     {
         services.AddRazorPages();
         services.AddControllersWithViews();
@@ -124,96 +125,101 @@
         services.AddSingleton&lt;IWeatherForecastService, WeatherForecastService&gt;();
         services.AddCECRouting();
     }
-</code></pre>
+</pre></div>
 <p>What you see are a set of services configured directly - such as the <code>WeatherForecastService</code> and calls to a set of ServiceCollectionExtensions like <code>AddServerSideBlazor</code> and <code>AddCECRouting</code>.</p>
 <p>To de-mystify these, the code for <code>AddCECRouting</code> is shown below.</p>
-<pre><code class="language-csharp">public static class ServiceCollectionExtensions
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+<span style="color:#569CD6;">public</span> <span style="color:#569CD6;">static</span> <span style="color:#569CD6;">class</span> ServiceCollectionExtensions
 {
-    public static IServiceCollection AddCECRouting(this IServiceCollection services)
+    <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">static</span> IServiceCollection AddCECRouting(<span style="color:#569CD6;">this</span> IServiceCollection services)
     {
         services.AddScoped&lt;RouterSessionService&gt;();
-        return services;
+        <span style="color:#569CD6;">return</span> services;
     }
 }
-</code></pre>
+</pre></div>
 <p>ServiceCollectionExtensions are just ways to configure all the services for a specific function under one roof.  They are Extension methods for <code>IServiceCollection</code>.  <code>AddServerSideBlazor</code> just adds all the necessary services for Blazor Server, such as <code>NavigationManager</code> and <code>IJSRuntime</code>.</p>
 <p><code>AddServerSideHttpClient</code> is defined in CEC.Blazor.Hydra/Extensions if you want to see a ServiceCollectionExtension implementation.</p>
 <p><code>Configure</code> sets up the <em>Middleware</em> run by the web server.  We'll break this down into sections.</p>
 <p>The first section is ASPNetCore web server standard implementation.</p>
-<pre><code class="language-csharp">public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+<span style="color:#569CD6;">public</span> <span style="color:#569CD6;">void</span> Configure(IApplicationBuilder app, IWebHostEnvironment env)
 {
-    if (env.IsDevelopment())
+    <span style="color:#569CD6;">if</span> (env.IsDevelopment())
     {
         app.UseDeveloperExceptionPage();
     }
-    else
+    <span style="color:#569CD6;">else</span>
     {
-        app.UseExceptionHandler(&quot;/Error&quot;);
-        // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
+        app.UseExceptionHandler(<span style="color:#D69D85;">&quot;/Error&quot;</span>);
+        <span style="color:#57A64A;">// The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.</span>
         app.UseHsts();
     }
     app.UseHttpsRedirection();
     app.UseStaticFiles();
 
-</code></pre>
+</pre></div>
 <p>Next we define a <code>IApplicationBuilder.MapWhen</code> for each WASM SPA.  I've shown the one for <em>red</em> here.  These define the middleware to run for specific site segments - defined by the Url.  This is for the Red WASM.  Note:</p>
 <ol>
 <li>We configure <code>UseBlazorFrameworkFiles</code> to a specific Url segment- we'll look at the significance of this in the WASM section below. It means the frameworks file path will be <em>wwwroot/red/_framework/</em>, providing a unique path for this WASM SPA.</li>
 <li>The fallback Page for the segment is <code>/_Red.cshtml</code>.</li>
 </ol>
-<pre><code class="language-csharp">
-    app.MapWhen(ctx =&gt; ctx.Request.Path.StartsWithSegments(&quot;/red&quot;), app1 =&gt;
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+
+    app.MapWhen(ctx =&gt; ctx.Request.Path.StartsWithSegments(<span style="color:#D69D85;">&quot;/red&quot;</span>), app1 =&gt;
     {
-        app1.UseBlazorFrameworkFiles(&quot;/red&quot;);
+        app1.UseBlazorFrameworkFiles(<span style="color:#D69D85;">&quot;/red&quot;</span>);
         app1.UseRouting();
         app1.UseEndpoints(endpoints =&gt;
         {
-            endpoints.MapFallbackToPage(&quot;/red/{*path:nonfile}&quot;, &quot;/_Red&quot;);
+            endpoints.MapFallbackToPage(<span style="color:#D69D85;">&quot;/red/{*path:nonfile}&quot;</span>, <span style="color:#D69D85;">&quot;/_Red&quot;</span>);
         });
     });
 
-</code></pre>
+</pre></div>
 <p>Finally we define the default segment middleware.  Note:</p>
 <ol>
 <li>We define <code>MapBlazorHub</code> to map all SignalR traffic to the Blazor Hub.</li>
 <li>We define a set of segment specific fallback pages for each Blazor Server SPA with the specific startup page for the SPA.</li>
 </ol>
-<pre><code class="language-csharp">    app.UseRouting();
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+    app.UseRouting();
     app.UseBlazorFrameworkFiles();
     app.UseEndpoints(endpoints =&gt;
     {
         endpoints.MapBlazorHub();
         endpoints.MapRazorPages();
-        endpoints.MapFallbackToPage(&quot;/examplesserver/{*path:nonfile}&quot;, &quot;/_ExamplesServer&quot;);
-        endpoints.MapFallbackToPage(&quot;/grey/{*path:nonfile}&quot;, &quot;/_Grey&quot;);
-        endpoints.MapFallbackToPage(&quot;/blue/{*path:nonfile}&quot;, &quot;/_Blue&quot;);
-        endpoints.MapFallbackToPage(&quot;/routing/{*path:nonfile}&quot;, &quot;/_Routing&quot;);
-        endpoints.MapFallbackToPage(&quot;/Index&quot;);
+        endpoints.MapFallbackToPage(<span style="color:#D69D85;">&quot;/examplesserver/{*path:nonfile}&quot;</span>, <span style="color:#D69D85;">&quot;/_ExamplesServer&quot;</span>);
+        endpoints.MapFallbackToPage(<span style="color:#D69D85;">&quot;/grey/{*path:nonfile}&quot;</span>, <span style="color:#D69D85;">&quot;/_Grey&quot;</span>);
+        endpoints.MapFallbackToPage(<span style="color:#D69D85;">&quot;/blue/{*path:nonfile}&quot;</span>, <span style="color:#D69D85;">&quot;/_Blue&quot;</span>);
+        endpoints.MapFallbackToPage(<span style="color:#D69D85;">&quot;/routing/{*path:nonfile}&quot;</span>, <span style="color:#D69D85;">&quot;/_Routing&quot;</span>);
+        endpoints.MapFallbackToPage(<span style="color:#D69D85;">&quot;/Index&quot;</span>);
     });
 }
-</code></pre>
-<h2 id="blazor-wasm">Blazor WASM</h2>
+</pre></div><h2 id="blazor-wasm">Blazor WASM</h2>
 <p>Each WASM SPA must have a separate project. <code>&lt;Project Sdk=&quot;Microsoft.NET.Sdk.BlazorWebAssembly&quot;&gt;</code>
 declares the project as a WASM SPA and instructs the compiler to build the project as a WASM SPA.  There's a single <code>RootComponent</code> defined in <code>Program</code>.</p>
-<pre><code class="language-csharp">public class Program
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+<span style="color:#569CD6;">public</span> <span style="color:#569CD6;">class</span> Program
 {
-    public static async Task Main(string[] args)
+    <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">static</span> <span style="color:#569CD6;">async</span> Task Main(<span style="color:#569CD6;">string</span>[] args)
     {
-        var builder = WebAssemblyHostBuilder.CreateDefault(args);
-        builder.RootComponents.Add&lt;WASMRedApp&gt;(&quot;#app&quot;);
+        <span style="color:#569CD6;">var</span> builder = WebAssemblyHostBuilder.CreateDefault(args);
+        builder.RootComponents.Add&lt;WASMRedApp&gt;(<span style="color:#D69D85;">&quot;#app&quot;</span>);
 
-        builder.Services.AddScoped(sp =&gt; new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
+        builder.Services.AddScoped(sp =&gt; <span style="color:#569CD6;">new</span> HttpClient { BaseAddress = <span style="color:#569CD6;">new</span> Uri(builder.HostEnvironment.BaseAddress) });
 
-        await builder.Build().RunAsync();
+        <span style="color:#569CD6;">await</span> builder.Build().RunAsync();
     }
 }
-</code></pre>
+</pre></div>
 <p>You don't need to stick with <code>app</code>.  This declaration defines a different class to <code>App</code>.  It basically says render the component of <code>TComponent</code> in the HTML tag with <code>id</code> of <code>app</code>.  Don't be misled by <code>RootComponents</code> and <code>Add</code>.  Declare one.  You can declare more than one, but they must all be present on the rendered page, so it's fairly pointless: Layouts achieve the same result with far more flexibility.</p>
 <p>The key to multi SPA hosting is specifying a unique <code>StaticWebAssetBasePath</code> in the project definition file.</p>
-<pre><code class="language-xml">  &lt;PropertyGroup&gt;
-    &lt;StaticWebAssetBasePath&gt;red&lt;/StaticWebAssetBasePath&gt;
-  &lt;/PropertyGroup&gt;
-</code></pre>
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+  <span style="color:#808080;">&lt;</span><span style="color:#E6E6E6;">PropertyGroup</span><span style="color:#808080;">&gt;</span>
+    <span style="color:#808080;">&lt;</span><span style="color:#E6E6E6;">StaticWebAssetBasePath</span><span style="color:#808080;">&gt;</span>red<span style="color:#808080;">&lt;/</span><span style="color:#E6E6E6;">StaticWebAssetBasePath</span><span style="color:#808080;">&gt;</span>
+  <span style="color:#808080;">&lt;/</span><span style="color:#E6E6E6;">PropertyGroup</span><span style="color:#808080;">&gt;</span>
+</pre></div>
 <p>Remember we used <code>UseBlazorFrameworkFiles(&quot;/red&quot;)</code> in the middleware map in <code>Startup,cs</code>.  This is where things tie together.  This is case sensitive!</p>
 <p><img src="https://shauncurtis.github.io/articles/assets/Hydra/Mongrel-Red-Project.png" alt="Mongrel Red Project" /></p>
 <p>The project view above shows all the files in the project.</p>
@@ -226,34 +232,35 @@ declares the project as a WASM SPA and instructs the compiler to build the proje
 <p><img src="https://shauncurtis.github.io/articles/assets/Hydra/Mongrel-Red-bin.png" alt="Mongrel Red Project" /></p>
 <p>Note the <em>_framework</em> directory containing <code>blazor.webaseembly.js</code> and <code>blazor.boot.json</code>.  When this project is referenced by Hydra this directory will be available as <em>red/_framework</em>.  Without unique <code>StaticWebAssetBasePath</code>s all SPA's would be mappsed to <em>_framework</em>.</p>
 <p>The &quot;Startup&quot; page for the SPA is on Hydra. <em>_Red.cshtml</em></p>
-<pre><code class="language-html">@page &quot;/spared&quot;
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+@page &quot;/spared&quot;
 @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 @{
     Layout = null;
 }
 
-&lt;!DOCTYPE html&gt;
-&lt;html&gt;
-&lt;head&gt;
-    &lt;meta charset=&quot;utf-8&quot; /&gt;
-    &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no&quot; /&gt;
-    &lt;title&gt;Mongrel.WASM.RED&lt;/title&gt;
-    &lt;base href=&quot;/red/&quot; /&gt;
-    &lt;link href=&quot;/css/site.css&quot; rel=&quot;stylesheet&quot; /&gt;
-    &lt;link href=&quot;/CEC.Blazor.Hydra.styles.css&quot; rel=&quot;stylesheet&quot; /&gt;
-&lt;/head&gt;
-&lt;body&gt;
-    &lt;div id=&quot;app&quot;&gt;
-        &lt;div class=&quot;mt-4&quot; style=&quot;margin-right:auto; margin-left:auto; width:100%;&quot;&gt;
-            &lt;div class=&quot;loader&quot;&gt;&lt;/div&gt;
-            &lt;div style=&quot;width:100%; text-align:center;&quot;&gt;&lt;h4&gt;Web Application Loading&lt;/h4&gt;&lt;/div&gt;
-        &lt;/div&gt;
-    &lt;/div&gt;
+<span style="color:#569CD6;">&lt;!</span><span style="color:#A31515;">DOCTYPE</span> <span style="color:#FF0000;">html</span><span style="color:#569CD6;">&gt;</span>
+<span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">html</span><span style="color:#569CD6;">&gt;</span>
+<span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">head</span><span style="color:#569CD6;">&gt;</span>
+    <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">meta</span> <span style="color:#FF0000;">charset</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;utf-8&quot;</span> <span style="color:#569CD6;">/&gt;</span>
+    <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">meta</span> <span style="color:#FF0000;">name</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;viewport&quot;</span> <span style="color:#FF0000;">content</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no&quot;</span> <span style="color:#569CD6;">/&gt;</span>
+    <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">title</span><span style="color:#569CD6;">&gt;</span>Mongrel.WASM.RED<span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">title</span><span style="color:#569CD6;">&gt;</span>
+    <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">base</span> <span style="color:#FF0000;">href</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;/red/&quot;</span> <span style="color:#569CD6;">/&gt;</span>
+    <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">link</span> <span style="color:#FF0000;">href</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;/css/site.css&quot;</span> <span style="color:#FF0000;">rel</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;stylesheet&quot;</span> <span style="color:#569CD6;">/&gt;</span>
+    <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">link</span> <span style="color:#FF0000;">href</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;/CEC.Blazor.Hydra.styles.css&quot;</span> <span style="color:#FF0000;">rel</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;stylesheet&quot;</span> <span style="color:#569CD6;">/&gt;</span>
+<span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">head</span><span style="color:#569CD6;">&gt;</span>
+<span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">body</span><span style="color:#569CD6;">&gt;</span>
+    <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">div</span> <span style="color:#FF0000;">id</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;app&quot;</span><span style="color:#569CD6;">&gt;</span>
+        <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">div</span> <span style="color:#FF0000;">class</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;mt-4&quot;</span> <span style="color:#FF0000;">style</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;margin-right:auto; margin-left:auto; width:100%;&quot;</span><span style="color:#569CD6;">&gt;</span>
+            <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">div</span> <span style="color:#FF0000;">class</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;loader&quot;</span><span style="color:#569CD6;">&gt;</span><span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">div</span><span style="color:#569CD6;">&gt;</span>
+            <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">div</span> <span style="color:#FF0000;">style</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;width:100%; text-align:center;&quot;</span><span style="color:#569CD6;">&gt;</span><span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">h4</span><span style="color:#569CD6;">&gt;</span>Web Application Loading<span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">h4</span><span style="color:#569CD6;">&gt;</span><span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">div</span><span style="color:#569CD6;">&gt;</span>
+        <span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">div</span><span style="color:#569CD6;">&gt;</span>
+    <span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">div</span><span style="color:#569CD6;">&gt;</span>
 
-    &lt;script src=&quot;/red/_framework/blazor.webassembly.js&quot;&gt;&lt;/script&gt;
-&lt;/body&gt;
-&lt;/html&gt;
-</code></pre>
+    <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">script</span> <span style="color:#FF0000;">src</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;/red/_framework/blazor.webassembly.js&quot;</span><span style="color:#569CD6;">&gt;</span><span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">script</span><span style="color:#569CD6;">&gt;</span>
+<span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">body</span><span style="color:#569CD6;">&gt;</span>
+<span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">html</span><span style="color:#569CD6;">&gt;</span>
+</pre></div>
 <p>Note:</p>
 <ol>
 <li>The <code>base</code> is set to <code>&quot;/red/&quot;</code>.  <strong>Important</strong> - You need to leading and trailing slashes.</li>
@@ -274,28 +281,29 @@ declares the project as a WASM SPA and instructs the compiler to build the proje
 <p>The key bot to understand here is there's one Blazor hub for all the SPAs.  Load all the services for each SPA in <code>ConfigureServices</code>.  This does place some restrictions and controls on what you can and can't run together, but for most instances this won't be an issue.  Remember Services are only loaded as needed, and cleaned up as they are disposed.  Make sure you get the scope of your service right.</p>
 <p>Each Server SPA has an <em>endpoint</em>.  You don't need to configure these with <code>MapWhen</code> as they all use the same middleware train.Thet're all defined in the default <code>UseEndpoints</code>.  You've seen these already in <code>Startup.cs</code>.</p>
 <p>The client side of the Server SPA is again defined as a single page.  Unlike the WASM page, which is static Html wrapped in a Razor page, the Server SPA page is a razor page.  It has a <code>Component</code> entry point that is read by the TagHelper and processed by the server.  What Razor does with the page is dictated by <code>rendermode</code>.</p>
-<pre><code class="language-html">@page &quot;/spagrey&quot;
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+@page &quot;/spagrey&quot;
 @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 @{
     Layout = null;
 }
-&lt;!DOCTYPE html&gt;
-&lt;html&gt;
-&lt;head&gt;
-    &lt;meta charset=&quot;utf-8&quot; /&gt;
-    &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no&quot; /&gt;
-    &lt;title&gt;Mongrel.Server.GREY&lt;/title&gt;
-    &lt;base href=&quot;/grey&quot; /&gt;
-    &lt;link href=&quot;/css/site.css&quot; rel=&quot;stylesheet&quot; /&gt;
-    &lt;link href=&quot;/CEC.Blazor.Hydra.styles.css&quot; rel=&quot;stylesheet&quot; /&gt;
-&lt;/head&gt;
-&lt;body&gt;
-    &lt;component type=&quot;typeof(Mongrel.Server.Grey.Components.ServerGreyApp)&quot; render-mode=&quot;ServerPrerendered&quot; /&gt;
+<span style="color:#569CD6;">&lt;!</span><span style="color:#A31515;">DOCTYPE</span> <span style="color:#FF0000;">html</span><span style="color:#569CD6;">&gt;</span>
+<span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">html</span><span style="color:#569CD6;">&gt;</span>
+<span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">head</span><span style="color:#569CD6;">&gt;</span>
+    <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">meta</span> <span style="color:#FF0000;">charset</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;utf-8&quot;</span> <span style="color:#569CD6;">/&gt;</span>
+    <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">meta</span> <span style="color:#FF0000;">name</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;viewport&quot;</span> <span style="color:#FF0000;">content</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no&quot;</span> <span style="color:#569CD6;">/&gt;</span>
+    <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">title</span><span style="color:#569CD6;">&gt;</span>Mongrel.Server.GREY<span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">title</span><span style="color:#569CD6;">&gt;</span>
+    <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">base</span> <span style="color:#FF0000;">href</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;/grey&quot;</span> <span style="color:#569CD6;">/&gt;</span>
+    <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">link</span> <span style="color:#FF0000;">href</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;/css/site.css&quot;</span> <span style="color:#FF0000;">rel</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;stylesheet&quot;</span> <span style="color:#569CD6;">/&gt;</span>
+    <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">link</span> <span style="color:#FF0000;">href</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;/CEC.Blazor.Hydra.styles.css&quot;</span> <span style="color:#FF0000;">rel</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;stylesheet&quot;</span> <span style="color:#569CD6;">/&gt;</span>
+<span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">head</span><span style="color:#569CD6;">&gt;</span>
+<span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">body</span><span style="color:#569CD6;">&gt;</span>
+    <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">component</span> <span style="color:#FF0000;">type</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;typeof(Mongrel.Server.Grey.Components.ServerGreyApp)&quot;</span> <span style="color:#FF0000;">render-mode</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;ServerPrerendered&quot;</span> <span style="color:#569CD6;">/&gt;</span>
 
-    &lt;script src=&quot;_framework/blazor.server.js&quot;&gt;&lt;/script&gt;
-&lt;/body&gt;
-&lt;/html&gt;
-</code></pre>
+    <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">script</span> <span style="color:#FF0000;">src</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;_framework/blazor.server.js&quot;</span><span style="color:#569CD6;">&gt;</span><span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">script</span><span style="color:#569CD6;">&gt;</span>
+<span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">body</span><span style="color:#569CD6;">&gt;</span>
+<span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">html</span><span style="color:#569CD6;">&gt;</span>
+</pre></div>
 <p>Once the browser receives what got produced by the server, it renders the initial static DOM provided and then calls the loaded Javascript.  This where the magic starts.  <code>blazor.server.js</code> loads, reads configuration data incorporated in the page and establishes a session with the BlazorHub over SignalR and requests the root <code>IComponent</code> defined on the page by <code>&lt;component&gt;</code> - normally <code>App</code> defined by <code>App.Razor</code>.  The Blazor middleware, configured on the server by <code>endpoints.MapBlazorHub()</code> receives the request and establishes the session.  The Blazor Hub renders the requested <code>IComponent</code> component tree and passes the changes back over SignalR to the client: on initial re-render this is the whole DOM.  The SPA is now live.  Events happen on the page, get passed back to the Hub Session.  It handles the events and passes any DOM changes back to the client.  Navigation events to known routes get handled by the SPA router: the SPA session persists.  A URL outside known routes causes the SPA Router to submit a full http get for the URL: the SPA session ends.  I watch the page tab in the browser to see if a request is routed or causes a page refresh.</p>
 <p>So what's going on in the SignalR session.  The AspNetCore compiled code library for the website contains all the Blazor component code - they're just standard classes.  The Service container runs the services, again standard classes within the compiled code library.  The heart of the signalR session is the Renderer for the specific SPA session.  It builds and rebuilds the DOM from the ComponentTree.  Consider a Blazor Server SPA as two entities: one running in the Blazor Hub on the Server doing most of the work; the other bit on the client, intercepting events and passing them back to the server, then re-rendering the page with the DOM changes returned. Events client-to-Server, DOM changes Server-to-Client.</p>
 <h2 id="building-the-hydra-site">Building the Hydra Site</h2>
@@ -321,70 +329,75 @@ declares the project as a WASM SPA and instructs the compiler to build the proje
 <h2 id="hydra.red">Hydra.Red</h2>
 <p><img src="https://shauncurtis.github.io/articles/assets/Hydra/Hydra-Red.png" alt="Initial Project View" /></p>
 <p>Update the project file.  Note <code>StaticWebAssetBasePath</code> is set to <em>red</em>.</p>
-<pre><code class="language-xml">&lt;Project Sdk=&quot;Microsoft.NET.Sdk.BlazorWebAssembly&quot;&gt;
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+<span style="color:#808080;">&lt;</span><span style="color:#E6E6E6;">Project</span> <span style="color:#92CAF4;">Sdk</span><span style="color:#808080;">=</span><span style="color:#569CD6;">&quot;</span><span style="color:#569CD6;">Microsoft.NET.Sdk.BlazorWebAssembly</span><span style="color:#569CD6;">&quot;</span><span style="color:#808080;">&gt;</span>
 
-  &lt;PropertyGroup&gt;
-    &lt;TargetFramework&gt;net5.0&lt;/TargetFramework&gt;
-    &lt;StaticWebAssetBasePath&gt;red&lt;/StaticWebAssetBasePath&gt;
-  &lt;/PropertyGroup&gt;
+  <span style="color:#808080;">&lt;</span><span style="color:#E6E6E6;">PropertyGroup</span><span style="color:#808080;">&gt;</span>
+    <span style="color:#808080;">&lt;</span><span style="color:#E6E6E6;">TargetFramework</span><span style="color:#808080;">&gt;</span>net5.0<span style="color:#808080;">&lt;/</span><span style="color:#E6E6E6;">TargetFramework</span><span style="color:#808080;">&gt;</span>
+    <span style="color:#808080;">&lt;</span><span style="color:#E6E6E6;">StaticWebAssetBasePath</span><span style="color:#808080;">&gt;</span>red<span style="color:#808080;">&lt;/</span><span style="color:#E6E6E6;">StaticWebAssetBasePath</span><span style="color:#808080;">&gt;</span>
+  <span style="color:#808080;">&lt;/</span><span style="color:#E6E6E6;">PropertyGroup</span><span style="color:#808080;">&gt;</span>
 
-  &lt;ItemGroup&gt;
-    &lt;PackageReference Include=&quot;Microsoft.AspNetCore.Components.WebAssembly&quot; Version=&quot;5.0.3&quot; /&gt;
-    &lt;PackageReference Include=&quot;Microsoft.AspNetCore.Components.WebAssembly.DevServer&quot; Version=&quot;5.0.3&quot; PrivateAssets=&quot;all&quot; /&gt;
-    &lt;PackageReference Include=&quot;System.Net.Http.Json&quot; Version=&quot;5.0.0&quot; /&gt;
-  &lt;/ItemGroup&gt;
+  <span style="color:#808080;">&lt;</span><span style="color:#E6E6E6;">ItemGroup</span><span style="color:#808080;">&gt;</span>
+    <span style="color:#808080;">&lt;</span><span style="color:#E6E6E6;">PackageReference</span> <span style="color:#92CAF4;">Include</span><span style="color:#808080;">=</span><span style="color:#569CD6;">&quot;</span><span style="color:#569CD6;">Microsoft.AspNetCore.Components.WebAssembly</span><span style="color:#569CD6;">&quot;</span> <span style="color:#92CAF4;">Version</span><span style="color:#808080;">=</span><span style="color:#569CD6;">&quot;</span><span style="color:#569CD6;">5.0.3</span><span style="color:#569CD6;">&quot;</span> <span style="color:#808080;">/&gt;</span>
+    <span style="color:#808080;">&lt;</span><span style="color:#E6E6E6;">PackageReference</span> <span style="color:#92CAF4;">Include</span><span style="color:#808080;">=</span><span style="color:#569CD6;">&quot;</span><span style="color:#569CD6;">Microsoft.AspNetCore.Components.WebAssembly.DevServer</span><span style="color:#569CD6;">&quot;</span> <span style="color:#92CAF4;">Version</span><span style="color:#808080;">=</span><span style="color:#569CD6;">&quot;</span><span style="color:#569CD6;">5.0.3</span><span style="color:#569CD6;">&quot;</span> <span style="color:#92CAF4;">PrivateAssets</span><span style="color:#808080;">=</span><span style="color:#569CD6;">&quot;</span><span style="color:#569CD6;">all</span><span style="color:#569CD6;">&quot;</span> <span style="color:#808080;">/&gt;</span>
+    <span style="color:#808080;">&lt;</span><span style="color:#E6E6E6;">PackageReference</span> <span style="color:#92CAF4;">Include</span><span style="color:#808080;">=</span><span style="color:#569CD6;">&quot;</span><span style="color:#569CD6;">System.Net.Http.Json</span><span style="color:#569CD6;">&quot;</span> <span style="color:#92CAF4;">Version</span><span style="color:#808080;">=</span><span style="color:#569CD6;">&quot;</span><span style="color:#569CD6;">5.0.0</span><span style="color:#569CD6;">&quot;</span> <span style="color:#808080;">/&gt;</span>
+  <span style="color:#808080;">&lt;/</span><span style="color:#E6E6E6;">ItemGroup</span><span style="color:#808080;">&gt;</span>
 
-&lt;/Project&gt;
-</code></pre>
+<span style="color:#808080;">&lt;/</span><span style="color:#E6E6E6;">Project</span><span style="color:#808080;">&gt;</span>
+</pre></div>
 <p>Update <em>NavMenu.razor</em> by adding the following link at the top of the links.</p>
-<pre><code class="language-html">&lt;div class=&quot;@NavMenuCssClass&quot; @onclick=&quot;ToggleNavMenu&quot;&gt;
-    &lt;ul class=&quot;nav flex-column&quot;&gt;
-        &lt;li class=&quot;nav-item px-3&quot;&gt;
-            &lt;NavLink class=&quot;nav-link&quot; href=&quot;/Hydra&quot; Match=&quot;NavLinkMatch.All&quot;&gt;
-                &lt;span class=&quot;oi oi-home&quot; aria-hidden=&quot;true&quot;&gt;&lt;/span&gt; Hydra
-            &lt;/NavLink&gt;
-        &lt;/li&gt;
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+<span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">div</span> <span style="color:#FF0000;">class</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;@NavMenuCssClass&quot; @onclick=&quot;ToggleNavMenu&quot;</span><span style="color:#569CD6;">&gt;</span>
+    <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">ul</span> <span style="color:#FF0000;">class</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;nav flex-column&quot;</span><span style="color:#569CD6;">&gt;</span>
+        <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">li</span> <span style="color:#FF0000;">class</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;nav-item px-3&quot;</span><span style="color:#569CD6;">&gt;</span>
+            <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">NavLink</span> <span style="color:#FF0000;">class</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;nav-link&quot;</span> <span style="color:#FF0000;">href</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;/Hydra&quot;</span> <span style="color:#FF0000;">Match</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;NavLinkMatch.All&quot;</span><span style="color:#569CD6;">&gt;</span>
+                <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">span</span> <span style="color:#FF0000;">class</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;oi oi-home&quot;</span> <span style="color:#FF0000;">aria-hidden</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;true&quot;</span><span style="color:#569CD6;">&gt;</span><span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">span</span><span style="color:#569CD6;">&gt;</span> Hydra
+            <span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">NavLink</span><span style="color:#569CD6;">&gt;</span>
+        <span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">li</span><span style="color:#569CD6;">&gt;</span>
 ......
-</code></pre>
+</pre></div>
 <p>Update <em>MainLayout.razor.css</em> by changing the <code>.sidebar</code> background.</p>
-<pre><code class="language-css">.sidebar {
-    background-image: linear-gradient(180deg, #400 0%, #800 70%);
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+<span style="color:#A31515;">.sidebar </span>{
+    <span style="color:#FF0000;">background-image</span>: <span style="color:#569CD6;">linear-gradient(180deg, #400 0%, #800 70%)</span>;
 }
-</code></pre>
-<h2 id="hydra.steel">Hydra.Steel</h2>
+</pre></div><h2 id="hydra.steel">Hydra.Steel</h2>
 <p><img src="https://shauncurtis.github.io/articles/assets/Hydra/Hydra-Steel.png" alt="Initial Project View" /></p>
 <p>Update the project file.  Note the added <code>StaticWebAssetBasePath</code> set to <em>steel</em>.</p>
-<pre><code class="language-xml">&lt;Project Sdk=&quot;Microsoft.NET.Sdk.BlazorWebAssembly&quot;&gt;
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+<span style="color:#808080;">&lt;</span><span style="color:#E6E6E6;">Project</span> <span style="color:#92CAF4;">Sdk</span><span style="color:#808080;">=</span><span style="color:#569CD6;">&quot;</span><span style="color:#569CD6;">Microsoft.NET.Sdk.BlazorWebAssembly</span><span style="color:#569CD6;">&quot;</span><span style="color:#808080;">&gt;</span>
 
-  &lt;PropertyGroup&gt;
-    &lt;TargetFramework&gt;net5.0&lt;/TargetFramework&gt;
-    &lt;StaticWebAssetBasePath&gt;steel&lt;/StaticWebAssetBasePath&gt;
-  &lt;/PropertyGroup&gt;
+  <span style="color:#808080;">&lt;</span><span style="color:#E6E6E6;">PropertyGroup</span><span style="color:#808080;">&gt;</span>
+    <span style="color:#808080;">&lt;</span><span style="color:#E6E6E6;">TargetFramework</span><span style="color:#808080;">&gt;</span>net5.0<span style="color:#808080;">&lt;/</span><span style="color:#E6E6E6;">TargetFramework</span><span style="color:#808080;">&gt;</span>
+    <span style="color:#808080;">&lt;</span><span style="color:#E6E6E6;">StaticWebAssetBasePath</span><span style="color:#808080;">&gt;</span>steel<span style="color:#808080;">&lt;/</span><span style="color:#E6E6E6;">StaticWebAssetBasePath</span><span style="color:#808080;">&gt;</span>
+  <span style="color:#808080;">&lt;/</span><span style="color:#E6E6E6;">PropertyGroup</span><span style="color:#808080;">&gt;</span>
 
-  &lt;ItemGroup&gt;
-    &lt;PackageReference Include=&quot;Microsoft.AspNetCore.Components.WebAssembly&quot; Version=&quot;5.0.3&quot; /&gt;
-    &lt;PackageReference Include=&quot;Microsoft.AspNetCore.Components.WebAssembly.DevServer&quot; Version=&quot;5.0.3&quot; PrivateAssets=&quot;all&quot; /&gt;
-    &lt;PackageReference Include=&quot;System.Net.Http.Json&quot; Version=&quot;5.0.0&quot; /&gt;
-  &lt;/ItemGroup&gt;
+  <span style="color:#808080;">&lt;</span><span style="color:#E6E6E6;">ItemGroup</span><span style="color:#808080;">&gt;</span>
+    <span style="color:#808080;">&lt;</span><span style="color:#E6E6E6;">PackageReference</span> <span style="color:#92CAF4;">Include</span><span style="color:#808080;">=</span><span style="color:#569CD6;">&quot;</span><span style="color:#569CD6;">Microsoft.AspNetCore.Components.WebAssembly</span><span style="color:#569CD6;">&quot;</span> <span style="color:#92CAF4;">Version</span><span style="color:#808080;">=</span><span style="color:#569CD6;">&quot;</span><span style="color:#569CD6;">5.0.3</span><span style="color:#569CD6;">&quot;</span> <span style="color:#808080;">/&gt;</span>
+    <span style="color:#808080;">&lt;</span><span style="color:#E6E6E6;">PackageReference</span> <span style="color:#92CAF4;">Include</span><span style="color:#808080;">=</span><span style="color:#569CD6;">&quot;</span><span style="color:#569CD6;">Microsoft.AspNetCore.Components.WebAssembly.DevServer</span><span style="color:#569CD6;">&quot;</span> <span style="color:#92CAF4;">Version</span><span style="color:#808080;">=</span><span style="color:#569CD6;">&quot;</span><span style="color:#569CD6;">5.0.3</span><span style="color:#569CD6;">&quot;</span> <span style="color:#92CAF4;">PrivateAssets</span><span style="color:#808080;">=</span><span style="color:#569CD6;">&quot;</span><span style="color:#569CD6;">all</span><span style="color:#569CD6;">&quot;</span> <span style="color:#808080;">/&gt;</span>
+    <span style="color:#808080;">&lt;</span><span style="color:#E6E6E6;">PackageReference</span> <span style="color:#92CAF4;">Include</span><span style="color:#808080;">=</span><span style="color:#569CD6;">&quot;</span><span style="color:#569CD6;">System.Net.Http.Json</span><span style="color:#569CD6;">&quot;</span> <span style="color:#92CAF4;">Version</span><span style="color:#808080;">=</span><span style="color:#569CD6;">&quot;</span><span style="color:#569CD6;">5.0.0</span><span style="color:#569CD6;">&quot;</span> <span style="color:#808080;">/&gt;</span>
+  <span style="color:#808080;">&lt;/</span><span style="color:#E6E6E6;">ItemGroup</span><span style="color:#808080;">&gt;</span>
 
-&lt;/Project&gt;
-</code></pre>
+<span style="color:#808080;">&lt;/</span><span style="color:#E6E6E6;">Project</span><span style="color:#808080;">&gt;</span>
+</pre></div>
 <p>Update <code>NavMenu.razor</code> by adding the following link at the top of the links.</p>
-<pre><code class="language-html">&lt;div class=&quot;@NavMenuCssClass&quot; @onclick=&quot;ToggleNavMenu&quot;&gt;
-    &lt;ul class=&quot;nav flex-column&quot;&gt;
-        &lt;li class=&quot;nav-item px-3&quot;&gt;
-            &lt;NavLink class=&quot;nav-link&quot; href=&quot;/Hydra&quot; Match=&quot;NavLinkMatch.All&quot;&gt;
-                &lt;span class=&quot;oi oi-home&quot; aria-hidden=&quot;true&quot;&gt;&lt;/span&gt; Hydra
-            &lt;/NavLink&gt;
-        &lt;/li&gt;
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+<span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">div</span> <span style="color:#FF0000;">class</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;@NavMenuCssClass&quot; @onclick=&quot;ToggleNavMenu&quot;</span><span style="color:#569CD6;">&gt;</span>
+    <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">ul</span> <span style="color:#FF0000;">class</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;nav flex-column&quot;</span><span style="color:#569CD6;">&gt;</span>
+        <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">li</span> <span style="color:#FF0000;">class</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;nav-item px-3&quot;</span><span style="color:#569CD6;">&gt;</span>
+            <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">NavLink</span> <span style="color:#FF0000;">class</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;nav-link&quot;</span> <span style="color:#FF0000;">href</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;/Hydra&quot;</span> <span style="color:#FF0000;">Match</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;NavLinkMatch.All&quot;</span><span style="color:#569CD6;">&gt;</span>
+                <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">span</span> <span style="color:#FF0000;">class</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;oi oi-home&quot;</span> <span style="color:#FF0000;">aria-hidden</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;true&quot;</span><span style="color:#569CD6;">&gt;</span><span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">span</span><span style="color:#569CD6;">&gt;</span> Hydra
+            <span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">NavLink</span><span style="color:#569CD6;">&gt;</span>
+        <span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">li</span><span style="color:#569CD6;">&gt;</span>
 ......
-</code></pre>
+</pre></div>
 <p>Update the <em>sidebar</em> in <code>MainLayout</code>.</p>
-<pre><code class="language-html">    &lt;div class=&quot;sidebar sidebar-steel&quot;&gt;
-        &lt;NavMenu /&gt;
-    &lt;/div&gt;
-</code></pre>
-<pre><code class="language-html">// Hydra.Steel/Pages/FetchData.razor
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+    <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">div</span> <span style="color:#FF0000;">class</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;sidebar sidebar-steel&quot;</span><span style="color:#569CD6;">&gt;</span>
+        <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">NavMenu</span> <span style="color:#569CD6;">/&gt;</span>
+    <span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">div</span><span style="color:#569CD6;">&gt;</span>
+</pre></div><div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+// Hydra.Steel/Pages/FetchData.razor
 ....
 
     protected override async Task OnInitializedAsync()
@@ -393,7 +406,7 @@ declares the project as a WASM SPA and instructs the compiler to build the proje
         forecasts = await Http.GetFromJsonAsync&lt;WeatherForecast[]&gt;(&quot;/sample-data/weather.json&quot;);
     }
 ....
-</code></pre>
+</pre></div>
 <p>We will use CSS from <em>Hydra.Web</em> for this SPA.</p>
 <p>Delete:</p>
 <ol>
@@ -404,25 +417,26 @@ declares the project as a WASM SPA and instructs the compiler to build the proje
 <h2 id="hydra.web">Hydra.Web</h2>
 <p><img src="https://shauncurtis.github.io/articles/assets/Hydra/Hydra-Web.png" alt="Initial Project View" /></p>
 <p>Update the project file.  We add in all projects and a package reference to the Blazor WASM Server library.</p>
-<pre><code class="language-xml">&lt;Project Sdk=&quot;Microsoft.NET.Sdk.Web&quot;&gt;
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+<span style="color:#808080;">&lt;</span><span style="color:#E6E6E6;">Project</span> <span style="color:#92CAF4;">Sdk</span><span style="color:#808080;">=</span><span style="color:#569CD6;">&quot;</span><span style="color:#569CD6;">Microsoft.NET.Sdk.Web</span><span style="color:#569CD6;">&quot;</span><span style="color:#808080;">&gt;</span>
 
-  &lt;PropertyGroup&gt;
-    &lt;TargetFramework&gt;net5.0&lt;/TargetFramework&gt;
-  &lt;/PropertyGroup&gt;
+  <span style="color:#808080;">&lt;</span><span style="color:#E6E6E6;">PropertyGroup</span><span style="color:#808080;">&gt;</span>
+    <span style="color:#808080;">&lt;</span><span style="color:#E6E6E6;">TargetFramework</span><span style="color:#808080;">&gt;</span>net5.0<span style="color:#808080;">&lt;/</span><span style="color:#E6E6E6;">TargetFramework</span><span style="color:#808080;">&gt;</span>
+  <span style="color:#808080;">&lt;/</span><span style="color:#E6E6E6;">PropertyGroup</span><span style="color:#808080;">&gt;</span>
 
-  &lt;ItemGroup&gt;
-    &lt;PackageReference Include=&quot;Microsoft.AspNetCore.Components.WebAssembly.Server&quot; Version=&quot;5.0.3&quot; /&gt;
-  &lt;/ItemGroup&gt;
+  <span style="color:#808080;">&lt;</span><span style="color:#E6E6E6;">ItemGroup</span><span style="color:#808080;">&gt;</span>
+    <span style="color:#808080;">&lt;</span><span style="color:#E6E6E6;">PackageReference</span> <span style="color:#92CAF4;">Include</span><span style="color:#808080;">=</span><span style="color:#569CD6;">&quot;</span><span style="color:#569CD6;">Microsoft.AspNetCore.Components.WebAssembly.Server</span><span style="color:#569CD6;">&quot;</span> <span style="color:#92CAF4;">Version</span><span style="color:#808080;">=</span><span style="color:#569CD6;">&quot;</span><span style="color:#569CD6;">5.0.3</span><span style="color:#569CD6;">&quot;</span> <span style="color:#808080;">/&gt;</span>
+  <span style="color:#808080;">&lt;/</span><span style="color:#E6E6E6;">ItemGroup</span><span style="color:#808080;">&gt;</span>
 
-  &lt;ItemGroup&gt;
-    &lt;ProjectReference Include=&quot;..\Hydra.Blue\Hydra.Blue.csproj&quot; /&gt;
-    &lt;ProjectReference Include=&quot;..\Hydra.Red\Hydra.Red.csproj&quot; /&gt;
-    &lt;ProjectReference Include=&quot;..\Hydra.Steel\Hydra.Steel.csproj&quot; /&gt;
-    &lt;ProjectReference Include=&quot;..\Razor.Grey\Hydra.Grey.csproj&quot; /&gt;
-  &lt;/ItemGroup&gt;
+  <span style="color:#808080;">&lt;</span><span style="color:#E6E6E6;">ItemGroup</span><span style="color:#808080;">&gt;</span>
+    <span style="color:#808080;">&lt;</span><span style="color:#E6E6E6;">ProjectReference</span> <span style="color:#92CAF4;">Include</span><span style="color:#808080;">=</span><span style="color:#569CD6;">&quot;</span><span style="color:#569CD6;">..\Hydra.Blue\Hydra.Blue.csproj</span><span style="color:#569CD6;">&quot;</span> <span style="color:#808080;">/&gt;</span>
+    <span style="color:#808080;">&lt;</span><span style="color:#E6E6E6;">ProjectReference</span> <span style="color:#92CAF4;">Include</span><span style="color:#808080;">=</span><span style="color:#569CD6;">&quot;</span><span style="color:#569CD6;">..\Hydra.Red\Hydra.Red.csproj</span><span style="color:#569CD6;">&quot;</span> <span style="color:#808080;">/&gt;</span>
+    <span style="color:#808080;">&lt;</span><span style="color:#E6E6E6;">ProjectReference</span> <span style="color:#92CAF4;">Include</span><span style="color:#808080;">=</span><span style="color:#569CD6;">&quot;</span><span style="color:#569CD6;">..\Hydra.Steel\Hydra.Steel.csproj</span><span style="color:#569CD6;">&quot;</span> <span style="color:#808080;">/&gt;</span>
+    <span style="color:#808080;">&lt;</span><span style="color:#E6E6E6;">ProjectReference</span> <span style="color:#92CAF4;">Include</span><span style="color:#808080;">=</span><span style="color:#569CD6;">&quot;</span><span style="color:#569CD6;">..\Razor.Grey\Hydra.Grey.csproj</span><span style="color:#569CD6;">&quot;</span> <span style="color:#808080;">/&gt;</span>
+  <span style="color:#808080;">&lt;/</span><span style="color:#E6E6E6;">ItemGroup</span><span style="color:#808080;">&gt;</span>
 
-&lt;/Project&gt;
-</code></pre>
+<span style="color:#808080;">&lt;/</span><span style="color:#E6E6E6;">Project</span><span style="color:#808080;">&gt;</span>
+</pre></div>
 <p>Pull the following folders with files from the Repo:</p>
 <ol>
 <li><em>wwwroot/css</em></li>
@@ -437,86 +451,86 @@ declares the project as a WASM SPA and instructs the compiler to build the proje
 <li><em>_Grey.cshtml</em></li>
 </ol>
 <p>Delete the associated model cs files assocated with these.</p>
-<pre><code class="language-html">// Hydra.Web/Pages/_Red.cshtml
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+// Hydra.Web/Pages/_Red.cshtml
 @page &quot;/spared&quot;
 @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 @{
     Layout = null;
 }
 
-&lt;!DOCTYPE html&gt;
-&lt;html&gt;
+<span style="color:#569CD6;">&lt;!</span><span style="color:#A31515;">DOCTYPE</span> <span style="color:#FF0000;">html</span><span style="color:#569CD6;">&gt;</span>
+<span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">html</span><span style="color:#569CD6;">&gt;</span>
 
-&lt;head&gt;
-    &lt;meta charset=&quot;utf-8&quot; /&gt;
-    &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no&quot; /&gt;
-    &lt;title&gt;Hydra.RED&lt;/title&gt;
-    &lt;base href=&quot;/red/&quot; /&gt;
-    &lt;link href=&quot;/red/css/bootstrap/bootstrap.min.css&quot; rel=&quot;stylesheet&quot; /&gt;
-    &lt;link href=&quot;/red/css/app.css&quot; rel=&quot;stylesheet&quot; /&gt;
-    &lt;link href=&quot;/red/Hydra.Red.styles.css&quot; rel=&quot;stylesheet&quot; /&gt;
-&lt;/head&gt;
+<span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">head</span><span style="color:#569CD6;">&gt;</span>
+    <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">meta</span> <span style="color:#FF0000;">charset</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;utf-8&quot;</span> <span style="color:#569CD6;">/&gt;</span>
+    <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">meta</span> <span style="color:#FF0000;">name</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;viewport&quot;</span> <span style="color:#FF0000;">content</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no&quot;</span> <span style="color:#569CD6;">/&gt;</span>
+    <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">title</span><span style="color:#569CD6;">&gt;</span>Hydra.RED<span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">title</span><span style="color:#569CD6;">&gt;</span>
+    <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">base</span> <span style="color:#FF0000;">href</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;/red/&quot;</span> <span style="color:#569CD6;">/&gt;</span>
+    <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">link</span> <span style="color:#FF0000;">href</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;/red/css/bootstrap/bootstrap.min.css&quot;</span> <span style="color:#FF0000;">rel</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;stylesheet&quot;</span> <span style="color:#569CD6;">/&gt;</span>
+    <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">link</span> <span style="color:#FF0000;">href</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;/red/css/app.css&quot;</span> <span style="color:#FF0000;">rel</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;stylesheet&quot;</span> <span style="color:#569CD6;">/&gt;</span>
+    <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">link</span> <span style="color:#FF0000;">href</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;/red/Hydra.Red.styles.css&quot;</span> <span style="color:#FF0000;">rel</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;stylesheet&quot;</span> <span style="color:#569CD6;">/&gt;</span>
+<span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">head</span><span style="color:#569CD6;">&gt;</span>
 
-&lt;body&gt;
-    &lt;div id=&quot;app&quot;&gt;
-        &lt;div class=&quot;mt-4&quot; style=&quot;margin-right:auto; margin-left:auto; width:100%;&quot;&gt;
-            &lt;div class=&quot;loader&quot;&gt;&lt;/div&gt;
-            &lt;div style=&quot;width:100%; text-align:center;&quot;&gt;&lt;h4&gt;Web Application Loading&lt;/h4&gt;&lt;/div&gt;
-        &lt;/div&gt;
-    &lt;/div&gt;
+<span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">body</span><span style="color:#569CD6;">&gt;</span>
+    <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">div</span> <span style="color:#FF0000;">id</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;app&quot;</span><span style="color:#569CD6;">&gt;</span>
+        <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">div</span> <span style="color:#FF0000;">class</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;mt-4&quot;</span> <span style="color:#FF0000;">style</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;margin-right:auto; margin-left:auto; width:100%;&quot;</span><span style="color:#569CD6;">&gt;</span>
+            <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">div</span> <span style="color:#FF0000;">class</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;loader&quot;</span><span style="color:#569CD6;">&gt;</span><span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">div</span><span style="color:#569CD6;">&gt;</span>
+            <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">div</span> <span style="color:#FF0000;">style</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;width:100%; text-align:center;&quot;</span><span style="color:#569CD6;">&gt;</span><span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">h4</span><span style="color:#569CD6;">&gt;</span>Web Application Loading<span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">h4</span><span style="color:#569CD6;">&gt;</span><span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">div</span><span style="color:#569CD6;">&gt;</span>
+        <span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">div</span><span style="color:#569CD6;">&gt;</span>
+    <span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">div</span><span style="color:#569CD6;">&gt;</span>
 
-    &lt;script src=&quot;/red/_framework/blazor.webassembly.js&quot;&gt;&lt;/script&gt;
-&lt;/body&gt;
+    <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">script</span> <span style="color:#FF0000;">src</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;/red/_framework/blazor.webassembly.js&quot;</span><span style="color:#569CD6;">&gt;</span><span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">script</span><span style="color:#569CD6;">&gt;</span>
+<span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">body</span><span style="color:#569CD6;">&gt;</span>
 
-&lt;/html&gt;
-</code></pre>
-<pre><code class="language-html">// Hydra.Web/Pages/_Steel.cshtml
+<span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">html</span><span style="color:#569CD6;">&gt;</span>
+</pre></div><div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+// Hydra.Web/Pages/_Steel.cshtml
 @page &quot;/spasteel&quot;
 @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 @{
     Layout = null;
 }
 
-&lt;!DOCTYPE html&gt;
-&lt;html&gt;
+<span style="color:#569CD6;">&lt;!</span><span style="color:#A31515;">DOCTYPE</span> <span style="color:#FF0000;">html</span><span style="color:#569CD6;">&gt;</span>
+<span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">html</span><span style="color:#569CD6;">&gt;</span>
 
-&lt;head&gt;
-    &lt;meta charset=&quot;utf-8&quot; /&gt;
-    &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no&quot; /&gt;
-    &lt;title&gt;Hydra.Steel&lt;/title&gt;
-    &lt;base href=&quot;/steel/&quot; /&gt;
-    &lt;link href=&quot;/css/app.css&quot; rel=&quot;stylesheet&quot; /&gt;
-    &lt;link href=&quot;Hydra.Web.styles.css&quot; rel=&quot;stylesheet&quot; /&gt;
-&lt;/head&gt;
+<span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">head</span><span style="color:#569CD6;">&gt;</span>
+    <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">meta</span> <span style="color:#FF0000;">charset</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;utf-8&quot;</span> <span style="color:#569CD6;">/&gt;</span>
+    <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">meta</span> <span style="color:#FF0000;">name</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;viewport&quot;</span> <span style="color:#FF0000;">content</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no&quot;</span> <span style="color:#569CD6;">/&gt;</span>
+    <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">title</span><span style="color:#569CD6;">&gt;</span>Hydra.Steel<span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">title</span><span style="color:#569CD6;">&gt;</span>
+    <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">base</span> <span style="color:#FF0000;">href</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;/steel/&quot;</span> <span style="color:#569CD6;">/&gt;</span>
+    <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">link</span> <span style="color:#FF0000;">href</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;/css/app.css&quot;</span> <span style="color:#FF0000;">rel</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;stylesheet&quot;</span> <span style="color:#569CD6;">/&gt;</span>
+    <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">link</span> <span style="color:#FF0000;">href</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;Hydra.Web.styles.css&quot;</span> <span style="color:#FF0000;">rel</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;stylesheet&quot;</span> <span style="color:#569CD6;">/&gt;</span>
+<span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">head</span><span style="color:#569CD6;">&gt;</span>
 
-&lt;body&gt;
-    &lt;div id=&quot;app&quot;&gt;
-        &lt;div class=&quot;mt-4&quot; style=&quot;margin-right:auto; margin-left:auto; width:100%;&quot;&gt;
-            &lt;div class=&quot;loader&quot;&gt;&lt;/div&gt;
-            &lt;div style=&quot;width:100%; text-align:center;&quot;&gt;&lt;h4&gt;Web Application Loading&lt;/h4&gt;&lt;/div&gt;
-        &lt;/div&gt;
-    &lt;/div&gt;
+<span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">body</span><span style="color:#569CD6;">&gt;</span>
+    <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">div</span> <span style="color:#FF0000;">id</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;app&quot;</span><span style="color:#569CD6;">&gt;</span>
+        <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">div</span> <span style="color:#FF0000;">class</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;mt-4&quot;</span> <span style="color:#FF0000;">style</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;margin-right:auto; margin-left:auto; width:100%;&quot;</span><span style="color:#569CD6;">&gt;</span>
+            <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">div</span> <span style="color:#FF0000;">class</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;loader&quot;</span><span style="color:#569CD6;">&gt;</span><span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">div</span><span style="color:#569CD6;">&gt;</span>
+            <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">div</span> <span style="color:#FF0000;">style</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;width:100%; text-align:center;&quot;</span><span style="color:#569CD6;">&gt;</span><span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">h4</span><span style="color:#569CD6;">&gt;</span>Web Application Loading<span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">h4</span><span style="color:#569CD6;">&gt;</span><span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">div</span><span style="color:#569CD6;">&gt;</span>
+        <span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">div</span><span style="color:#569CD6;">&gt;</span>
+    <span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">div</span><span style="color:#569CD6;">&gt;</span>
 
-    &lt;script src=&quot;/steel/_framework/blazor.webassembly.js&quot;&gt;&lt;/script&gt;
-&lt;/body&gt;
+    <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">script</span> <span style="color:#FF0000;">src</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;/steel/_framework/blazor.webassembly.js&quot;</span><span style="color:#569CD6;">&gt;</span><span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">script</span><span style="color:#569CD6;">&gt;</span>
+<span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">body</span><span style="color:#569CD6;">&gt;</span>
 
-&lt;/html&gt;
-</code></pre>
-<pre><code class="language-html">// Hydra.Web/Pages/_Grey.cshtml &amp; _Blue.cshtml_
+<span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">html</span><span style="color:#569CD6;">&gt;</span>
+</pre></div><div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+// Hydra.Web/Pages/_Grey.cshtml &amp; _Blue.cshtml_
 @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 @{
     Layout = null;
 }
-&lt;!DOCTYPE html&gt;
-&lt;html&gt;
-&lt;head&gt;
-&lt;/head&gt;
-&lt;body&gt;
+<span style="color:#569CD6;">&lt;!</span><span style="color:#A31515;">DOCTYPE</span> <span style="color:#FF0000;">html</span><span style="color:#569CD6;">&gt;</span>
+<span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">html</span><span style="color:#569CD6;">&gt;</span>
+<span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">head</span><span style="color:#569CD6;">&gt;</span>
+<span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">head</span><span style="color:#569CD6;">&gt;</span>
+<span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">body</span><span style="color:#569CD6;">&gt;</span>
 Holding page
-&lt;/body&gt;
-&lt;/html&gt;
-</code></pre>
-<h4 id="startup.cs">Startup.cs</h4>
+<span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">body</span><span style="color:#569CD6;">&gt;</span>
+<span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">html</span><span style="color:#569CD6;">&gt;</span>
+</pre></div><h4 id="startup.cs">Startup.cs</h4>
 <p>We're:</p>
 <ol>
 <li>Adding in Support for Razor Pages to the Services.</li>
@@ -534,102 +548,103 @@ Holding page
 </ol>
 </li>
 </ol>
-<pre><code class="language-csharp">// Hydra.Web/StartUp.cs
-public void ConfigureServices(IServiceCollection services)
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+<span style="color:#57A64A;">// Hydra.Web/StartUp.cs</span>
+<span style="color:#569CD6;">public</span> <span style="color:#569CD6;">void</span> ConfigureServices(IServiceCollection services)
 {
     services.AddRazorPages();
     services.AddServerSideBlazor();
-    // Server Side Blazor doesn't register HttpClient by default
-    // Thanks to Robin Sue - Suchiman https://github.com/Suchiman/BlazorDualMode
-    if (!services.Any(x =&gt; x.ServiceType == typeof(HttpClient)))
+    <span style="color:#57A64A;">// Server Side Blazor doesn&#39;t register HttpClient by default</span>
+    <span style="color:#57A64A;">// Thanks to Robin Sue - Suchiman https://github.com/Suchiman/BlazorDualMode</span>
+    <span style="color:#569CD6;">if</span> (!services.Any(x =&gt; x.ServiceType == <span style="color:#569CD6;">typeof</span>(HttpClient)))
     {
-        // Setup HttpClient for server side in a client side compatible fashion
+        <span style="color:#57A64A;">// Setup HttpClient for server side in a client side compatible fashion</span>
         services.AddScoped&lt;HttpClient&gt;(s =&gt;
         {
-            // Creating the URI helper needs to wait until the JS Runtime is initialized, so defer it.
-            var uriHelper = s.GetRequiredService&lt;NavigationManager&gt;();
-            return new HttpClient
+            <span style="color:#57A64A;">// Creating the URI helper needs to wait until the JS Runtime is initialized, so defer it.</span>
+            <span style="color:#569CD6;">var</span> uriHelper = s.GetRequiredService&lt;NavigationManager&gt;();
+            <span style="color:#569CD6;">return</span> <span style="color:#569CD6;">new</span> HttpClient
             {
-                BaseAddress = new Uri(uriHelper.BaseUri)
+                BaseAddress = <span style="color:#569CD6;">new</span> Uri(uriHelper.BaseUri)
             };
         });
     }
 }
 
-public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+<span style="color:#569CD6;">public</span> <span style="color:#569CD6;">void</span> Configure(IApplicationBuilder app, IWebHostEnvironment env)
 {
     ....
     app.UseStaticFiles();
 
-    app.MapWhen(ctx =&gt; ctx.Request.Path.StartsWithSegments(&quot;/red&quot;), app1 =&gt;
+    app.MapWhen(ctx =&gt; ctx.Request.Path.StartsWithSegments(<span style="color:#D69D85;">&quot;/red&quot;</span>), app1 =&gt;
     {
-        app1.UseBlazorFrameworkFiles(&quot;/red&quot;);
+        app1.UseBlazorFrameworkFiles(<span style="color:#D69D85;">&quot;/red&quot;</span>);
         app1.UseRouting();
         app1.UseEndpoints(endpoints =&gt;
         {
-            endpoints.MapFallbackToPage(&quot;/red/{*path:nonfile}&quot;, &quot;/_Red&quot;);
+            endpoints.MapFallbackToPage(<span style="color:#D69D85;">&quot;/red/{*path:nonfile}&quot;</span>, <span style="color:#D69D85;">&quot;/_Red&quot;</span>);
         });
 
     });
 
-    app.MapWhen(ctx =&gt; ctx.Request.Path.StartsWithSegments(&quot;/steel&quot;), app1 =&gt;
+    app.MapWhen(ctx =&gt; ctx.Request.Path.StartsWithSegments(<span style="color:#D69D85;">&quot;/steel&quot;</span>), app1 =&gt;
     {
-        app1.UseBlazorFrameworkFiles(&quot;/steel&quot;);
+        app1.UseBlazorFrameworkFiles(<span style="color:#D69D85;">&quot;/steel&quot;</span>);
         app1.UseRouting();
         app1.UseEndpoints(endpoints =&gt;
         {
-            endpoints.MapFallbackToPage(&quot;/steel/{*path:nonfile}&quot;, &quot;/_Steel&quot;);
+            endpoints.MapFallbackToPage(<span style="color:#D69D85;">&quot;/steel/{*path:nonfile}&quot;</span>, <span style="color:#D69D85;">&quot;/_Steel&quot;</span>);
         });
 
     });
 
     app.UseRouting();
 
-    // default EndPoint Configuration
+    <span style="color:#57A64A;">// default EndPoint Configuration</span>
     app.UseEndpoints(endpoints =&gt;
     {
         endpoints.MapBlazorHub();
         endpoints.MapRazorPages();
-        endpoints.MapFallbackToPage(&quot;/grey/{*path:nonfile}&quot;, &quot;/_Grey&quot;);
-        endpoints.MapFallbackToPage(&quot;/blue/{*path:nonfile}&quot;, &quot;/_Blue&quot;);
-        endpoints.MapFallbackToPage(&quot;/Index&quot;);
+        endpoints.MapFallbackToPage(<span style="color:#D69D85;">&quot;/grey/{*path:nonfile}&quot;</span>, <span style="color:#D69D85;">&quot;/_Grey&quot;</span>);
+        endpoints.MapFallbackToPage(<span style="color:#D69D85;">&quot;/blue/{*path:nonfile}&quot;</span>, <span style="color:#D69D85;">&quot;/_Blue&quot;</span>);
+        endpoints.MapFallbackToPage(<span style="color:#D69D85;">&quot;/Index&quot;</span>);
     });
 }
-</code></pre>
-<h4 id="index.cshtml">Index.cshtml</h4>
+</pre></div><h4 id="index.cshtml">Index.cshtml</h4>
 <p>Update the <code>@page</code> directive and add some buttons for navigation.</p>
-<pre><code class="language-html">@page &quot;/&quot;
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+@page &quot;/&quot;
 ....
-&lt;div class=&quot;text-center&quot;&gt;
-    &lt;h1 class=&quot;display-4&quot;&gt;Welcome&lt;/h1&gt;
-    &lt;p&gt;Learn about &lt;a href=&quot;https://docs.microsoft.com/aspnet/core&quot;&gt;building Web apps with ASP.NET Core&lt;/a&gt;.&lt;/p&gt;
-    &lt;div class=&quot;container&quot;&gt;
-        &lt;a class=&quot;btn btn-danger&quot; href=&quot;/red&quot;&gt;Hydra Red&lt;/a&gt;
-        &lt;a class=&quot;btn btn-dark&quot; href=&quot;/steel&quot;&gt;Hydra Steel&lt;/a&gt;
-        &lt;a class=&quot;btn btn-primary&quot; href=&quot;/blue&quot;&gt;Hydra Blue&lt;/a&gt;
-        &lt;a class=&quot;btn btn-secondary&quot; href=&quot;/grey&quot;&gt;Hydra Grey&lt;/a&gt;
-    &lt;/div&gt;
-&lt;/div&gt;
-</code></pre>
+<span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">div</span> <span style="color:#FF0000;">class</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;text-center&quot;</span><span style="color:#569CD6;">&gt;</span>
+    <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">h1</span> <span style="color:#FF0000;">class</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;display-4&quot;</span><span style="color:#569CD6;">&gt;</span>Welcome<span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">h1</span><span style="color:#569CD6;">&gt;</span>
+    <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">p</span><span style="color:#569CD6;">&gt;</span>Learn about <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">a</span> <span style="color:#FF0000;">href</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;https://docs.microsoft.com/aspnet/core&quot;</span><span style="color:#569CD6;">&gt;</span>building Web apps with ASP.NET Core<span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">a</span><span style="color:#569CD6;">&gt;</span>.<span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">p</span><span style="color:#569CD6;">&gt;</span>
+    <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">div</span> <span style="color:#FF0000;">class</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;container&quot;</span><span style="color:#569CD6;">&gt;</span>
+        <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">a</span> <span style="color:#FF0000;">class</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;btn btn-danger&quot;</span> <span style="color:#FF0000;">href</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;/red&quot;</span><span style="color:#569CD6;">&gt;</span>Hydra Red<span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">a</span><span style="color:#569CD6;">&gt;</span>
+        <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">a</span> <span style="color:#FF0000;">class</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;btn btn-dark&quot;</span> <span style="color:#FF0000;">href</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;/steel&quot;</span><span style="color:#569CD6;">&gt;</span>Hydra Steel<span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">a</span><span style="color:#569CD6;">&gt;</span>
+        <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">a</span> <span style="color:#FF0000;">class</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;btn btn-primary&quot;</span> <span style="color:#FF0000;">href</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;/blue&quot;</span><span style="color:#569CD6;">&gt;</span>Hydra Blue<span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">a</span><span style="color:#569CD6;">&gt;</span>
+        <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">a</span> <span style="color:#FF0000;">class</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;btn btn-secondary&quot;</span> <span style="color:#FF0000;">href</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;/grey&quot;</span><span style="color:#569CD6;">&gt;</span>Hydra Grey<span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">a</span><span style="color:#569CD6;">&gt;</span>
+    <span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">div</span><span style="color:#569CD6;">&gt;</span>
+<span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">div</span><span style="color:#569CD6;">&gt;</span>
+</pre></div>
 <p>This should all now compile and run.</p>
 <h2 id="hydra.blue">Hydra.Blue</h2>
 <p><img src="https://shauncurtis.github.io/articles/assets/Hydra/Hydra-Blue.png" alt="Initial Project View" /></p>
 <p>This is the library were we'll use to build one of the Blazor Server SPAs.</p>
 <h4 id="project-file">Project File</h4>
 <p>Include the following Packages and projects.</p>
-<pre><code class="language-xml">&lt;Project Sdk=&quot;Microsoft.NET.Sdk.Razor&quot;&gt;
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+<span style="color:#808080;">&lt;</span><span style="color:#E6E6E6;">Project</span> <span style="color:#92CAF4;">Sdk</span><span style="color:#808080;">=</span><span style="color:#569CD6;">&quot;</span><span style="color:#569CD6;">Microsoft.NET.Sdk.Razor</span><span style="color:#569CD6;">&quot;</span><span style="color:#808080;">&gt;</span>
 
-  &lt;PropertyGroup&gt;
-    &lt;TargetFramework&gt;net5.0&lt;/TargetFramework&gt;
-  &lt;/PropertyGroup&gt;
+  <span style="color:#808080;">&lt;</span><span style="color:#E6E6E6;">PropertyGroup</span><span style="color:#808080;">&gt;</span>
+    <span style="color:#808080;">&lt;</span><span style="color:#E6E6E6;">TargetFramework</span><span style="color:#808080;">&gt;</span>net5.0<span style="color:#808080;">&lt;/</span><span style="color:#E6E6E6;">TargetFramework</span><span style="color:#808080;">&gt;</span>
+  <span style="color:#808080;">&lt;/</span><span style="color:#E6E6E6;">PropertyGroup</span><span style="color:#808080;">&gt;</span>
 
-  &lt;ItemGroup&gt;
-    &lt;PackageReference Include=&quot;Microsoft.AspNetCore.Components.Web&quot; Version=&quot;5.0.3&quot; /&gt;
-  &lt;/ItemGroup&gt;
+  <span style="color:#808080;">&lt;</span><span style="color:#E6E6E6;">ItemGroup</span><span style="color:#808080;">&gt;</span>
+    <span style="color:#808080;">&lt;</span><span style="color:#E6E6E6;">PackageReference</span> <span style="color:#92CAF4;">Include</span><span style="color:#808080;">=</span><span style="color:#569CD6;">&quot;</span><span style="color:#569CD6;">Microsoft.AspNetCore.Components.Web</span><span style="color:#569CD6;">&quot;</span> <span style="color:#92CAF4;">Version</span><span style="color:#808080;">=</span><span style="color:#569CD6;">&quot;</span><span style="color:#569CD6;">5.0.3</span><span style="color:#569CD6;">&quot;</span> <span style="color:#808080;">/&gt;</span>
+  <span style="color:#808080;">&lt;/</span><span style="color:#E6E6E6;">ItemGroup</span><span style="color:#808080;">&gt;</span>
 
-&lt;/Project&gt;
-</code></pre>
-<h4 id="file-moves-and-renames">File Moves and Renames</h4>
+<span style="color:#808080;">&lt;/</span><span style="color:#E6E6E6;">Project</span><span style="color:#808080;">&gt;</span>
+</pre></div><h4 id="file-moves-and-renames">File Moves and Renames</h4>
 <p>Copy the <em>Pages</em> and <em>Shared</em> folders from <em>Hydra.Red</em>.</p>
 <ol>
 <li><em>Pages</em> folder.</li>
@@ -638,7 +653,8 @@ public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
 <li><em>_Imports.razor</em>.</li>
 </ol>
 <h4 id="imports.razor">_Imports.razor</h4>
-<pre><code class="language-html">@using System.Net.Http
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+@using System.Net.Http
 @using System.Net.Http.Json
 @using Microsoft.AspNetCore.Components.Forms
 @using Microsoft.AspNetCore.Components.Routing
@@ -647,19 +663,19 @@ public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
 @using Microsoft.JSInterop
 @using Hydra.Blue
 @using Hydra.Blue.Shared
-</code></pre>
-<pre><code class="language-html">// Hydra.Blue/Pages/Index.razor
+</pre></div><div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+// Hydra.Blue/Pages/Index.razor
 @page &quot;/&quot;
 @page &quot;/blue&quot;
 @page &quot;/blue/index&quot;
 ....
-</code></pre>
-<pre><code class="language-html">// Hydra.Blue/Pages/Counter.razor
+</pre></div><div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+// Hydra.Blue/Pages/Counter.razor
 @page &quot;/counter&quot;
 @page &quot;/blue/counter&quot;
 ....
-</code></pre>
-<pre><code class="language-html">// Hydra.Blue/Pages/FetchData.razor
+</pre></div><div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+// Hydra.Blue/Pages/FetchData.razor
 @page &quot;/fetchdata&quot;
 @page &quot;/blue/fetchdata&quot;
 ....
@@ -670,68 +686,70 @@ public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         forecasts = await Http.GetFromJsonAsync&lt;WeatherForecast[]&gt;(&quot;/sample-data/weather.json&quot;);
     }
 ....
-</code></pre>
+</pre></div>
 <p>Update the <em>sidebar</em> in <code>MainLayout</code>.</p>
-<pre><code class="language-html">    &lt;div class=&quot;sidebar sidebar-blue&quot;&gt;
-        &lt;NavMenu /&gt;
-    &lt;/div&gt;
-</code></pre>
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+    <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">div</span> <span style="color:#FF0000;">class</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;sidebar sidebar-blue&quot;</span><span style="color:#569CD6;">&gt;</span>
+        <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">NavMenu</span> <span style="color:#569CD6;">/&gt;</span>
+    <span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">div</span><span style="color:#569CD6;">&gt;</span>
+</pre></div>
 <p>Update <code>NavMenu.razor</code></p>
-<pre><code class="language-html">&lt;div class=&quot;@NavMenuCssClass&quot; @onclick=&quot;ToggleNavMenu&quot;&gt;
-    &lt;ul class=&quot;nav flex-column&quot;&gt;
-        &lt;li class=&quot;nav-item px-3&quot;&gt;
-            &lt;NavLink class=&quot;nav-link&quot; href=&quot;/Hydra&quot; Match=&quot;NavLinkMatch.All&quot;&gt;
-                &lt;span class=&quot;oi oi-home&quot; aria-hidden=&quot;true&quot;&gt;&lt;/span&gt; Hydra
-            &lt;/NavLink&gt;
-        &lt;/li&gt;
-        &lt;li class=&quot;nav-item px-3&quot;&gt;
-            &lt;NavLink class=&quot;nav-link&quot; href=&quot;blue/index&quot; Match=&quot;NavLinkMatch.All&quot;&gt;
-                &lt;span class=&quot;oi oi-home&quot; aria-hidden=&quot;true&quot;&gt;&lt;/span&gt; Home
-            &lt;/NavLink&gt;
-        &lt;/li&gt;
-        &lt;li class=&quot;nav-item px-3&quot;&gt;
-            &lt;NavLink class=&quot;nav-link&quot; href=&quot;blue/counter&quot;&gt;
-                &lt;span class=&quot;oi oi-plus&quot; aria-hidden=&quot;true&quot;&gt;&lt;/span&gt; Counter
-            &lt;/NavLink&gt;
-        &lt;/li&gt;
-        &lt;li class=&quot;nav-item px-3&quot;&gt;
-            &lt;NavLink class=&quot;nav-link&quot; href=&quot;blue/fetchdata&quot;&gt;
-                &lt;span class=&quot;oi oi-list-rich&quot; aria-hidden=&quot;true&quot;&gt;&lt;/span&gt; Fetch data
-            &lt;/NavLink&gt;
-        &lt;/li&gt;
-    &lt;/ul&gt;
-&lt;/div&gt;
-</code></pre>
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+<span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">div</span> <span style="color:#FF0000;">class</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;@NavMenuCssClass&quot; @onclick=&quot;ToggleNavMenu&quot;</span><span style="color:#569CD6;">&gt;</span>
+    <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">ul</span> <span style="color:#FF0000;">class</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;nav flex-column&quot;</span><span style="color:#569CD6;">&gt;</span>
+        <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">li</span> <span style="color:#FF0000;">class</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;nav-item px-3&quot;</span><span style="color:#569CD6;">&gt;</span>
+            <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">NavLink</span> <span style="color:#FF0000;">class</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;nav-link&quot;</span> <span style="color:#FF0000;">href</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;/Hydra&quot;</span> <span style="color:#FF0000;">Match</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;NavLinkMatch.All&quot;</span><span style="color:#569CD6;">&gt;</span>
+                <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">span</span> <span style="color:#FF0000;">class</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;oi oi-home&quot;</span> <span style="color:#FF0000;">aria-hidden</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;true&quot;</span><span style="color:#569CD6;">&gt;</span><span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">span</span><span style="color:#569CD6;">&gt;</span> Hydra
+            <span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">NavLink</span><span style="color:#569CD6;">&gt;</span>
+        <span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">li</span><span style="color:#569CD6;">&gt;</span>
+        <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">li</span> <span style="color:#FF0000;">class</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;nav-item px-3&quot;</span><span style="color:#569CD6;">&gt;</span>
+            <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">NavLink</span> <span style="color:#FF0000;">class</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;nav-link&quot;</span> <span style="color:#FF0000;">href</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;blue/index&quot;</span> <span style="color:#FF0000;">Match</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;NavLinkMatch.All&quot;</span><span style="color:#569CD6;">&gt;</span>
+                <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">span</span> <span style="color:#FF0000;">class</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;oi oi-home&quot;</span> <span style="color:#FF0000;">aria-hidden</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;true&quot;</span><span style="color:#569CD6;">&gt;</span><span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">span</span><span style="color:#569CD6;">&gt;</span> Home
+            <span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">NavLink</span><span style="color:#569CD6;">&gt;</span>
+        <span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">li</span><span style="color:#569CD6;">&gt;</span>
+        <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">li</span> <span style="color:#FF0000;">class</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;nav-item px-3&quot;</span><span style="color:#569CD6;">&gt;</span>
+            <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">NavLink</span> <span style="color:#FF0000;">class</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;nav-link&quot;</span> <span style="color:#FF0000;">href</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;blue/counter&quot;</span><span style="color:#569CD6;">&gt;</span>
+                <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">span</span> <span style="color:#FF0000;">class</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;oi oi-plus&quot;</span> <span style="color:#FF0000;">aria-hidden</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;true&quot;</span><span style="color:#569CD6;">&gt;</span><span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">span</span><span style="color:#569CD6;">&gt;</span> Counter
+            <span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">NavLink</span><span style="color:#569CD6;">&gt;</span>
+        <span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">li</span><span style="color:#569CD6;">&gt;</span>
+        <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">li</span> <span style="color:#FF0000;">class</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;nav-item px-3&quot;</span><span style="color:#569CD6;">&gt;</span>
+            <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">NavLink</span> <span style="color:#FF0000;">class</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;nav-link&quot;</span> <span style="color:#FF0000;">href</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;blue/fetchdata&quot;</span><span style="color:#569CD6;">&gt;</span>
+                <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">span</span> <span style="color:#FF0000;">class</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;oi oi-list-rich&quot;</span> <span style="color:#FF0000;">aria-hidden</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;true&quot;</span><span style="color:#569CD6;">&gt;</span><span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">span</span><span style="color:#569CD6;">&gt;</span> Fetch data
+            <span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">NavLink</span><span style="color:#569CD6;">&gt;</span>
+        <span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">li</span><span style="color:#569CD6;">&gt;</span>
+    <span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">ul</span><span style="color:#569CD6;">&gt;</span>
+<span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">div</span><span style="color:#569CD6;">&gt;</span>
+</pre></div>
 <p>Update <em>App.razor</em>, changing <code>AppAssembly</code>, which is set to <em>Hydra.Blue.App</em>, so it finds the routes in this assembly.</p>
-<pre><code class="language-html">// Hydra.Blue/App.razor
-&lt;Router AppAssembly=&quot;@typeof(Hydra.Blue.App).Assembly&quot; PreferExactMatches=&quot;@true&quot;&gt;
-    &lt;Found Context=&quot;routeData&quot;&gt;
-        &lt;RouteView RouteData=&quot;@routeData&quot; DefaultLayout=&quot;@typeof(MainLayout)&quot; /&gt;
-    &lt;/Found&gt;
-    &lt;NotFound&gt;
-        &lt;LayoutView Layout=&quot;@typeof(MainLayout)&quot;&gt;
-            &lt;p&gt;Sorry, there's nothing at this address.&lt;/p&gt;
-        &lt;/LayoutView&gt;
-    &lt;/NotFound&gt;
-&lt;/Router&gt;
-</code></pre>
-<h2 id="hydra.grey">Hydra.Grey</h2>
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+// Hydra.Blue/App.razor
+<span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">Router</span> <span style="color:#FF0000;">AppAssembly</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;@typeof(Hydra.Blue.App).Assembly&quot;</span> <span style="color:#FF0000;">PreferExactMatches</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;@true&quot;</span><span style="color:#569CD6;">&gt;</span>
+    <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">Found</span> <span style="color:#FF0000;">Context</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;routeData&quot;</span><span style="color:#569CD6;">&gt;</span>
+        <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">RouteView</span> <span style="color:#FF0000;">RouteData</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;@routeData&quot;</span> <span style="color:#FF0000;">DefaultLayout</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;@typeof(MainLayout)&quot;</span> <span style="color:#569CD6;">/&gt;</span>
+    <span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">Found</span><span style="color:#569CD6;">&gt;</span>
+    <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">NotFound</span><span style="color:#569CD6;">&gt;</span>
+        <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">LayoutView</span> <span style="color:#FF0000;">Layout</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;@typeof(MainLayout)&quot;</span><span style="color:#569CD6;">&gt;</span>
+            <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">p</span><span style="color:#569CD6;">&gt;</span>Sorry, there&#39;s nothing at this address.<span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">p</span><span style="color:#569CD6;">&gt;</span>
+        <span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">LayoutView</span><span style="color:#569CD6;">&gt;</span>
+    <span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">NotFound</span><span style="color:#569CD6;">&gt;</span>
+<span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">Router</span><span style="color:#569CD6;">&gt;</span>
+</pre></div><h2 id="hydra.grey">Hydra.Grey</h2>
 <p><img src="https://shauncurtis.github.io/articles/assets/Hydra/Hydra-Grey.png" alt="Initial Project View" /></p>
 <h4 id="project-file-1">Project File</h4>
 <p>Include the following Packages and projects.</p>
-<pre><code class="language-xml">&lt;Project Sdk=&quot;Microsoft.NET.Sdk.Razor&quot;&gt;
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+<span style="color:#808080;">&lt;</span><span style="color:#E6E6E6;">Project</span> <span style="color:#92CAF4;">Sdk</span><span style="color:#808080;">=</span><span style="color:#569CD6;">&quot;</span><span style="color:#569CD6;">Microsoft.NET.Sdk.Razor</span><span style="color:#569CD6;">&quot;</span><span style="color:#808080;">&gt;</span>
 
-  &lt;PropertyGroup&gt;
-    &lt;TargetFramework&gt;net5.0&lt;/TargetFramework&gt;
-  &lt;/PropertyGroup&gt;
+  <span style="color:#808080;">&lt;</span><span style="color:#E6E6E6;">PropertyGroup</span><span style="color:#808080;">&gt;</span>
+    <span style="color:#808080;">&lt;</span><span style="color:#E6E6E6;">TargetFramework</span><span style="color:#808080;">&gt;</span>net5.0<span style="color:#808080;">&lt;/</span><span style="color:#E6E6E6;">TargetFramework</span><span style="color:#808080;">&gt;</span>
+  <span style="color:#808080;">&lt;/</span><span style="color:#E6E6E6;">PropertyGroup</span><span style="color:#808080;">&gt;</span>
 
-  &lt;ItemGroup&gt;
-    &lt;PackageReference Include=&quot;Microsoft.AspNetCore.Components.Web&quot; Version=&quot;5.0.3&quot; /&gt;
-  &lt;/ItemGroup&gt;
+  <span style="color:#808080;">&lt;</span><span style="color:#E6E6E6;">ItemGroup</span><span style="color:#808080;">&gt;</span>
+    <span style="color:#808080;">&lt;</span><span style="color:#E6E6E6;">PackageReference</span> <span style="color:#92CAF4;">Include</span><span style="color:#808080;">=</span><span style="color:#569CD6;">&quot;</span><span style="color:#569CD6;">Microsoft.AspNetCore.Components.Web</span><span style="color:#569CD6;">&quot;</span> <span style="color:#92CAF4;">Version</span><span style="color:#808080;">=</span><span style="color:#569CD6;">&quot;</span><span style="color:#569CD6;">5.0.3</span><span style="color:#569CD6;">&quot;</span> <span style="color:#808080;">/&gt;</span>
+  <span style="color:#808080;">&lt;/</span><span style="color:#E6E6E6;">ItemGroup</span><span style="color:#808080;">&gt;</span>
 
-&lt;/Project&gt;
-</code></pre>
-<h4 id="file-moves-and-renames-1">File Moves and Renames</h4>
+<span style="color:#808080;">&lt;/</span><span style="color:#E6E6E6;">Project</span><span style="color:#808080;">&gt;</span>
+</pre></div><h4 id="file-moves-and-renames-1">File Moves and Renames</h4>
 <p>Copy the <em>Pages</em> and <em>Shared</em> folders from <em>Hydra.Blue</em>.</p>
 <ol>
 <li><em>Pages</em> folder.</li>
@@ -740,7 +758,8 @@ public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
 <li><em>_Imports.razor</em>.</li>
 </ol>
 <h4 id="imports.razor-1">_Imports.razor</h4>
-<pre><code class="language-html">@using System.Net.Http
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+@using System.Net.Http
 @using System.Net.Http.Json
 @using Microsoft.AspNetCore.Components.Forms
 @using Microsoft.AspNetCore.Components.Routing
@@ -749,18 +768,18 @@ public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
 @using Microsoft.JSInterop
 @using Hydra.Grey
 @using Hydra.Grey.Shared
-</code></pre>
-<pre><code class="language-html">// Hydra.Grey/Pages/Index.razor
+</pre></div><div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+// Hydra.Grey/Pages/Index.razor
 @page &quot;/&quot;
 @page &quot;/Grey&quot;
 @page &quot;/Grey/index&quot;
 ....
-</code></pre>
-<pre><code class="language-html">// Hydra.Grey/Pages/Counter.razor
+</pre></div><div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+// Hydra.Grey/Pages/Counter.razor
 @page &quot;/Grey/counter&quot;
 ....
-</code></pre>
-<pre><code class="language-html">// Hydra.Grey/Pages/FetchData.razor
+</pre></div><div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+// Hydra.Grey/Pages/FetchData.razor
 @page &quot;/fetchdata&quot;
 @page &quot;/Grey/fetchdata&quot;
 ....
@@ -771,7 +790,7 @@ public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         forecasts = await Http.GetFromJsonAsync&lt;WeatherForecast[]&gt;(&quot;/sample-data/weather.json&quot;);
     }
 ....
-</code></pre>
+</pre></div>
 <pre><code>Update the *sidebar* in `MainLayout`.
 ```html
     &lt;div class=&quot;sidebar sidebar-grey&quot;&gt;
@@ -779,106 +798,108 @@ public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
     &lt;/div&gt;
 </code></pre>
 <p>Update <code>NavMenu.razor</code></p>
-<pre><code class="language-html">&lt;div class=&quot;top-row pl-4 navbar navbar-dark&quot;&gt;
-    &lt;a class=&quot;navbar-brand&quot; href=&quot;&quot;&gt;Hydra.Grey&lt;/a&gt;
-    &lt;button class=&quot;navbar-toggler&quot; @onclick=&quot;ToggleNavMenu&quot;&gt;
-        &lt;span class=&quot;navbar-toggler-icon&quot;&gt;&lt;/span&gt;
-    &lt;/button&gt;
-&lt;/div&gt;
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+<span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">div</span> <span style="color:#FF0000;">class</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;top-row pl-4 navbar navbar-dark&quot;</span><span style="color:#569CD6;">&gt;</span>
+    <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">a</span> <span style="color:#FF0000;">class</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;navbar-brand&quot; href=&quot;&quot;</span><span style="color:#569CD6;">&gt;</span>Hydra.Grey<span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">a</span><span style="color:#569CD6;">&gt;</span>
+    <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">button</span> <span style="color:#FF0000;">class</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;navbar-toggler&quot; @onclick=&quot;ToggleNavMenu&quot;</span><span style="color:#569CD6;">&gt;</span>
+        <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">span</span> <span style="color:#FF0000;">class</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;navbar-toggler-icon&quot;</span><span style="color:#569CD6;">&gt;</span><span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">span</span><span style="color:#569CD6;">&gt;</span>
+    <span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">button</span><span style="color:#569CD6;">&gt;</span>
+<span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">div</span><span style="color:#569CD6;">&gt;</span>
 
-&lt;div class=&quot;@NavMenuCssClass&quot; @onclick=&quot;ToggleNavMenu&quot;&gt;
-    &lt;ul class=&quot;nav flex-column&quot;&gt;
-        &lt;li class=&quot;nav-item px-3&quot;&gt;
-            &lt;NavLink class=&quot;nav-link&quot; href=&quot;/Hydra&quot; Match=&quot;NavLinkMatch.All&quot;&gt;
-                &lt;span class=&quot;oi oi-home&quot; aria-hidden=&quot;true&quot;&gt;&lt;/span&gt; Hydra
-            &lt;/NavLink&gt;
-        &lt;/li&gt;
-        &lt;li class=&quot;nav-item px-3&quot;&gt;
-            &lt;NavLink class=&quot;nav-link&quot; href=&quot;grey/index&quot; Match=&quot;NavLinkMatch.All&quot;&gt;
-                &lt;span class=&quot;oi oi-home&quot; aria-hidden=&quot;true&quot;&gt;&lt;/span&gt; Home
-            &lt;/NavLink&gt;
-        &lt;/li&gt;
-        &lt;li class=&quot;nav-item px-3&quot;&gt;
-            &lt;NavLink class=&quot;nav-link&quot; href=&quot;grey/counter&quot;&gt;
-                &lt;span class=&quot;oi oi-plus&quot; aria-hidden=&quot;true&quot;&gt;&lt;/span&gt; Counter
-            &lt;/NavLink&gt;
-        &lt;/li&gt;
-        &lt;li class=&quot;nav-item px-3&quot;&gt;
-            &lt;NavLink class=&quot;nav-link&quot; href=&quot;grey/fetchdata&quot;&gt;
-                &lt;span class=&quot;oi oi-list-rich&quot; aria-hidden=&quot;true&quot;&gt;&lt;/span&gt; Fetch data
-            &lt;/NavLink&gt;
-        &lt;/li&gt;
-    &lt;/ul&gt;
-&lt;/div&gt;
-</code></pre>
+<span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">div</span> <span style="color:#FF0000;">class</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;@NavMenuCssClass&quot; @onclick=&quot;ToggleNavMenu&quot;</span><span style="color:#569CD6;">&gt;</span>
+    <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">ul</span> <span style="color:#FF0000;">class</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;nav flex-column&quot;</span><span style="color:#569CD6;">&gt;</span>
+        <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">li</span> <span style="color:#FF0000;">class</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;nav-item px-3&quot;</span><span style="color:#569CD6;">&gt;</span>
+            <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">NavLink</span> <span style="color:#FF0000;">class</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;nav-link&quot;</span> <span style="color:#FF0000;">href</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;/Hydra&quot;</span> <span style="color:#FF0000;">Match</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;NavLinkMatch.All&quot;</span><span style="color:#569CD6;">&gt;</span>
+                <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">span</span> <span style="color:#FF0000;">class</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;oi oi-home&quot;</span> <span style="color:#FF0000;">aria-hidden</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;true&quot;</span><span style="color:#569CD6;">&gt;</span><span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">span</span><span style="color:#569CD6;">&gt;</span> Hydra
+            <span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">NavLink</span><span style="color:#569CD6;">&gt;</span>
+        <span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">li</span><span style="color:#569CD6;">&gt;</span>
+        <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">li</span> <span style="color:#FF0000;">class</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;nav-item px-3&quot;</span><span style="color:#569CD6;">&gt;</span>
+            <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">NavLink</span> <span style="color:#FF0000;">class</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;nav-link&quot;</span> <span style="color:#FF0000;">href</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;grey/index&quot;</span> <span style="color:#FF0000;">Match</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;NavLinkMatch.All&quot;</span><span style="color:#569CD6;">&gt;</span>
+                <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">span</span> <span style="color:#FF0000;">class</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;oi oi-home&quot;</span> <span style="color:#FF0000;">aria-hidden</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;true&quot;</span><span style="color:#569CD6;">&gt;</span><span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">span</span><span style="color:#569CD6;">&gt;</span> Home
+            <span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">NavLink</span><span style="color:#569CD6;">&gt;</span>
+        <span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">li</span><span style="color:#569CD6;">&gt;</span>
+        <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">li</span> <span style="color:#FF0000;">class</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;nav-item px-3&quot;</span><span style="color:#569CD6;">&gt;</span>
+            <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">NavLink</span> <span style="color:#FF0000;">class</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;nav-link&quot;</span> <span style="color:#FF0000;">href</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;grey/counter&quot;</span><span style="color:#569CD6;">&gt;</span>
+                <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">span</span> <span style="color:#FF0000;">class</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;oi oi-plus&quot;</span> <span style="color:#FF0000;">aria-hidden</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;true&quot;</span><span style="color:#569CD6;">&gt;</span><span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">span</span><span style="color:#569CD6;">&gt;</span> Counter
+            <span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">NavLink</span><span style="color:#569CD6;">&gt;</span>
+        <span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">li</span><span style="color:#569CD6;">&gt;</span>
+        <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">li</span> <span style="color:#FF0000;">class</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;nav-item px-3&quot;</span><span style="color:#569CD6;">&gt;</span>
+            <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">NavLink</span> <span style="color:#FF0000;">class</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;nav-link&quot;</span> <span style="color:#FF0000;">href</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;grey/fetchdata&quot;</span><span style="color:#569CD6;">&gt;</span>
+                <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">span</span> <span style="color:#FF0000;">class</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;oi oi-list-rich&quot;</span> <span style="color:#FF0000;">aria-hidden</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;true&quot;</span><span style="color:#569CD6;">&gt;</span><span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">span</span><span style="color:#569CD6;">&gt;</span> Fetch data
+            <span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">NavLink</span><span style="color:#569CD6;">&gt;</span>
+        <span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">li</span><span style="color:#569CD6;">&gt;</span>
+    <span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">ul</span><span style="color:#569CD6;">&gt;</span>
+<span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">div</span><span style="color:#569CD6;">&gt;</span>
+</pre></div>
 <p>Update <em>App.razor</em>, changing <code>AppAssembly</code>, which is set to <em>Hydra.Grey.App</em>, so it finds the routes in this assembly.</p>
-<pre><code class="language-html">// Hydra.Grey/App.razor
-&lt;Router AppAssembly=&quot;@typeof(Hydra.Grey.App).Assembly&quot; PreferExactMatches=&quot;@true&quot;&gt;
-    &lt;Found Context=&quot;routeData&quot;&gt;
-        &lt;RouteView RouteData=&quot;@routeData&quot; DefaultLayout=&quot;@typeof(MainLayout)&quot; /&gt;
-    &lt;/Found&gt;
-    &lt;NotFound&gt;
-        &lt;LayoutView Layout=&quot;@typeof(MainLayout)&quot;&gt;
-            &lt;p&gt;Sorry, there's nothing at this address.&lt;/p&gt;
-        &lt;/LayoutView&gt;
-    &lt;/NotFound&gt;
-&lt;/Router&gt;
-</code></pre>
-<h2 id="hydra.web-1">Hydra.Web</h2>
-<pre><code class="language-html">// Hydra.Web/Pages/_Blue.html
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+// Hydra.Grey/App.razor
+<span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">Router</span> <span style="color:#FF0000;">AppAssembly</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;@typeof(Hydra.Grey.App).Assembly&quot;</span> <span style="color:#FF0000;">PreferExactMatches</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;@true&quot;</span><span style="color:#569CD6;">&gt;</span>
+    <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">Found</span> <span style="color:#FF0000;">Context</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;routeData&quot;</span><span style="color:#569CD6;">&gt;</span>
+        <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">RouteView</span> <span style="color:#FF0000;">RouteData</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;@routeData&quot;</span> <span style="color:#FF0000;">DefaultLayout</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;@typeof(MainLayout)&quot;</span> <span style="color:#569CD6;">/&gt;</span>
+    <span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">Found</span><span style="color:#569CD6;">&gt;</span>
+    <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">NotFound</span><span style="color:#569CD6;">&gt;</span>
+        <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">LayoutView</span> <span style="color:#FF0000;">Layout</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;@typeof(MainLayout)&quot;</span><span style="color:#569CD6;">&gt;</span>
+            <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">p</span><span style="color:#569CD6;">&gt;</span>Sorry, there&#39;s nothing at this address.<span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">p</span><span style="color:#569CD6;">&gt;</span>
+        <span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">LayoutView</span><span style="color:#569CD6;">&gt;</span>
+    <span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">NotFound</span><span style="color:#569CD6;">&gt;</span>
+<span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">Router</span><span style="color:#569CD6;">&gt;</span>
+</pre></div><h2 id="hydra.web-1">Hydra.Web</h2>
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+// Hydra.Web/Pages/_Blue.html
 @page &quot;/spablue&quot;
 @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 @{
     Layout = null;
 }
 
-&lt;!DOCTYPE html&gt;
-&lt;html&gt;
+<span style="color:#569CD6;">&lt;!</span><span style="color:#A31515;">DOCTYPE</span> <span style="color:#FF0000;">html</span><span style="color:#569CD6;">&gt;</span>
+<span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">html</span><span style="color:#569CD6;">&gt;</span>
 
-&lt;head&gt;
-    &lt;meta charset=&quot;utf-8&quot; /&gt;
-    &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no&quot; /&gt;
-    &lt;title&gt;Hydra.Blue&lt;/title&gt;
-    &lt;base href=&quot;/blue&quot; /&gt;
-    &lt;link href=&quot;/css/app.css&quot; rel=&quot;stylesheet&quot; /&gt;
-    &lt;link href=&quot;/CEC.Blazor.Hydra.styles.css&quot; rel=&quot;stylesheet&quot; /&gt;
-&lt;/head&gt;
+<span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">head</span><span style="color:#569CD6;">&gt;</span>
+    <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">meta</span> <span style="color:#FF0000;">charset</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;utf-8&quot;</span> <span style="color:#569CD6;">/&gt;</span>
+    <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">meta</span> <span style="color:#FF0000;">name</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;viewport&quot;</span> <span style="color:#FF0000;">content</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no&quot;</span> <span style="color:#569CD6;">/&gt;</span>
+    <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">title</span><span style="color:#569CD6;">&gt;</span>Hydra.Blue<span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">title</span><span style="color:#569CD6;">&gt;</span>
+    <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">base</span> <span style="color:#FF0000;">href</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;/blue&quot;</span> <span style="color:#569CD6;">/&gt;</span>
+    <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">link</span> <span style="color:#FF0000;">href</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;/css/app.css&quot;</span> <span style="color:#FF0000;">rel</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;stylesheet&quot;</span> <span style="color:#569CD6;">/&gt;</span>
+    <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">link</span> <span style="color:#FF0000;">href</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;/CEC.Blazor.Hydra.styles.css&quot;</span> <span style="color:#FF0000;">rel</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;stylesheet&quot;</span> <span style="color:#569CD6;">/&gt;</span>
+<span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">head</span><span style="color:#569CD6;">&gt;</span>
 
-&lt;body&gt;
-    &lt;component type=&quot;typeof(Hydra.Blue.App)&quot; render-mode=&quot;ServerPrerendered&quot; /&gt;
+<span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">body</span><span style="color:#569CD6;">&gt;</span>
+    <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">component</span> <span style="color:#FF0000;">type</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;typeof(Hydra.Blue.App)&quot;</span> <span style="color:#FF0000;">render-mode</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;ServerPrerendered&quot;</span> <span style="color:#569CD6;">/&gt;</span>
 
-    &lt;script src=&quot;_framework/blazor.server.js&quot;&gt;&lt;/script&gt;
-&lt;/body&gt;
+    <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">script</span> <span style="color:#FF0000;">src</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;_framework/blazor.server.js&quot;</span><span style="color:#569CD6;">&gt;</span><span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">script</span><span style="color:#569CD6;">&gt;</span>
+<span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">body</span><span style="color:#569CD6;">&gt;</span>
 
-&lt;/html&gt;
-</code></pre>
-<pre><code class="language-html">// Hydra.Web/Pages/_Grey.html
+<span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">html</span><span style="color:#569CD6;">&gt;</span>
+</pre></div><div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+// Hydra.Web/Pages/_Grey.html
 @page &quot;/spagrey&quot;
 @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 @{
     Layout = null;
 }
 
-&lt;!DOCTYPE html&gt;
-&lt;html&gt;
+<span style="color:#569CD6;">&lt;!</span><span style="color:#A31515;">DOCTYPE</span> <span style="color:#FF0000;">html</span><span style="color:#569CD6;">&gt;</span>
+<span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">html</span><span style="color:#569CD6;">&gt;</span>
 
-&lt;head&gt;
-    &lt;meta charset=&quot;utf-8&quot; /&gt;
-    &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no&quot; /&gt;
-    &lt;title&gt;Hydra.Grey&lt;/title&gt;
-    &lt;base href=&quot;/grey&quot; /&gt;
-    &lt;link href=&quot;/css/app.css&quot; rel=&quot;stylesheet&quot; /&gt;
-    &lt;link href=&quot;/CEC.Blazor.Hydra.styles.css&quot; rel=&quot;stylesheet&quot; /&gt;
-&lt;/head&gt;
+<span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">head</span><span style="color:#569CD6;">&gt;</span>
+    <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">meta</span> <span style="color:#FF0000;">charset</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;utf-8&quot;</span> <span style="color:#569CD6;">/&gt;</span>
+    <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">meta</span> <span style="color:#FF0000;">name</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;viewport&quot;</span> <span style="color:#FF0000;">content</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no&quot;</span> <span style="color:#569CD6;">/&gt;</span>
+    <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">title</span><span style="color:#569CD6;">&gt;</span>Hydra.Grey<span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">title</span><span style="color:#569CD6;">&gt;</span>
+    <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">base</span> <span style="color:#FF0000;">href</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;/grey&quot;</span> <span style="color:#569CD6;">/&gt;</span>
+    <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">link</span> <span style="color:#FF0000;">href</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;/css/app.css&quot;</span> <span style="color:#FF0000;">rel</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;stylesheet&quot;</span> <span style="color:#569CD6;">/&gt;</span>
+    <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">link</span> <span style="color:#FF0000;">href</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;/CEC.Blazor.Hydra.styles.css&quot;</span> <span style="color:#FF0000;">rel</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;stylesheet&quot;</span> <span style="color:#569CD6;">/&gt;</span>
+<span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">head</span><span style="color:#569CD6;">&gt;</span>
 
-&lt;body&gt;
-    &lt;component type=&quot;typeof(Hydra.Grey.App)&quot; render-mode=&quot;ServerPrerendered&quot; /&gt;
+<span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">body</span><span style="color:#569CD6;">&gt;</span>
+    <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">component</span> <span style="color:#FF0000;">type</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;typeof(Hydra.Grey.App)&quot;</span> <span style="color:#FF0000;">render-mode</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;ServerPrerendered&quot;</span> <span style="color:#569CD6;">/&gt;</span>
 
-    &lt;script src=&quot;_framework/blazor.server.js&quot;&gt;&lt;/script&gt;
-&lt;/body&gt;
+    <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">script</span> <span style="color:#FF0000;">src</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;_framework/blazor.server.js&quot;</span><span style="color:#569CD6;">&gt;</span><span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">script</span><span style="color:#569CD6;">&gt;</span>
+<span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">body</span><span style="color:#569CD6;">&gt;</span>
 
-&lt;/html&gt;
-</code></pre>
+<span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">html</span><span style="color:#569CD6;">&gt;</span>
+</pre></div>
 <p>This should all now compile and run.</p>
 <h2 id="wrap-up">Wrap Up</h2>
 <p>There's a lot to take in in this article.  It took me a while to pull this article together once I'd proven the concepts.  Som important concepts to understand:</p>

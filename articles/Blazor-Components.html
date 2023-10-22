@@ -102,57 +102,64 @@
 <h2 id="the-client-application">The Client Application</h2>
 <h3 id="blazor-server">Blazor Server</h3>
 <p>Blazor Server defines the <code>&lt;app&gt;</code> component in the initial server/html page.  This looks like this:</p>
-<pre><code class="language-html">&lt;app&gt;
-    &lt;component type=&quot;typeof(App)&quot; render-mode=&quot;ServerPrerendered&quot; /&gt;
-&lt;/app&gt;
-</code></pre>
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+<span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">app</span><span style="color:#569CD6;">&gt;</span>
+    <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">component</span> <span style="color:#FF0000;">type</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;typeof(App)&quot;</span> <span style="color:#FF0000;">render-mode</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;ServerPrerendered&quot;</span> <span style="color:#569CD6;">/&gt;</span>
+<span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">app</span><span style="color:#569CD6;">&gt;</span>
+</pre></div>
 <p><code>type</code> defines the route component class - in this case <code>App</code> and <code>render-mode</code> defines how the initial server-side render process runs.  You can read about that elsewhere.  The only important bit to understand is that if it pre-renders, the page is rendered twice on the initial load - once by the server to build a static version of the page, and then a second time by the browser client code to build the live version of the page.</p>
 <p>The browser client code gets loaded by:</p>
-<pre><code class="language-html">&lt;script src=&quot;_framework/blazor.server.js&quot;&gt;&lt;/script&gt;
-</code></pre>
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+<span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">script</span> <span style="color:#FF0000;">src</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;_framework/blazor.server.js&quot;</span><span style="color:#569CD6;">&gt;</span><span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">script</span><span style="color:#569CD6;">&gt;</span>
+</pre></div>
 <p>Once <em>blazor.server.js</em> loads, the client application runs in the browser page and a SignalR connection estabished with the server.  To complete the initial load, the Client Application calls the Blazor Hub Session and requests a complete server render of the <code>App</code> component.  It then applies the resultant DOM changes to the Client Application DOM - this will principly be the event wiring.</p>
 <p>The diagram below shows how a render request is passed to the displayed page.</p>
 <p><img src="https://shauncurtis.github.io/articles/assets/Blazor-Components/Server-Render.png" alt="Server Rendering" /></p>
 <h3 id="blazor-web-assembly">Blazor Web Assembly</h3>
 <p>In Blazor WebAssembly the browser receives an Html page with a defined <code>div</code> placeholder where the root component should be loaded:</p>
-<pre><code class="language-html">&lt;div id=&quot;app&quot;&gt;
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+<span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">div</span> <span style="color:#FF0000;">id</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;app&quot;</span><span style="color:#569CD6;">&gt;</span>
     ....
-&lt;/div&gt;
-</code></pre>
+<span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">div</span><span style="color:#569CD6;">&gt;</span>
+</pre></div>
 <p>The Client Application gets loaded by:</p>
-<pre><code class="language-html">&lt;script src=&quot;_framework/blazor.webassembly.js&quot;&gt;&lt;/script&gt;
-</code></pre>
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+<span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">script</span> <span style="color:#FF0000;">src</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;_framework/blazor.webassembly.js&quot;</span><span style="color:#569CD6;">&gt;</span><span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">script</span><span style="color:#569CD6;">&gt;</span>
+</pre></div>
 <p>Once the WASM code is loaded, it runs <code>program</code>.</p>
-<pre><code class="language-csharp">builder.RootComponents.Add&lt;App&gt;(&quot;#app&quot;);
-</code></pre>
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+builder.RootComponents.Add&lt;App&gt;(<span style="color:#D69D85;">&quot;#app&quot;</span>);
+</pre></div>
 <p>The code tells the Renderer that the <code>App</code> class component is the root component for the <code>RenderTree</code> and to load it's DOM into the <code>app</code> element in the browser DOM.</p>
 <p><img src="https://shauncurtis.github.io/articles/assets/Blazor-Components/Web-Assembly-Render.png" alt="Server Rendering" /></p>
 <p>The key point to take from this is that although the process by which the root component is defined and loaded is different, there's no difference between in a WebAssembly and Server root component or any sub-component.  You can use the same component.</p>
 <h4 id="app.razor">App.razor</h4>
 <p><em>App.razor</em> is the &quot;standard&quot; root component.  It can be any <code>IComponent</code> defined class.</p>
 <p><code>App</code> looks like this:</p>
-<pre><code class="language-html">&lt;Router AppAssembly=&quot;@typeof(Program).Assembly&quot;&gt;
-    &lt;Found Context=&quot;routeData&quot;&gt;
-        &lt;RouteView RouteData=&quot;@routeData&quot; DefaultLayout=&quot;@typeof(MainLayout)&quot; /&gt;
-    &lt;/Found&gt;
-    &lt;NotFound&gt;
-        &lt;LayoutView Layout=&quot;@typeof(MainLayout)&quot;&gt;
-            &lt;p&gt;Sorry, there's nothing at this address.&lt;/p&gt;
-        &lt;/LayoutView&gt;
-    &lt;/NotFound&gt;
-&lt;/Router&gt;
-</code></pre>
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+<span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">Router</span> <span style="color:#FF0000;">AppAssembly</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;@typeof(Program).Assembly&quot;</span><span style="color:#569CD6;">&gt;</span>
+    <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">Found</span> <span style="color:#FF0000;">Context</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;routeData&quot;</span><span style="color:#569CD6;">&gt;</span>
+        <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">RouteView</span> <span style="color:#FF0000;">RouteData</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;@routeData&quot;</span> <span style="color:#FF0000;">DefaultLayout</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;@typeof(MainLayout)&quot;</span> <span style="color:#569CD6;">/&gt;</span>
+    <span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">Found</span><span style="color:#569CD6;">&gt;</span>
+    <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">NotFound</span><span style="color:#569CD6;">&gt;</span>
+        <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">LayoutView</span> <span style="color:#FF0000;">Layout</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;@typeof(MainLayout)&quot;</span><span style="color:#569CD6;">&gt;</span>
+            <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">p</span><span style="color:#569CD6;">&gt;</span>Sorry, there&#39;s nothing at this address.<span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">p</span><span style="color:#569CD6;">&gt;</span>
+        <span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">LayoutView</span><span style="color:#569CD6;">&gt;</span>
+    <span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">NotFound</span><span style="color:#569CD6;">&gt;</span>
+<span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">Router</span><span style="color:#569CD6;">&gt;</span>
+</pre></div>
 <p>It's a Razor component defining one child component, <code>Router</code>.  <code>Router</code> has two <code>RenderFragments</code>, <code>Found</code> and <code>NotFound</code>.  If <code>Router</code> finds a route, and therefore an <code>IComponent</code> class, it renders the <code>RouteView</code> component and passes it the route class type along with the default <code>Layout</code> class.   If no route is found it renders a <code>LayoutView</code> and renders the defined content in it's <code>Body</code>.</p>
 <p><code>RouteView</code> checks if the <code>RouteData</code> component has a specific layout class defined.  If so it uses it, otherwise it uses the default layout.  It renders the layout and passes it the type of the component to add to the <code>Body</code> RenderFragment.</p>
 <h2 id="components">Components</h2>
 <p>All components are normal DotNetCore classes that implement <code>IComponent</code>.</p>
 <p>The <code>IComponent</code> interface definition is:</p>
-<pre><code class="language-csharp">public interface IComponent
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+<span style="color:#569CD6;">public</span> <span style="color:#569CD6;">interface</span> IComponent
 {
-    void Attach(RenderHandle renderHandle);
+    <span style="color:#569CD6;">void</span> Attach(RenderHandle renderHandle);
     Task SetParametersAsync(ParameterView parameters);
 }
-</code></pre>
+</pre></div>
 <p>My first reaction on seeing this was &quot;What? Something missing here. Where's all those events and initialization methods?&quot; Every article you read talks about components and  <code>OnInitialized</code>, ...  Don't let them confuse you.   These are part of <code>ComponentBase</code> the out-of-the-box Blazor implementation of <code>IComponent</code>.  <code>ComponentBase</code> does not define of a component.  You will see a much simpler implementation below.</p>
 <p>Lets look at what is defined in more detail.  The Blazor Hub Session has a <code>Renderer</code> that runs the <code>RenderTree</code> for each root component.  Technically you can have more than one, but we'll ignore that for this discussion.  To quote the class documentation:</p>
 <p><code>Renderer</code> provides mechanisms:</p>
@@ -174,33 +181,36 @@
 <h3 id="the-helloworld-component">The HelloWorld Component</h3>
 <p>To demonstrate the <code>IComponent</code> interface We'll build a simple <code>HelloWorld</code> component.</p>
 <p>Our simplest Hello World Razor component looks like this:</p>
-<pre><code class="language-html">@page &quot;/helloworld&quot;
-&lt;div&gt;
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+@page &quot;/helloworld&quot;
+<span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">div</span><span style="color:#569CD6;">&gt;</span>
     Hello World
-&lt;/div&gt;
-</code></pre>
+<span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">div</span><span style="color:#569CD6;">&gt;</span>
+</pre></div>
 <p>It's a Razor defined component.</p>
 <p>We can refactor it to look like this:</p>
-<pre><code class="language-csharp">@page &quot;/helloworld&quot;
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+@page <span style="color:#D69D85;">&quot;/helloworld&quot;</span>
 
 @HelloWorld
 
 @code {
-    protected RenderFragment HelloWorld =&gt; (RenderTreeBuilder builder) =&gt;
+    <span style="color:#569CD6;">protected</span> RenderFragment HelloWorld =&gt; (RenderTreeBuilder builder) =&gt;
     {
-        builder.OpenElement(0, &quot;div&quot;);
-        builder.AddContent(1, &quot;Hello World 2&quot;);
+        builder.OpenElement(<span style="color:#B5CEA8;">0</span>, <span style="color:#D69D85;">&quot;div&quot;</span>);
+        builder.AddContent(<span style="color:#B5CEA8;">1</span>, <span style="color:#D69D85;">&quot;Hello World 2&quot;</span>);
         builder.CloseElement();
     };
 }
-</code></pre>
+</pre></div>
 <p>This introduces the <code>RenderFragment</code>. To quote the official Microsoft documentation.</p>
 <p><em>A RenderFragement represents a segment of UI content, implemented as a delegate that writes the content to a RenderTreeBuilder.</em></p>
 <p>The <code>RenderTreeBuilder</code> is even more succinct:</p>
 <p><em>Provides methods for building a collection of RenderTreeFrame entries.</em></p>
 <p>So, a <code>RenderFragment</code> is a delegate - defined in <em>Microsoft.AspNetCore.Components</em> as follows:</p>
-<pre><code class="language-csharp">public delegate void RenderFragment(RenderTreeBuilder builder);
-</code></pre>
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+<span style="color:#569CD6;">public</span> <span style="color:#569CD6;">delegate</span> <span style="color:#569CD6;">void</span> RenderFragment(RenderTreeBuilder builder);
+</pre></div>
 <p>If you're new to delegates think of them as a pattern definition.  Any function that conforms to the pattern defined by <code>RenderFragment</code> delegate can passed as a <code>RenderFragment</code>.</p>
 <p>The pattern dictates your method must:</p>
 <ol>
@@ -216,42 +226,43 @@
 <h3 id="a-simple-icomponent-implementation">A Simple IComponent Implementation</h3>
 <p>The <code>HelloWorld</code> component above inherits from <code>ComponentBase</code>.  Razor components that don't explicitly define inheritance inherit by default from <code>ComponentBase</code>.</p>
 <p>We can now build our component as a simple C# class.</p>
-<pre><code class="language-csharp">using Microsoft.AspNetCore.Components;
-using Microsoft.AspNetCore.Components.Rendering;
-using Microsoft.AspNetCore.Components.Web;
-using System.Threading.Tasks;
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+<span style="color:#569CD6;">using</span> Microsoft.AspNetCore.Components;
+<span style="color:#569CD6;">using</span> Microsoft.AspNetCore.Components.Rendering;
+<span style="color:#569CD6;">using</span> Microsoft.AspNetCore.Components.Web;
+<span style="color:#569CD6;">using</span> System.Threading.Tasks;
 
-namespace Blazor.HelloWorld.Pages
+<span style="color:#569CD6;">namespace</span> Blazor.HelloWorld.Pages
 {
-    [RouteAttribute(&quot;/helloworld&quot;)]
-    public class RendererComponent : IComponent
+    [RouteAttribute(<span style="color:#D69D85;">&quot;/helloworld&quot;</span>)]
+    <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">class</span> RendererComponent : IComponent
     {
-        private RenderHandle _renderHandle;
+        <span style="color:#569CD6;">private</span> RenderHandle _renderHandle;
 
-        public void Attach(RenderHandle renderHandle)
+        <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">void</span> Attach(RenderHandle renderHandle)
         {
             _renderHandle = renderHandle;
         }
 
-        public Task SetParametersAsync(ParameterView parameters)
+        <span style="color:#569CD6;">public</span> Task SetParametersAsync(ParameterView parameters)
         {
-            parameters.SetParameterProperties(this);
-            this.Render();
-            return Task.CompletedTask;
+            parameters.SetParameterProperties(<span style="color:#569CD6;">this</span>);
+            <span style="color:#569CD6;">this</span>.Render();
+            <span style="color:#569CD6;">return</span> Task.CompletedTask;
         }
 
-        public void Render()
+        <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">void</span> Render()
             =&gt; _renderHandle.Render(RenderComponent);
 
-        private void RenderComponent(RenderTreeBuilder builder)
+        <span style="color:#569CD6;">private</span> <span style="color:#569CD6;">void</span> RenderComponent(RenderTreeBuilder builder)
         {
-            builder.OpenElement(0, &quot;div&quot;);
-            builder.AddContent(1, &quot;Hello World 2&quot;);
+            builder.OpenElement(<span style="color:#B5CEA8;">0</span>, <span style="color:#D69D85;">&quot;div&quot;</span>);
+            builder.AddContent(<span style="color:#B5CEA8;">1</span>, <span style="color:#D69D85;">&quot;Hello World 2&quot;</span>);
             builder.CloseElement();
         }
     }
 }
-</code></pre>
+</pre></div>
 <p>Points to note in the above code:</p>
 <ol>
 <li>The class uses the custom attribute <code>RouteAttribute</code> to define the route.</li>
@@ -266,15 +277,17 @@ namespace Blazor.HelloWorld.Pages
 <h3 id="routed-components">Routed Components</h3>
 <p>Everything's a component, but not all components are equal.  <strong>Routed Components</strong> are a little special.</p>
 <p>They contain <em>@page</em> routing directives and optionally a <em>@Layout</em> directive.</p>
-<pre><code class="language-html">@page &quot;/WeatherForecast&quot;
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+@page &quot;/WeatherForecast&quot;
 @page &quot;/WeatherForecasts&quot;
 @layout MainLayout
-</code></pre>
+</pre></div>
 <p>You can define these directly on classes like this:</p>
-<pre><code class="language-csharp">[LayoutAttribute(typeof(MainLayout))]
-[RouteAttribute(&quot;/helloworld&quot;)]
-public class RendererComponent : IComponent {}
-</code></pre>
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+[LayoutAttribute(<span style="color:#569CD6;">typeof</span>(MainLayout))]
+[RouteAttribute(<span style="color:#D69D85;">&quot;/helloworld&quot;</span>)]
+<span style="color:#569CD6;">public</span> <span style="color:#569CD6;">class</span> RendererComponent : IComponent {}
+</pre></div>
 <p>The <code>RouteAttribute</code> is used by the router to find Routes in the application.</p>
 <p>Don't think of routed components as pages. It may seem obvious to do so, but don't.  Lots of web page properties don't apply to routed components.  You will:</p>
 <ul>
@@ -304,86 +317,90 @@ public class RendererComponent : IComponent {}
 <li><code>new</code> - often forgotten.</li>
 </ol>
 <p>The standard class instantiation method builds the <code>RenderFragment</code> that <code>StateHasChanged</code> passes to the  <code>Renderer</code> to render the component.  It sets two private class variables to false and runs <code>BuildRenderTree</code>.</p>
-<pre><code class="language-csharp">public ComponentBase()
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+<span style="color:#569CD6;">public</span> ComponentBase()
 {
     _renderFragment = builder =&gt;
     {
-        _hasPendingQueuedRender = false;
-        _hasNeverRendered = false;
+        _hasPendingQueuedRender = <span style="color:#569CD6;">false</span>;
+        _hasNeverRendered = <span style="color:#569CD6;">false</span>;
         BuildRenderTree(builder);
     };
 }
-</code></pre>
+</pre></div>
 <p><code>SetParametersAsync</code> sets the properties for the submitted parameters. It only runs <code>RunInitAndSetParametersAsync</code> - and thus <code>OnInitialized</code> followed by <code>OnInitializedAsync</code> - on initialization. It always calls <code>CallOnParametersSetAsync</code>.  Note:</p>
 <ol>
 <li><code>CallOnParametersSetAsync</code> waits on <code>OnInitializedAsync</code> to complete before calling <code>CallOnParametersSetAsync</code>.</li>
 <li><code>RunInitAndSetParametersAsync</code> calls <code>StateHasChanged</code> if <code>OnInitializedAsync</code> task yields before completion.</li>
 </ol>
-<pre><code class="language-csharp">public virtual Task SetParametersAsync(ParameterView parameters)
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+<span style="color:#569CD6;">public</span> <span style="color:#569CD6;">virtual</span> Task SetParametersAsync(ParameterView parameters)
 {
-    parameters.SetParameterProperties(this);
-    if (!_initialized)
+    parameters.SetParameterProperties(<span style="color:#569CD6;">this</span>);
+    <span style="color:#569CD6;">if</span> (!_initialized)
     {
-        _initialized = true;
-        return RunInitAndSetParametersAsync();
+        _initialized = <span style="color:#569CD6;">true</span>;
+        <span style="color:#569CD6;">return</span> RunInitAndSetParametersAsync();
     }
-    else return CallOnParametersSetAsync();
+    <span style="color:#569CD6;">else</span> <span style="color:#569CD6;">return</span> CallOnParametersSetAsync();
 }
 
-private async Task RunInitAndSetParametersAsync()
+<span style="color:#569CD6;">private</span> <span style="color:#569CD6;">async</span> Task RunInitAndSetParametersAsync()
 {
     OnInitialized();
-    var task = OnInitializedAsync();
-    if (task.Status != TaskStatus.RanToCompletion &amp;&amp; task.Status != TaskStatus.Canceled)
+    <span style="color:#569CD6;">var</span> task = OnInitializedAsync();
+    <span style="color:#569CD6;">if</span> (task.Status != TaskStatus.RanToCompletion &amp;&amp; task.Status != TaskStatus.Canceled)
     {
         StateHasChanged();
-        try { await task;}
-        catch { if (!task.IsCanceled) throw; }
+        <span style="color:#569CD6;">try</span> { <span style="color:#569CD6;">await</span> task;}
+        <span style="color:#569CD6;">catch</span> { <span style="color:#569CD6;">if</span> (!task.IsCanceled) <span style="color:#569CD6;">throw</span>; }
     }
-    await CallOnParametersSetAsync();
+    <span style="color:#569CD6;">await</span> CallOnParametersSetAsync();
 
-</code></pre>
+</pre></div>
 <p><code>CallOnParametersSetAsync</code> calls <code>OnParametersSet</code> followed by <code>OnParametersSetAsync</code>, and finally <code>StateHasChanged</code>.  If the <code>OnParametersSetAsync()</code> task yields <code>CallStateHasChangedOnAsyncCompletion</code> awaits the task and re-runs <code>StateHasChanged</code>.</p>
-<pre><code class="language-csharp">private Task CallOnParametersSetAsync()
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+<span style="color:#569CD6;">private</span> Task CallOnParametersSetAsync()
 {
     OnParametersSet();
-    var task = OnParametersSetAsync();
-    var shouldAwaitTask = task.Status != TaskStatus.RanToCompletion &amp;&amp;
+    <span style="color:#569CD6;">var</span> task = OnParametersSetAsync();
+    <span style="color:#569CD6;">var</span> shouldAwaitTask = task.Status != TaskStatus.RanToCompletion &amp;&amp;
         task.Status != TaskStatus.Canceled;
 
     StateHasChanged();
 
-    return shouldAwaitTask ?
+    <span style="color:#569CD6;">return</span> shouldAwaitTask ?
         CallStateHasChangedOnAsyncCompletion(task) :
         Task.CompletedTask;
 }
 
-private async Task CallStateHasChangedOnAsyncCompletion(Task task)
+<span style="color:#569CD6;">private</span> <span style="color:#569CD6;">async</span> Task CallStateHasChangedOnAsyncCompletion(Task task)
 {
-    try { await task; }
-    catch 
+    <span style="color:#569CD6;">try</span> { <span style="color:#569CD6;">await</span> task; }
+    <span style="color:#569CD6;">catch</span> 
     {
-        if (task.IsCanceled) return;
-        throw;
+        <span style="color:#569CD6;">if</span> (task.IsCanceled) <span style="color:#569CD6;">return</span>;
+        <span style="color:#569CD6;">throw</span>;
     }
     StateHasChanged();
 }
-</code></pre>
+</pre></div>
 <p>Lastly, lets look at <code>StateHasChanged</code>.  If a render is pending i.e. the renderer hasn't got round to running the queued render request, it closes - whatever changes have been made will be captured in the queued render.  If not, it sets the  <code>_hasPendingQueuedRender</code> class flag and calls the Render method on the <code>RenderHandle</code>.  This queues <code>_renderFragement</code> onto the <code>Renderer</code> <code>RenderQueue</code>.  When the queue runs <code>_renderFragment</code> - see above - it sets the two class flags to false and runs <code>BuildRenderTree</code>.</p>
-<pre><code class="language-csharp">protected void StateHasChanged()
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+<span style="color:#569CD6;">protected</span> <span style="color:#569CD6;">void</span> StateHasChanged()
 {
-    if (_hasPendingQueuedRender) return;
-    if (_hasNeverRendered || ShouldRender())
+    <span style="color:#569CD6;">if</span> (_hasPendingQueuedRender) <span style="color:#569CD6;">return</span>;
+    <span style="color:#569CD6;">if</span> (_hasNeverRendered || ShouldRender())
     {
-        _hasPendingQueuedRender = true;
-        try { _renderHandle.Render(_renderFragment);}
-        catch {
-            _hasPendingQueuedRender = false;
-            throw;
+        _hasPendingQueuedRender = <span style="color:#569CD6;">true</span>;
+        <span style="color:#569CD6;">try</span> { _renderHandle.Render(_renderFragment);}
+        <span style="color:#569CD6;">catch</span> {
+            _hasPendingQueuedRender = <span style="color:#569CD6;">false</span>;
+            <span style="color:#569CD6;">throw</span>;
         }
     }
 }
-</code></pre>
+</pre></div>
 <p>Some key points to note:</p>
 <ol>
 <li><p><code>OnInitialized</code> and <code>OnInitializedAsync</code> only get called during initialization.  <code>OnInitialized</code> is run first.  If, and only if, <code>OnInitializedAsync</code> yields back to the internal calling method <code>RunInitAndSetParametersAsync</code>, then <code>StateHasChanged</code> get called, providing the opportunity to provide &quot;Loading&quot; information to the user.  <code>OnInitializedAsync</code> completes before <code>OnParametersSet</code> and <code>OnParametersSetAsync</code> are called.</p>
@@ -400,30 +417,31 @@ private async Task CallStateHasChangedOnAsyncCompletion(Task task)
 <h2 id="the-render-process">The Render Process</h2>
 <p>Let's look in detail at how a simple page and component get rendered.</p>
 <h4 id="simplecomponent.razor">SimpleComponent.razor</h4>
-<pre><code class="language-html">&lt;div class=&quot;h4 bg-success text-white p-2&quot;&gt;Loaded&lt;/div&gt;
-</code></pre>
-<h4 id="simplepage.razor">SimplePage.razor</h4>
-<pre><code class="language-csharp">@page &quot;/simple&quot;
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+<span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">div</span> <span style="color:#FF0000;">class</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;h4 bg-success text-white p-2&quot;</span><span style="color:#569CD6;">&gt;</span>Loaded<span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">div</span><span style="color:#569CD6;">&gt;</span>
+</pre></div><h4 id="simplepage.razor">SimplePage.razor</h4>
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+@page <span style="color:#D69D85;">&quot;/simple&quot;</span>
 &lt;h3&gt;SimplePage&lt;/h3&gt;
-@if (loaded)
+@<span style="color:#569CD6;">if</span> (loaded)
 {
     &lt;SimpleComponent&gt;&lt;/SimpleComponent&gt;
 }
-else
+<span style="color:#569CD6;">else</span>
 {
-    &lt;div class=&quot;h4 bg-danger text-white p-2&quot;&gt;Loading.....&lt;/div&gt;
+    &lt;div <span style="color:#569CD6;">class</span>=<span style="color:#D69D85;">&quot;h4 bg-danger text-white p-2&quot;</span>&gt;Loading.....&lt;/div&gt;
 }
 
 @code {
-    private bool loaded;
+    <span style="color:#569CD6;">private</span> <span style="color:#569CD6;">bool</span> loaded;
 
-    protected async override Task OnInitializedAsync()
+    <span style="color:#569CD6;">protected</span> <span style="color:#569CD6;">async</span> <span style="color:#569CD6;">override</span> Task OnInitializedAsync()
     {
-        await Task.Delay(2000);
-        loaded = true;
+        <span style="color:#569CD6;">await</span> Task.Delay(<span style="color:#B5CEA8;">2000</span>);
+        loaded = <span style="color:#569CD6;">true</span>;
     }
 }
-</code></pre>
+</pre></div>
 <p>The follow diagram shows a simplified <code>RenderTree</code> representing a simple &quot;/&quot; route.</p>
 <p><img src="https://shauncurtis.github.io/articles/assets/Blazor-Components/Root-Render-Tree.png" alt="Root Render Tree" /></p>
 <p>Note the three nodes in <code>NavMenu</code> for the three <code>NavLink</code> controls.</p>
@@ -434,221 +452,232 @@ else
 <h3 id="component-content">Component Content</h3>
 <p>Change <code>SimpleComponent</code> and <code>SimplePage</code> to:</p>
 <h4 id="simplecomponent.razor-1">SimpleComponent.razor</h4>
-<pre><code class="language-csharp">&lt;div class=&quot;h4 bg-success text-white p-2&quot;&gt;@ChildContent&lt;/div&gt;
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+&lt;div <span style="color:#569CD6;">class</span>=<span style="color:#D69D85;">&quot;h4 bg-success text-white p-2&quot;</span>&gt;@ChildContent&lt;/div&gt;
 
 @code {
-    [Parameter] public RenderFragment ChildContent { get; set; }
+    [Parameter] <span style="color:#569CD6;">public</span> RenderFragment ChildContent { <span style="color:#569CD6;">get</span>; <span style="color:#569CD6;">set</span>; }
 }
-</code></pre>
-<h4 id="simplepage.razor-1">SimplePage.razor</h4>
-<pre><code class="language-csharp">@page &quot;/simple&quot;
+</pre></div><h4 id="simplepage.razor-1">SimplePage.razor</h4>
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+@page <span style="color:#D69D85;">&quot;/simple&quot;</span>
 &lt;h3&gt;SimplePage&lt;/h3&gt;
-@if (loaded)
+@<span style="color:#569CD6;">if</span> (loaded)
 {
     &lt;SimpleComponent&gt;
-        &lt;button class=&quot;btn btn-primary&quot; @onclick=&quot;ButtonClick&quot;&gt;Click Me&lt;/button&gt;
+        &lt;button <span style="color:#569CD6;">class</span>=<span style="color:#D69D85;">&quot;btn btn-primary&quot;</span> @onclick=<span style="color:#D69D85;">&quot;ButtonClick&quot;</span>&gt;Click Me&lt;/button&gt;
     &lt;/SimpleComponent&gt;
 }
-else
+<span style="color:#569CD6;">else</span>
 {
-    &lt;div class=&quot;h4 bg-danger text-white p-2&quot;&gt;Loading.....&lt;/div&gt;
+    &lt;div <span style="color:#569CD6;">class</span>=<span style="color:#D69D85;">&quot;h4 bg-danger text-white p-2&quot;</span>&gt;Loading.....&lt;/div&gt;
 }
 
 @code {
-    private bool loaded;
+    <span style="color:#569CD6;">private</span> <span style="color:#569CD6;">bool</span> loaded;
 
-    protected async override Task OnInitializedAsync()
+    <span style="color:#569CD6;">protected</span> <span style="color:#569CD6;">async</span> <span style="color:#569CD6;">override</span> Task OnInitializedAsync()
     {
-        await Task.Delay(2000);
-        loaded = true;
+        <span style="color:#569CD6;">await</span> Task.Delay(<span style="color:#B5CEA8;">2000</span>);
+        loaded = <span style="color:#569CD6;">true</span>;
     }
 
-    protected void ButtonClick(MouseEventArgs e)
+    <span style="color:#569CD6;">protected</span> <span style="color:#569CD6;">void</span> ButtonClick(MouseEventArgs e)
     {
-        var x = true;
+        <span style="color:#569CD6;">var</span> x = <span style="color:#569CD6;">true</span>;
     }
 }
-</code></pre>
+</pre></div>
 <p>There is now content in <code>SimpleComponent</code>. When the application is run that content gets executed in the context of the parent component.  How?</p>
 <p>The answer is in <code>SimpleComponent</code>.   Remove the <code>[Parameter]</code> attribute from <code>SimpleComponent</code> and run the page.  It errors:</p>
 <pre><code class="language-Text">InvalidOperationException: Object of type 'xxx.SimpleComponent' has a property matching the name 'ChildContent', but it does not have [ParameterAttribute] or [CascadingParameterAttribute] applied.
 </code></pre>
 <p>If a component has &quot;content&quot; i.e. markup between the opening and closing tags, Blazor expects to find a <code>Parameter</code> named <code>ChildContent</code> in the component.  The content between the tags is pre-compiled into a <code>RenderFragment</code> and then added to the component.  The content of the <code>RenderFragment</code> is run in the context of the object that owns it - <code>SimplePage</code>.</p>
 <p>The content can also be defined like this:</p>
-<pre><code class="language-html">&lt;SimpleComponent&gt;
-    &lt;ChildContent&gt;
-        &lt;button class=&quot;btn btn-primary&quot; @onclick=&quot;ButtonClick&quot;&gt;
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+<span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">SimpleComponent</span><span style="color:#569CD6;">&gt;</span>
+    <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">ChildContent</span><span style="color:#569CD6;">&gt;</span>
+        <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">button</span> <span style="color:#FF0000;">class</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;btn btn-primary&quot; @onclick=&quot;ButtonClick&quot;</span><span style="color:#569CD6;">&gt;</span>
             Click Me
-        &lt;/button&gt;
-    &lt;/ChildContent&gt;
-&lt;/SimpleComponent&gt;
-</code></pre>
+        <span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">button</span><span style="color:#569CD6;">&gt;</span>
+    <span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">ChildContent</span><span style="color:#569CD6;">&gt;</span>
+<span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">SimpleComponent</span><span style="color:#569CD6;">&gt;</span>
+</pre></div>
 <p>The page can also be re-written as below, where it now becomes more obvious who owns the <code>RenderFragment</code>.</p>
-<pre><code class="language-csharp">@page &quot;/simple&quot;
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+@page <span style="color:#D69D85;">&quot;/simple&quot;</span>
 &lt;h3&gt;SimplePage&lt;/h3&gt;
-@if (loaded)
+@<span style="color:#569CD6;">if</span> (loaded)
 {
     &lt;SimpleComponent&gt;
         @_childContent
     &lt;/SimpleComponent&gt;
 }
-else
+<span style="color:#569CD6;">else</span>
 {
-    &lt;div class=&quot;h4 bg-danger text-white p-2&quot;&gt;Loading.....&lt;/div&gt;
+    &lt;div <span style="color:#569CD6;">class</span>=<span style="color:#D69D85;">&quot;h4 bg-danger text-white p-2&quot;</span>&gt;Loading.....&lt;/div&gt;
 }
 
 @code {
 
-    private bool loaded;
+    <span style="color:#569CD6;">private</span> <span style="color:#569CD6;">bool</span> loaded;
 
-    protected async override Task OnInitializedAsync()
+    <span style="color:#569CD6;">protected</span> <span style="color:#569CD6;">async</span> <span style="color:#569CD6;">override</span> Task OnInitializedAsync()
     {
-        await Task.Delay(2000);
-        loaded = true;
+        <span style="color:#569CD6;">await</span> Task.Delay(<span style="color:#B5CEA8;">2000</span>);
+        loaded = <span style="color:#569CD6;">true</span>;
     }
 
-    protected void ButtonClick(MouseEventArgs e)
+    <span style="color:#569CD6;">protected</span> <span style="color:#569CD6;">void</span> ButtonClick(MouseEventArgs e)
     {
-        var x = true;
+        <span style="color:#569CD6;">var</span> x = <span style="color:#569CD6;">true</span>;
     }
 
-    private RenderFragment _childContent =&gt; (builder) =&gt;
+    <span style="color:#569CD6;">private</span> RenderFragment _childContent =&gt; (builder) =&gt;
     {
-        builder.OpenElement(0, &quot;button&quot;);
-        builder.AddAttribute(1, &quot;class&quot;, &quot;btn btn-primary&quot;);
-        builder.AddAttribute(2, &quot;onclick&quot;, EventCallback.Factory.Create&lt;MouseEventArgs&gt;(this, ButtonClick));
-        builder.AddContent(3, &quot;Click Me&quot;);
+        builder.OpenElement(<span style="color:#B5CEA8;">0</span>, <span style="color:#D69D85;">&quot;button&quot;</span>);
+        builder.AddAttribute(<span style="color:#B5CEA8;">1</span>, <span style="color:#D69D85;">&quot;class&quot;</span>, <span style="color:#D69D85;">&quot;btn btn-primary&quot;</span>);
+        builder.AddAttribute(<span style="color:#B5CEA8;">2</span>, <span style="color:#D69D85;">&quot;onclick&quot;</span>, EventCallback.Factory.Create&lt;MouseEventArgs&gt;(<span style="color:#569CD6;">this</span>, ButtonClick));
+        builder.AddContent(<span style="color:#B5CEA8;">3</span>, <span style="color:#D69D85;">&quot;Click Me&quot;</span>);
         builder.CloseElement();
     };
 }
-</code></pre>
+</pre></div>
 <p>A component is not limited to a single <code>RenderFragment</code>.  A table component could look like this:</p>
-<pre><code class="language-html">&lt;TableComponent&gt;
-    &lt;Header&gt;
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+<span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">TableComponent</span><span style="color:#569CD6;">&gt;</span>
+    <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">Header</span><span style="color:#569CD6;">&gt;</span>
         ...
-    &lt;/Header&gt;
-    &lt;Rows&gt;
+    <span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">Header</span><span style="color:#569CD6;">&gt;</span>
+    <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">Rows</span><span style="color:#569CD6;">&gt;</span>
         ...
-    &lt;/Rows&gt;
-    &lt;Footer&gt;
+    <span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">Rows</span><span style="color:#569CD6;">&gt;</span>
+    <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">Footer</span><span style="color:#569CD6;">&gt;</span>
         ...
-    &lt;/Footer&gt;
-&lt;/TableComponent&gt;
-</code></pre>
-<h2 id="component-events">Component Events</h2>
+    <span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">Footer</span><span style="color:#569CD6;">&gt;</span>
+<span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">TableComponent</span><span style="color:#569CD6;">&gt;</span>
+</pre></div><h2 id="component-events">Component Events</h2>
 <p>The most important point to understand about Component events is they are <strong>NOT</strong> fire and forget.  All events are by default asynchronous and look like this:</p>
-<pre><code class="language-csharp">var task = InvokeAsync(HandlerMethod);
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+<span style="color:#569CD6;">var</span> task = InvokeAsync(HandlerMethod);
 StateHasChanged();
-if (!task.IsCompleted)
+<span style="color:#569CD6;">if</span> (!task.IsCompleted)
 {
-    await task;
+    <span style="color:#569CD6;">await</span> task;
     StateHasChanged();
 }
-</code></pre>
+</pre></div>
 <p>So the following code won't execute as expected:</p>
-<pre><code class="language-csharp">void async ButtonClick(MouseEventArgs e) 
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+<span style="color:#569CD6;">void</span> <span style="color:#569CD6;">async</span> ButtonClick(MouseEventArgs e) 
 {
-  await Task.Delay(2000);
+  <span style="color:#569CD6;">await</span> Task.Delay(<span style="color:#B5CEA8;">2000</span>);
   UpdateADisplayProperty();
 }
-</code></pre>
+</pre></div>
 <p>The DisplayProperty doesn't display the current value until another <code>StateHasChanged</code> events occurs.  Why? ButtonClick doesn't return a <code>Task</code>, so there's nothing for the event handler to wait on.  It runs <code>StateHasChanged</code> before <code>UpdateADisplayProperty</code> completes.</p>
 <p>This is a bandaid fix - it's bad pactice.</p>
-<pre><code class="language-csharp">void async ButtonClick(MouseEventArgs e) 
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+<span style="color:#569CD6;">void</span> <span style="color:#569CD6;">async</span> ButtonClick(MouseEventArgs e) 
 {
-  await Task.Delay(2000);
+  <span style="color:#569CD6;">await</span> Task.Delay(<span style="color:#B5CEA8;">2000</span>);
   UpdateADisplayProperty();
   StateHasChanged();
 }
-</code></pre>
+</pre></div>
 <p>The correct solution is:</p>
-<pre><code class="language-csharp">Task async ButtonClick(MouseEventArgs e) 
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+Task <span style="color:#569CD6;">async</span> ButtonClick(MouseEventArgs e) 
 {
-  await Task.Delay(2000);
+  <span style="color:#569CD6;">await</span> Task.Delay(<span style="color:#B5CEA8;">2000</span>);
   UpdateADisplayProperty();
 }
-</code></pre>
+</pre></div>
 <p>Now the event handle has a <code>Task</code> to await and doesn't execute <code>StateHasChanged</code> until <code>ButtonClick</code> completes.</p>
 <h2 id="some-important-less-documented-information-and-lessons-learned">Some Important Less Documented Information and Lessons Learned</h2>
 <h3 id="keep-parameter-properties-simple">Keep Parameter Properties Simple</h3>
 <p>Your parameter declarations should look like this:</p>
-<pre><code class="language-csharp">[Parameter] MyClass myClass {get; set;}
-</code></pre>
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+[Parameter] MyClass myClass {<span style="color:#569CD6;">get</span>; <span style="color:#569CD6;">set</span>;}
+</pre></div>
 <p><strong>DON'T</strong> add code to the getter or setter.  Why?  Any setter must be run as part of the render process and can have a significant impact on render speed and component state.</p>
 <h3 id="overriding-setparametersasync">Overriding SetParametersAsync</h3>
 <p>If you override <code>SetParametersAsync</code> your method should look like this:</p>
-<pre><code class="language-csharp">    public override Task SetParametersAsync(ParameterView parameters)
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+    <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">override</span> Task SetParametersAsync(ParameterView parameters)
     {
-        // always call first
-        parameters.SetParameterProperties(this);
-        // Your Code
+        <span style="color:#57A64A;">// always call first</span>
+        parameters.SetParameterProperties(<span style="color:#569CD6;">this</span>);
+        <span style="color:#57A64A;">// Your Code</span>
         .....
-        // pass an empty ParameterView, not parameters
-        return base.SetParametersAsync(ParameterView.Empty);
+        <span style="color:#57A64A;">// pass an empty ParameterView, not parameters</span>
+        <span style="color:#569CD6;">return</span> <span style="color:#569CD6;">base</span>.SetParametersAsync(ParameterView.Empty);
     }
-</code></pre>
+</pre></div>
 <p>Set the parameters in the first line and call the base method passing <code>ParameterView.Empty</code>.  Don't try to pass <code>parameters</code> - you will get an error.</p>
 <h3 id="treat-parameters-as-immutable">Treat Parameters as Immutable</h3>
 <p>Never set Parameters in your code.  If you want to make or track changes do this:</p>
-<pre><code class="language-csharp">    [Parameter] public int MyParameter { get; set; }
-    private int _MyParameter;
-    public event EventHandler MyParameterChanged;
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+    [Parameter] <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">int</span> MyParameter { <span style="color:#569CD6;">get</span>; <span style="color:#569CD6;">set</span>; }
+    <span style="color:#569CD6;">private</span> <span style="color:#569CD6;">int</span> _MyParameter;
+    <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">event</span> EventHandler MyParameterChanged;
 
-    public async override Task SetParametersAsync(ParameterView parameters)
+    <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">async</span> <span style="color:#569CD6;">override</span> Task SetParametersAsync(ParameterView parameters)
     {
-        parameters.SetParameterProperties(this);
-        if (!_MyParameter.Equals(MyParameter))
+        parameters.SetParameterProperties(<span style="color:#569CD6;">this</span>);
+        <span style="color:#569CD6;">if</span> (!_MyParameter.Equals(MyParameter))
         {
             _MyParameter = MyParameter;
             MyParameterChanged?.Invoke(_MyParameter, EventArgs.Empty);
         }
-        await base.SetParametersAsync(ParameterView.Empty);
+        <span style="color:#569CD6;">await</span> <span style="color:#569CD6;">base</span>.SetParametersAsync(ParameterView.Empty);
     }
-</code></pre>
-<h3 id="iterators">Iterators</h3>
+</pre></div><h3 id="iterators">Iterators</h3>
 <p>A common problem occurs when a <code>For</code> iterator is used to loop through a collection to build a <code>select</code> or a data table.  A typical example is shown below:</p>
-<pre><code class="language-csharp">@for (var counter = 0; counter &lt; this.myList.Count; counter++)
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+@<span style="color:#569CD6;">for</span> (<span style="color:#569CD6;">var</span> counter = <span style="color:#B5CEA8;">0</span>; counter &lt; <span style="color:#569CD6;">this</span>.myList.Count; counter++)
 {
-    &lt;button class=&quot;btn btn-dark m-3&quot; @onclick=&quot;() =&gt; ButtonClick(this.myList[counter])&quot;&gt;@this.myList[counter]&lt;/button&gt;
+    &lt;button <span style="color:#569CD6;">class</span>=<span style="color:#D69D85;">&quot;btn btn-dark m-3&quot;</span> @onclick=<span style="color:#D69D85;">&quot;() =&gt; ButtonClick(this.myList[counter])&quot;</span>&gt;@<span style="color:#569CD6;">this</span>.myList[counter]&lt;/button&gt;
 }
-@for (var counter = 0; counter &lt; this.myList.Count; counter++)
+@<span style="color:#569CD6;">for</span> (<span style="color:#569CD6;">var</span> counter = <span style="color:#B5CEA8;">0</span>; counter &lt; <span style="color:#569CD6;">this</span>.myList.Count; counter++)
 {
-    &lt;button class=&quot;btn btn-dark m-3&quot; @onclick=&quot;() =&gt; ButtonClick(counter)&quot;&gt;@this.myList[counter]&lt;/button&gt;
+    &lt;button <span style="color:#569CD6;">class</span>=<span style="color:#D69D85;">&quot;btn btn-dark m-3&quot;</span> @onclick=<span style="color:#D69D85;">&quot;() =&gt; ButtonClick(counter)&quot;</span>&gt;@<span style="color:#569CD6;">this</span>.myList[counter]&lt;/button&gt;
 }
-&lt;div&gt;Value = @this.value &lt;/div&gt;
+&lt;div&gt;Value = @<span style="color:#569CD6;">this</span>.value &lt;/div&gt;
 
 @code {
-    private List&lt;int&gt; myList =&gt; new List&lt;int&gt; { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
-    private int value;
+    <span style="color:#569CD6;">private</span> List&lt;<span style="color:#569CD6;">int</span>&gt; myList =&gt; <span style="color:#569CD6;">new</span> List&lt;<span style="color:#569CD6;">int</span>&gt; { <span style="color:#B5CEA8;">1</span>, <span style="color:#B5CEA8;">2</span>, <span style="color:#B5CEA8;">3</span>, <span style="color:#B5CEA8;">4</span>, <span style="color:#B5CEA8;">5</span>, <span style="color:#B5CEA8;">6</span>, <span style="color:#B5CEA8;">7</span>, <span style="color:#B5CEA8;">8</span>, <span style="color:#B5CEA8;">9</span>, <span style="color:#B5CEA8;">10</span> };
+    <span style="color:#569CD6;">private</span> <span style="color:#569CD6;">int</span> value;
 
-    private Task ButtonClick(int value)
+    <span style="color:#569CD6;">private</span> Task ButtonClick(<span style="color:#569CD6;">int</span> value)
     {
-        this.value = value;
-        return Task.CompletedTask;
+        <span style="color:#569CD6;">this</span>.value = value;
+        <span style="color:#569CD6;">return</span> Task.CompletedTask;
     }
 }
-</code></pre>
+</pre></div>
 <p>If you click on a button in the first row, you will get a <em>Index was out of range</em> error.  Click on a button in the second row and value is always 10.  The reason is that the interator has completed before you click a button, at which time <code>counter</code> is 10.</p>
 <p>To fix the problem, set a local variable within the loop as shown below.</p>
-<pre><code class="language-csharp">@for (var counter = 0; counter &lt; this.myList.Count; counter++)
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+@<span style="color:#569CD6;">for</span> (<span style="color:#569CD6;">var</span> counter = <span style="color:#B5CEA8;">0</span>; counter &lt; <span style="color:#569CD6;">this</span>.myList.Count; counter++)
 {
-    var item = this.myList[counter];
-    &lt;button class=&quot;btn btn-dark m-3&quot; @onclick=&quot;() =&gt; ButtonClick(item)&quot;&gt;@item&lt;/button&gt;
+    <span style="color:#569CD6;">var</span> item = <span style="color:#569CD6;">this</span>.myList[counter];
+    &lt;button <span style="color:#569CD6;">class</span>=<span style="color:#D69D85;">&quot;btn btn-dark m-3&quot;</span> @onclick=<span style="color:#D69D85;">&quot;() =&gt; ButtonClick(item)&quot;</span>&gt;@item&lt;/button&gt;
 }
-@for (var counter = 0; counter &lt; this.myList.Count; counter++)
+@<span style="color:#569CD6;">for</span> (<span style="color:#569CD6;">var</span> counter = <span style="color:#B5CEA8;">0</span>; counter &lt; <span style="color:#569CD6;">this</span>.myList.Count; counter++)
 {
-    var item = this.myList[counter];
-    var thiscount = counter;
-    &lt;button class=&quot;btn btn-info m-3&quot; @onclick=&quot;() =&gt; ButtonClick(thiscount)&quot;&gt;@item&lt;/button&gt;
+    <span style="color:#569CD6;">var</span> item = <span style="color:#569CD6;">this</span>.myList[counter];
+    <span style="color:#569CD6;">var</span> thiscount = counter;
+    &lt;button <span style="color:#569CD6;">class</span>=<span style="color:#D69D85;">&quot;btn btn-info m-3&quot;</span> @onclick=<span style="color:#D69D85;">&quot;() =&gt; ButtonClick(thiscount)&quot;</span>&gt;@item&lt;/button&gt;
 }
-</code></pre>
+</pre></div>
 <p>The best solution is to use <code>ForEach</code>.</p>
-<pre><code class="language-csharp">@foreach  (var item in this.myList)
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+@<span style="color:#569CD6;">foreach</span>  (<span style="color:#569CD6;">var</span> item <span style="color:#569CD6;">in</span> <span style="color:#569CD6;">this</span>.myList)
 {
-    &lt;button class=&quot;btn btn-primary m-3&quot; @onclick=&quot;() =&gt; ButtonClick(item)&quot;&gt;@item&lt;/button&gt;
+    &lt;button <span style="color:#569CD6;">class</span>=<span style="color:#D69D85;">&quot;btn btn-primary m-3&quot;</span> @onclick=<span style="color:#D69D85;">&quot;() =&gt; ButtonClick(item)&quot;</span>&gt;@item&lt;/button&gt;
 }
-</code></pre>
-<h3 id="component-numbering">Component Numbering</h3>
+</pre></div><h3 id="component-numbering">Component Numbering</h3>
 <p>It's seems logical to use iterators to automate the numbering of component elements.  DON'T.  The numbering system is used by the diffing engine to decide which bits of the DOM need updating and which bits don't.  Numbering must be consistent within a <code>RenderFragment</code>.  You can use <code>OpenRegion</code> and <code>CloseRegion</code> to define a region with it's own number space.  <a href="https://gist.github.com/SteveSandersonMS/ec232992c2446ab9a0059dd0fbc5d0c3">See this gist for a more detailed explanation</a>.</p>
 <h2 id="building-components">Building Components</h2>
 <p>Components can be defined in three ways:</p>
@@ -659,53 +688,54 @@ if (!task.IsCompleted)
 </ol>
 <h5 id="all-in-one-razor-file">All in One Razor File</h5>
 <p>HelloWorld.razor</p>
-<pre><code class="language-html">&lt;div&gt;
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+<span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">div</span><span style="color:#569CD6;">&gt;</span>
 @HelloWorld
-&lt;/div&gt;
+<span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">div</span><span style="color:#569CD6;">&gt;</span>
 
 @code {
 [Parameter]
 public string HelloWorld {get; set;} = &quot;Hello?&quot;;
 }
-</code></pre>
-<h5 id="code-behind">Code Behind</h5>
+</pre></div><h5 id="code-behind">Code Behind</h5>
 <p>HelloWorld.razor</p>
-<pre><code class="language-html">@inherits ComponentBase
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+@inherits ComponentBase
 @namespace CEC.Blazor.Server.Pages
 
-&lt;div&gt;
+<span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">div</span><span style="color:#569CD6;">&gt;</span>
 @HelloWorld
-&lt;/div&gt;
-</code></pre>
+<span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">div</span><span style="color:#569CD6;">&gt;</span>
+</pre></div>
 <p>HelloWorld.razor.cs</p>
-<pre><code class="language-csharp">namespace CEC.Blazor.Server.Pages
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+<span style="color:#569CD6;">namespace</span> CEC.Blazor.Server.Pages
 {
-    public partial class HelloWorld : ComponentBase
+    <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">partial</span> <span style="color:#569CD6;">class</span> HelloWorld : ComponentBase
     {
         [Parameter]
-        public string HelloWorld {get; set;} = &quot;Hello?&quot;;
+        <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">string</span> HelloWorld {<span style="color:#569CD6;">get</span>; <span style="color:#569CD6;">set</span>;} = <span style="color:#D69D85;">&quot;Hello?&quot;</span>;
     }
 }
-</code></pre>
-<h5 id="c-class">C# Class</h5>
+</pre></div><h5 id="c-class">C# Class</h5>
 <p>HelloWorld.cs</p>
-<pre><code class="language-csharp">namespace CEC.Blazor.Server.Pages
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+<span style="color:#569CD6;">namespace</span> CEC.Blazor.Server.Pages
 {
-    public class HelloWorld : ComponentBase
+    <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">class</span> HelloWorld : ComponentBase
     {
         [Parameter]
-        public string HelloWorld {get; set;} = &quot;Hello?&quot;;
+        <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">string</span> HelloWorld {<span style="color:#569CD6;">get</span>; <span style="color:#569CD6;">set</span>;} = <span style="color:#D69D85;">&quot;Hello?&quot;</span>;
 
-        protected override void BuildRenderTree(RenderTreeBuilder builder)
+        <span style="color:#569CD6;">protected</span> <span style="color:#569CD6;">override</span> <span style="color:#569CD6;">void</span> BuildRenderTree(RenderTreeBuilder builder)
         {
-            builder.OpenElement(0, &quot;div&quot;);
-            builder.AddContent(1, (MarkupString)this._Content);
+            builder.OpenElement(<span style="color:#B5CEA8;">0</span>, <span style="color:#D69D85;">&quot;div&quot;</span>);
+            builder.AddContent(<span style="color:#B5CEA8;">1</span>, (MarkupString)<span style="color:#569CD6;">this</span>._Content);
             builder.CloseElement();
         }
     }
 }
-</code></pre>
-<h2 id="some-observations">Some Observations</h2>
+</pre></div><h2 id="some-observations">Some Observations</h2>
 <ol>
 <li><p>There's a tendency to pile too much code into <code>OnInitialized</code> and <code>OnInitializedAsync</code> and then use events to drive <code>StateHasChanged</code> updates in the component tree.  Get the relevant code into the right places in the lifecycle and you won't need the events.</p>
 </li>

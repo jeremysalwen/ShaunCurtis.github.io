@@ -87,25 +87,27 @@
 <h2 id="code-classes">Code Classes</h2>
 <h3 id="toast">Toast</h3>
 <p>First an <code>enum</code> for the message colour.  It uses Bootstrap nomenclature directly to make building Css strings simple.</p>
-<pre><code class="language-csharp">public enum MessageColour
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+<span style="color:#569CD6;">public</span> <span style="color:#569CD6;">enum</span> MessageColour
 {
     Primary, Secondary, Dark, Light, Success, Danger, Warning, Info
 }
-</code></pre>
+</pre></div>
 <p><code>Toast</code> is declared as a value object.  Once we've created an instance, we have no reason to change it.</p>
 <ol>
 <li>Toast is declared as a <code>record</code>.</li>
 <li>There are five public properties that are used by the UI to display the toast. All are declared as immutable  with <code>{ get; init; }</code>.</li>
 <li><code>TimeToBurn</code> uses <code>DateTimeOffset</code> to give time zone independent absolute time.</li>
 </ol>
-<pre><code class="language-csharp">public record Toast
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+<span style="color:#569CD6;">public</span> record Toast
 {
-    public Guid Id = Guid.NewGuid();
-    public string Title { get; init; } = string.Empty;
-    public string Message { get; init; } = string.Empty;
-    public MessageColour MessageColour { get; init; } = MessageColour.Primary;
-    public DateTimeOffset TimeToBurn { get; init; } = DateTimeOffset.Now.AddSeconds(30);
-</code></pre>
+    <span style="color:#569CD6;">public</span> Guid Id = Guid.NewGuid();
+    <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">string</span> Title { <span style="color:#569CD6;">get</span>; init; } = <span style="color:#569CD6;">string</span>.Empty;
+    <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">string</span> Message { <span style="color:#569CD6;">get</span>; init; } = <span style="color:#569CD6;">string</span>.Empty;
+    <span style="color:#569CD6;">public</span> MessageColour MessageColour { <span style="color:#569CD6;">get</span>; init; } = MessageColour.Primary;
+    <span style="color:#569CD6;">public</span> DateTimeOffset TimeToBurn { <span style="color:#569CD6;">get</span>; init; } = DateTimeOffset.Now.AddSeconds(<span style="color:#B5CEA8;">30</span>);
+</pre></div>
 <p>Next:</p>
 <ol>
 <li><code>Posted</code> is a object creation timestamp.</li>
@@ -113,26 +115,27 @@
 <li><code>elapsedTime</code> is used to build <code>ElapsedTimeText</code>.</li>
 <li><code>ElapsedTimeText</code> is used by the UI Component.</li>
 </ol>
-<pre><code class="language-csharp">public readonly DateTimeOffset Posted = DateTimeOffset.Now;
-public bool IsBurnt =&gt; TimeToBurn &lt; DateTimeOffset.Now;
-private TimeSpan elapsedTime =&gt; Posted - DateTimeOffset.Now;
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+<span style="color:#569CD6;">public</span> <span style="color:#569CD6;">readonly</span> DateTimeOffset Posted = DateTimeOffset.Now;
+<span style="color:#569CD6;">public</span> <span style="color:#569CD6;">bool</span> IsBurnt =&gt; TimeToBurn &lt; DateTimeOffset.Now;
+<span style="color:#569CD6;">private</span> TimeSpan elapsedTime =&gt; Posted - DateTimeOffset.Now;
 
-public string ElapsedTimeText =&gt;
-    elapsedTime.Seconds &gt; 60
-    ? $&quot;posted {-elapsedTime.Minutes} mins ago&quot;
-    : $&quot;posted {-elapsedTime.Seconds} secs ago&quot;;
-</code></pre>
+<span style="color:#569CD6;">public</span> <span style="color:#569CD6;">string</span> ElapsedTimeText =&gt;
+    elapsedTime.Seconds &gt; <span style="color:#B5CEA8;">60</span>
+    ? $<span style="color:#D69D85;">&quot;posted {-elapsedTime.Minutes} mins ago&quot;</span>
+    : $<span style="color:#D69D85;">&quot;posted {-elapsedTime.Seconds} secs ago&quot;</span>;
+</pre></div>
 <p>Finally a static constructor helper method.</p>
-<pre><code class="language-csharp">public static Toast NewToast(string title, string message, MessageColour messageColour, int secsToLive)
-    =&gt; new Toast
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+<span style="color:#569CD6;">public</span> <span style="color:#569CD6;">static</span> Toast NewToast(<span style="color:#569CD6;">string</span> title, <span style="color:#569CD6;">string</span> message, MessageColour messageColour, <span style="color:#569CD6;">int</span> secsToLive)
+    =&gt; <span style="color:#569CD6;">new</span> Toast
     {
         Title = title,
         Message = message,
         MessageColour = messageColour,
         TimeToBurn = DateTimeOffset.Now.AddSeconds(secsToLive)
     };
-</code></pre>
-<h3 id="toaster-service">Toaster Service</h3>
+</pre></div><h3 id="toaster-service">Toaster Service</h3>
 <p><code>ToasterService</code> is a Dependancy Injection service that holds and manages Toasts.  It has a private list to hold the toasts with add and clear methods.  There's a timer to trigger <code>ClearBurntToast</code> to clear out expired toasts and if necessary raise the <code>ToasterChanged</code> event.  It also raises the <code>ToasterTimerElapsed</code> event on each timer cycle.</p>
 <ol>
 <li>It's a standard class.</li>
@@ -140,90 +143,97 @@ public string ElapsedTimeText =&gt;
 <li>Has a read only private collection of <code>Toast</code> instances.  The list is managed internally.</li>
 <li>Has an internal timer that drives the classic service behaviour.</li>
 </ol>
-<pre><code class="language-csharp">public class ToasterService : IDisposable
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+<span style="color:#569CD6;">public</span> <span style="color:#569CD6;">class</span> ToasterService : IDisposable
 {
-    private readonly List&lt;Toast&gt; _toastList = new List&lt;Toast&gt;();
-    private System.Timers.Timer _timer = new System.Timers.Timer();
-</code></pre>
+    <span style="color:#569CD6;">private</span> <span style="color:#569CD6;">readonly</span> List&lt;Toast&gt; _toastList = <span style="color:#569CD6;">new</span> List&lt;Toast&gt;();
+    <span style="color:#569CD6;">private</span> System.Timers.Timer _timer = <span style="color:#569CD6;">new</span> System.Timers.Timer();
+</pre></div>
 <p>There are two public events that other services or UI components can subscribe to.</p>
 <ol>
 <li><code>ToasterChanged</code> is raised whenever the toast list is changed.</li>
 <li><code>ToasterTimerElapsed</code> is raised on each timer loop.</li>
 <li><code>HasToasts</code> is a simple status bool.</li>
 </ol>
-<pre><code class="language-csharp">
-    public event EventHandler? ToasterChanged;
-    public event EventHandler? ToasterTimerElapsed;
-    public bool HasToasts =&gt; _toastList.Count &gt; 0;
-</code></pre>
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+
+    <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">event</span> EventHandler? ToasterChanged;
+    <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">event</span> EventHandler? ToasterTimerElapsed;
+    <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">bool</span> HasToasts =&gt; _toastList.Count &gt; <span style="color:#B5CEA8;">0</span>;
+</pre></div>
 <p><code>ClearBurntToast</code> is our toast list management method.  It checks to see it there's any burnt toast.  It there is it clears them out and raises the <code>ToasterChanged</code> event.</p>
-<pre><code class="language-csharp">    private bool ClearBurntToast()
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+    <span style="color:#569CD6;">private</span> <span style="color:#569CD6;">bool</span> ClearBurntToast()
     {
-        var toastsToDelete = _toastList.Where(item =&gt; item.IsBurnt).ToList();
-        if (toastsToDelete is not null &amp;&amp; toastsToDelete.Count &gt; 0)
+        <span style="color:#569CD6;">var</span> toastsToDelete = _toastList.Where(item =&gt; item.IsBurnt).ToList();
+        <span style="color:#569CD6;">if</span> (toastsToDelete <span style="color:#569CD6;">is</span> not <span style="color:#569CD6;">null</span> &amp;&amp; toastsToDelete.Count &gt; <span style="color:#B5CEA8;">0</span>)
         {
             toastsToDelete.ForEach(toast =&gt; _toastList.Remove(toast));
-            this.ToasterChanged?.Invoke(this, EventArgs.Empty);
-            return true;
+            <span style="color:#569CD6;">this</span>.ToasterChanged?.Invoke(<span style="color:#569CD6;">this</span>, EventArgs.Empty);
+            <span style="color:#569CD6;">return</span> <span style="color:#569CD6;">true</span>;
         }
-        return false;
+        <span style="color:#569CD6;">return</span> <span style="color:#569CD6;">false</span>;
     }
-</code></pre>
+</pre></div>
 <p><code>TimerElapsed</code> is our event handler for the timer elapsed event.  It clears any burnt toast and raises the <code>ToasterTimerElapsed</code> event.</p>
-<pre><code class="language-csharp">    private void TimerElapsed(object? sender, ElapsedEventArgs e)
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+    <span style="color:#569CD6;">private</span> <span style="color:#569CD6;">void</span> TimerElapsed(<span style="color:#569CD6;">object</span>? sender, ElapsedEventArgs e)
     { 
-        this.ClearBurntToast();
-        this.ToasterTimerElapsed?.Invoke(this, EventArgs.Empty);
+        <span style="color:#569CD6;">this</span>.ClearBurntToast();
+        <span style="color:#569CD6;">this</span>.ToasterTimerElapsed?.Invoke(<span style="color:#569CD6;">this</span>, EventArgs.Empty);
     }
-</code></pre>
+</pre></div>
 <p>The constructor adds a welcome <code>Toast</code>, sets up the timer and registers the event handler.</p>
-<pre><code class="language-csharp">    public ToasterService()
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+    <span style="color:#569CD6;">public</span> ToasterService()
     {
-        AddToast(new Toast { Title = &quot;Welcome Toast&quot;, Message = &quot;Welcome to this Application.  I'll disappear after 15 seconds.&quot;, TTD = DateTimeOffset.Now.AddSeconds(10) });
-        _timer.Interval = 5000;
-        _timer.AutoReset = true;
-        _timer.Elapsed += this.TimerElapsed;
+        AddToast(<span style="color:#569CD6;">new</span> Toast { Title = <span style="color:#D69D85;">&quot;Welcome Toast&quot;</span>, Message = <span style="color:#D69D85;">&quot;Welcome to this Application.  I&#39;ll disappear after 15 seconds.&quot;</span>, TTD = DateTimeOffset.Now.AddSeconds(<span style="color:#B5CEA8;">10</span>) });
+        _timer.Interval = <span style="color:#B5CEA8;">5000</span>;
+        _timer.AutoReset = <span style="color:#569CD6;">true</span>;
+        _timer.Elapsed += <span style="color:#569CD6;">this</span>.TimerElapsed;
         _timer.Start();
     }
-</code></pre>
+</pre></div>
 <p>The <em>CRUD</em> type operations are self explanatory. Each calls <code>ClearBurntToast</code> to run the management method.</p>
-<pre><code class="language-csharp">
-    public List&lt;Toast&gt; GetToasts()
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+
+    <span style="color:#569CD6;">public</span> List&lt;Toast&gt; GetToasts()
     {
         ClearBurntToast();
-        return _toastList;
+        <span style="color:#569CD6;">return</span> _toastList;
     }
 
-    public void AddToast(Toast toast)
+    <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">void</span> AddToast(Toast toast)
     {
         _toastList.Add(toast);
-        // only raise the ToasterChanged event if it hasn't already been raised by ClearBurntToast
-        if (!this.ClearBurntToast())
-            this.ToasterChanged?.Invoke(this, EventArgs.Empty);
+        <span style="color:#57A64A;">// only raise the ToasterChanged event if it hasn&#39;t already been raised by ClearBurntToast</span>
+        <span style="color:#569CD6;">if</span> (!<span style="color:#569CD6;">this</span>.ClearBurntToast())
+            <span style="color:#569CD6;">this</span>.ToasterChanged?.Invoke(<span style="color:#569CD6;">this</span>, EventArgs.Empty);
     }
 
-    public void ClearToast(Toast toast)
+    <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">void</span> ClearToast(Toast toast)
     {
-        if (_toastList.Contains(toast))
+        <span style="color:#569CD6;">if</span> (_toastList.Contains(toast))
         {
             _toastList.Remove(toast);
-            // only raise the ToasterChanged event if it hasn't already been raised by ClearBurntToast
-            if (!this.ClearBurntToast())
-                this.ToasterChanged?.Invoke(this, EventArgs.Empty);
+            <span style="color:#57A64A;">// only raise the ToasterChanged event if it hasn&#39;t already been raised by ClearBurntToast</span>
+            <span style="color:#569CD6;">if</span> (!<span style="color:#569CD6;">this</span>.ClearBurntToast())
+                <span style="color:#569CD6;">this</span>.ToasterChanged?.Invoke(<span style="color:#569CD6;">this</span>, EventArgs.Empty);
         }
     }
-</code></pre>
+</pre></div>
 <p>Finally the <code>Dispose</code> method clears the timer event handler.</p>
-<pre><code class="language-csharp">    public void Dispose()
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+    <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">void</span> Dispose()
     {
-        if (_timer is not null)
+        <span style="color:#569CD6;">if</span> (_timer <span style="color:#569CD6;">is</span> not <span style="color:#569CD6;">null</span>)
         {
-            _timer.Elapsed += this.TimerElapsed;
+            _timer.Elapsed += <span style="color:#569CD6;">this</span>.TimerElapsed;
             _timer.Stop();
         }
     }
 }
-</code></pre>
+</pre></div>
 <p><code>ToasterService</code> can run as either a <code>Scoped</code> or <code>Singleton</code> service, depending on what you're want it to do.</p>
 <h3 id="toaster">Toaster</h3>
 <p><code>Toaster</code> is the UI component.</p>
@@ -233,21 +243,22 @@ public string ElapsedTimeText =&gt;
 <li><code>@_toastCss</code> gets the correct Css string for the message colour.</li>
 <li>The close <strong>X</strong> calls <code>this.ClearToast(toast)</code> to remove a toast.</li>
 </ol>
-<pre><code class="language-csharp">@implements IDisposable
-@if (this.toasterService.HasToasts)
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+@implements IDisposable
+@<span style="color:#569CD6;">if</span> (<span style="color:#569CD6;">this</span>.toasterService.HasToasts)
 {
-    &lt;div class=&quot;&quot;&gt;
-        &lt;div class=&quot;toast-container position-absolute top-0 end-0 mt-5 pt-5 pe-2&quot;&gt;
-            @foreach (var toast in this.toasterService.GetToasts())
+    &lt;div <span style="color:#569CD6;">class</span>=<span style="color:#D69D85;">&quot;&quot;</span>&gt;
+        &lt;div <span style="color:#569CD6;">class</span>=<span style="color:#D69D85;">&quot;toast-container position-absolute top-0 end-0 mt-5 pt-5 pe-2&quot;</span>&gt;
+            @<span style="color:#569CD6;">foreach</span> (<span style="color:#569CD6;">var</span> toast <span style="color:#569CD6;">in</span> <span style="color:#569CD6;">this</span>.toasterService.GetToasts())
             {
-                var _toastCss = toastCss(toast);
-                &lt;div class=&quot;toast show&quot; role=&quot;alert&quot; aria-live=&quot;assertive&quot; aria-atomic=&quot;true&quot;&gt;
-                    &lt;div class=&quot;toast-header @_toastCss&quot;&gt;
-                        &lt;strong class=&quot;me-auto&quot;&gt;@toast.Title&lt;/strong&gt;
-                        &lt;small class=&quot;@_toastCss&quot;&gt;@toast.ElapsedTimeText&lt;/small&gt;
-                        &lt;button type=&quot;button&quot; class=&quot;btn-close btn-close-white&quot; aria-label=&quot;Close&quot; @onclick=&quot;() =&gt; this.ClearToast(toast)&quot;&gt;&lt;/button&gt;
+                <span style="color:#569CD6;">var</span> _toastCss = toastCss(toast);
+                &lt;div <span style="color:#569CD6;">class</span>=<span style="color:#D69D85;">&quot;toast show&quot;</span> role=<span style="color:#D69D85;">&quot;alert&quot;</span> aria-live=<span style="color:#D69D85;">&quot;assertive&quot;</span> aria-atomic=<span style="color:#D69D85;">&quot;true&quot;</span>&gt;
+                    &lt;div <span style="color:#569CD6;">class</span>=<span style="color:#D69D85;">&quot;toast-header @_toastCss&quot;</span>&gt;
+                        &lt;strong <span style="color:#569CD6;">class</span>=<span style="color:#D69D85;">&quot;me-auto&quot;</span>&gt;@toast.Title&lt;/strong&gt;
+                        &lt;small <span style="color:#569CD6;">class</span>=<span style="color:#D69D85;">&quot;@_toastCss&quot;</span>&gt;@toast.ElapsedTimeText&lt;/small&gt;
+                        &lt;button type=<span style="color:#D69D85;">&quot;button&quot;</span> <span style="color:#569CD6;">class</span>=<span style="color:#D69D85;">&quot;btn-close btn-close-white&quot;</span> aria-label=<span style="color:#D69D85;">&quot;Close&quot;</span> @onclick=<span style="color:#D69D85;">&quot;() =&gt; this.ClearToast(toast)&quot;</span>&gt;&lt;/button&gt;
                     &lt;/div&gt;
-                    &lt;div class=&quot;toast-body&quot;&gt;
+                    &lt;div <span style="color:#569CD6;">class</span>=<span style="color:#D69D85;">&quot;toast-body&quot;</span>&gt;
                         @toast.Message
                     &lt;/div&gt;
                 &lt;/div&gt;
@@ -255,91 +266,95 @@ public string ElapsedTimeText =&gt;
         &lt;/div&gt;
     &lt;/div&gt;
 }
-</code></pre>
+</pre></div>
 <p>The code behind class:</p>
 <ol>
 <li>Inherits from <code>ComponentBase</code> and implements <code>IDisposable</code> to unhook event handlers.</li>
 <li>Injects the <code>ToasterService</code>.</li>
 <li>Creates a second null forgiving reference to the <code>ToasterService</code>.  We're in the nullable world, but the C# compiler doesn't know <code>ToasterService</code> can't be null, so we create a second null forgiving reference so we don't need to null forgive ever time we use the <code>ToasterService</code> instance.</li>
 </ol>
-<pre><code class="language-csharp">public partial class Toaster : ComponentBase, IDisposable
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+<span style="color:#569CD6;">public</span> <span style="color:#569CD6;">partial</span> <span style="color:#569CD6;">class</span> Toaster : ComponentBase, IDisposable
 {
-    [Inject] private ToasterService? _toasterService { get; set; }
+    [Inject] <span style="color:#569CD6;">private</span> ToasterService? _toasterService { <span style="color:#569CD6;">get</span>; <span style="color:#569CD6;">set</span>; }
 
-    private ToasterService toasterService =&gt; _toasterService!;
-</code></pre>
+    <span style="color:#569CD6;">private</span> ToasterService toasterService =&gt; _toasterService!;
+</pre></div>
 <p><code>ToastChanged</code> is the event handler for the <code>ToasterService</code> events.  It invokes <code>StateHasChanged</code> on the UI thread.</p>
-<pre><code class="language-csharp">    private void ToastChanged(object? sender, EventArgs e)
-        =&gt; this.InvokeAsync(this.StateHasChanged);
-</code></pre>
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+    <span style="color:#569CD6;">private</span> <span style="color:#569CD6;">void</span> ToastChanged(<span style="color:#569CD6;">object</span>? sender, EventArgs e)
+        =&gt; <span style="color:#569CD6;">this</span>.InvokeAsync(<span style="color:#569CD6;">this</span>.StateHasChanged);
+</pre></div>
 <p><code>OnInitialized</code> registers the two <code>ToasterService</code> events to <code>ToastChanged</code>, and <code>Dispose</code> removes them.</p>
-<pre><code class="language-csharp">    protected override void OnInitialized()
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+    <span style="color:#569CD6;">protected</span> <span style="color:#569CD6;">override</span> <span style="color:#569CD6;">void</span> OnInitialized()
     { 
-        this.toasterService.ToasterChanged += ToastChanged;
-        this.toasterService.ToasterTimerElapsed += ToastChanged;
+        <span style="color:#569CD6;">this</span>.toasterService.ToasterChanged += ToastChanged;
+        <span style="color:#569CD6;">this</span>.toasterService.ToasterTimerElapsed += ToastChanged;
     }
 
-    public void Dispose()
+    <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">void</span> Dispose()
     { 
-        this.toasterService.ToasterChanged -= ToastChanged;
-        this.toasterService.ToasterTimerElapsed -= ToastChanged;
+        <span style="color:#569CD6;">this</span>.toasterService.ToasterChanged -= ToastChanged;
+        <span style="color:#569CD6;">this</span>.toasterService.ToasterTimerElapsed -= ToastChanged;
     }
-</code></pre>
+</pre></div>
 <p>Finally <code>ClearToast</code> clears the selected toast from the service and <code>toastCss</code> gets the toast background colour.</p>
-<pre><code class="language-csharp">    private void ClearToast(Toast toast)
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+    <span style="color:#569CD6;">private</span> <span style="color:#569CD6;">void</span> ClearToast(Toast toast)
         =&gt; toasterService.ClearToast(toast);
 
-    private string toastCss(Toast toast)
+    <span style="color:#569CD6;">private</span> <span style="color:#569CD6;">string</span> toastCss(Toast toast)
     {
-        var colour = Enum.GetName(typeof(MessageColour), toast.MessageColour)?.ToLower();
-        return toast.MessageColour switch
+        <span style="color:#569CD6;">var</span> colour = Enum.GetName(<span style="color:#569CD6;">typeof</span>(MessageColour), toast.MessageColour)?.ToLower();
+        <span style="color:#569CD6;">return</span> toast.MessageColour <span style="color:#569CD6;">switch</span>
         {
-            MessageColour.Light =&gt; &quot;bg-light&quot;,
-            _ =&gt; $&quot;bg-{colour} text-white&quot;
+            MessageColour.Light =&gt; <span style="color:#D69D85;">&quot;bg-light&quot;</span>,
+            _ =&gt; $<span style="color:#D69D85;">&quot;bg-{colour} text-white&quot;</span>
         };
     }
 }
-</code></pre>
-<h2 id="implementing">Implementing</h2>
+</pre></div><h2 id="implementing">Implementing</h2>
 <ol>
 <li><p>Add <code>ToasterService</code> to the DI service container in Program.</p>
 </li>
 <li><p>Add the component to either <code>Layout</code> or <code>App</code> or wherever you wish to use it.</p>
 </li>
 </ol>
-<pre><code class="language-xml">&lt;CascadingAuthenticationState&gt;
-    &lt;Router AppAssembly=&quot;@typeof(App).Assembly&quot; PreferExactMatches=&quot;@true&quot;&gt;
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+<span style="color:#808080;">&lt;</span><span style="color:#E6E6E6;">CascadingAuthenticationState</span><span style="color:#808080;">&gt;</span>
+    <span style="color:#808080;">&lt;</span><span style="color:#E6E6E6;">Router</span> <span style="color:#92CAF4;">AppAssembly</span><span style="color:#808080;">=</span><span style="color:#569CD6;">&quot;</span><span style="color:#569CD6;">@typeof(App).Assembly</span><span style="color:#569CD6;">&quot;</span> <span style="color:#92CAF4;">PreferExactMatches</span><span style="color:#808080;">=</span><span style="color:#569CD6;">&quot;</span><span style="color:#569CD6;">@true</span><span style="color:#569CD6;">&quot;</span><span style="color:#808080;">&gt;</span>
     ....
-    &lt;/Router&gt;
-&lt;/CascadingAuthenticationState&gt;
-&lt;Toaster /&gt;
-</code></pre>
+    <span style="color:#808080;">&lt;/</span><span style="color:#E6E6E6;">Router</span><span style="color:#808080;">&gt;</span>
+<span style="color:#808080;">&lt;/</span><span style="color:#E6E6E6;">CascadingAuthenticationState</span><span style="color:#808080;">&gt;</span>
+<span style="color:#808080;">&lt;</span><span style="color:#E6E6E6;">Toaster</span> <span style="color:#808080;">/&gt;</span>
+</pre></div>
 <ol start="3">
 <li>Inject the service into any pages where you want to raise toasts, and call <code>AddToast</code>.  The example below shows a demo <code>Index</code> page.</li>
 </ol>
-<pre><code class="language-csharp">@page &quot;/&quot;
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+@page <span style="color:#D69D85;">&quot;/&quot;</span>
 
 &lt;PageTitle&gt;Index&lt;/PageTitle&gt;
 
 &lt;h1&gt;Hello, world!&lt;/h1&gt;
 
-Welcome to your new app.
+Welcome to your <span style="color:#569CD6;">new</span> app.
 
-&lt;SurveyPrompt Title=&quot;How is Blazor working for you?&quot; /&gt;
-&lt;div class=&quot;m-2 p-2&quot;&gt;
-    &lt;button class=&quot;btn btn-primary&quot; @onclick=&quot;AddToast&quot; &gt;Add a Toast&lt;/button&gt;
+&lt;SurveyPrompt Title=<span style="color:#D69D85;">&quot;How is Blazor working for you?&quot;</span> /&gt;
+&lt;div <span style="color:#569CD6;">class</span>=<span style="color:#D69D85;">&quot;m-2 p-2&quot;</span>&gt;
+    &lt;button <span style="color:#569CD6;">class</span>=<span style="color:#D69D85;">&quot;btn btn-primary&quot;</span> @onclick=<span style="color:#D69D85;">&quot;AddToast&quot;</span> &gt;Add a Toast&lt;/button&gt;
 &lt;/div&gt;
 
 @code {
-    [Inject] private ToasterService? _toasterService {get; set;}
+    [Inject] <span style="color:#569CD6;">private</span> ToasterService? _toasterService {<span style="color:#569CD6;">get</span>; <span style="color:#569CD6;">set</span>;}
     
-    private ToasterService toasterService =&gt; _toasterService!;
+    <span style="color:#569CD6;">private</span> ToasterService toasterService =&gt; _toasterService!;
 
-    private void AddToast()
-    =&gt; toasterService.AddToast(Toast.NewToast(&quot;Hello World&quot;, &quot;Hello from Blazor&quot;, MessageColour.Info, 30));
+    <span style="color:#569CD6;">private</span> <span style="color:#569CD6;">void</span> AddToast()
+    =&gt; toasterService.AddToast(Toast.NewToast(<span style="color:#D69D85;">&quot;Hello World&quot;</span>, <span style="color:#D69D85;">&quot;Hello from Blazor&quot;</span>, MessageColour.Info, <span style="color:#B5CEA8;">30</span>));
 }
-</code></pre>
-<h2 id="wrap-up">Wrap Up</h2>
+</pre></div><h2 id="wrap-up">Wrap Up</h2>
 <p>The design demonstrates a clean separation of data from UI.  All data handling happens in <code>ToasterService</code>.  <code>Toaster</code> uses references to the data objects in <code>ToasterService</code>.</p>
 <p>The Blazor notification pattern is used to update the UI whenever the toast list changes.  <code>Toaster</code> registers an event handler with the two <code>ToasterService</code> events which re-renders the component whenever an event occurs.</p>
 <p><code>Toaster</code> demonstrates how to show and hide UI markup based on state.</p>

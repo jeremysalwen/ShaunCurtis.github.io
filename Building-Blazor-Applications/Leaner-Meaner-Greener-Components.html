@@ -97,21 +97,23 @@
 <p>Do you really write lean, mean, green code?</p>
 <p>Let me illustrate my point.</p>
 <p>Here's a &quot;simple&quot; component.  It's a Bootstrap container.</p>
-<pre><code class="language-csharp">&lt;div class=&quot;container&quot;&gt;
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+&lt;div <span style="color:#569CD6;">class</span>=<span style="color:#D69D85;">&quot;container&quot;</span>&gt;
     @ChildContent
 &lt;/div&gt;
 @code {
-    [Parameter] public RenderFragment? ChildContent { get; set; }
+    [Parameter] <span style="color:#569CD6;">public</span> RenderFragment? ChildContent { <span style="color:#569CD6;">get</span>; <span style="color:#569CD6;">set</span>; }
 }
-</code></pre>
+</pre></div>
 <p>Looks very simple and would probably pass code review.</p>
 <p>Now take a look at this?  I haven't shown you the 150+ lines - I don't want TLDR!</p>
-<pre><code class="language-csharp">public abstract class ComponentBase : IComponent, IHandleEvent, IHandleAfterRender
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+<span style="color:#569CD6;">public</span> <span style="color:#569CD6;">abstract</span> <span style="color:#569CD6;">class</span> ComponentBase : IComponent, IHandleEvent, IHandleAfterRender
 {
-    // 150+ lines
-    // See Appendix for the 150+ lines
+    <span style="color:#57A64A;">// 150+ lines</span>
+    <span style="color:#57A64A;">// See Appendix for the 150+ lines</span>
 }
-</code></pre>
+</pre></div>
 <p>This is what the above component really looks like.  Do you think this would pass code review?</p>
 <h2 id="so-why-does-everyone-use-componentbase">So why does everyone use ComponentBase?</h2>
 <p>Never thought about it, asked the right questions, lazy, don't know any better.  Component library suppliers - no idea, there are plenty of clever people around in those organisations.  They may display green credentials, but every time one of their components gets rendered it burning more energy that it should.</p>
@@ -122,10 +124,11 @@
 </blockquote>
 <p>I don't think the author of that comment ever expected <code>ComponentBase</code> to dominate the Blazor UI.  Look across the component landscape and see if you can spot any different base classes.</p>
 <p>Here are the base classes for two of the popular Blazor libraries available on the market:</p>
-<pre><code class="language-csharp">public class RadzenComponent : ComponentBase, IDisposable
-</code></pre>
-<pre><code class="language-csharp">public abstract class MudComponentBase : ComponentBase
-</code></pre>
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+<span style="color:#569CD6;">public</span> <span style="color:#569CD6;">class</span> RadzenComponent : ComponentBase, IDisposable
+</pre></div><div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+<span style="color:#569CD6;">public</span> <span style="color:#569CD6;">abstract</span> <span style="color:#569CD6;">class</span> MudComponentBase : ComponentBase
+</pre></div>
 <p>Good developers who understand <code>ComponentBase</code> are questioning component usage. They believe simple components are too <strong>expensive</strong>.  They have too much overhead and carry too much baggage.  They write repetitive code to avoid building too many components into a page.</p>
 <p>My answer: Don't throw away the component: write base components that are fit for purpose.</p>
 <p>I have two principle base components.  They are based on what I call the <strong>Lean Mean Green Component</strong> - LMGC from now on - that I'll cover in detail below.</p>
@@ -135,8 +138,9 @@
 <h3 id="manage-parameter-changes">Manage Parameter Changes</h3>
 <p>When a component is rendered, the renderer must decide whether any child components need re-rendering.  It manages a component's parameter state though a <code>ParametersView</code> object.  It checks if any child component parameters have changed, and if so, calls <code>SetParametersAsync</code> passing in the <code>ParametersView</code> object.</p>
 <p>The first line of <code>SetParametersAsync</code> uses the <code>ParametersView</code> to set the component's parameters.</p>
-<pre><code class="language-csharp">        parameters.SetParameterProperties(this);
-</code></pre>
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+        parameters.SetParameterProperties(<span style="color:#569CD6;">this</span>);
+</pre></div>
 <p>There are two issues with this process.  Neither are simple to address:</p>
 <ol>
 <li><p>Setting the parameters is expensive exercise because <code>ParameterView</code> uses reflection to find and assign the parameter values.</p>
@@ -145,35 +149,36 @@
 </li>
 </ol>
 <p>Here's the code:</p>
-<pre><code class="language-csharp">public static bool MayHaveChanged&lt;T1, T2&gt;(T1 oldValue, T2 newValue)
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+<span style="color:#569CD6;">public</span> <span style="color:#569CD6;">static</span> <span style="color:#569CD6;">bool</span> MayHaveChanged&lt;T1, T2&gt;(T1 oldValue, T2 newValue)
 {
-    var oldIsNotNull = oldValue != null;
-    var newIsNotNull = newValue != null;
+    <span style="color:#569CD6;">var</span> oldIsNotNull = oldValue != <span style="color:#569CD6;">null</span>;
+    <span style="color:#569CD6;">var</span> newIsNotNull = newValue != <span style="color:#569CD6;">null</span>;
 
-    // Only one is null so different
-    if (oldIsNotNull != newIsNotNull)
-        return true;
+    <span style="color:#57A64A;">// Only one is null so different</span>
+    <span style="color:#569CD6;">if</span> (oldIsNotNull != newIsNotNull)
+        <span style="color:#569CD6;">return</span> <span style="color:#569CD6;">true</span>;
 
-    var oldValueType = oldValue!.GetType();
-    var newValueType = newValue!.GetType();
+    <span style="color:#569CD6;">var</span> oldValueType = oldValue!.GetType();
+    <span style="color:#569CD6;">var</span> newValueType = newValue!.GetType();
 
-    if (oldValueType != newValueType)
-        return true;
+    <span style="color:#569CD6;">if</span> (oldValueType != newValueType)
+        <span style="color:#569CD6;">return</span> <span style="color:#569CD6;">true</span>;
 
-    if (!IsKnownImmutableType(oldValueType))
-        return true;
+    <span style="color:#569CD6;">if</span> (!IsKnownImmutableType(oldValueType))
+        <span style="color:#569CD6;">return</span> <span style="color:#569CD6;">true</span>;
 
-    return !oldValue.Equals(newValue);
+    <span style="color:#569CD6;">return</span> !oldValue.Equals(newValue);
 }
 
-private static bool IsKnownImmutableType(Type type)
+<span style="color:#569CD6;">private</span> <span style="color:#569CD6;">static</span> <span style="color:#569CD6;">bool</span> IsKnownImmutableType(Type type)
     =&gt; type.IsPrimitive
-        || type == typeof(string)
-        || type == typeof(DateTime)
-        || type == typeof(Type)
-        || type == typeof(decimal)
-        || type == typeof(Guid);
-</code></pre>
+        || type == <span style="color:#569CD6;">typeof</span>(<span style="color:#569CD6;">string</span>)
+        || type == <span style="color:#569CD6;">typeof</span>(DateTime)
+        || type == <span style="color:#569CD6;">typeof</span>(Type)
+        || type == <span style="color:#569CD6;">typeof</span>(<span style="color:#569CD6;">decimal</span>)
+        || type == <span style="color:#569CD6;">typeof</span>(Guid);
+</pre></div>
 <p>Callbacks and RenderFragments are objects and always fail the <code>IsKnownImmutableType</code> test.</p>
 <p>My strategies are:</p>
 <ol>
@@ -185,32 +190,34 @@ private static bool IsKnownImmutableType(Type type)
 <h3 id="dont-render-when-you-dont-need-to">Don't Render when you don't need to</h3>
 <p>Yes, a double negative - you should only render a component when you need to.  Don't do it by default, which is what <code>ComponentBase</code> does.</p>
 <p>Here's the <code>ComponentBase</code> handler for UI events:</p>
-<pre><code class="language-csharp">Task IHandleEvent.HandleEventAsync(EventCallbackWorkItem callback, object? arg)
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+Task IHandleEvent.HandleEventAsync(EventCallbackWorkItem callback, <span style="color:#569CD6;">object</span>? arg)
 {
-    var task = callback.InvokeAsync(arg);
-    var shouldAwaitTask = task.Status != TaskStatus.RanToCompletion &amp;&amp;
+    <span style="color:#569CD6;">var</span> task = callback.InvokeAsync(arg);
+    <span style="color:#569CD6;">var</span> shouldAwaitTask = task.Status != TaskStatus.RanToCompletion &amp;&amp;
         task.Status != TaskStatus.Canceled;
 
     StateHasChanged();
 
-    return shouldAwaitTask ?
+    <span style="color:#569CD6;">return</span> shouldAwaitTask ?
         CallStateHasChangedOnAsyncCompletion(task) :
         Task.CompletedTask;
 }
-</code></pre>
+</pre></div>
 <p>If you don't implement <code>IHandleEvent</code> then you are repsonsible for calling <code>StateHasChanged</code> when you need to.</p>
 <h3 id="do-you-need-afterrender">Do You need AfterRender?</h3>
 <p><code>ComponentBase</code> implements a set of after render events.</p>
-<pre><code class="language-csharp">    Task IHandleAfterRender.OnAfterRenderAsync()
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+    Task IHandleAfterRender.OnAfterRenderAsync()
     {
-        var firstRender = !_hasCalledOnAfterRender;
-        _hasCalledOnAfterRender |= true;
+        <span style="color:#569CD6;">var</span> firstRender = !_hasCalledOnAfterRender;
+        _hasCalledOnAfterRender |= <span style="color:#569CD6;">true</span>;
 
         OnAfterRender(firstRender);
 
-        return OnAfterRenderAsync(firstRender);
+        <span style="color:#569CD6;">return</span> OnAfterRenderAsync(firstRender);
     }
-</code></pre>
+</pre></div>
 <p>Probably 99% of components don't need them.  So manually implement <code>IHandleAfterRender</code> on the rare occasions you need it.</p>
 <h2 id="our-lean.mean.green-components">Our Lean. Mean. Green Components</h2>
 <p>Based on what we've discussed above we can build a set of new base components.</p>
@@ -236,55 +243,55 @@ private static bool IsKnownImmutableType(Type type)
 <li>A <code>ChildContent</code> Parameter for component content.</li>
 </ol>
 <p><code>Hidden</code>/<code>hide</code> is built is at this level so it can be implemented efficiently in the component <code>renderFragment</code>.</p>
-<pre><code class="language-csharp">public abstract class UIBase : IComponent
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+<span style="color:#569CD6;">public</span> <span style="color:#569CD6;">abstract</span> <span style="color:#569CD6;">class</span> UIBase : IComponent
 {
-    protected RenderFragment renderFragment;
-    protected internal RenderHandle renderHandle;
-    protected bool hasPendingQueuedRender = false;
-    protected internal bool hasNeverRendered = true;
-    protected bool hide;
+    <span style="color:#569CD6;">protected</span> RenderFragment renderFragment;
+    <span style="color:#569CD6;">protected</span> <span style="color:#569CD6;">internal</span> RenderHandle renderHandle;
+    <span style="color:#569CD6;">protected</span> <span style="color:#569CD6;">bool</span> hasPendingQueuedRender = <span style="color:#569CD6;">false</span>;
+    <span style="color:#569CD6;">protected</span> <span style="color:#569CD6;">internal</span> <span style="color:#569CD6;">bool</span> hasNeverRendered = <span style="color:#569CD6;">true</span>;
+    <span style="color:#569CD6;">protected</span> <span style="color:#569CD6;">bool</span> hide;
 
-    [Parameter] public RenderFragment? ChildContent { get; set; }
+    [Parameter] <span style="color:#569CD6;">public</span> RenderFragment? ChildContent { <span style="color:#569CD6;">get</span>; <span style="color:#569CD6;">set</span>; }
 
-    [Parameter] public bool Hidden { get; set; } = false;
+    [Parameter] <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">bool</span> Hidden { <span style="color:#569CD6;">get</span>; <span style="color:#569CD6;">set</span>; } = <span style="color:#569CD6;">false</span>;
 
-    public UIBase()
+    <span style="color:#569CD6;">public</span> UIBase()
     {
         renderFragment = builder =&gt;
         {
-            hasPendingQueuedRender = false;
-            hasNeverRendered = false;
-            if (!(Hidden | hide))
+            hasPendingQueuedRender = <span style="color:#569CD6;">false</span>;
+            hasNeverRendered = <span style="color:#569CD6;">false</span>;
+            <span style="color:#569CD6;">if</span> (!(Hidden | hide))
                 BuildRenderTree(builder);
         };
     }
 
-    protected virtual void BuildRenderTree(RenderTreeBuilder builder) { }
+    <span style="color:#569CD6;">protected</span> <span style="color:#569CD6;">virtual</span> <span style="color:#569CD6;">void</span> BuildRenderTree(RenderTreeBuilder builder) { }
 
-    protected void StateHasChanged()
+    <span style="color:#569CD6;">protected</span> <span style="color:#569CD6;">void</span> StateHasChanged()
     {
-        if (hasPendingQueuedRender)
-            return;
+        <span style="color:#569CD6;">if</span> (hasPendingQueuedRender)
+            <span style="color:#569CD6;">return</span>;
 
-        hasPendingQueuedRender = true;
+        hasPendingQueuedRender = <span style="color:#569CD6;">true</span>;
         renderHandle.Render(renderFragment);
     }
 
-    protected void InvokeStateHasChanged()
+    <span style="color:#569CD6;">protected</span> <span style="color:#569CD6;">void</span> InvokeStateHasChanged()
         =&gt; renderHandle.Dispatcher.InvokeAsync(StateHasChanged);
 
-    public void Attach(RenderHandle renderHandle)
-        =&gt; this.renderHandle = renderHandle;
+    <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">void</span> Attach(RenderHandle renderHandle)
+        =&gt; <span style="color:#569CD6;">this</span>.renderHandle = renderHandle;
 
-    public virtual Task SetParametersAsync(ParameterView parameters)
+    <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">virtual</span> Task SetParametersAsync(ParameterView parameters)
     {
-        parameters.SetParameterProperties(this);
+        parameters.SetParameterProperties(<span style="color:#569CD6;">this</span>);
         StateHasChanged();
-        return Task.CompletedTask;
+        <span style="color:#569CD6;">return</span> Task.CompletedTask;
     }
 }
-</code></pre>
-<h3 id="uicomponentbase">UIComponentBase</h3>
+</pre></div><h3 id="uicomponentbase">UIComponentBase</h3>
 <p><code>UIComponentBase</code> adds a single lifefcycle event <code>OnParametersChangedAsync</code>.  It:</p>
 <ol>
 <li>Passes in a <code>bool</code> to indicate first render.</li>
@@ -296,80 +303,81 @@ private static bool IsKnownImmutableType(Type type)
 <li>Do everything you did in <code>OnInitialized{Async}</code> and <code>OnParametersSet{Async}</code>.</li>
 <li>Check what parameters have been set and decide if a render is necessary.</li>
 </ol>
-<pre><code class="language-csharp">public abstract class UIComponentBase : UIBase
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+<span style="color:#569CD6;">public</span> <span style="color:#569CD6;">abstract</span> <span style="color:#569CD6;">class</span> UIComponentBase : UIBase
 {
-    protected bool initialized;
+    <span style="color:#569CD6;">protected</span> <span style="color:#569CD6;">bool</span> initialized;
 
-    protected virtual ValueTask&lt;bool&gt; OnParametersChangedAsync(bool firstRender)
-        =&gt; ValueTask.FromResult(true);
+    <span style="color:#569CD6;">protected</span> <span style="color:#569CD6;">virtual</span> ValueTask&lt;<span style="color:#569CD6;">bool</span>&gt; OnParametersChangedAsync(<span style="color:#569CD6;">bool</span> firstRender)
+        =&gt; ValueTask.FromResult(<span style="color:#569CD6;">true</span>);
 
-    public override async Task SetParametersAsync(ParameterView parameters)
+    <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">override</span> <span style="color:#569CD6;">async</span> Task SetParametersAsync(ParameterView parameters)
     {
-        parameters.SetParameterProperties(this);
+        parameters.SetParameterProperties(<span style="color:#569CD6;">this</span>);
 
-        var dorender = await this.OnParametersChangedAsync(!initialized)
+        <span style="color:#569CD6;">var</span> dorender = <span style="color:#569CD6;">await</span> <span style="color:#569CD6;">this</span>.OnParametersChangedAsync(!initialized)
             || hasNeverRendered
             || !hasPendingQueuedRender;
 
-        if (dorender)
-            this.StateHasChanged();
+        <span style="color:#569CD6;">if</span> (dorender)
+            <span style="color:#569CD6;">this</span>.StateHasChanged();
 
-        this.initialized = true;
+        <span style="color:#569CD6;">this</span>.initialized = <span style="color:#569CD6;">true</span>;
     }
 }
-</code></pre>
-<h3 id="adding-automated-ui-rendering">Adding Automated UI Rendering</h3>
+</pre></div><h3 id="adding-automated-ui-rendering">Adding Automated UI Rendering</h3>
 <p>If you need automated UI rendering, implement <code>IHandleEvent</code>.</p>
 <p>For a single render:</p>
-<pre><code class="language-csharp">@implements IHandleEvent
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+@implements IHandleEvent
 
-//...
+<span style="color:#57A64A;">//...</span>
 @code {
-    public async Task HandleEventAsync(EventCallbackWorkItem callback, object? arg)
+    <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">async</span> Task HandleEventAsync(EventCallbackWorkItem callback, <span style="color:#569CD6;">object</span>? arg)
     {
-        await callback.InvokeAsync(arg);
+        <span style="color:#569CD6;">await</span> callback.InvokeAsync(arg);
         StateHasChanged();
     }
 }
-</code></pre>
+</pre></div>
 <p>For a double event:</p>
-<pre><code class="language-csharp">@implements IHandleEvent
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+@implements IHandleEvent
 
-//...
+<span style="color:#57A64A;">//...</span>
 @code {
-    public async Task HandleEventAsync(EventCallbackWorkItem callback, object? arg)
+    <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">async</span> Task HandleEventAsync(EventCallbackWorkItem callback, <span style="color:#569CD6;">object</span>? arg)
     {
-        var task = callback.InvokeAsync(arg);
-        if (task.Status != TaskStatus.RanToCompletion &amp;&amp; task.Status != TaskStatus.Canceled)
+        <span style="color:#569CD6;">var</span> task = callback.InvokeAsync(arg);
+        <span style="color:#569CD6;">if</span> (task.Status != TaskStatus.RanToCompletion &amp;&amp; task.Status != TaskStatus.Canceled)
         {
             StateHasChanged();
-            await task;
+            <span style="color:#569CD6;">await</span> task;
         }
         StateHasChanged();
     }
 }
-</code></pre>
-<h3 id="adding-onafterrender">Adding OnAfterRender</h3>
+</pre></div><h3 id="adding-onafterrender">Adding OnAfterRender</h3>
 <p>If you need to implement the <code>OnAfterRender</code> event, implement <code>IHandleAfterRender</code>.</p>
-<pre><code class="language-csharp">@implements IHandleAfterRender
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+@implements IHandleAfterRender
 
-//...
+<span style="color:#57A64A;">//...</span>
 
 @code {
-    private bool _hasCalledOnAfterRender;
+    <span style="color:#569CD6;">private</span> <span style="color:#569CD6;">bool</span> _hasCalledOnAfterRender;
 
-    public Task OnAfterRenderAsync()
+    <span style="color:#569CD6;">public</span> Task OnAfterRenderAsync()
     {
-        var firstRender = !_hasCalledOnAfterRender;
-        _hasCalledOnAfterRender |= true;
+        <span style="color:#569CD6;">var</span> firstRender = !_hasCalledOnAfterRender;
+        _hasCalledOnAfterRender |= <span style="color:#569CD6;">true</span>;
 
-        // your code here
+        <span style="color:#57A64A;">// your code here</span>
 
-        return Task.CompletedTask;
+        <span style="color:#569CD6;">return</span> Task.CompletedTask;
     }
 }
-</code></pre>
-<h2 id="render-cascades">Render Cascades</h2>
+</pre></div><h2 id="render-cascades">Render Cascades</h2>
 <p>One of the most important strategies to implement is avoiding render cascades.</p>
 <p>If you render a component with sub-components that have object parameters, the Renderer will call <code>SetParametersAsync</code> on the sub-components regardless of an real state change.  Unless you've implemented stop strategies in those components rendering will cascade down through the tree.</p>
 <p>The principle way to minimize this is:</p>
@@ -383,315 +391,315 @@ private static bool IsKnownImmutableType(Type type)
 <p>This demonstration shows how to rebuild the Counter page.</p>
 <h4 id="counterstate">CounterState</h4>
 <p>We need a state object to track the counter state.</p>
-<pre><code class="language-csharp">public class CounterState
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+<span style="color:#569CD6;">public</span> <span style="color:#569CD6;">class</span> CounterState
 {
-    public int Counter { get; private set; }
+    <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">int</span> Counter { <span style="color:#569CD6;">get</span>; <span style="color:#569CD6;">private</span> <span style="color:#569CD6;">set</span>; }
 
-    public Action&lt;int&gt;? CounterUpdated;
+    <span style="color:#569CD6;">public</span> Action&lt;<span style="color:#569CD6;">int</span>&gt;? CounterUpdated;
 
-    public void IncrementCounter()
+    <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">void</span> IncrementCounter()
     {
-        this.Counter++;
-        this.CounterUpdated?.Invoke(this.Counter);
+        <span style="color:#569CD6;">this</span>.Counter++;
+        <span style="color:#569CD6;">this</span>.CounterUpdated?.Invoke(<span style="color:#569CD6;">this</span>.Counter);
     }
 }
-</code></pre>
-<h4 id="countercomponent.razor">CounterComponent.razor</h4>
+</pre></div><h4 id="countercomponent.razor">CounterComponent.razor</h4>
 <p><code>CounterComponent</code> displays the Counter.  It inherits from <code>UIComponentBase</code> and implements <code>IDisposable</code>.</p>
 <p>It's a little more intricate than a standard component but is pretty self explanatory.</p>
-<pre><code class="language-csharp">@namespace Blazr.Components
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+@<span style="color:#569CD6;">namespace</span> Blazr.Components
 @implements IDisposable
 @inherits UIComponentBase
 
-&lt;div class=&quot;alert alert-info&quot;&gt;
-    @this.Counter
+&lt;div <span style="color:#569CD6;">class</span>=<span style="color:#D69D85;">&quot;alert alert-info&quot;</span>&gt;
+    @<span style="color:#569CD6;">this</span>.Counter
 &lt;/div&gt;
 
 @code {
-    [CascadingParameter] private CounterState State { get; set; } = default!;
-    private int Counter;
+    [CascadingParameter] <span style="color:#569CD6;">private</span> CounterState State { <span style="color:#569CD6;">get</span>; <span style="color:#569CD6;">set</span>; } = <span style="color:#569CD6;">default</span>!;
+    <span style="color:#569CD6;">private</span> <span style="color:#569CD6;">int</span> Counter;
 
-    protected override ValueTask&lt;bool&gt; OnParametersChangedAsync(bool firstRender)
+    <span style="color:#569CD6;">protected</span> <span style="color:#569CD6;">override</span> ValueTask&lt;<span style="color:#569CD6;">bool</span>&gt; OnParametersChangedAsync(<span style="color:#569CD6;">bool</span> firstRender)
     {
-        if (firstRender)
+        <span style="color:#569CD6;">if</span> (firstRender)
         {
-            if (this.State is null)
-                throw new NullReferenceException($&quot;State cannot be null in Component {this.GetType().Name}&quot;);
+            <span style="color:#569CD6;">if</span> (<span style="color:#569CD6;">this</span>.State <span style="color:#569CD6;">is</span> <span style="color:#569CD6;">null</span>)
+                <span style="color:#569CD6;">throw</span> <span style="color:#569CD6;">new</span> NullReferenceException($<span style="color:#D69D85;">&quot;State cannot be null in Component {this.GetType().Name}&quot;</span>);
 
-            this.State.CounterUpdated += this.OnCounterUpdated;
+            <span style="color:#569CD6;">this</span>.State.CounterUpdated += <span style="color:#569CD6;">this</span>.OnCounterUpdated;
         }
-        return ValueTask.FromResult(true);
+        <span style="color:#569CD6;">return</span> ValueTask.FromResult(<span style="color:#569CD6;">true</span>);
     }
 
-    private void OnCounterUpdated(int counter)
+    <span style="color:#569CD6;">private</span> <span style="color:#569CD6;">void</span> OnCounterUpdated(<span style="color:#569CD6;">int</span> counter)
     {
-        this.Counter = counter;
-        this.StateHasChanged();
+        <span style="color:#569CD6;">this</span>.Counter = counter;
+        <span style="color:#569CD6;">this</span>.StateHasChanged();
     }
 
-    public void Dispose()
-        =&gt; this.State.CounterUpdated -= this.OnCounterUpdated;
+    <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">void</span> Dispose()
+        =&gt; <span style="color:#569CD6;">this</span>.State.CounterUpdated -= <span style="color:#569CD6;">this</span>.OnCounterUpdated;
 }
-</code></pre>
-<h4 id="counter.razor">Counter.Razor</h4>
+</pre></div><h4 id="counter.razor">Counter.Razor</h4>
 <p><code>Counter</code> implements <code>UIBase</code>: it doesn't need the lifecycle event.  it creates an instance of <code>CounterState</code>, cascades it and updates it on the button click.  There are three instances of <code>CounterComponent</code> to demonstrate the multi-cast functionality of the event.</p>
 <p>I've left the old counter code in place so you can see that it no longer updates.  <code>IncrementCounter</code> no longer triggers a render of the route component, and therfore no longer triggers a render cascade.</p>
-<pre><code class="language-csharp">@page &quot;/counter&quot;
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+@page <span style="color:#D69D85;">&quot;/counter&quot;</span>
 @inherits UIBase
 &lt;PageTitle&gt;Counter&lt;/PageTitle&gt;
 
 &lt;h1&gt;Counter&lt;/h1&gt;
 
-&lt;p role=&quot;status&quot;&gt;Current count: @currentCount&lt;/p&gt;
-&lt;CascadingValue Value=&quot;this.counterState&quot;&gt;
+&lt;p role=<span style="color:#D69D85;">&quot;status&quot;</span>&gt;Current count: @currentCount&lt;/p&gt;
+&lt;CascadingValue Value=<span style="color:#D69D85;">&quot;this.counterState&quot;</span>&gt;
     &lt;CounterComponent /&gt;
     &lt;CounterComponent /&gt;
     &lt;CounterComponent /&gt;
 &lt;/CascadingValue&gt;
 
-&lt;button class=&quot;btn btn-primary&quot; @onclick=&quot;IncrementCount&quot;&gt;Click me&lt;/button&gt;
+&lt;button <span style="color:#569CD6;">class</span>=<span style="color:#D69D85;">&quot;btn btn-primary&quot;</span> @onclick=<span style="color:#D69D85;">&quot;IncrementCount&quot;</span>&gt;Click me&lt;/button&gt;
 
 @code {
-    private int currentCount = 0;
-    private CounterState counterState = new CounterState();
+    <span style="color:#569CD6;">private</span> <span style="color:#569CD6;">int</span> currentCount = <span style="color:#B5CEA8;">0</span>;
+    <span style="color:#569CD6;">private</span> CounterState counterState = <span style="color:#569CD6;">new</span> CounterState();
 
-    private void IncrementCount()
+    <span style="color:#569CD6;">private</span> <span style="color:#569CD6;">void</span> IncrementCount()
     {
         currentCount++;
-        this.counterState.IncrementCounter();
+        <span style="color:#569CD6;">this</span>.counterState.IncrementCounter();
     }
 }
-</code></pre>
-<h3 id="a-weather-record-viewer">A Weather Record Viewer</h3>
+</pre></div><h3 id="a-weather-record-viewer">A Weather Record Viewer</h3>
 <p>This demonstrates selective rendering in <code>SetParametersAsync</code>.  The forward and back buttons move up and down the record set and reload the route.  The component tracks the current record with <code>_id</code> and in <code>OnParametersChangedAsync</code> checks the updated parameter <code>Id</code>.  It only renders (returns true) when Id has changed.</p>
-<pre><code class="language-csharp">@page &quot;/WeatherView/{Id:int}&quot;
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+@page <span style="color:#D69D85;">&quot;/WeatherView/{Id:int}&quot;</span>
 @inherits UIComponentBase
 @inject NavigationManager NavManager
 
 &lt;h3&gt;WeatherViewer&lt;/h3&gt;
 
-&lt;div class=&quot;row mb-2&quot;&gt;
-    &lt;div class=&quot;col-3&quot;&gt;
+&lt;div <span style="color:#569CD6;">class</span>=<span style="color:#D69D85;">&quot;row mb-2&quot;</span>&gt;
+    &lt;div <span style="color:#569CD6;">class</span>=<span style="color:#D69D85;">&quot;col-3&quot;</span>&gt;
         Date
     &lt;/div&gt;
-    &lt;div class=&quot;col-3&quot;&gt;
-        @this.record.Date
+    &lt;div <span style="color:#569CD6;">class</span>=<span style="color:#D69D85;">&quot;col-3&quot;</span>&gt;
+        @<span style="color:#569CD6;">this</span>.record.Date
     &lt;/div&gt;
 &lt;/div&gt;
-&lt;div class=&quot;row mb-2&quot;&gt;
-    &lt;div class=&quot;col-3&quot;&gt;
+&lt;div <span style="color:#569CD6;">class</span>=<span style="color:#D69D85;">&quot;row mb-2&quot;</span>&gt;
+    &lt;div <span style="color:#569CD6;">class</span>=<span style="color:#D69D85;">&quot;col-3&quot;</span>&gt;
         Temperature &amp;deg;C
     &lt;/div&gt;
-    &lt;div class=&quot;col-3&quot;&gt;
-        @this.record.TemperatureC
+    &lt;div <span style="color:#569CD6;">class</span>=<span style="color:#D69D85;">&quot;col-3&quot;</span>&gt;
+        @<span style="color:#569CD6;">this</span>.record.TemperatureC
     &lt;/div&gt;
 &lt;/div&gt;
-&lt;div class=&quot;row mb-2&quot;&gt;
-    &lt;div class=&quot;col-3&quot;&gt;
+&lt;div <span style="color:#569CD6;">class</span>=<span style="color:#D69D85;">&quot;row mb-2&quot;</span>&gt;
+    &lt;div <span style="color:#569CD6;">class</span>=<span style="color:#D69D85;">&quot;col-3&quot;</span>&gt;
         Summary
     &lt;/div&gt;
-    &lt;div class=&quot;col-6&quot;&gt;
-        @this.record.Summary
+    &lt;div <span style="color:#569CD6;">class</span>=<span style="color:#D69D85;">&quot;col-6&quot;</span>&gt;
+        @<span style="color:#569CD6;">this</span>.record.Summary
     &lt;/div&gt;
 &lt;/div&gt;
-&lt;div class=&quot;m-2&quot;&gt;
-    &lt;button class=&quot;btn btn-dark&quot; @onclick=&quot;() =&gt; this.Move(-1)&quot;&gt;Previous&lt;/button&gt; 
-    &lt;button class=&quot;btn btn-primary&quot; @onclick=&quot;() =&gt; this.Move(1)&quot;&gt;Next&lt;/button&gt;
+&lt;div <span style="color:#569CD6;">class</span>=<span style="color:#D69D85;">&quot;m-2&quot;</span>&gt;
+    &lt;button <span style="color:#569CD6;">class</span>=<span style="color:#D69D85;">&quot;btn btn-dark&quot;</span> @onclick=<span style="color:#D69D85;">&quot;() =&gt; this.Move(-1)&quot;</span>&gt;Previous&lt;/button&gt; 
+    &lt;button <span style="color:#569CD6;">class</span>=<span style="color:#D69D85;">&quot;btn btn-primary&quot;</span> @onclick=<span style="color:#D69D85;">&quot;() =&gt; this.Move(1)&quot;</span>&gt;Next&lt;/button&gt;
 &lt;/div&gt;
 
 @code {
-    private int _id;
-    private WeatherForecast record = new();
+    <span style="color:#569CD6;">private</span> <span style="color:#569CD6;">int</span> _id;
+    <span style="color:#569CD6;">private</span> WeatherForecast record = <span style="color:#569CD6;">new</span>();
 
-    [Parameter] public int Id { get; set; } = 0;
+    [Parameter] <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">int</span> Id { <span style="color:#569CD6;">get</span>; <span style="color:#569CD6;">set</span>; } = <span style="color:#B5CEA8;">0</span>;
 
-    protected override async ValueTask&lt;bool&gt; OnParametersChangedAsync(bool firstRender)
+    <span style="color:#569CD6;">protected</span> <span style="color:#569CD6;">override</span> <span style="color:#569CD6;">async</span> ValueTask&lt;<span style="color:#569CD6;">bool</span>&gt; OnParametersChangedAsync(<span style="color:#569CD6;">bool</span> firstRender)
     {
-        var recordChanged = !this.Id.Equals(_id);
+        <span style="color:#569CD6;">var</span> recordChanged = !<span style="color:#569CD6;">this</span>.Id.Equals(_id);
 
-        if (recordChanged)
+        <span style="color:#569CD6;">if</span> (recordChanged)
         {
-            _id = this.Id;
-            this.record = await GetForecast(this.Id);
+            _id = <span style="color:#569CD6;">this</span>.Id;
+            <span style="color:#569CD6;">this</span>.record = <span style="color:#569CD6;">await</span> GetForecast(<span style="color:#569CD6;">this</span>.Id);
         }
 
-        return recordChanged;
+        <span style="color:#569CD6;">return</span> recordChanged;
     }
 
-    private static async ValueTask&lt;WeatherForecast&gt; GetForecast(int id)
+    <span style="color:#569CD6;">private</span> <span style="color:#569CD6;">static</span> <span style="color:#569CD6;">async</span> ValueTask&lt;WeatherForecast&gt; GetForecast(<span style="color:#569CD6;">int</span> id)
     {
-        await Task.Delay(100);
-        return new WeatherForecast
+        <span style="color:#569CD6;">await</span> Task.Delay(<span style="color:#B5CEA8;">100</span>);
+        <span style="color:#569CD6;">return</span> <span style="color:#569CD6;">new</span> WeatherForecast
             {
                 Date = DateOnly.FromDateTime(DateTime.Now.AddDays(id)),
                 TemperatureC = id,
-                Summary = &quot;Testing&quot;
+                Summary = <span style="color:#D69D85;">&quot;Testing&quot;</span>
             };
     }
 
-    private void Move(int value)
-        =&gt; this.NavManager.NavigateTo($&quot;/WeatherView/{_id + value}&quot;);
+    <span style="color:#569CD6;">private</span> <span style="color:#569CD6;">void</span> Move(<span style="color:#569CD6;">int</span> value)
+        =&gt; <span style="color:#569CD6;">this</span>.NavManager.NavigateTo($<span style="color:#D69D85;">&quot;/WeatherView/{_id + value}&quot;</span>);
 }
-</code></pre>
-<h2 id="conclusions">Conclusions</h2>
+</pre></div><h2 id="conclusions">Conclusions</h2>
 <p>If this article isn't a wake up call to serious Blazor developers to rethink the component, I've failed!</p>
 <p>What will it take to get out of the <code>ComponentBase</code> comfort zone.  Your building the whole UI on a jack-of-all-trades master-of-none base class.  It has just about everything thrown in to cover almost every eventuality.</p>
 <p>It's great to get you started.  Learn the ropes, look under the hood. Buth then move on.</p>
 <h2 id="appendix">Appendix</h2>
 <h3 id="componentbase">ComponentBase</h3>
 <p>This is the code that gets loaded with every component you build that inherits from <code>ComponentBase</code>.</p>
-<pre><code class="language-csharp">public abstract class ComponentBase : IComponent, IHandleEvent, IHandleAfterRender
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+<span style="color:#569CD6;">public</span> <span style="color:#569CD6;">abstract</span> <span style="color:#569CD6;">class</span> ComponentBase : IComponent, IHandleEvent, IHandleAfterRender
 {
-    private readonly RenderFragment _renderFragment;
-    private RenderHandle _renderHandle;
-    private bool _initialized;
-    private bool _hasNeverRendered = true;
-    private bool _hasPendingQueuedRender;
-    private bool _hasCalledOnAfterRender;
+    <span style="color:#569CD6;">private</span> <span style="color:#569CD6;">readonly</span> RenderFragment _renderFragment;
+    <span style="color:#569CD6;">private</span> RenderHandle _renderHandle;
+    <span style="color:#569CD6;">private</span> <span style="color:#569CD6;">bool</span> _initialized;
+    <span style="color:#569CD6;">private</span> <span style="color:#569CD6;">bool</span> _hasNeverRendered = <span style="color:#569CD6;">true</span>;
+    <span style="color:#569CD6;">private</span> <span style="color:#569CD6;">bool</span> _hasPendingQueuedRender;
+    <span style="color:#569CD6;">private</span> <span style="color:#569CD6;">bool</span> _hasCalledOnAfterRender;
 
-    public ComponentBase()
+    <span style="color:#569CD6;">public</span> ComponentBase()
     {
         _renderFragment = builder =&gt;
         {
-            _hasPendingQueuedRender = false;
-            _hasNeverRendered = false;
+            _hasPendingQueuedRender = <span style="color:#569CD6;">false</span>;
+            _hasNeverRendered = <span style="color:#569CD6;">false</span>;
             BuildRenderTree(builder);
         };
     }
 
-    protected virtual void BuildRenderTree(RenderTreeBuilder builder) { }
-    protected virtual void OnInitialized() { }
-    protected virtual Task OnInitializedAsync() =&gt; Task.CompletedTask;
-    protected virtual void OnParametersSet() { }
-    protected virtual Task OnParametersSetAsync() =&gt; Task.CompletedTask;
-    protected virtual bool ShouldRender() =&gt; true;
-    protected virtual void OnAfterRender(bool firstRender) { }
-    protected virtual Task OnAfterRenderAsync(bool firstRender) =&gt; Task.CompletedTask;
-    protected Task InvokeAsync(Action workItem) =&gt; _renderHandle.Dispatcher.InvokeAsync(workItem);
-    protected Task InvokeAsync(Func&lt;Task&gt; workItem) =&gt; _renderHandle.Dispatcher.InvokeAsync(workItem);
+    <span style="color:#569CD6;">protected</span> <span style="color:#569CD6;">virtual</span> <span style="color:#569CD6;">void</span> BuildRenderTree(RenderTreeBuilder builder) { }
+    <span style="color:#569CD6;">protected</span> <span style="color:#569CD6;">virtual</span> <span style="color:#569CD6;">void</span> OnInitialized() { }
+    <span style="color:#569CD6;">protected</span> <span style="color:#569CD6;">virtual</span> Task OnInitializedAsync() =&gt; Task.CompletedTask;
+    <span style="color:#569CD6;">protected</span> <span style="color:#569CD6;">virtual</span> <span style="color:#569CD6;">void</span> OnParametersSet() { }
+    <span style="color:#569CD6;">protected</span> <span style="color:#569CD6;">virtual</span> Task OnParametersSetAsync() =&gt; Task.CompletedTask;
+    <span style="color:#569CD6;">protected</span> <span style="color:#569CD6;">virtual</span> <span style="color:#569CD6;">bool</span> ShouldRender() =&gt; <span style="color:#569CD6;">true</span>;
+    <span style="color:#569CD6;">protected</span> <span style="color:#569CD6;">virtual</span> <span style="color:#569CD6;">void</span> OnAfterRender(<span style="color:#569CD6;">bool</span> firstRender) { }
+    <span style="color:#569CD6;">protected</span> <span style="color:#569CD6;">virtual</span> Task OnAfterRenderAsync(<span style="color:#569CD6;">bool</span> firstRender) =&gt; Task.CompletedTask;
+    <span style="color:#569CD6;">protected</span> Task InvokeAsync(Action workItem) =&gt; _renderHandle.Dispatcher.InvokeAsync(workItem);
+    <span style="color:#569CD6;">protected</span> Task InvokeAsync(Func&lt;Task&gt; workItem) =&gt; _renderHandle.Dispatcher.InvokeAsync(workItem);
 
-    protected void StateHasChanged()
+    <span style="color:#569CD6;">protected</span> <span style="color:#569CD6;">void</span> StateHasChanged()
     {
-        if (_hasPendingQueuedRender)
-            return;
+        <span style="color:#569CD6;">if</span> (_hasPendingQueuedRender)
+            <span style="color:#569CD6;">return</span>;
 
-        if (_hasNeverRendered || ShouldRender() || _renderHandle.IsRenderingOnMetadataUpdate)
+        <span style="color:#569CD6;">if</span> (_hasNeverRendered || ShouldRender() || _renderHandle.IsRenderingOnMetadataUpdate)
         {
-            _hasPendingQueuedRender = true;
+            _hasPendingQueuedRender = <span style="color:#569CD6;">true</span>;
 
-            try
+            <span style="color:#569CD6;">try</span>
             {
                 _renderHandle.Render(_renderFragment);
             }
-            catch
+            <span style="color:#569CD6;">catch</span>
             {
-                _hasPendingQueuedRender = false;
-                throw;
+                _hasPendingQueuedRender = <span style="color:#569CD6;">false</span>;
+                <span style="color:#569CD6;">throw</span>;
             }
         }
     }
 
-    void IComponent.Attach(RenderHandle renderHandle)
+    <span style="color:#569CD6;">void</span> IComponent.Attach(RenderHandle renderHandle)
     {
-        if (_renderHandle.IsInitialized)
-            throw new InvalidOperationException($&quot;The render handle is already set. Cannot initialize a {nameof(ComponentBase)} more than once.&quot;);
+        <span style="color:#569CD6;">if</span> (_renderHandle.IsInitialized)
+            <span style="color:#569CD6;">throw</span> <span style="color:#569CD6;">new</span> InvalidOperationException($<span style="color:#D69D85;">&quot;The render handle is already set. Cannot initialize a {nameof(ComponentBase)} more than once.&quot;</span>);
 
         _renderHandle = renderHandle;
     }
 
-    public virtual Task SetParametersAsync(ParameterView parameters)
+    <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">virtual</span> Task SetParametersAsync(ParameterView parameters)
     {
-        parameters.SetParameterProperties(this);
-        if (!_initialized)
+        parameters.SetParameterProperties(<span style="color:#569CD6;">this</span>);
+        <span style="color:#569CD6;">if</span> (!_initialized)
         {
-            _initialized = true;
+            _initialized = <span style="color:#569CD6;">true</span>;
 
-            return RunInitAndSetParametersAsync();
+            <span style="color:#569CD6;">return</span> RunInitAndSetParametersAsync();
         }
-        else
-            return CallOnParametersSetAsync();
+        <span style="color:#569CD6;">else</span>
+            <span style="color:#569CD6;">return</span> CallOnParametersSetAsync();
     }
 
-    private async Task RunInitAndSetParametersAsync()
+    <span style="color:#569CD6;">private</span> <span style="color:#569CD6;">async</span> Task RunInitAndSetParametersAsync()
     {
         OnInitialized();
-        var task = OnInitializedAsync();
+        <span style="color:#569CD6;">var</span> task = OnInitializedAsync();
 
-        if (task.Status != TaskStatus.RanToCompletion &amp;&amp; task.Status != TaskStatus.Canceled)
+        <span style="color:#569CD6;">if</span> (task.Status != TaskStatus.RanToCompletion &amp;&amp; task.Status != TaskStatus.Canceled)
         {
             StateHasChanged();
 
-            try
+            <span style="color:#569CD6;">try</span>
             {
-                await task;
+                <span style="color:#569CD6;">await</span> task;
             }
-            catch
+            <span style="color:#569CD6;">catch</span>
             {
-                if (!task.IsCanceled)
-                    throw;
+                <span style="color:#569CD6;">if</span> (!task.IsCanceled)
+                    <span style="color:#569CD6;">throw</span>;
             }
         }
 
-        await CallOnParametersSetAsync();
+        <span style="color:#569CD6;">await</span> CallOnParametersSetAsync();
     }
 
-    private Task CallOnParametersSetAsync()
+    <span style="color:#569CD6;">private</span> Task CallOnParametersSetAsync()
     {
         OnParametersSet();
-        var task = OnParametersSetAsync();
+        <span style="color:#569CD6;">var</span> task = OnParametersSetAsync();
 
-        var shouldAwaitTask = task.Status != TaskStatus.RanToCompletion &amp;&amp;
+        <span style="color:#569CD6;">var</span> shouldAwaitTask = task.Status != TaskStatus.RanToCompletion &amp;&amp;
             task.Status != TaskStatus.Canceled;
 
         StateHasChanged();
 
-        return shouldAwaitTask ?
+        <span style="color:#569CD6;">return</span> shouldAwaitTask ?
             CallStateHasChangedOnAsyncCompletion(task) :
             Task.CompletedTask;
     }
 
-    private async Task CallStateHasChangedOnAsyncCompletion(Task task)
+    <span style="color:#569CD6;">private</span> <span style="color:#569CD6;">async</span> Task CallStateHasChangedOnAsyncCompletion(Task task)
     {
-        try
+        <span style="color:#569CD6;">try</span>
         {
-            await task;
+            <span style="color:#569CD6;">await</span> task;
         }
-        catch 
+        <span style="color:#569CD6;">catch</span> 
         {
-            if (task.IsCanceled)
-                return;
+            <span style="color:#569CD6;">if</span> (task.IsCanceled)
+                <span style="color:#569CD6;">return</span>;
 
-            throw;
+            <span style="color:#569CD6;">throw</span>;
         }
 
         StateHasChanged();
     }
 
-    Task IHandleEvent.HandleEventAsync(EventCallbackWorkItem callback, object? arg)
+    Task IHandleEvent.HandleEventAsync(EventCallbackWorkItem callback, <span style="color:#569CD6;">object</span>? arg)
     {
-        var task = callback.InvokeAsync(arg);
-        var shouldAwaitTask = task.Status != TaskStatus.RanToCompletion &amp;&amp;
+        <span style="color:#569CD6;">var</span> task = callback.InvokeAsync(arg);
+        <span style="color:#569CD6;">var</span> shouldAwaitTask = task.Status != TaskStatus.RanToCompletion &amp;&amp;
             task.Status != TaskStatus.Canceled;
 
         StateHasChanged();
 
-        return shouldAwaitTask ?
+        <span style="color:#569CD6;">return</span> shouldAwaitTask ?
             CallStateHasChangedOnAsyncCompletion(task) :
             Task.CompletedTask;
     }
 
     Task IHandleAfterRender.OnAfterRenderAsync()
     {
-        var firstRender = !_hasCalledOnAfterRender;
-        _hasCalledOnAfterRender |= true;
+        <span style="color:#569CD6;">var</span> firstRender = !_hasCalledOnAfterRender;
+        _hasCalledOnAfterRender |= <span style="color:#569CD6;">true</span>;
 
         OnAfterRender(firstRender);
 
-        return OnAfterRenderAsync(firstRender);
+        <span style="color:#569CD6;">return</span> OnAfterRenderAsync(firstRender);
     }
 }
-</code></pre>
-</div></div></div></body></html>
+</pre></div></div></div></div></body></html>
 
 
 

@@ -88,87 +88,90 @@
 <li>Logs when the Component <code>RenderFragment</code> is run by the Renderer.</li>
 <li>Implements <code>IDisposable</code> and logs when <code>Dispose</code> is run.</li>
 </ol>
-<pre><code class="language-csharp">public abstract class MinimalDebugBase : IComponent, IDisposable
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+<span style="color:#569CD6;">public</span> <span style="color:#569CD6;">abstract</span> <span style="color:#569CD6;">class</span> MinimalDebugBase : IComponent, IDisposable
 {
-    protected RenderHandle renderHandle;
-    private bool _renderPending;
-    private RenderFragment _componentFragment;
-    private Guid Uid = Guid.NewGuid();
-    private string ClassName =&gt; this.GetType().Name;
-    protected virtual bool hide { get; set; }
+    <span style="color:#569CD6;">protected</span> RenderHandle renderHandle;
+    <span style="color:#569CD6;">private</span> <span style="color:#569CD6;">bool</span> _renderPending;
+    <span style="color:#569CD6;">private</span> RenderFragment _componentFragment;
+    <span style="color:#569CD6;">private</span> Guid Uid = Guid.NewGuid();
+    <span style="color:#569CD6;">private</span> <span style="color:#569CD6;">string</span> ClassName =&gt; <span style="color:#569CD6;">this</span>.GetType().Name;
+    <span style="color:#569CD6;">protected</span> <span style="color:#569CD6;">virtual</span> <span style="color:#569CD6;">bool</span> hide { <span style="color:#569CD6;">get</span>; <span style="color:#569CD6;">set</span>; }
 
-    public MinimalDebugBase()
+    <span style="color:#569CD6;">public</span> MinimalDebugBase()
     {
-        Debug.WriteLine($&quot;{ClassName} - instance : {Uid.ToString()} Ctor at {DateTime.Now.ToLongTimeString()}&quot;);
+        Debug.WriteLine($<span style="color:#D69D85;">&quot;{ClassName} - instance : {Uid.ToString()} Ctor at {DateTime.Now.ToLongTimeString()}&quot;</span>);
         _componentFragment = (builder) =&gt;
         {
-            _renderPending = false;
-            if (!this.hide)
+            _renderPending = <span style="color:#569CD6;">false</span>;
+            <span style="color:#569CD6;">if</span> (!<span style="color:#569CD6;">this</span>.hide)
             {
-                Debug.WriteLine($&quot;{ClassName} - instance : {Uid.ToString()} rendered at {DateTime.Now.ToLongTimeString()}&quot;);
+                Debug.WriteLine($<span style="color:#D69D85;">&quot;{ClassName} - instance : {Uid.ToString()} rendered at {DateTime.Now.ToLongTimeString()}&quot;</span>);
                 BuildRenderTree(builder);
             }
         };
     }
 
-    public void Attach(RenderHandle handle)
+    <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">void</span> Attach(RenderHandle handle)
         =&gt; renderHandle = handle;
 
-    public Task SetParametersAsync(ParameterView parameters)
+    <span style="color:#569CD6;">public</span> Task SetParametersAsync(ParameterView parameters)
     {
-        parameters.SetParameterProperties(this);
-        Debug.WriteLine($&quot;{ClassName} - instance : {Uid.ToString()} parameters set at {DateTime.Now.ToLongTimeString()}&quot;);
-        this.RequestRender();
-        return Task.CompletedTask;
+        parameters.SetParameterProperties(<span style="color:#569CD6;">this</span>);
+        Debug.WriteLine($<span style="color:#D69D85;">&quot;{ClassName} - instance : {Uid.ToString()} parameters set at {DateTime.Now.ToLongTimeString()}&quot;</span>);
+        <span style="color:#569CD6;">this</span>.RequestRender();
+        <span style="color:#569CD6;">return</span> Task.CompletedTask;
     }
 
-    protected abstract void BuildRenderTree(RenderTreeBuilder builder);
+    <span style="color:#569CD6;">protected</span> <span style="color:#569CD6;">abstract</span> <span style="color:#569CD6;">void</span> BuildRenderTree(RenderTreeBuilder builder);
 
-    protected void RequestRender()
+    <span style="color:#569CD6;">protected</span> <span style="color:#569CD6;">void</span> RequestRender()
     {
-        if (!_renderPending)
+        <span style="color:#569CD6;">if</span> (!_renderPending)
         {
-            _renderPending = true;
-            this.renderHandle.Render(_componentFragment);
+            _renderPending = <span style="color:#569CD6;">true</span>;
+            <span style="color:#569CD6;">this</span>.renderHandle.Render(_componentFragment);
         }
     }
 
-    public void Dispose()
+    <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">void</span> Dispose()
     {
-        Debug.WriteLine($&quot;{ClassName} - instance : {Uid.ToString()} disposed at {DateTime.Now.ToLongTimeString()}&quot;);
+        Debug.WriteLine($<span style="color:#D69D85;">&quot;{ClassName} - instance : {Uid.ToString()} disposed at {DateTime.Now.ToLongTimeString()}&quot;</span>);
     }
 }
-</code></pre>
+</pre></div>
 <p><strong>MinimalComponent.razor</strong></p>
-<pre><code class="language-csharp">@inherits MinimalDebugBase
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+@inherits MinimalDebugBase
 
-&lt;div class=&quot;@CssClass&quot;&gt;
+&lt;div <span style="color:#569CD6;">class</span>=<span style="color:#D69D85;">&quot;@CssClass&quot;</span>&gt;
     &lt;h3&gt;MinimalComponent&lt;/h3&gt;
     &lt;h4&gt;Rendered at @(DateTime.Now.ToLongTimeString())&lt;/h4&gt;
     &lt;h5&gt;@(Uid.ToString())&lt;/h5&gt;
 &lt;/div&gt;
 
 @code {
-    [Parameter] public bool Hidden { get; set; }
-    [Parameter] public string CssClass { get; set; } = string.Empty;
-    private Guid Uid = Guid.NewGuid();
-    protected override bool hide =&gt; this.Hidden;
+    [Parameter] <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">bool</span> Hidden { <span style="color:#569CD6;">get</span>; <span style="color:#569CD6;">set</span>; }
+    [Parameter] <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">string</span> CssClass { <span style="color:#569CD6;">get</span>; <span style="color:#569CD6;">set</span>; } = <span style="color:#569CD6;">string</span>.Empty;
+    <span style="color:#569CD6;">private</span> Guid Uid = Guid.NewGuid();
+    <span style="color:#569CD6;">protected</span> <span style="color:#569CD6;">override</span> <span style="color:#569CD6;">bool</span> hide =&gt; <span style="color:#569CD6;">this</span>.Hidden;
 }
-</code></pre>
+</pre></div>
 <p>And a page that demonstrates various ways of showing and hiding components.</p>
-<pre><code class="language-csharp">@page &quot;/MinimalDebugTest&quot;
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+@page <span style="color:#D69D85;">&quot;/MinimalDebugTest&quot;</span>
 @inherits MinimalDebugBase
 
-&lt;BootstrapButton Colour=&quot;btn-primary&quot; Text=&quot;@this.buttonText&quot; Clicked=this.Clicked /&gt;
+&lt;BootstrapButton Colour=<span style="color:#D69D85;">&quot;btn-primary&quot;</span> Text=<span style="color:#D69D85;">&quot;@this.buttonText&quot;</span> Clicked=<span style="color:#569CD6;">this</span>.Clicked /&gt;
 
-@if (!hidden)
+@<span style="color:#569CD6;">if</span> (!hidden)
 {
-    &lt;MinimalComponent CssClass=&quot;bg-danger text-white p-2 m-2&quot; /&gt;
+    &lt;MinimalComponent CssClass=<span style="color:#D69D85;">&quot;bg-danger text-white p-2 m-2&quot;</span> /&gt;
 }
 
-&lt;MinimalComponent Hidden=this.hidden CssClass=&quot;bg-success text-white p-2 m-2&quot; /&gt;
+&lt;MinimalComponent Hidden=<span style="color:#569CD6;">this</span>.hidden CssClass=<span style="color:#D69D85;">&quot;bg-success text-white p-2 m-2&quot;</span> /&gt;
 
-&lt;MinimalComponent CssClass=&quot;@($&quot;bg-dark text-white p-2 m-2 {this.css}&quot;)&quot; /&gt;
+&lt;MinimalComponent CssClass=<span style="color:#D69D85;">&quot;@($&quot;</span>bg-dark text-white p-<span style="color:#B5CEA8;">2</span> m-<span style="color:#B5CEA8;">2</span> {<span style="color:#569CD6;">this</span>.css}<span style="color:#D69D85;">&quot;)&quot;</span> /&gt;
 
 &lt;style&gt;
     .blazr-hide { display: none; }
@@ -176,23 +179,23 @@
 &lt;/style&gt;
 
 @code {
-    private bool hidden;
+    <span style="color:#569CD6;">private</span> <span style="color:#569CD6;">bool</span> hidden;
 
-    private string css =&gt; hidden
-        ? &quot;blazr-hide&quot;
-        : &quot;blazr-show&quot;;
+    <span style="color:#569CD6;">private</span> <span style="color:#569CD6;">string</span> css =&gt; hidden
+        ? <span style="color:#D69D85;">&quot;blazr-hide&quot;</span>
+        : <span style="color:#D69D85;">&quot;blazr-show&quot;</span>;
 
-    private string buttonText =&gt; hidden
-        ? &quot;Show&quot;
-        : &quot;Hide&quot;;
+    <span style="color:#569CD6;">private</span> <span style="color:#569CD6;">string</span> buttonText =&gt; hidden
+        ? <span style="color:#D69D85;">&quot;Show&quot;</span>
+        : <span style="color:#D69D85;">&quot;Hide&quot;</span>;
 
-    private void Clicked()
+    <span style="color:#569CD6;">private</span> <span style="color:#569CD6;">void</span> Clicked()
     {
-        this.hidden = !this.hidden;
-        this.RequestRender();
+        <span style="color:#569CD6;">this</span>.hidden = !<span style="color:#569CD6;">this</span>.hidden;
+        <span style="color:#569CD6;">this</span>.RequestRender();
     }
 }
-</code></pre>
+</pre></div>
 <p>The following log shows the sequences of events.</p>
 <p>The route is created and renders</p>
 <pre><code class="language-text">Test - instance : a68d5db7-90a1-4b35-9811-b5f18841c406 Ctor at 22:44:19

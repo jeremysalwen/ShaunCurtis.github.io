@@ -99,87 +99,101 @@
 <h2 id="inputthrottler">InputThrottler</h2>
 <p>This is my de-bouncer.  No timer: it utilizes the built in functionality in the Async library.</p>
 <p>The class outline.</p>
-<pre><code class="language-csharp">public sealed class InputThrottler
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+<span style="color:#569CD6;">public</span> <span style="color:#569CD6;">sealed</span> <span style="color:#569CD6;">class</span> InputThrottler
 {
-    private int _backOff = 0;
-    private Func&lt;Task&gt; _taskToRun;
-    private Task _activeTask = Task.CompletedTask;
-    private TaskCompletionSource&lt;bool&gt;? _queuedTaskCompletionSource;
-    private TaskCompletionSource&lt;bool&gt;? _activeTaskCompletionSource;
+    <span style="color:#569CD6;">private</span> <span style="color:#569CD6;">int</span> _backOff = <span style="color:#B5CEA8;">0</span>;
+    <span style="color:#569CD6;">private</span> Func&lt;Task&gt; _taskToRun;
+    <span style="color:#569CD6;">private</span> Task _activeTask = Task.CompletedTask;
+    <span style="color:#569CD6;">private</span> TaskCompletionSource&lt;<span style="color:#569CD6;">bool</span>&gt;? _queuedTaskCompletionSource;
+    <span style="color:#569CD6;">private</span> TaskCompletionSource&lt;<span style="color:#569CD6;">bool</span>&gt;? _activeTaskCompletionSource;
 
-    private InputThrottler(Func&lt;Task&gt; toRun, int backOff);
-    private async Task RunQueueAsync();
-    public Task&lt;bool&gt; QueueAsync();
-    public static InputThrottler Create(Func&lt;Task&gt; toRun, int backOff)
-            =&gt; new InputThrottler(toRun, backOff &gt; 300 ? backOff : 300);
+    <span style="color:#569CD6;">private</span> InputThrottler(Func&lt;Task&gt; toRun, <span style="color:#569CD6;">int</span> backOff);
+    <span style="color:#569CD6;">private</span> <span style="color:#569CD6;">async</span> Task RunQueueAsync();
+    <span style="color:#569CD6;">public</span> Task&lt;<span style="color:#569CD6;">bool</span>&gt; QueueAsync();
+    <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">static</span> InputThrottler Create(Func&lt;Task&gt; toRun, <span style="color:#569CD6;">int</span> backOff)
+            =&gt; <span style="color:#569CD6;">new</span> InputThrottler(toRun, backOff &gt; <span style="color:#B5CEA8;">300</span> ? backOff : <span style="color:#B5CEA8;">300</span>);
 }
-</code></pre>
+</pre></div>
 <p>Instantiation is restricted to a static <code>Create</code> method. There's no way to just &quot;new&quot; up an instance.</p>
 <p>The <code>Func</code> delegate is the actual method that gets called to refresh the data.  The method pattern is <code>Task MethodName()</code>.</p>
 <p>The backoff is the minimum update backoff period: the default value is set to 300 milliseconds.</p>
 <p>There are two private <code>TaskCompletionSource</code> global variables that track the running and queued requests.  If you haven't encountered <code>TaskCompletionSource</code> before, it's an object that provides manual creation and management of Tasks.  You'll see how it works in the code.</p>
 <p><code>_activeTask</code> references the <code>Task</code> for the current instance of <code>RunQueueAsync</code>.  It provides a mechanism to check if the queue is currently running or completed.</p>
 <h3 id="queueasync">QueueAsync</h3>
-<pre><code class="language-csharp">public Task&lt;bool&gt; QueueAsync()
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+<span style="color:#569CD6;">public</span> Task&lt;<span style="color:#569CD6;">bool</span>&gt; QueueAsync()
 {
-</code></pre>
+</pre></div>
 <p>Get a reference to the currently queued CompletionTask.  It will be set to completed once replaced by a new CompletionTask.  It may be null.</p>
-<pre><code class="language-csharp">    var oldCompletionTask = _queuedTaskCompletionSource;
-</code></pre>
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+    <span style="color:#569CD6;">var</span> oldCompletionTask = _queuedTaskCompletionSource;
+</pre></div>
 <p>Create a new CompletionTask and get a reference to it's <code>Task</code>.  Belt-and-braces stuff to make sure it's referenced before assigned to the active queue.</p>
-<pre><code class="language-csharp">    var newCompletionTask = new TaskCompletionSource&lt;bool&gt;();
-    var task = newCompletionTask.Task;
-</code></pre>
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+    <span style="color:#569CD6;">var</span> newCompletionTask = <span style="color:#569CD6;">new</span> TaskCompletionSource&lt;<span style="color:#569CD6;">bool</span>&gt;();
+    <span style="color:#569CD6;">var</span> task = newCompletionTask.Task;
+</pre></div>
 <p>Switch out the CompletionTask reference assigned to the active queue.</p>
-<pre><code class="language-csharp">    // replace _queuedTaskCompletionSource
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+    <span style="color:#57A64A;">// replace _queuedTaskCompletionSource</span>
     _queuedTaskCompletionSource = newCompletionTask;
-</code></pre>
+</pre></div>
 <p>Set the old CompletionTask to completed. Return <code>false</code>: nothing happened.</p>
-<pre><code class="language-csharp">    if (oldCompletionTask is not null)
-        oldCompletionTask?.TrySetResult(false);
-</code></pre>
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+    <span style="color:#569CD6;">if</span> (oldCompletionTask <span style="color:#569CD6;">is</span> not <span style="color:#569CD6;">null</span>)
+        oldCompletionTask?.TrySetResult(<span style="color:#569CD6;">false</span>);
+</pre></div>
 <p>Is <code>_activeTask</code> not completed i.e. <code>RunQueueAsync</code> is running.  If not call <code>RunQueueAsync</code> and assign it's <code>Task</code> reference to <code>_activeTask</code>.</p>
-<pre><code class="language-csharp">    if (_activeTask is null || _activeTask.IsCompleted)
-        _activeTask = this.RunQueueAsync();
-</code></pre>
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+    <span style="color:#569CD6;">if</span> (_activeTask <span style="color:#569CD6;">is</span> <span style="color:#569CD6;">null</span> || _activeTask.IsCompleted)
+        _activeTask = <span style="color:#569CD6;">this</span>.RunQueueAsync();
+</pre></div>
 <p>Return the task associated with the new queued CompletionTask.</p>
-<pre><code class="language-csharp">    return task;
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+    <span style="color:#569CD6;">return</span> task;
 }
-</code></pre>
-<h3 id="runqueueasync">RunQueueAsync</h3>
-<pre><code class="language-csharp">private async Task RunQueueAsync()
+</pre></div><h3 id="runqueueasync">RunQueueAsync</h3>
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+<span style="color:#569CD6;">private</span> <span style="color:#569CD6;">async</span> Task RunQueueAsync()
 {
-</code></pre>
+</pre></div>
 <p>If the current CompletionTask is completed, release the reference to it.</p>
-<pre><code class="language-csharp">    if (_activeTaskCompletionSource is not null &amp;&amp; _activeTaskCompletionSource.Task.IsCompleted)
-        _activeTaskCompletionSource = null;
-</code></pre>
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+    <span style="color:#569CD6;">if</span> (_activeTaskCompletionSource <span style="color:#569CD6;">is</span> not <span style="color:#569CD6;">null</span> &amp;&amp; _activeTaskCompletionSource.Task.IsCompleted)
+        _activeTaskCompletionSource = <span style="color:#569CD6;">null</span>;
+</pre></div>
 <p>If the current CompletionTask is running then everything is already in motion and there's nothing to do so return.</p>
-<pre><code class="language-csharp">    if (_activeTaskCompletionSource is not null)
-        return;
-</code></pre>
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+    <span style="color:#569CD6;">if</span> (_activeTaskCompletionSource <span style="color:#569CD6;">is</span> not <span style="color:#569CD6;">null</span>)
+        <span style="color:#569CD6;">return</span>;
+</pre></div>
 <p>Use a <code>while</code> loop to keep the process running while there's a queued CompletionTask.</p>
-<pre><code class="language-csharp">    while (_queuedTaskCompletionSource is not null)
-</code></pre>
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+    <span style="color:#569CD6;">while</span> (_queuedTaskCompletionSource <span style="color:#569CD6;">is</span> not <span style="color:#569CD6;">null</span>)
+</pre></div>
 <p>If we're here, there's no active CompletionTask.  Assign a queued CompletionTask reference to the active CompletionTask and release queued CompletionTask reference.  The queue is now empty.</p>
-<pre><code class="language-csharp">        _activeTaskCompletionSource = _queuedTaskCompletionSource;
-        _queuedTaskCompletionSource = null;
-</code></pre>
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+        _activeTaskCompletionSource = _queuedTaskCompletionSource;
+        _queuedTaskCompletionSource = <span style="color:#569CD6;">null</span>;
+</pre></div>
 <p>Start a <code>Task.Delay</code> task set to delay for the backoff period, the main task in <code>_taskToRun</code>, and await both.  The actual backoff period will be the longer running of the two tasks.</p>
-<pre><code class="language-csharp">        var backoffTask = Task.Delay(_backOff);
-        var mainTask = _taskToRun.Invoke();
-        await Task.WhenAll( new Task[] { mainTask, backoffTask } );
-</code></pre>
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+        <span style="color:#569CD6;">var</span> backoffTask = Task.Delay(_backOff);
+        <span style="color:#569CD6;">var</span> mainTask = _taskToRun.Invoke();
+        <span style="color:#569CD6;">await</span> Task.WhenAll( <span style="color:#569CD6;">new</span> Task[] { mainTask, backoffTask } );
+</pre></div>
 <p>The main task has completed so we set the active CompletionTask to completed and release the reference to it.  The return value is true: - we did something.</p>
-<pre><code class="language-csharp">        _activeTaskCompletionSource.TrySetResult(true);
-        _activeTaskCompletionSource = null;
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+        _activeTaskCompletionSource.TrySetResult(<span style="color:#569CD6;">true</span>);
+        _activeTaskCompletionSource = <span style="color:#569CD6;">null</span>;
     }
-</code></pre>
+</pre></div>
 <p>Loop back to check if another request has been queued: there's been a UI event while we've been processing the last queued request.  If not complete.</p>
-<pre><code class="language-csharp">    return;
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+    <span style="color:#569CD6;">return</span>;
 }
-</code></pre>
-<h3 id="summary">Summary</h3>
+</pre></div><h3 id="summary">Summary</h3>
 <p>The object uses <code>TaskCompletionSource</code> instances to represent each request.  It passes the Task associated with the instance of <code>TaskCompletionSource</code> back to the caller.  The queued request, represented by the <code>TaskCompletionSource</code>, is either:</p>
 <ol>
 <li>Run by the queue handler.  The task is completed as true: we did something and you probably need to update the UI.</li>
@@ -192,206 +206,216 @@
 <li>a <code>Func</code> delegate to return a string collection based on a provided string,</li>
 <li>and the Css to apply to the input.</li>
 </ol>
-<pre><code class="language-csharp">[Parameter] public string? Value { get; set; }
-[Parameter] public EventCallback&lt;string?&gt; ValueChanged { get; set; }
-[Parameter, EditorRequired] public Func&lt;string?, Task&lt;IEnumerable&lt;string&gt;&gt;&gt;? FilterItems { get; set; }
-[Parameter] public string CssClass { get; set; } = &quot;form-control mb-3&quot;;
-</code></pre>
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+[Parameter] <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">string</span>? Value { <span style="color:#569CD6;">get</span>; <span style="color:#569CD6;">set</span>; }
+[Parameter] <span style="color:#569CD6;">public</span> EventCallback&lt;<span style="color:#569CD6;">string</span>?&gt; ValueChanged { <span style="color:#569CD6;">get</span>; <span style="color:#569CD6;">set</span>; }
+[Parameter, EditorRequired] <span style="color:#569CD6;">public</span> Func&lt;<span style="color:#569CD6;">string</span>?, Task&lt;IEnumerable&lt;<span style="color:#569CD6;">string</span>&gt;&gt;&gt;? FilterItems { <span style="color:#569CD6;">get</span>; <span style="color:#569CD6;">set</span>; }
+[Parameter] <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">string</span> CssClass { <span style="color:#569CD6;">get</span>; <span style="color:#569CD6;">set</span>; } = <span style="color:#D69D85;">&quot;form-control mb-3&quot;</span>;
+</pre></div>
 <p>The private global variables:</p>
-<pre><code class="language-csharp">private InputThrottler inputThrottler;
-private string? filterText;  //The value we'll get from oninput events
-private string listid = Guid.NewGuid().ToString(); //unique id for the datalist
-private IEnumerable&lt;string&gt; items = Enumerable.Empty&lt;string&gt;(); //string list for the datalist
-</code></pre>
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+<span style="color:#569CD6;">private</span> InputThrottler inputThrottler;
+<span style="color:#569CD6;">private</span> <span style="color:#569CD6;">string</span>? filterText;  <span style="color:#57A64A;">//The value we&#39;ll get from oninput events</span>
+<span style="color:#569CD6;">private</span> <span style="color:#569CD6;">string</span> listid = Guid.NewGuid().ToString(); <span style="color:#57A64A;">//unique id for the datalist</span>
+<span style="color:#569CD6;">private</span> IEnumerable&lt;<span style="color:#569CD6;">string</span>&gt; items = Enumerable.Empty&lt;<span style="color:#569CD6;">string</span>&gt;(); <span style="color:#57A64A;">//string list for the datalist</span>
+</pre></div>
 <p>A ctor to initialize the <code>InputThrottler</code>.</p>
-<pre><code class="language-csharp">public AutoCompleteControl()
-    =&gt; inputThrottler = InputThrottler.Create(GetFilteredItems, 300);
-</code></pre>
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+<span style="color:#569CD6;">public</span> AutoCompleteControl()
+    =&gt; inputThrottler = InputThrottler.Create(GetFilteredItems, <span style="color:#B5CEA8;">300</span>);
+</pre></div>
 <p><code>OnInitializedAsync</code> to get the initial filter list.  This may be an empty list.</p>
-<pre><code class="language-csharp">protected override Task OnInitializedAsync()
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+<span style="color:#569CD6;">protected</span> <span style="color:#569CD6;">override</span> Task OnInitializedAsync()
     =&gt; GetFilteredItems();
-</code></pre>
+</pre></div>
 <p>The actual method to get the list items.  If the Parameter <code>FilterItems</code> is null set <code>items</code> to an empty collection, otherwise set <code>items</code> to the returned collection.</p>
-<pre><code class="language-csharp">private async Task GetFilteredItems()
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+<span style="color:#569CD6;">private</span> <span style="color:#569CD6;">async</span> Task GetFilteredItems()
 {
-    this.Items = FilterItems is null
-        ? Enumerable.Empty&lt;string&gt;()
-        : await FilterItems.Invoke(filterText);
+    <span style="color:#569CD6;">this</span>.Items = FilterItems <span style="color:#569CD6;">is</span> <span style="color:#569CD6;">null</span>
+        ? Enumerable.Empty&lt;<span style="color:#569CD6;">string</span>&gt;()
+        : <span style="color:#569CD6;">await</span> FilterItems.Invoke(filterText);
 }
-</code></pre>
+</pre></div>
 <p>Method called by <code>@oninput</code>.  It sets <code>filterText</code> to the current string and then queues a request on <code>inputThrottler</code>.  If this is returned as true - <code>inputThrottler</code> didn't <em>cancel</em> the request - call <code>StateHasChanged</code> to update the component.  See the <em>Improving the Component Performance</em> to explain why we call <code>StateHasChanged</code>.</p>
-<pre><code class="language-csharp">private async void OnSearchUpdated(ChangeEventArgs e)
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+<span style="color:#569CD6;">private</span> <span style="color:#569CD6;">async</span> <span style="color:#569CD6;">void</span> OnSearchUpdated(ChangeEventArgs e)
 {
-    this.filterText = e.Value?.ToString() ?? string.Empty;
-    if (await inputThrottler.QueueAsync())
+    <span style="color:#569CD6;">this</span>.filterText = e.Value?.ToString() ?? <span style="color:#569CD6;">string</span>.Empty;
+    <span style="color:#569CD6;">if</span> (<span style="color:#569CD6;">await</span> inputThrottler.QueueAsync())
         StateHasChanged();
 }
-</code></pre>
+</pre></div>
 <p>The UI event handler for an input update invoking the bind <code>ValueChanged</code> callback.</p>
-<pre><code class="language-csharp">private Task OnChange(ChangeEventArgs e)
-    =&gt; this.ValueChanged.InvokeAsync(e.Value?.ToString());
-</code></pre>
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+<span style="color:#569CD6;">private</span> Task OnChange(ChangeEventArgs e)
+    =&gt; <span style="color:#569CD6;">this</span>.ValueChanged.InvokeAsync(e.Value?.ToString());
+</pre></div>
 <p>The UI markup code:</p>
-<pre><code class="language-html">&lt;input class=&quot;@CssClass&quot; type=&quot;search&quot; value=&quot;@this.Value&quot; @onchange=this.OnChange list=&quot;@listid&quot; @oninput=this.OnSearchUpdated /&gt;
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+&lt;input class=&quot;@CssClass&quot; type=&quot;search&quot; value=&quot;@this.Value&quot; @onchange=this.OnChange list=&quot;@listid&quot; @oninput=this.OnSearchUpdated /&gt;
 
-&lt;datalist id=&quot;@listid&quot;&gt;
+<span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">datalist</span> <span style="color:#FF0000;">id</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;@listid&quot;</span><span style="color:#569CD6;">&gt;</span>
     @foreach (var item in this.Items)
     {
-            &lt;option&gt;@item&lt;/option&gt;
+            <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">option</span><span style="color:#569CD6;">&gt;</span>@item<span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">option</span><span style="color:#569CD6;">&gt;</span>
     }
-&lt;/datalist&gt;
-</code></pre>
-<h3 id="improving-the-component-performance">Improving the Component Performance</h3>
+<span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">datalist</span><span style="color:#569CD6;">&gt;</span>
+</pre></div><h3 id="improving-the-component-performance">Improving the Component Performance</h3>
 <p>The component raises a UI event on every keystroke: <code>OnSearchUpdated</code> is called.  As we inherit from <code>ComponentBase</code>, this triggers two render events on the component: one before and one after the await yield.  We don't need them: they do nothing unless <code>inputThrottler.QueueAsync()</code> returns true.</p>
 <p>We can change this by implementing <code>IHandleEvent</code> and defining a custom <code>HandleEventAsync</code> that just invokes the method with no calls to <code>StateHasChanged</code>.  We call it manually when we need to.</p>
 <p>We can also <em>shortcircuit</em> the <code>OnAfterRenderAsync</code> handler as we aren't using it either.</p>
 <p>Here's how to do it:</p>
-<pre><code class="language-csharp">@implements IHandleEvent
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+@implements IHandleEvent
 @implements IHandleAfterRender
 
-//....
-Task IHandleEvent.HandleEventAsync(EventCallbackWorkItem callback, object? arg)
+<span style="color:#57A64A;">//....</span>
+Task IHandleEvent.HandleEventAsync(EventCallbackWorkItem callback, <span style="color:#569CD6;">object</span>? arg)
     =&gt; callback.InvokeAsync(arg);
 
 Task IHandleAfterRender.OnAfterRenderAsync()
     =&gt; Task.CompletedTask;
-</code></pre>
+</pre></div>
 <p>Finally we add a code behind file to seal the class: sealed objects are marginally quicker that open objects.  One of the <em>behind the scenes</em> changes in .Net7.0 was sealing as many classes as possible.</p>
-<pre><code class="language-csharp">public sealed partial class AutoCompleteControl  {}
-</code></pre>
-<h2 id="demo-page">Demo Page</h2>
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+<span style="color:#569CD6;">public</span> <span style="color:#569CD6;">sealed</span> <span style="color:#569CD6;">partial</span> <span style="color:#569CD6;">class</span> AutoCompleteControl  {}
+</pre></div><h2 id="demo-page">Demo Page</h2>
 <p>The code for the data pipeline is in the appendix.  This page demonstrates autocomplete on a country select control.  It's pretty self explanatory.  Either return the whole list if search is empty as done here, or return an empty list.</p>
-<pre><code class="language-html">@page &quot;/&quot;
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+@page &quot;/&quot;
 @page &quot;/Index&quot;
 @inject CountryService Service
 
-&lt;PageTitle&gt;Index&lt;/PageTitle&gt;
+<span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">PageTitle</span><span style="color:#569CD6;">&gt;</span>Index<span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">PageTitle</span><span style="color:#569CD6;">&gt;</span>
 
 &lt;AutoCompleteControl FilterItems=this.GetItems @bind-Value=this.typeAheadText /&gt;
 
-&lt;div class=&quot;alert alert-info&quot;&gt;
+<span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">div</span> <span style="color:#FF0000;">class</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;alert alert-info&quot;</span><span style="color:#569CD6;">&gt;</span>
     typeAheadText : @typeAheadText
-&lt;/div&gt;
-</code></pre>
-<pre><code class="language-csharp">@code {
-    private string? typeAheadText;
+<span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">div</span><span style="color:#569CD6;">&gt;</span>
+</pre></div><div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+@code {
+    <span style="color:#569CD6;">private</span> <span style="color:#569CD6;">string</span>? typeAheadText;
 
-    private IEnumerable&lt;Country&gt; filteredCountries = Enumerable.Empty&lt;Country&gt;();
+    <span style="color:#569CD6;">private</span> IEnumerable&lt;Country&gt; filteredCountries = Enumerable.Empty&lt;Country&gt;();
 
-    private async Task&lt;IEnumerable&lt;string&gt;&gt; GetItems(string search)
+    <span style="color:#569CD6;">private</span> <span style="color:#569CD6;">async</span> Task&lt;IEnumerable&lt;<span style="color:#569CD6;">string</span>&gt;&gt; GetItems(<span style="color:#569CD6;">string</span> search)
     {
-        var list = await this.Service.FilteredCountries(search, null);
-        return list.Select(item =&gt; item.Name).AsEnumerable();
+        <span style="color:#569CD6;">var</span> list = <span style="color:#569CD6;">await</span> <span style="color:#569CD6;">this</span>.Service.FilteredCountries(search, <span style="color:#569CD6;">null</span>);
+        <span style="color:#569CD6;">return</span> list.Select(item =&gt; item.Name).AsEnumerable();
     }
 }
-</code></pre>
+</pre></div>
 <p>Code behind class:</p>
-<pre><code class="language-csharp">public sealed partial class Index {}
-</code></pre>
-<h2 id="appendix">Appendix</h2>
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+<span style="color:#569CD6;">public</span> <span style="color:#569CD6;">sealed</span> <span style="color:#569CD6;">partial</span> <span style="color:#569CD6;">class</span> Index {}
+</pre></div><h2 id="appendix">Appendix</h2>
 <p>The <em>Data Pipeline</em> for this article.</p>
 <h3 id="countryservice">CountryService</h3>
-<pre><code class="language-csharp">public sealed class CountryService
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+<span style="color:#569CD6;">public</span> <span style="color:#569CD6;">sealed</span> <span style="color:#569CD6;">class</span> CountryService
 {
-    private readonly HttpClient _httpClient;
-    private List&lt;CountryData&gt; _baseDataSet = new List&lt;CountryData&gt;();
-    private ValueTask _loadTask;
+    <span style="color:#569CD6;">private</span> <span style="color:#569CD6;">readonly</span> HttpClient _httpClient;
+    <span style="color:#569CD6;">private</span> List&lt;CountryData&gt; _baseDataSet = <span style="color:#569CD6;">new</span> List&lt;CountryData&gt;();
+    <span style="color:#569CD6;">private</span> ValueTask _loadTask;
 
-    public IEnumerable&lt;Continent&gt; Continents =&gt; _continents;
-    public IEnumerable&lt;Country&gt; Countries =&gt; _countries;
+    <span style="color:#569CD6;">public</span> IEnumerable&lt;Continent&gt; Continents =&gt; _continents;
+    <span style="color:#569CD6;">public</span> IEnumerable&lt;Country&gt; Countries =&gt; _countries;
 
-    private List&lt;Continent&gt; _continents = new();
-    private List&lt;Country&gt; _countries = new();
+    <span style="color:#569CD6;">private</span> List&lt;Continent&gt; _continents = <span style="color:#569CD6;">new</span>();
+    <span style="color:#569CD6;">private</span> List&lt;Country&gt; _countries = <span style="color:#569CD6;">new</span>();
 
-    public CountryService(HttpClient httpClient)
+    <span style="color:#569CD6;">public</span> CountryService(HttpClient httpClient)
     {
         _httpClient = httpClient;
         _loadTask = GetBaseData();
     }
 
-    public async ValueTask&lt;IEnumerable&lt;Country&gt;&gt; FilteredCountries(string? searchText, Guid? continentUid = null)
-        =&gt; await this.GetFilteredCountries(searchText, continentUid);
+    <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">async</span> ValueTask&lt;IEnumerable&lt;Country&gt;&gt; FilteredCountries(<span style="color:#569CD6;">string</span>? searchText, Guid? continentUid = <span style="color:#569CD6;">null</span>)
+        =&gt; <span style="color:#569CD6;">await</span> <span style="color:#569CD6;">this</span>.GetFilteredCountries(searchText, continentUid);
 
-    private async ValueTask GetBaseData()
+    <span style="color:#569CD6;">private</span> <span style="color:#569CD6;">async</span> ValueTask GetBaseData()
     {
-        // source country file is https://github.com/samayo/country-json/blob/master/src/country-by-continent.json
-        // on my site it's in wwwroot/sample-data/countries.json
-        _baseDataSet = await _httpClient.GetFromJsonAsync&lt;List&lt;CountryData&gt;&gt;(&quot;sample-data/countries.json&quot;) ?? new List&lt;CountryData&gt;();
-        var distinctContinentNames = _baseDataSet.Select(item =&gt; item.Continent).Distinct().ToList();
+        <span style="color:#57A64A;">// source country file is https://github.com/samayo/country-json/blob/master/src/country-by-continent.json</span>
+        <span style="color:#57A64A;">// on my site it&#39;s in wwwroot/sample-data/countries.json</span>
+        _baseDataSet = <span style="color:#569CD6;">await</span> _httpClient.GetFromJsonAsync&lt;List&lt;CountryData&gt;&gt;(<span style="color:#D69D85;">&quot;sample-data/countries.json&quot;</span>) ?? <span style="color:#569CD6;">new</span> List&lt;CountryData&gt;();
+        <span style="color:#569CD6;">var</span> distinctContinentNames = _baseDataSet.Select(item =&gt; item.Continent).Distinct().ToList();
 
-        foreach (var continent in distinctContinentNames)
-            _continents.Add(new Continent { Name = continent });
+        <span style="color:#569CD6;">foreach</span> (<span style="color:#569CD6;">var</span> continent <span style="color:#569CD6;">in</span> distinctContinentNames)
+            _continents.Add(<span style="color:#569CD6;">new</span> Continent { Name = continent });
 
-        foreach (var continent in _continents)
+        <span style="color:#569CD6;">foreach</span> (<span style="color:#569CD6;">var</span> continent <span style="color:#569CD6;">in</span> _continents)
         {
-            var countryNamesInContinent = _baseDataSet.Where(item =&gt; item.Continent == continent.Name).Select(item =&gt; item.Country).ToList();
+            <span style="color:#569CD6;">var</span> countryNamesInContinent = _baseDataSet.Where(item =&gt; item.Continent == continent.Name).Select(item =&gt; item.Country).ToList();
 
-            foreach (var countryName in countryNamesInContinent)
-                _countries.Add(new Country { Name = countryName, ContinentUid = continent.Uid });
+            <span style="color:#569CD6;">foreach</span> (<span style="color:#569CD6;">var</span> countryName <span style="color:#569CD6;">in</span> countryNamesInContinent)
+                _countries.Add(<span style="color:#569CD6;">new</span> Country { Name = countryName, ContinentUid = continent.Uid });
         }
     }
 
-    private async ValueTask&lt;IEnumerable&lt;Country&gt;&gt; GetFilteredCountries(string? searchText, Guid? continentUid = null)
+    <span style="color:#569CD6;">private</span> <span style="color:#569CD6;">async</span> ValueTask&lt;IEnumerable&lt;Country&gt;&gt; GetFilteredCountries(<span style="color:#569CD6;">string</span>? searchText, Guid? continentUid = <span style="color:#569CD6;">null</span>)
     {
-        // Add in a yield to emulate async behaviour;
-        await Task.Delay(10);
-        if (string.IsNullOrWhiteSpace(searchText))
-            return continentUid is null
+        <span style="color:#57A64A;">// Add in a yield to emulate async behaviour;</span>
+        <span style="color:#569CD6;">await</span> Task.Delay(<span style="color:#B5CEA8;">10</span>);
+        <span style="color:#569CD6;">if</span> (<span style="color:#569CD6;">string</span>.IsNullOrWhiteSpace(searchText))
+            <span style="color:#569CD6;">return</span> continentUid <span style="color:#569CD6;">is</span> <span style="color:#569CD6;">null</span>
                 ? _countries.OrderBy(item =&gt; item.Name).AsEnumerable()
                 : _countries.Where(item =&gt; item.ContinentUid == continentUid).OrderBy(item =&gt; item.Name).AsEnumerable();
 
-        return continentUid is null || continentUid == Guid.Empty
+        <span style="color:#569CD6;">return</span> continentUid <span style="color:#569CD6;">is</span> <span style="color:#569CD6;">null</span> || continentUid == Guid.Empty
             ? _countries.Where(item =&gt; item.Name.ToLower().Contains(searchText.ToLower())).OrderBy(item =&gt; item.Name).AsEnumerable()
             : _countries.Where(item =&gt; item.Name.ToLower().Contains(searchText.ToLower()) &amp;&amp; item.ContinentUid == continentUid).OrderBy(item =&gt; item.Name).AsEnumerable();
     }
 }
-</code></pre>
-<pre><code class="language-csharp">private sealed record CountryData
+</pre></div><div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+<span style="color:#569CD6;">private</span> <span style="color:#569CD6;">sealed</span> record CountryData
 {
-    public required string Country { get; init; }
-    public required string Continent { get; init; }
+    <span style="color:#569CD6;">public</span> required <span style="color:#569CD6;">string</span> Country { <span style="color:#569CD6;">get</span>; init; }
+    <span style="color:#569CD6;">public</span> required <span style="color:#569CD6;">string</span> Continent { <span style="color:#569CD6;">get</span>; init; }
 }
-</code></pre>
-<pre><code class="language-csharp">public sealed record Country
+</pre></div><div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+<span style="color:#569CD6;">public</span> <span style="color:#569CD6;">sealed</span> record Country
 {
-    public Guid Uid { get; init; } = Guid.NewGuid();
-    public required Guid ContinentUid { get; init; }
-    public required string Name { get; init; }
+    <span style="color:#569CD6;">public</span> Guid Uid { <span style="color:#569CD6;">get</span>; init; } = Guid.NewGuid();
+    <span style="color:#569CD6;">public</span> required Guid ContinentUid { <span style="color:#569CD6;">get</span>; init; }
+    <span style="color:#569CD6;">public</span> required <span style="color:#569CD6;">string</span> Name { <span style="color:#569CD6;">get</span>; init; }
 }
-</code></pre>
-<pre><code class="language-csharp">public sealed record Continent
+</pre></div><div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+<span style="color:#569CD6;">public</span> <span style="color:#569CD6;">sealed</span> record Continent
 {
-    public Guid Uid { get; init; } = Guid.NewGuid();
-    public required string Name { get; init; }
+    <span style="color:#569CD6;">public</span> Guid Uid { <span style="color:#569CD6;">get</span>; init; } = Guid.NewGuid();
+    <span style="color:#569CD6;">public</span> required <span style="color:#569CD6;">string</span> Name { <span style="color:#569CD6;">get</span>; init; }
 }
-</code></pre>
+</pre></div>
 <p>Services Registration.  This is for Blazor Server</p>
-<pre><code class="language-csharp">// Add services to the container.
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+<span style="color:#57A64A;">// Add services to the container.</span>
 builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
 builder.Services.AddSingleton&lt;WeatherForecastService&gt;();
 builder.Services.AddTransient&lt;CountryService&gt;();
 {
-    var services = builder.Services;
+    <span style="color:#569CD6;">var</span> services = builder.Services;
 
-    // Server Side Blazor doesn't register HttpClient by default
-    // Thanks to Robin Sue - Suchiman https://github.com/Suchiman/BlazorDualMode
-    if (!services.Any(x =&gt; x.ServiceType == typeof(HttpClient)))
+    <span style="color:#57A64A;">// Server Side Blazor doesn&#39;t register HttpClient by default</span>
+    <span style="color:#57A64A;">// Thanks to Robin Sue - Suchiman https://github.com/Suchiman/BlazorDualMode</span>
+    <span style="color:#569CD6;">if</span> (!services.Any(x =&gt; x.ServiceType == <span style="color:#569CD6;">typeof</span>(HttpClient)))
     {
-        // Setup HttpClient for server side in a client side compatible fashion
+        <span style="color:#57A64A;">// Setup HttpClient for server side in a client side compatible fashion</span>
         services.AddScoped&lt;HttpClient&gt;(s =&gt;
         {
-            // Creating the URI helper needs to wait until the JS Runtime is initialized, so defer it.
-            var uriHelper = s.GetRequiredService&lt;NavigationManager&gt;();
-            return new HttpClient
+            <span style="color:#57A64A;">// Creating the URI helper needs to wait until the JS Runtime is initialized, so defer it.</span>
+            <span style="color:#569CD6;">var</span> uriHelper = s.GetRequiredService&lt;NavigationManager&gt;();
+            <span style="color:#569CD6;">return</span> <span style="color:#569CD6;">new</span> HttpClient
             {
-                BaseAddress = new Uri(uriHelper.BaseUri)
+                BaseAddress = <span style="color:#569CD6;">new</span> Uri(uriHelper.BaseUri)
             };
         });
     }
 }
-</code></pre>
-</div></div></div></body></html>
+</pre></div></div></div></div></body></html>
 
 
 

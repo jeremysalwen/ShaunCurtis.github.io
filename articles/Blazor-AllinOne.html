@@ -100,265 +100,269 @@
 <li>Add the necessary packages.</li>
 </ol>
 <p>The project file should look like this:</p>
-<pre><code class="language-xml">&lt;Project Sdk=&quot;Microsoft.NET.Sdk.BlazorWebAssembly&quot;&gt;
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+<span style="color:#808080;">&lt;</span><span style="color:#E6E6E6;">Project</span> <span style="color:#92CAF4;">Sdk</span><span style="color:#808080;">=</span><span style="color:#569CD6;">&quot;</span><span style="color:#569CD6;">Microsoft.NET.Sdk.BlazorWebAssembly</span><span style="color:#569CD6;">&quot;</span><span style="color:#808080;">&gt;</span>
 
-  &lt;PropertyGroup&gt;
-    &lt;StaticWebAssetBasePath&gt;wasm&lt;/StaticWebAssetBasePath&gt;
-    &lt;TargetFramework&gt;net5.0&lt;/TargetFramework&gt;
-  &lt;/PropertyGroup&gt;
+  <span style="color:#808080;">&lt;</span><span style="color:#E6E6E6;">PropertyGroup</span><span style="color:#808080;">&gt;</span>
+    <span style="color:#808080;">&lt;</span><span style="color:#E6E6E6;">StaticWebAssetBasePath</span><span style="color:#808080;">&gt;</span>wasm<span style="color:#808080;">&lt;/</span><span style="color:#E6E6E6;">StaticWebAssetBasePath</span><span style="color:#808080;">&gt;</span>
+    <span style="color:#808080;">&lt;</span><span style="color:#E6E6E6;">TargetFramework</span><span style="color:#808080;">&gt;</span>net5.0<span style="color:#808080;">&lt;/</span><span style="color:#E6E6E6;">TargetFramework</span><span style="color:#808080;">&gt;</span>
+  <span style="color:#808080;">&lt;/</span><span style="color:#E6E6E6;">PropertyGroup</span><span style="color:#808080;">&gt;</span>
 
-  &lt;ItemGroup&gt;
-    &lt;PackageReference Include=&quot;Microsoft.AspNetCore.Components.WebAssembly&quot; Version=&quot;5.0.4&quot; /&gt;
-    &lt;PackageReference Include=&quot;Microsoft.AspNetCore.Components.WebAssembly.DevServer&quot; Version=&quot;5.0.4&quot; PrivateAssets=&quot;all&quot; /&gt;
-    &lt;PackageReference Include=&quot;System.Net.Http.Json&quot; Version=&quot;5.0.0&quot; /&gt;
-  &lt;/ItemGroup&gt;
+  <span style="color:#808080;">&lt;</span><span style="color:#E6E6E6;">ItemGroup</span><span style="color:#808080;">&gt;</span>
+    <span style="color:#808080;">&lt;</span><span style="color:#E6E6E6;">PackageReference</span> <span style="color:#92CAF4;">Include</span><span style="color:#808080;">=</span><span style="color:#569CD6;">&quot;</span><span style="color:#569CD6;">Microsoft.AspNetCore.Components.WebAssembly</span><span style="color:#569CD6;">&quot;</span> <span style="color:#92CAF4;">Version</span><span style="color:#808080;">=</span><span style="color:#569CD6;">&quot;</span><span style="color:#569CD6;">5.0.4</span><span style="color:#569CD6;">&quot;</span> <span style="color:#808080;">/&gt;</span>
+    <span style="color:#808080;">&lt;</span><span style="color:#E6E6E6;">PackageReference</span> <span style="color:#92CAF4;">Include</span><span style="color:#808080;">=</span><span style="color:#569CD6;">&quot;</span><span style="color:#569CD6;">Microsoft.AspNetCore.Components.WebAssembly.DevServer</span><span style="color:#569CD6;">&quot;</span> <span style="color:#92CAF4;">Version</span><span style="color:#808080;">=</span><span style="color:#569CD6;">&quot;</span><span style="color:#569CD6;">5.0.4</span><span style="color:#569CD6;">&quot;</span> <span style="color:#92CAF4;">PrivateAssets</span><span style="color:#808080;">=</span><span style="color:#569CD6;">&quot;</span><span style="color:#569CD6;">all</span><span style="color:#569CD6;">&quot;</span> <span style="color:#808080;">/&gt;</span>
+    <span style="color:#808080;">&lt;</span><span style="color:#E6E6E6;">PackageReference</span> <span style="color:#92CAF4;">Include</span><span style="color:#808080;">=</span><span style="color:#569CD6;">&quot;</span><span style="color:#569CD6;">System.Net.Http.Json</span><span style="color:#569CD6;">&quot;</span> <span style="color:#92CAF4;">Version</span><span style="color:#808080;">=</span><span style="color:#569CD6;">&quot;</span><span style="color:#569CD6;">5.0.0</span><span style="color:#569CD6;">&quot;</span> <span style="color:#808080;">/&gt;</span>
+  <span style="color:#808080;">&lt;/</span><span style="color:#E6E6E6;">ItemGroup</span><span style="color:#808080;">&gt;</span>
 
-  &lt;ItemGroup&gt;
-    &lt;Folder Include=&quot;wwwroot\&quot; /&gt;
-  &lt;/ItemGroup&gt;
+  <span style="color:#808080;">&lt;</span><span style="color:#E6E6E6;">ItemGroup</span><span style="color:#808080;">&gt;</span>
+    <span style="color:#808080;">&lt;</span><span style="color:#E6E6E6;">Folder</span> <span style="color:#92CAF4;">Include</span><span style="color:#808080;">=</span><span style="color:#569CD6;">&quot;</span><span style="color:#569CD6;">wwwroot\</span><span style="color:#569CD6;">&quot;</span> <span style="color:#808080;">/&gt;</span>
+  <span style="color:#808080;">&lt;/</span><span style="color:#E6E6E6;">ItemGroup</span><span style="color:#808080;">&gt;</span>
 
-&lt;/Project&gt;
-</code></pre>
-<h3 id="mainlayout">MainLayout</h3>
+<span style="color:#808080;">&lt;/</span><span style="color:#E6E6E6;">Project</span><span style="color:#808080;">&gt;</span>
+</pre></div><h3 id="mainlayout">MainLayout</h3>
 <p><code>MainLayout</code> needs to be modified to handle both contexts.  The solution changes the colour scheme for each context.  WASM  <em>Teal</em> and Server <em>Steel</em>.</p>
-<pre><code class="language-csharp">@inherits LayoutComponentBase
-&lt;div class=&quot;page&quot;&gt;
-    @*change class*@
-    &lt;div class=&quot;@_sidebarCss&quot;&gt;
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+@inherits LayoutComponentBase
+&lt;div <span style="color:#569CD6;">class</span>=<span style="color:#D69D85;">&quot;page&quot;</span>&gt;
+    @*change <span style="color:#569CD6;">class</span>*@
+    &lt;div <span style="color:#569CD6;">class</span>=<span style="color:#D69D85;">&quot;@_sidebarCss&quot;</span>&gt;
         &lt;NavMenu /&gt;
     &lt;/div&gt;
-    &lt;div class=&quot;main&quot;&gt;
-        &lt;div class=&quot;top-row px-4&quot;&gt;
-            &lt;a href=&quot;https://docs.microsoft.com/aspnet/&quot; target=&quot;_blank&quot;&gt;About&lt;/a&gt;
+    &lt;div <span style="color:#569CD6;">class</span>=<span style="color:#D69D85;">&quot;main&quot;</span>&gt;
+        &lt;div <span style="color:#569CD6;">class</span>=<span style="color:#D69D85;">&quot;top-row px-4&quot;</span>&gt;
+            &lt;a href=<span style="color:#D69D85;">&quot;https://docs.microsoft.com/aspnet/&quot;</span> target=<span style="color:#D69D85;">&quot;_blank&quot;</span>&gt;About&lt;/a&gt;
         &lt;/div&gt;
-        &lt;div class=&quot;content px-4&quot;&gt;
+        &lt;div <span style="color:#569CD6;">class</span>=<span style="color:#D69D85;">&quot;content px-4&quot;</span>&gt;
             @Body
         &lt;/div&gt;
     &lt;/div&gt;
 &lt;/div&gt;
 
 @code {
-    [Inject] NavigationManager NavManager { get; set; }
-    private bool _isWasm =&gt; NavManager?.Uri.Contains(&quot;wasm&quot;, StringComparison.CurrentCultureIgnoreCase) ?? false;
-    private string _sidebarCss =&gt; _isWasm ? &quot;sidebar sidebar-teal&quot; : &quot;sidebar sidebar-steel&quot;;
+    [Inject] NavigationManager NavManager { <span style="color:#569CD6;">get</span>; <span style="color:#569CD6;">set</span>; }
+    <span style="color:#569CD6;">private</span> <span style="color:#569CD6;">bool</span> _isWasm =&gt; NavManager?.Uri.Contains(<span style="color:#D69D85;">&quot;wasm&quot;</span>, StringComparison.CurrentCultureIgnoreCase) ?? <span style="color:#569CD6;">false</span>;
+    <span style="color:#569CD6;">private</span> <span style="color:#569CD6;">string</span> _sidebarCss =&gt; _isWasm ? <span style="color:#D69D85;">&quot;sidebar sidebar-teal&quot;</span> : <span style="color:#D69D85;">&quot;sidebar sidebar-steel&quot;</span>;
 }
-</code></pre>
+</pre></div>
 <p>Add the following Css styles to the component Css file below <code>.sidebar</code>.</p>
-<pre><code class="language-css">.sidebar {
-    background-image: linear-gradient(180deg, rgb(5, 39, 103) 0%, #3a0647 70%);
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+<span style="color:#A31515;">.sidebar </span>{
+    <span style="color:#FF0000;">background-image</span>: <span style="color:#569CD6;">linear-gradient(180deg, rgb(5, 39, 103) 0%, #3a0647 70%)</span>;
+}<span style="color:#57A64A;">
+
+/* Added Styles*/</span>
+<span style="color:#A31515;">.sidebar-teal </span>{
+    <span style="color:#FF0000;">background-image</span>: <span style="color:#569CD6;">linear-gradient(180deg, rgb(0, 64, 128) 0%, rgb(0,96,192) 70%)</span>;
 }
 
-/* Added Styles*/
-.sidebar-teal {
-    background-image: linear-gradient(180deg, rgb(0, 64, 128) 0%, rgb(0,96,192) 70%);
-}
-
-.sidebar-steel {
-    background-image: linear-gradient(180deg, #2a3f4f 0%, #446680 70%);
-}
-/* End Added Styles*/
-</code></pre>
-<h3 id="navmenu">NavMenu</h3>
+<span style="color:#A31515;">.sidebar-steel </span>{
+    <span style="color:#FF0000;">background-image</span>: <span style="color:#569CD6;">linear-gradient(180deg, #2a3f4f 0%, #446680 70%)</span>;
+}<span style="color:#57A64A;">
+/* End Added Styles*/</span>
+</pre></div><h3 id="navmenu">NavMenu</h3>
 <p>Add code and markup - it adds a link to switch between contexts.</p>
-<pre><code class="language-csharp">&lt;div class=&quot;top-row pl-4 navbar navbar-dark&quot;&gt;
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+&lt;div <span style="color:#569CD6;">class</span>=<span style="color:#D69D85;">&quot;top-row pl-4 navbar navbar-dark&quot;</span>&gt;
     @*Change title*@
-    &lt;a class=&quot;navbar-brand&quot; href=&quot;&quot;&gt;Blazor&lt;/a&gt;
-    &lt;button class=&quot;navbar-toggler&quot; @onclick=&quot;ToggleNavMenu&quot;&gt;
-        &lt;span class=&quot;navbar-toggler-icon&quot;&gt;&lt;/span&gt;
+    &lt;a <span style="color:#569CD6;">class</span>=<span style="color:#D69D85;">&quot;navbar-brand&quot;</span> href=<span style="color:#D69D85;">&quot;&quot;</span>&gt;Blazor&lt;/a&gt;
+    &lt;button <span style="color:#569CD6;">class</span>=<span style="color:#D69D85;">&quot;navbar-toggler&quot;</span> @onclick=<span style="color:#D69D85;">&quot;ToggleNavMenu&quot;</span>&gt;
+        &lt;span <span style="color:#569CD6;">class</span>=<span style="color:#D69D85;">&quot;navbar-toggler-icon&quot;</span>&gt;&lt;/span&gt;
     &lt;/button&gt;
 &lt;/div&gt;
 
-&lt;div class=&quot;@NavMenuCssClass&quot; @onclick=&quot;ToggleNavMenu&quot;&gt;
-    &lt;ul class=&quot;nav flex-column&quot;&gt;
+&lt;div <span style="color:#569CD6;">class</span>=<span style="color:#D69D85;">&quot;@NavMenuCssClass&quot;</span> @onclick=<span style="color:#D69D85;">&quot;ToggleNavMenu&quot;</span>&gt;
+    &lt;ul <span style="color:#569CD6;">class</span>=<span style="color:#D69D85;">&quot;nav flex-column&quot;</span>&gt;
         @*Add links between contexts*@
-        &lt;li class=&quot;nav-item px-3&quot;&gt;
-                &lt;NavLink class=&quot;nav-link&quot; href=&quot;@_otherContextUrl&quot; Match=&quot;NavLinkMatch.All&quot;&gt;
-                    &lt;span class=&quot;oi oi-home&quot; aria-hidden=&quot;true&quot;&gt;&lt;/span&gt; @_otherContextLinkName
+        &lt;li <span style="color:#569CD6;">class</span>=<span style="color:#D69D85;">&quot;nav-item px-3&quot;</span>&gt;
+                &lt;NavLink <span style="color:#569CD6;">class</span>=<span style="color:#D69D85;">&quot;nav-link&quot;</span> href=<span style="color:#D69D85;">&quot;@_otherContextUrl&quot;</span> Match=<span style="color:#D69D85;">&quot;NavLinkMatch.All&quot;</span>&gt;
+                    &lt;span <span style="color:#569CD6;">class</span>=<span style="color:#D69D85;">&quot;oi oi-home&quot;</span> aria-hidden=<span style="color:#D69D85;">&quot;true&quot;</span>&gt;&lt;/span&gt; @_otherContextLinkName
                 &lt;/NavLink&gt;
         &lt;/li&gt;
-        &lt;li class=&quot;nav-item px-3&quot;&gt;
-            &lt;NavLink class=&quot;nav-link&quot; href=&quot;&quot; Match=&quot;NavLinkMatch.All&quot;&gt;
-                &lt;span class=&quot;oi oi-home&quot; aria-hidden=&quot;true&quot;&gt;&lt;/span&gt; Home
+        &lt;li <span style="color:#569CD6;">class</span>=<span style="color:#D69D85;">&quot;nav-item px-3&quot;</span>&gt;
+            &lt;NavLink <span style="color:#569CD6;">class</span>=<span style="color:#D69D85;">&quot;nav-link&quot;</span> href=<span style="color:#D69D85;">&quot;&quot;</span> Match=<span style="color:#D69D85;">&quot;NavLinkMatch.All&quot;</span>&gt;
+                &lt;span <span style="color:#569CD6;">class</span>=<span style="color:#D69D85;">&quot;oi oi-home&quot;</span> aria-hidden=<span style="color:#D69D85;">&quot;true&quot;</span>&gt;&lt;/span&gt; Home
             &lt;/NavLink&gt;
         &lt;/li&gt;
-        &lt;li class=&quot;nav-item px-3&quot;&gt;
-            &lt;NavLink class=&quot;nav-link&quot; href=&quot;counter&quot;&gt;
-                &lt;span class=&quot;oi oi-plus&quot; aria-hidden=&quot;true&quot;&gt;&lt;/span&gt; Counter
+        &lt;li <span style="color:#569CD6;">class</span>=<span style="color:#D69D85;">&quot;nav-item px-3&quot;</span>&gt;
+            &lt;NavLink <span style="color:#569CD6;">class</span>=<span style="color:#D69D85;">&quot;nav-link&quot;</span> href=<span style="color:#D69D85;">&quot;counter&quot;</span>&gt;
+                &lt;span <span style="color:#569CD6;">class</span>=<span style="color:#D69D85;">&quot;oi oi-plus&quot;</span> aria-hidden=<span style="color:#D69D85;">&quot;true&quot;</span>&gt;&lt;/span&gt; Counter
             &lt;/NavLink&gt;
         &lt;/li&gt;
-        &lt;li class=&quot;nav-item px-3&quot;&gt;
-            &lt;NavLink class=&quot;nav-link&quot; href=&quot;fetchdata&quot;&gt;
-                &lt;span class=&quot;oi oi-list-rich&quot; aria-hidden=&quot;true&quot;&gt;&lt;/span&gt; Fetch data
+        &lt;li <span style="color:#569CD6;">class</span>=<span style="color:#D69D85;">&quot;nav-item px-3&quot;</span>&gt;
+            &lt;NavLink <span style="color:#569CD6;">class</span>=<span style="color:#D69D85;">&quot;nav-link&quot;</span> href=<span style="color:#D69D85;">&quot;fetchdata&quot;</span>&gt;
+                &lt;span <span style="color:#569CD6;">class</span>=<span style="color:#D69D85;">&quot;oi oi-list-rich&quot;</span> aria-hidden=<span style="color:#D69D85;">&quot;true&quot;</span>&gt;&lt;/span&gt; Fetch data
             &lt;/NavLink&gt;
         &lt;/li&gt;
     &lt;/ul&gt;
 &lt;/div&gt;
 
 @code {
-    [Inject] NavigationManager NavManager { get; set; }
-    private bool _isWasm =&gt; NavManager?.Uri.Contains(&quot;wasm&quot;, StringComparison.CurrentCultureIgnoreCase) ?? false;
-    private string _otherContextUrl =&gt; _isWasm ? &quot;/&quot; : &quot;/wasm&quot;;
-    private string _otherContextLinkName =&gt; _isWasm ? &quot;Server Home&quot; : &quot;WASM Home&quot;;
-    private string _title =&gt; _isWasm ? &quot;AllinOne WASM&quot; : &quot;AllinOne Server&quot;;
-    private bool collapseNavMenu = true;
-    private string NavMenuCssClass =&gt; collapseNavMenu ? &quot;collapse&quot; : null;
+    [Inject] NavigationManager NavManager { <span style="color:#569CD6;">get</span>; <span style="color:#569CD6;">set</span>; }
+    <span style="color:#569CD6;">private</span> <span style="color:#569CD6;">bool</span> _isWasm =&gt; NavManager?.Uri.Contains(<span style="color:#D69D85;">&quot;wasm&quot;</span>, StringComparison.CurrentCultureIgnoreCase) ?? <span style="color:#569CD6;">false</span>;
+    <span style="color:#569CD6;">private</span> <span style="color:#569CD6;">string</span> _otherContextUrl =&gt; _isWasm ? <span style="color:#D69D85;">&quot;/&quot;</span> : <span style="color:#D69D85;">&quot;/wasm&quot;</span>;
+    <span style="color:#569CD6;">private</span> <span style="color:#569CD6;">string</span> _otherContextLinkName =&gt; _isWasm ? <span style="color:#D69D85;">&quot;Server Home&quot;</span> : <span style="color:#D69D85;">&quot;WASM Home&quot;</span>;
+    <span style="color:#569CD6;">private</span> <span style="color:#569CD6;">string</span> _title =&gt; _isWasm ? <span style="color:#D69D85;">&quot;AllinOne WASM&quot;</span> : <span style="color:#D69D85;">&quot;AllinOne Server&quot;</span>;
+    <span style="color:#569CD6;">private</span> <span style="color:#569CD6;">bool</span> collapseNavMenu = <span style="color:#569CD6;">true</span>;
+    <span style="color:#569CD6;">private</span> <span style="color:#569CD6;">string</span> NavMenuCssClass =&gt; collapseNavMenu ? <span style="color:#D69D85;">&quot;collapse&quot;</span> : <span style="color:#569CD6;">null</span>;
 
-    private void ToggleNavMenu()
+    <span style="color:#569CD6;">private</span> <span style="color:#569CD6;">void</span> ToggleNavMenu()
     {
         collapseNavMenu = !collapseNavMenu;
     }
 }
-</code></pre>
-<h3 id="fetchdata.razor">FetchData.razor</h3>
+</pre></div><h3 id="fetchdata.razor">FetchData.razor</h3>
 <p>Update the Url for getting forecasts by adding a <code>/</code> at the start, the file is now in the root and not in <code>wasm</code>.</p>
-<pre><code class="language-csharp">protected override async Task OnInitializedAsync()
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+<span style="color:#569CD6;">protected</span> <span style="color:#569CD6;">override</span> <span style="color:#569CD6;">async</span> Task OnInitializedAsync()
 {
-    forecasts = await Http.GetFromJsonAsync&lt;WeatherForecast[]&gt;(&quot;/sample-data/weather.json&quot;);
+    forecasts = <span style="color:#569CD6;">await</span> Http.GetFromJsonAsync&lt;WeatherForecast[]&gt;(<span style="color:#D69D85;">&quot;/sample-data/weather.json&quot;</span>);
 }
-</code></pre>
-<h2 id="blazor.web">Blazor.Web</h2>
+</pre></div><h2 id="blazor.web">Blazor.Web</h2>
 <p>Update the project file:</p>
-<pre><code class="language-xml">&lt;Project Sdk=&quot;Microsoft.NET.Sdk.Web&quot;&gt;
-  &lt;PropertyGroup&gt;
-    &lt;TargetFramework&gt;net5.0&lt;/TargetFramework&gt;
-  &lt;/PropertyGroup&gt;
-  &lt;ItemGroup&gt;
-    &lt;PackageReference Include=&quot;Microsoft.AspNetCore.Components.WebAssembly.Server&quot; Version=&quot;5.0.3&quot; /&gt;
-  &lt;/ItemGroup&gt;
-  &lt;ItemGroup&gt;
-    &lt;ProjectReference Include=&quot;..\Blazor\Blazor.csproj&quot; /&gt;
-  &lt;/ItemGroup&gt;
-&lt;/Project&gt;
-</code></pre>
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+<span style="color:#808080;">&lt;</span><span style="color:#E6E6E6;">Project</span> <span style="color:#92CAF4;">Sdk</span><span style="color:#808080;">=</span><span style="color:#569CD6;">&quot;</span><span style="color:#569CD6;">Microsoft.NET.Sdk.Web</span><span style="color:#569CD6;">&quot;</span><span style="color:#808080;">&gt;</span>
+  <span style="color:#808080;">&lt;</span><span style="color:#E6E6E6;">PropertyGroup</span><span style="color:#808080;">&gt;</span>
+    <span style="color:#808080;">&lt;</span><span style="color:#E6E6E6;">TargetFramework</span><span style="color:#808080;">&gt;</span>net5.0<span style="color:#808080;">&lt;/</span><span style="color:#E6E6E6;">TargetFramework</span><span style="color:#808080;">&gt;</span>
+  <span style="color:#808080;">&lt;/</span><span style="color:#E6E6E6;">PropertyGroup</span><span style="color:#808080;">&gt;</span>
+  <span style="color:#808080;">&lt;</span><span style="color:#E6E6E6;">ItemGroup</span><span style="color:#808080;">&gt;</span>
+    <span style="color:#808080;">&lt;</span><span style="color:#E6E6E6;">PackageReference</span> <span style="color:#92CAF4;">Include</span><span style="color:#808080;">=</span><span style="color:#569CD6;">&quot;</span><span style="color:#569CD6;">Microsoft.AspNetCore.Components.WebAssembly.Server</span><span style="color:#569CD6;">&quot;</span> <span style="color:#92CAF4;">Version</span><span style="color:#808080;">=</span><span style="color:#569CD6;">&quot;</span><span style="color:#569CD6;">5.0.3</span><span style="color:#569CD6;">&quot;</span> <span style="color:#808080;">/&gt;</span>
+  <span style="color:#808080;">&lt;/</span><span style="color:#E6E6E6;">ItemGroup</span><span style="color:#808080;">&gt;</span>
+  <span style="color:#808080;">&lt;</span><span style="color:#E6E6E6;">ItemGroup</span><span style="color:#808080;">&gt;</span>
+    <span style="color:#808080;">&lt;</span><span style="color:#E6E6E6;">ProjectReference</span> <span style="color:#92CAF4;">Include</span><span style="color:#808080;">=</span><span style="color:#569CD6;">&quot;</span><span style="color:#569CD6;">..\Blazor\Blazor.csproj</span><span style="color:#569CD6;">&quot;</span> <span style="color:#808080;">/&gt;</span>
+  <span style="color:#808080;">&lt;/</span><span style="color:#E6E6E6;">ItemGroup</span><span style="color:#808080;">&gt;</span>
+<span style="color:#808080;">&lt;/</span><span style="color:#E6E6E6;">Project</span><span style="color:#808080;">&gt;</span>
+</pre></div>
 <p>Add a Razor Page to <em>Pages</em> called <em>WASM.cshtml</em> - the launch page for the WASM SPA.</p>
-<pre><code class="language-html">@page &quot;/wasm&quot;
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+@page &quot;/wasm&quot;
 @{
     Layout = null;
 }
 
-&lt;!DOCTYPE html&gt;
-&lt;html&gt;
-&lt;head&gt;
-    &lt;meta charset=&quot;utf-8&quot; /&gt;
-    &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no&quot; /&gt;
-    &lt;title&gt;Blazor&lt;/title&gt;
+<span style="color:#569CD6;">&lt;!</span><span style="color:#A31515;">DOCTYPE</span> <span style="color:#FF0000;">html</span><span style="color:#569CD6;">&gt;</span>
+<span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">html</span><span style="color:#569CD6;">&gt;</span>
+<span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">head</span><span style="color:#569CD6;">&gt;</span>
+    <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">meta</span> <span style="color:#FF0000;">charset</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;utf-8&quot;</span> <span style="color:#569CD6;">/&gt;</span>
+    <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">meta</span> <span style="color:#FF0000;">name</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;viewport&quot;</span> <span style="color:#FF0000;">content</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no&quot;</span> <span style="color:#569CD6;">/&gt;</span>
+    <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">title</span><span style="color:#569CD6;">&gt;</span>Blazor<span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">title</span><span style="color:#569CD6;">&gt;</span>
     @*Change base*@
-    &lt;base href=&quot;/wasm/&quot; /&gt;
+    <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">base</span> <span style="color:#FF0000;">href</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;/wasm/&quot;</span> <span style="color:#569CD6;">/&gt;</span>
     @*Update Link hrefs*@
-    &lt;link href=&quot;/css/bootstrap/bootstrap.min.css&quot; rel=&quot;stylesheet&quot; /&gt;
-    &lt;link href=&quot;/css/app.css&quot; rel=&quot;stylesheet&quot; /&gt;
-    &lt;link href=&quot;/wasm/Blazor.styles.css&quot; rel=&quot;stylesheet&quot; /&gt;
-&lt;/head&gt;
-&lt;body&gt;
-    &lt;div id=&quot;app&quot;&gt;Loading...&lt;/div&gt;
-    &lt;div id=&quot;blazor-error-ui&quot;&gt;
+    <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">link</span> <span style="color:#FF0000;">href</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;/css/bootstrap/bootstrap.min.css&quot;</span> <span style="color:#FF0000;">rel</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;stylesheet&quot;</span> <span style="color:#569CD6;">/&gt;</span>
+    <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">link</span> <span style="color:#FF0000;">href</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;/css/app.css&quot;</span> <span style="color:#FF0000;">rel</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;stylesheet&quot;</span> <span style="color:#569CD6;">/&gt;</span>
+    <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">link</span> <span style="color:#FF0000;">href</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;/wasm/Blazor.styles.css&quot;</span> <span style="color:#FF0000;">rel</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;stylesheet&quot;</span> <span style="color:#569CD6;">/&gt;</span>
+<span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">head</span><span style="color:#569CD6;">&gt;</span>
+<span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">body</span><span style="color:#569CD6;">&gt;</span>
+    <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">div</span> <span style="color:#FF0000;">id</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;app&quot;</span><span style="color:#569CD6;">&gt;</span>Loading...<span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">div</span><span style="color:#569CD6;">&gt;</span>
+    <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">div</span> <span style="color:#FF0000;">id</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;blazor-error-ui&quot;</span><span style="color:#569CD6;">&gt;</span>
         An unhandled error has occurred.
-        &lt;a href=&quot;&quot; class=&quot;reload&quot;&gt;Reload&lt;/a&gt;
-        &lt;a class=&quot;dismiss&quot;&gt;🗙&lt;/a&gt;
-    &lt;/div&gt;
+        <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">a</span> <span style="color:#FF0000;">href</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;&quot; class=&quot;reload&quot;</span><span style="color:#569CD6;">&gt;</span>Reload<span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">a</span><span style="color:#569CD6;">&gt;</span>
+        <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">a</span> <span style="color:#FF0000;">class</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;dismiss&quot;</span><span style="color:#569CD6;">&gt;</span>&#128473;<span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">a</span><span style="color:#569CD6;">&gt;</span>
+    <span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">div</span><span style="color:#569CD6;">&gt;</span>
     @*Update js sources *@
-    &lt;script src=&quot;/wasm/_framework/blazor.webassembly.js&quot;&gt;&lt;/script&gt;
-&lt;/body&gt;
-&lt;/html&gt;
-</code></pre>
+    <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">script</span> <span style="color:#FF0000;">src</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;/wasm/_framework/blazor.webassembly.js&quot;</span><span style="color:#569CD6;">&gt;</span><span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">script</span><span style="color:#569CD6;">&gt;</span>
+<span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">body</span><span style="color:#569CD6;">&gt;</span>
+<span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">html</span><span style="color:#569CD6;">&gt;</span>
+</pre></div>
 <p>Add a second Razor Page to <em>Pages</em> called <em>Server.cshtml</em> - the launch page for the Servr SPA.</p>
-<pre><code class="language-csharp">@page &quot;/&quot;
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+@page <span style="color:#D69D85;">&quot;/&quot;</span>
 @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 @{
-    Layout = null;
+    Layout = <span style="color:#569CD6;">null</span>;
 }
 
 &lt;!DOCTYPE html&gt;
 &lt;html&gt;
 
 &lt;head&gt;
-    &lt;meta charset=&quot;utf-8&quot; /&gt;
-    &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no&quot; /&gt;
+    &lt;meta charset=<span style="color:#D69D85;">&quot;utf-8&quot;</span> /&gt;
+    &lt;meta name=<span style="color:#D69D85;">&quot;viewport&quot;</span> content=<span style="color:#D69D85;">&quot;width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no&quot;</span> /&gt;
     &lt;title&gt;Blazor&lt;/title&gt;
-    &lt;base href=&quot;/&quot; /&gt;
-    &lt;link href=&quot;/css/bootstrap/bootstrap.min.css&quot; rel=&quot;stylesheet&quot; /&gt;
-    &lt;link href=&quot;/css/site.css&quot; rel=&quot;stylesheet&quot; /&gt;
-    &lt;link href=&quot;/wasm/Blazor.styles.css&quot; rel=&quot;stylesheet&quot; /&gt;
+    &lt;<span style="color:#569CD6;">base</span> href=<span style="color:#D69D85;">&quot;/&quot;</span> /&gt;
+    &lt;link href=<span style="color:#D69D85;">&quot;/css/bootstrap/bootstrap.min.css&quot;</span> rel=<span style="color:#D69D85;">&quot;stylesheet&quot;</span> /&gt;
+    &lt;link href=<span style="color:#D69D85;">&quot;/css/site.css&quot;</span> rel=<span style="color:#D69D85;">&quot;stylesheet&quot;</span> /&gt;
+    &lt;link href=<span style="color:#D69D85;">&quot;/wasm/Blazor.styles.css&quot;</span> rel=<span style="color:#D69D85;">&quot;stylesheet&quot;</span> /&gt;
 &lt;/head&gt;
 
 &lt;body&gt;
-    &lt;component type=&quot;typeof(Blazor.App)&quot; render-mode=&quot;ServerPrerendered&quot; /&gt;
+    &lt;component type=<span style="color:#D69D85;">&quot;typeof(Blazor.App)&quot;</span> render-mode=<span style="color:#D69D85;">&quot;ServerPrerendered&quot;</span> /&gt;
 
-    &lt;div id=&quot;blazor-error-ui&quot;&gt;
-        &lt;environment include=&quot;Staging,Production&quot;&gt;
+    &lt;div id=<span style="color:#D69D85;">&quot;blazor-error-ui&quot;</span>&gt;
+        &lt;environment include=<span style="color:#D69D85;">&quot;Staging,Production&quot;</span>&gt;
             An error has occurred. This application may no longer respond until reloaded.
         &lt;/environment&gt;
-        &lt;environment include=&quot;Development&quot;&gt;
-            An unhandled exception has occurred. See browser dev tools for details.
+        &lt;environment include=<span style="color:#D69D85;">&quot;Development&quot;</span>&gt;
+            An unhandled exception has occurred. See browser dev tools <span style="color:#569CD6;">for</span> details.
         &lt;/environment&gt;
-        &lt;a href=&quot;&quot; class=&quot;reload&quot;&gt;Reload&lt;/a&gt;
-        &lt;a class=&quot;dismiss&quot;&gt;🗙&lt;/a&gt;
+        &lt;a href=<span style="color:#D69D85;">&quot;&quot;</span> <span style="color:#569CD6;">class</span>=<span style="color:#D69D85;">&quot;reload&quot;</span>&gt;Reload&lt;/a&gt;
+        &lt;a <span style="color:#569CD6;">class</span>=<span style="color:#D69D85;">&quot;dismiss&quot;</span>&gt;&#128473;&lt;/a&gt;
     &lt;/div&gt;
 
-    &lt;script src=&quot;_framework/blazor.server.js&quot;&gt;&lt;/script&gt;
+    &lt;script src=<span style="color:#D69D85;">&quot;_framework/blazor.server.js&quot;</span>&gt;&lt;/script&gt;
 &lt;/body&gt;
 &lt;/html&gt;
-</code></pre>
-<h3 id="index.cshtml">Index.cshtml</h3>
+</pre></div><h3 id="index.cshtml">Index.cshtml</h3>
 <p>Update the <code>@page</code> directive to <code>@page &quot;/index&quot;</code>.</p>
 <h3 id="startup.cs">Startup.cs</h3>
 <p>Update <code>Startup</code> to handle WASM and Server middleware paths.</p>
-<pre><code class="language-csharp">public class Startup
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+<span style="color:#569CD6;">public</span> <span style="color:#569CD6;">class</span> Startup
 {
-    public Startup(IConfiguration configuration)
+    <span style="color:#569CD6;">public</span> Startup(IConfiguration configuration)
     {
         Configuration = configuration;
     }
 
-    public IConfiguration Configuration { get; }
+    <span style="color:#569CD6;">public</span> IConfiguration Configuration { <span style="color:#569CD6;">get</span>; }
 
-    // This method gets called by the runtime. Use this method to add services to the container.
-    public void ConfigureServices(IServiceCollection services)
+    <span style="color:#57A64A;">// This method gets called by the runtime. Use this method to add services to the container.</span>
+    <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">void</span> ConfigureServices(IServiceCollection services)
     {
         services.AddRazorPages();
         services.AddServerSideBlazor();
 
-        // Server Side Blazor doesn't register HttpClient by default
-        // Thanks to Robin Sue - Suchiman https://github.com/Suchiman/BlazorDualMode
-        if (!services.Any(x =&gt; x.ServiceType == typeof(HttpClient)))
+        <span style="color:#57A64A;">// Server Side Blazor doesn&#39;t register HttpClient by default</span>
+        <span style="color:#57A64A;">// Thanks to Robin Sue - Suchiman https://github.com/Suchiman/BlazorDualMode</span>
+        <span style="color:#569CD6;">if</span> (!services.Any(x =&gt; x.ServiceType == <span style="color:#569CD6;">typeof</span>(HttpClient)))
         {
-            // Setup HttpClient for server side in a client side compatible fashion
+            <span style="color:#57A64A;">// Setup HttpClient for server side in a client side compatible fashion</span>
             services.AddScoped&lt;HttpClient&gt;(s =&gt;
             {
-                // Creating the URI helper needs to wait until the JS Runtime is initialized, so defer it.
-                var uriHelper = s.GetRequiredService&lt;NavigationManager&gt;();
-                return new HttpClient
+                <span style="color:#57A64A;">// Creating the URI helper needs to wait until the JS Runtime is initialized, so defer it.</span>
+                <span style="color:#569CD6;">var</span> uriHelper = s.GetRequiredService&lt;NavigationManager&gt;();
+                <span style="color:#569CD6;">return</span> <span style="color:#569CD6;">new</span> HttpClient
                 {
-                    BaseAddress = new Uri(uriHelper.BaseUri)
+                    BaseAddress = <span style="color:#569CD6;">new</span> Uri(uriHelper.BaseUri)
                 };
             });
         }
     }
 
-    // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-    public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+    <span style="color:#57A64A;">// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.</span>
+    <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">void</span> Configure(IApplicationBuilder app, IWebHostEnvironment env)
     {
-        if (env.IsDevelopment())
+        <span style="color:#569CD6;">if</span> (env.IsDevelopment())
         {
             app.UseDeveloperExceptionPage();
         }
-        else
+        <span style="color:#569CD6;">else</span>
         {
-            app.UseExceptionHandler(&quot;/Error&quot;);
-            // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
+            app.UseExceptionHandler(<span style="color:#D69D85;">&quot;/Error&quot;</span>);
+            <span style="color:#57A64A;">// The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.</span>
             app.UseHsts();
         }
 
         app.UseHttpsRedirection();
         app.UseStaticFiles();
 
-        app.MapWhen(ctx =&gt; ctx.Request.Path.StartsWithSegments(&quot;/wasm&quot;), app1 =&gt;
+        app.MapWhen(ctx =&gt; ctx.Request.Path.StartsWithSegments(<span style="color:#D69D85;">&quot;/wasm&quot;</span>), app1 =&gt;
         {
-            app1.UseBlazorFrameworkFiles(&quot;/wasm&quot;);
+            app1.UseBlazorFrameworkFiles(<span style="color:#D69D85;">&quot;/wasm&quot;</span>);
             app1.UseRouting();
             app1.UseEndpoints(endpoints =&gt;
             {
-                endpoints.MapFallbackToPage(&quot;/wasm/{*path:nonfile}&quot;, &quot;/wasm&quot;);
+                endpoints.MapFallbackToPage(<span style="color:#D69D85;">&quot;/wasm/{*path:nonfile}&quot;</span>, <span style="color:#D69D85;">&quot;/wasm&quot;</span>);
             });
         });
 
@@ -369,127 +373,126 @@
             endpoints.MapControllers();
             endpoints.MapBlazorHub();
             endpoints.MapRazorPages();
-            endpoints.MapFallbackToPage(&quot;/Server&quot;);
+            endpoints.MapFallbackToPage(<span style="color:#D69D85;">&quot;/Server&quot;</span>);
         });
     }
 }
-</code></pre>
-<h2 id="run-the-application">Run the Application</h2>
+</pre></div><h2 id="run-the-application">Run the Application</h2>
 <p>The application should now run.  It will start in the Server context.  Switch to the WASM context via the link in the left menu.  You should see the the colour change as you switch between contexts.</p>
 <h2 id="adding-a-dataservice">Adding a DataService</h2>
 <p>While the above configuation works, it needs some demo code to show how it handles more conventional data services.  We'll modify the solution to work with a very basic data services to show the DI and interface concepts that should be used.</p>
 <p>Add <em>Data</em> and <em>Services</em> folders to the <em>Blazor</em> project.</p>
 <h3 id="weatherforecast.cs">WeatherForecast.cs</h3>
 <p>Add a <code>WeatherForecast</code> class to <em>Data</em>.</p>
-<pre><code class="language-csharp">public class WeatherForecast
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+<span style="color:#569CD6;">public</span> <span style="color:#569CD6;">class</span> WeatherForecast
 {
-    public DateTime Date { get; set; }
-    public int TemperatureC { get; set; }
-    public string Summary { get; set; }
-    public int TemperatureF =&gt; 32 + (int)(TemperatureC / 0.5556);
+    <span style="color:#569CD6;">public</span> DateTime Date { <span style="color:#569CD6;">get</span>; <span style="color:#569CD6;">set</span>; }
+    <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">int</span> TemperatureC { <span style="color:#569CD6;">get</span>; <span style="color:#569CD6;">set</span>; }
+    <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">string</span> Summary { <span style="color:#569CD6;">get</span>; <span style="color:#569CD6;">set</span>; }
+    <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">int</span> TemperatureF =&gt; <span style="color:#B5CEA8;">32</span> + (<span style="color:#569CD6;">int</span>)(TemperatureC / <span style="color:#B5CEA8;">0</span>.<span style="color:#B5CEA8;">5556</span>);
 }
-</code></pre>
-<h3 id="iweatherforecastservice.cs">IWeatherForecastService.cs</h3>
+</pre></div><h3 id="iweatherforecastservice.cs">IWeatherForecastService.cs</h3>
 <p>Add a <code>IWeatherForecastService</code> interface to <em>Services</em>.</p>
-<pre><code class="language-csharp">    public interface IWeatherForecastService
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+    <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">interface</span> IWeatherForecastService
     {
-        public Task&lt;List&lt;WeatherForecast&gt;&gt; GetRecordsAsync();
+        <span style="color:#569CD6;">public</span> Task&lt;List&lt;WeatherForecast&gt;&gt; GetRecordsAsync();
     }
-</code></pre>
-<h3 id="weatherforecastserverservice.cs">WeatherForecastServerService.cs</h3>
+</pre></div><h3 id="weatherforecastserverservice.cs">WeatherForecastServerService.cs</h3>
 <p>Add a <code>WeatherForecastServerService</code> class to <em>Services</em>.  Normally this would interface to a database, but here we're just creating a set of dummy records.</p>
-<pre><code class="language-csharp">public class WeatherForecastServerService : IWeatherForecastService
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+<span style="color:#569CD6;">public</span> <span style="color:#569CD6;">class</span> WeatherForecastServerService : IWeatherForecastService
 {
-    private static readonly string[] Summaries = new[]
+    <span style="color:#569CD6;">private</span> <span style="color:#569CD6;">static</span> <span style="color:#569CD6;">readonly</span> <span style="color:#569CD6;">string</span>[] Summaries = <span style="color:#569CD6;">new</span>[]
     {
-        &quot;Freezing&quot;, &quot;Bracing&quot;, &quot;Chilly&quot;, &quot;Cool&quot;, &quot;Mild&quot;, &quot;Warm&quot;, &quot;Balmy&quot;, &quot;Hot&quot;, &quot;Sweltering&quot;, &quot;Scorching&quot;
+        <span style="color:#D69D85;">&quot;Freezing&quot;</span>, <span style="color:#D69D85;">&quot;Bracing&quot;</span>, <span style="color:#D69D85;">&quot;Chilly&quot;</span>, <span style="color:#D69D85;">&quot;Cool&quot;</span>, <span style="color:#D69D85;">&quot;Mild&quot;</span>, <span style="color:#D69D85;">&quot;Warm&quot;</span>, <span style="color:#D69D85;">&quot;Balmy&quot;</span>, <span style="color:#D69D85;">&quot;Hot&quot;</span>, <span style="color:#D69D85;">&quot;Sweltering&quot;</span>, <span style="color:#D69D85;">&quot;Scorching&quot;</span>
     };
 
-    private List&lt;WeatherForecast&gt; records = new List&lt;WeatherForecast&gt;();
+    <span style="color:#569CD6;">private</span> List&lt;WeatherForecast&gt; records = <span style="color:#569CD6;">new</span> List&lt;WeatherForecast&gt;();
 
-    public WeatherForecastServerService()
-        =&gt; this.GetForecasts();
+    <span style="color:#569CD6;">public</span> WeatherForecastServerService()
+        =&gt; <span style="color:#569CD6;">this</span>.GetForecasts();
 
-    public void GetForecasts()
+    <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">void</span> GetForecasts()
     {
-        var rng = new Random();
-        records = Enumerable.Range(1, 10).Select(index =&gt; new WeatherForecast
+        <span style="color:#569CD6;">var</span> rng = <span style="color:#569CD6;">new</span> Random();
+        records = Enumerable.Range(<span style="color:#B5CEA8;">1</span>, <span style="color:#B5CEA8;">10</span>).Select(index =&gt; <span style="color:#569CD6;">new</span> WeatherForecast
         {
             Date = DateTime.Now.AddDays(index),
-            TemperatureC = rng.Next(-20, 55),
+            TemperatureC = rng.Next(-<span style="color:#B5CEA8;">20</span>, <span style="color:#B5CEA8;">55</span>),
             Summary = Summaries[rng.Next(Summaries.Length)]
         }).ToList();
     }
 
-    public Task&lt;List&lt;WeatherForecast&gt;&gt; GetRecordsAsync()
-        =&gt; Task.FromResult(this.records);
+    <span style="color:#569CD6;">public</span> Task&lt;List&lt;WeatherForecast&gt;&gt; GetRecordsAsync()
+        =&gt; Task.FromResult(<span style="color:#569CD6;">this</span>.records);
 }
-</code></pre>
-<h3 id="weatherforecastapiservice.cs">WeatherForecastAPIService.cs</h3>
+</pre></div><h3 id="weatherforecastapiservice.cs">WeatherForecastAPIService.cs</h3>
 <p>Add a <code>WeatherForecastAPIService</code> class to <em>Services</em>.</p>
-<pre><code class="language-csharp">public class WeatherForecastAPIService : IWeatherForecastService
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+<span style="color:#569CD6;">public</span> <span style="color:#569CD6;">class</span> WeatherForecastAPIService : IWeatherForecastService
 {
-    protected HttpClient HttpClient { get; set; }
+    <span style="color:#569CD6;">protected</span> HttpClient HttpClient { <span style="color:#569CD6;">get</span>; <span style="color:#569CD6;">set</span>; }
 
-    public WeatherForecastAPIService(HttpClient httpClient)
-        =&gt; this.HttpClient = httpClient;
+    <span style="color:#569CD6;">public</span> WeatherForecastAPIService(HttpClient httpClient)
+        =&gt; <span style="color:#569CD6;">this</span>.HttpClient = httpClient;
 
-    public async Task&lt;List&lt;WeatherForecast&gt;&gt; GetRecordsAsync()
-        =&gt; await this.HttpClient.GetFromJsonAsync&lt;List&lt;WeatherForecast&gt;&gt;($&quot;/api/weatherforecast/list&quot;);
+    <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">async</span> Task&lt;List&lt;WeatherForecast&gt;&gt; GetRecordsAsync()
+        =&gt; <span style="color:#569CD6;">await</span> <span style="color:#569CD6;">this</span>.HttpClient.GetFromJsonAsync&lt;List&lt;WeatherForecast&gt;&gt;($<span style="color:#D69D85;">&quot;/api/weatherforecast/list&quot;</span>);
 }
-</code></pre>
-<h3 id="weatherforecastcontroller.cs">WeatherForecastController.cs</h3>
+</pre></div><h3 id="weatherforecastcontroller.cs">WeatherForecastController.cs</h3>
 <p>Finally add a <code>WeatherForecastController</code> class to the <em>Blazor.Web</em> project in a <em>Controller</em> folder.</p>
-<pre><code class="language-csharp">using System.Collections.Generic;
-using System.Threading.Tasks;
-using Blazor.Data;
-using Microsoft.AspNetCore.Mvc;
-using MVC = Microsoft.AspNetCore.Mvc;
-using Blazor.Services;
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+<span style="color:#569CD6;">using</span> System.Collections.Generic;
+<span style="color:#569CD6;">using</span> System.Threading.Tasks;
+<span style="color:#569CD6;">using</span> Blazor.Data;
+<span style="color:#569CD6;">using</span> Microsoft.AspNetCore.Mvc;
+<span style="color:#569CD6;">using</span> MVC = Microsoft.AspNetCore.Mvc;
+<span style="color:#569CD6;">using</span> Blazor.Services;
 
-namespace Blazor.Web.APIControllers
+<span style="color:#569CD6;">namespace</span> Blazor.Web.APIControllers
 {
     [ApiController]
-    public class WeatherForecastController : ControllerBase
+    <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">class</span> WeatherForecastController : ControllerBase
     {
-        protected IWeatherForecastService DataService { get; set; }
+        <span style="color:#569CD6;">protected</span> IWeatherForecastService DataService { <span style="color:#569CD6;">get</span>; <span style="color:#569CD6;">set</span>; }
 
-        public WeatherForecastController(IWeatherForecastService dataService)
-            =&gt; this.DataService = dataService;
+        <span style="color:#569CD6;">public</span> WeatherForecastController(IWeatherForecastService dataService)
+            =&gt; <span style="color:#569CD6;">this</span>.DataService = dataService;
 
-        [MVC.Route(&quot;/api/weatherforecast/list&quot;)]
+        [MVC.Route(<span style="color:#D69D85;">&quot;/api/weatherforecast/list&quot;</span>)]
         [HttpGet]
-        public async Task&lt;List&lt;WeatherForecast&gt;&gt; GetList() =&gt; await DataService.GetRecordsAsync();
+        <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">async</span> Task&lt;List&lt;WeatherForecast&gt;&gt; GetList() =&gt; <span style="color:#569CD6;">await</span> DataService.GetRecordsAsync();
     }
 }
-</code></pre>
-<h3 id="blazor-project-program.cs">Blazor Project Program.cs</h3>
+</pre></div><h3 id="blazor-project-program.cs">Blazor Project Program.cs</h3>
 <p>Add the API service to <em>Program.cs</em> in the <em>Blazor</em> project, declaring it through it's <code>IWeatherForecastService</code>.</p>
-<pre><code class="language-csharp">public class Program
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+<span style="color:#569CD6;">public</span> <span style="color:#569CD6;">class</span> Program
 {
-    public static async Task Main(string[] args)
+    <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">static</span> <span style="color:#569CD6;">async</span> Task Main(<span style="color:#569CD6;">string</span>[] args)
     {
-        var builder = WebAssemblyHostBuilder.CreateDefault(args);
-        builder.RootComponents.Add&lt;App&gt;(&quot;#app&quot;);
+        <span style="color:#569CD6;">var</span> builder = WebAssemblyHostBuilder.CreateDefault(args);
+        builder.RootComponents.Add&lt;App&gt;(<span style="color:#D69D85;">&quot;#app&quot;</span>);
 
-        builder.Services.AddScoped(sp =&gt; new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
+        builder.Services.AddScoped(sp =&gt; <span style="color:#569CD6;">new</span> HttpClient { BaseAddress = <span style="color:#569CD6;">new</span> Uri(builder.HostEnvironment.BaseAddress) });
         builder.Services.AddScoped&lt;IWeatherForecastService, WeatherForecastAPIService&gt;();
 
-        await builder.Build().RunAsync();
+        <span style="color:#569CD6;">await</span> builder.Build().RunAsync();
     }
 }
-</code></pre>
-<h3 id="blazor.web-startup.cs">Blazor.Web Startup.cs</h3>
+</pre></div><h3 id="blazor.web-startup.cs">Blazor.Web Startup.cs</h3>
 <p>Add the server service to <em>Startup.cs</em> in the <em>Blazor.Web</em> project, again through it's <code>IWeatherForecastService</code>.</p>
-<pre><code class="language-csharp">public void ConfigureServices(IServiceCollection services)
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+<span style="color:#569CD6;">public</span> <span style="color:#569CD6;">void</span> ConfigureServices(IServiceCollection services)
 {
     services.AddRazorPages();
     services.AddServerSideBlazor();
     services.AddScoped&lt;IWeatherForecastService, WeatherForecastServerService&gt;();
     .....
 }
-</code></pre>
-<h2 id="building-and-run-the-project">Building and Run the project</h2>
+</pre></div><h2 id="building-and-run-the-project">Building and Run the project</h2>
 <p>The solution should now build and run.</p>
 <p><img src="https://shauncurtis.github.io/articles/assets/Blazor-AllinOne/Blazor-Project.png" alt="Blazor Project" /></p>
 <p><img src="https://shauncurtis.github.io/articles/assets/Blazor-AllinOne/Blazor-Web-Project.png" alt="Blazor.Web Project" /></p>

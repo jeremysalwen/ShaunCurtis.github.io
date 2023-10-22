@@ -81,55 +81,57 @@
 <h2 id="client">Client</h2>
 <p>This is your Web Assembly project.  It's where you put all your Blazor code.</p>
 <p>The project file looks like this:</p>
-<pre><code class="language-xml">&lt;Project Sdk=&quot;Microsoft.NET.Sdk.BlazorWebAssembly&quot;&gt;
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+<span style="color:#808080;">&lt;</span><span style="color:#E6E6E6;">Project</span> <span style="color:#92CAF4;">Sdk</span><span style="color:#808080;">=</span><span style="color:#569CD6;">&quot;</span><span style="color:#569CD6;">Microsoft.NET.Sdk.BlazorWebAssembly</span><span style="color:#569CD6;">&quot;</span><span style="color:#808080;">&gt;</span>
 
-  &lt;PropertyGroup&gt;
-    &lt;TargetFramework&gt;net6.0&lt;/TargetFramework&gt;
-    &lt;Nullable&gt;enable&lt;/Nullable&gt;
-    &lt;ImplicitUsings&gt;enable&lt;/ImplicitUsings&gt;
-  &lt;/PropertyGroup&gt;
+  <span style="color:#808080;">&lt;</span><span style="color:#E6E6E6;">PropertyGroup</span><span style="color:#808080;">&gt;</span>
+    <span style="color:#808080;">&lt;</span><span style="color:#E6E6E6;">TargetFramework</span><span style="color:#808080;">&gt;</span>net6.0<span style="color:#808080;">&lt;/</span><span style="color:#E6E6E6;">TargetFramework</span><span style="color:#808080;">&gt;</span>
+    <span style="color:#808080;">&lt;</span><span style="color:#E6E6E6;">Nullable</span><span style="color:#808080;">&gt;</span>enable<span style="color:#808080;">&lt;/</span><span style="color:#E6E6E6;">Nullable</span><span style="color:#808080;">&gt;</span>
+    <span style="color:#808080;">&lt;</span><span style="color:#E6E6E6;">ImplicitUsings</span><span style="color:#808080;">&gt;</span>enable<span style="color:#808080;">&lt;/</span><span style="color:#E6E6E6;">ImplicitUsings</span><span style="color:#808080;">&gt;</span>
+  <span style="color:#808080;">&lt;/</span><span style="color:#E6E6E6;">PropertyGroup</span><span style="color:#808080;">&gt;</span>
 
-  &lt;ItemGroup&gt;
-    &lt;PackageReference Include=&quot;Microsoft.AspNetCore.Components.WebAssembly&quot; Version=&quot;6.0.0&quot; /&gt;
-    &lt;PackageReference Include=&quot;Microsoft.AspNetCore.Components.WebAssembly.DevServer&quot; Version=&quot;6.0.0&quot; PrivateAssets=&quot;all&quot; /&gt;
-  &lt;/ItemGroup&gt;
+  <span style="color:#808080;">&lt;</span><span style="color:#E6E6E6;">ItemGroup</span><span style="color:#808080;">&gt;</span>
+    <span style="color:#808080;">&lt;</span><span style="color:#E6E6E6;">PackageReference</span> <span style="color:#92CAF4;">Include</span><span style="color:#808080;">=</span><span style="color:#569CD6;">&quot;</span><span style="color:#569CD6;">Microsoft.AspNetCore.Components.WebAssembly</span><span style="color:#569CD6;">&quot;</span> <span style="color:#92CAF4;">Version</span><span style="color:#808080;">=</span><span style="color:#569CD6;">&quot;</span><span style="color:#569CD6;">6.0.0</span><span style="color:#569CD6;">&quot;</span> <span style="color:#808080;">/&gt;</span>
+    <span style="color:#808080;">&lt;</span><span style="color:#E6E6E6;">PackageReference</span> <span style="color:#92CAF4;">Include</span><span style="color:#808080;">=</span><span style="color:#569CD6;">&quot;</span><span style="color:#569CD6;">Microsoft.AspNetCore.Components.WebAssembly.DevServer</span><span style="color:#569CD6;">&quot;</span> <span style="color:#92CAF4;">Version</span><span style="color:#808080;">=</span><span style="color:#569CD6;">&quot;</span><span style="color:#569CD6;">6.0.0</span><span style="color:#569CD6;">&quot;</span> <span style="color:#92CAF4;">PrivateAssets</span><span style="color:#808080;">=</span><span style="color:#569CD6;">&quot;</span><span style="color:#569CD6;">all</span><span style="color:#569CD6;">&quot;</span> <span style="color:#808080;">/&gt;</span>
+  <span style="color:#808080;">&lt;/</span><span style="color:#E6E6E6;">ItemGroup</span><span style="color:#808080;">&gt;</span>
 
-  &lt;ItemGroup&gt;
-    &lt;ProjectReference Include=&quot;..\Shared\BlazorApp1.Shared.csproj&quot; /&gt;
-  &lt;/ItemGroup&gt;
+  <span style="color:#808080;">&lt;</span><span style="color:#E6E6E6;">ItemGroup</span><span style="color:#808080;">&gt;</span>
+    <span style="color:#808080;">&lt;</span><span style="color:#E6E6E6;">ProjectReference</span> <span style="color:#92CAF4;">Include</span><span style="color:#808080;">=</span><span style="color:#569CD6;">&quot;</span><span style="color:#569CD6;">..\Shared\BlazorApp1.Shared.csproj</span><span style="color:#569CD6;">&quot;</span> <span style="color:#808080;">/&gt;</span>
+  <span style="color:#808080;">&lt;/</span><span style="color:#E6E6E6;">ItemGroup</span><span style="color:#808080;">&gt;</span>
 
-&lt;/Project&gt;
-</code></pre>
+<span style="color:#808080;">&lt;/</span><span style="color:#E6E6E6;">Project</span><span style="color:#808080;">&gt;</span>
+</pre></div>
 <p>Note the Sdk is set to <code>Microsoft.NET.Sdk.BlazorWebAssembly</code>, and it has a dependancy on <em>Shared</em>.</p>
 <p>When you compile this project it builds the code and resource files you need to deploy the project to a web browser and run in WASM mode.</p>
 <p>Note that the project has a <code>wwwroot</code> directory that contains the startup page <code>index.html</code> and the Css resources.</p>
 <p><code>index.html</code> looks like this:</p>
-<pre><code class="language-html">&lt;!DOCTYPE html&gt;
-&lt;html lang=&quot;en&quot;&gt;
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+<span style="color:#569CD6;">&lt;!</span><span style="color:#A31515;">DOCTYPE</span> <span style="color:#FF0000;">html</span><span style="color:#569CD6;">&gt;</span>
+<span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">html</span> <span style="color:#FF0000;">lang</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;en&quot;</span><span style="color:#569CD6;">&gt;</span>
 
-&lt;head&gt;
-    &lt;meta charset=&quot;utf-8&quot; /&gt;
-    &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no&quot; /&gt;
-    &lt;title&gt;BlazorApp1&lt;/title&gt;
-    &lt;base href=&quot;/&quot; /&gt;
-    &lt;link href=&quot;css/bootstrap/bootstrap.min.css&quot; rel=&quot;stylesheet&quot; /&gt;
-    &lt;link href=&quot;css/app.css&quot; rel=&quot;stylesheet&quot; /&gt;
-    &lt;link href=&quot;BlazorApp1.Client.styles.css&quot; rel=&quot;stylesheet&quot; /&gt;
-&lt;/head&gt;
+<span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">head</span><span style="color:#569CD6;">&gt;</span>
+    <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">meta</span> <span style="color:#FF0000;">charset</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;utf-8&quot;</span> <span style="color:#569CD6;">/&gt;</span>
+    <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">meta</span> <span style="color:#FF0000;">name</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;viewport&quot;</span> <span style="color:#FF0000;">content</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no&quot;</span> <span style="color:#569CD6;">/&gt;</span>
+    <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">title</span><span style="color:#569CD6;">&gt;</span>BlazorApp1<span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">title</span><span style="color:#569CD6;">&gt;</span>
+    <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">base</span> <span style="color:#FF0000;">href</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;/&quot;</span> <span style="color:#569CD6;">/&gt;</span>
+    <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">link</span> <span style="color:#FF0000;">href</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;css/bootstrap/bootstrap.min.css&quot;</span> <span style="color:#FF0000;">rel</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;stylesheet&quot;</span> <span style="color:#569CD6;">/&gt;</span>
+    <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">link</span> <span style="color:#FF0000;">href</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;css/app.css&quot;</span> <span style="color:#FF0000;">rel</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;stylesheet&quot;</span> <span style="color:#569CD6;">/&gt;</span>
+    <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">link</span> <span style="color:#FF0000;">href</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;BlazorApp1.Client.styles.css&quot;</span> <span style="color:#FF0000;">rel</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;stylesheet&quot;</span> <span style="color:#569CD6;">/&gt;</span>
+<span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">head</span><span style="color:#569CD6;">&gt;</span>
 
-&lt;body&gt;
-    &lt;div id=&quot;app&quot;&gt;Loading...&lt;/div&gt;
+<span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">body</span><span style="color:#569CD6;">&gt;</span>
+    <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">div</span> <span style="color:#FF0000;">id</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;app&quot;</span><span style="color:#569CD6;">&gt;</span>Loading...<span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">div</span><span style="color:#569CD6;">&gt;</span>
 
-    &lt;div id=&quot;blazor-error-ui&quot;&gt;
+    <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">div</span> <span style="color:#FF0000;">id</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;blazor-error-ui&quot;</span><span style="color:#569CD6;">&gt;</span>
         An unhandled error has occurred.
-        &lt;a href=&quot;&quot; class=&quot;reload&quot;&gt;Reload&lt;/a&gt;
-        &lt;a class=&quot;dismiss&quot;&gt;🗙&lt;/a&gt;
-    &lt;/div&gt;
-    &lt;script src=&quot;_framework/blazor.webassembly.js&quot;&gt;&lt;/script&gt;
-&lt;/body&gt;
+        <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">a</span> <span style="color:#FF0000;">href</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;&quot; class=&quot;reload&quot;</span><span style="color:#569CD6;">&gt;</span>Reload<span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">a</span><span style="color:#569CD6;">&gt;</span>
+        <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">a</span> <span style="color:#FF0000;">class</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;dismiss&quot;</span><span style="color:#569CD6;">&gt;</span>&#128473;<span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">a</span><span style="color:#569CD6;">&gt;</span>
+    <span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">div</span><span style="color:#569CD6;">&gt;</span>
+    <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">script</span> <span style="color:#FF0000;">src</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;_framework/blazor.webassembly.js&quot;</span><span style="color:#569CD6;">&gt;</span><span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">script</span><span style="color:#569CD6;">&gt;</span>
+<span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">body</span><span style="color:#569CD6;">&gt;</span>
 
-&lt;/html&gt;
-</code></pre>
+<span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">html</span><span style="color:#569CD6;">&gt;</span>
+</pre></div>
 <p>More shortly on how this fires up the WASM SPA.</p>
 <h2 id="shared">Shared</h2>
 <p>Shared is a library project.  It contains code shared between the Client and Server projects: the <code>WeatherForecast</code> data class.  It's used in the application and by the API controller.</p>
@@ -140,44 +142,46 @@
 <li>Provide the controllers for API calls from the Client project.</li>
 </ol>
 <p>The project looks like this:</p>
-<pre><code class="language-xml">&lt;Project Sdk=&quot;Microsoft.NET.Sdk.Web&quot;&gt;
-  &lt;PropertyGroup&gt;
-    &lt;TargetFramework&gt;net6.0&lt;/TargetFramework&gt;
-    &lt;Nullable&gt;enable&lt;/Nullable&gt;
-    &lt;ImplicitUsings&gt;enable&lt;/ImplicitUsings&gt;
-  &lt;/PropertyGroup&gt;
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+<span style="color:#808080;">&lt;</span><span style="color:#E6E6E6;">Project</span> <span style="color:#92CAF4;">Sdk</span><span style="color:#808080;">=</span><span style="color:#569CD6;">&quot;</span><span style="color:#569CD6;">Microsoft.NET.Sdk.Web</span><span style="color:#569CD6;">&quot;</span><span style="color:#808080;">&gt;</span>
+  <span style="color:#808080;">&lt;</span><span style="color:#E6E6E6;">PropertyGroup</span><span style="color:#808080;">&gt;</span>
+    <span style="color:#808080;">&lt;</span><span style="color:#E6E6E6;">TargetFramework</span><span style="color:#808080;">&gt;</span>net6.0<span style="color:#808080;">&lt;/</span><span style="color:#E6E6E6;">TargetFramework</span><span style="color:#808080;">&gt;</span>
+    <span style="color:#808080;">&lt;</span><span style="color:#E6E6E6;">Nullable</span><span style="color:#808080;">&gt;</span>enable<span style="color:#808080;">&lt;/</span><span style="color:#E6E6E6;">Nullable</span><span style="color:#808080;">&gt;</span>
+    <span style="color:#808080;">&lt;</span><span style="color:#E6E6E6;">ImplicitUsings</span><span style="color:#808080;">&gt;</span>enable<span style="color:#808080;">&lt;/</span><span style="color:#E6E6E6;">ImplicitUsings</span><span style="color:#808080;">&gt;</span>
+  <span style="color:#808080;">&lt;/</span><span style="color:#E6E6E6;">PropertyGroup</span><span style="color:#808080;">&gt;</span>
 
-  &lt;ItemGroup&gt;
-    &lt;PackageReference Include=&quot;Microsoft.AspNetCore.Components.WebAssembly.Server&quot; Version=&quot;6.0.0&quot; /&gt;
-  &lt;/ItemGroup&gt;
+  <span style="color:#808080;">&lt;</span><span style="color:#E6E6E6;">ItemGroup</span><span style="color:#808080;">&gt;</span>
+    <span style="color:#808080;">&lt;</span><span style="color:#E6E6E6;">PackageReference</span> <span style="color:#92CAF4;">Include</span><span style="color:#808080;">=</span><span style="color:#569CD6;">&quot;</span><span style="color:#569CD6;">Microsoft.AspNetCore.Components.WebAssembly.Server</span><span style="color:#569CD6;">&quot;</span> <span style="color:#92CAF4;">Version</span><span style="color:#808080;">=</span><span style="color:#569CD6;">&quot;</span><span style="color:#569CD6;">6.0.0</span><span style="color:#569CD6;">&quot;</span> <span style="color:#808080;">/&gt;</span>
+  <span style="color:#808080;">&lt;/</span><span style="color:#E6E6E6;">ItemGroup</span><span style="color:#808080;">&gt;</span>
 
-  &lt;ItemGroup&gt;
-    &lt;ProjectReference Include=&quot;..\Client\BlazorApp1.Client.csproj&quot; /&gt;
-    &lt;ProjectReference Include=&quot;..\Shared\BlazorApp1.Shared.csproj&quot; /&gt;
-  &lt;/ItemGroup&gt;
-&lt;/Project&gt;
-</code></pre>
+  <span style="color:#808080;">&lt;</span><span style="color:#E6E6E6;">ItemGroup</span><span style="color:#808080;">&gt;</span>
+    <span style="color:#808080;">&lt;</span><span style="color:#E6E6E6;">ProjectReference</span> <span style="color:#92CAF4;">Include</span><span style="color:#808080;">=</span><span style="color:#569CD6;">&quot;</span><span style="color:#569CD6;">..\Client\BlazorApp1.Client.csproj</span><span style="color:#569CD6;">&quot;</span> <span style="color:#808080;">/&gt;</span>
+    <span style="color:#808080;">&lt;</span><span style="color:#E6E6E6;">ProjectReference</span> <span style="color:#92CAF4;">Include</span><span style="color:#808080;">=</span><span style="color:#569CD6;">&quot;</span><span style="color:#569CD6;">..\Shared\BlazorApp1.Shared.csproj</span><span style="color:#569CD6;">&quot;</span> <span style="color:#808080;">/&gt;</span>
+  <span style="color:#808080;">&lt;/</span><span style="color:#E6E6E6;">ItemGroup</span><span style="color:#808080;">&gt;</span>
+<span style="color:#808080;">&lt;/</span><span style="color:#E6E6E6;">Project</span><span style="color:#808080;">&gt;</span>
+</pre></div>
 <p><code>Program</code> looks like this:</p>
-<pre><code class="language-csharp">using Microsoft.AspNetCore.ResponseCompression;
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+<span style="color:#569CD6;">using</span> Microsoft.AspNetCore.ResponseCompression;
 
-var builder = WebApplication.CreateBuilder(args);
+<span style="color:#569CD6;">var</span> builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
+<span style="color:#57A64A;">// Add services to the container.</span>
 
 builder.Services.AddControllersWithViews();
 builder.Services.AddRazorPages();
 
-var app = builder.Build();
+<span style="color:#569CD6;">var</span> app = builder.Build();
 
-// Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
+<span style="color:#57A64A;">// Configure the HTTP request pipeline.</span>
+<span style="color:#569CD6;">if</span> (app.Environment.IsDevelopment())
 {
     app.UseWebAssemblyDebugging();
 }
-else
+<span style="color:#569CD6;">else</span>
 {
-    app.UseExceptionHandler(&quot;/Error&quot;);
-    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
+    app.UseExceptionHandler(<span style="color:#D69D85;">&quot;/Error&quot;</span>);
+    <span style="color:#57A64A;">// The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.</span>
     app.UseHsts();
 }
 
@@ -190,10 +194,10 @@ app.UseRouting();
 
 app.MapRazorPages();
 app.MapControllers();
-app.MapFallbackToFile(&quot;index.html&quot;);
+app.MapFallbackToFile(<span style="color:#D69D85;">&quot;index.html&quot;</span>);
 
 app.Run();
-</code></pre>
+</pre></div>
 <p><code>app.UseBlazorFrameworkFiles()</code> adds the middleware to map and process the requests for the WASM files from any <code>BlazorWebAssembly</code> Sdk dependant project.  The WASM files are mapped to the <code>_framework</code> virtual directory and any <code>wwwroot</code> files in the <code>BlazorWebAssembly</code> project are mapping into the server's root folder.  In this instance the <em>Server</em> project doesn't have it's own <code>wwwroot</code> folder.</p>
 <p><code>app.MapControllers()</code> maps any controllers in the <em>Server</em> project.  In this case the <code>WeatherForecastController</code>.</p>
 <p><code>app.MapFallbackToFile(&quot;index.html&quot;)</code> points to the <code>BlazorWebAssembly</code> project <code>index.html</code> as the default site page.</p>

@@ -76,186 +76,198 @@
             <div><small>What Async patterns to use for UI events in Blazor.</small></div></div>
     <p>This short post describes how Blazor handles UI events and the programming patterns you should use.</p>
 <p>The classic asynchronous pattern for events is the &quot;fire and forget&quot; pattern:</p>
-<pre><code class="language-csharp">void EventHandlerMethod(args)
-// or
-async void EventHandlerMethod(args)
-</code></pre>
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+<span style="color:#569CD6;">void</span> EventHandlerMethod(args)
+<span style="color:#57A64A;">// or</span>
+<span style="color:#569CD6;">async</span> <span style="color:#569CD6;">void</span> EventHandlerMethod(args)
+</pre></div>
 <p>The the event caller doesn't expect a return, so the event handler method should return a <code>void</code>.</p>
 <p>Blazor UI <em>events</em> aren't fire and forget.  They're loaded by the Blazor runtime onto the <code>SynchronisationContext</code> thread and look something like:</p>
-<pre><code class="language-csharp">var task = InvokeAsync(EventMethod);
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+<span style="color:#569CD6;">var</span> task = InvokeAsync(EventMethod);
 StateHasChanged();
-if (!task.IsCompleted)
+<span style="color:#569CD6;">if</span> (!task.IsCompleted)
 {
-    await task;
+    <span style="color:#569CD6;">await</span> task;
     StateHasChanged();
 }
-</code></pre>
+</pre></div>
 <p>The event handler is called and awaited and then <code>StateHasChanged</code> is called on the component that owns the event.  This ensures that whatever actions the event caused are captured in the re-render event.</p>
 <h2 id="test.razor">Test.Razor</h2>
 <p>We need a test page with some support code:</p>
-<pre><code class="language-html">&lt;div class=&quot;container m-2 px-3 p-t bg-light&quot;&gt;
-    &lt;div class=&quot;row pt-2&quot;&gt;
-        &lt;div class=&quot;col-12&quot;&gt;
-            &lt;h3&gt;Event Buttons&lt;/h3&gt;
-        &lt;/div&gt;
-    &lt;/div&gt;
-    &lt;div class=&quot;row pt-2&quot;&gt;
-        &lt;div class=&quot;col-6&quot;&gt;
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+<span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">div</span> <span style="color:#FF0000;">class</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;container m-2 px-3 p-t bg-light&quot;</span><span style="color:#569CD6;">&gt;</span>
+    <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">div</span> <span style="color:#FF0000;">class</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;row pt-2&quot;</span><span style="color:#569CD6;">&gt;</span>
+        <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">div</span> <span style="color:#FF0000;">class</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;col-12&quot;</span><span style="color:#569CD6;">&gt;</span>
+            <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">h3</span><span style="color:#569CD6;">&gt;</span>Event Buttons<span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">h3</span><span style="color:#569CD6;">&gt;</span>
+        <span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">div</span><span style="color:#569CD6;">&gt;</span>
+    <span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">div</span><span style="color:#569CD6;">&gt;</span>
+    <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">div</span> <span style="color:#FF0000;">class</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;row pt-2&quot;</span><span style="color:#569CD6;">&gt;</span>
+        <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">div</span> <span style="color:#FF0000;">class</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;col-6&quot;</span><span style="color:#569CD6;">&gt;</span>
             @value1
-        &lt;/div&gt;
-        &lt;div class=&quot;col-6&quot;&gt;
-            &lt;button class=&quot;btn btn-primary&quot; @onclick=&quot;this.OnClick&quot;&gt;Click&lt;/button&gt;
-        &lt;/div&gt;
-    &lt;/div&gt;
-&lt;/div&gt;
-</code></pre>
-<pre><code class="language-csharp">@code {
-    private string value1 = &quot;not set&quot;;
+        <span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">div</span><span style="color:#569CD6;">&gt;</span>
+        <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">div</span> <span style="color:#FF0000;">class</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;col-6&quot;</span><span style="color:#569CD6;">&gt;</span>
+            <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">button</span> <span style="color:#FF0000;">class</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;btn btn-primary&quot; @onclick=&quot;this.OnClick&quot;</span><span style="color:#569CD6;">&gt;</span>Click<span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">button</span><span style="color:#569CD6;">&gt;</span>
+        <span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">div</span><span style="color:#569CD6;">&gt;</span>
+    <span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">div</span><span style="color:#569CD6;">&gt;</span>
+<span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">div</span><span style="color:#569CD6;">&gt;</span>
+</pre></div><div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+@code {
+    <span style="color:#569CD6;">private</span> <span style="color:#569CD6;">string</span> value1 = <span style="color:#D69D85;">&quot;not set&quot;</span>;
 }
-</code></pre>
-<h2 id="the-void-pattern">The Void Pattern</h2>
+</pre></div><h2 id="the-void-pattern">The Void Pattern</h2>
 <p>Let's look at a simple void pattern example that works:</p>
-<pre><code class="language-csharp">private void OnClick(MouseEventArgs e)
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+<span style="color:#569CD6;">private</span> <span style="color:#569CD6;">void</span> OnClick(MouseEventArgs e)
 {
-    value1 = &quot;Onclick started&quot;;
-        // run some synchronous code
-    value1 = &quot;Onclick complete&quot;;
+    value1 = <span style="color:#D69D85;">&quot;Onclick started&quot;</span>;
+        <span style="color:#57A64A;">// run some synchronous code</span>
+    value1 = <span style="color:#D69D85;">&quot;Onclick complete&quot;</span>;
 }
-</code></pre>
+</pre></div>
 <p>Why?  All the code is synchronous.  The event handler completes before <code>StateHasChanged</code> is called.
 This works fine, <code>Value1</code> has the correct value.</p>
 <p>Now lets add an async method into <code>OnClick</code> that still works.</p>
-<pre><code class="language-csharp">@code {
-    private async void Onclick(MouseEventArgs e)
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+@code {
+    <span style="color:#569CD6;">private</span> <span style="color:#569CD6;">async</span> <span style="color:#569CD6;">void</span> Onclick(MouseEventArgs e)
     {
-        value1 = &quot;Onclick started&quot;;
-        await DoSomethingAsync();
-        value1 = &quot;Onclick complete&quot;;
+        value1 = <span style="color:#D69D85;">&quot;Onclick started&quot;</span>;
+        <span style="color:#569CD6;">await</span> DoSomethingAsync();
+        value1 = <span style="color:#D69D85;">&quot;Onclick complete&quot;</span>;
     }
 
-    private Task DoSomethingAsync()
+    <span style="color:#569CD6;">private</span> Task DoSomethingAsync()
     {
-        // some sync code
-        return Task.CompletedTask;
+        <span style="color:#57A64A;">// some sync code</span>
+        <span style="color:#569CD6;">return</span> Task.CompletedTask;
     }
 }
-</code></pre>
+</pre></div>
 <p>Why?  All the code is still synchronous.  <code>DoSomethingAsync</code> may return a <code>Task</code> but it doesn't yield.  The event handler completes before <code>StateHasChanged</code> is called.</p>
 <p>Finally let's make <code>DoSomethingAsync</code> yield - such as doing an API call or getting data from a database - and see the problem.</p>
-<pre><code class="language-csharp">private async void OnClick(MouseEventArgs e)
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+<span style="color:#569CD6;">private</span> <span style="color:#569CD6;">async</span> <span style="color:#569CD6;">void</span> OnClick(MouseEventArgs e)
 {
-    value1 = &quot;Onclick started&quot;;
-    await DoSomethingAsync();
-    value1 = &quot;Onclick complete&quot;;
+    value1 = <span style="color:#D69D85;">&quot;Onclick started&quot;</span>;
+    <span style="color:#569CD6;">await</span> DoSomethingAsync();
+    value1 = <span style="color:#D69D85;">&quot;Onclick complete&quot;</span>;
 }
 
-private async Task DoSomethingAsync()
-    =&gt; await Task.Yield();
-</code></pre>
+<span style="color:#569CD6;">private</span> <span style="color:#569CD6;">async</span> Task DoSomethingAsync()
+    =&gt; <span style="color:#569CD6;">await</span> Task.Yield();
+</pre></div>
 <p>Why?  <code>DoSomethingAsync</code> yields back to <code>OnClick</code> before it completes.  <code>OnClick</code> yields back to the Blazor event which has nothing to wait on - <code>OnClick</code> returned a <code>void</code> - so runs to completion and calls <code>StateHasChanged</code>.  The Blazor event completes before <code>OnClick</code> completes.</p>
 <p>The temptation is to add a call the <code>StateHasChanged</code> like this:</p>
-<pre><code class="language-csharp">private async void OnClick(MouseEventArgs e)
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+<span style="color:#569CD6;">private</span> <span style="color:#569CD6;">async</span> <span style="color:#569CD6;">void</span> OnClick(MouseEventArgs e)
 {
-    value1 = &quot;Onclick started&quot;;
-    await DoSomethingAsync();
-    value1 = &quot;Onclick complete&quot;;
+    value1 = <span style="color:#D69D85;">&quot;Onclick started&quot;</span>;
+    <span style="color:#569CD6;">await</span> DoSomethingAsync();
+    value1 = <span style="color:#D69D85;">&quot;Onclick complete&quot;</span>;
     StateHasChanged();
 }
-</code></pre>
+</pre></div>
 <p>Which is not the eight answer!</p>
 <h2 id="the-task-pattern">The Task Pattern</h2>
 <p>This is the final async code above changed so <code>OnClick</code> returns a Task.  This now works correctly.</p>
-<pre><code class="language-csharp">private async Task OnClick(MouseEventArgs e)
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+<span style="color:#569CD6;">private</span> <span style="color:#569CD6;">async</span> Task OnClick(MouseEventArgs e)
 {
-    value1 = &quot;Onclick started&quot;;
-    await DoSomethingAsync();
-    value1 = &quot;Onclick complete&quot;;
+    value1 = <span style="color:#D69D85;">&quot;Onclick started&quot;</span>;
+    <span style="color:#569CD6;">await</span> DoSomethingAsync();
+    value1 = <span style="color:#D69D85;">&quot;Onclick complete&quot;</span>;
 }
 
-private async Task DoSomethingAsync()
-    =&gt; await Task.Yield();
-</code></pre>
+<span style="color:#569CD6;">private</span> <span style="color:#569CD6;">async</span> Task DoSomethingAsync()
+    =&gt; <span style="color:#569CD6;">await</span> Task.Yield();
+</pre></div>
 <p>Why? The Blazor event now has a Task to wait on and only runs <code>StateHasChanged</code> when <code>OnClick</code> returns a completed Task.</p>
 <h2 id="the-await-task-pattern">The Await Task Pattern</h2>
 <p>You will see the following pattern used on html element events:</p>
-<pre><code class="language-csharp">&lt;button class=&quot;btn btn-warning&quot; @onclick=&quot;async (e) =&gt; await this.OnClick(e)&quot;&gt;Click&lt;/button&gt;
-</code></pre>
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+&lt;button <span style="color:#569CD6;">class</span>=<span style="color:#D69D85;">&quot;btn btn-warning&quot;</span> @onclick=<span style="color:#D69D85;">&quot;async (e) =&gt; await this.OnClick(e)&quot;</span>&gt;Click&lt;/button&gt;
+</pre></div>
 <p>This isn't required.  It's overkill, wrapping a <code>Task</code> in a <code>Task</code>.</p>
 <h2 id="component-events-and-eventcallbacks">Component Events and EventCallbacks</h2>
 <p>A common error is:</p>
-<pre><code class="language-csharp">&lt;MyComponent @onclick=&quot;() =&gt; OnClick()&quot;&gt;Hello&lt;MyComponent&gt;
-</code></pre>
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+&lt;MyComponent @onclick=<span style="color:#D69D85;">&quot;() =&gt; OnClick()&quot;</span>&gt;Hello&lt;MyComponent&gt;
+</pre></div>
 <p>Components aren't html elements.  There's no <code>OnClick</code> event on <code>MyComponent</code> unless you've created an EventCallback.</p>
 <p>The code below is for a simple button control.</p>
-<pre><code class="language-csharp">// UIButton.razor
-&lt;button class=&quot;btn btn-warning&quot; @onclick=&quot;this.BtnClick&quot;&gt;@ChildContent&lt;/button&gt;
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+<span style="color:#57A64A;">// UIButton.razor</span>
+&lt;button <span style="color:#569CD6;">class</span>=<span style="color:#D69D85;">&quot;btn btn-warning&quot;</span> @onclick=<span style="color:#D69D85;">&quot;this.BtnClick&quot;</span>&gt;@ChildContent&lt;/button&gt;
 
 @code {
-    [Parameter] public EventCallback&lt;MouseEventArgs&gt; OnClick { get; set; }
-    [Parameter] public RenderFragment ChildContent { get; set; }
+    [Parameter] <span style="color:#569CD6;">public</span> EventCallback&lt;MouseEventArgs&gt; OnClick { <span style="color:#569CD6;">get</span>; <span style="color:#569CD6;">set</span>; }
+    [Parameter] <span style="color:#569CD6;">public</span> RenderFragment ChildContent { <span style="color:#569CD6;">get</span>; <span style="color:#569CD6;">set</span>; }
 
-    private async Task BtnClick(MouseEventArgs e)
-        =&gt; await OnClick.InvokeAsync(e);
+    <span style="color:#569CD6;">private</span> <span style="color:#569CD6;">async</span> Task BtnClick(MouseEventArgs e)
+        =&gt; <span style="color:#569CD6;">await</span> OnClick.InvokeAsync(e);
 }
-</code></pre>
+</pre></div>
 <p>Note that the <code>BtnClick</code> event handler uses the <code>Task</code> pattern, invokes the EventCallback asynchronously and waits it.</p>
 <p>The <em>Test.razor</em> code looks like this:</p>
-<pre><code class="language-html">&lt;div class=&quot;row pt-2&quot;&gt;
-    &lt;div class=&quot;col-6&quot;&gt;
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+<span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">div</span> <span style="color:#FF0000;">class</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;row pt-2&quot;</span><span style="color:#569CD6;">&gt;</span>
+    <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">div</span> <span style="color:#FF0000;">class</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;col-6&quot;</span><span style="color:#569CD6;">&gt;</span>
         @value5
-    &lt;/div&gt;
-    &lt;div class=&quot;col-6&quot;&gt;
-        &lt;UIButton OnClick=&quot;OnclickComponent&quot;&gt;click me&lt;/UIButton&gt;
-    &lt;/div&gt;
-&lt;/div&gt;
-</code></pre>
-<pre><code class="language-csharp">private string value5 = &quot;notset&quot;;
+    <span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">div</span><span style="color:#569CD6;">&gt;</span>
+    <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">div</span> <span style="color:#FF0000;">class</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;col-6&quot;</span><span style="color:#569CD6;">&gt;</span>
+        <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">UIButton</span> <span style="color:#FF0000;">OnClick</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;OnclickComponent&quot;</span><span style="color:#569CD6;">&gt;</span>click me<span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">UIButton</span><span style="color:#569CD6;">&gt;</span>
+    <span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">div</span><span style="color:#569CD6;">&gt;</span>
+<span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">div</span><span style="color:#569CD6;">&gt;</span>
+</pre></div><div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+<span style="color:#569CD6;">private</span> <span style="color:#569CD6;">string</span> value5 = <span style="color:#D69D85;">&quot;notset&quot;</span>;
 
-private async Task OnclickComponent(MouseEventArgs e)
+<span style="color:#569CD6;">private</span> <span style="color:#569CD6;">async</span> Task OnclickComponent(MouseEventArgs e)
 {
-    value5 = &quot;Onclick started&quot;;
-    await Task.Delay(2000);
-    await DoSomethingAsync();
-    value5 = &quot;Onclick complete&quot;;
+    value5 = <span style="color:#D69D85;">&quot;Onclick started&quot;</span>;
+    <span style="color:#569CD6;">await</span> Task.Delay(<span style="color:#B5CEA8;">2000</span>);
+    <span style="color:#569CD6;">await</span> DoSomethingAsync();
+    value5 = <span style="color:#D69D85;">&quot;Onclick complete&quot;</span>;
 }
-</code></pre>
+</pre></div>
 <p>The parent <code>OnclickComponent</code> delegate registered with the <code>OnClick</code> EventCallback passes an awaitable Task back to the component.  It's <code>async</code> and <code>Task</code> based all the way.</p>
 <h2 id="when-to-use-the-void-pattern">When to use the Void Pattern</h2>
 <p>Only use the void pattern on true class based events.  The code below shows a simple service which generates a new randon number when <code>NewNumber</code> is called and triggers the <code>NumberChanged</code> event when the number changes.</p>
-<pre><code class="language-csharp">public class RandomNumberService
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+<span style="color:#569CD6;">public</span> <span style="color:#569CD6;">class</span> RandomNumberService
 {
-    public int Value =&gt; _Value;
-    private int _Value = 0;
-    public event EventHandler NumberChanged;
+    <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">int</span> Value =&gt; _Value;
+    <span style="color:#569CD6;">private</span> <span style="color:#569CD6;">int</span> _Value = <span style="color:#B5CEA8;">0</span>;
+    <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">event</span> EventHandler NumberChanged;
 
-    public void NewNumber()
+    <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">void</span> NewNumber()
     {
-        var rand = new Random();
-        NotifyNumberChanged(rand.Next(0, 100));
+        <span style="color:#569CD6;">var</span> rand = <span style="color:#569CD6;">new</span> Random();
+        NotifyNumberChanged(rand.Next(<span style="color:#B5CEA8;">0</span>, <span style="color:#B5CEA8;">100</span>));
     }
 
-    public void NotifyNumberChanged(int value)
+    <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">void</span> NotifyNumberChanged(<span style="color:#569CD6;">int</span> value)
     {
-        if (!value.Equals(_Value))
+        <span style="color:#569CD6;">if</span> (!value.Equals(_Value))
         {
             _Value = value;
-            // only trigger event if it has delegates registered
-            NumberChanged?.Invoke(this, EventArgs.Empty);
+            <span style="color:#57A64A;">// only trigger event if it has delegates registered</span>
+            NumberChanged?.Invoke(<span style="color:#569CD6;">this</span>, EventArgs.Empty);
         }
     }
 }
-</code></pre>
+</pre></div>
 <p>And the code that registers for the event.  Note that <code>OnNumberChange</code> invokes <code>StateHasChanged</code> rather than calling it directly.  You don't know which thread the service code is being executed on, so you need to ensure <code>StateHasChanged</code> is run on the UI thread.  <code>InvokeAsync</code> - a public <code>ComponentBase</code> method - ensures that it is.</p>
-<pre><code class="language-csharp">protected override Task OnInitializedAsync()
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+<span style="color:#569CD6;">protected</span> <span style="color:#569CD6;">override</span> Task OnInitializedAsync()
 {
-    this.RdmService.NumberChanged += this.OnNumberChange;
-    return base.OnInitializedAsync();
+    <span style="color:#569CD6;">this</span>.RdmService.NumberChanged += <span style="color:#569CD6;">this</span>.OnNumberChange;
+    <span style="color:#569CD6;">return</span> <span style="color:#569CD6;">base</span>.OnInitializedAsync();
 }
 
-private void OnNumberChange(object sender, EventArgs e)
-    =&gt; this.InvokeAsync(StateHasChanged);
-</code></pre>
-</div></div></div></body></html>
+<span style="color:#569CD6;">private</span> <span style="color:#569CD6;">void</span> OnNumberChange(<span style="color:#569CD6;">object</span> sender, EventArgs e)
+    =&gt; <span style="color:#569CD6;">this</span>.InvokeAsync(StateHasChanged);
+</pre></div></div></div></div></body></html>
 
 
 

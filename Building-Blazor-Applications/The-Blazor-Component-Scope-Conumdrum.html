@@ -98,59 +98,61 @@
 <h2 id="componentserviceprovider-in-action">ComponentServiceProvider in Action</h2>
 <p>Here's a simple implementation to demonstate it in action.  The detailed design is in the next section.</p>
 <p>A simple Timer Service defined by an interface.</p>
-<pre><code class="language-csharp">public interface ITimeService
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+<span style="color:#569CD6;">public</span> <span style="color:#569CD6;">interface</span> ITimeService
 {
-    public string Message { get;}
-    public event EventHandler? TimeChanged;
-    public void UpdateTime();
+    <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">string</span> Message { <span style="color:#569CD6;">get</span>;}
+    <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">event</span> EventHandler? TimeChanged;
+    <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">void</span> UpdateTime();
 }
-</code></pre>
+</pre></div>
 <p>The concrete service with debug code to see instances created and disposed correctly.</p>
-<pre><code class="language-csharp">public class TimeService : ITimeService, IDisposable, IAsyncDisposable
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+<span style="color:#569CD6;">public</span> <span style="color:#569CD6;">class</span> TimeService : ITimeService, IDisposable, IAsyncDisposable
 {
-    public readonly Guid InstanceId = Guid.NewGuid();
-    private bool asyncdisposedValue;
-    private bool disposedValue;
+    <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">readonly</span> Guid InstanceId = Guid.NewGuid();
+    <span style="color:#569CD6;">private</span> <span style="color:#569CD6;">bool</span> asyncdisposedValue;
+    <span style="color:#569CD6;">private</span> <span style="color:#569CD6;">bool</span> disposedValue;
 
-    public string Message { get; private set; } = DateTime.Now.ToLongTimeString();
-    public event EventHandler? TimeChanged;
+    <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">string</span> Message { <span style="color:#569CD6;">get</span>; <span style="color:#569CD6;">private</span> <span style="color:#569CD6;">set</span>; } = DateTime.Now.ToLongTimeString();
+    <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">event</span> EventHandler? TimeChanged;
 
-    public TimeService()
-        =&gt; Debug.WriteLine($&quot;TimeService - instance {InstanceId} created&quot;);
+    <span style="color:#569CD6;">public</span> TimeService()
+        =&gt; Debug.WriteLine($<span style="color:#D69D85;">&quot;TimeService - instance {InstanceId} created&quot;</span>);
 
-    public void UpdateTime()
+    <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">void</span> UpdateTime()
     {
         Message = DateTime.Now.ToLongTimeString();
-        TimeChanged?.Invoke(this, EventArgs.Empty);
+        TimeChanged?.Invoke(<span style="color:#569CD6;">this</span>, EventArgs.Empty);
     }
 
-    public ValueTask DisposeAsync()
+    <span style="color:#569CD6;">public</span> ValueTask DisposeAsync()
     {
-        if (!asyncdisposedValue)
-            Debug.WriteLine($&quot;TimeService - instance {InstanceId} async disposed&quot;);
+        <span style="color:#569CD6;">if</span> (!asyncdisposedValue)
+            Debug.WriteLine($<span style="color:#D69D85;">&quot;TimeService - instance {InstanceId} async disposed&quot;</span>);
 
-        asyncdisposedValue = true;
-        return ValueTask.CompletedTask;
+        asyncdisposedValue = <span style="color:#569CD6;">true</span>;
+        <span style="color:#569CD6;">return</span> ValueTask.CompletedTask;
     }
 
-    protected virtual void Dispose(bool disposing)
+    <span style="color:#569CD6;">protected</span> <span style="color:#569CD6;">virtual</span> <span style="color:#569CD6;">void</span> Dispose(<span style="color:#569CD6;">bool</span> disposing)
     {
-        if (!disposedValue)
+        <span style="color:#569CD6;">if</span> (!disposedValue)
         {
-            if (disposing)
-                Debug.WriteLine($&quot;TimeService - instance {InstanceId} disposed&quot;);
+            <span style="color:#569CD6;">if</span> (disposing)
+                Debug.WriteLine($<span style="color:#D69D85;">&quot;TimeService - instance {InstanceId} disposed&quot;</span>);
 
-            disposedValue = true;
+            disposedValue = <span style="color:#569CD6;">true</span>;
         }
     }
 
-    public void Dispose()
+    <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">void</span> Dispose()
     {
-        Dispose(disposing: true);
-        GC.SuppressFinalize(this);
+        Dispose(disposing: <span style="color:#569CD6;">true</span>);
+        GC.SuppressFinalize(<span style="color:#569CD6;">this</span>);
     }
 }
-</code></pre>
+</pre></div>
 <p>A set of components to display and update the <code>TimeService</code>. This is <code>AdvancedTimeStamp.razor</code>.  Note:</p>
 <ol>
 <li>The capture of a cascaded <code>Guid</code> named <code>ComponentServiceId</code>.</li>
@@ -158,71 +160,73 @@
 <li>The private <code>ITimerService</code> global variable.</li>
 <li>The call to <code>serviceProvider.GetService&lt;ITimeService&gt;(ComponentServiceId)</code> to get the <code>ITimerService</code> instance.</li>
 </ol>
-<pre><code class="language-csharp">@namespace Blazr.UI
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+@<span style="color:#569CD6;">namespace</span> Blazr.UI
 @implements IDisposable
 
-&lt;div class=&quot;bg-light p-2 m-2&quot;&gt;
+&lt;div <span style="color:#569CD6;">class</span>=<span style="color:#D69D85;">&quot;bg-light p-2 m-2&quot;</span>&gt;
 
     &lt;h3&gt;Advanced TimeStamp Component&lt;/h3&gt;
 
-    &lt;div class=&quot;m-2&quot;&gt;
-        &lt;button class=&quot;btn btn-primary&quot; @onclick=Clicked&gt;Update Timestamp&lt;/button&gt;
+    &lt;div <span style="color:#569CD6;">class</span>=<span style="color:#D69D85;">&quot;m-2&quot;</span>&gt;
+        &lt;button <span style="color:#569CD6;">class</span>=<span style="color:#D69D85;">&quot;btn btn-primary&quot;</span> @onclick=Clicked&gt;Update Timestamp&lt;/button&gt;
     &lt;/div&gt;
 
     &lt;div&gt;
-        @(timeService?.Message ?? &quot;No message set.&quot;)
+        @(timeService?.Message ?? <span style="color:#D69D85;">&quot;No message set.&quot;</span>)
     &lt;/div&gt;
 
-    &lt;div class=&quot;mt-2 bg-dark text-white&quot;&gt;
-        Parameters Set at at @this.ParametersChangedTimeStamp
+    &lt;div <span style="color:#569CD6;">class</span>=<span style="color:#D69D85;">&quot;mt-2 bg-dark text-white&quot;</span>&gt;
+        Parameters Set at at @<span style="color:#569CD6;">this</span>.ParametersChangedTimeStamp
     &lt;/div&gt;
 
 &lt;/div&gt;
 
 @code {
-    [CascadingParameter(Name = &quot;ComponentServiceId&quot;)] private Guid ComponentServiceId { get; set; }
+    [CascadingParameter(Name = <span style="color:#D69D85;">&quot;ComponentServiceId&quot;</span>)] <span style="color:#569CD6;">private</span> Guid ComponentServiceId { <span style="color:#569CD6;">get</span>; <span style="color:#569CD6;">set</span>; }
 
-    [Inject] private IComponentServiceProvider serviceProvider { get; set; } = default!;
+    [Inject] <span style="color:#569CD6;">private</span> IComponentServiceProvider serviceProvider { <span style="color:#569CD6;">get</span>; <span style="color:#569CD6;">set</span>; } = <span style="color:#569CD6;">default</span>!;
 
-    private ITimeService? timeService;
-    private string ParametersChangedTimeStamp = &quot;Not Set&quot;;
+    <span style="color:#569CD6;">private</span> ITimeService? timeService;
+    <span style="color:#569CD6;">private</span> <span style="color:#569CD6;">string</span> ParametersChangedTimeStamp = <span style="color:#D69D85;">&quot;Not Set&quot;</span>;
 
-    protected override void OnInitialized()
+    <span style="color:#569CD6;">protected</span> <span style="color:#569CD6;">override</span> <span style="color:#569CD6;">void</span> OnInitialized()
     {
         timeService = serviceProvider.GetService&lt;ITimeService&gt;(ComponentServiceId);
 
-        if (this.timeService is not null)
-            timeService.TimeChanged += this.OnUpdate;
+        <span style="color:#569CD6;">if</span> (<span style="color:#569CD6;">this</span>.timeService <span style="color:#569CD6;">is</span> not <span style="color:#569CD6;">null</span>)
+            timeService.TimeChanged += <span style="color:#569CD6;">this</span>.OnUpdate;
     }
 
-    protected override void OnParametersSet()
+    <span style="color:#569CD6;">protected</span> <span style="color:#569CD6;">override</span> <span style="color:#569CD6;">void</span> OnParametersSet()
     {
-        Debug.WriteLine(&quot;AdvancedTimeStamp - Parameter Change&quot;);
-        this.ParametersChangedTimeStamp = DateTime.Now.ToLongTimeString();
-        base.OnParametersSet();
+        Debug.WriteLine(<span style="color:#D69D85;">&quot;AdvancedTimeStamp - Parameter Change&quot;</span>);
+        <span style="color:#569CD6;">this</span>.ParametersChangedTimeStamp = DateTime.Now.ToLongTimeString();
+        <span style="color:#569CD6;">base</span>.OnParametersSet();
     }
 
-    private void OnUpdate(object? sender, EventArgs e)
-        =&gt; InvokeAsync(this.StateHasChanged);
+    <span style="color:#569CD6;">private</span> <span style="color:#569CD6;">void</span> OnUpdate(<span style="color:#569CD6;">object</span>? sender, EventArgs e)
+        =&gt; InvokeAsync(<span style="color:#569CD6;">this</span>.StateHasChanged);
 
-    private void Clicked()
+    <span style="color:#569CD6;">private</span> <span style="color:#569CD6;">void</span> Clicked()
       =&gt; timeService?.UpdateTime();
 
-    public void Dispose()
+    <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">void</span> Dispose()
     {
-        if (this.timeService is not null)
-            timeService.TimeChanged -= this.OnUpdate;
+        <span style="color:#569CD6;">if</span> (<span style="color:#569CD6;">this</span>.timeService <span style="color:#569CD6;">is</span> not <span style="color:#569CD6;">null</span>)
+            timeService.TimeChanged -= <span style="color:#569CD6;">this</span>.OnUpdate;
     }
 }
-</code></pre>
+</pre></div>
 <p>And our demo page.  Note it creates a Guid to uniquely identify this instance of the component, and passes it to the <code>ComponentServiceProviderCascade</code> component.</p>
-<pre><code class="language-csharp">@page &quot;/&quot;
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+@page <span style="color:#D69D85;">&quot;/&quot;</span>
 &lt;PageTitle&gt;Index&lt;/PageTitle&gt;
-&lt;ComponentServiceProviderCascade ServiceType=&quot;typeof(ITimeService)&quot; ComponentServiceId=&quot;this.ComponentServiceId&quot;&gt;
+&lt;ComponentServiceProviderCascade ServiceType=<span style="color:#D69D85;">&quot;typeof(ITimeService)&quot;</span> ComponentServiceId=<span style="color:#D69D85;">&quot;this.ComponentServiceId&quot;</span>&gt;
 
     &lt;h1&gt;Hello, world!&lt;/h1&gt;
 
-    Welcome to your new app.
+    Welcome to your <span style="color:#569CD6;">new</span> app.
 
     &lt;TimeStamp /&gt;
 
@@ -231,17 +235,18 @@
 &lt;/ComponentServiceProviderCascade&gt;
 
 @code {
-    private Guid ComponentServiceId = Guid.NewGuid();
+    <span style="color:#569CD6;">private</span> Guid ComponentServiceId = Guid.NewGuid();
 }
-</code></pre>
+</pre></div>
 <p>This version adds the <code>CostlyTimeStamp</code> and get's the <code>ITimeService</code> instance to cascade it.  Note the <em>Parameters Set</em> time stamp updates that demonstrate the <em>Render Cascade</em> issue with cascading objects.</p>
-<pre><code class="language-csharp">@page &quot;/&quot;
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+@page <span style="color:#D69D85;">&quot;/&quot;</span>
 &lt;PageTitle&gt;Index&lt;/PageTitle&gt;
-&lt;ComponentServiceProviderCascade ServiceType=&quot;typeof(ITimeService)&quot; ComponentServiceId=&quot;this.ComponentServiceId&quot;&gt;
+&lt;ComponentServiceProviderCascade ServiceType=<span style="color:#D69D85;">&quot;typeof(ITimeService)&quot;</span> ComponentServiceId=<span style="color:#D69D85;">&quot;this.ComponentServiceId&quot;</span>&gt;
 
     &lt;h1&gt;Hello, world!&lt;/h1&gt;
 
-    Welcome to your new app.
+    Welcome to your <span style="color:#569CD6;">new</span> app.
 
     &lt;TimeStamp /&gt;
 
@@ -249,39 +254,39 @@
 
 &lt;/ComponentServiceProviderCascade&gt;
 
-&lt;CascadingValue Value=&quot;this.timeService&quot;&gt;
+&lt;CascadingValue Value=<span style="color:#D69D85;">&quot;this.timeService&quot;</span>&gt;
     &lt;CostlyTimeStamp /&gt;
 &lt;/CascadingValue&gt;
 
 @code {
 
-    [Inject] private IComponentServiceProvider serviceProvider { get; set; } = default!;
+    [Inject] <span style="color:#569CD6;">private</span> IComponentServiceProvider serviceProvider { <span style="color:#569CD6;">get</span>; <span style="color:#569CD6;">set</span>; } = <span style="color:#569CD6;">default</span>!;
 
-    private ITimeService? timeService;
-    private Guid ComponentServiceId = Guid.NewGuid();
+    <span style="color:#569CD6;">private</span> ITimeService? timeService;
+    <span style="color:#569CD6;">private</span> Guid ComponentServiceId = Guid.NewGuid();
 
-    protected override void OnInitialized()
+    <span style="color:#569CD6;">protected</span> <span style="color:#569CD6;">override</span> <span style="color:#569CD6;">void</span> OnInitialized()
         =&gt; timeService = serviceProvider.GetOrCreateService&lt;ITimeService&gt;(ComponentServiceId);
 }
-</code></pre>
-<h2 id="the-detail">The Detail</h2>
+</pre></div><h2 id="the-detail">The Detail</h2>
 <h3 id="componentservice">ComponentService</h3>
 <p>A record to represent the component service.</p>
-<pre><code class="language-csharp">public record ComponentService(Guid ComponentId, Type ServiceType, object ServiceInstance);
-</code></pre>
-<h3 id="componentserviceprovider">ComponentServiceProvider</h3>
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+<span style="color:#569CD6;">public</span> record ComponentService(Guid ComponentId, Type ServiceType, <span style="color:#569CD6;">object</span> ServiceInstance);
+</pre></div><h3 id="componentserviceprovider">ComponentServiceProvider</h3>
 <p>The interface:</p>
-<pre><code class="language-csharp">public interface IComponentServiceProvider
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+<span style="color:#569CD6;">public</span> <span style="color:#569CD6;">interface</span> IComponentServiceProvider
 {
-    public object? GetOrCreateService(Guid componentId, Type? serviceType);
-    public TService? GetOrCreateService&lt;TService&gt;(Guid componentId);
-    public object? GetService(Guid componentId, Type serviceType);
-    public TService? GetService&lt;TService&gt;(Guid componentId);
-    public bool TryGetService&lt;TService&gt;(Guid componentId, [NotNullWhen(true)] out TService? value);
-    public ValueTask&lt;bool&gt; RemoveServiceAsync&lt;TService&gt;(Guid componentId);
-    public ValueTask&lt;bool&gt; RemoveServiceAsync(Guid componentId, Type serviceType);
+    <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">object</span>? GetOrCreateService(Guid componentId, Type? serviceType);
+    <span style="color:#569CD6;">public</span> TService? GetOrCreateService&lt;TService&gt;(Guid componentId);
+    <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">object</span>? GetService(Guid componentId, Type serviceType);
+    <span style="color:#569CD6;">public</span> TService? GetService&lt;TService&gt;(Guid componentId);
+    <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">bool</span> TryGetService&lt;TService&gt;(Guid componentId, [NotNullWhen(<span style="color:#569CD6;">true</span>)] <span style="color:#569CD6;">out</span> TService? value);
+    <span style="color:#569CD6;">public</span> ValueTask&lt;<span style="color:#569CD6;">bool</span>&gt; RemoveServiceAsync&lt;TService&gt;(Guid componentId);
+    <span style="color:#569CD6;">public</span> ValueTask&lt;<span style="color:#569CD6;">bool</span>&gt; RemoveServiceAsync(Guid componentId, Type serviceType);
 }
-</code></pre>
+</pre></div>
 <p>The class:</p>
 <ol>
 <li>Implements <code>IComponentServiceProvider</code> and both <code>IDisposable</code> and <code>IAsyncDisposable</code> because it needs to dispose objects that may implement either.</li>
@@ -290,225 +295,232 @@
 <li>Creates <code>InstanceId</code> as a unique identifier used in debugging.</li>
 <li><code>asyncdisposedValue</code> and <code>disposedValue</code> provide disposal control.</li>
 </ol>
-<pre><code class="language-csharp">public class ComponentServiceManager : IDisposable, IAsyncDisposable
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+<span style="color:#569CD6;">public</span> <span style="color:#569CD6;">class</span> ComponentServiceManager : IDisposable, IAsyncDisposable
 {
-    private IServiceProvider _serviceProvider;
-    private List&lt;ComponentService&gt; _componentServices = new List&lt;ComponentService&gt;();
-    private bool asyncdisposedValue;
-    private bool disposedValue;
-    public readonly Guid InstanceId = Guid.NewGuid();
+    <span style="color:#569CD6;">private</span> IServiceProvider _serviceProvider;
+    <span style="color:#569CD6;">private</span> List&lt;ComponentService&gt; _componentServices = <span style="color:#569CD6;">new</span> List&lt;ComponentService&gt;();
+    <span style="color:#569CD6;">private</span> <span style="color:#569CD6;">bool</span> asyncdisposedValue;
+    <span style="color:#569CD6;">private</span> <span style="color:#569CD6;">bool</span> disposedValue;
+    <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">readonly</span> Guid InstanceId = Guid.NewGuid();
 
-    public ComponentServiceManager(IServiceProvider serviceProvider)
+    <span style="color:#569CD6;">public</span> ComponentServiceManager(IServiceProvider serviceProvider)
     {
-        Debug.WriteLine($&quot;ComponentServiceManager - instance {InstanceId} created&quot;);
+        Debug.WriteLine($<span style="color:#D69D85;">&quot;ComponentServiceManager - instance {InstanceId} created&quot;</span>);
         _serviceProvider = serviceProvider;
     }
-</code></pre>
+</pre></div>
 <p><code>tryFindComponentService</code> is internal and defines the search Linq query for the service list.</p>
-<pre><code class="language-csharp">private bool tryFindComponentService(Guid componentId, Type serviceType, [NotNullWhenAttribute(true)] out ComponentService? result)
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+<span style="color:#569CD6;">private</span> <span style="color:#569CD6;">bool</span> tryFindComponentService(Guid componentId, Type serviceType, [NotNullWhenAttribute(<span style="color:#569CD6;">true</span>)] <span style="color:#569CD6;">out</span> ComponentService? result)
 {
     result = _componentServices.SingleOrDefault(item =&gt; item.ComponentId == componentId &amp;&amp; item.ServiceType == serviceType);
-    if (result is default(ComponentService))
-        return false;
+    <span style="color:#569CD6;">if</span> (result <span style="color:#569CD6;">is</span> <span style="color:#569CD6;">default</span>(ComponentService))
+        <span style="color:#569CD6;">return</span> <span style="color:#569CD6;">false</span>;
 
-    return true;
+    <span style="color:#569CD6;">return</span> <span style="color:#569CD6;">true</span>;
 }
-</code></pre>
+</pre></div>
 <p>GetOrCreateService are two public methods that will attempt to create a new instance of a service if one doesn't currently exist.</p>
-<pre><code class="language-csharp">public object? GetOrCreateService(Guid componentId, Type? serviceType)
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+<span style="color:#569CD6;">public</span> <span style="color:#569CD6;">object</span>? GetOrCreateService(Guid componentId, Type? serviceType)
     =&gt; getOrCreateService(componentId, serviceType);
 
-public TService? GetOrCreateService&lt;TService&gt;(Guid componentId)
+<span style="color:#569CD6;">public</span> TService? GetOrCreateService&lt;TService&gt;(Guid componentId)
 {
-    var service = this.getOrCreateService(componentId, typeof(TService));
-    return service is null
-        ? default
+    <span style="color:#569CD6;">var</span> service = <span style="color:#569CD6;">this</span>.getOrCreateService(componentId, <span style="color:#569CD6;">typeof</span>(TService));
+    <span style="color:#569CD6;">return</span> service <span style="color:#569CD6;">is</span> <span style="color:#569CD6;">null</span>
+        ? <span style="color:#569CD6;">default</span>
         : (TService)service;
 }
-</code></pre>
+</pre></div>
 <p><code>getOrCreateService</code> is the internal method that does the work.  It checks if a service is already registered against the Guid.  If not it attempts to create a new instance.  <code>tryCreateService</code> uses the <code>ActivatorUtilities</code> static class to attempt to create instance.  This only works with <em>concrete</em> typoes, so will fail if <code>serviceType</code> is an interface definition.  <code>tryCreateInterfaceService</code> attempts to get the interface definition from the service container.  If it gets one it gets the concrete type and then uses that to crearte and instance with <code>ActivatorUtilities</code>.</p>
 <p>The end result is either a <code>null</code> or an instance of the type with the correctly injected instances from the SPA scoped service container.  A <em>Transient</em> service without any retained reference even if the object implements <code>IDisposable/IAsyncDisposable</code>.  Disposal is your responsibility.</p>
-<pre><code class="language-csharp">private object? getOrCreateService(Guid componentId, Type? serviceType)
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+<span style="color:#569CD6;">private</span> <span style="color:#569CD6;">object</span>? getOrCreateService(Guid componentId, Type? serviceType)
 {
-    if (serviceType is null || componentId == Guid.Empty)
-        return null;
+    <span style="color:#569CD6;">if</span> (serviceType <span style="color:#569CD6;">is</span> <span style="color:#569CD6;">null</span> || componentId == Guid.Empty)
+        <span style="color:#569CD6;">return</span> <span style="color:#569CD6;">null</span>;
 
-    // Try getting the service from the collection
-    if (this.tryFindComponentService(componentId, serviceType, out ComponentService? service))
-        return service.ServiceInstance;
+    <span style="color:#57A64A;">// Try getting the service from the collection</span>
+    <span style="color:#569CD6;">if</span> (<span style="color:#569CD6;">this</span>.tryFindComponentService(componentId, serviceType, <span style="color:#569CD6;">out</span> ComponentService? service))
+        <span style="color:#569CD6;">return</span> service.ServiceInstance;
 
-    // Try creating the service
-    if (!this.tryCreateService(serviceType, out object? newService))
-        this.tryCreateInterfaceService(serviceType, out newService);
+    <span style="color:#57A64A;">// Try creating the service</span>
+    <span style="color:#569CD6;">if</span> (!<span style="color:#569CD6;">this</span>.tryCreateService(serviceType, <span style="color:#569CD6;">out</span> <span style="color:#569CD6;">object</span>? newService))
+        <span style="color:#569CD6;">this</span>.tryCreateInterfaceService(serviceType, <span style="color:#569CD6;">out</span> newService);
 
-    if (newService is null)
-        return null;
+    <span style="color:#569CD6;">if</span> (newService <span style="color:#569CD6;">is</span> <span style="color:#569CD6;">null</span>)
+        <span style="color:#569CD6;">return</span> <span style="color:#569CD6;">null</span>;
 
-    _componentServices.Add(new ComponentService(componentId, serviceType, newService));
+    _componentServices.Add(<span style="color:#569CD6;">new</span> ComponentService(componentId, serviceType, newService));
 
-    return newService;
+    <span style="color:#569CD6;">return</span> newService;
 }
 
-private bool tryCreateService(Type serviceType, [NotNullWhen(true)] out object? service)
+<span style="color:#569CD6;">private</span> <span style="color:#569CD6;">bool</span> tryCreateService(Type serviceType, [NotNullWhen(<span style="color:#569CD6;">true</span>)] <span style="color:#569CD6;">out</span> <span style="color:#569CD6;">object</span>? service)
 {
-    service = null;
-    try
+    service = <span style="color:#569CD6;">null</span>;
+    <span style="color:#569CD6;">try</span>
     {
         service = ActivatorUtilities.CreateInstance(_serviceProvider, serviceType);
-        return true;
+        <span style="color:#569CD6;">return</span> <span style="color:#569CD6;">true</span>;
     }
-    catch
+    <span style="color:#569CD6;">catch</span>
     {
-        return false;
+        <span style="color:#569CD6;">return</span> <span style="color:#569CD6;">false</span>;
     }
 }
 
-private bool tryCreateInterfaceService(Type serviceType, [NotNullWhen(true)] out object? service)
+<span style="color:#569CD6;">private</span> <span style="color:#569CD6;">bool</span> tryCreateInterfaceService(Type serviceType, [NotNullWhen(<span style="color:#569CD6;">true</span>)] <span style="color:#569CD6;">out</span> <span style="color:#569CD6;">object</span>? service)
 {
-    service = null;
-    var concreteService = _serviceProvider.GetService(serviceType);
-    if (concreteService is null)
-        return false;
+    service = <span style="color:#569CD6;">null</span>;
+    <span style="color:#569CD6;">var</span> concreteService = _serviceProvider.GetService(serviceType);
+    <span style="color:#569CD6;">if</span> (concreteService <span style="color:#569CD6;">is</span> <span style="color:#569CD6;">null</span>)
+        <span style="color:#569CD6;">return</span> <span style="color:#569CD6;">false</span>;
 
-    var concreteInterfaceType = concreteService.GetType();
+    <span style="color:#569CD6;">var</span> concreteInterfaceType = concreteService.GetType();
 
-    try
+    <span style="color:#569CD6;">try</span>
     {
         service = ActivatorUtilities.CreateInstance(_serviceProvider, concreteInterfaceType);
-        return true;
+        <span style="color:#569CD6;">return</span> <span style="color:#569CD6;">true</span>;
     }
-    catch
+    <span style="color:#569CD6;">catch</span>
     {
-        return false;
+        <span style="color:#569CD6;">return</span> <span style="color:#569CD6;">false</span>;
     }
 }
-</code></pre>
+</pre></div>
 <p>There are three <code>GetService</code> public methods and a single private <code>getService</code> to get the service from the internal collection.</p>
-<pre><code class="language-csharp">public object? GetService(Guid componentId, Type? serviceType)
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+<span style="color:#569CD6;">public</span> <span style="color:#569CD6;">object</span>? GetService(Guid componentId, Type? serviceType)
     =&gt; getService(componentId, serviceType);
 
-public TService? GetService&lt;TService&gt;(Guid componentId)
+<span style="color:#569CD6;">public</span> TService? GetService&lt;TService&gt;(Guid componentId)
 {
-    var service = this.getService(componentId, typeof(TService));
-    return service is null
-        ? default
+    <span style="color:#569CD6;">var</span> service = <span style="color:#569CD6;">this</span>.getService(componentId, <span style="color:#569CD6;">typeof</span>(TService));
+    <span style="color:#569CD6;">return</span> service <span style="color:#569CD6;">is</span> <span style="color:#569CD6;">null</span>
+        ? <span style="color:#569CD6;">default</span>
         : (TService)service;
 }
 
-public bool TryGetService&lt;TService&gt;(Guid componentId, [NotNullWhen(true)] out TService? value)
+<span style="color:#569CD6;">public</span> <span style="color:#569CD6;">bool</span> TryGetService&lt;TService&gt;(Guid componentId, [NotNullWhen(<span style="color:#569CD6;">true</span>)] <span style="color:#569CD6;">out</span> TService? value)
 {
-    var result = getService(componentId, typeof(TService));
+    <span style="color:#569CD6;">var</span> result = getService(componentId, <span style="color:#569CD6;">typeof</span>(TService));
 
-    value = result is null
-        ? default
+    value = result <span style="color:#569CD6;">is</span> <span style="color:#569CD6;">null</span>
+        ? <span style="color:#569CD6;">default</span>
         : (TService)result;
 
-    return result is not null;
+    <span style="color:#569CD6;">return</span> result <span style="color:#569CD6;">is</span> not <span style="color:#569CD6;">null</span>;
 }
 
-private object? getService(Guid componentId, Type? serviceType)
+<span style="color:#569CD6;">private</span> <span style="color:#569CD6;">object</span>? getService(Guid componentId, Type? serviceType)
 {
-    if (serviceType is null || componentId == Guid.Empty)
-        return null;
+    <span style="color:#569CD6;">if</span> (serviceType <span style="color:#569CD6;">is</span> <span style="color:#569CD6;">null</span> || componentId == Guid.Empty)
+        <span style="color:#569CD6;">return</span> <span style="color:#569CD6;">null</span>;
 
-    if (!this.tryFindComponentService(componentId, serviceType, out ComponentService? componentService))
-        return null;
+    <span style="color:#569CD6;">if</span> (!<span style="color:#569CD6;">this</span>.tryFindComponentService(componentId, serviceType, <span style="color:#569CD6;">out</span> ComponentService? componentService))
+        <span style="color:#569CD6;">return</span> <span style="color:#569CD6;">null</span>;
 
-    return (componentService is not null)
+    <span style="color:#569CD6;">return</span> (componentService <span style="color:#569CD6;">is</span> not <span style="color:#569CD6;">null</span>)
         ? componentService.ServiceInstance
-        : null;
+        : <span style="color:#569CD6;">null</span>;
 }
-</code></pre>
+</pre></div>
 <p><code>RemoveService</code> disposes the registered object if necessary and then removes it from the internal collection.</p>
-<pre><code class="language-csharp">public ValueTask&lt;bool&gt; RemoveServiceAsync&lt;TService&gt;(Guid componentId)
-    =&gt; removeServiceAsync(componentId, typeof(TService));
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+<span style="color:#569CD6;">public</span> ValueTask&lt;<span style="color:#569CD6;">bool</span>&gt; RemoveServiceAsync&lt;TService&gt;(Guid componentId)
+    =&gt; removeServiceAsync(componentId, <span style="color:#569CD6;">typeof</span>(TService));
 
-public ValueTask&lt;bool&gt; RemoveServiceAsync(Guid componentId, Type serviceType)
+<span style="color:#569CD6;">public</span> ValueTask&lt;<span style="color:#569CD6;">bool</span>&gt; RemoveServiceAsync(Guid componentId, Type serviceType)
     =&gt; removeServiceAsync(componentId, serviceType);
 
-private async ValueTask&lt;bool&gt; removeServiceAsync(Guid componentId, Type serviceType)
+<span style="color:#569CD6;">private</span> <span style="color:#569CD6;">async</span> ValueTask&lt;<span style="color:#569CD6;">bool</span>&gt; removeServiceAsync(Guid componentId, Type serviceType)
 {
-    if (!this.tryFindComponentService(componentId, serviceType, out ComponentService? componentService))
-        return false;
+    <span style="color:#569CD6;">if</span> (!<span style="color:#569CD6;">this</span>.tryFindComponentService(componentId, serviceType, <span style="color:#569CD6;">out</span> ComponentService? componentService))
+        <span style="color:#569CD6;">return</span> <span style="color:#569CD6;">false</span>;
 
-    if (componentService.ServiceInstance is IDisposable disposable)
+    <span style="color:#569CD6;">if</span> (componentService.ServiceInstance <span style="color:#569CD6;">is</span> IDisposable disposable)
         disposable.Dispose();
 
-    if (componentService.ServiceInstance is IAsyncDisposable asyncDisposable)
-        await asyncDisposable.DisposeAsync();
+    <span style="color:#569CD6;">if</span> (componentService.ServiceInstance <span style="color:#569CD6;">is</span> IAsyncDisposable asyncDisposable)
+        <span style="color:#569CD6;">await</span> asyncDisposable.DisposeAsync();
 
     _componentServices.Remove(componentService);
 
-    return true;
+    <span style="color:#569CD6;">return</span> <span style="color:#569CD6;">true</span>;
 }
-</code></pre>
+</pre></div>
 <p><code>Dispose</code> and <code>DisposeAsync</code> are called when the service is disposed.  They dispose all the remaining objects in the service collection.</p>
-<pre><code class="language-csharp">protected virtual void Dispose(bool disposing)
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+<span style="color:#569CD6;">protected</span> <span style="color:#569CD6;">virtual</span> <span style="color:#569CD6;">void</span> Dispose(<span style="color:#569CD6;">bool</span> disposing)
 {
-    if (disposedValue || !disposing)
+    <span style="color:#569CD6;">if</span> (disposedValue || !disposing)
     {
-        disposedValue = true;
-        return;
+        disposedValue = <span style="color:#569CD6;">true</span>;
+        <span style="color:#569CD6;">return</span>;
     }
 
-    Debug.WriteLine($&quot;ComponentServiceManager - instance {InstanceId} disposed&quot;);
+    Debug.WriteLine($<span style="color:#D69D85;">&quot;ComponentServiceManager - instance {InstanceId} disposed&quot;</span>);
 
-    foreach (var componentService in _componentServices)
+    <span style="color:#569CD6;">foreach</span> (<span style="color:#569CD6;">var</span> componentService <span style="color:#569CD6;">in</span> _componentServices)
     {
-        if (componentService.ServiceInstance is IDisposable disposable)
+        <span style="color:#569CD6;">if</span> (componentService.ServiceInstance <span style="color:#569CD6;">is</span> IDisposable disposable)
             disposable.Dispose();
     }
 
-    disposedValue = true;
+    disposedValue = <span style="color:#569CD6;">true</span>;
 }
 
-public void Dispose()
+<span style="color:#569CD6;">public</span> <span style="color:#569CD6;">void</span> Dispose()
 {
-    Dispose(disposing: true);
-    GC.SuppressFinalize(this);
+    Dispose(disposing: <span style="color:#569CD6;">true</span>);
+    GC.SuppressFinalize(<span style="color:#569CD6;">this</span>);
 }
 
-public async ValueTask DisposeAsync()
+<span style="color:#569CD6;">public</span> <span style="color:#569CD6;">async</span> ValueTask DisposeAsync()
 {
-    if (asyncdisposedValue)
-        return;
+    <span style="color:#569CD6;">if</span> (asyncdisposedValue)
+        <span style="color:#569CD6;">return</span>;
 
-    Debug.WriteLine($&quot;ComponentServiceManager - instance {InstanceId} async disposed&quot;);
+    Debug.WriteLine($<span style="color:#D69D85;">&quot;ComponentServiceManager - instance {InstanceId} async disposed&quot;</span>);
 
-    foreach (var componentService in _componentServices)
+    <span style="color:#569CD6;">foreach</span> (<span style="color:#569CD6;">var</span> componentService <span style="color:#569CD6;">in</span> _componentServices)
     {
-        if (componentService.ServiceInstance is IAsyncDisposable asyncDisposable)
-            await asyncDisposable.DisposeAsync();
+        <span style="color:#569CD6;">if</span> (componentService.ServiceInstance <span style="color:#569CD6;">is</span> IAsyncDisposable asyncDisposable)
+            <span style="color:#569CD6;">await</span> asyncDisposable.DisposeAsync();
     }
 
-    asyncdisposedValue = true;
+    asyncdisposedValue = <span style="color:#569CD6;">true</span>;
 }
-</code></pre>
-<h3 id="componentserviceprovidercascade">ComponentServiceProviderCascade</h3>
+</pre></div><h3 id="componentserviceprovidercascade">ComponentServiceProviderCascade</h3>
 <p><code>ComponentServiceProviderCascade</code> provides a wrapper to implement all the functionality necessary to properly manage the service creation and disposal.</p>
 <p><code>ServiceType</code> defines the shared service object.  <code>ComponentServiceId</code> either generates or is passed a Guid that uniquely defines the component context.  The component implements <code>IAsyncDisposable</code> to dispose of the service instance when the component is disposed (by the Renderer): <code>RemoveServiceAsync</code> is an <code>ansync</code> method.</p>
-<pre><code class="language-csharp">@implements IAsyncDisposable
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+@implements IAsyncDisposable
 
-&lt;CascadingValue Name=&quot;ComponentServiceId&quot; Value=&quot;this.ComponentServiceId&quot;&gt;
-    @this.ChildContent
+&lt;CascadingValue Name=<span style="color:#D69D85;">&quot;ComponentServiceId&quot;</span> Value=<span style="color:#D69D85;">&quot;this.ComponentServiceId&quot;</span>&gt;
+    @<span style="color:#569CD6;">this</span>.ChildContent
 &lt;/CascadingValue&gt;
 
 @code {
-    [Parameter] public RenderFragment? ChildContent { get; set; }
-    [Parameter] public Guid ComponentServiceId { get; set; } = Guid.NewGuid();
-    [Parameter, EditorRequired] public Type? ServiceType { get; set; }
-    [Inject] private IComponentServiceProvider serviceProvider { get; set; } = default!;
+    [Parameter] <span style="color:#569CD6;">public</span> RenderFragment? ChildContent { <span style="color:#569CD6;">get</span>; <span style="color:#569CD6;">set</span>; }
+    [Parameter] <span style="color:#569CD6;">public</span> Guid ComponentServiceId { <span style="color:#569CD6;">get</span>; <span style="color:#569CD6;">set</span>; } = Guid.NewGuid();
+    [Parameter, EditorRequired] <span style="color:#569CD6;">public</span> Type? ServiceType { <span style="color:#569CD6;">get</span>; <span style="color:#569CD6;">set</span>; }
+    [Inject] <span style="color:#569CD6;">private</span> IComponentServiceProvider serviceProvider { <span style="color:#569CD6;">get</span>; <span style="color:#569CD6;">set</span>; } = <span style="color:#569CD6;">default</span>!;
 
-    protected override void OnInitialized()
+    <span style="color:#569CD6;">protected</span> <span style="color:#569CD6;">override</span> <span style="color:#569CD6;">void</span> OnInitialized()
         =&gt; serviceProvider.GetOrCreateService(ComponentServiceId, ServiceType);
 
-    public async ValueTask DisposeAsync()
+    <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">async</span> ValueTask DisposeAsync()
     {
-        if (this.ServiceType is not null)
-            await serviceProvider.RemoveServiceAsync(ComponentServiceId, this.ServiceType);
+        <span style="color:#569CD6;">if</span> (<span style="color:#569CD6;">this</span>.ServiceType <span style="color:#569CD6;">is</span> not <span style="color:#569CD6;">null</span>)
+            <span style="color:#569CD6;">await</span> serviceProvider.RemoveServiceAsync(ComponentServiceId, <span style="color:#569CD6;">this</span>.ServiceType);
     }
 }
-</code></pre>
+</pre></div>
 <p>You can <code>unwrap</code> the cascade and do it yourself within the root component.  It's primary purpose is to implment the disposal.</p>
 <h2 id="wrapping-up">Wrapping Up</h2>
 <p>That's it, not rocket science.  Comments on improvements/things I've got wrong gratefully received.</p>

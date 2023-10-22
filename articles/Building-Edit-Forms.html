@@ -115,116 +115,119 @@
 <h2 id="blazor-and-navigation">Blazor and Navigation</h2>
 <p>Blazor's Client side Javascript code registers event handlers for the various navigation events within the page and from the back/forward buttons.</p>
 <p>In Blazor Web Assembly, these events surface in DotNetCore code in JsInterop code:</p>
-<pre><code class="language-csharp">[JSInvokable(nameof(NotifyLocationChanged))]
-public static void NotifyLocationChanged(string uri, bool isInterceptedLink)
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+[JSInvokable(nameof(NotifyLocationChanged))]
+<span style="color:#569CD6;">public</span> <span style="color:#569CD6;">static</span> <span style="color:#569CD6;">void</span> NotifyLocationChanged(<span style="color:#569CD6;">string</span> uri, <span style="color:#569CD6;">bool</span> isInterceptedLink)
 {
     WebAssemblyNavigationManager.Instance.SetLocation(uri, isInterceptedLink);
 }
-</code></pre>
+</pre></div>
 <p>In Server the events get passed through the SignalR connection and surface:</p>
-<pre><code class="language-csharp">public async ValueTask OnLocationChanged(string uri, bool intercepted)
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+<span style="color:#569CD6;">public</span> <span style="color:#569CD6;">async</span> ValueTask OnLocationChanged(<span style="color:#569CD6;">string</span> uri, <span style="color:#569CD6;">bool</span> intercepted)
 {
-    var circuitHost = await GetActiveCircuitAsync();
-    if (circuitHost == null)
-        return;
+    <span style="color:#569CD6;">var</span> circuitHost = <span style="color:#569CD6;">await</span> GetActiveCircuitAsync();
+    <span style="color:#569CD6;">if</span> (circuitHost == <span style="color:#569CD6;">null</span>)
+        <span style="color:#569CD6;">return</span>;
 
     _ = circuitHost.OnLocationChangedAsync(uri, intercepted);
 }
-</code></pre>
+</pre></div>
 <p>This calls the <code>CircuitHost</code> method:</p>
-<pre><code class="language-csharp">public async Task OnLocationChangedAsync(string uri, bool intercepted)
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+<span style="color:#569CD6;">public</span> <span style="color:#569CD6;">async</span> Task OnLocationChangedAsync(<span style="color:#569CD6;">string</span> uri, <span style="color:#569CD6;">bool</span> intercepted)
 {
-    await Renderer.Dispatcher.InvokeAsync(() =&gt;
+    <span style="color:#569CD6;">await</span> Renderer.Dispatcher.InvokeAsync(() =&gt;
     {
-        var navigationManager = (RemoteNavigationManager)Services.GetRequiredService&lt;NavigationManager&gt;();
+        <span style="color:#569CD6;">var</span> navigationManager = (RemoteNavigationManager)Services.GetRequiredService&lt;NavigationManager&gt;();
         navigationManager.NotifyLocationChanged(uri, intercepted);
     });
  }
-//lots of code missing to only show the relevant lines
-</code></pre>
-<h2 id="the-options">The Options</h2>
+<span style="color:#57A64A;">//lots of code missing to only show the relevant lines</span>
+</pre></div><h2 id="the-options">The Options</h2>
 <h3 id="the-javascript-option">The Javascript Option</h3>
 <p>One possible approach to intercept and cancel the events that drive the Blazor code.</p>
 <p>The code block below shows one possibility.</p>
-<pre><code class="language-js">let blazr_PreventNavigation = false;  // main control bool to stop/allow navigation
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+let blazr_PreventNavigation = <span style="color:#569CD6;">false</span>;  <span style="color:#57A64A;">// main control bool to stop/allow navigation</span>
 let idCounter = 0;
-let lastHistoryItemId = 0; //needed to detect back/forward, in popstate event handler
+let lastHistoryItemId = 0; <span style="color:#57A64A;">//needed to detect back/forward, in popstate event handler</span>
 
-window.blazr_setPageLock = function (lock) {
+window.blazr_setPageLock = <span style="color:#569CD6;">function</span> (lock) {
     blazr_PreventNavigation = lock;
 }
 
-window.history.pushState = (function (basePushState) {
-    return function (...args) {
-        if (blazr_PreventNavigation) {
-            return;
+window.history.pushState = (<span style="color:#569CD6;">function</span> (basePushState) {
+    <span style="color:#569CD6;">return</span> <span style="color:#569CD6;">function</span> (...args) {
+        <span style="color:#569CD6;">if</span> (blazr_PreventNavigation) {
+            <span style="color:#569CD6;">return</span>;
         }
-        basePushState.apply(this, args);
+        basePushState.apply(<span style="color:#569CD6;">this</span>, args);
     }
 })(window.history.pushState);
 
-window.addEventListener('beforeunload', e =&gt; {
-    if (blazr_PreventNavigation) {
-        e.returnValue = 'There are unsaved changes'
+window.addEventListener(<span style="color:#D69D85;">&#39;beforeunload&#39;</span>, e =&gt; {
+    <span style="color:#569CD6;">if</span> (blazr_PreventNavigation) {
+        e.returnValue = <span style="color:#D69D85;">&#39;There are unsaved changes&#39;</span>
     }
 });
 
-window.addEventListener('load', () =&gt; {
-    let resetUrlRun = false;
-    function popStateListener(e) {
-        if (blazr_PreventNavigation) {
-            let lockNavigation = false;
+window.addEventListener(<span style="color:#D69D85;">&#39;load&#39;</span>, () =&gt; {
+    let resetUrlRun = <span style="color:#569CD6;">false</span>;
+    <span style="color:#569CD6;">function</span> popStateListener(e) {
+        <span style="color:#569CD6;">if</span> (blazr_PreventNavigation) {
+            let lockNavigation = <span style="color:#569CD6;">false</span>;
 
-            //popstate can be triggered twice, but we want to show confirm dialog only once
+            <span style="color:#57A64A;">//popstate can be triggered twice, but we want to show confirm dialog only once</span>
             lockNavigation = blazr_PreventNavigation &amp;&amp; !resetUrlRun;
 
-            if (lockNavigation) {
-                //this will nearly always cancel Blazor navigation, but the url is already changed
+            <span style="color:#569CD6;">if</span> (lockNavigation) {
+                <span style="color:#57A64A;">//this will nearly always cancel Blazor navigation, but the url is already changed</span>
                 e.stopImmediatePropagation();
                 e.preventDefault();
-                e.returnValue = false;
+                e.returnValue = <span style="color:#569CD6;">false</span>;
             }
 
-            if (resetUrlRun) {
-                //Resets resetUrlRun on second run
-                resetUrlRun = false;
+            <span style="color:#569CD6;">if</span> (resetUrlRun) {
+                <span style="color:#57A64A;">//Resets resetUrlRun on second run</span>
+                resetUrlRun = <span style="color:#569CD6;">false</span>;
             }
 
-            // Only runs on the first pass through    
-            if (lockNavigation) {
-                //detect back vs forward 
-                const currentId = e.state &amp;&amp; e.state.__incrementalId;
-                const navigatingForward = currentId &gt; lastHistoryItemId;
+            <span style="color:#57A64A;">// Only runs on the first pass through    </span>
+            <span style="color:#569CD6;">if</span> (lockNavigation) {
+                <span style="color:#57A64A;">//detect back vs forward </span>
+                <span style="color:#569CD6;">const</span> currentId = e.state &amp;&amp; e.state.__incrementalId;
+                <span style="color:#569CD6;">const</span> navigatingForward = currentId &gt; lastHistoryItemId;
 
-                //revert url
-                if (navigatingForward) {
+                <span style="color:#57A64A;">//revert url</span>
+                <span style="color:#569CD6;">if</span> (navigatingForward) {
                     history.back();
                 }
-                else {
+                <span style="color:#569CD6;">else</span> {
                     history.forward();
                 }
-                resetUrlRun = true;
+                resetUrlRun = <span style="color:#569CD6;">true</span>;
             }
         }
     }
 
-    window.addEventListener('popstate', popStateListener, { capture: true });
+    window.addEventListener(<span style="color:#D69D85;">&#39;popstate&#39;</span>, popStateListener, { capture: <span style="color:#569CD6;">true</span> });
 
-    window.history.pushState = (function (basePushState) {
-        return function (...args) {
-            if (blazr_PreventNavigation) {
-                return;
+    window.history.pushState = (<span style="color:#569CD6;">function</span> (basePushState) {
+        <span style="color:#569CD6;">return</span> <span style="color:#569CD6;">function</span> (...args) {
+            <span style="color:#569CD6;">if</span> (blazr_PreventNavigation) {
+                <span style="color:#569CD6;">return</span>;
             }
-            if (!args[0]) {
+            <span style="color:#569CD6;">if</span> (!args[0]) {
                 args[0] = {};
             }
             lastHistoryItemId = history.state &amp;&amp; history.state.__incrementalId;
-            args[0].__incrementalId = ++idCounter; //track order of history items            
-            basePushState.apply(this, args);
+            args[0].__incrementalId = ++idCounter; <span style="color:#57A64A;">//track order of history items            </span>
+            basePushState.apply(<span style="color:#569CD6;">this</span>, args);
         }
     })(window.history.pushState);
 });
-</code></pre>
+</pre></div>
 <p>This code works most of the time in Blazor Server, but not in Web Assembly mode.  Unfortunately, unless someone knows how to make it 100%, I've discounted it for now.  The code is available in Repo for you to test and work with.</p>
 <h3 id="the-navigation-manager-option">The Navigation Manager Option</h3>
 <p>In Blazor Web Assembly, <code>NotifyLocationChanged</code> uses the static <code>WebAssemblyNavigationManager.Instance</code> to get the currently registered singleton instance and calls the <code>SetLocation</code> method on that instance.  Specifically, it doesn't access the instance through the DI container.  This is Web Assembly, so Scoped and Singleton are the same thing, it uses the &quot;Singleton&quot; pattern to access the only instance of <code>WebAssemblyNavigationManager</code> running in the browser container.</p>
@@ -245,428 +248,434 @@ window.addEventListener('load', () =&gt; {
 <h3 id="editstatecontext">EditStateContext</h3>
 <p><code>EditStateContext</code> loads content from the <code>EditContext</code> Model into a <code>EditFieldCollection</code> of <code>EditField</code> objects.  This collection is populated when the form loads.  Individual edits are passed in by calling <code>NotifyFieldChanged</code>, and the <code>EditedValue</code> property of the correct <code>EditField</code> is updated.  <code>EditFieldCollection</code> exposes a <code>IsDirty</code> property which is true if any <code>EditField</code> is dirty i.e. <code>Value</code> does not equal <code>EditedValue</code>.</p>
 <p><code>EditStateContext</code> registers with <code>EditContext</code> for FieldChanges and calls <code>NotifyFieldChanged</code> whenever a field is updated.</p>
-<pre><code class="language-csharp">public class EditStateContext : IDisposable
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+<span style="color:#569CD6;">public</span> <span style="color:#569CD6;">class</span> EditStateContext : IDisposable
 {
-    public bool IsDirty =&gt; EditFields.IsDirty;
+    <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">bool</span> IsDirty =&gt; EditFields.IsDirty;
 
-    public event EventHandler&lt;EditStateEventArgs&gt;? EditStateChanged;
+    <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">event</span> EventHandler&lt;EditStateEventArgs&gt;? EditStateChanged;
 
-    private EditFieldCollection EditFields = new EditFieldCollection();
+    <span style="color:#569CD6;">private</span> EditFieldCollection EditFields = <span style="color:#569CD6;">new</span> EditFieldCollection();
 
-    protected EditContext? EditContext { get; private set; }
+    <span style="color:#569CD6;">protected</span> EditContext? EditContext { <span style="color:#569CD6;">get</span>; <span style="color:#569CD6;">private</span> <span style="color:#569CD6;">set</span>; }
 
-    public EditStateContext(EditContext editContext)
-        =&gt; this.Load(editContext);
+    <span style="color:#569CD6;">public</span> EditStateContext(EditContext editContext)
+        =&gt; <span style="color:#569CD6;">this</span>.Load(editContext);
 
-    public void Load(EditContext editContext)
+    <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">void</span> Load(EditContext editContext)
     {
-        this.EditContext = editContext;
-        this.LoadEditState();
-        this.EditContext.OnFieldChanged += this.FieldChanged;
+        <span style="color:#569CD6;">this</span>.EditContext = editContext;
+        <span style="color:#569CD6;">this</span>.LoadEditState();
+        <span style="color:#569CD6;">this</span>.EditContext.OnFieldChanged += <span style="color:#569CD6;">this</span>.FieldChanged;
     }
 
-    private void LoadEditState()
-        =&gt; this.GetEditFields();
+    <span style="color:#569CD6;">private</span> <span style="color:#569CD6;">void</span> LoadEditState()
+        =&gt; <span style="color:#569CD6;">this</span>.GetEditFields();
 
-    private void GetEditFields()
+    <span style="color:#569CD6;">private</span> <span style="color:#569CD6;">void</span> GetEditFields()
     {
-        var model = this.EditContext!.Model;
-        this.EditFields.Clear();
-        if (model is not null)
+        <span style="color:#569CD6;">var</span> model = <span style="color:#569CD6;">this</span>.EditContext!.Model;
+        <span style="color:#569CD6;">this</span>.EditFields.Clear();
+        <span style="color:#569CD6;">if</span> (model <span style="color:#569CD6;">is</span> not <span style="color:#569CD6;">null</span>)
         {
-            var props = model.GetType().GetProperties();
-            foreach (var prop in props)
+            <span style="color:#569CD6;">var</span> props = model.GetType().GetProperties();
+            <span style="color:#569CD6;">foreach</span> (<span style="color:#569CD6;">var</span> prop <span style="color:#569CD6;">in</span> props)
             {
-                if (prop.CanWrite)
+                <span style="color:#569CD6;">if</span> (prop.CanWrite)
                 {
-                    var value = prop.GetValue(model);
+                    <span style="color:#569CD6;">var</span> value = prop.GetValue(model);
                     EditFields.AddField(model, prop.Name, value);
                 }
             }
         }
     }
-    private void FieldChanged(object? sender, FieldChangedEventArgs e)
-        =&gt; this.NotifyFieldChanged(e);
+    <span style="color:#569CD6;">private</span> <span style="color:#569CD6;">void</span> FieldChanged(<span style="color:#569CD6;">object</span>? sender, FieldChangedEventArgs e)
+        =&gt; <span style="color:#569CD6;">this</span>.NotifyFieldChanged(e);
 
-    public void NotifyFieldChanged(FieldChangedEventArgs e)
+    <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">void</span> NotifyFieldChanged(FieldChangedEventArgs e)
     {
-        var wasDirty = EditFields.IsDirty;
+        <span style="color:#569CD6;">var</span> wasDirty = EditFields.IsDirty;
 
-        // Get the PropertyInfo object for the model property
-        // Uses reflection to get property and value
-        var prop = e.FieldIdentifier.Model.GetType().GetProperty(e.FieldIdentifier.FieldName);
-        if (prop != null)
+        <span style="color:#57A64A;">// Get the PropertyInfo object for the model property</span>
+        <span style="color:#57A64A;">// Uses reflection to get property and value</span>
+        <span style="color:#569CD6;">var</span> prop = e.FieldIdentifier.Model.GetType().GetProperty(e.FieldIdentifier.FieldName);
+        <span style="color:#569CD6;">if</span> (prop != <span style="color:#569CD6;">null</span>)
         {
-            // Get the value for the property
-            var value = prop.GetValue(e.FieldIdentifier.Model);
+            <span style="color:#57A64A;">// Get the value for the property</span>
+            <span style="color:#569CD6;">var</span> value = prop.GetValue(e.FieldIdentifier.Model);
 
-            // Sets the edit value in the EditField
+            <span style="color:#57A64A;">// Sets the edit value in the EditField</span>
             EditFields.SetField(e.FieldIdentifier.FieldName, value);
 
-            // Invokes EditStateChanged if changed
-            var isStateChange = (EditFields.IsDirty) != wasDirty;
-            if (isStateChange)
-                this.NotifyEditStateChanged();
+            <span style="color:#57A64A;">// Invokes EditStateChanged if changed</span>
+            <span style="color:#569CD6;">var</span> isStateChange = (EditFields.IsDirty) != wasDirty;
+            <span style="color:#569CD6;">if</span> (isStateChange)
+                <span style="color:#569CD6;">this</span>.NotifyEditStateChanged();
         }
     }
 
-    public void NotifySaved()
+    <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">void</span> NotifySaved()
     {
-        var currentState = this.EditFields.IsDirty;
-        this.LoadEditState();
-        if (currentState)
+        <span style="color:#569CD6;">var</span> currentState = <span style="color:#569CD6;">this</span>.EditFields.IsDirty;
+        <span style="color:#569CD6;">this</span>.LoadEditState();
+        <span style="color:#569CD6;">if</span> (currentState)
             NotifyEditStateChanged();
     }
 
-    private void NotifyEditStateChanged()
-        =&gt; EditStateChanged?.Invoke(this, EditStateEventArgs.NewArgs(EditFields?.IsDirty ?? false));
+    <span style="color:#569CD6;">private</span> <span style="color:#569CD6;">void</span> NotifyEditStateChanged()
+        =&gt; EditStateChanged?.Invoke(<span style="color:#569CD6;">this</span>, EditStateEventArgs.NewArgs(EditFields?.IsDirty ?? <span style="color:#569CD6;">false</span>));
 
-    public void Dispose()
+    <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">void</span> Dispose()
     {
-        if (this.EditContext is not null)
-            this.EditContext.OnFieldChanged += this.FieldChanged;
+        <span style="color:#569CD6;">if</span> (<span style="color:#569CD6;">this</span>.EditContext <span style="color:#569CD6;">is</span> not <span style="color:#569CD6;">null</span>)
+            <span style="color:#569CD6;">this</span>.EditContext.OnFieldChanged += <span style="color:#569CD6;">this</span>.FieldChanged;
     }
 }
-</code></pre>
-<h4 id="editstateeventargs">EditStateEventArgs</h4>
-<pre><code class="language-csharp">using System;
+</pre></div><h4 id="editstateeventargs">EditStateEventArgs</h4>
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+<span style="color:#569CD6;">using</span> System;
 
-namespace Blazr.EditForms
+<span style="color:#569CD6;">namespace</span> Blazr.EditForms
 {
-    public class EditStateEventArgs : EventArgs
+    <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">class</span> EditStateEventArgs : EventArgs
     {
-        public bool IsDirty { get; set; }
+        <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">bool</span> IsDirty { <span style="color:#569CD6;">get</span>; <span style="color:#569CD6;">set</span>; }
 
-        public static EditStateEventArgs NewArgs(bool dirtyState)
-            =&gt; new EditStateEventArgs { IsDirty = dirtyState };
+        <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">static</span> EditStateEventArgs NewArgs(<span style="color:#569CD6;">bool</span> dirtyState)
+            =&gt; <span style="color:#569CD6;">new</span> EditStateEventArgs { IsDirty = dirtyState };
     }
 }
-</code></pre>
-<h4 id="editfield">EditField</h4>
+</pre></div><h4 id="editfield">EditField</h4>
 <p><code>EditField</code> looks like this.  All but <code>EditedValue</code> are <code>init</code> record type properties.</p>
-<pre><code class="language-csharp">    public class EditField
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+    <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">class</span> EditField
     {
-        public string FieldName { get; init; }
-        public Guid GUID { get; init; }
-        public object Value { get; init; }
-        public object EditedValue { get; set; }
-        public object Model { get; init; }
+        <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">string</span> FieldName { <span style="color:#569CD6;">get</span>; init; }
+        <span style="color:#569CD6;">public</span> Guid GUID { <span style="color:#569CD6;">get</span>; init; }
+        <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">object</span> Value { <span style="color:#569CD6;">get</span>; init; }
+        <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">object</span> EditedValue { <span style="color:#569CD6;">get</span>; <span style="color:#569CD6;">set</span>; }
+        <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">object</span> Model { <span style="color:#569CD6;">get</span>; init; }
 
-        public bool IsDirty
+        <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">bool</span> IsDirty
         {
-            get
+            <span style="color:#569CD6;">get</span>
             {
-                if (Value != null &amp;&amp; EditedValue != null) return !Value.Equals(EditedValue);
-                if (Value is null &amp;&amp; EditedValue is null) return false;
-                return true;
+                <span style="color:#569CD6;">if</span> (Value != <span style="color:#569CD6;">null</span> &amp;&amp; EditedValue != <span style="color:#569CD6;">null</span>) <span style="color:#569CD6;">return</span> !Value.Equals(EditedValue);
+                <span style="color:#569CD6;">if</span> (Value <span style="color:#569CD6;">is</span> <span style="color:#569CD6;">null</span> &amp;&amp; EditedValue <span style="color:#569CD6;">is</span> <span style="color:#569CD6;">null</span>) <span style="color:#569CD6;">return</span> <span style="color:#569CD6;">false</span>;
+                <span style="color:#569CD6;">return</span> <span style="color:#569CD6;">true</span>;
             }
         }
 
-        public EditField(object model, string fieldName, object value)
+        <span style="color:#569CD6;">public</span> EditField(<span style="color:#569CD6;">object</span> model, <span style="color:#569CD6;">string</span> fieldName, <span style="color:#569CD6;">object</span> value)
         {
-            this.Model = model;
-            this.FieldName = fieldName;
-            this.Value = value;
-            this.EditedValue = value;
-            this.GUID = Guid.NewGuid();
+            <span style="color:#569CD6;">this</span>.Model = model;
+            <span style="color:#569CD6;">this</span>.FieldName = fieldName;
+            <span style="color:#569CD6;">this</span>.Value = value;
+            <span style="color:#569CD6;">this</span>.EditedValue = value;
+            <span style="color:#569CD6;">this</span>.GUID = Guid.NewGuid();
         }
 
-        public void Reset()
-            =&gt; this.EditedValue = this.Value;
+        <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">void</span> Reset()
+            =&gt; <span style="color:#569CD6;">this</span>.EditedValue = <span style="color:#569CD6;">this</span>.Value;
     }
-</code></pre>
-<h4 id="editfieldcollection">EditFieldCollection</h4>
+</pre></div><h4 id="editfieldcollection">EditFieldCollection</h4>
 <p><code>EditFieldCollection</code> implements <code>IEnumerable</code>.  It provides:</p>
 <ol>
 <li>An <code>IsDirty</code> property which checks the state of all the <code>EditFields</code> in the collection.</li>
 <li>A set of getters and setters for adding and setting the edit state.</li>
 </ol>
-<pre><code class="language-csharp">    public class EditFieldCollection : IEnumerable
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+    <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">class</span> EditFieldCollection : IEnumerable
     {
-        private List&lt;EditField&gt; _items = new List&lt;EditField&gt;();
-        public int Count =&gt; _items.Count;
-        public Action&lt;bool&gt; FieldValueChanged;
-        public bool IsDirty =&gt; _items.Any(item =&gt; item.IsDirty);
+        <span style="color:#569CD6;">private</span> List&lt;EditField&gt; _items = <span style="color:#569CD6;">new</span> List&lt;EditField&gt;();
+        <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">int</span> Count =&gt; _items.Count;
+        <span style="color:#569CD6;">public</span> Action&lt;<span style="color:#569CD6;">bool</span>&gt; FieldValueChanged;
+        <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">bool</span> IsDirty =&gt; _items.Any(item =&gt; item.IsDirty);
 
-        public void Clear()
+        <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">void</span> Clear()
             =&gt; _items.Clear();
 
-        public void ResetValues()
+        <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">void</span> ResetValues()
             =&gt; _items.ForEach(item =&gt; item.Reset());
 ..... lots of getters and setters and IEnumerator implementation code
-</code></pre>
-<h2 id="the-navigation-lock-code">The Navigation Lock Code</h2>
+</pre></div><h2 id="the-navigation-lock-code">The Navigation Lock Code</h2>
 <h3 id="the-navigationlock-component">The NavigationLock Component</h3>
 <p>Page locking is implemented in the UI through  the <code>NavigationLock</code> component.  It looks like this:</p>
-<pre><code class="language-csharp">public class NavigationLock : ComponentBase, IDisposable
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+<span style="color:#569CD6;">public</span> <span style="color:#569CD6;">class</span> NavigationLock : ComponentBase, IDisposable
 {
-    [Inject] private IJSRuntime? _js { get; set; }
+    [Inject] <span style="color:#569CD6;">private</span> IJSRuntime? _js { <span style="color:#569CD6;">get</span>; <span style="color:#569CD6;">set</span>; }
 
-    [Inject] private BlazrNavigationManager? blazrNavigationManager { get; set; }    
+    [Inject] <span style="color:#569CD6;">private</span> BlazrNavigationManager? blazrNavigationManager { <span style="color:#569CD6;">get</span>; <span style="color:#569CD6;">set</span>; }    
     
-    [Parameter] public RenderFragment? ChildContent { get; set; }
+    [Parameter] <span style="color:#569CD6;">public</span> RenderFragment? ChildContent { <span style="color:#569CD6;">get</span>; <span style="color:#569CD6;">set</span>; }
 
-    private bool locked;
+    <span style="color:#569CD6;">private</span> <span style="color:#569CD6;">bool</span> locked;
 
-    protected override void OnInitialized()
+    <span style="color:#569CD6;">protected</span> <span style="color:#569CD6;">override</span> <span style="color:#569CD6;">void</span> OnInitialized()
         =&gt; blazrNavigationManager!.BeforeLocationChange += OnBeforeLocationChange;
 
-    protected override Task OnAfterRenderAsync(bool firstRender)
+    <span style="color:#569CD6;">protected</span> <span style="color:#569CD6;">override</span> Task OnAfterRenderAsync(<span style="color:#569CD6;">bool</span> firstRender)
     {
-        if (firstRender)
+        <span style="color:#569CD6;">if</span> (firstRender)
             SetPageLock();
-        return Task.CompletedTask;
+        <span style="color:#569CD6;">return</span> Task.CompletedTask;
     }
 
-    public void SetLock(bool locked)
+    <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">void</span> SetLock(<span style="color:#569CD6;">bool</span> locked)
     {
-        this.locked = locked;
-        this.SetPageLock();
+        <span style="color:#569CD6;">this</span>.locked = locked;
+        <span style="color:#569CD6;">this</span>.SetPageLock();
     }
 
-    private void OnBeforeLocationChange(object? sender, NavigationData e)
-        =&gt; e.IsCanceled = this.locked;
+    <span style="color:#569CD6;">private</span> <span style="color:#569CD6;">void</span> OnBeforeLocationChange(<span style="color:#569CD6;">object</span>? sender, NavigationData e)
+        =&gt; e.IsCanceled = <span style="color:#569CD6;">this</span>.locked;
 
-    private void SetPageLock()
-        =&gt; _js!.InvokeAsync&lt;bool&gt;(&quot;blazr_setPageLock&quot;, locked);
+    <span style="color:#569CD6;">private</span> <span style="color:#569CD6;">void</span> SetPageLock()
+        =&gt; _js!.InvokeAsync&lt;<span style="color:#569CD6;">bool</span>&gt;(<span style="color:#D69D85;">&quot;blazr_setPageLock&quot;</span>, locked);
 
-    protected override void BuildRenderTree(RenderTreeBuilder builder)
+    <span style="color:#569CD6;">protected</span> <span style="color:#569CD6;">override</span> <span style="color:#569CD6;">void</span> BuildRenderTree(RenderTreeBuilder builder)
     {
-        builder.OpenComponent&lt;CascadingValue&lt;NavigationLock&gt;&gt;(0);
-        builder.AddAttribute(1, &quot;Value&quot;, this);
-        builder.AddAttribute(2, &quot;ChildContent&quot;, this.ChildContent);
+        builder.OpenComponent&lt;CascadingValue&lt;NavigationLock&gt;&gt;(<span style="color:#B5CEA8;">0</span>);
+        builder.AddAttribute(<span style="color:#B5CEA8;">1</span>, <span style="color:#D69D85;">&quot;Value&quot;</span>, <span style="color:#569CD6;">this</span>);
+        builder.AddAttribute(<span style="color:#B5CEA8;">2</span>, <span style="color:#D69D85;">&quot;ChildContent&quot;</span>, <span style="color:#569CD6;">this</span>.ChildContent);
         builder.CloseComponent();
     }
 
-    public void Dispose()
+    <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">void</span> Dispose()
         =&gt; blazrNavigationManager!.BeforeLocationChange -= OnBeforeLocationChange;
 }
-</code></pre>
+</pre></div>
 <p>It's default first load condition is unlocked.  It has a single public method <code>SetLock</code>.  This sets an internal state global variable and calls the Javascript <code>blazr_setPageLock</code> passing true/false to set or unset page locking.</p>
 <p>It injects the new <code>BlazrNavigationManager</code> and registers for the <code>OnBeforeLocationChange</code> event.  It sets <code>IsCancelled</code> on the <code>NavigationData</code> object it is passed to the lock state.  We'll see <code>BlazrNavigationManager</code> in a minute.</p>
 <p>The Component UI wraps the child content in a cascade of the component.</p>
 <h3 id="site.js">site.js</h3>
 <p>The client side guts of the solution.  In essence we add listeners into the various browser navigation events and either allow or prevent event propogation.  The code is shown in full below.</p>
-<pre><code class="language-js">let blazr_PreventNavigation = false;  // main control bool to stop/allow navigation
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+let blazr_PreventNavigation = <span style="color:#569CD6;">false</span>;  <span style="color:#57A64A;">// main control bool to stop/allow navigation</span>
 
-window.blazr_setPageLock = function (lock) {
+window.blazr_setPageLock = <span style="color:#569CD6;">function</span> (lock) {
     blazr_PreventNavigation = lock;
 }
 
-window.addEventListener('beforeunload', e =&gt; {
-    if (blazr_PreventNavigation) {
-        e.returnValue = 'There are unsaved changes in your form!'
+window.addEventListener(<span style="color:#D69D85;">&#39;beforeunload&#39;</span>, e =&gt; {
+    <span style="color:#569CD6;">if</span> (blazr_PreventNavigation) {
+        e.returnValue = <span style="color:#D69D85;">&#39;There are unsaved changes in your form!&#39;</span>
     }
 });
-</code></pre>
-<h3 id="blazrnavigationmanager">BlazrNavigationManager</h3>
+</pre></div><h3 id="blazrnavigationmanager">BlazrNavigationManager</h3>
 <p><code>BlazrNavigationManager</code> replaces the normal Navigation Manager.</p>
 <p>It injects the standard Navigation Manager through Dependancy Injection as it's UnderlyingNavigationManager.  It registers on the <code>OnUnderlyingNavigationManager.LocationChanged</code> event.  The event handler invokes all registered delegates on it's <code>BeforeLocationChange</code> event.  If <code>NavigationData.IsCanceled</code> is true it sinks the event.  If not, it invokes it's own base class <code>LocationChanged</code> event though <code>NotifyLocationChanged</code>.</p>
 <p>If navigation is cancelled, it instigates a second Navigation event on the standard Navigation Manager to reset the Uri.</p>
-<pre><code class="language-csharp">public class BlazrNavigationManager : NavigationManager
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+<span style="color:#569CD6;">public</span> <span style="color:#569CD6;">class</span> BlazrNavigationManager : NavigationManager
 {
-    private NavigationManager _UnderlyingNavigationManager;
-    private bool _isBlindNavigation = false;
+    <span style="color:#569CD6;">private</span> NavigationManager _UnderlyingNavigationManager;
+    <span style="color:#569CD6;">private</span> <span style="color:#569CD6;">bool</span> _isBlindNavigation = <span style="color:#569CD6;">false</span>;
 
-    public event EventHandler&lt;NavigationData&gt;? BeforeLocationChange;
+    <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">event</span> EventHandler&lt;NavigationData&gt;? BeforeLocationChange;
 
-    public BlazrNavigationManager(NavigationManager? underlyingNavigationManager)
+    <span style="color:#569CD6;">public</span> BlazrNavigationManager(NavigationManager? underlyingNavigationManager)
     {
         _UnderlyingNavigationManager = underlyingNavigationManager!;
-        base.Initialize(underlyingNavigationManager!.BaseUri, underlyingNavigationManager.Uri);
+        <span style="color:#569CD6;">base</span>.Initialize(underlyingNavigationManager!.BaseUri, underlyingNavigationManager.Uri);
         _UnderlyingNavigationManager.LocationChanged += OnUnderlyingNavigationManagerLocationChanged;
     }
 
-    protected override void EnsureInitialized()
+    <span style="color:#569CD6;">protected</span> <span style="color:#569CD6;">override</span> <span style="color:#569CD6;">void</span> EnsureInitialized()
     {
-        base.Initialize(_UnderlyingNavigationManager.BaseUri, _UnderlyingNavigationManager.Uri);
+        <span style="color:#569CD6;">base</span>.Initialize(_UnderlyingNavigationManager.BaseUri, _UnderlyingNavigationManager.Uri);
     }
 
-    protected override void NavigateToCore(string uri, bool forceLoad)
+    <span style="color:#569CD6;">protected</span> <span style="color:#569CD6;">override</span> <span style="color:#569CD6;">void</span> NavigateToCore(<span style="color:#569CD6;">string</span> uri, <span style="color:#569CD6;">bool</span> forceLoad)
     {
-        // Call the underlying navigation manager.
+        <span style="color:#57A64A;">// Call the underlying navigation manager.</span>
         _UnderlyingNavigationManager.NavigateTo(uri, forceLoad);
     }
 
-    private NavigationData NotifyBeforeLocationChange(LocationChangedEventArgs e)
+    <span style="color:#569CD6;">private</span> NavigationData NotifyBeforeLocationChange(LocationChangedEventArgs e)
     {
-        var navigation = new NavigationData()
+        <span style="color:#569CD6;">var</span> navigation = <span style="color:#569CD6;">new</span> NavigationData()
         {
-            CurrentLocation = this.Uri,
+            CurrentLocation = <span style="color:#569CD6;">this</span>.Uri,
             NewLocation = e.Location,
             IsNavigationIntercepted = e.IsNavigationIntercepted,
-            IsCanceled = false
+            IsCanceled = <span style="color:#569CD6;">false</span>
         };
-        BeforeLocationChange?.Invoke(this, navigation);
-        return navigation;
+        BeforeLocationChange?.Invoke(<span style="color:#569CD6;">this</span>, navigation);
+        <span style="color:#569CD6;">return</span> navigation;
     }
 
-    private void OnUnderlyingNavigationManagerLocationChanged(object? sender, LocationChangedEventArgs e)
+    <span style="color:#569CD6;">private</span> <span style="color:#569CD6;">void</span> OnUnderlyingNavigationManagerLocationChanged(<span style="color:#569CD6;">object</span>? sender, LocationChangedEventArgs e)
     {
-        var navigation = NotifyBeforeLocationChange(e);
-        // Check our blind navigation flag.  If we are blind navigating
-        // we just set the flag back to false and exit
-        if (_isBlindNavigation)
+        <span style="color:#569CD6;">var</span> navigation = NotifyBeforeLocationChange(e);
+        <span style="color:#57A64A;">// Check our blind navigation flag.  If we are blind navigating</span>
+        <span style="color:#57A64A;">// we just set the flag back to false and exit</span>
+        <span style="color:#569CD6;">if</span> (_isBlindNavigation)
         {
-            _isBlindNavigation = false;
-            return;
+            _isBlindNavigation = <span style="color:#569CD6;">false</span>;
+            <span style="color:#569CD6;">return</span>;
         }
 
-        // Navigation is cancelled
-        // we set the flag so we don't create a loop with the dummy run
-        if (navigation.IsCanceled)
+        <span style="color:#57A64A;">// Navigation is cancelled</span>
+        <span style="color:#57A64A;">// we set the flag so we don&#39;t create a loop with the dummy run</span>
+        <span style="color:#569CD6;">if</span> (navigation.IsCanceled)
         {
-            // prevents a NavigateTo loop
-            _isBlindNavigation = true;
-            // Puts the link back - else it will change, but the page will not navigate.
-            _UnderlyingNavigationManager.NavigateTo(this.Uri, false);
-            return;
+            <span style="color:#57A64A;">// prevents a NavigateTo loop</span>
+            _isBlindNavigation = <span style="color:#569CD6;">true</span>;
+            <span style="color:#57A64A;">// Puts the link back - else it will change, but the page will not navigate.</span>
+            _UnderlyingNavigationManager.NavigateTo(<span style="color:#569CD6;">this</span>.Uri, <span style="color:#569CD6;">false</span>);
+            <span style="color:#569CD6;">return</span>;
         }
 
-        // Normal Navigation path
-        // NOTE: We set the Uri before calling notify location changed, as it will use this uri property in its args.
-        this.Uri = e.Location;
-        // Trigger the Location Changed event for all listeners including the Router
-        this.NotifyLocationChanged(e.IsNavigationIntercepted);
-        // Belt and braces to ensure false 
-        _isBlindNavigation = false;
+        <span style="color:#57A64A;">// Normal Navigation path</span>
+        <span style="color:#57A64A;">// NOTE: We set the Uri before calling notify location changed, as it will use this uri property in its args.</span>
+        <span style="color:#569CD6;">this</span>.Uri = e.Location;
+        <span style="color:#57A64A;">// Trigger the Location Changed event for all listeners including the Router</span>
+        <span style="color:#569CD6;">this</span>.NotifyLocationChanged(e.IsNavigationIntercepted);
+        <span style="color:#57A64A;">// Belt and braces to ensure false </span>
+        _isBlindNavigation = <span style="color:#569CD6;">false</span>;
     }
 }
-</code></pre>
-<h3 id="weatherforecasteditorform">WeatherForecastEditorForm</h3>
+</pre></div><h3 id="weatherforecasteditorform">WeatherForecastEditorForm</h3>
 <p>Our base editor form looks like this.  It's all UI controls which you can investigate in the Repo code.</p>
-<pre><code class="language-html">&lt;UILoader State=&quot;this.LoadState&quot;&gt;
-    &lt;FormViewTitle&gt;
-        &lt;h2&gt;Weather Forecast Editor&lt;/h2&gt;
-    &lt;/FormViewTitle&gt;
-    &lt;EditForm EditContext=&quot;this.editContent&quot;&gt;
-        &lt;UIContainer Size=BootstrapSize.Fluid&gt;
-            &lt;UIFormRow&gt;
-                &lt;UIColumn Columns=12 MediumColumns=6&gt;
-                    &lt;FormEditControl Label=&quot;Date&quot; ShowLabel=&quot;true&quot; @bind-Value=&quot;this.viewService.EditModel.Date&quot; ControlType=&quot;typeof(InputDate&lt;DateTime&gt;)&quot; IsRequired=&quot;true&quot; ShowValidation=&quot;true&quot; HelperText=&quot;Enter the Forecast Date&quot;&gt;&lt;/FormEditControl&gt;
-                &lt;/UIColumn&gt;
-                &lt;UIColumn Columns=12 MediumColumns=6&gt;
-                    &lt;FormEditControl Label=&quot;Temperature &amp;deg;C&quot; ShowLabel=&quot;true&quot; @bind-Value=&quot;this.viewService.EditModel.TemperatureC&quot; ControlType=&quot;typeof(InputNumber&lt;int&gt;)&quot; IsRequired=&quot;true&quot; ShowValidation=&quot;true&quot; HelperText=&quot;Enter the Temperature&quot;&gt;&lt;/FormEditControl&gt;
-                &lt;/UIColumn&gt;
-            &lt;/UIFormRow&gt;
-            &lt;UIFormRow&gt;
-                &lt;UIColumn Columns=12&gt;
-                    &lt;FormEditControl Label=&quot;Summary&quot; ShowLabel=&quot;true&quot; @bind-Value=&quot;this.viewService.EditModel.Summary&quot; IsRequired=&quot;true&quot; ShowValidation=&quot;true&quot; HelperText=&quot;Summarise the Weather&quot;&gt;&lt;/FormEditControl&gt;
-                &lt;/UIColumn&gt;
-            &lt;/UIFormRow&gt;
-        &lt;/UIContainer&gt;
-        &lt;UIContainer Size=BootstrapSize.Fluid&gt;
-            &lt;UIFormRow&gt;
-                &lt;UIColumn Columns=12 class=&quot;text-end&quot;&gt;
-                    &lt;UIButton class=&quot;btn-success&quot; Disabled=&quot;!this.isDirty&quot; ClickEvent=&quot;this.SaveRecord&quot;&gt;Save&lt;/UIButton&gt;
-                    &lt;UIButton class=&quot;btn-dark&quot; Show=&quot;!this.isDirty&quot; ClickEvent=&quot;this.Exit&quot;&gt;Exit&lt;/UIButton&gt;
-                    &lt;UIButton class=&quot;btn-danger&quot; Show=&quot;this.isDirty&quot; ClickEvent=&quot;this.ExitWithoutSaving&quot;&gt;Exit Without Saving&lt;/UIButton&gt;
-                &lt;/UIColumn&gt;
-            &lt;/UIFormRow&gt;
-        &lt;/UIContainer&gt;
-    &lt;/EditForm&gt;
-&lt;/UILoader&gt;
-</code></pre>
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+<span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">UILoader</span> <span style="color:#FF0000;">State</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;this.LoadState&quot;</span><span style="color:#569CD6;">&gt;</span>
+    <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">FormViewTitle</span><span style="color:#569CD6;">&gt;</span>
+        <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">h2</span><span style="color:#569CD6;">&gt;</span>Weather Forecast Editor<span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">h2</span><span style="color:#569CD6;">&gt;</span>
+    <span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">FormViewTitle</span><span style="color:#569CD6;">&gt;</span>
+    <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">EditForm</span> <span style="color:#FF0000;">EditContext</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;this.editContent&quot;</span><span style="color:#569CD6;">&gt;</span>
+        <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">UIContainer</span> <span style="color:#FF0000;">Size</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">BootstrapSize.Fluid</span><span style="color:#569CD6;">&gt;</span>
+            <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">UIFormRow</span><span style="color:#569CD6;">&gt;</span>
+                <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">UIColumn</span> <span style="color:#FF0000;">Columns</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">12</span> <span style="color:#FF0000;">MediumColumns</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">6</span><span style="color:#569CD6;">&gt;</span>
+                    <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">FormEditControl</span> <span style="color:#FF0000;">Label</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;Date&quot;</span> <span style="color:#FF0000;">ShowLabel</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;true&quot; @bind-Value=&quot;this.viewService.EditModel.Date&quot;</span> <span style="color:#FF0000;">ControlType</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;typeof(InputDate&lt;DateTime&gt;)&quot;</span> <span style="color:#FF0000;">IsRequired</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;true&quot;</span> <span style="color:#FF0000;">ShowValidation</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;true&quot;</span> <span style="color:#FF0000;">HelperText</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;Enter the Forecast Date&quot;</span><span style="color:#569CD6;">&gt;</span><span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">FormEditControl</span><span style="color:#569CD6;">&gt;</span>
+                <span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">UIColumn</span><span style="color:#569CD6;">&gt;</span>
+                <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">UIColumn</span> <span style="color:#FF0000;">Columns</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">12</span> <span style="color:#FF0000;">MediumColumns</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">6</span><span style="color:#569CD6;">&gt;</span>
+                    <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">FormEditControl</span> <span style="color:#FF0000;">Label</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;Temperature &amp;deg;C&quot;</span> <span style="color:#FF0000;">ShowLabel</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;true&quot; @bind-Value=&quot;this.viewService.EditModel.TemperatureC&quot;</span> <span style="color:#FF0000;">ControlType</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;typeof(InputNumber&lt;int&gt;)&quot;</span> <span style="color:#FF0000;">IsRequired</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;true&quot;</span> <span style="color:#FF0000;">ShowValidation</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;true&quot;</span> <span style="color:#FF0000;">HelperText</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;Enter the Temperature&quot;</span><span style="color:#569CD6;">&gt;</span><span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">FormEditControl</span><span style="color:#569CD6;">&gt;</span>
+                <span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">UIColumn</span><span style="color:#569CD6;">&gt;</span>
+            <span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">UIFormRow</span><span style="color:#569CD6;">&gt;</span>
+            <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">UIFormRow</span><span style="color:#569CD6;">&gt;</span>
+                <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">UIColumn</span> <span style="color:#FF0000;">Columns</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">12</span><span style="color:#569CD6;">&gt;</span>
+                    <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">FormEditControl</span> <span style="color:#FF0000;">Label</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;Summary&quot;</span> <span style="color:#FF0000;">ShowLabel</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;true&quot; @bind-Value=&quot;this.viewService.EditModel.Summary&quot;</span> <span style="color:#FF0000;">IsRequired</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;true&quot;</span> <span style="color:#FF0000;">ShowValidation</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;true&quot;</span> <span style="color:#FF0000;">HelperText</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;Summarise the Weather&quot;</span><span style="color:#569CD6;">&gt;</span><span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">FormEditControl</span><span style="color:#569CD6;">&gt;</span>
+                <span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">UIColumn</span><span style="color:#569CD6;">&gt;</span>
+            <span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">UIFormRow</span><span style="color:#569CD6;">&gt;</span>
+        <span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">UIContainer</span><span style="color:#569CD6;">&gt;</span>
+        <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">UIContainer</span> <span style="color:#FF0000;">Size</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">BootstrapSize.Fluid</span><span style="color:#569CD6;">&gt;</span>
+            <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">UIFormRow</span><span style="color:#569CD6;">&gt;</span>
+                <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">UIColumn</span> <span style="color:#FF0000;">Columns</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">12</span> <span style="color:#FF0000;">class</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;text-end&quot;</span><span style="color:#569CD6;">&gt;</span>
+                    <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">UIButton</span> <span style="color:#FF0000;">class</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;btn-success&quot;</span> <span style="color:#FF0000;">Disabled</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;!this.isDirty&quot;</span> <span style="color:#FF0000;">ClickEvent</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;this.SaveRecord&quot;</span><span style="color:#569CD6;">&gt;</span>Save<span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">UIButton</span><span style="color:#569CD6;">&gt;</span>
+                    <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">UIButton</span> <span style="color:#FF0000;">class</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;btn-dark&quot;</span> <span style="color:#FF0000;">Show</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;!this.isDirty&quot;</span> <span style="color:#FF0000;">ClickEvent</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;this.Exit&quot;</span><span style="color:#569CD6;">&gt;</span>Exit<span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">UIButton</span><span style="color:#569CD6;">&gt;</span>
+                    <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">UIButton</span> <span style="color:#FF0000;">class</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;btn-danger&quot;</span> <span style="color:#FF0000;">Show</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;this.isDirty&quot;</span> <span style="color:#FF0000;">ClickEvent</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;this.ExitWithoutSaving&quot;</span><span style="color:#569CD6;">&gt;</span>Exit Without Saving<span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">UIButton</span><span style="color:#569CD6;">&gt;</span>
+                <span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">UIColumn</span><span style="color:#569CD6;">&gt;</span>
+            <span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">UIFormRow</span><span style="color:#569CD6;">&gt;</span>
+        <span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">UIContainer</span><span style="color:#569CD6;">&gt;</span>
+    <span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">EditForm</span><span style="color:#569CD6;">&gt;</span>
+<span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">UILoader</span><span style="color:#569CD6;">&gt;</span>
+</pre></div>
 <p>And the code behind.</p>
 <p>Most of the code is in a <code>BaseEditForm</code>.</p>
 <p>The relevant section is in <code>OnInitializedAsync</code> where the <code>EditStateContext</code> is set up.  <code>OnEditStateChanged</code> importantly sets the lock on the Cascaded <code>NavigationLock</code>.</p>
-<pre><code class="language-csharp">public partial class WeatherForecastEditForm : BaseEditForm, IDisposable
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+<span style="color:#569CD6;">public</span> <span style="color:#569CD6;">partial</span> <span style="color:#569CD6;">class</span> WeatherForecastEditForm : BaseEditForm, IDisposable
 {
-    [Inject] private WeatherForecastViewService? ViewService { get; set; }
+    [Inject] <span style="color:#569CD6;">private</span> WeatherForecastViewService? ViewService { <span style="color:#569CD6;">get</span>; <span style="color:#569CD6;">set</span>; }
 
-    private WeatherForecastViewService viewService =&gt; this.ViewService!;
+    <span style="color:#569CD6;">private</span> WeatherForecastViewService viewService =&gt; <span style="color:#569CD6;">this</span>.ViewService!;
 
-    protected async override Task OnInitializedAsync()
+    <span style="color:#569CD6;">protected</span> <span style="color:#569CD6;">async</span> <span style="color:#569CD6;">override</span> Task OnInitializedAsync()
     {
-        base.LoadState = ComponentState.Loading;
-        await this.viewService.GetForecastAsync(Id);
-        base.editContent = new EditContext(this.viewService.EditModel);
-        base.editStateContext = new EditStateContext(base.editContent);
-        base.editStateContext.EditStateChanged += base.OnEditStateChanged;
-        base.LoadState = ComponentState.Loaded;
+        <span style="color:#569CD6;">base</span>.LoadState = ComponentState.Loading;
+        <span style="color:#569CD6;">await</span> <span style="color:#569CD6;">this</span>.viewService.GetForecastAsync(Id);
+        <span style="color:#569CD6;">base</span>.editContent = <span style="color:#569CD6;">new</span> EditContext(<span style="color:#569CD6;">this</span>.viewService.EditModel);
+        <span style="color:#569CD6;">base</span>.editStateContext = <span style="color:#569CD6;">new</span> EditStateContext(<span style="color:#569CD6;">base</span>.editContent);
+        <span style="color:#569CD6;">base</span>.editStateContext.EditStateChanged += <span style="color:#569CD6;">base</span>.OnEditStateChanged;
+        <span style="color:#569CD6;">base</span>.LoadState = ComponentState.Loaded;
     }
 
-    private async Task SaveRecord()
+    <span style="color:#569CD6;">private</span> <span style="color:#569CD6;">async</span> Task SaveRecord()
     {
-        await this.viewService.UpdateRecordAsync();
-        base.editStateContext?.NotifySaved();
+        <span style="color:#569CD6;">await</span> <span style="color:#569CD6;">this</span>.viewService.UpdateRecordAsync();
+        <span style="color:#569CD6;">base</span>.editStateContext?.NotifySaved();
     }
 
-    private async Task AddRecord()
-    =&gt; await this.viewService.AddRecordAsync(
-        new DcoWeatherForecast
+    <span style="color:#569CD6;">private</span> <span style="color:#569CD6;">async</span> Task AddRecord()
+    =&gt; <span style="color:#569CD6;">await</span> <span style="color:#569CD6;">this</span>.viewService.AddRecordAsync(
+        <span style="color:#569CD6;">new</span> DcoWeatherForecast
         {
             Date = DateTime.Now,
             Id = Guid.NewGuid(),
-            Summary = &quot;Balmy&quot;,
-            TemperatureC = 14
+            Summary = <span style="color:#D69D85;">&quot;Balmy&quot;</span>,
+            TemperatureC = <span style="color:#B5CEA8;">14</span>
         });
 
-    protected override void BaseExit()
-    =&gt; this.NavManager?.NavigateTo(&quot;/weatherforecast&quot;);
+    <span style="color:#569CD6;">protected</span> <span style="color:#569CD6;">override</span> <span style="color:#569CD6;">void</span> BaseExit()
+    =&gt; <span style="color:#569CD6;">this</span>.NavManager?.NavigateTo(<span style="color:#D69D85;">&quot;/weatherforecast&quot;</span>);
 
-    public void Dispose()
+    <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">void</span> Dispose()
     {
-        if (base.editStateContext is not null)
-            base.editStateContext.EditStateChanged -= base.OnEditStateChanged;
+        <span style="color:#569CD6;">if</span> (<span style="color:#569CD6;">base</span>.editStateContext <span style="color:#569CD6;">is</span> not <span style="color:#569CD6;">null</span>)
+            <span style="color:#569CD6;">base</span>.editStateContext.EditStateChanged -= <span style="color:#569CD6;">base</span>.OnEditStateChanged;
     }
 }
-</code></pre>
-<h2 id="the-infratructure-code">The Infratructure Code</h2>
+</pre></div><h2 id="the-infratructure-code">The Infratructure Code</h2>
 <h2 id="mainlayout.razor">MainLayout.razor</h2>
 <p>The most common approach is to use the component in Layouts.  Here's the modified <code>MainLayout</code>.</p>
-<pre><code class="language-csharp">&lt;div class=&quot;page&quot;&gt;
-    &lt;div class=&quot;sidebar&quot;&gt;
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+&lt;div <span style="color:#569CD6;">class</span>=<span style="color:#D69D85;">&quot;page&quot;</span>&gt;
+    &lt;div <span style="color:#569CD6;">class</span>=<span style="color:#D69D85;">&quot;sidebar&quot;</span>&gt;
         &lt;NavMenu /&gt;
     &lt;/div&gt;
 
     &lt;main&gt;
-        &lt;div class=&quot;top-row px-4&quot;&gt;
-            &lt;a href=&quot;https://docs.microsoft.com/aspnet/&quot; target=&quot;_blank&quot;&gt;About&lt;/a&gt;
+        &lt;div <span style="color:#569CD6;">class</span>=<span style="color:#D69D85;">&quot;top-row px-4&quot;</span>&gt;
+            &lt;a href=<span style="color:#D69D85;">&quot;https://docs.microsoft.com/aspnet/&quot;</span> target=<span style="color:#D69D85;">&quot;_blank&quot;</span>&gt;About&lt;/a&gt;
         &lt;/div&gt;
 
-        &lt;article class=&quot;content px-4&quot;&gt;
+        &lt;article <span style="color:#569CD6;">class</span>=<span style="color:#D69D85;">&quot;content px-4&quot;</span>&gt;
             &lt;NavigationLock&gt;
                 @Body
             &lt;/NavigationLock&gt;
         &lt;/article&gt;
     &lt;/main&gt;
 &lt;/div&gt;
-</code></pre>
+</pre></div>
 <p>The <code>Body</code> content is wrapped in the component, and the component cascaded, so is available to all pages/components that use the layout.</p>
 <h3 id="layout.cshtmlindex.html">_Layout.cshtml/index.html</h3>
 <p>Add the js script as the last script to load in either Layout.cshtml or index.html.</p>
 <p>Server</p>
-<pre><code class="language-html">&lt;script src=&quot;_framework/blazor.server.js&quot;&gt;&lt;/script&gt;
-&lt;script src=&quot;_content/Blazr.NavigationLocker/site.js&quot;&gt;&lt;/script&gt;
-</code></pre>
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+<span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">script</span> <span style="color:#FF0000;">src</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;_framework/blazor.server.js&quot;</span><span style="color:#569CD6;">&gt;</span><span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">script</span><span style="color:#569CD6;">&gt;</span>
+<span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">script</span> <span style="color:#FF0000;">src</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;_content/Blazr.NavigationLocker/site.js&quot;</span><span style="color:#569CD6;">&gt;</span><span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">script</span><span style="color:#569CD6;">&gt;</span>
+</pre></div>
 <p>WASM</p>
-<pre><code class="language-html">&lt;script src=&quot;_framework/blazor.webassembly.js&quot;&gt;&lt;/script&gt;
-&lt;script src=&quot;_content/Blazr.NavigationLocker/site.js&quot;&gt;&lt;/script&gt;
-</code></pre>
-<h3 id="services">Services</h3>
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+<span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">script</span> <span style="color:#FF0000;">src</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;_framework/blazor.webassembly.js&quot;</span><span style="color:#569CD6;">&gt;</span><span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">script</span><span style="color:#569CD6;">&gt;</span>
+<span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">script</span> <span style="color:#FF0000;">src</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;_content/Blazr.NavigationLocker/site.js&quot;</span><span style="color:#569CD6;">&gt;</span><span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">script</span><span style="color:#569CD6;">&gt;</span>
+</pre></div><h3 id="services">Services</h3>
 <p>Add the required services.</p>
 <p>Server</p>
-<pre><code class="language-csharp">    services.AddBlazrNavigationLockerServerServices();
-</code></pre>
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+    services.AddBlazrNavigationLockerServerServices();
+</pre></div>
 <p>WASM</p>
-<pre><code class="language-csharp">    services.AddBlazrNavigationLockerWASMServices();
-</code></pre>
-<h2 id="using-blazrrouter">Using BlazrRouter</h2>
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+    services.AddBlazrNavigationLockerWASMServices();
+</pre></div><h2 id="using-blazrrouter">Using BlazrRouter</h2>
 <p>To use <code>BlazrRouter</code> simply replace the standard router in <code>App.razor</code>.</p>
-<pre><code class="language-xml">&lt;BlazrRouter AppAssembly=&quot;@typeof(App).Assembly&quot;&gt;
-    &lt;Found Context=&quot;routeData&quot;&gt;
-        &lt;RouteView RouteData=&quot;@routeData&quot; DefaultLayout=&quot;@typeof(MainLayout)&quot; /&gt;
-        &lt;FocusOnNavigate RouteData=&quot;@routeData&quot; Selector=&quot;h1&quot; /&gt;
-    &lt;/Found&gt;
-    &lt;NotFound&gt;
-        &lt;PageTitle&gt;Not found&lt;/PageTitle&gt;
-        &lt;LayoutView Layout=&quot;@typeof(MainLayout)&quot;&gt;
-            &lt;p role=&quot;alert&quot;&gt;Sorry, there's nothing at this address.&lt;/p&gt;
-        &lt;/LayoutView&gt;
-    &lt;/NotFound&gt;
-&lt;/BlazrRouter&gt;
-</code></pre>
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+<span style="color:#808080;">&lt;</span><span style="color:#E6E6E6;">BlazrRouter</span> <span style="color:#92CAF4;">AppAssembly</span><span style="color:#808080;">=</span><span style="color:#569CD6;">&quot;</span><span style="color:#569CD6;">@typeof(App).Assembly</span><span style="color:#569CD6;">&quot;</span><span style="color:#808080;">&gt;</span>
+    <span style="color:#808080;">&lt;</span><span style="color:#E6E6E6;">Found</span> <span style="color:#92CAF4;">Context</span><span style="color:#808080;">=</span><span style="color:#569CD6;">&quot;</span><span style="color:#569CD6;">routeData</span><span style="color:#569CD6;">&quot;</span><span style="color:#808080;">&gt;</span>
+        <span style="color:#808080;">&lt;</span><span style="color:#E6E6E6;">RouteView</span> <span style="color:#92CAF4;">RouteData</span><span style="color:#808080;">=</span><span style="color:#569CD6;">&quot;</span><span style="color:#569CD6;">@routeData</span><span style="color:#569CD6;">&quot;</span> <span style="color:#92CAF4;">DefaultLayout</span><span style="color:#808080;">=</span><span style="color:#569CD6;">&quot;</span><span style="color:#569CD6;">@typeof(MainLayout)</span><span style="color:#569CD6;">&quot;</span> <span style="color:#808080;">/&gt;</span>
+        <span style="color:#808080;">&lt;</span><span style="color:#E6E6E6;">FocusOnNavigate</span> <span style="color:#92CAF4;">RouteData</span><span style="color:#808080;">=</span><span style="color:#569CD6;">&quot;</span><span style="color:#569CD6;">@routeData</span><span style="color:#569CD6;">&quot;</span> <span style="color:#92CAF4;">Selector</span><span style="color:#808080;">=</span><span style="color:#569CD6;">&quot;</span><span style="color:#569CD6;">h1</span><span style="color:#569CD6;">&quot;</span> <span style="color:#808080;">/&gt;</span>
+    <span style="color:#808080;">&lt;/</span><span style="color:#E6E6E6;">Found</span><span style="color:#808080;">&gt;</span>
+    <span style="color:#808080;">&lt;</span><span style="color:#E6E6E6;">NotFound</span><span style="color:#808080;">&gt;</span>
+        <span style="color:#808080;">&lt;</span><span style="color:#E6E6E6;">PageTitle</span><span style="color:#808080;">&gt;</span>Not found<span style="color:#808080;">&lt;/</span><span style="color:#E6E6E6;">PageTitle</span><span style="color:#808080;">&gt;</span>
+        <span style="color:#808080;">&lt;</span><span style="color:#E6E6E6;">LayoutView</span> <span style="color:#92CAF4;">Layout</span><span style="color:#808080;">=</span><span style="color:#569CD6;">&quot;</span><span style="color:#569CD6;">@typeof(MainLayout)</span><span style="color:#569CD6;">&quot;</span><span style="color:#808080;">&gt;</span>
+            <span style="color:#808080;">&lt;</span><span style="color:#E6E6E6;">p</span> <span style="color:#92CAF4;">role</span><span style="color:#808080;">=</span><span style="color:#569CD6;">&quot;</span><span style="color:#569CD6;">alert</span><span style="color:#569CD6;">&quot;</span><span style="color:#808080;">&gt;</span>Sorry, there&#39;s nothing at this address.<span style="color:#808080;">&lt;/</span><span style="color:#E6E6E6;">p</span><span style="color:#808080;">&gt;</span>
+        <span style="color:#808080;">&lt;/</span><span style="color:#E6E6E6;">LayoutView</span><span style="color:#808080;">&gt;</span>
+    <span style="color:#808080;">&lt;/</span><span style="color:#E6E6E6;">NotFound</span><span style="color:#808080;">&gt;</span>
+<span style="color:#808080;">&lt;/</span><span style="color:#E6E6E6;">BlazrRouter</span><span style="color:#808080;">&gt;</span>
+</pre></div>
 <p>You will need to register the services as above.</p>
 </div></div></div></body></html>
 

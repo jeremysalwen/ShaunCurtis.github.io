@@ -1,0 +1,726 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<base href="/">
+
+	
+
+	
+
+	
+	<link href="/resources/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+	<link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+
+	
+	<link href="/resources/css/sb-admin-2.css" rel="stylesheet" type="text/css">
+	<link href="/resources/css/site.css" rel="stylesheet" type="text/css">
+
+	
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/highlight.css">
+	<link rel="stylesheet" href="/resources/css/article.css" type="text/css">
+
+	
+	<link rel="icon" href="/images/favicon.png">
+
+	<title>Building a Base Component Library - The Three Component Solution</title>
+        <meta property="author" content="Shaun Curtis" />
+        <meta property="description" content="In this article I&#x27;ll describe how to build three base components you can use throughout your applications." />
+    <meta property="og:site_name" content="Cold Elm Coders" />
+        <meta property="og:site" content="https://shauncurtis.github.io/" />
+        <meta property="og:title" content="Building a Base Component Library - The Three Component Solution" />
+        <meta property="og:description" content="In this article I&#x27;ll describe how to build three base components you can use throughout your applications." /></head>
+<body><header class="navbar bg-dark p-2 text-large text-light"><section class="navbar-section  text-light"><a href="/" class="navbar-brand mr-2 text-large text-light p-2">Cold Elm Coders</a>
+			<a href="/Posts" class="btn btn-link text-light">Posts</a>
+			<a href="/Rants" class="btn btn-link text-light">Rants</a>
+			<a href="/Articles" class="btn btn-link text-light">Articles</a>
+			<a href="/Stories" class="btn btn-link text-light">Stories</a>
+			<a href="/about.html" class="btn btn-link text-light">About</a></section></header>
+
+	<div class="container-fluid"><div class="row"><div class="col-12 col-sm-3 col-lg-2 bg-light pt-2"><div class="article-info p-2"><div class="mb-2">Published: 26-Sept-2023</div>
+                <div class="mb-2">Updated: 26-Sept-2023</div>
+                <div class="mb-2">Author: Shaun Curtis</div></div>
+    <h4 class="p-2">Table of Contents</h4>
+<ul class="TOC" >
+<li class="TOC-item TOC-item-0" >
+<a class="TOC-link" href="#">Top</a>
+<ul class="TOC TOC-0" >
+<li class="TOC-item TOC-item-1" >
+<ul class="TOC TOC-1" >
+<li class="TOC-item TOC-item-2" >
+<a class="TOC-link" href="#the-components">The Components</a>
+</li>
+<li class="TOC-item TOC-item-2" >
+<a class="TOC-link" href="#blazrbasecomponent">BlazrBaseComponent</a>
+</li>
+<li class="TOC-item TOC-item-2" >
+<a class="TOC-link" href="#blazruibase">BlazrUIBase</a>
+</li>
+<li class="TOC-item TOC-item-2" >
+<a class="TOC-link" href="#blazruibase-demo">BlazrUIBase Demo</a>
+</li>
+<li class="TOC-item TOC-item-2" >
+<a class="TOC-link" href="#blazrcontrolbase">BlazrControlBase</a>
+</li>
+<li class="TOC-item TOC-item-2" >
+<a class="TOC-link" href="#blazrcontrolbase-demo">BlazrControlBase Demo</a>
+</li>
+<li class="TOC-item TOC-item-2" >
+<a class="TOC-link" href="#the-extra-basecomponent-features">The Extra BaseComponent Features</a>
+</li>
+<li class="TOC-item TOC-item-2" >
+<a class="TOC-link" href="#the-wrapperframe-functionality">The Wrapper/Frame Functionality</a>
+</li>
+<li class="TOC-item TOC-item-2" >
+<a class="TOC-link" href="#manually-implementing-onafterrender">Manually Implementing OnAfterRender</a>
+</li>
+<li class="TOC-item TOC-item-2" >
+<a class="TOC-link" href="#summing-up">Summing Up</a>
+</li>
+<li class="TOC-item TOC-item-2" >
+<a class="TOC-link" href="#appendix">Appendix</a>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+			
+			<div class="col-12 col-sm-9 col-lg-10 p-2"><div class="pt-2 pb-2 border-bottom mb-4 text-primary"><h1>Building a Base Component Library - The Three Component Solution</h1>
+            <div><small>In this article I&#x27;ll describe how to build three base components you can use throughout your applications.</small></div></div>
+    <p>I have several earlier articles exploring how Blazor components work and why <code>ComponentBase</code> is not a very good citizen.</p>
+<p>In this article I'll describe how to build three base components you can use in your applications.  They form a hierarchy: changing the inheritance to a higher level base simply adds extra functionality.  The top level component has everything <code>ComponentBase</code> has and more.  Consider it as <em>Black Box Replacement</em>.  Change the inheritance of say <code>FetchData</code> or <code>Counter</code> and you won't see a difference.</p>
+<p>The components are available in a <a href="https://www.nuget.org/packages/Blazr.BaseComponents/">Nuget Package: Blazr.BaseComponents</a>.</p>
+<p>Before I dive into the detail, consider this simple component which displays a Bootstrap Alert.</p>
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+@<span style="color:#569CD6;">if</span> (Message <span style="color:#569CD6;">is</span> not <span style="color:#569CD6;">null</span>)
+{
+    &lt;div <span style="color:#569CD6;">class</span>=<span style="color:#D69D85;">&quot;alert @_alertType&quot;</span>&gt;
+        @<span style="color:#569CD6;">this</span>.Message
+    &lt;/div&gt;
+}
+
+@code {
+    [Parameter] <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">string</span>? Message { <span style="color:#569CD6;">get</span>; <span style="color:#569CD6;">set</span>; }
+    [Parameter] <span style="color:#569CD6;">public</span> AlertType MessageType { <span style="color:#569CD6;">get</span>; <span style="color:#569CD6;">set</span>; } = BasicAlert.AlertType.Info;
+
+    <span style="color:#569CD6;">private</span> <span style="color:#569CD6;">string</span> _alertType =&gt; <span style="color:#569CD6;">this</span>.MessageType <span style="color:#569CD6;">switch</span>
+    {
+        AlertType.Success =&gt; <span style="color:#D69D85;">&quot;alert-success&quot;</span>,
+        AlertType.Warning =&gt; <span style="color:#D69D85;">&quot;alert-warning&quot;</span>,
+        AlertType.Error =&gt; <span style="color:#D69D85;">&quot;alert-danger&quot;</span>,
+        _ =&gt;  <span style="color:#D69D85;">&quot;alert-primary&quot;</span>
+    };
+
+    <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">enum</span> AlertType
+    {
+        Info,
+        Success,
+        Error,
+        Warning,
+    }
+}
+</pre></div>
+<p>This only uses a small amount of the functionality built into <code>ComponentBase</code>.  There's no lifecycle code, UI events or after render code.</p>
+<p>Only one sermon:</p>
+<blockquote>
+<p>Consider how many times instances of this type of component are loaded into memory every day.  And then how many times they get re-rendered.  Lots of calls to lifecycle async methods, constructing and then disposing Task state machines for nothing.  Lot's of memory occupied doing sweet nothing.  That's CPU cycles and memory you (and the planet) are paying for and wasting every second of every day.</p>
+</blockquote>
+<p>Such components need a much simpler and smaller footprint base component.</p>
+<p>I'll stick my neck out [based on my own experience] and speculate that 99% of all components are candidates for simpler and smaller footprint base components.</p>
+<h2 id="the-components">The Components</h2>
+<ol>
+<li><p><code>BlazrUIBase</code> is a simple UI component with minimal functionality.</p>
+</li>
+<li><p><code>BlazrControlBase</code> is a mid level control component with a single lifecycle method and simple single rendering.</p>
+</li>
+<li><p><code>BlazrComponentBase</code> is a full <code>ComponentBase</code> replacement with some additional Wrapper/Frame functionality.</p>
+</li>
+</ol>
+<h2 id="blazrbasecomponent">BlazrBaseComponent</h2>
+<p><code>BlazrBaseComponent</code> is a standard class that implements all the basic boiler plate code used by components.  It's abstract and doesn't implement <code>IComponent</code>.</p>
+<p>It replicates many of the same variables and properties of <code>ComponentBase</code>.</p>
+<p>The differences are:</p>
+<ol>
+<li>The <code>Initialized</code> flag has changed.  It's reversed and now <code>protected</code>, so inheriting classes can access it.  It has a <code>NotInitialized</code> opposite, so no need for the awkward <code>if(!Initialized)</code> conditional code.</li>
+<li>It has a Guid identifier: useful for tracking instances in debugging, and used in some of my more advanced components.</li>
+<li>It has two <code>RenderFragments</code> to implement Wrapper/Frame functionality. <code>Frame</code> defines the code to wrap around <code>Body</code>. <code>Frame</code> is nullable, so if null is not used: the component renders <code>Body</code>.</li>
+</ol>
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+<span style="color:#569CD6;">public</span> <span style="color:#569CD6;">abstract</span> <span style="color:#569CD6;">class</span> BlazrBaseComponent
+{
+    <span style="color:#569CD6;">private</span> RenderHandle _renderHandle;
+    <span style="color:#569CD6;">private</span> RenderFragment _content;
+    <span style="color:#569CD6;">private</span> <span style="color:#569CD6;">bool</span> _renderPending;
+    <span style="color:#569CD6;">private</span> <span style="color:#569CD6;">bool</span> _hasNeverRendered = <span style="color:#569CD6;">true</span>;
+
+    <span style="color:#569CD6;">protected</span> <span style="color:#569CD6;">bool</span> Initialized;
+    <span style="color:#569CD6;">protected</span> <span style="color:#569CD6;">bool</span> NotInitialized =&gt; !<span style="color:#569CD6;">this</span>.Initialized;
+
+    <span style="color:#569CD6;">protected</span> <span style="color:#569CD6;">virtual</span> RenderFragment? Frame { <span style="color:#569CD6;">get</span>; <span style="color:#569CD6;">set</span>; }
+    <span style="color:#569CD6;">protected</span> RenderFragment Body { <span style="color:#569CD6;">get</span>; init; }
+
+    <span style="color:#569CD6;">public</span> Guid ComponentUid { <span style="color:#569CD6;">get</span>; init; } = Guid.NewGuid();
+</pre></div>
+<p>The constructor implements the wrapper functionality.</p>
+<ol>
+<li>It assigns the render code <code>BuildRenderTree</code> to <code>Body</code>.</li>
+<li>It sets up the lambda method assigned to <code>_content</code> : the render fragment <code>StateHasChanged</code> passes to the Renderer.</li>
+<li>The lambda method assigns <code>Frame</code> to <code>_content</code> if it's not null, otherwise it assigns <code>Body</code>.</li>
+<li>It sets <code>Initialized</code> to true when it completes.</li>
+</ol>
+<p>More about the frame/wrapper functionality later.</p>
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+    <span style="color:#569CD6;">public</span> BlazrBaseComponent()
+    {
+        <span style="color:#569CD6;">this</span>.Body = (builder) =&gt; <span style="color:#569CD6;">this</span>.BuildRenderTree(builder);
+
+        _content = (builder) =&gt;
+        {
+            _renderPending = <span style="color:#569CD6;">false</span>;
+            _hasNeverRendered = <span style="color:#569CD6;">false</span>;
+            <span style="color:#569CD6;">if</span> (Frame <span style="color:#569CD6;">is</span> not <span style="color:#569CD6;">null</span>)
+                Frame.Invoke(builder);
+            <span style="color:#569CD6;">else</span>
+                BuildRenderTree(builder);
+
+            <span style="color:#569CD6;">this</span>.Initialized = <span style="color:#569CD6;">true</span>;
+        };
+    }
+</pre></div>
+<p>The rest of the code is the same as implemented in <code>ComponentBase</code>.</p>
+<p><code>RenderAsync</code> renders the component immediately.  It works by calling <code>StateHasChanged</code> and then yielding by calling <code>await Task.Yield()</code>. This frees the UI Synchronisation Context: the Renderer services it's queue and renders the component.</p>
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+
+    <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">void</span> Attach(RenderHandle renderHandle)
+        =&gt; _renderHandle = renderHandle;
+
+    <span style="color:#569CD6;">protected</span> <span style="color:#569CD6;">abstract</span> <span style="color:#569CD6;">void</span> BuildRenderTree(RenderTreeBuilder builder);
+
+    <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">async</span> Task RenderAsync()
+    {
+        <span style="color:#569CD6;">this</span>.StateHasChanged();
+        <span style="color:#569CD6;">await</span> Task.Yield();
+    }
+
+    <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">void</span> StateHasChanged()
+    {
+        <span style="color:#569CD6;">if</span> (_renderPending)
+            <span style="color:#569CD6;">return</span>;
+
+        <span style="color:#569CD6;">var</span> shouldRender = _hasNeverRendered || <span style="color:#569CD6;">this</span>.ShouldRender() || _renderHandle.IsRenderingOnMetadataUpdate;
+
+        <span style="color:#569CD6;">if</span> (shouldRender)
+        {
+            _renderPending = <span style="color:#569CD6;">true</span>;
+            _renderHandle.Render(_content);
+        }
+    }
+
+    <span style="color:#569CD6;">protected</span> <span style="color:#569CD6;">virtual</span> <span style="color:#569CD6;">bool</span> ShouldRender() =&gt; <span style="color:#569CD6;">true</span>;
+
+    <span style="color:#569CD6;">protected</span> Task InvokeAsync(Action workItem)
+        =&gt; _renderHandle.Dispatcher.InvokeAsync(workItem);
+
+    <span style="color:#569CD6;">protected</span> Task InvokeAsync(Func&lt;Task&gt; workItem)
+        =&gt; _renderHandle.Dispatcher.InvokeAsync(workItem);
+</pre></div>
+<p>Note: there are no lifecycle methods or implementation of <code>SetParametersAsync</code>.  It's the responsibility of the individual library classes to implement <code>IComponent</code>.  They can choose to lock <code>SetParametersAsync</code> by not making it <code>virtual</code>.</p>
+<h2 id="blazruibase">BlazrUIBase</h2>
+<p>This is our simple implementation.</p>
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+<span style="color:#569CD6;">public</span> <span style="color:#569CD6;">class</span> BlazrUIBase : BlazrBaseComponent, IComponent
+{
+    <span style="color:#569CD6;">public</span> Task SetParametersAsync(ParameterView parameters)
+    {
+        parameters.SetParameterProperties(<span style="color:#569CD6;">this</span>);
+        <span style="color:#569CD6;">this</span>.StateHasChanged();
+        <span style="color:#569CD6;">return</span> Task.CompletedTask;
+    }
+}
+</pre></div>
+<p>It inherits from <code>BlazrBaseComponent</code> and implements <code>IComponent</code>.</p>
+<ol>
+<li>It has a fixed <code>SetParametersAsync</code>: it's can't be overridden.</li>
+<li>It has no lifecycle methods.  Simple components don't need them.</li>
+<li>It doesn't implement <code>IHandleEvent</code> i.e. it has no UI event handling.  If you need any, call <code>StateHasChanged</code> manually.</li>
+<li>It doesn't implement <code>IHandleAfterRender</code> i.e. it has no after render handling.  If you need it, implement it manually.</li>
+</ol>
+<h2 id="blazruibase-demo">BlazrUIBase Demo</h2>
+<p>We've seen the <code>BasicAlert</code> above.  We can go a little further and implement a dismissible <code>Alert</code> version.</p>
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+@inherits BlazrUIBase
+
+@<span style="color:#569CD6;">if</span> (Message <span style="color:#569CD6;">is</span> not <span style="color:#569CD6;">null</span>)
+{
+    &lt;div <span style="color:#569CD6;">class</span>=<span style="color:#D69D85;">&quot;alert @_alertType alert-dismissible&quot;</span>&gt;
+        @<span style="color:#569CD6;">this</span>.Message
+        &lt;button type=<span style="color:#D69D85;">&quot;button&quot;</span> <span style="color:#569CD6;">class</span>=<span style="color:#D69D85;">&quot;btn-close&quot;</span> @onclick=<span style="color:#569CD6;">this</span>.Dismiss&gt;
+        &lt;/button&gt;
+    &lt;/div&gt;
+}
+
+@code {
+    [Parameter] <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">string</span>? Message { <span style="color:#569CD6;">get</span>; <span style="color:#569CD6;">set</span>; }
+    [Parameter] <span style="color:#569CD6;">public</span> EventCallback&lt;<span style="color:#569CD6;">string</span>?&gt; MessageChanged { <span style="color:#569CD6;">get</span>; <span style="color:#569CD6;">set</span>; }
+    [Parameter] <span style="color:#569CD6;">public</span> AlertType MessageType { <span style="color:#569CD6;">get</span>; <span style="color:#569CD6;">set</span>; } = Alert.AlertType.Info;
+
+    <span style="color:#569CD6;">private</span> <span style="color:#569CD6;">void</span> Dismiss()
+        =&gt; MessageChanged.InvokeAsync(<span style="color:#569CD6;">null</span>);
+    
+    <span style="color:#57A64A;">//... AlertType and _alertType code</span>
+}
+</pre></div>
+<p>And the demo <code>AlertPage</code>.</p>
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+@page <span style="color:#D69D85;">&quot;/AlertPage&quot;</span>
+@inherits BlazrControlBase
+&lt;PageTitle&gt;Index&lt;/PageTitle&gt;
+
+&lt;h1&gt;Hello, world!&lt;/h1&gt;
+
+Welcome to your <span style="color:#569CD6;">new</span> app.
+
+&lt;div <span style="color:#569CD6;">class</span>=<span style="color:#D69D85;">&quot;m-2&quot;</span>&gt;
+    &lt;button <span style="color:#569CD6;">class</span>=<span style="color:#D69D85;">&quot;btn btn-success&quot;</span> @onclick=<span style="color:#D69D85;">&quot;() =&gt; this.SetMessageAsync(_timeString)&quot;</span>&gt;Set Message&lt;/button&gt;
+    &lt;button <span style="color:#569CD6;">class</span>=<span style="color:#D69D85;">&quot;btn btn-danger&quot;</span> @onclick=<span style="color:#D69D85;">&quot;() =&gt; this.SetMessageAsync(null)&quot;</span>&gt;Clear Message&lt;/button&gt;
+&lt;/div&gt;
+
+&lt;div <span style="color:#569CD6;">class</span>=<span style="color:#D69D85;">&quot;m-3 p-2 border border-1 border-success rounded-3&quot;</span>&gt;
+    &lt;h5&gt;Dismisses Correctly&lt;/h5&gt;
+    &lt;Alert @bind-Message=@_message1 MessageType=Alert.AlertType.Success /&gt;
+&lt;/div&gt;
+
+&lt;div <span style="color:#569CD6;">class</span>=<span style="color:#D69D85;">&quot;m-3 p-2 border border-1 border-danger rounded-3&quot;</span>&gt;
+    &lt;h5&gt;Does Not Dismiss&lt;/h5&gt;
+    &lt;Alert Message=@_message2 MessageType=Alert.AlertType.Error /&gt;
+&lt;/div&gt;
+
+@code {
+    <span style="color:#569CD6;">private</span> <span style="color:#569CD6;">string</span>? _message1;
+    <span style="color:#569CD6;">private</span> <span style="color:#569CD6;">string</span>? _message2;
+    <span style="color:#569CD6;">private</span> <span style="color:#569CD6;">string</span> _timeString =&gt; $<span style="color:#D69D85;">&quot;Set at {DateTime.Now.ToLongTimeString()}&quot;</span>;
+
+    <span style="color:#569CD6;">private</span> Task SetMessageAsync(<span style="color:#569CD6;">string</span>? message)
+    {
+        _message1 = message;
+        _message2 = message;
+        <span style="color:#569CD6;">this</span>.StateHasChanged();
+        <span style="color:#569CD6;">return</span> Task.CompletedTask;
+    }
+
+}
+</pre></div>
+<p>There are some important points to digest.</p>
+<p><code>Alert</code> implements the <em>Component Bind</em> pattern: A <code>Message</code> incoming getter parameter and a <code>MessageChanged</code> outgoing <code>EventCallback</code> setter parameter.   The parent can bind a variable/property to the component like this <code>@bind-Message=_message</code>.</p>
+<p><code>Alert</code> has a UI event, but there's no <code>IHandleEvent</code> handler implemented.  The Render still handles the event: it calls the UI event method directly.  There's automatic call to <code>StateAsChanged()</code>.</p>
+<p>In the Demo page there are two instances of <code>Alert</code>.  One is wired by the <code>Message</code> parameter, two is wired through <code>@bind-Message</code>.</p>
+<p>When you run the code and click on the buttons, Two doesn't dismiss the Alert.  There's nothing wired to <code>MessageChanged</code>.</p>
+<p>Intriguingly, One works without any calls to <code>StateHasChanged</code>.</p>
+<p><code>Index</code> inherits from <code>BlazrControlBase</code>, so <code>StateHasChanged</code> is automatically called by the UI event handler.</p>
+<ol>
+<li>The Alert <code>Dismiss</code> invokes <code>MessageChanged</code> passing a <code>null</code> string.</li>
+<li>The UI handler invokes the Bind handler in <code>Index</code>.</li>
+<li>The Bind handler [created by the Razor Compiler] updates <code>_message</code> to <code>null</code>.</li>
+<li>The UI Handler completes and calls <code>StateHasChanged</code>.</li>
+<li><code>Index</code> renders.</li>
+<li>The Renderer detects the <code>Message</code> parameter on <code>Alert</code> has changed.  It calls <code>SetParametersAsync</code> on <code>Alert</code> passing in the modified <code>ParameterView</code>.</li>
+<li><code>Alert</code> renders: <code>Message</code> is <code>null</code> so it hides the alert.</li>
+</ol>
+<blockquote>
+<p>The important lesson to learn is : Always test whether you actually need to call <code>StateHasChanged</code>.</p>
+</blockquote>
+<h3 id="alertpage-inheriting-blazruibase">AlertPage Inheriting BlazrUIBase</h3>
+<p>We can downgrade the inheritance on <code>AlertPage</code> to <code>BlazrUIBase</code>.</p>
+<p>Once you do so, nothing updates.  No Alert appears because there's no <code>StateHasChanged()</code> calls happening [and no UI Render Updates] when UI events occur.</p>
+<p>We can fix that by adding calls to <code>StateHasChanged</code> where they are needed.</p>
+<p>Binding will no longer work as advertised.</p>
+<p>Add a handler for the MessageChangedb callback.  Note it calls <code>StateHasChanged</code> once it's set <code>_message1</code>.  Now, when the component dismisses and <code>MessageChanged</code> is invoked, the parent renders and triggers a render of <code>Alert</code>.</p>
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+<span style="color:#569CD6;">private</span> Task OnUpdateMessage(<span style="color:#569CD6;">string</span>? value)
+{
+    _message1 = value;
+    <span style="color:#569CD6;">this</span>.StateHasChanged();
+    <span style="color:#569CD6;">return</span> Task.CompletedTask;
+}
+</pre></div>
+<p>Change the binding on the <code>Alert</code> component:</p>
+<pre><code>&lt;Alert @bind-Message:get=_message1 @bind-Message:set=this.OnUpdateMessage MessageType=Alert.AlertType.Success /&gt;
+</code></pre>
+<p>And Update <code>SetMessageAsync</code> to call <code>StateHasChanged</code>.</p>
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+<span style="color:#569CD6;">private</span> Task SetMessageAsync(<span style="color:#569CD6;">string</span>? message)
+{
+    _message1 = message;
+    _message2 = message;
+    <span style="color:#569CD6;">this</span>.StateHasChanged();
+    <span style="color:#569CD6;">return</span> Task.CompletedTask;
+}
+</pre></div><h2 id="blazrcontrolbase">BlazrControlBase</h2>
+<p><code>BlazrControlBase</code> is the intermediate level component.  It's my workhorse.</p>
+<p>It:</p>
+<ol>
+<li>Implements the <code>OnParametersSetAsync</code> lifecycle method.</li>
+<li>Implements a single render UI event handler.</li>
+<li><code>SetParametersAsync</code> is fixed, you can't override it.</li>
+</ol>
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+<span style="color:#569CD6;">public</span> <span style="color:#569CD6;">abstract</span> <span style="color:#569CD6;">class</span> BlazrControlBase : BlazrBaseComponent, IComponent, IHandleEvent
+{
+    <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">async</span> Task SetParametersAsync(ParameterView parameters)
+    {
+        parameters.SetParameterProperties(<span style="color:#569CD6;">this</span>);
+        <span style="color:#569CD6;">await</span> <span style="color:#569CD6;">this</span>.OnParametersSetAsync();
+        <span style="color:#569CD6;">this</span>.StateHasChanged();
+    }
+
+    <span style="color:#569CD6;">protected</span> <span style="color:#569CD6;">virtual</span> Task OnParametersSetAsync()
+        =&gt; Task.CompletedTask;  
+
+    <span style="color:#569CD6;">async</span> Task IHandleEvent.HandleEventAsync(EventCallbackWorkItem item, <span style="color:#569CD6;">object</span>? obj)
+    {
+        <span style="color:#569CD6;">await</span> item.InvokeAsync(obj);
+        <span style="color:#569CD6;">this</span>.StateHasChanged();
+    }
+}
+</pre></div>
+<p>Consider.</p>
+<p>You can now do this, which makes <code>OnInitialized{Async}</code> redundant.</p>
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+   <span style="color:#569CD6;">protected</span> <span style="color:#569CD6;">override</span> <span style="color:#569CD6;">async</span> Task OnParametersSetAsync()
+    {
+        <span style="color:#569CD6;">if</span> (<span style="color:#569CD6;">this</span>.NotInitialized)
+        {
+            <span style="color:#57A64A;">// do initialization stuff here</span>
+        }
+    }
+</pre></div>
+<p>You don't need a <em>sync</em> version of <code>OnParametersSet()</code>.  There's no difference in overhead between:</p>
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+<span style="color:#569CD6;">private</span> Task DoParametersSet()
+{
+    OnParametersSet();
+    <span style="color:#569CD6;">return</span> OnParametersSetAsync();
+}
+
+<span style="color:#569CD6;">protected</span> <span style="color:#569CD6;">virtual</span> <span style="color:#569CD6;">void</span> OnParametersSet()
+{
+    <span style="color:#57A64A;">// Some sync code</span>
+}
+
+<span style="color:#569CD6;">protected</span> <span style="color:#569CD6;">virtual</span> Task OnParametersSetAsync()
+    =&gt; Task.CompletedTask;
+</pre></div>
+<p>And:</p>
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+<span style="color:#569CD6;">protected</span> <span style="color:#569CD6;">virtual</span> Task OnParametersSetAsync() 
+{
+    <span style="color:#57A64A;">// some sync code</span>
+    <span style="color:#569CD6;">return</span> Task.CompletedTask;
+}
+</pre></div>
+<p>I'd like to make it return a <code>ValueTask</code>, but we loose compatibility.</p>
+<h2 id="blazrcontrolbase-demo">BlazrControlBase Demo</h2>
+<p>The demo page looks like a normal <code>ComponentBase</code> page.  That's intentional.  The component now has access to the initialization state of the component though <code>Initialized</code>.</p>
+<h3 id="modified-weather-forecast-data-pipeline">Modified Weather Forecast Data Pipeline</h3>
+<p>First the modified Weather Forecast data class and service.</p>
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+<span style="color:#569CD6;">public</span> <span style="color:#569CD6;">class</span> WeatherForecast
+{
+    <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">int</span> Id { <span style="color:#569CD6;">get</span>; <span style="color:#569CD6;">set</span>; }
+    <span style="color:#569CD6;">public</span> DateOnly Date { <span style="color:#569CD6;">get</span>; <span style="color:#569CD6;">set</span>; }
+    <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">int</span> TemperatureC { <span style="color:#569CD6;">get</span>; <span style="color:#569CD6;">set</span>; }
+    <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">int</span> TemperatureF =&gt; <span style="color:#B5CEA8;">32</span> + (<span style="color:#569CD6;">int</span>)(TemperatureC / <span style="color:#B5CEA8;">0</span>.<span style="color:#B5CEA8;">5556</span>);
+    <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">string</span>? Summary { <span style="color:#569CD6;">get</span>; <span style="color:#569CD6;">set</span>; }
+}
+</pre></div><div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+<span style="color:#569CD6;">namespace</span> Blazr.Server.Web.Data;
+
+<span style="color:#569CD6;">public</span> <span style="color:#569CD6;">class</span> WeatherForecastService
+{
+    <span style="color:#569CD6;">private</span> List&lt;WeatherForecast&gt; _forecasts;
+    <span style="color:#569CD6;">private</span> <span style="color:#569CD6;">static</span> <span style="color:#569CD6;">readonly</span> <span style="color:#569CD6;">string</span>[] Summaries = <span style="color:#569CD6;">new</span>[]
+        { <span style="color:#D69D85;">&quot;Freezing&quot;</span>, <span style="color:#D69D85;">&quot;Bracing&quot;</span>, <span style="color:#D69D85;">&quot;Chilly&quot;</span>, <span style="color:#D69D85;">&quot;Cool&quot;</span>, <span style="color:#D69D85;">&quot;Mild&quot;</span>, <span style="color:#D69D85;">&quot;Warm&quot;</span>, <span style="color:#D69D85;">&quot;Balmy&quot;</span>, <span style="color:#D69D85;">&quot;Hot&quot;</span>, <span style="color:#D69D85;">&quot;Sweltering&quot;</span>, <span style="color:#D69D85;">&quot;Scorching&quot;</span>};
+
+    <span style="color:#569CD6;">public</span> WeatherForecastService()
+        =&gt; _forecasts = <span style="color:#569CD6;">this</span>.GetForecasts();
+
+    <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">async</span> Task&lt;IEnumerable&lt;WeatherForecast&gt;&gt; GetForecastsAsync()
+    {
+        <span style="color:#569CD6;">await</span> Task.Delay(<span style="color:#B5CEA8;">100</span>);
+        <span style="color:#569CD6;">return</span> _forecasts.AsEnumerable();
+    }
+
+    <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">async</span> Task&lt;WeatherForecast?&gt; GetForecastAsync(<span style="color:#569CD6;">int</span> id)
+    {
+        <span style="color:#569CD6;">await</span> Task.Delay(<span style="color:#B5CEA8;">100</span>);
+        <span style="color:#569CD6;">return</span> _forecasts.FirstOrDefault(item =&gt; item.Id == id);
+    }
+
+    <span style="color:#569CD6;">private</span> List&lt;WeatherForecast&gt; GetForecasts()
+    {
+        <span style="color:#569CD6;">var</span> date = DateOnly.FromDateTime(DateTime.Now);
+        <span style="color:#569CD6;">return</span> Enumerable.Range(<span style="color:#B5CEA8;">1</span>, <span style="color:#B5CEA8;">10</span>).Select(index =&gt; <span style="color:#569CD6;">new</span> WeatherForecast
+        {
+            Id = index,
+            Date = date.AddDays(index),
+            TemperatureC = Random.Shared.Next(-<span style="color:#B5CEA8;">20</span>, <span style="color:#B5CEA8;">55</span>),
+            Summary = Summaries[Random.Shared.Next(Summaries.Length)]
+        }).ToList();
+    }
+}
+</pre></div><h3 id="weatherforecastviewer">WeatherForecastViewer</h3>
+<p>I want to demonstrate various features so there's a set of buttons that use routing [rather than a button event handler that just updates the id and display].  They all route to the same page and just modify the Id - <code>/WeatherForecast/1</code>.</p>
+<p>The markup is self-evident.  It's not efficient: it's keep it simple demo code.</p>
+<p>The code I want to look at in detail is <code>OnParametersSetAsync</code>.</p>
+<ol>
+<li>It uses <code>NotInitialized</code> to only get the WeatherForecast list on initialization.  In <code>ComponentBase</code> this code would have been in <code>OnInitializedAsync</code>.</li>
+<li>It checks the Id status: <code>hasRecordChanged</code>.  I use a bool here so we are clear what's happening.  Your code should be expressive: the compiler will optimize this, you don't need to.</li>
+<li>It only gets the new record if the Id has changed.</li>
+</ol>
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+@page <span style="color:#D69D85;">&quot;/WeatherForecast/{Id:int}&quot;</span>
+@inject WeatherForecastService service
+@inherits BlazrControlBase
+
+&lt;h3&gt;Country Viewer&lt;/h3&gt;
+
+&lt;div <span style="color:#569CD6;">class</span>=<span style="color:#D69D85;">&quot;bg-dark text-white m-2 p-2&quot;</span>&gt;
+    @<span style="color:#569CD6;">if</span> (_record <span style="color:#569CD6;">is</span> not <span style="color:#569CD6;">null</span>)
+    {
+        &lt;pre&gt;Id : @_record.Id &lt;/pre&gt;
+        &lt;pre&gt;Name : @_record.Date &lt;/pre&gt;
+        &lt;pre&gt;Temp C : @_record.TemperatureC &lt;/pre&gt;
+        &lt;pre&gt;Temp F : @_record.TemperatureF &lt;/pre&gt;
+        &lt;pre&gt;Summary : @_record.Summary &lt;/pre&gt;
+    }
+    <span style="color:#569CD6;">else</span>
+    {
+        &lt;pre&gt;No Record Loaded&lt;/pre&gt;
+    }
+&lt;/div&gt;
+
+&lt;div <span style="color:#569CD6;">class</span>=<span style="color:#D69D85;">&quot;m-3 text-end&quot;</span>&gt;
+    &lt;div <span style="color:#569CD6;">class</span>=<span style="color:#D69D85;">&quot;btn-group&quot;</span>&gt;
+        @<span style="color:#569CD6;">foreach</span> (<span style="color:#569CD6;">var</span> forecast <span style="color:#569CD6;">in</span> _forecasts)
+        {
+            &lt;a <span style="color:#569CD6;">class</span>=<span style="color:#D69D85;">&quot;btn @this.SelectedCss(forecast.Id)&quot;</span> href=<span style="color:#D69D85;">&quot;@($&quot;</span>/WeatherForecast/{forecast.Id}<span style="color:#D69D85;">&quot;)&quot;</span>&gt;@forecast.Id&lt;/a&gt;
+        }
+    &lt;/div&gt;
+&lt;/div&gt;
+@code {
+    [Parameter] <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">int</span> Id { <span style="color:#569CD6;">get</span>; <span style="color:#569CD6;">set</span>; }
+
+    <span style="color:#569CD6;">private</span> WeatherForecast? _record;
+    <span style="color:#569CD6;">private</span> IEnumerable&lt;WeatherForecast&gt; _forecasts = Enumerable.Empty&lt;WeatherForecast&gt;();
+
+    <span style="color:#569CD6;">private</span> <span style="color:#569CD6;">int</span> _id;
+
+    <span style="color:#569CD6;">private</span> <span style="color:#569CD6;">string</span> SelectedCss(<span style="color:#569CD6;">int</span> value)
+        =&gt; _id == value ? <span style="color:#D69D85;">&quot;btn-primary&quot;</span> : <span style="color:#D69D85;">&quot;btn-outline-primary&quot;</span>;
+
+    <span style="color:#569CD6;">protected</span> <span style="color:#569CD6;">override</span> <span style="color:#569CD6;">async</span> Task OnParametersSetAsync()
+    {
+        <span style="color:#569CD6;">if</span> (NotInitialized)
+            _forecasts = <span style="color:#569CD6;">await</span> service.GetForecastsAsync();
+
+        <span style="color:#569CD6;">var</span> hasRecordChanged = <span style="color:#569CD6;">this</span>.Id != _id;
+
+        _id = <span style="color:#569CD6;">this</span>.Id;
+
+        <span style="color:#569CD6;">if</span> (hasRecordChanged)
+            _record = <span style="color:#569CD6;">await</span> service.GetForecastAsync(<span style="color:#569CD6;">this</span>.Id);
+    }
+}
+</pre></div><h3 id="blazrcomponentbase"><code>BlazrComponentBase</code></h3>
+<p>The full <code>ComponentBase</code> implementation is too long to include here: it's in the Appendix.</p>
+<h2 id="the-extra-basecomponent-features">The Extra BaseComponent Features</h2>
+<p>All the base components come with some extras.</p>
+<h2 id="the-wrapperframe-functionality">The Wrapper/Frame Functionality</h2>
+<p>A Demo <code>Wrapper</code> component.</p>
+<p>Note the wrapper is defined in the <code>Frame</code> render fragment, and uses the Razor built-in <code>__builder</code> RenderTreeBuilder instance.</p>
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+@inherits BlazrControlBase
+
+@*Code Here <span style="color:#569CD6;">is</span> redundant*@
+
+@code {
+    <span style="color:#569CD6;">protected</span> <span style="color:#569CD6;">override</span> RenderFragment Frame =&gt; (__builder) =&gt; 
+    {
+        &lt;h2 <span style="color:#569CD6;">class</span>=<span style="color:#D69D85;">&quot;text-primary&quot;</span>&gt;Welcome To Blazor&lt;/h2&gt;
+        &lt;div <span style="color:#569CD6;">class</span>=<span style="color:#D69D85;">&quot;border border-1 border-primary rounded-3 bg-light p-2&quot;</span>&gt;
+            @<span style="color:#569CD6;">this</span>.Body
+        &lt;/div&gt;
+    };
+}
+</pre></div>
+<p>And <code>Index</code> inheriting from <code>Wrapper</code>.</p>
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+@page <span style="color:#D69D85;">&quot;/&quot;</span>
+@page <span style="color:#D69D85;">&quot;/WrapperDemo&quot;</span>
+
+@inherits Wrapper
+
+&lt;PageTitle&gt;Index&lt;/PageTitle&gt;
+
+&lt;h1&gt;Hello, world!&lt;/h1&gt;
+
+Welcome to your <span style="color:#569CD6;">new</span> app.
+
+&lt;SurveyPrompt /&gt;
+
+</pre></div>
+<p>What you get is:</p>
+<p><img src="../assets/BlazrComponentBase/Wrapper-Demo.png" alt="Wrapper Demo" /></p>
+<h3 id="renderasync">RenderAsync</h3>
+<p>When you move to the single render-on-completion or manual render UI event handling, you [the coder] get control of when you do intermediate renders.  This is where <code>RenderAsync</code> comes in.  When you call it [in Task based methods] it ensures the component is rendered immediately.</p>
+<p>The following page demonstrates:</p>
+<pre><code>@page &quot;/Load&quot;
+@inherits BlazrControlBase
+&lt;h3&gt;SequentialLoadPage&lt;/h3&gt;
+
+&lt;div class=&quot;bg-dark text-white m-2 p-2&quot;&gt;
+    &lt;pre&gt;@this.Log.ToString()&lt;/pre&gt;
+&lt;/div&gt;
+@code {
+    private StringBuilder Log = new();
+
+    protected override async Task OnParametersSetAsync()
+    {
+        await GetData();
+    }
+
+    private async Task GetData()
+    {
+        for(var counter = 1; counter &lt;= 10; counter++)
+        {
+            this.Log.AppendLine($&quot;Fetched Record {counter}&quot;);
+            await this.RenderAsync();
+            await Task.Delay(500);
+        }
+    }
+}
+</code></pre>
+<p>Miss out <code>await this.RenderAsync();</code> and you only get the final result.  If you ran this code in <code>CompoinentBase</code> you would get the first render, and then nothing would happen till the last.  Comment out <code>RenderAsync</code>, change the inheritance and try it.</p>
+<h2 id="manually-implementing-onafterrender">Manually Implementing OnAfterRender</h2>
+<p>If you need to implement <code>OnAfterRender</code> it's relatively simple.</p>
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+@implements IHandleAfterRender
+
+<span style="color:#57A64A;">//...  markup</span>
+
+@code {
+    <span style="color:#57A64A;">// Implement if need to detect first after render</span>
+    <span style="color:#569CD6;">private</span> <span style="color:#569CD6;">bool</span> _firstRender = <span style="color:#569CD6;">true</span>;
+
+    Task IHandleAfterRender.OnAfterRenderAsync()
+    {
+        <span style="color:#569CD6;">if</span> (_firstRender)
+        {
+            <span style="color:#57A64A;">// Do first render stuff</span>
+            _firstRender = <span style="color:#569CD6;">false</span>;
+        }
+
+        <span style="color:#57A64A;">// Do subsequent render stuff</span>
+    }
+}
+</pre></div><h2 id="summing-up">Summing Up</h2>
+<p>Hopefully I've demonstrated why there's no need to use that expensive <code>ComponentBase</code> in your Blazor applications.  Take the plunge.</p>
+<p>The three components I've shown are upwardly compatible.  If there's not enough functionality in one move up.</p>
+<p>Once you start using them, you'll find that <code>BlazrControlBase</code> satisfies almost all your needs.  Confession: I never use <code>BlazorComponentBase</code></p>
+<h2 id="appendix">Appendix</h2>
+<p>The full class code for <code>BlazrComponentBase</code>.</p>
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+<span style="color:#569CD6;">public</span> <span style="color:#569CD6;">class</span> BlazrComponentBase : BlazrBaseComponent, IComponent, IHandleEvent, IHandleAfterRender
+{
+    <span style="color:#569CD6;">private</span> <span style="color:#569CD6;">bool</span> _hasCalledOnAfterRender;
+
+    <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">virtual</span> <span style="color:#569CD6;">async</span> Task SetParametersAsync(ParameterView parameters)
+    {
+        parameters.SetParameterProperties(<span style="color:#569CD6;">this</span>);
+        <span style="color:#569CD6;">await</span> <span style="color:#569CD6;">this</span>.ParametersSetAsync();
+    }
+
+    <span style="color:#569CD6;">protected</span> <span style="color:#569CD6;">async</span> Task ParametersSetAsync()
+    {
+        Task? initTask = <span style="color:#569CD6;">null</span>;
+        <span style="color:#569CD6;">var</span> hasRenderedOnYield = <span style="color:#569CD6;">false</span>;
+
+        <span style="color:#57A64A;">// If this is the initial call then we need to run the OnInitialized methods</span>
+        <span style="color:#569CD6;">if</span> (<span style="color:#569CD6;">this</span>.NotInitialized)
+        {
+            <span style="color:#569CD6;">this</span>.OnInitialized();
+            initTask = <span style="color:#569CD6;">this</span>.OnInitializedAsync();
+            hasRenderedOnYield = <span style="color:#569CD6;">await</span> <span style="color:#569CD6;">this</span>.CheckIfShouldRunStateHasChanged(initTask);
+            Initialized = <span style="color:#569CD6;">true</span>;
+        }
+
+        <span style="color:#569CD6;">this</span>.OnParametersSet();
+        <span style="color:#569CD6;">var</span> task = <span style="color:#569CD6;">this</span>.OnParametersSetAsync();
+
+        <span style="color:#57A64A;">// check if we need to do the render on Yield i.e.</span>
+        <span style="color:#57A64A;">//  - this is not the initial run or</span>
+        <span style="color:#57A64A;">//  - OnInitializedAsync did not yield</span>
+        <span style="color:#569CD6;">var</span> shouldRenderOnYield = initTask <span style="color:#569CD6;">is</span> <span style="color:#569CD6;">null</span> || !hasRenderedOnYield;
+
+        <span style="color:#569CD6;">if</span> (shouldRenderOnYield)
+            <span style="color:#569CD6;">await</span> <span style="color:#569CD6;">this</span>.CheckIfShouldRunStateHasChanged(task);
+        <span style="color:#569CD6;">else</span>
+            <span style="color:#569CD6;">await</span> task;
+
+        <span style="color:#57A64A;">// run the final state has changed to update the UI.</span>
+        <span style="color:#569CD6;">this</span>.StateHasChanged();
+    }
+
+    <span style="color:#569CD6;">protected</span> <span style="color:#569CD6;">virtual</span> <span style="color:#569CD6;">void</span> OnInitialized() { }
+
+    <span style="color:#569CD6;">protected</span> <span style="color:#569CD6;">virtual</span> Task OnInitializedAsync() =&gt; Task.CompletedTask;
+
+    <span style="color:#569CD6;">protected</span> <span style="color:#569CD6;">virtual</span> <span style="color:#569CD6;">void</span> OnParametersSet() { }
+
+    <span style="color:#569CD6;">protected</span> <span style="color:#569CD6;">virtual</span> Task OnParametersSetAsync() =&gt; Task.CompletedTask;
+
+    <span style="color:#569CD6;">protected</span> <span style="color:#569CD6;">virtual</span> <span style="color:#569CD6;">void</span> OnAfterRender(<span style="color:#569CD6;">bool</span> firstRender) { }
+
+    <span style="color:#569CD6;">protected</span> <span style="color:#569CD6;">virtual</span> Task OnAfterRenderAsync(<span style="color:#569CD6;">bool</span> firstRender) =&gt; Task.CompletedTask;
+
+    <span style="color:#569CD6;">async</span> Task IHandleEvent.HandleEventAsync(EventCallbackWorkItem item, <span style="color:#569CD6;">object</span>? obj)
+    {
+        <span style="color:#569CD6;">var</span> uiTask = item.InvokeAsync(obj);
+
+        <span style="color:#569CD6;">await</span> <span style="color:#569CD6;">this</span>.CheckIfShouldRunStateHasChanged(uiTask);
+
+        <span style="color:#569CD6;">this</span>.StateHasChanged();
+    }
+
+    Task IHandleAfterRender.OnAfterRenderAsync()
+    {
+        <span style="color:#569CD6;">var</span> firstRender = !_hasCalledOnAfterRender;
+        _hasCalledOnAfterRender = <span style="color:#569CD6;">true</span>;
+
+        OnAfterRender(firstRender);
+
+        <span style="color:#569CD6;">return</span> OnAfterRenderAsync(firstRender);
+    }
+
+    <span style="color:#569CD6;">protected</span> <span style="color:#569CD6;">async</span> Task&lt;<span style="color:#569CD6;">bool</span>&gt; CheckIfShouldRunStateHasChanged(Task task)
+    {
+        <span style="color:#569CD6;">var</span> isCompleted = task.IsCompleted || task.IsCanceled;
+
+        <span style="color:#569CD6;">if</span> (!isCompleted)
+        {
+            <span style="color:#569CD6;">this</span>.StateHasChanged();
+            <span style="color:#569CD6;">await</span> task;
+            <span style="color:#569CD6;">return</span> <span style="color:#569CD6;">true</span>;
+        }
+
+        <span style="color:#569CD6;">return</span> <span style="color:#569CD6;">false</span>;
+    }
+}
+</pre></div></div></div></div></body></html>
+
+
+
+
+

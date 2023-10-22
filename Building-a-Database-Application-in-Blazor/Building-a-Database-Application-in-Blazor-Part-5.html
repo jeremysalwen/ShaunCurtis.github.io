@@ -100,199 +100,201 @@
 <h2 id="the-base-forms">The Base Forms</h2>
 <p><code>ListFormBase</code> is the base abstract form for all lists. It inherits from <code>ComponentBase</code>, and contains all the boilerplate code.  <code>TRecord</code> is the dataclass it operates on.  The form uses the</p>
 <p>The code is shown below</p>
-<pre><code class="language-csharp">public abstract class ListFormBase&lt;TRecord&gt; : ComponentBase, IDisposable
-    where TRecord : class, IDbRecord&lt;TRecord&gt;, new()
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+<span style="color:#569CD6;">public</span> <span style="color:#569CD6;">abstract</span> <span style="color:#569CD6;">class</span> ListFormBase&lt;TRecord&gt; : ComponentBase, IDisposable
+    <span style="color:#569CD6;">where</span> TRecord : <span style="color:#569CD6;">class</span>, IDbRecord&lt;TRecord&gt;, <span style="color:#569CD6;">new</span>()
 {
-    [Parameter] public EventCallback&lt;Guid&gt; EditRecord { get; set; }
-    [Parameter] public EventCallback&lt;Guid&gt; ViewRecord { get; set; }
-    [Parameter] public EventCallback&lt;Guid&gt; NewRecord { get; set; }
-    [Parameter] public EventCallback ExitAction { get; set; }
+    [Parameter] <span style="color:#569CD6;">public</span> EventCallback&lt;Guid&gt; EditRecord { <span style="color:#569CD6;">get</span>; <span style="color:#569CD6;">set</span>; }
+    [Parameter] <span style="color:#569CD6;">public</span> EventCallback&lt;Guid&gt; ViewRecord { <span style="color:#569CD6;">get</span>; <span style="color:#569CD6;">set</span>; }
+    [Parameter] <span style="color:#569CD6;">public</span> EventCallback&lt;Guid&gt; NewRecord { <span style="color:#569CD6;">get</span>; <span style="color:#569CD6;">set</span>; }
+    [Parameter] <span style="color:#569CD6;">public</span> EventCallback ExitAction { <span style="color:#569CD6;">get</span>; <span style="color:#569CD6;">set</span>; }
 
-    [Inject] protected NavigationManager NavManager { get; set; }
-    [Inject] protected EditStateService EditStateService { get; set; }
+    [Inject] <span style="color:#569CD6;">protected</span> NavigationManager NavManager { <span style="color:#569CD6;">get</span>; <span style="color:#569CD6;">set</span>; }
+    [Inject] <span style="color:#569CD6;">protected</span> EditStateService EditStateService { <span style="color:#569CD6;">get</span>; <span style="color:#569CD6;">set</span>; }
 
-    protected IModelViewService&lt;TRecord&gt; Service { get; set; }
-    protected bool IsLoaded =&gt; this.Service?.HasRecords ?? false;
-    protected ComponentState LoadState =&gt; IsLoaded ? ComponentState.Loaded : ComponentState.Loading;
-    protected bool HasService =&gt; this.Service != null;
-    protected override async Task OnInitializedAsync()
+    <span style="color:#569CD6;">protected</span> IModelViewService&lt;TRecord&gt; Service { <span style="color:#569CD6;">get</span>; <span style="color:#569CD6;">set</span>; }
+    <span style="color:#569CD6;">protected</span> <span style="color:#569CD6;">bool</span> IsLoaded =&gt; <span style="color:#569CD6;">this</span>.Service?.HasRecords ?? <span style="color:#569CD6;">false</span>;
+    <span style="color:#569CD6;">protected</span> ComponentState LoadState =&gt; IsLoaded ? ComponentState.Loaded : ComponentState.Loading;
+    <span style="color:#569CD6;">protected</span> <span style="color:#569CD6;">bool</span> HasService =&gt; <span style="color:#569CD6;">this</span>.Service != <span style="color:#569CD6;">null</span>;
+    <span style="color:#569CD6;">protected</span> <span style="color:#569CD6;">override</span> <span style="color:#569CD6;">async</span> Task OnInitializedAsync()
     {
-        if (HasService)
+        <span style="color:#569CD6;">if</span> (HasService)
         {
-            await this.Service.GetRecordsAsync();
-            this.Service.ListHasChanged += OnListChanged;
+            <span style="color:#569CD6;">await</span> <span style="color:#569CD6;">this</span>.Service.GetRecordsAsync();
+            <span style="color:#569CD6;">this</span>.Service.ListHasChanged += OnListChanged;
         }
     }
 
-    protected override void OnAfterRender(bool firstRender)
+    <span style="color:#569CD6;">protected</span> <span style="color:#569CD6;">override</span> <span style="color:#569CD6;">void</span> OnAfterRender(<span style="color:#569CD6;">bool</span> firstRender)
     {
-        if (this.EditStateService.IsDirty)
-            this.Edit((Guid)this.EditStateService.RecordID);
+        <span style="color:#569CD6;">if</span> (<span style="color:#569CD6;">this</span>.EditStateService.IsDirty)
+            <span style="color:#569CD6;">this</span>.Edit((Guid)<span style="color:#569CD6;">this</span>.EditStateService.RecordID);
     }
 
-    protected void OnListChanged(object sender, EventArgs e)
-        =&gt; this.InvokeAsync(this.StateHasChanged);
+    <span style="color:#569CD6;">protected</span> <span style="color:#569CD6;">void</span> OnListChanged(<span style="color:#569CD6;">object</span> sender, EventArgs e)
+        =&gt; <span style="color:#569CD6;">this</span>.InvokeAsync(<span style="color:#569CD6;">this</span>.StateHasChanged);
 
-    protected virtual void Edit(Guid id)
-        =&gt; this.EditRecord.InvokeAsync(id);
+    <span style="color:#569CD6;">protected</span> <span style="color:#569CD6;">virtual</span> <span style="color:#569CD6;">void</span> Edit(Guid id)
+        =&gt; <span style="color:#569CD6;">this</span>.EditRecord.InvokeAsync(id);
 
-    protected virtual void View(Guid id)
-        =&gt; this.ViewRecord.InvokeAsync(id);
+    <span style="color:#569CD6;">protected</span> <span style="color:#569CD6;">virtual</span> <span style="color:#569CD6;">void</span> View(Guid id)
+        =&gt; <span style="color:#569CD6;">this</span>.ViewRecord.InvokeAsync(id);
 
-    protected virtual void New()
-        =&gt; this.NewRecord.InvokeAsync();
+    <span style="color:#569CD6;">protected</span> <span style="color:#569CD6;">virtual</span> <span style="color:#569CD6;">void</span> New()
+        =&gt; <span style="color:#569CD6;">this</span>.NewRecord.InvokeAsync();
 
-    protected virtual void Exit()
+    <span style="color:#569CD6;">protected</span> <span style="color:#569CD6;">virtual</span> <span style="color:#569CD6;">void</span> Exit()
     {
-        if (ExitAction.HasDelegate)
+        <span style="color:#569CD6;">if</span> (ExitAction.HasDelegate)
             ExitAction.InvokeAsync();
-        else
-            this.NavManager.NavigateTo(&quot;/&quot;);
+        <span style="color:#569CD6;">else</span>
+            <span style="color:#569CD6;">this</span>.NavManager.NavigateTo(<span style="color:#D69D85;">&quot;/&quot;</span>);
     }
 
-    public void Dispose()
-        =&gt; this.Service.ListHasChanged -= OnListChanged;
+    <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">void</span> Dispose()
+        =&gt; <span style="color:#569CD6;">this</span>.Service.ListHasChanged -= OnListChanged;
 
 }
-</code></pre>
-<h3 id="paging-and-sorting">Paging and Sorting</h3>
+</pre></div><h3 id="paging-and-sorting">Paging and Sorting</h3>
 <p>Paging and sorting is implemented by a <code>RecordPager</code> class that is part of the ViewService.  <code>DataPagingControl</code> and <code>SortControl</code> are UI components that interact with the <code>RecordPager</code>.</p>
 <p>You can see <code>DataPagingControl</code> in use in a list form - here in the left side of a button row at the bottom of the form</p>
-<pre><code class="language-csharp">&lt;UIContainer&gt;
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+&lt;UIContainer&gt;
     &lt;UIFormRow&gt;
-        &lt;UIColumn Cols=&quot;8&quot;&gt;
-            &lt;DataPagingControl RecordPager=&quot;this.ViewService.RecordPager&quot;&gt;&lt;/DataPagingControl&gt;
+        &lt;UIColumn Cols=<span style="color:#D69D85;">&quot;8&quot;</span>&gt;
+            &lt;DataPagingControl RecordPager=<span style="color:#D69D85;">&quot;this.ViewService.RecordPager&quot;</span>&gt;&lt;/DataPagingControl&gt;
         &lt;/UIColumn&gt;
-        &lt;UIButtonColumn Cols=&quot;4&quot;&gt;
-            &lt;UIButton type=&quot;button&quot; Show=&quot;true&quot; class=&quot;btn-success&quot; ClickEvent=&quot;() =&gt; this.New()&quot;&gt;New Record&lt;/UIButton&gt;
-            &lt;UIButton type=&quot;button&quot; class=&quot;btn-secondary&quot; ClickEvent=&quot;this.Exit&quot;&gt;Exit&lt;/UIButton&gt;
+        &lt;UIButtonColumn Cols=<span style="color:#D69D85;">&quot;4&quot;</span>&gt;
+            &lt;UIButton type=<span style="color:#D69D85;">&quot;button&quot;</span> Show=<span style="color:#D69D85;">&quot;true&quot;</span> <span style="color:#569CD6;">class</span>=<span style="color:#D69D85;">&quot;btn-success&quot;</span> ClickEvent=<span style="color:#D69D85;">&quot;() =&gt; this.New()&quot;</span>&gt;New Record&lt;/UIButton&gt;
+            &lt;UIButton type=<span style="color:#D69D85;">&quot;button&quot;</span> <span style="color:#569CD6;">class</span>=<span style="color:#D69D85;">&quot;btn-secondary&quot;</span> ClickEvent=<span style="color:#D69D85;">&quot;this.Exit&quot;</span>&gt;Exit&lt;/UIButton&gt;
         &lt;/UIButtonColumn&gt;
     &lt;/UIFormRow&gt;
 &lt;/UIContainer&gt;
-</code></pre>
+</pre></div>
 <p>And <code>SortControl</code> in action in the header row of a list form.</p>
-<pre><code class="language-csharp">&lt;head&gt;
-    &lt;SortControl RecordPager=&quot;this.Service.RecordPager&quot;&gt;
-        &lt;UIDataTableHeaderColumn SortField=&quot;ID&quot;&gt;ID&lt;/UIDataTableHeaderColumn&gt;
-        &lt;UIDataTableHeaderColumn SortField=&quot;Date&quot;&gt;Date&lt;/UIDataTableHeaderColumn&gt;
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+&lt;head&gt;
+    &lt;SortControl RecordPager=<span style="color:#D69D85;">&quot;this.Service.RecordPager&quot;</span>&gt;
+        &lt;UIDataTableHeaderColumn SortField=<span style="color:#D69D85;">&quot;ID&quot;</span>&gt;ID&lt;/UIDataTableHeaderColumn&gt;
+        &lt;UIDataTableHeaderColumn SortField=<span style="color:#D69D85;">&quot;Date&quot;</span>&gt;Date&lt;/UIDataTableHeaderColumn&gt;
         ...
     &lt;/SortControl&gt;
 &lt;/head&gt;
-</code></pre>
-<h4 id="recordpager">RecordPager</h4>
+</pre></div><h4 id="recordpager">RecordPager</h4>
 <p>The code is self explanatory, providing the functionality for paging operations.  The imnportant concept to understand is that internally page and block positions are tracked on zero based indexes, while what gets displayed is one based.  Page 0 internally is displayed as 1 to the user.</p>
-<pre><code class="language-csharp">    public class RecordPager
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+    <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">class</span> RecordPager
     {
-        public int DisplayPage =&gt; this.Page + 1;
-        public int DisplayLastPage =&gt; this.LastPage + 1;
-        public int DisplayLastBlock =&gt; this.LastBlock + 1;
-        public int DisplayStartBlockPage =&gt; this.StartBlockPage + 1;
-        public int DisplayEndBlockPage =&gt; this.EndBlockPage + 1;
+        <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">int</span> DisplayPage =&gt; <span style="color:#569CD6;">this</span>.Page + <span style="color:#B5CEA8;">1</span>;
+        <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">int</span> DisplayLastPage =&gt; <span style="color:#569CD6;">this</span>.LastPage + <span style="color:#B5CEA8;">1</span>;
+        <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">int</span> DisplayLastBlock =&gt; <span style="color:#569CD6;">this</span>.LastBlock + <span style="color:#B5CEA8;">1</span>;
+        <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">int</span> DisplayStartBlockPage =&gt; <span style="color:#569CD6;">this</span>.StartBlockPage + <span style="color:#B5CEA8;">1</span>;
+        <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">int</span> DisplayEndBlockPage =&gt; <span style="color:#569CD6;">this</span>.EndBlockPage + <span style="color:#B5CEA8;">1</span>;
 
-        public bool Enabled { get; set; }
-        public int Page { get; private set; } = 0;
-        public int RecordCount { get; set; } = 0;
-        public int PageSize { get; set; } = 10;
-        public int BlockSize { get; set; } = 5;
+        <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">bool</span> Enabled { <span style="color:#569CD6;">get</span>; <span style="color:#569CD6;">set</span>; }
+        <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">int</span> Page { <span style="color:#569CD6;">get</span>; <span style="color:#569CD6;">private</span> <span style="color:#569CD6;">set</span>; } = <span style="color:#B5CEA8;">0</span>;
+        <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">int</span> RecordCount { <span style="color:#569CD6;">get</span>; <span style="color:#569CD6;">set</span>; } = <span style="color:#B5CEA8;">0</span>;
+        <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">int</span> PageSize { <span style="color:#569CD6;">get</span>; <span style="color:#569CD6;">set</span>; } = <span style="color:#B5CEA8;">10</span>;
+        <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">int</span> BlockSize { <span style="color:#569CD6;">get</span>; <span style="color:#569CD6;">set</span>; } = <span style="color:#B5CEA8;">5</span>;
 
-        public string DefaultSortColumn { get; set; } = &quot;ID&quot;;
-        public bool Sort { get; set; }
-        public bool SortDescending { get; set; }
+        <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">string</span> DefaultSortColumn { <span style="color:#569CD6;">get</span>; <span style="color:#569CD6;">set</span>; } = <span style="color:#D69D85;">&quot;ID&quot;</span>;
+        <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">bool</span> Sort { <span style="color:#569CD6;">get</span>; <span style="color:#569CD6;">set</span>; }
+        <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">bool</span> SortDescending { <span style="color:#569CD6;">get</span>; <span style="color:#569CD6;">set</span>; }
 
-        public int Block
+        <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">int</span> Block
         {
-            get
+            <span style="color:#569CD6;">get</span>
             {
-                var block = (int)Math.Floor((Decimal)(this.Page / this.BlockSize));
-                return block &lt; this.LastBlock ? block : LastBlock;
+                <span style="color:#569CD6;">var</span> block = (<span style="color:#569CD6;">int</span>)Math.Floor((Decimal)(<span style="color:#569CD6;">this</span>.Page / <span style="color:#569CD6;">this</span>.BlockSize));
+                <span style="color:#569CD6;">return</span> block &lt; <span style="color:#569CD6;">this</span>.LastBlock ? block : LastBlock;
             }
         }
 
-        public int LastPage =&gt; ((int)Math.Floor((Decimal)((RecordCount - 1) / PageSize))) - 1;
-        public int LastBlock =&gt; (int)Math.Floor((Decimal)(this.LastPage / this.BlockSize));
-        public int StartBlockPage =&gt; (Block * BlockSize);
-        public int EndBlockPage =&gt; (StartBlockPage + (BlockSize - 1)) &gt; LastPage ? LastPage : StartBlockPage + (BlockSize - 1);
-        public bool HasBlocks =&gt; this.LastPage &gt; BlockSize;
-        public bool HasPagination =&gt; this.RecordCount &gt; PageSize;
+        <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">int</span> LastPage =&gt; ((<span style="color:#569CD6;">int</span>)Math.Floor((Decimal)((RecordCount - <span style="color:#B5CEA8;">1</span>) / PageSize))) - <span style="color:#B5CEA8;">1</span>;
+        <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">int</span> LastBlock =&gt; (<span style="color:#569CD6;">int</span>)Math.Floor((Decimal)(<span style="color:#569CD6;">this</span>.LastPage / <span style="color:#569CD6;">this</span>.BlockSize));
+        <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">int</span> StartBlockPage =&gt; (Block * BlockSize);
+        <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">int</span> EndBlockPage =&gt; (StartBlockPage + (BlockSize - <span style="color:#B5CEA8;">1</span>)) &gt; LastPage ? LastPage : StartBlockPage + (BlockSize - <span style="color:#B5CEA8;">1</span>);
+        <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">bool</span> HasBlocks =&gt; <span style="color:#569CD6;">this</span>.LastPage &gt; BlockSize;
+        <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">bool</span> HasPagination =&gt; <span style="color:#569CD6;">this</span>.RecordCount &gt; PageSize;
 
-        public string SortColumn
+        <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">string</span> SortColumn
         {
-            get =&gt; (!string.IsNullOrWhiteSpace(_sortColumn)) ? _sortColumn : DefaultSortColumn;
-            set =&gt; _sortColumn = value;
+            <span style="color:#569CD6;">get</span> =&gt; (!<span style="color:#569CD6;">string</span>.IsNullOrWhiteSpace(_sortColumn)) ? _sortColumn : DefaultSortColumn;
+            <span style="color:#569CD6;">set</span> =&gt; _sortColumn = value;
         }
 
-        private string _sortColumn = string.Empty;
+        <span style="color:#569CD6;">private</span> <span style="color:#569CD6;">string</span> _sortColumn = <span style="color:#569CD6;">string</span>.Empty;
 
-        public RecordPagingData PagingData =&gt; new RecordPagingData()
+        <span style="color:#569CD6;">public</span> RecordPagingData PagingData =&gt; <span style="color:#569CD6;">new</span> RecordPagingData()
         {
-            Page = this.Page,
-            PageSize = this.PageSize,
-            Sort = this.Sort,
-            SortColumn = this.SortColumn,
-            SortDescending = this.SortDescending
+            Page = <span style="color:#569CD6;">this</span>.Page,
+            PageSize = <span style="color:#569CD6;">this</span>.PageSize,
+            Sort = <span style="color:#569CD6;">this</span>.Sort,
+            SortColumn = <span style="color:#569CD6;">this</span>.SortColumn,
+            SortDescending = <span style="color:#569CD6;">this</span>.SortDescending
         };
 
-        public event EventHandler PageChanged;
+        <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">event</span> EventHandler PageChanged;
 
-        public bool ToPage(int page, bool forceUpdate = false)
+        <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">bool</span> ToPage(<span style="color:#569CD6;">int</span> page, <span style="color:#569CD6;">bool</span> forceUpdate = <span style="color:#569CD6;">false</span>)
         {
-            var move = (forceUpdate | !this.Page.Equals(page)) &amp;&amp; page &gt;= 0;
-            if (move)
+            <span style="color:#569CD6;">var</span> move = (forceUpdate | !<span style="color:#569CD6;">this</span>.Page.Equals(page)) &amp;&amp; page &gt;= <span style="color:#B5CEA8;">0</span>;
+            <span style="color:#569CD6;">if</span> (move)
             {
-                this.Page = page;
-                this.PageChanged?.Invoke(this, EventArgs.Empty);
+                <span style="color:#569CD6;">this</span>.Page = page;
+                <span style="color:#569CD6;">this</span>.PageChanged?.Invoke(<span style="color:#569CD6;">this</span>, EventArgs.Empty);
             }
-            return move;
+            <span style="color:#569CD6;">return</span> move;
         }
 
-        public bool PageMove(int pages)
+        <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">bool</span> PageMove(<span style="color:#569CD6;">int</span> pages)
         {
-            var move = this.Page + pages &lt;= this.LastPage &amp;&amp; this.Page + pages &gt;= 0;
-            if (move)
-                this.ToPage(this.Page + pages);
-            return move;
+            <span style="color:#569CD6;">var</span> move = <span style="color:#569CD6;">this</span>.Page + pages &lt;= <span style="color:#569CD6;">this</span>.LastPage &amp;&amp; <span style="color:#569CD6;">this</span>.Page + pages &gt;= <span style="color:#B5CEA8;">0</span>;
+            <span style="color:#569CD6;">if</span> (move)
+                <span style="color:#569CD6;">this</span>.ToPage(<span style="color:#569CD6;">this</span>.Page + pages);
+            <span style="color:#569CD6;">return</span> move;
         }
 
-        public bool BlockMove(int blocks)
+        <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">bool</span> BlockMove(<span style="color:#569CD6;">int</span> blocks)
         {
-            var move = this.Block + blocks &lt;= this.LastBlock &amp;&amp; this.Block + blocks &gt;= 0;
-            if (move)
-                this.ToPage((this.Block + blocks) * BlockSize);
-            return move;
+            <span style="color:#569CD6;">var</span> move = <span style="color:#569CD6;">this</span>.Block + blocks &lt;= <span style="color:#569CD6;">this</span>.LastBlock &amp;&amp; <span style="color:#569CD6;">this</span>.Block + blocks &gt;= <span style="color:#B5CEA8;">0</span>;
+            <span style="color:#569CD6;">if</span> (move)
+                <span style="color:#569CD6;">this</span>.ToPage((<span style="color:#569CD6;">this</span>.Block + blocks) * BlockSize);
+            <span style="color:#569CD6;">return</span> move;
         }
 
-        public void NotifySortingChanged()
-           =&gt; this.ToPage(1, true);
+        <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">void</span> NotifySortingChanged()
+           =&gt; <span style="color:#569CD6;">this</span>.ToPage(<span style="color:#B5CEA8;">1</span>, <span style="color:#569CD6;">true</span>);
     }
-</code></pre>
-<h4 id="recordpagingdata">RecordPagingData</h4>
+</pre></div><h4 id="recordpagingdata">RecordPagingData</h4>
 <p>This is the class used to pass data into the dats services.  This has to be passed via json though the api so &quot;keep it simple&quot;. Again it's zero based indexing.</p>
-<pre><code class="language-csharp">    public class RecordPagingData
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+    <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">class</span> RecordPagingData
     {
-        public int Page { get; set; } = 0;
-        public int PageSize { get; set; } = 25;
-        public string SortColumn { get; set; } = string.Empty;
-        public bool Sort { get; set; } = false;
-        public bool SortDescending { get; set; } = false;
-        public int StartRecord =&gt; this.Page * this.PageSize;
+        <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">int</span> Page { <span style="color:#569CD6;">get</span>; <span style="color:#569CD6;">set</span>; } = <span style="color:#B5CEA8;">0</span>;
+        <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">int</span> PageSize { <span style="color:#569CD6;">get</span>; <span style="color:#569CD6;">set</span>; } = <span style="color:#B5CEA8;">25</span>;
+        <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">string</span> SortColumn { <span style="color:#569CD6;">get</span>; <span style="color:#569CD6;">set</span>; } = <span style="color:#569CD6;">string</span>.Empty;
+        <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">bool</span> Sort { <span style="color:#569CD6;">get</span>; <span style="color:#569CD6;">set</span>; } = <span style="color:#569CD6;">false</span>;
+        <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">bool</span> SortDescending { <span style="color:#569CD6;">get</span>; <span style="color:#569CD6;">set</span>; } = <span style="color:#569CD6;">false</span>;
+        <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">int</span> StartRecord =&gt; <span style="color:#569CD6;">this</span>.Page * <span style="color:#569CD6;">this</span>.PageSize;
     }
-</code></pre>
-<h4 id="datapagingcontrol">DataPagingControl</h4>
+</pre></div><h4 id="datapagingcontrol">DataPagingControl</h4>
 <p>The code again is self-explanatory, building out a Bootstrap ButtonGroup.  I've kept away from using icons, you can if you wish.</p>
-<pre><code class="language-html">@namespace Blazr.SPA.Components
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+@namespace Blazr.SPA.Components
 
 @if (this.hasPagination)
 {
-    &lt;nav aria-label=&quot;...&quot;&gt;
-        &lt;ul class=&quot;pagination&quot;&gt;
-            &lt;li class=&quot;page-item&quot;&gt;
-                &lt;a class=&quot;page-link cursor-hand&quot; @onclick=&quot;() =&gt; this.RecordPager.ToPage(0)&quot;&gt;&amp;vert;&amp;lt;&lt;/a&gt;
-            &lt;/li&gt;
+    <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">nav</span> <span style="color:#FF0000;">aria-label</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;...&quot;</span><span style="color:#569CD6;">&gt;</span>
+        <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">ul</span> <span style="color:#FF0000;">class</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;pagination&quot;</span><span style="color:#569CD6;">&gt;</span>
+            <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">li</span> <span style="color:#FF0000;">class</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;page-item&quot;</span><span style="color:#569CD6;">&gt;</span>
+                <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">a</span> <span style="color:#FF0000;">class</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;page-link cursor-hand&quot; @onclick=&quot;() =&gt; this.RecordPager.ToPage(0)&quot;</span><span style="color:#569CD6;">&gt;</span><span style="color:#FF0000;">&amp;vert;</span><span style="color:#FF0000;">&amp;lt;</span><span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">a</span><span style="color:#569CD6;">&gt;</span>
+            <span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">li</span><span style="color:#569CD6;">&gt;</span>
             @if (this.RecordPager.HasBlocks)
             {
-                &lt;li class=&quot;page-item&quot;&gt;
-                    &lt;a class=&quot;page-link cursor-hand&quot; @onclick=&quot;() =&gt; this.RecordPager.BlockMove(-1)&quot;&gt;&amp;lt;&amp;lt;&lt;/a&gt;
-                &lt;/li&gt;
+                <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">li</span> <span style="color:#FF0000;">class</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;page-item&quot;</span><span style="color:#569CD6;">&gt;</span>
+                    <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">a</span> <span style="color:#FF0000;">class</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;page-link cursor-hand&quot; @onclick=&quot;() =&gt; this.RecordPager.BlockMove(-1)&quot;</span><span style="color:#569CD6;">&gt;</span><span style="color:#FF0000;">&amp;lt;</span><span style="color:#FF0000;">&amp;lt;</span><span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">a</span><span style="color:#569CD6;">&gt;</span>
+                <span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">li</span><span style="color:#569CD6;">&gt;</span>
             }
             @for (var i = this.RecordPager.DisplayStartBlockPage; i &lt;= this.RecordPager.DisplayEndBlockPage; i++)
             {
@@ -301,32 +303,32 @@
                 @if (displayPageNo &gt; this.RecordPager.DisplayLastPage) break;
                 @if (displayPageNo == this.RecordPager.DisplayPage)
                 {
-                    &lt;li class=&quot;page-item active&quot;&gt;
-                        &lt;span class=&quot;page-link cursor-hand&quot;&gt;
+                    <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">li</span> <span style="color:#FF0000;">class</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;page-item active&quot;</span><span style="color:#569CD6;">&gt;</span>
+                        <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">span</span> <span style="color:#FF0000;">class</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;page-link cursor-hand&quot;</span><span style="color:#569CD6;">&gt;</span>
                             @displayPageNo
-                            &lt;span class=&quot;sr-only&quot;&gt;(current)&lt;/span&gt;
-                        &lt;/span&gt;
-                    &lt;/li&gt;
+                            <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">span</span> <span style="color:#FF0000;">class</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;sr-only&quot;</span><span style="color:#569CD6;">&gt;</span>(current)<span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">span</span><span style="color:#569CD6;">&gt;</span>
+                        <span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">span</span><span style="color:#569CD6;">&gt;</span>
+                    <span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">li</span><span style="color:#569CD6;">&gt;</span>
                 }
                 else
                 {
-                    &lt;li class=&quot;page-item&quot;&gt;
-                        &lt;a class=&quot;page-link cursor-hand&quot; @onclick=&quot;() =&gt; this.RecordPager.ToPage(pageNo)&quot;&gt;@displayPageNo&lt;/a&gt;
-                    &lt;/li&gt;
+                    <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">li</span> <span style="color:#FF0000;">class</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;page-item&quot;</span><span style="color:#569CD6;">&gt;</span>
+                        <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">a</span> <span style="color:#FF0000;">class</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;page-link cursor-hand&quot; @onclick=&quot;() =&gt; this.RecordPager.ToPage(pageNo)&quot;</span><span style="color:#569CD6;">&gt;</span>@displayPageNo<span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">a</span><span style="color:#569CD6;">&gt;</span>
+                    <span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">li</span><span style="color:#569CD6;">&gt;</span>
                 }
 
             }
             @if (this.RecordPager.HasBlocks)
             {
-                &lt;li class=&quot;page-item&quot;&gt;
-                    &lt;a class=&quot;page-link cursor-hand&quot; @onclick=&quot;() =&gt; this.RecordPager.BlockMove(1)&quot;&gt;&amp;gt;&amp;gt;&lt;/a&gt;
-                &lt;/li&gt;
+                <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">li</span> <span style="color:#FF0000;">class</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;page-item&quot;</span><span style="color:#569CD6;">&gt;</span>
+                    <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">a</span> <span style="color:#FF0000;">class</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;page-link cursor-hand&quot; @onclick=&quot;() =&gt; this.RecordPager.BlockMove(1)&quot;</span><span style="color:#569CD6;">&gt;</span><span style="color:#FF0000;">&amp;gt;</span><span style="color:#FF0000;">&amp;gt;</span><span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">a</span><span style="color:#569CD6;">&gt;</span>
+                <span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">li</span><span style="color:#569CD6;">&gt;</span>
             }
-            &lt;li class=&quot;page-item&quot;&gt;
-                &lt;a class=&quot;page-link cursor-hand&quot; @onclick=&quot;() =&gt; this.RecordPager.ToPage(this.RecordPager.LastPage)&quot;&gt;&amp;gt;&amp;vert;&lt;/a&gt;
-            &lt;/li&gt;
-        &lt;/ul&gt;
-    &lt;/nav&gt;
+            <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">li</span> <span style="color:#FF0000;">class</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;page-item&quot;</span><span style="color:#569CD6;">&gt;</span>
+                <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">a</span> <span style="color:#FF0000;">class</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;page-link cursor-hand&quot; @onclick=&quot;() =&gt; this.RecordPager.ToPage(this.RecordPager.LastPage)&quot;</span><span style="color:#569CD6;">&gt;</span><span style="color:#FF0000;">&amp;gt;</span><span style="color:#FF0000;">&amp;vert;</span><span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">a</span><span style="color:#569CD6;">&gt;</span>
+            <span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">li</span><span style="color:#569CD6;">&gt;</span>
+        <span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">ul</span><span style="color:#569CD6;">&gt;</span>
+    <span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">nav</span><span style="color:#569CD6;">&gt;</span>
 }
 
 @code {
@@ -334,190 +336,191 @@
 
     private bool hasPagination =&gt; this.RecordPager != null &amp;&amp; this.RecordPager.HasPagination;
 }
-</code></pre>
-<h4 id="sortcontrol">SortControl</h4>
+</pre></div><h4 id="sortcontrol">SortControl</h4>
 <p>The <code>SortControl</code> is used in a list header. It cascades itself and provides the interface into the Paginator for the header columns through a set of public helper methods.</p>
-<pre><code class="language-csharp">@namespace Blazor.SPA.Components
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+@<span style="color:#569CD6;">namespace</span> Blazor.SPA.Components
 
-&lt;CascadingValue Value=&quot;this&quot;&gt;
+&lt;CascadingValue Value=<span style="color:#D69D85;">&quot;this&quot;</span>&gt;
     @ChildContent
 &lt;/CascadingValue&gt;
 
 @code {
 
-    [Parameter] public RenderFragment ChildContent { get; set; }
-    [Parameter] public string NotSortedClass { get; set; } = &quot;sort-column oi oi-resize-height&quot;;
-    [Parameter] public string AscendingClass { get; set; } = &quot;sort-column oi oi-sort-ascending&quot;;
-    [Parameter] public string DescendingClass { get; set; } = &quot;sort-column oi oi-sort-descending&quot;;
-    [Parameter] public EventCallback&lt;SortingEventArgs&gt; Sort { get; set; }
-    [Parameter] public RecordPager RecordPager { get; set; }
-    public string SortColumm { get; private set; } = string.Empty;
-    public bool Descending { get; private set; } = false;
+    [Parameter] <span style="color:#569CD6;">public</span> RenderFragment ChildContent { <span style="color:#569CD6;">get</span>; <span style="color:#569CD6;">set</span>; }
+    [Parameter] <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">string</span> NotSortedClass { <span style="color:#569CD6;">get</span>; <span style="color:#569CD6;">set</span>; } = <span style="color:#D69D85;">&quot;sort-column oi oi-resize-height&quot;</span>;
+    [Parameter] <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">string</span> AscendingClass { <span style="color:#569CD6;">get</span>; <span style="color:#569CD6;">set</span>; } = <span style="color:#D69D85;">&quot;sort-column oi oi-sort-ascending&quot;</span>;
+    [Parameter] <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">string</span> DescendingClass { <span style="color:#569CD6;">get</span>; <span style="color:#569CD6;">set</span>; } = <span style="color:#D69D85;">&quot;sort-column oi oi-sort-descending&quot;</span>;
+    [Parameter] <span style="color:#569CD6;">public</span> EventCallback&lt;SortingEventArgs&gt; Sort { <span style="color:#569CD6;">get</span>; <span style="color:#569CD6;">set</span>; }
+    [Parameter] <span style="color:#569CD6;">public</span> RecordPager RecordPager { <span style="color:#569CD6;">get</span>; <span style="color:#569CD6;">set</span>; }
+    <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">string</span> SortColumm { <span style="color:#569CD6;">get</span>; <span style="color:#569CD6;">private</span> <span style="color:#569CD6;">set</span>; } = <span style="color:#569CD6;">string</span>.Empty;
+    <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">bool</span> Descending { <span style="color:#569CD6;">get</span>; <span style="color:#569CD6;">private</span> <span style="color:#569CD6;">set</span>; } = <span style="color:#569CD6;">false</span>;
 
-    public string GetIcon(string columnName)
-        =&gt; !this.SortColumm.Equals(columnName)
-        ? this.NotSortedClass
-        : this.Descending
-            ? this.AscendingClass
-            : this.DescendingClass;
+    <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">string</span> GetIcon(<span style="color:#569CD6;">string</span> columnName)
+        =&gt; !<span style="color:#569CD6;">this</span>.SortColumm.Equals(columnName)
+        ? <span style="color:#569CD6;">this</span>.NotSortedClass
+        : <span style="color:#569CD6;">this</span>.Descending
+            ? <span style="color:#569CD6;">this</span>.AscendingClass
+            : <span style="color:#569CD6;">this</span>.DescendingClass;
 
-    public void NotifySortingChanged(string sortColumn, bool descending = false)
+    <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">void</span> NotifySortingChanged(<span style="color:#569CD6;">string</span> sortColumn, <span style="color:#569CD6;">bool</span> <span style="color:#569CD6;">descending</span> = <span style="color:#569CD6;">false</span>)
     {
-        this.SortColumm = sortColumn;
-        this.Descending = descending;
-        this.Notify();
+        <span style="color:#569CD6;">this</span>.SortColumm = sortColumn;
+        <span style="color:#569CD6;">this</span>.Descending = <span style="color:#569CD6;">descending</span>;
+        <span style="color:#569CD6;">this</span>.Notify();
     }
 
-    public void NotifySortingDirectionChanged()
+    <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">void</span> NotifySortingDirectionChanged()
     {
-        this.Descending = !this.Descending;
-        this.Notify();
+        <span style="color:#569CD6;">this</span>.Descending = !<span style="color:#569CD6;">this</span>.Descending;
+        <span style="color:#569CD6;">this</span>.Notify();
     }
 
-    private void Notify()
+    <span style="color:#569CD6;">private</span> <span style="color:#569CD6;">void</span> Notify()
     {
-        if (RecordPager != null)
+        <span style="color:#569CD6;">if</span> (RecordPager != <span style="color:#569CD6;">null</span>)
             {
-            RecordPager.SortDescending = this.Descending;
-            RecordPager.SortColumn = this.SortColumm;
+            RecordPager.SortDescending = <span style="color:#569CD6;">this</span>.Descending;
+            RecordPager.SortColumn = <span style="color:#569CD6;">this</span>.SortColumm;
             RecordPager.NotifySortingChanged();
             }
-        var args = SortingEventArgs.Get(this.SortColumm, this.Descending);
-        if (Sort.HasDelegate) this.Sort.InvokeAsync(args);
+        <span style="color:#569CD6;">var</span> args = SortingEventArgs.Get(<span style="color:#569CD6;">this</span>.SortColumm, <span style="color:#569CD6;">this</span>.Descending);
+        <span style="color:#569CD6;">if</span> (Sort.HasDelegate) <span style="color:#569CD6;">this</span>.Sort.InvokeAsync(args);
     }
 }
-</code></pre>
-<h4 id="uilistcolumn">UIListColumn</h4>
+</pre></div><h4 id="uilistcolumn">UIListColumn</h4>
 <p>This is the UI control that builds out either the header or data rows.</p>
-<pre><code class="language-html">@namespace Blazr.UIComponents
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+@namespace Blazr.UIComponents
 @inherits UIComponentBase
 
 @if (this.IsHeader)
 {
-    &lt;th class=&quot;@this.HeaderCSS&quot;&gt;
+    <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">th</span> <span style="color:#FF0000;">class</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;@this.HeaderCSS&quot;</span><span style="color:#569CD6;">&gt;</span>
         @((MarkupString)this.HeaderTitle)
-    &lt;/th&gt;
+    <span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">th</span><span style="color:#569CD6;">&gt;</span>
 }
 else if (this.isMaxRowColumn)
 {
-    &lt;td class=&quot;max-column&quot; @attributes=&quot;this.SplatterAttributes&quot;&gt;
-        &lt;div class=&quot;grid-overflow&quot;&gt;
-            &lt;div class=&quot;grid-overflowinner&quot;&gt;
+    <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">td</span> <span style="color:#FF0000;">class</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;max-column&quot; @attributes=&quot;this.SplatterAttributes&quot;</span><span style="color:#569CD6;">&gt;</span>
+        <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">div</span> <span style="color:#FF0000;">class</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;grid-overflow&quot;</span><span style="color:#569CD6;">&gt;</span>
+            <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">div</span> <span style="color:#FF0000;">class</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;grid-overflowinner&quot;</span><span style="color:#569CD6;">&gt;</span>
                 @ChildContent
-            &lt;/div&gt;
-        &lt;/div&gt;
-    &lt;/td&gt;
+            <span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">div</span><span style="color:#569CD6;">&gt;</span>
+        <span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">div</span><span style="color:#569CD6;">&gt;</span>
+    <span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">td</span><span style="color:#569CD6;">&gt;</span>
 }
 else
 {
-    &lt;td class=&quot;data-column&quot; @attributes=&quot;this.SplatterAttributes&quot;&gt;
+    <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">td</span> <span style="color:#FF0000;">class</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;data-column&quot; @attributes=&quot;this.SplatterAttributes&quot;</span><span style="color:#569CD6;">&gt;</span>
         @this.ChildContent
-    &lt;/td&gt;
+    <span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">td</span><span style="color:#569CD6;">&gt;</span>
 }
-</code></pre>
+</pre></div>
 <p><em>UIListColumn.razor.cs</em>:</p>
-<pre><code class="language-csharp">using Blazr.SPA.Components;
-using Microsoft.AspNetCore.Components;
-using System.Collections.Generic;
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+<span style="color:#569CD6;">using</span> Blazr.SPA.Components;
+<span style="color:#569CD6;">using</span> Microsoft.AspNetCore.Components;
+<span style="color:#569CD6;">using</span> System.Collections.Generic;
 
-namespace Blazr.UIComponents
+<span style="color:#569CD6;">namespace</span> Blazr.UIComponents
 {
-    public partial class UIListColumn : UIComponentBase
+    <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">partial</span> <span style="color:#569CD6;">class</span> UIListColumn : UIComponentBase
     {
-        [CascadingParameter(Name = &quot;IsHeader&quot;)] public bool IsHeader { get; set; }
-        [Parameter] public bool IsMaxColumn { get; set; }
-        [Parameter] public string HeaderTitle { get; set; }
-        [Parameter] public bool IsHeaderNoWrap { get; set; }
+        [CascadingParameter(Name = <span style="color:#D69D85;">&quot;IsHeader&quot;</span>)] <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">bool</span> IsHeader { <span style="color:#569CD6;">get</span>; <span style="color:#569CD6;">set</span>; }
+        [Parameter] <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">bool</span> IsMaxColumn { <span style="color:#569CD6;">get</span>; <span style="color:#569CD6;">set</span>; }
+        [Parameter] <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">string</span> HeaderTitle { <span style="color:#569CD6;">get</span>; <span style="color:#569CD6;">set</span>; }
+        [Parameter] <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">bool</span> IsHeaderNoWrap { <span style="color:#569CD6;">get</span>; <span style="color:#569CD6;">set</span>; }
 
-        private bool isMaxRowColumn =&gt; IsMaxColumn &amp;&amp; !this.IsHeader;
-        private bool isNormalRowColumn =&gt; !IsMaxColumn &amp;&amp; !this.IsHeader;
-        protected override List&lt;string&gt; UnwantedAttributes { get; set; } = new List&lt;string&gt;() { &quot;class&quot; };
+        <span style="color:#569CD6;">private</span> <span style="color:#569CD6;">bool</span> isMaxRowColumn =&gt; IsMaxColumn &amp;&amp; !<span style="color:#569CD6;">this</span>.IsHeader;
+        <span style="color:#569CD6;">private</span> <span style="color:#569CD6;">bool</span> isNormalRowColumn =&gt; !IsMaxColumn &amp;&amp; !<span style="color:#569CD6;">this</span>.IsHeader;
+        <span style="color:#569CD6;">protected</span> <span style="color:#569CD6;">override</span> List&lt;<span style="color:#569CD6;">string</span>&gt; UnwantedAttributes { <span style="color:#569CD6;">get</span>; <span style="color:#569CD6;">set</span>; } = <span style="color:#569CD6;">new</span> List&lt;<span style="color:#569CD6;">string</span>&gt;() { <span style="color:#D69D85;">&quot;class&quot;</span> };
 
-        private string HeaderCSS
+        <span style="color:#569CD6;">private</span> <span style="color:#569CD6;">string</span> HeaderCSS
             =&gt; CSSBuilder.Class()
-                .AddClass(&quot;header-column-nowrap&quot;, &quot;header-column&quot;, IsHeaderNoWrap)
-                .AddClass(&quot;align-baseline&quot;)
+                .AddClass(<span style="color:#D69D85;">&quot;header-column-nowrap&quot;</span>, <span style="color:#D69D85;">&quot;header-column&quot;</span>, IsHeaderNoWrap)
+                .AddClass(<span style="color:#D69D85;">&quot;align-baseline&quot;</span>)
                 .Build();
     }
 }
-</code></pre>
+</pre></div>
 <p><em>UIListColumn.razor.css</em>:</p>
-<pre><code class="language-css">.data-column {
-    max-width: 30%;
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+<span style="color:#A31515;">.data-column </span>{
+    <span style="color:#FF0000;">max-width</span>: <span style="color:#569CD6;">30%</span>;
 }
 
-.max-column {
-    width: 50%;
+<span style="color:#A31515;">.max-column </span>{
+    <span style="color:#FF0000;">width</span>: <span style="color:#569CD6;">50%</span>;
 }
 
-.grid-overflow {
-    display: flex;
+<span style="color:#A31515;">.grid-overflow </span>{
+    <span style="color:#FF0000;">display</span>: <span style="color:#569CD6;">flex</span>;
 }
 
-.grid-overflowinner {
-    flex: 1;
-    width: 1px;
-    overflow-x: hidden;
-    white-space: nowrap;
-    text-overflow: ellipsis;
+<span style="color:#A31515;">.grid-overflowinner </span>{
+    <span style="color:#FF0000;">flex</span>: <span style="color:#569CD6;">1</span>;
+    <span style="color:#FF0000;">width</span>: <span style="color:#569CD6;">1px</span>;
+    <span style="color:#FF0000;">overflow-x</span>: <span style="color:#569CD6;">hidden</span>;
+    <span style="color:#FF0000;">white-space</span>: <span style="color:#569CD6;">nowrap</span>;
+    <span style="color:#FF0000;">text-overflow</span>: <span style="color:#569CD6;">ellipsis</span>;
 }
 
-.header-column-nowrap {
-    white-space: nowrap;
+<span style="color:#A31515;">.header-column-nowrap </span>{
+    <span style="color:#FF0000;">white-space</span>: <span style="color:#569CD6;">nowrap</span>;
 }
-</code></pre>
-<h4 id="uilistcontrol">UIListControl</h4>
+</pre></div><h4 id="uilistcontrol">UIListControl</h4>
 <p>This control builds out the list</p>
-<pre><code class="language-html">@namespace Blazr.UIComponents
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+@namespace Blazr.UIComponents
 @inherits UIComponentBase
 @typeparam TRecord
 
 @if (this.LoadState == ComponentState.Loaded &amp;&amp; this.HasRecords)
 {
     &lt;table @attributes=&quot;this.SplatterAttributes&quot;&gt;
-        &lt;thead&gt;
-            &lt;CascadingValue Name=&quot;IsHeader&quot; Value=&quot;true&quot;&gt;
-                &lt;tr&gt;
+        <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">thead</span><span style="color:#569CD6;">&gt;</span>
+            <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">CascadingValue</span> <span style="color:#FF0000;">Name</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;IsHeader&quot;</span> <span style="color:#FF0000;">Value</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;true&quot;</span><span style="color:#569CD6;">&gt;</span>
+                <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">tr</span><span style="color:#569CD6;">&gt;</span>
                     @RowTemplate(default(TRecord))
-                &lt;/tr&gt;
-            &lt;/CascadingValue&gt;
-        &lt;/thead&gt;
-        &lt;tbody&gt;
+                <span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">tr</span><span style="color:#569CD6;">&gt;</span>
+            <span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">CascadingValue</span><span style="color:#569CD6;">&gt;</span>
+        <span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">thead</span><span style="color:#569CD6;">&gt;</span>
+        <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">tbody</span><span style="color:#569CD6;">&gt;</span>
             @foreach (var item in this.Records)
             {
-                &lt;tr&gt;
+                <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">tr</span><span style="color:#569CD6;">&gt;</span>
                     @RowTemplate(item)
-                &lt;/tr&gt;
+                <span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">tr</span><span style="color:#569CD6;">&gt;</span>
             }
-        &lt;/tbody&gt;
-    &lt;/table&gt;
+        <span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">tbody</span><span style="color:#569CD6;">&gt;</span>
+    <span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">table</span><span style="color:#569CD6;">&gt;</span>
 }
 else if (this.LoadState == ComponentState.Loaded)
 {
-    &lt;div class=&quot;alert alert-warning&quot;&gt;
+    <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">div</span> <span style="color:#FF0000;">class</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;alert alert-warning&quot;</span><span style="color:#569CD6;">&gt;</span>
         No Records to Display
-    &lt;/div&gt;
+    <span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">div</span><span style="color:#569CD6;">&gt;</span>
 }
 else if (this.LoadState == ComponentState.Loading)
 {
-    &lt;div class=&quot;m-2 p-2&quot;&gt;Loading...&lt;/div&gt;
+    <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">div</span> <span style="color:#FF0000;">class</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;m-2 p-2&quot;</span><span style="color:#569CD6;">&gt;</span>Loading...<span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">div</span><span style="color:#569CD6;">&gt;</span>
 }
 else
 {
-    &lt;div class=&quot;alert alert-danger&quot;&gt;
+    <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">div</span> <span style="color:#FF0000;">class</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;alert alert-danger&quot;</span><span style="color:#569CD6;">&gt;</span>
         Error Loading the List
-    &lt;/div&gt;
+    <span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">div</span><span style="color:#569CD6;">&gt;</span>
 }
-</code></pre>
-<pre><code class="language-csharp">@code {
-    [Parameter] public ComponentState LoadState { get; set; }
-    [Parameter] public RenderFragment&lt;TRecord&gt; RowTemplate { get; set; }
-    [Parameter] public IEnumerable&lt;TRecord&gt; Records { get; set; }
-    private bool HasRecords =&gt; Records.Count() &gt; 0;
+</pre></div><div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+@code {
+    [Parameter] <span style="color:#569CD6;">public</span> ComponentState LoadState { <span style="color:#569CD6;">get</span>; <span style="color:#569CD6;">set</span>; }
+    [Parameter] <span style="color:#569CD6;">public</span> RenderFragment&lt;TRecord&gt; RowTemplate { <span style="color:#569CD6;">get</span>; <span style="color:#569CD6;">set</span>; }
+    [Parameter] <span style="color:#569CD6;">public</span> IEnumerable&lt;TRecord&gt; Records { <span style="color:#569CD6;">get</span>; <span style="color:#569CD6;">set</span>; }
+    <span style="color:#569CD6;">private</span> <span style="color:#569CD6;">bool</span> HasRecords =&gt; Records.Count() &gt; <span style="color:#B5CEA8;">0</span>;
 
 }
-</code></pre>
-<h3 id="weather-forecast-list-forms">Weather Forecast List Forms</h3>
+</pre></div><h3 id="weather-forecast-list-forms">Weather Forecast List Forms</h3>
 <p>There are three list forms in the solution.  They demonstrate different UI approaches.</p>
 <ol>
 <li>The classic web page approach using different RouteViews (Pages) for the record viewer and editor.</li>
@@ -525,103 +528,105 @@ else
 <li>The inline dialog approach - opening and closing a section within the RouteView to display/edit the record.</li>
 </ol>
 <p>The standard <code>WeatherForecastListForm</code> looks like this.  It inherits from <code>ListFormBase</code> with <code>WeatherForecast</code> as <code>TRecord</code>.  It assigns the <code>WeatherForecastViewService</code> to the base <code>IModelViewService</code> property <code>Service</code>.  Note it has a component Css file defining the custom Css used in the component.</p>
-<pre><code class="language-csharp">// Blazor.Database/Forms/WeatherForecast/WeatherForecastListForm.razor.cs
-public partial class WeatherForecastListForm : ListFormBase&lt;WeatherForecast&gt;
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+<span style="color:#57A64A;">// Blazor.Database/Forms/WeatherForecast/WeatherForecastListForm.razor.cs</span>
+<span style="color:#569CD6;">public</span> <span style="color:#569CD6;">partial</span> <span style="color:#569CD6;">class</span> WeatherForecastListForm : ListFormBase&lt;WeatherForecast&gt;
 {
-    [Inject] private WeatherForecastViewService ViewService { get; set; }
-    [Parameter] public bool IsModal { get; set; }
+    [Inject] <span style="color:#569CD6;">private</span> WeatherForecastViewService ViewService { <span style="color:#569CD6;">get</span>; <span style="color:#569CD6;">set</span>; }
+    [Parameter] <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">bool</span> IsModal { <span style="color:#569CD6;">get</span>; <span style="color:#569CD6;">set</span>; }
 
-    private BaseModalDialog Modal { get; set; }
+    <span style="color:#569CD6;">private</span> BaseModalDialog Modal { <span style="color:#569CD6;">get</span>; <span style="color:#569CD6;">set</span>; }
 
-    protected override async Task OnInitializedAsync()
+    <span style="color:#569CD6;">protected</span> <span style="color:#569CD6;">override</span> <span style="color:#569CD6;">async</span> Task OnInitializedAsync()
     {
-        this.Service = this.ViewService;
-        await base.OnInitializedAsync();
+        <span style="color:#569CD6;">this</span>.Service = <span style="color:#569CD6;">this</span>.ViewService;
+        <span style="color:#569CD6;">await</span> <span style="color:#569CD6;">base</span>.OnInitializedAsync();
     }
-    protected override async void Edit(Guid id)
+    <span style="color:#569CD6;">protected</span> <span style="color:#569CD6;">override</span> <span style="color:#569CD6;">async</span> <span style="color:#569CD6;">void</span> Edit(Guid id)
     {
-        if (this.IsModal)
+        <span style="color:#569CD6;">if</span> (<span style="color:#569CD6;">this</span>.IsModal)
         {
-            var options = new ModalOptions();
-            options.Set(&quot;Id&quot;, id);
-            await this.Modal.ShowAsync&lt;WeatherForecastEditorForm&gt;(options);
+            <span style="color:#569CD6;">var</span> options = <span style="color:#569CD6;">new</span> ModalOptions();
+            options.Set(<span style="color:#D69D85;">&quot;Id&quot;</span>, id);
+            <span style="color:#569CD6;">await</span> <span style="color:#569CD6;">this</span>.Modal.ShowAsync&lt;WeatherForecastEditorForm&gt;(options);
         }
-        else
-            base.Edit(id);
+        <span style="color:#569CD6;">else</span>
+            <span style="color:#569CD6;">base</span>.Edit(id);
     }
-    protected override async void View(Guid id)
+    <span style="color:#569CD6;">protected</span> <span style="color:#569CD6;">override</span> <span style="color:#569CD6;">async</span> <span style="color:#569CD6;">void</span> View(Guid id)
     {
-        if (this.IsModal)
+        <span style="color:#569CD6;">if</span> (<span style="color:#569CD6;">this</span>.IsModal)
         {
-            var options = new ModalOptions();
-            options.Set(&quot;Id&quot;, id);
-            await this.Modal.ShowAsync&lt;WeatherForecastViewerForm&gt;(options);
+            <span style="color:#569CD6;">var</span> options = <span style="color:#569CD6;">new</span> ModalOptions();
+            options.Set(<span style="color:#D69D85;">&quot;Id&quot;</span>, id);
+            <span style="color:#569CD6;">await</span> <span style="color:#569CD6;">this</span>.Modal.ShowAsync&lt;WeatherForecastViewerForm&gt;(options);
         }
-        else
-            base.View(id);
+        <span style="color:#569CD6;">else</span>
+            <span style="color:#569CD6;">base</span>.View(id);
     }
 
-    protected override async void New()
+    <span style="color:#569CD6;">protected</span> <span style="color:#569CD6;">override</span> <span style="color:#569CD6;">async</span> <span style="color:#569CD6;">void</span> New()
     {
-        if (this.IsModal)
+        <span style="color:#569CD6;">if</span> (<span style="color:#569CD6;">this</span>.IsModal)
         {
-            var options = new ModalOptions();
-            options.Set(&quot;Id&quot;, -1);
-            await this.Modal.ShowAsync&lt;WeatherForecastEditorForm&gt;(options);
+            <span style="color:#569CD6;">var</span> options = <span style="color:#569CD6;">new</span> ModalOptions();
+            options.Set(<span style="color:#D69D85;">&quot;Id&quot;</span>, -<span style="color:#B5CEA8;">1</span>);
+            <span style="color:#569CD6;">await</span> <span style="color:#569CD6;">this</span>.Modal.ShowAsync&lt;WeatherForecastEditorForm&gt;(options);
         }
-        else
-            base.New();
+        <span style="color:#569CD6;">else</span>
+            <span style="color:#569CD6;">base</span>.New();
     }
 }
-</code></pre>
+</pre></div>
 <p>The razor markup.  Note:</p>
 <ol>
 <li>The <code>SortControl</code> in the header and the <code>UIListColumn</code> components building the header with the sortable columns.</li>
 <li>The <code>DataPagingControl</code> in the botton button row linked to the <code>Service.RecordPager</code>.  Paging is event driven.  <code>DataPagingControl</code> paging requests are handled directly by <code>RecordPager</code> in the controller service.  Updates trigger a <code>ListChanged</code> event in the service which triggers a UI update in the List Form.</li>
 <li>The <code>BaseModalDialog</code> added if the Form is using Modal Dialogs.</li>
 </ol>
-<pre><code class="language-html">@namespace Blazor.Database.Forms
-@inherits ListFormBase&lt;WeatherForecast&gt;
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+@namespace Blazor.Database.Forms
+@inherits ListFormBase<span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">WeatherForecast</span><span style="color:#569CD6;">&gt;</span>
 
-&lt;h1&gt;Weather Forecasts&lt;/h1&gt;
+<span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">h1</span><span style="color:#569CD6;">&gt;</span>Weather Forecasts<span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">h1</span><span style="color:#569CD6;">&gt;</span>
 
-&lt;UIListControl TRecord=&quot;WeatherForecast&quot; Records=&quot;this.ViewService.Records&quot; LoadState=&quot;this.LoadState&quot; class=&quot;table&quot;&gt;
-    &lt;RowTemplate&gt;
-        &lt;UIListColumn HeaderTitle=&quot;Date&quot;&gt;@context.Date.LocalDateTime.ToShortDateString()&lt;/UIListColumn&gt;
-        &lt;UIListColumn HeaderTitle=&quot;Temp &amp;deg; C&quot;&gt;@context.TemperatureC&lt;/UIListColumn&gt;
-        &lt;UIListColumn HeaderTitle=&quot;Temp &amp;deg; F&quot;&gt;@context.TemperatureF&lt;/UIListColumn&gt;
-        &lt;UIListColumn HeaderTitle=&quot;Summary&quot;&gt;@context.Summary&lt;/UIListColumn&gt;
-        &lt;UIListColumn HeaderTitle=&quot;Detail&quot; IsMaxColumn=&quot;true&quot;&gt;@context.Description&lt;/UIListColumn&gt;
-        &lt;UIListColumn HeaderTitle=&quot;Edit/View&quot;&gt;
-            &lt;UIButton type=&quot;button&quot; class=&quot;btn-sm btn-secondary&quot; ClickEvent=&quot;() =&gt; this.View(context.ID)&quot;&gt;View&lt;/UIButton&gt;
-            &lt;UIButton type=&quot;button&quot; class=&quot;btn-sm btn-primary&quot; ClickEvent=&quot;() =&gt; this.Edit(context.ID)&quot;&gt;Edit&lt;/UIButton&gt;
-        &lt;/UIListColumn&gt;
-    &lt;/RowTemplate&gt;
-&lt;/UIListControl&gt;
-&lt;UIContainer&gt;
-    &lt;UIFormRow&gt;
-        &lt;UIColumn Cols=&quot;8&quot;&gt;
-            &lt;DataPagingControl RecordPager=&quot;this.ViewService.RecordPager&quot;&gt;&lt;/DataPagingControl&gt;
-        &lt;/UIColumn&gt;
-        &lt;UIButtonColumn Cols=&quot;4&quot;&gt;
-            &lt;UIButton type=&quot;button&quot; Show=&quot;true&quot; class=&quot;btn-success&quot; ClickEvent=&quot;() =&gt; this.New()&quot;&gt;New Record&lt;/UIButton&gt;
-            &lt;UIButton type=&quot;button&quot; class=&quot;btn-secondary&quot; ClickEvent=&quot;this.Exit&quot;&gt;Exit&lt;/UIButton&gt;
-        &lt;/UIButtonColumn&gt;
-    &lt;/UIFormRow&gt;
-&lt;/UIContainer&gt;
+<span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">UIListControl</span> <span style="color:#FF0000;">TRecord</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;WeatherForecast&quot;</span> <span style="color:#FF0000;">Records</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;this.ViewService.Records&quot;</span> <span style="color:#FF0000;">LoadState</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;this.LoadState&quot;</span> <span style="color:#FF0000;">class</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;table&quot;</span><span style="color:#569CD6;">&gt;</span>
+    <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">RowTemplate</span><span style="color:#569CD6;">&gt;</span>
+        <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">UIListColumn</span> <span style="color:#FF0000;">HeaderTitle</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;Date&quot;</span><span style="color:#569CD6;">&gt;</span>@context.Date.LocalDateTime.ToShortDateString()<span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">UIListColumn</span><span style="color:#569CD6;">&gt;</span>
+        <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">UIListColumn</span> <span style="color:#FF0000;">HeaderTitle</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;Temp &amp;deg; C&quot;</span><span style="color:#569CD6;">&gt;</span>@context.TemperatureC<span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">UIListColumn</span><span style="color:#569CD6;">&gt;</span>
+        <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">UIListColumn</span> <span style="color:#FF0000;">HeaderTitle</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;Temp &amp;deg; F&quot;</span><span style="color:#569CD6;">&gt;</span>@context.TemperatureF<span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">UIListColumn</span><span style="color:#569CD6;">&gt;</span>
+        <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">UIListColumn</span> <span style="color:#FF0000;">HeaderTitle</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;Summary&quot;</span><span style="color:#569CD6;">&gt;</span>@context.Summary<span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">UIListColumn</span><span style="color:#569CD6;">&gt;</span>
+        <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">UIListColumn</span> <span style="color:#FF0000;">HeaderTitle</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;Detail&quot;</span> <span style="color:#FF0000;">IsMaxColumn</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;true&quot;</span><span style="color:#569CD6;">&gt;</span>@context.Description<span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">UIListColumn</span><span style="color:#569CD6;">&gt;</span>
+        <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">UIListColumn</span> <span style="color:#FF0000;">HeaderTitle</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;Edit/View&quot;</span><span style="color:#569CD6;">&gt;</span>
+            <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">UIButton</span> <span style="color:#FF0000;">type</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;button&quot;</span> <span style="color:#FF0000;">class</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;btn-sm btn-secondary&quot;</span> <span style="color:#FF0000;">ClickEvent</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;() =&gt; this.View(context.ID)&quot;</span><span style="color:#569CD6;">&gt;</span>View<span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">UIButton</span><span style="color:#569CD6;">&gt;</span>
+            <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">UIButton</span> <span style="color:#FF0000;">type</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;button&quot;</span> <span style="color:#FF0000;">class</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;btn-sm btn-primary&quot;</span> <span style="color:#FF0000;">ClickEvent</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;() =&gt; this.Edit(context.ID)&quot;</span><span style="color:#569CD6;">&gt;</span>Edit<span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">UIButton</span><span style="color:#569CD6;">&gt;</span>
+        <span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">UIListColumn</span><span style="color:#569CD6;">&gt;</span>
+    <span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">RowTemplate</span><span style="color:#569CD6;">&gt;</span>
+<span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">UIListControl</span><span style="color:#569CD6;">&gt;</span>
+<span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">UIContainer</span><span style="color:#569CD6;">&gt;</span>
+    <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">UIFormRow</span><span style="color:#569CD6;">&gt;</span>
+        <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">UIColumn</span> <span style="color:#FF0000;">Cols</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;8&quot;</span><span style="color:#569CD6;">&gt;</span>
+            <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">DataPagingControl</span> <span style="color:#FF0000;">RecordPager</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;this.ViewService.RecordPager&quot;</span><span style="color:#569CD6;">&gt;</span><span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">DataPagingControl</span><span style="color:#569CD6;">&gt;</span>
+        <span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">UIColumn</span><span style="color:#569CD6;">&gt;</span>
+        <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">UIButtonColumn</span> <span style="color:#FF0000;">Cols</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;4&quot;</span><span style="color:#569CD6;">&gt;</span>
+            <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">UIButton</span> <span style="color:#FF0000;">type</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;button&quot;</span> <span style="color:#FF0000;">Show</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;true&quot;</span> <span style="color:#FF0000;">class</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;btn-success&quot;</span> <span style="color:#FF0000;">ClickEvent</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;() =&gt; this.New()&quot;</span><span style="color:#569CD6;">&gt;</span>New Record<span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">UIButton</span><span style="color:#569CD6;">&gt;</span>
+            <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">UIButton</span> <span style="color:#FF0000;">type</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;button&quot;</span> <span style="color:#FF0000;">class</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;btn-secondary&quot;</span> <span style="color:#FF0000;">ClickEvent</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;this.Exit&quot;</span><span style="color:#569CD6;">&gt;</span>Exit<span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">UIButton</span><span style="color:#569CD6;">&gt;</span>
+        <span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">UIButtonColumn</span><span style="color:#569CD6;">&gt;</span>
+    <span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">UIFormRow</span><span style="color:#569CD6;">&gt;</span>
+<span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">UIContainer</span><span style="color:#569CD6;">&gt;</span>
 @if (this.IsModal)
 {
-    &lt;BaseModalDialog @ref=&quot;this.Modal&quot;&gt;&lt;/BaseModalDialog&gt;
+    &lt;BaseModalDialog @ref=&quot;this.Modal&quot;&gt;<span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">BaseModalDialog</span><span style="color:#569CD6;">&gt;</span>
 }
-</code></pre>
-<h3 id="the-views">The Views</h3>
+</pre></div><h3 id="the-views">The Views</h3>
 <p>The application declares a set of intermediate Views for the list forms.  These are common to both the WASM and Server SPAs</p>
 <h4 id="fetchdata">FetchData</h4>
 <p>This is the multi RouteView implementation.  Event handlers are hooked up <code>WeatherForecastListForm</code> to route to the different RouteViews through the <code>NavigationManager</code>.</p>
-<pre><code class="language-html">@page &quot;/fetchdata&quot;
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+@page &quot;/fetchdata&quot;
 @namespace Blazor.Database.RouteViews
 
-&lt;WeatherForecastListForm EditRecord=&quot;this.GoToEditor&quot; ViewRecord=&quot;this.GoToViewer&quot; NewRecord=&quot;this.GoToNew&quot; ExitAction=&quot;Exit&quot;&gt;&lt;/WeatherForecastListForm&gt;
+<span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">WeatherForecastListForm</span> <span style="color:#FF0000;">EditRecord</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;this.GoToEditor&quot;</span> <span style="color:#FF0000;">ViewRecord</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;this.GoToViewer&quot;</span> <span style="color:#FF0000;">NewRecord</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;this.GoToNew&quot;</span> <span style="color:#FF0000;">ExitAction</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;Exit&quot;</span><span style="color:#569CD6;">&gt;</span><span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">WeatherForecastListForm</span><span style="color:#569CD6;">&gt;</span>
 
 @code {
 
@@ -647,61 +652,61 @@ public partial class WeatherForecastListForm : ListFormBase&lt;WeatherForecast&g
     }
 
 }
-</code></pre>
-<h4 id="fetchdatamodal">FetchDataModal</h4>
+</pre></div><h4 id="fetchdatamodal">FetchDataModal</h4>
 <p>The modal implementation is simple.  It already handles editor/viewer state by enabling <code>IsModal</code>.  You don't really need it as you could declare <code>WeatherForecastListForm</code> directly in the RouteView.</p>
-<pre><code class="language-html">@page &quot;/fetchdataModal&quot;
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+@page &quot;/fetchdataModal&quot;
 @namespace Blazor.Database.RouteViews
 
-&lt;WeatherForecastListForm IsModal=&quot;true&quot;&gt;&lt;/WeatherForecastListForm&gt;
-</code></pre>
+<span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">WeatherForecastListForm</span> <span style="color:#FF0000;">IsModal</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;true&quot;</span><span style="color:#569CD6;">&gt;</span><span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">WeatherForecastListForm</span><span style="color:#569CD6;">&gt;</span>
+</pre></div>
 <p>The inline dialog is the most complex.  It uses Ids to show/hide the Editor/Viewer through <code>UIComponent</code>.</p>
-<pre><code class="language-html">@page &quot;/fetchdataInline&quot;
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+@page &quot;/fetchdataInline&quot;
 
 @namespace Blazor.Database.RouteViews
 
-&lt;UIComponent Show=&quot;this.ShowEditor&quot;&gt;
-    &lt;WeatherForecastEditorForm ID=&quot;this.editorId&quot; ExitAction=&quot;this.CloseDialog&quot;&gt;&lt;/WeatherForecastEditorForm&gt;
-&lt;/UIComponent&gt;
-&lt;UIComponent Show=&quot;this.ShowViewer&quot;&gt;
-    &lt;WeatherForecastViewerForm ID=&quot;this.viewerId&quot; ExitAction=&quot;this.CloseDialog&quot;&gt;&lt;/WeatherForecastViewerForm&gt;
-&lt;/UIComponent&gt;
+<span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">UIComponent</span> <span style="color:#FF0000;">Show</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;this.ShowEditor&quot;</span><span style="color:#569CD6;">&gt;</span>
+    <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">WeatherForecastEditorForm</span> <span style="color:#FF0000;">ID</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;this.editorId&quot;</span> <span style="color:#FF0000;">ExitAction</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;this.CloseDialog&quot;</span><span style="color:#569CD6;">&gt;</span><span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">WeatherForecastEditorForm</span><span style="color:#569CD6;">&gt;</span>
+<span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">UIComponent</span><span style="color:#569CD6;">&gt;</span>
+<span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">UIComponent</span> <span style="color:#FF0000;">Show</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;this.ShowViewer&quot;</span><span style="color:#569CD6;">&gt;</span>
+    <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">WeatherForecastViewerForm</span> <span style="color:#FF0000;">ID</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;this.viewerId&quot;</span> <span style="color:#FF0000;">ExitAction</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;this.CloseDialog&quot;</span><span style="color:#569CD6;">&gt;</span><span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">WeatherForecastViewerForm</span><span style="color:#569CD6;">&gt;</span>
+<span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">UIComponent</span><span style="color:#569CD6;">&gt;</span>
 
-&lt;WeatherForecastListForm EditRecord=&quot;this.GoToEditor&quot; ViewRecord=&quot;this.GoToViewer&quot; NewRecord=&quot;this.GoToNew&quot; ExitAction=&quot;Exit&quot;&gt;&lt;/WeatherForecastListForm&gt;
-</code></pre>
-<pre><code class="language-csharp">@code {
+<span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">WeatherForecastListForm</span> <span style="color:#FF0000;">EditRecord</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;this.GoToEditor&quot;</span> <span style="color:#FF0000;">ViewRecord</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;this.GoToViewer&quot;</span> <span style="color:#FF0000;">NewRecord</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;this.GoToNew&quot;</span> <span style="color:#FF0000;">ExitAction</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;Exit&quot;</span><span style="color:#569CD6;">&gt;</span><span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">WeatherForecastListForm</span><span style="color:#569CD6;">&gt;</span>
+</pre></div><div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+@code {
 
-    [Inject] NavigationManager NavManager { get; set; }
+    [Inject] NavigationManager NavManager { <span style="color:#569CD6;">get</span>; <span style="color:#569CD6;">set</span>; }
 
-    private Guid editorId = Guid.Empty;
-    private Guid viewerId = Guid.Empty;
+    <span style="color:#569CD6;">private</span> Guid editorId = Guid.Empty;
+    <span style="color:#569CD6;">private</span> Guid viewerId = Guid.Empty;
 
-    private bool ShowViewer =&gt; this.viewerId != Guid.Empty;
-    private bool ShowEditor =&gt; this.editorId != Guid.Empty;
+    <span style="color:#569CD6;">private</span> <span style="color:#569CD6;">bool</span> ShowViewer =&gt; <span style="color:#569CD6;">this</span>.viewerId != Guid.Empty;
+    <span style="color:#569CD6;">private</span> <span style="color:#569CD6;">bool</span> ShowEditor =&gt; <span style="color:#569CD6;">this</span>.editorId != Guid.Empty;
 
-    public void GoToEditor(Guid id)
+    <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">void</span> GoToEditor(Guid id)
         =&gt; SetIds(id, Guid.Empty);
 
-    public void GoToNew()
+    <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">void</span> GoToNew()
         =&gt; SetIds(Guid.Empty, Guid.Empty);
 
-    public void GoToViewer(Guid id)
+    <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">void</span> GoToViewer(Guid id)
         =&gt; SetIds(Guid.Empty, id);
 
-    public void CloseDialog()
+    <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">void</span> CloseDialog()
         =&gt; SetIds(Guid.Empty, Guid.Empty);
 
-    public void Exit()
-        =&gt; this.NavManager.NavigateTo(&quot;index&quot;);
+    <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">void</span> Exit()
+        =&gt; <span style="color:#569CD6;">this</span>.NavManager.NavigateTo(<span style="color:#D69D85;">&quot;index&quot;</span>);
 
-    private void SetIds(Guid editorId, Guid viewerId)
+    <span style="color:#569CD6;">private</span> <span style="color:#569CD6;">void</span> SetIds(Guid editorId, Guid viewerId)
     {
-        this.editorId = editorId;
-        this.viewerId = viewerId;
+        <span style="color:#569CD6;">this</span>.editorId = editorId;
+        <span style="color:#569CD6;">this</span>.viewerId = viewerId;
     }
 }
-</code></pre>
-<h2 id="wrap-up">Wrap Up</h2>
+</pre></div><h2 id="wrap-up">Wrap Up</h2>
 <p>That wraps up this article.  Some key points to note:</p>
 <ol>
 <li>There's no differences between the Blazor Server and Blazor WASM code base.</li>

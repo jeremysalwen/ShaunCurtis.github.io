@@ -95,92 +95,98 @@
 <li>Calls the handler directly.</li>
 </ol>
 <p><code>IHandleEvent</code> defines a single method.</p>
-<pre><code class="language-csharp">Task IHandleEvent.HandleEventAsync(EventCallbackWorkItem callback, object? arg);
-</code></pre>
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+Task IHandleEvent.HandleEventAsync(EventCallbackWorkItem callback, <span style="color:#569CD6;">object</span>? arg);
+</pre></div>
 <p><code>ComponentBase</code> implements the interface, with the two step call to <code>StateHasChanged</code>.  Ensure you're fundimental understandoing of this piece of code.  It will save you a lot of time in the future.</p>
-<pre><code class="language-csharp">Task IHandleEvent.HandleEventAsync(EventCallbackWorkItem callback, object? arg)
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+Task IHandleEvent.HandleEventAsync(EventCallbackWorkItem callback, <span style="color:#569CD6;">object</span>? arg)
 {
-    var task = callback.InvokeAsync(arg);
-    var shouldAwaitTask = task.Status != TaskStatus.RanToCompletion &amp;&amp;
+    <span style="color:#569CD6;">var</span> task = callback.InvokeAsync(arg);
+    <span style="color:#569CD6;">var</span> shouldAwaitTask = task.Status != TaskStatus.RanToCompletion &amp;&amp;
         task.Status != TaskStatus.Canceled;
 
-    // After each event, we synchronously re-render (unless !ShouldRender())
-    // This just saves the developer the trouble of putting &quot;StateHasChanged();&quot;
-    // at the end of every event callback.
+    <span style="color:#57A64A;">// After each event, we synchronously re-render (unless !ShouldRender())</span>
+    <span style="color:#57A64A;">// This just saves the developer the trouble of putting &quot;StateHasChanged();&quot;</span>
+    <span style="color:#57A64A;">// at the end of every event callback.</span>
     StateHasChanged();
 
-    return shouldAwaitTask ?
+    <span style="color:#569CD6;">return</span> shouldAwaitTask ?
         CallStateHasChangedOnAsyncCompletion(task) :
         Task.CompletedTask;
 }
 
-private async Task CallStateHasChangedOnAsyncCompletion(Task task)
+<span style="color:#569CD6;">private</span> <span style="color:#569CD6;">async</span> Task CallStateHasChangedOnAsyncCompletion(Task task)
 {
-    try
+    <span style="color:#569CD6;">try</span>
     {
-        await task;
+        <span style="color:#569CD6;">await</span> task;
     }
-    catch // avoiding exception filters for AOT runtime support
+    <span style="color:#569CD6;">catch</span> <span style="color:#57A64A;">// avoiding exception filters for AOT runtime support</span>
     {
-        // Ignore exceptions from task cancellations, but don't bother issuing a state change.
-        if (task.IsCanceled)
-            return;
-        throw;
+        <span style="color:#57A64A;">// Ignore exceptions from task cancellations, but don&#39;t bother issuing a state change.</span>
+        <span style="color:#569CD6;">if</span> (task.IsCanceled)
+            <span style="color:#569CD6;">return</span>;
+        <span style="color:#569CD6;">throw</span>;
     }
     StateHasChanged();
 }
-</code></pre>
+</pre></div>
 <p>If <code>IHandleEvent</code> is not implemented it simply calls the handler directly.</p>
-<pre><code class="language-csharp">Task async IHandleEvent.HandleEventAsync(EventCallbackWorkItem callback, object? arg)
-   =&gt; await callback.InvokeAsync(arg);
-</code></pre>
-<h3 id="ihandleafterrender">IHandleAfterRender</h3>
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+Task <span style="color:#569CD6;">async</span> IHandleEvent.HandleEventAsync(EventCallbackWorkItem callback, <span style="color:#569CD6;">object</span>? arg)
+   =&gt; <span style="color:#569CD6;">await</span> callback.InvokeAsync(arg);
+</pre></div><h3 id="ihandleafterrender">IHandleAfterRender</h3>
 <p>When the component completes rendering the Renderer checks the compoment to see if it If a implements <code>IHandleAfterRender</code>the Renderer calls <code>HandleEventAsync</code>.  If it doesn't then the renderer doesn't track the event on the component and nothing happens.</p>
 <p><code>ComponentBase</code> implements the interface.</p>
-<pre><code class="language-csharp">Task IHandleEvent.HandleEventAsync(EventCallbackWorkItem callback, object? arg)
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+Task IHandleEvent.HandleEventAsync(EventCallbackWorkItem callback, <span style="color:#569CD6;">object</span>? arg)
 {
-    var task = callback.InvokeAsync(arg);
-    var shouldAwaitTask = task.Status != TaskStatus.RanToCompletion &amp;&amp;
+    <span style="color:#569CD6;">var</span> task = callback.InvokeAsync(arg);
+    <span style="color:#569CD6;">var</span> shouldAwaitTask = task.Status != TaskStatus.RanToCompletion &amp;&amp;
         task.Status != TaskStatus.Canceled;
 
-    // After each event, we synchronously re-render (unless !ShouldRender())
-    // This just saves the developer the trouble of putting &quot;StateHasChanged();&quot;
-    // at the end of every event callback.
+    <span style="color:#57A64A;">// After each event, we synchronously re-render (unless !ShouldRender())</span>
+    <span style="color:#57A64A;">// This just saves the developer the trouble of putting &quot;StateHasChanged();&quot;</span>
+    <span style="color:#57A64A;">// at the end of every event callback.</span>
     StateHasChanged();
 
-    return shouldAwaitTask ?
+    <span style="color:#569CD6;">return</span> shouldAwaitTask ?
         CallStateHasChangedOnAsyncCompletion(task) :
         Task.CompletedTask;
 }
-</code></pre>
+</pre></div>
 <p>If <code>IHandleAfterRender</code> is not implemented then nothing happens.</p>
-<pre><code class="language-csharp">Task IHandleEvent.HandleEventAsync(EventCallbackWorkItem callback, object? arg)
-   =&gt; return Task.CompletedTask;
-</code></pre>
-<h3 id="void-ui-events">Void UI Events</h3>
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+Task IHandleEvent.HandleEventAsync(EventCallbackWorkItem callback, <span style="color:#569CD6;">object</span>? arg)
+   =&gt; <span style="color:#569CD6;">return</span> Task.CompletedTask;
+</pre></div><h3 id="void-ui-events">Void UI Events</h3>
 <p>The following code won't execute as expected in <code>ComponentBase</code>:</p>
-<pre><code class="language-csharp">void async ButtonClick(MouseEventArgs e) 
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+<span style="color:#569CD6;">void</span> <span style="color:#569CD6;">async</span> ButtonClick(MouseEventArgs e) 
 {
-  await Task.Delay(2000);
+  <span style="color:#569CD6;">await</span> Task.Delay(<span style="color:#B5CEA8;">2000</span>);
   UpdateADisplayProperty();
 }
-</code></pre>
+</pre></div>
 <p>The DisplayProperty doesn't display the current value until another <code>StateHasChanged</code> events occurs.  Why? ButtonClick doesn't return anything, so there's no <code>Task</code> for the event handler to wait on.  On the <code>await</code> yield, it runs to completion running the final <code>StateHasChanged</code> before <code>UpdateADisplayProperty</code> completes.</p>
 <p>This is a band-aid fix - it's bad pactice, <strong>DON'T DO IT</strong>.</p>
-<pre><code class="language-csharp">void async ButtonClick(MouseEventArgs e) 
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+<span style="color:#569CD6;">void</span> <span style="color:#569CD6;">async</span> ButtonClick(MouseEventArgs e) 
 {
-  await Task.Delay(2000);
+  <span style="color:#569CD6;">await</span> Task.Delay(<span style="color:#B5CEA8;">2000</span>);
   UpdateADisplayProperty();
   StateHasChanged();
 }
-</code></pre>
+</pre></div>
 <p>The correct solution is:</p>
-<pre><code class="language-csharp">Task async ButtonClick(MouseEventArgs e) 
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+Task <span style="color:#569CD6;">async</span> ButtonClick(MouseEventArgs e) 
 {
-  await Task.Delay(2000);
+  <span style="color:#569CD6;">await</span> Task.Delay(<span style="color:#B5CEA8;">2000</span>);
   UpdateADisplayProperty();
 }
-</code></pre>
+</pre></div>
 <p>Now the event handler has a <code>Task</code> to await and doesn't execute <code>StateHasChanged</code> until <code>ButtonClick</code> completes.</p>
 </div></div></div></body></html>
 

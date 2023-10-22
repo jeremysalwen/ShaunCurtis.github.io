@@ -58,202 +58,206 @@
 <li>A RouteView/Page with serveral versions of <code>ValueDisplay</code> wired up differently.</li>
 </ol>
 <p>First we have a Scoped or Singleton Service</p>
-<pre><code class="language-csharp">public class RandomNumberService
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+<span style="color:#569CD6;">public</span> <span style="color:#569CD6;">class</span> RandomNumberService
 {
-    public int Value =&gt; _Value;
-    private int _Value = 0;
-    public event EventHandler NumberChanged;
+    <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">int</span> Value =&gt; _Value;
+    <span style="color:#569CD6;">private</span> <span style="color:#569CD6;">int</span> _Value = <span style="color:#B5CEA8;">0</span>;
+    <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">event</span> EventHandler NumberChanged;
 
-    public void NewNumber()
+    <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">void</span> NewNumber()
     {
-        var rand = new Random();
-        NotifyNumberChanged(rand.Next(0, 100));
+        <span style="color:#569CD6;">var</span> rand = <span style="color:#569CD6;">new</span> Random();
+        NotifyNumberChanged(rand.Next(<span style="color:#B5CEA8;">0</span>, <span style="color:#B5CEA8;">100</span>));
     }
 
-    public void NotifyNumberChanged(int value)
+    <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">void</span> NotifyNumberChanged(<span style="color:#569CD6;">int</span> value)
     {
-        if (!value.Equals(_Value))
+        <span style="color:#569CD6;">if</span> (!value.Equals(_Value))
         {
             _Value = value;
-            // only trigger event if it has delegates registered
-            NumberChanged?.Invoke(this, EventArgs.Empty);
+            <span style="color:#57A64A;">// only trigger event if it has delegates registered</span>
+            NumberChanged?.Invoke(<span style="color:#569CD6;">this</span>, EventArgs.Empty);
         }
     }
 }
-</code></pre>
+</pre></div>
 <p>Add this service to Startup.</p>
-<pre><code class="language-csharp">    public void ConfigureServices(IServiceCollection services)
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+    <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">void</span> ConfigureServices(IServiceCollection services)
     {
         services.AddRazorPages();
         services.AddServerSideBlazor();
         ....
         services.AddScoped&lt;RandomNumberService&gt;();
     }
-</code></pre>
+</pre></div>
 <p>Next we build a display component that injects the <code>RandomNumberService</code>.  It gets it's value either from the Parameter or from the Service.  It has a button to update the number - this could be a save button in an inline edit form.  if <code>WireEvent</code> is true it sets up event wiring.   The component has a bottom row tally to show how many times Initialized, ParamsSet and Render has been called.</p>
-<pre><code class="language-csharp">// We implement IDisposable as we need to unhook the event wiring as part of the component disposal cycle.
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+<span style="color:#57A64A;">// We implement IDisposable as we need to unhook the event wiring as part of the component disposal cycle.</span>
 @implements IDisposable
 
-&lt;div class=&quot;container m-2 px-3 p-t bg-info text-white&quot;&gt;
-    &lt;div class=&quot;row&quot;&gt;
-        &lt;div class=&quot;col-12&quot;&gt;
-            &lt;h3&gt;@this.Title&lt;/h3&gt;
+&lt;div <span style="color:#569CD6;">class</span>=<span style="color:#D69D85;">&quot;container m-2 px-3 p-t bg-info text-white&quot;</span>&gt;
+    &lt;div <span style="color:#569CD6;">class</span>=<span style="color:#D69D85;">&quot;row&quot;</span>&gt;
+        &lt;div <span style="color:#569CD6;">class</span>=<span style="color:#D69D85;">&quot;col-12&quot;</span>&gt;
+            &lt;h3&gt;@<span style="color:#569CD6;">this</span>.Title&lt;/h3&gt;
         &lt;/div&gt;
     &lt;/div&gt;
-    &lt;div class=&quot;row&quot;&gt;
-        &lt;div class=&quot;col-2&quot;&gt;Number&lt;/div&gt;
-        &lt;div class=&quot;col-2&quot;&gt;@this.displayValue&lt;/div&gt;
-        &lt;div class=&quot;col-2&quot;&gt;&lt;button class=&quot;btn btn-secondary&quot; @onclick=&quot;(e) =&gt; NewRandomNumber()&quot;&gt;New Number&lt;/button&gt;&lt;/div&gt;
+    &lt;div <span style="color:#569CD6;">class</span>=<span style="color:#D69D85;">&quot;row&quot;</span>&gt;
+        &lt;div <span style="color:#569CD6;">class</span>=<span style="color:#D69D85;">&quot;col-2&quot;</span>&gt;Number&lt;/div&gt;
+        &lt;div <span style="color:#569CD6;">class</span>=<span style="color:#D69D85;">&quot;col-2&quot;</span>&gt;@<span style="color:#569CD6;">this</span>.displayValue&lt;/div&gt;
+        &lt;div <span style="color:#569CD6;">class</span>=<span style="color:#D69D85;">&quot;col-2&quot;</span>&gt;&lt;button <span style="color:#569CD6;">class</span>=<span style="color:#D69D85;">&quot;btn btn-secondary&quot;</span> @onclick=<span style="color:#D69D85;">&quot;(e) =&gt; NewRandomNumber()&quot;</span>&gt;New Number&lt;/button&gt;&lt;/div&gt;
     &lt;/div&gt;
-    &lt;div class=&quot;row bg-dark mt-2&quot;&gt;
-        &lt;div class=&quot;col-3&quot;&gt;
+    &lt;div <span style="color:#569CD6;">class</span>=<span style="color:#D69D85;">&quot;row bg-dark mt-2&quot;</span>&gt;
+        &lt;div <span style="color:#569CD6;">class</span>=<span style="color:#D69D85;">&quot;col-3&quot;</span>&gt;
             Initialized:
         &lt;/div&gt;
-        &lt;div class=&quot;col-1&quot;&gt;
-            @this.InitRun
+        &lt;div <span style="color:#569CD6;">class</span>=<span style="color:#D69D85;">&quot;col-1&quot;</span>&gt;
+            @<span style="color:#569CD6;">this</span>.InitRun
         &lt;/div&gt;
-        &lt;div class=&quot;col-3&quot;&gt;
+        &lt;div <span style="color:#569CD6;">class</span>=<span style="color:#D69D85;">&quot;col-3&quot;</span>&gt;
             Params Set:
         &lt;/div&gt;
-        &lt;div class=&quot;col-1&quot;&gt;
-            @this.ParamsSetRun
+        &lt;div <span style="color:#569CD6;">class</span>=<span style="color:#D69D85;">&quot;col-1&quot;</span>&gt;
+            @<span style="color:#569CD6;">this</span>.ParamsSetRun
         &lt;/div&gt;
-        &lt;div class=&quot;col-3&quot;&gt;
+        &lt;div <span style="color:#569CD6;">class</span>=<span style="color:#D69D85;">&quot;col-3&quot;</span>&gt;
             Rendered:
         &lt;/div&gt;
-        &lt;div class=&quot;col-1&quot;&gt;
-            @this.Rendered
+        &lt;div <span style="color:#569CD6;">class</span>=<span style="color:#D69D85;">&quot;col-1&quot;</span>&gt;
+            @<span style="color:#569CD6;">this</span>.Rendered
         &lt;/div&gt;
     &lt;/div&gt;
 &lt;/div&gt;
 
 @code {
-    [Inject] private RandomNumberService RdmService { get; set; }
+    [Inject] <span style="color:#569CD6;">private</span> RandomNumberService RdmService { <span style="color:#569CD6;">get</span>; <span style="color:#569CD6;">set</span>; }
 
-    // Property to control if we wire up to the service event
-    [Parameter] public bool WireEvent { get; set; }
+    <span style="color:#57A64A;">// Property to control if we wire up to the service event</span>
+    [Parameter] <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">bool</span> WireEvent { <span style="color:#569CD6;">get</span>; <span style="color:#569CD6;">set</span>; }
 
-    [Parameter] public string Title { get; set; }
+    [Parameter] <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">string</span> Title { <span style="color:#569CD6;">get</span>; <span style="color:#569CD6;">set</span>; }
 
-    [Parameter] public int Value { get; set; } = 0;
+    [Parameter] <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">int</span> Value { <span style="color:#569CD6;">get</span>; <span style="color:#569CD6;">set</span>; } = <span style="color:#B5CEA8;">0</span>;
 
-    // Get the Display value.  If the Parameter Value is 0 (not set) then we get the value from the service
-    private int displayValue =&gt; this.Value &gt; 0 ? this.Value : RdmService.Value;
+    <span style="color:#57A64A;">// Get the Display value.  If the Parameter Value is 0 (not set) then we get the value from the service</span>
+    <span style="color:#569CD6;">private</span> <span style="color:#569CD6;">int</span> displayValue =&gt; <span style="color:#569CD6;">this</span>.Value &gt; <span style="color:#B5CEA8;">0</span> ? <span style="color:#569CD6;">this</span>.Value : RdmService.Value;
 
-    protected override Task OnInitializedAsync()
+    <span style="color:#569CD6;">protected</span> <span style="color:#569CD6;">override</span> Task OnInitializedAsync()
     {
-        this.InitRun++;
-        if (this.WireEvent)
-            this.RdmService.NumberChanged += this.OnNumberChange;
+        <span style="color:#569CD6;">this</span>.InitRun++;
+        <span style="color:#569CD6;">if</span> (<span style="color:#569CD6;">this</span>.WireEvent)
+            <span style="color:#569CD6;">this</span>.RdmService.NumberChanged += <span style="color:#569CD6;">this</span>.OnNumberChange;
 
-        return base.OnInitializedAsync();
+        <span style="color:#569CD6;">return</span> <span style="color:#569CD6;">base</span>.OnInitializedAsync();
     }
 
-    private void NewRandomNumber()
+    <span style="color:#569CD6;">private</span> <span style="color:#569CD6;">void</span> NewRandomNumber()
     =&gt; RdmService.NewNumber();
 
-    // Note that we use InvokeAsync to ensure StateHasChanged is run on the Synchronization Context thread.
-    private async void OnNumberChange(object sender, EventArgs e)
-        =&gt; await this.InvokeAsync(StateHasChanged);
+    <span style="color:#57A64A;">// Note that we use InvokeAsync to ensure StateHasChanged is run on the Synchronization Context thread.</span>
+    <span style="color:#569CD6;">private</span> <span style="color:#569CD6;">async</span> <span style="color:#569CD6;">void</span> OnNumberChange(<span style="color:#569CD6;">object</span> sender, EventArgs e)
+        =&gt; <span style="color:#569CD6;">await</span> <span style="color:#569CD6;">this</span>.InvokeAsync(StateHasChanged);
 
-    private int InitRun = 0;
-    private int ParamsSetRun = 0;
-    private int Rendered = 1;
+    <span style="color:#569CD6;">private</span> <span style="color:#569CD6;">int</span> InitRun = <span style="color:#B5CEA8;">0</span>;
+    <span style="color:#569CD6;">private</span> <span style="color:#569CD6;">int</span> ParamsSetRun = <span style="color:#B5CEA8;">0</span>;
+    <span style="color:#569CD6;">private</span> <span style="color:#569CD6;">int</span> Rendered = <span style="color:#B5CEA8;">1</span>;
 
-    protected override Task OnParametersSetAsync()
+    <span style="color:#569CD6;">protected</span> <span style="color:#569CD6;">override</span> Task OnParametersSetAsync()
     {
-        this.ParamsSetRun++;
-        return base.OnParametersSetAsync();
+        <span style="color:#569CD6;">this</span>.ParamsSetRun++;
+        <span style="color:#569CD6;">return</span> <span style="color:#569CD6;">base</span>.OnParametersSetAsync();
     }
 
-    // We overide ShouldRender to get it increment the counter
-    // ShouldRender is called as part of the process to queue a render request
-    // we start the counter at 1 as it doesn't get called during the Initialization process
-    protected override bool ShouldRender()
+    <span style="color:#57A64A;">// We overide ShouldRender to get it increment the counter</span>
+    <span style="color:#57A64A;">// ShouldRender is called as part of the process to queue a render request</span>
+    <span style="color:#57A64A;">// we start the counter at 1 as it doesn&#39;t get called during the Initialization process</span>
+    <span style="color:#569CD6;">protected</span> <span style="color:#569CD6;">override</span> <span style="color:#569CD6;">bool</span> ShouldRender()
     {
         Rendered++;
-        return true;
+        <span style="color:#569CD6;">return</span> <span style="color:#569CD6;">true</span>;
     }
 
-    // IDisposable implementation
-    public void Dispose()
+    <span style="color:#57A64A;">// IDisposable implementation</span>
+    <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">void</span> Dispose()
     {
-        if (this.WireEvent)
-            this.RdmService.NumberChanged -= this.OnNumberChange;
+        <span style="color:#569CD6;">if</span> (<span style="color:#569CD6;">this</span>.WireEvent)
+            <span style="color:#569CD6;">this</span>.RdmService.NumberChanged -= <span style="color:#569CD6;">this</span>.OnNumberChange;
     }
 }
-</code></pre>
+</pre></div>
 <p>Finally we have a razor display page</p>
-<pre><code class="language-csharp">@page &quot;/Random&quot;
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+@page <span style="color:#D69D85;">&quot;/Random&quot;</span>
 
-&lt;div class=&quot;container m-2 px-3 p-t bg-primary text-white&quot;&gt;
-    &lt;div class=&quot;row&quot;&gt;
-        &lt;div class=&quot;col-12&quot;&gt;
-            &lt;h3&gt;@this.Title&lt;/h3&gt;
+&lt;div <span style="color:#569CD6;">class</span>=<span style="color:#D69D85;">&quot;container m-2 px-3 p-t bg-primary text-white&quot;</span>&gt;
+    &lt;div <span style="color:#569CD6;">class</span>=<span style="color:#D69D85;">&quot;row&quot;</span>&gt;
+        &lt;div <span style="color:#569CD6;">class</span>=<span style="color:#D69D85;">&quot;col-12&quot;</span>&gt;
+            &lt;h3&gt;@<span style="color:#569CD6;">this</span>.Title&lt;/h3&gt;
         &lt;/div&gt;
     &lt;/div&gt;
-    &lt;div class=&quot;row&quot;&gt;
-        &lt;div class=&quot;col-2&quot;&gt;Number&lt;/div&gt;
-        &lt;div class=&quot;col-2&quot;&gt;@RdmService.Value&lt;/div&gt;
-        &lt;div class=&quot;col-2&quot;&gt;&lt;button class=&quot;btn btn-secondary&quot; @onclick=&quot;(e) =&gt; NewRandomNumber()&quot;&gt;New Number&lt;/button&gt;&lt;/div&gt;
+    &lt;div <span style="color:#569CD6;">class</span>=<span style="color:#D69D85;">&quot;row&quot;</span>&gt;
+        &lt;div <span style="color:#569CD6;">class</span>=<span style="color:#D69D85;">&quot;col-2&quot;</span>&gt;Number&lt;/div&gt;
+        &lt;div <span style="color:#569CD6;">class</span>=<span style="color:#D69D85;">&quot;col-2&quot;</span>&gt;@RdmService.Value&lt;/div&gt;
+        &lt;div <span style="color:#569CD6;">class</span>=<span style="color:#D69D85;">&quot;col-2&quot;</span>&gt;&lt;button <span style="color:#569CD6;">class</span>=<span style="color:#D69D85;">&quot;btn btn-secondary&quot;</span> @onclick=<span style="color:#D69D85;">&quot;(e) =&gt; NewRandomNumber()&quot;</span>&gt;New Number&lt;/button&gt;&lt;/div&gt;
     &lt;/div&gt;
-    &lt;div class=&quot;row bg-dark mt-2&quot;&gt;
-        &lt;div class=&quot;col-3&quot;&gt;
+    &lt;div <span style="color:#569CD6;">class</span>=<span style="color:#D69D85;">&quot;row bg-dark mt-2&quot;</span>&gt;
+        &lt;div <span style="color:#569CD6;">class</span>=<span style="color:#D69D85;">&quot;col-3&quot;</span>&gt;
             Initialized:
         &lt;/div&gt;
-        &lt;div class=&quot;col-1&quot;&gt;
-            @this.InitRun
+        &lt;div <span style="color:#569CD6;">class</span>=<span style="color:#D69D85;">&quot;col-1&quot;</span>&gt;
+            @<span style="color:#569CD6;">this</span>.InitRun
         &lt;/div&gt;
-        &lt;div class=&quot;col-3&quot;&gt;
+        &lt;div <span style="color:#569CD6;">class</span>=<span style="color:#D69D85;">&quot;col-3&quot;</span>&gt;
             Params Set:
         &lt;/div&gt;
-        &lt;div class=&quot;col-1&quot;&gt;
-            @this.ParamsSetRun
+        &lt;div <span style="color:#569CD6;">class</span>=<span style="color:#D69D85;">&quot;col-1&quot;</span>&gt;
+            @<span style="color:#569CD6;">this</span>.ParamsSetRun
         &lt;/div&gt;
-        &lt;div class=&quot;col-3&quot;&gt;
+        &lt;div <span style="color:#569CD6;">class</span>=<span style="color:#D69D85;">&quot;col-3&quot;</span>&gt;
             Rendered:
         &lt;/div&gt;
-        &lt;div class=&quot;col-1&quot;&gt;
-            @this.Rendered
+        &lt;div <span style="color:#569CD6;">class</span>=<span style="color:#D69D85;">&quot;col-1&quot;</span>&gt;
+            @<span style="color:#569CD6;">this</span>.Rendered
         &lt;/div&gt;
     &lt;/div&gt;
 &lt;/div&gt;
 
-&lt;ValueDisplay Title=&quot;Unwired Display&quot;&gt;&lt;/ValueDisplay&gt;
-&lt;ValueDisplay WireEvent=&quot;true&quot; Title=&quot;Wired Display&quot;&gt;&lt;/ValueDisplay&gt;
-&lt;ValueDisplay Value=&quot;RdmService.Value&quot; Title=&quot;Parameter Display&quot;&gt;&lt;/ValueDisplay&gt;
+&lt;ValueDisplay Title=<span style="color:#D69D85;">&quot;Unwired Display&quot;</span>&gt;&lt;/ValueDisplay&gt;
+&lt;ValueDisplay WireEvent=<span style="color:#D69D85;">&quot;true&quot;</span> Title=<span style="color:#D69D85;">&quot;Wired Display&quot;</span>&gt;&lt;/ValueDisplay&gt;
+&lt;ValueDisplay Value=<span style="color:#D69D85;">&quot;RdmService.Value&quot;</span> Title=<span style="color:#D69D85;">&quot;Parameter Display&quot;</span>&gt;&lt;/ValueDisplay&gt;
 
 @code {
-    private string Title = &quot;Root&quot;;
+    <span style="color:#569CD6;">private</span> <span style="color:#569CD6;">string</span> Title = <span style="color:#D69D85;">&quot;Root&quot;</span>;
 
-    [Inject] private RandomNumberService RdmService { get; set; }
+    [Inject] <span style="color:#569CD6;">private</span> RandomNumberService RdmService { <span style="color:#569CD6;">get</span>; <span style="color:#569CD6;">set</span>; }
 
-    private void NewRandomNumber()
+    <span style="color:#569CD6;">private</span> <span style="color:#569CD6;">void</span> NewRandomNumber()
         =&gt; RdmService.NewNumber();
 
-    private int InitRun = 0;    
-    private int ParamsSetRun = 0;
-    private int Rendered = 1;
+    <span style="color:#569CD6;">private</span> <span style="color:#569CD6;">int</span> InitRun = <span style="color:#B5CEA8;">0</span>;    
+    <span style="color:#569CD6;">private</span> <span style="color:#569CD6;">int</span> ParamsSetRun = <span style="color:#B5CEA8;">0</span>;
+    <span style="color:#569CD6;">private</span> <span style="color:#569CD6;">int</span> Rendered = <span style="color:#B5CEA8;">1</span>;
 
-    protected override Task OnInitializedAsync()
+    <span style="color:#569CD6;">protected</span> <span style="color:#569CD6;">override</span> Task OnInitializedAsync()
     {
         InitRun++;
-        return base.OnInitializedAsync();
+        <span style="color:#569CD6;">return</span> <span style="color:#569CD6;">base</span>.OnInitializedAsync();
     }
 
-    protected override Task OnParametersSetAsync()
+    <span style="color:#569CD6;">protected</span> <span style="color:#569CD6;">override</span> Task OnParametersSetAsync()
     {
-        this.ParamsSetRun++;
-        return base.OnParametersSetAsync();
+        <span style="color:#569CD6;">this</span>.ParamsSetRun++;
+        <span style="color:#569CD6;">return</span> <span style="color:#569CD6;">base</span>.OnParametersSetAsync();
     }
 
-    protected override bool ShouldRender()
+    <span style="color:#569CD6;">protected</span> <span style="color:#569CD6;">override</span> <span style="color:#569CD6;">bool</span> ShouldRender()
     {
         Rendered++;
-        return true;
+        <span style="color:#569CD6;">return</span> <span style="color:#569CD6;">true</span>;
     }
 }
-</code></pre>
+</pre></div>
 <p>Once you have this running you can see what happens when you update the number in various controls within the page.  The sure-fire method is the event driven update.</p>
 </div></div></div></body></html>
 

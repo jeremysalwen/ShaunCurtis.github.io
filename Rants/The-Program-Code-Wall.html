@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<base href="/">
+
+	
+
+	
+
+	
+	<link href="/resources/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+	<link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+
+	
+	<link href="/resources/css/sb-admin-2.css" rel="stylesheet" type="text/css">
+	<link href="/resources/css/site.css" rel="stylesheet" type="text/css">
+
+	
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/highlight.css">
+	<link rel="stylesheet" href="/resources/css/article.css" type="text/css">
+
+	
+	<link rel="icon" href="/images/favicon.png">
+
+	<title>The Program Code Wall</title>
+        <meta property="author" content="Shaun Curtis" />
+        <meta property="description" content="How many times have you looked at Program.cs and been totally confused.  The detail initially overwhelms you." />
+    <meta property="og:site_name" content="Cold Elm Coders" />
+        <meta property="og:site" content="https://shauncurtis.github.io/" />
+        <meta property="og:title" content="The Program Code Wall" />
+        <meta property="og:description" content="How many times have you looked at Program.cs and been totally confused.  The detail initially overwhelms you." /></head>
+<body><header class="navbar bg-dark p-2 text-large text-light"><section class="navbar-section  text-light"><a href="/" class="navbar-brand mr-2 text-large text-light p-2">Cold Elm Coders</a>
+			<a href="/Posts" class="btn btn-link text-light">Posts</a>
+			<a href="/Rants" class="btn btn-link text-light">Rants</a>
+			<a href="/Articles" class="btn btn-link text-light">Articles</a>
+			<a href="/Stories" class="btn btn-link text-light">Stories</a>
+			<a href="/about.html" class="btn btn-link text-light">About</a></section></header>
+
+	<div class="container-fluid"><div class="row"><div class="col-12 col-sm-3 col-lg-2 bg-light pt-2"><div class="article-info p-2"><div class="mb-2">Published: 21-Oct-2023</div>
+                <div class="mb-2">Updated: 21-Oct-2023</div>
+                <div class="mb-2">Author: Shaun Curtis</div></div>
+    <h4 class="p-2">Table of Contents</h4>
+<ul class="TOC" >
+<li class="TOC-item TOC-item-0" >
+<a class="TOC-link" href="#">Top</a>
+</li>
+</ul>
+</div>
+			
+			<div class="col-12 col-sm-9 col-lg-10 p-2"><div class="pt-2 pb-2 border-bottom mb-4 text-primary"><h1>The Program Code Wall</h1>
+            <div><small>How many times have you looked at Program.cs and been totally confused.  The detail initially overwhelms you.</small></div></div>
+    <p>We've all stared at a wall of code and thought &quot;Blimey what does this do, where do I start?&quot;</p>
+<p>How many times have you repeated the same DI setup code in different places?</p>
+<p>The solution is to use <code>IServiceCollection</code> and <code>WebApplicationBuilder</code> extension methods.</p>
+<p>Here's an example where I declare <code>AddAppServerInfrastructureServices</code> as an extension method on <code>IServiceCollection</code>.</p>
+<p>It adds all the infrastructure project services and calls individual entity/feature extension methods to add any specific services.  Note I can define different methods to add services for different application deployments: in this case Server and WASM.</p>
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+<span style="color:#569CD6;">public</span> <span style="color:#569CD6;">static</span> <span style="color:#569CD6;">class</span> ApplicationInfrastructureServices
+{
+    <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">static</span> <span style="color:#569CD6;">void</span> AddAppServerInfrastructureServices(<span style="color:#569CD6;">this</span> IServiceCollection services)
+    {
+        services.AddScoped&lt;IDataBroker, ServerDataBroker&gt;();
+
+        <span style="color:#57A64A;">// Add the standard handlers</span>
+        services.AddScoped&lt;IListRequestHandler, ListRequestServerHandler&lt;InMemoryTestDbContext&gt;&gt;();
+        services.AddScoped&lt;IItemRequestHandler, ItemRequestServerHandler&lt;InMemoryTestDbContext&gt;&gt;();
+        services.AddScoped&lt;ICommandHandler, CommandServerHandler&lt;InMemoryTestDbContext&gt;&gt;();
+
+        <span style="color:#57A64A;">// Add any individual entity services</span>
+        services.AddWeatherForecastServerInfrastructureServices();
+    }
+
+    <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">static</span> <span style="color:#569CD6;">void</span> AddAppWASMInfrastructureServices(<span style="color:#569CD6;">this</span> IServiceCollection services)
+    {
+        services.AddScoped&lt;IDataBroker, APIDataBroker&gt;();
+
+        <span style="color:#57A64A;">//...</span>
+    }
+}
+</pre></div>
+<p>I then just call the extension method in <code>Program</code>.</p>
+<p>A overview of what's configured, not the mind boggling chaining detail.  I can drill down into the detail, but it's not in our face every time I look at <code>Program</code>.</p>
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+<span style="color:#569CD6;">var</span> builder = WebApplication.CreateBuilder(args);
+
+<span style="color:#57A64A;">//...</span>
+
+builder.Services.AddAppServerInfrastructureServices();
+builder.Services.AddAppServerPresentationServices();
+builder.Services.AddAppServerUIServices();
+
+<span style="color:#569CD6;">var</span> app = builder.Build();
+
+<span style="color:#57A64A;">//...</span>
+
+app.Run();
+
+</pre></div>
+<p>I access the configuration information I create an extension method for the <code>WebApplicationBuilder</code> like this:</p>
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+<span style="color:#569CD6;">public</span> <span style="color:#569CD6;">static</span> <span style="color:#569CD6;">class</span> ApplicationInfrastructureServices
+{
+    <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">static</span> <span style="color:#569CD6;">void</span> AddAppServerInfrastructureServices(<span style="color:#569CD6;">this</span> WebApplicationBuilder builder)
+    {
+        <span style="color:#569CD6;">var</span> services = builder.Services;
+        <span style="color:#569CD6;">var</span> configuration = builder.Configuration;
+
+        <span style="color:#569CD6;">var</span> dbConnectionString = configuration.GetValue&lt;<span style="color:#569CD6;">string</span>&gt;(<span style="color:#D69D85;">&quot;DevelopmentConfiguration:DBContext&quot;</span>);
+
+        services.AddDbContextFactory&lt;XXXDbContext&gt;(options =&gt; options.UseSqlServer(dbConnectionString));
+
+        services.AddScoped&lt;IDataBroker, ServerDataBroker&gt;();
+
+        <span style="color:#57A64A;">//...</span>
+
+    }
+}
+</pre></div></div></div></div></body></html>
+
+
+
+
+

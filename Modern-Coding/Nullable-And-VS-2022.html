@@ -86,127 +86,136 @@
 <p>The null keyword is a literal that represents a null reference, one that does not refer to any object. null is the default value of reference-type variables. Ordinary value types cannot be null, except for nullable value types.</p>
 </blockquote>
 <p>C# 8 introduced nullable reference types.  A system where reference types could no longer be null unless explicitly declared with the <code>?</code> operator.</p>
-<pre><code class="language-csharp">// not nullable fields/properties must be assigned a value
-string notNullableValue = string.Empty;
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+<span style="color:#57A64A;">// not nullable fields/properties must be assigned a value</span>
+<span style="color:#569CD6;">string</span> notNullableValue = <span style="color:#569CD6;">string</span>.Empty;
 
-string? NullableValue; 
+<span style="color:#569CD6;">string</span>? NullableValue; 
 
-// nullable is controlled by the return value from the method 
-var value = SomeMethod();
-</code></pre>
+<span style="color:#57A64A;">// nullable is controlled by the return value from the method </span>
+<span style="color:#569CD6;">var</span> value = SomeMethod();
+</pre></div>
 <p>For many programmers this had no consequences because the project templates by default did not enable <em>Nullable</em>.  We sailed on serenely in ignorance.</p>
 <p>With <em>Nullable</em> enabled the compiler throws warnings whenever it considers you've broken the rules.  It's pretty good, but there are certain circumstances where you want to break the rules, and edge cases where it gets things wrong.  We'll look at both of those later.</p>
 <h2 id="visual-studio-2022">Visual Studio 2022</h2>
 <p>Visual Studio 2022 moved the goalposts: <code>Nullable</code> is now enabled by default.  Here's the project file for a console app:</p>
-<pre><code class="language-xml">  &lt;PropertyGroup&gt;
-    &lt;OutputType&gt;Exe&lt;/OutputType&gt;
-    &lt;TargetFramework&gt;net6.0&lt;/TargetFramework&gt;
-    &lt;ImplicitUsings&gt;enable&lt;/ImplicitUsings&gt;
-    &lt;Nullable&gt;enable&lt;/Nullable&gt;
-  &lt;/PropertyGroup&gt;
-</code></pre>
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+  <span style="color:#808080;">&lt;</span><span style="color:#E6E6E6;">PropertyGroup</span><span style="color:#808080;">&gt;</span>
+    <span style="color:#808080;">&lt;</span><span style="color:#E6E6E6;">OutputType</span><span style="color:#808080;">&gt;</span>Exe<span style="color:#808080;">&lt;/</span><span style="color:#E6E6E6;">OutputType</span><span style="color:#808080;">&gt;</span>
+    <span style="color:#808080;">&lt;</span><span style="color:#E6E6E6;">TargetFramework</span><span style="color:#808080;">&gt;</span>net6.0<span style="color:#808080;">&lt;/</span><span style="color:#E6E6E6;">TargetFramework</span><span style="color:#808080;">&gt;</span>
+    <span style="color:#808080;">&lt;</span><span style="color:#E6E6E6;">ImplicitUsings</span><span style="color:#808080;">&gt;</span>enable<span style="color:#808080;">&lt;/</span><span style="color:#E6E6E6;">ImplicitUsings</span><span style="color:#808080;">&gt;</span>
+    <span style="color:#808080;">&lt;</span><span style="color:#E6E6E6;">Nullable</span><span style="color:#808080;">&gt;</span>enable<span style="color:#808080;">&lt;/</span><span style="color:#E6E6E6;">Nullable</span><span style="color:#808080;">&gt;</span>
+  <span style="color:#808080;">&lt;/</span><span style="color:#E6E6E6;">PropertyGroup</span><span style="color:#808080;">&gt;</span>
+</pre></div>
 <p>You now have to explicitly disable it.  Write code the old way, or import existing code and unless you were a miracle coder,  you will see a lot of null code warnings and errors.  It has certainly impacted my coding style and practices.</p>
 <p>Let's look at some code to see what I mean.</p>
 <h2 id="simple-nullable">Simple Nullable</h2>
 <p>Here's some simple old style code.</p>
-<pre><code class="language-csharp">string value;
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+<span style="color:#569CD6;">string</span> value;
 
-value = getHello(0);
+value = getHello(<span style="color:#B5CEA8;">0</span>);
 
 Console.WriteLine(value);
 
-string getHello(int test)
-    =&gt;  test == 1
-        ? &quot;Hello World&quot;
-        : null;
-</code></pre>
+<span style="color:#569CD6;">string</span> getHello(<span style="color:#569CD6;">int</span> test)
+    =&gt;  test == <span style="color:#B5CEA8;">1</span>
+        ? <span style="color:#D69D85;">&quot;Hello World&quot;</span>
+        : <span style="color:#569CD6;">null</span>;
+</pre></div>
 <p>Disable Nullable and this code flies: no exceptions or warnings.  So what's the problem?</p>
 <p>String can be a null, so we can pass null strings around.  Unless we explicitly check, we don't know if <code>Console.WriteLine</code> handles nulls correctly.  If it doesn't we will get an exception when we pass it a null.  Everything flies because <code>Console.WriteLine</code> knows how to handle nulls.  It's definition looks like this:</p>
-<pre><code class="language-csharp">Console.WriteLine(string? value) 
-</code></pre>
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+Console.WriteLine(<span style="color:#569CD6;">string</span>? value) 
+</pre></div>
 <p>Enable Nullable and we see a warning - <em>Possible Null Reference Return</em> on <code>getHello</code>.  Why?</p>
 <ol>
 <li><code>getHello</code> declares it's return value as <code>string</code>.  No <code>?</code> and therefore not nullable, yet in the body we can return <code>null</code>.</li>
 <li><code>string value</code> also declares <code>value</code> as not nullable.</li>
 </ol>
 <p>To fix this:</p>
-<pre><code class="language-csharp">string? value;
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+<span style="color:#569CD6;">string</span>? value;
 
-value = getHello(0);
+value = getHello(<span style="color:#B5CEA8;">0</span>);
 
 Console.WriteLine(value);
 
-string? getHello(int test)
-    =&gt;  test == 1
-        ? &quot;Hello World&quot;
-        : null;
-</code></pre>
+<span style="color:#569CD6;">string</span>? getHello(<span style="color:#569CD6;">int</span> test)
+    =&gt;  test == <span style="color:#B5CEA8;">1</span>
+        ? <span style="color:#D69D85;">&quot;Hello World&quot;</span>
+        : <span style="color:#569CD6;">null</span>;
+</pre></div>
 <p>We've added the nullable <code>?</code> operator to <code>value</code> and the return declaration of <code>getHello</code>.</p>
 <p>We're now declaring and handling nullables correctly and the compiler is happy,</p>
 <h2 id="nullable-detection">Nullable Detection</h2>
 <p>Our new block of code</p>
-<pre><code class="language-csharp">string? value;
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+<span style="color:#569CD6;">string</span>? value;
 
-var sometest = true;
+<span style="color:#569CD6;">var</span> sometest = <span style="color:#569CD6;">true</span>;
 
 value = sometest
-        ? &quot;Hello World&quot;
-        : &quot;Bye World&quot;;
+        ? <span style="color:#D69D85;">&quot;Hello World&quot;</span>
+        : <span style="color:#D69D85;">&quot;Bye World&quot;</span>;
 
 WriteLine(value);
 
 value = sometest
-        ? &quot;Hello World&quot;
-        : null;
+        ? <span style="color:#D69D85;">&quot;Hello World&quot;</span>
+        : <span style="color:#569CD6;">null</span>;
 
-// Get a possible null warning
+<span style="color:#57A64A;">// Get a possible null warning</span>
 WriteLine(value);
 
-void WriteLine(string value)
+<span style="color:#569CD6;">void</span> WriteLine(<span style="color:#569CD6;">string</span> value)
     =&gt; Console.WriteLine(value);
-</code></pre>
+</pre></div>
 <p>We have our own <code>WriteLine</code> method with a <em>not nullable</em> string argument.  note that we only get a compiler warning after yhe second assignment to value where we try and assign a <code>null</code>.  The compiler is analysing the code, seeing a possble null and throwing a warning.</p>
 <p>We fix this by changing <code>WriteLne</code> to accept a nullable string.  The compiler knows <code>Console.WriteLine</code> accepts nullable strings so everything is good.</p>
-<pre><code class="language-csharp">void WriteLine(string? value)
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+<span style="color:#569CD6;">void</span> WriteLine(<span style="color:#569CD6;">string</span>? value)
     =&gt; Console.WriteLine(value);
-</code></pre>
-<h2 id="edge-case">Edge Case</h2>
+</pre></div><h2 id="edge-case">Edge Case</h2>
 <p>The contrived code below illustrates one common problem.  We know once we've called <code>GetAsync</code> and assigned <code>value</code> it can't be null because we throw an error if it is.  However, the analyser isn't that clever so still throws the warning.</p>
-<pre><code class="language-csharp">string? value = null;
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+<span style="color:#569CD6;">string</span>? value = <span style="color:#569CD6;">null</span>;
 
-var myClass = new MyClass();
+<span style="color:#569CD6;">var</span> myClass = <span style="color:#569CD6;">new</span> MyClass();
 
-await myClass.GetAsync();
+<span style="color:#569CD6;">await</span> myClass.GetAsync();
 
 value = myClass.Value;
 
-// We know it's safe to pass Value because it can't be null
-// but the code doesn't so still throws a warning
+<span style="color:#57A64A;">// We know it&#39;s safe to pass Value because it can&#39;t be null</span>
+<span style="color:#57A64A;">// but the code doesn&#39;t so still throws a warning</span>
 WriteLine(value);
 
-void WriteLine(string value)
+<span style="color:#569CD6;">void</span> WriteLine(<span style="color:#569CD6;">string</span> value)
     =&gt; Console.WriteLine(value);
 
-class MyClass
+<span style="color:#569CD6;">class</span> MyClass
 {
-    public string? Value { get; set; }
+    <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">string</span>? Value { <span style="color:#569CD6;">get</span>; <span style="color:#569CD6;">set</span>; }
 
-    public async Task GetAsync()
+    <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">async</span> Task GetAsync()
     {
-        await Task.Yield();
-        // Get the value from a service
-        this.Value = &quot;Hello World&quot;;
-        if (this.Value is null)
-            throw new ArgumentNullException(&quot;Value is null and shouldn't be!&quot;);
+        <span style="color:#569CD6;">await</span> Task.Yield();
+        <span style="color:#57A64A;">// Get the value from a service</span>
+        <span style="color:#569CD6;">this</span>.Value = <span style="color:#D69D85;">&quot;Hello World&quot;</span>;
+        <span style="color:#569CD6;">if</span> (<span style="color:#569CD6;">this</span>.Value <span style="color:#569CD6;">is</span> <span style="color:#569CD6;">null</span>)
+            <span style="color:#569CD6;">throw</span> <span style="color:#569CD6;">new</span> ArgumentNullException(<span style="color:#D69D85;">&quot;Value is null and shouldn&#39;t be!&quot;</span>);
     }
 }
-</code></pre>
+</pre></div>
 <p>We can suppress these messages using the ! null forgiving operator.  In the code above, the correct place to apply it is where the assignment takes place.</p>
-<pre><code class="language-csharp">value = myClass.Value!;
-</code></pre>
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+value = myClass.Value!;
+</pre></div>
 <p>Don't apply it to where it's being used.</p>
-<pre><code class="language-csharp">WriteLine(value!);
-</code></pre>
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+WriteLine(value!);
+</pre></div>
 <p>Two notes:</p>
 <blockquote>
 <p>Don't use it unless you have to.  Use null coalesing - covered below - wherever you can.</p>
@@ -216,45 +225,49 @@ class MyClass
 </blockquote>
 <h2 id="real-world-edge-case">Real World Edge Case</h2>
 <p>The example above may be contrived, but consider the following code from a Blazor page.</p>
-<pre><code class="language-csharp">[Inject] MyService? myService { get; set; }
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+[Inject] MyService? myService { <span style="color:#569CD6;">get</span>; <span style="color:#569CD6;">set</span>; }
 
-void DoSomething()
+<span style="color:#569CD6;">void</span> DoSomething()
 {
-    // nullable warning on myService
-    var value = myService.Value;
+    <span style="color:#57A64A;">// nullable warning on myService</span>
+    <span style="color:#569CD6;">var</span> value = myService.Value;
 }
-</code></pre>
+</pre></div>
 <p>Blazor ensures <code>MyService</code> is registered: it throws an exception if it isn't.  We could code:</p>
-<pre><code class="language-csharp">[Inject] MyService myService { get; set; } = new MyService();
-</code></pre>
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+[Inject] MyService myService { <span style="color:#569CD6;">get</span>; <span style="color:#569CD6;">set</span>; } = <span style="color:#569CD6;">new</span> MyService();
+</pre></div>
 <p>Which works, but is just <em>wrong</em>.  We're creating an object for a contrived reason, and it's absolutely useless created outside the DI container context.</p>
 <p>We could use null forgiving when we use the object, which is ok when you use ut once, but say you use the service ten times in you code block, it doesn't seem right.</p>
 <p>My current best solution is to use a local variable in a code block like this:</p>
-<pre><code class="language-csharp">    void DoSomething()
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+    <span style="color:#569CD6;">void</span> DoSomething()
     {
         MyService service = myService!;
-        var value = service.Value;
+        <span style="color:#569CD6;">var</span> value = service.Value;
         ....
     }
-</code></pre>
-<h2 id="breaking-the-rules">Breaking The Rules</h2>
+</pre></div><h2 id="breaking-the-rules">Breaking The Rules</h2>
 <p>Not often, but testing is one area where you may break the rules to test null handling and boundary conditions.</p>
 <h2 id="null-coalescing">Null Coalescing</h2>
 <p>The normal approach to the &quot;boxing&quot; problem of switching from nullable to non nullable is to use null coalescing <code>??</code>.</p>
 <p>We can use it on  <code>Writeline</code> like this.  <code>Writeline</code> now receives <code>value</code> if it isn't <code>null</code>, or <code>string,Empty</code> if it is.</p>
-<pre><code class="language-csharp">WriteLine(value ?? string.Empty);
-</code></pre>
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+WriteLine(value ?? <span style="color:#569CD6;">string</span>.Empty);
+</pre></div>
 <p>We can also use the very useful null coalescing assignment operator <code>??=</code> like this whenever we need to make sure a value isn't null:</p>
-<pre><code class="language-csharp">value ??= string.Empty;
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+value ??= <span style="color:#569CD6;">string</span>.Empty;
 WriteLine(value);
-</code></pre>
+</pre></div>
 <p>More succinct than:</p>
-<pre><code class="language-csharp">if (value is null)
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+<span style="color:#569CD6;">if</span> (value <span style="color:#569CD6;">is</span> <span style="color:#569CD6;">null</span>)
 {
-    value = string.Empty;
+    value = <span style="color:#569CD6;">string</span>.Empty;
 }
-</code></pre>
-<h2 id="some-observations-and-suggestions">Some Observations and Suggestions</h2>
+</pre></div><h2 id="some-observations-and-suggestions">Some Observations and Suggestions</h2>
 <ol>
 <li>Don't chicken out, leave <strong>Nullable</strong> enabled.</li>
 <li>A lot of null checking code becomes obselete by ensuring you pass not nullable objects into methods.</li>

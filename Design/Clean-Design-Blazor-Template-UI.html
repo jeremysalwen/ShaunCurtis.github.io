@@ -78,13 +78,13 @@
 <h2 id="namespacing">Namespacing</h2>
 <p>All code files, including the razor files, are explicitly namespaced to <code>Blazr.Template.UI</code>.</p>
 <p><code>Counter.razor</code>:</p>
-<pre><code class="language-csharp">@page &quot;/counter&quot;
-@namespace Blazr.Template.UI
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+@page <span style="color:#D69D85;">&quot;/counter&quot;</span>
+@<span style="color:#569CD6;">namespace</span> Blazr.Template.UI
 &lt;h1&gt;Counter&lt;/h1&gt;
 
 &lt;p&gt;Current count: @currentCount&lt;/p&gt;
-</code></pre>
-<h2 id="components">Components</h2>
+</pre></div><h2 id="components">Components</h2>
 <p>Components are the heart of the Blazor UI.  Three terms are used for different component types:</p>
 <ol>
 <li><em>Routes</em> - are components with router attributes - mistakenly (in my view) called &quot;Pages&quot;. They aren't classic web pages, so I don't refer to them as such.  <code>Index</code>, <code>Counter</code> and <code>FetchData</code> are all Routes.</li>
@@ -100,45 +100,48 @@
 <ol>
 <li>Setting a local loop variable.  The code snippet shows setting <code>pageno</code> to the page loop variable, and then using the local variable in any loop code.  If you use <code>page</code> in <code>onclick</code>, when the click event occurs the looping has completed and <code>page</code> is set at <code>_pagingData.LastPage</code> plus one.</li>
 </ol>
-<pre><code class="language-csharp">@for (int page = 0; page &lt;= _pagingData.LastPage; page++)
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+@<span style="color:#569CD6;">for</span> (<span style="color:#569CD6;">int</span> page = <span style="color:#B5CEA8;">0</span>; page &lt;= _pagingData.LastPage; page++)
 {
-    var pageno = page;
-    var viewpageno = page + 1;
-    &lt;button type=&quot;button&quot; class=&quot;btn @GetCss(pageno)&quot; @onclick=&quot;() =&gt; this.GotToPage(pageno)&quot;&gt;@viewpageno&lt;/button&gt;
+    <span style="color:#569CD6;">var</span> pageno = page;
+    <span style="color:#569CD6;">var</span> viewpageno = page + <span style="color:#B5CEA8;">1</span>;
+    &lt;button type=<span style="color:#D69D85;">&quot;button&quot;</span> <span style="color:#569CD6;">class</span>=<span style="color:#D69D85;">&quot;btn @GetCss(pageno)&quot;</span> @onclick=<span style="color:#D69D85;">&quot;() =&gt; this.GotToPage(pageno)&quot;</span>&gt;@viewpageno&lt;/button&gt;
 }
-</code></pre>
+</pre></div>
 <ol start="2">
 <li><p>Implementing <code>IDisposable</code> in a component, and handling events.</p>
 </li>
 <li><p>Re-rendering on an event.  This one is conditional.  If the control triggered the page change event then <code>_currentpage == _pagingData.Page</code> and nothing happens.  <code>this.InvokeAsync(this.StateHasChanged);</code> isn't strictly needed in this instance, but if the event is triggered outside UI thread, this ensures thread safety - <code>InvokeAsync</code> is a <code>ComponentBase</code> method that invokes the action on the UI Thread.</p>
 </li>
 </ol>
-<pre><code class="language-csharp">private void OnPageChanged(object? sender, EventArgs e)
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+<span style="color:#569CD6;">private</span> <span style="color:#569CD6;">void</span> OnPageChanged(<span style="color:#569CD6;">object</span>? sender, EventArgs e)
 {
-    if (_currentpage != _pagingData.Page)
+    <span style="color:#569CD6;">if</span> (_currentpage != _pagingData.Page)
     {
         _currentpage = _pagingData.Page;
-        this.InvokeAsync(this.StateHasChanged);
+        <span style="color:#569CD6;">this</span>.InvokeAsync(<span style="color:#569CD6;">this</span>.StateHasChanged);
     }
 }
-</code></pre>
+</pre></div>
 <ol start="4">
 <li>If a Parameter is required.  Throw an error if it's not set in <code>SetParametersAsync</code>. if you implement <code>SetParametersAsync</code> you must set the component parameters immediately as shown, and then call the base <code>SetParametersAsync</code> with an empty <code>ParameterView</code>.</li>
 </ol>
-<pre><code class="language-csharp">public override Task SetParametersAsync(ParameterView parameters)
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+<span style="color:#569CD6;">public</span> <span style="color:#569CD6;">override</span> Task SetParametersAsync(ParameterView parameters)
 {
-    parameters.SetParameterProperties(this);
-    if (PagingData is null)
-        throw new ApplicationException(&quot;Paging Control must have a PagingData object assigned&quot;);
-    return base.SetParametersAsync(ParameterView.Empty);
+    parameters.SetParameterProperties(<span style="color:#569CD6;">this</span>);
+    <span style="color:#569CD6;">if</span> (PagingData <span style="color:#569CD6;">is</span> <span style="color:#569CD6;">null</span>)
+        <span style="color:#569CD6;">throw</span> <span style="color:#569CD6;">new</span> ApplicationException(<span style="color:#D69D85;">&quot;Paging Control must have a PagingData object assigned&quot;</span>);
+    <span style="color:#569CD6;">return</span> <span style="color:#569CD6;">base</span>.SetParametersAsync(ParameterView.Empty);
 }
-</code></pre>
+</pre></div>
 <ol start="5">
 <li>With <em>Nullable</em>* enabled, references to <code>PagingData</code> will throw warnings.  To prevent this a local global variable <code>_pagingData</code> is used throughout the component.  It's mapped to <code>PagingData</code> using a <em>null forgiving</em> assignment.</li>
 </ol>
-<pre><code class="language-csharp">private PagingData _pagingData =&gt; PagingData!;
-</code></pre>
-<h3 id="weatherforecastlist">WeatherForecastList</h3>
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+<span style="color:#569CD6;">private</span> PagingData _pagingData =&gt; PagingData!;
+</pre></div><h3 id="weatherforecastlist">WeatherForecastList</h3>
 <p><code>WeatherForecastList.razor</code> is a re-usable component containing all the code from <code>FetchData</code>.  The component:</p>
 <ol>
 <li>Injects the View Service.</li>
@@ -156,20 +159,20 @@
 <p>Note the page number is maintained across page navigations.  You can go to <code>Counter</code> and back to <code>FetchData</code>.  However, if you refresh the SPA then the state is lost.</p>
 <h2 id="apps">Apps</h2>
 <p>Apps contains the root application component <code>App</code>.  It's vanilla and namespaced.</p>
-<pre><code class="language-csharp">@namespace Blazr.Template.UI
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+@<span style="color:#569CD6;">namespace</span> Blazr.Template.UI
 
-&lt;Router AppAssembly=&quot;@typeof(App).Assembly&quot; PreferExactMatches=&quot;@true&quot;&gt;
-    &lt;Found Context=&quot;routeData&quot;&gt;
-        &lt;RouteView RouteData=&quot;@routeData&quot; DefaultLayout=&quot;@typeof(MainLayout)&quot; /&gt;
+&lt;Router AppAssembly=<span style="color:#D69D85;">&quot;@typeof(App).Assembly&quot;</span> PreferExactMatches=<span style="color:#D69D85;">&quot;@true&quot;</span>&gt;
+    &lt;Found Context=<span style="color:#D69D85;">&quot;routeData&quot;</span>&gt;
+        &lt;RouteView RouteData=<span style="color:#D69D85;">&quot;@routeData&quot;</span> DefaultLayout=<span style="color:#D69D85;">&quot;@typeof(MainLayout)&quot;</span> /&gt;
     &lt;/Found&gt;
     &lt;NotFound&gt;
-        &lt;LayoutView Layout=&quot;@typeof(MainLayout)&quot;&gt;
-            &lt;p&gt;Sorry, there's nothing at this address.&lt;/p&gt;
+        &lt;LayoutView Layout=<span style="color:#D69D85;">&quot;@typeof(MainLayout)&quot;</span>&gt;
+            &lt;p&gt;Sorry, there&#39;s nothing at <span style="color:#569CD6;">this</span> address.&lt;/p&gt;
         &lt;/LayoutView&gt;
     &lt;/NotFound&gt;
 &lt;/Router&gt;
-</code></pre>
-</div></div></div></body></html>
+</pre></div></div></div></div></body></html>
 
 
 

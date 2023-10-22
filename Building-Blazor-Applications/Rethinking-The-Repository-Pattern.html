@@ -90,13 +90,14 @@
 <ol>
 <li>There's no implementation per entity class.  You won't see this:</li>
 </ol>
-<pre><code class="language-csharp">    public class WeatherForecastRepository : GenericRepository&lt;WeatherForecast&gt;, IWeatherForcastRepository
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+    <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">class</span> WeatherForecastRepository : GenericRepository&lt;WeatherForecast&gt;, IWeatherForcastRepository
     {
-        public WeatherForecastRepository(DbContextClass dbContext) : base(dbContext) {}
+        <span style="color:#569CD6;">public</span> WeatherForecastRepository(DbContextClass dbContext) : <span style="color:#569CD6;">base</span>(dbContext) {}
     }
 
-    public interface IProductRepository : IGenericRepository&lt;WeatherForecast&gt; { }
-</code></pre>
+    <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">interface</span> IProductRepository : IGenericRepository&lt;WeatherForecast&gt; { }
+</pre></div>
 <ol start="2">
 <li><p>There's no separate <code>UnitOfWork</code> classes: it's built in.</p>
 </li>
@@ -122,16 +123,16 @@
 <p>The solution needs a real data store for testing: it implements an Entity Framework In-Memory database.</p>
 <p>I'm a Blazor developer so my test data class is <code>WeatherForecast</code>. The code for the data provider is in the Appendix.</p>
 <p>This is the <code>DbContext</code> used by the DBContext factory.</p>
-<pre><code class="language-csharp">public sealed class InMemoryWeatherDbContext : DbContext
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+<span style="color:#569CD6;">public</span> <span style="color:#569CD6;">sealed</span> <span style="color:#569CD6;">class</span> InMemoryWeatherDbContext : DbContext
 {
-    public DbSet&lt;WeatherForecast&gt; WeatherForecast { get; set; } = default!;
-    public InMemoryWeatherDbContext(DbContextOptions&lt;InMemoryWeatherDbContext&gt; options) : base(options) { }
+    <span style="color:#569CD6;">public</span> DbSet&lt;WeatherForecast&gt; WeatherForecast { <span style="color:#569CD6;">get</span>; <span style="color:#569CD6;">set</span>; } = <span style="color:#569CD6;">default</span>!;
+    <span style="color:#569CD6;">public</span> InMemoryWeatherDbContext(DbContextOptions&lt;InMemoryWeatherDbContext&gt; options) : <span style="color:#569CD6;">base</span>(options) { }
 
-    protected override void OnModelCreating(ModelBuilder modelBuilder)
-        =&gt; modelBuilder.Entity&lt;WeatherForecast&gt;().ToTable(&quot;WeatherForecast&quot;);
+    <span style="color:#569CD6;">protected</span> <span style="color:#569CD6;">override</span> <span style="color:#569CD6;">void</span> OnModelCreating(ModelBuilder modelBuilder)
+        =&gt; modelBuilder.Entity&lt;WeatherForecast&gt;().ToTable(<span style="color:#D69D85;">&quot;WeatherForecast&quot;</span>);
 }
-</code></pre>
-<h3 id="testing-the-factory-and-context">Testing the Factory and Context</h3>
+</pre></div><h3 id="testing-the-factory-and-context">Testing the Factory and Context</h3>
 <p>The following XUnit test demonstrates the basic datastore setup in DI. It:</p>
 <ol>
 <li>Sets up a DI container</li>
@@ -139,73 +140,74 @@
 <li>Tests the record count is correct</li>
 <li>Tests one arbitary record is correct.</li>
 </ol>
-<pre><code class="language-csharp">[Fact]
-public async Task DBContextTest()
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+[Fact]
+<span style="color:#569CD6;">public</span> <span style="color:#569CD6;">async</span> Task DBContextTest()
 {
-    // Gets the control test data
-    var testProvider = WeatherTestDataProvider.Instance();
+    <span style="color:#57A64A;">// Gets the control test data</span>
+    <span style="color:#569CD6;">var</span> testProvider = WeatherTestDataProvider.Instance();
 
-    // Build our services container
-    var services = new ServiceCollection();
+    <span style="color:#57A64A;">// Build our services container</span>
+    <span style="color:#569CD6;">var</span> services = <span style="color:#569CD6;">new</span> ServiceCollection();
 
-    // Define the DbSet and Server Type for the DbContext Factory
+    <span style="color:#57A64A;">// Define the DbSet and Server Type for the DbContext Factory</span>
     services.AddDbContextFactory&lt;InMemoryWeatherDbContext&gt;(options
-        =&gt; options.UseInMemoryDatabase($&quot;WeatherDatabase-{Guid.NewGuid().ToString()}&quot;));
+        =&gt; options.UseInMemoryDatabase($<span style="color:#D69D85;">&quot;WeatherDatabase-{Guid.NewGuid().ToString()}&quot;</span>));
 
-    var rootProvider = services.BuildServiceProvider();
+    <span style="color:#569CD6;">var</span> rootProvider = services.BuildServiceProvider();
 
-    //define a scoped container
-    var providerScope = rootProvider.CreateScope();
-    var provider = providerScope.ServiceProvider;
+    <span style="color:#57A64A;">//define a scoped container</span>
+    <span style="color:#569CD6;">var</span> providerScope = rootProvider.CreateScope();
+    <span style="color:#569CD6;">var</span> provider = providerScope.ServiceProvider;
 
-    // get the DbContext factory and add the test data
-    var factory = provider.GetService&lt;IDbContextFactory&lt;InMemoryWeatherDbContext&gt;&gt;();
-    if (factory is not null)
+    <span style="color:#57A64A;">// get the DbContext factory and add the test data</span>
+    <span style="color:#569CD6;">var</span> factory = provider.GetService&lt;IDbContextFactory&lt;InMemoryWeatherDbContext&gt;&gt;();
+    <span style="color:#569CD6;">if</span> (factory <span style="color:#569CD6;">is</span> not <span style="color:#569CD6;">null</span>)
         WeatherTestDataProvider.Instance().LoadDbContext&lt;InMemoryWeatherDbContext&gt;(factory);
 
-    // Check the data has been loaded
-    var dbContext = factory!.CreateDbContext();
+    <span style="color:#57A64A;">// Check the data has been loaded</span>
+    <span style="color:#569CD6;">var</span> dbContext = factory!.CreateDbContext();
     Assert.NotNull(dbContext);
 
-    var count = dbContext.Set&lt;WeatherForecast&gt;().Count();
+    <span style="color:#569CD6;">var</span> count = dbContext.Set&lt;WeatherForecast&gt;().Count();
     Assert.Equal(testProvider.WeatherForecasts.Count(), count);
 
-    // Test an arbitary record
-    var testRecord = testProvider.GetRandomRecord()!;
-    var record = await dbContext.Set&lt;WeatherForecast&gt;().SingleOrDefaultAsync(item =&gt; item.Uid.Equals(testRecord.Uid));
+    <span style="color:#57A64A;">// Test an arbitary record</span>
+    <span style="color:#569CD6;">var</span> testRecord = testProvider.GetRandomRecord()!;
+    <span style="color:#569CD6;">var</span> record = <span style="color:#569CD6;">await</span> dbContext.Set&lt;WeatherForecast&gt;().SingleOrDefaultAsync(item =&gt; item.Uid.Equals(testRecord.Uid));
     Assert.Equal(testRecord, record);
 
-    // Dispose of the resources correctly
+    <span style="color:#57A64A;">// Dispose of the resources correctly</span>
     providerScope.Dispose();
     rootProvider.Dispose();
 }
-</code></pre>
-<h2 id="the-classic-repository-pattern-implementation">The Classic Repository Pattern Implementation</h2>
+</pre></div><h2 id="the-classic-repository-pattern-implementation">The Classic Repository Pattern Implementation</h2>
 <p>Here's a nice succinct implementation that I found on the Internet.</p>
-<pre><code class="language-csharp">    public abstract class Repository&lt;T&gt; : IRepository&lt;T&gt; where T : class
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+    <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">abstract</span> <span style="color:#569CD6;">class</span> Repository&lt;T&gt; : IRepository&lt;T&gt; <span style="color:#569CD6;">where</span> T : <span style="color:#569CD6;">class</span>
     {
-        protected readonly DbContextClass _dbContext;
+        <span style="color:#569CD6;">protected</span> <span style="color:#569CD6;">readonly</span> DbContextClass _dbContext;
 
-        protected GenericRepository(DbContextClass context)
+        <span style="color:#569CD6;">protected</span> GenericRepository(DbContextClass context)
             =&gt; _dbContext = context;
 
-        public async Task&lt;T&gt; GetById(int id)
-            =&gt; await _dbContext.Set&lt;T&gt;().FindAsync(id);
+        <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">async</span> Task&lt;T&gt; GetById(<span style="color:#569CD6;">int</span> id)
+            =&gt; <span style="color:#569CD6;">await</span> _dbContext.Set&lt;T&gt;().FindAsync(id);
 
-        public async Task&lt;IEnumerable&lt;T&gt;&gt; GetAll()
-            =&gt; await _dbContext.Set&lt;T&gt;().ToListAsync();
+        <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">async</span> Task&lt;IEnumerable&lt;T&gt;&gt; GetAll()
+            =&gt; <span style="color:#569CD6;">await</span> _dbContext.Set&lt;T&gt;().ToListAsync();
 
-        public async Task Add(T entity)
-             =&gt; await _dbContext.Set&lt;T&gt;().AddAsync(entity);
+        <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">async</span> Task Add(T entity)
+             =&gt; <span style="color:#569CD6;">await</span> _dbContext.Set&lt;T&gt;().AddAsync(entity);
 
-        public void Delete(T entity)
+        <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">void</span> Delete(T entity)
             =&gt; _dbContext.Set&lt;T&gt;().Remove(entity);
 
-        public void Update(T entity)
+        <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">void</span> Update(T entity)
            =&gt;  _dbContext.Set&lt;T&gt;().Update(entity);
     }
 }
-</code></pre>
+</pre></div>
 <p>Picking it apart:</p>
 <ol>
 <li>What happens when a <code>null</code> is returned, what does it mean?</li>
@@ -219,95 +221,100 @@ public async Task DBContextTest()
 <p>Request objects encapulate what we request and result objects the data and status information we expect back.  They are <code>records</code>: defined once and then consumed.</p>
 <h4 id="commands">Commands</h4>
 <p>A <em>Command</em> is a request to make a change to the data store: Create/Update/Delete operations.  We can define one like this:</p>
-<pre><code class="language-csharp">public record CommandRequest&lt;TRecord&gt;
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+<span style="color:#569CD6;">public</span> record CommandRequest&lt;TRecord&gt;
 {
-    public required TRecord Item { get; init; }
-    public CancellationToken Cancellation { get; set; } = new ();
+    <span style="color:#569CD6;">public</span> required TRecord Item { <span style="color:#569CD6;">get</span>; init; }
+    <span style="color:#569CD6;">public</span> CancellationToken Cancellation { <span style="color:#569CD6;">get</span>; <span style="color:#569CD6;">set</span>; } = <span style="color:#569CD6;">new</span> ();
 }
-</code></pre>
+</pre></div>
 <p>Commands only return status information: no data.  We can define a result like this:</p>
-<pre><code class="language-csharp">public record CommandResult
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+<span style="color:#569CD6;">public</span> record CommandResult
 {
-    public bool Successful { get; init; }
-    public string Message { get; init; } = string.Empty;
+    <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">bool</span> Successful { <span style="color:#569CD6;">get</span>; init; }
+    <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">string</span> Message { <span style="color:#569CD6;">get</span>; init; } = <span style="color:#569CD6;">string</span>.Empty;
 
-    private CommandResult() { }
+    <span style="color:#569CD6;">private</span> CommandResult() { }
 
-    public static CommandResult Success(string? message = null)
-        =&gt; new CommandResult { Successful = true, Message= message ?? string.Empty };
+    <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">static</span> CommandResult Success(<span style="color:#569CD6;">string</span>? message = <span style="color:#569CD6;">null</span>)
+        =&gt; <span style="color:#569CD6;">new</span> CommandResult { Successful = <span style="color:#569CD6;">true</span>, Message= message ?? <span style="color:#569CD6;">string</span>.Empty };
 
-    public static CommandResult Failure(string message)
-        =&gt; new CommandResult { Message = message};
+    <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">static</span> CommandResult Failure(<span style="color:#569CD6;">string</span> message)
+        =&gt; <span style="color:#569CD6;">new</span> CommandResult { Message = message};
 }
-</code></pre>
+</pre></div>
 <p>At this point it's worth noting one small exception to the return rule: the Id for an inserted record.  If you aren't using Guids to give your records unique identifiers, then the database generated Id is status information.</p>
 <h4 id="item-requests">Item Requests</h4>
 <p>A <em>Query</em> is a request to get data from the data store: no mutation.  We can define an item query like this:</p>
-<pre><code class="language-csharp">public sealed record ItemQueryRequest
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+<span style="color:#569CD6;">public</span> <span style="color:#569CD6;">sealed</span> record ItemQueryRequest
 {
-    public required Guid Uid { get; init; }
-    public CancellationToken Cancellation { get; set; } = new();
+    <span style="color:#569CD6;">public</span> required Guid Uid { <span style="color:#569CD6;">get</span>; init; }
+    <span style="color:#569CD6;">public</span> CancellationToken Cancellation { <span style="color:#569CD6;">get</span>; <span style="color:#569CD6;">set</span>; } = <span style="color:#569CD6;">new</span>();
 }
-</code></pre>
+</pre></div>
 <p>And the return result: the requested data and status.</p>
-<pre><code class="language-csharp">public sealed record ItemQueryResult&lt;TRecord&gt;
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+<span style="color:#569CD6;">public</span> <span style="color:#569CD6;">sealed</span> record ItemQueryResult&lt;TRecord&gt;
 {
-    public TRecord? Item { get; init;} 
-    public bool Successful { get; init; }
-    public string Message { get; init; } = string.Empty;
+    <span style="color:#569CD6;">public</span> TRecord? Item { <span style="color:#569CD6;">get</span>; init;} 
+    <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">bool</span> Successful { <span style="color:#569CD6;">get</span>; init; }
+    <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">string</span> Message { <span style="color:#569CD6;">get</span>; init; } = <span style="color:#569CD6;">string</span>.Empty;
 
-    private ItemQueryResult() { }
+    <span style="color:#569CD6;">private</span> ItemQueryResult() { }
 
-    public static ItemQueryResult&lt;TRecord&gt; Success(TRecord Item, string? message = null)
-        =&gt; new ItemQueryResult&lt;TRecord&gt; { Successful=true, Item= Item, Message= message ?? string.Empty };
+    <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">static</span> ItemQueryResult&lt;TRecord&gt; Success(TRecord Item, <span style="color:#569CD6;">string</span>? message = <span style="color:#569CD6;">null</span>)
+        =&gt; <span style="color:#569CD6;">new</span> ItemQueryResult&lt;TRecord&gt; { Successful=<span style="color:#569CD6;">true</span>, Item= Item, Message= message ?? <span style="color:#569CD6;">string</span>.Empty };
 
-    public static ItemQueryResult&lt;TRecord&gt; Failure(string message)
-        =&gt; new ItemQueryResult&lt;TRecord&gt; { Message = message};
+    <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">static</span> ItemQueryResult&lt;TRecord&gt; Failure(<span style="color:#569CD6;">string</span> message)
+        =&gt; <span style="color:#569CD6;">new</span> ItemQueryResult&lt;TRecord&gt; { Message = message};
 }
-</code></pre>
-<h4 id="list-queries">List Queries</h4>
+</pre></div><h4 id="list-queries">List Queries</h4>
 <p>List queries present a few extra challenges.</p>
 <ol>
 <li>They should never request everything.  In edge conditions there may be 1,000,000+ rows in a table.  Every request should be constrained.  The request defines <code>StartIndex</code> and <code>PageSize</code> to both constrain the data and provide paging.  If you set the page size to 1,000,000, will your data pipeline and front end handle it gracefully?</li>
 <li>They need to handle sorting and filtering.  The request defines these as Linq Expressions.</li>
 </ol>
-<pre><code class="language-csharp">public sealed record ListQueryRequest&lt;TRecord&gt;
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+<span style="color:#569CD6;">public</span> <span style="color:#569CD6;">sealed</span> record ListQueryRequest&lt;TRecord&gt;
 {
-    public int StartIndex { get; init; } = 0;
-    public int PageSize { get; init; } = 1000;
-    public CancellationToken Cancellation { get; set; } = new ();
-    public bool SortDescending { get; } = false;
-    public Expression&lt;Func&lt;TRecord, bool&gt;&gt;? FilterExpression { get; init; }
-    public Expression&lt;Func&lt;TRecord, object&gt;&gt;? SortExpression { get; init; }
+    <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">int</span> StartIndex { <span style="color:#569CD6;">get</span>; init; } = <span style="color:#B5CEA8;">0</span>;
+    <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">int</span> PageSize { <span style="color:#569CD6;">get</span>; init; } = <span style="color:#B5CEA8;">1000</span>;
+    <span style="color:#569CD6;">public</span> CancellationToken Cancellation { <span style="color:#569CD6;">get</span>; <span style="color:#569CD6;">set</span>; } = <span style="color:#569CD6;">new</span> ();
+    <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">bool</span> SortDescending { <span style="color:#569CD6;">get</span>; } = <span style="color:#569CD6;">false</span>;
+    <span style="color:#569CD6;">public</span> Expression&lt;Func&lt;TRecord, <span style="color:#569CD6;">bool</span>&gt;&gt;? FilterExpression { <span style="color:#569CD6;">get</span>; init; }
+    <span style="color:#569CD6;">public</span> Expression&lt;Func&lt;TRecord, <span style="color:#569CD6;">object</span>&gt;&gt;? SortExpression { <span style="color:#569CD6;">get</span>; init; }
 }
-</code></pre>
+</pre></div>
 <p>The result returns the items, the total item count (for paging) and status information.  <code>Items</code> are always returned as <code>IEnumerable</code>.</p>
-<pre><code class="language-csharp">public sealed record ListQueryResult&lt;TRecord&gt;
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+<span style="color:#569CD6;">public</span> <span style="color:#569CD6;">sealed</span> record ListQueryResult&lt;TRecord&gt;
 {
-    public IEnumerable&lt;TRecord&gt; Items { get; init;} = Enumerable.Empty&lt;TRecord&gt;();  
-    public bool Successful { get; init; }
-    public string Message { get; init; } = string.Empty;
-    public long TotalCount { get; init; }
+    <span style="color:#569CD6;">public</span> IEnumerable&lt;TRecord&gt; Items { <span style="color:#569CD6;">get</span>; init;} = Enumerable.Empty&lt;TRecord&gt;();  
+    <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">bool</span> Successful { <span style="color:#569CD6;">get</span>; init; }
+    <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">string</span> Message { <span style="color:#569CD6;">get</span>; init; } = <span style="color:#569CD6;">string</span>.Empty;
+    <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">long</span> TotalCount { <span style="color:#569CD6;">get</span>; init; }
 
-    private ListQueryResult() { }
+    <span style="color:#569CD6;">private</span> ListQueryResult() { }
 
-    public static ListQueryResult&lt;TRecord&gt; Success(IEnumerable&lt;TRecord&gt; Items, long totalCount, string? message = null)
-        =&gt; new ListQueryResult&lt;TRecord&gt; {Successful=true,  Items= Items, TotalCount = totalCount, Message= message ?? string.Empty };
+    <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">static</span> ListQueryResult&lt;TRecord&gt; Success(IEnumerable&lt;TRecord&gt; Items, <span style="color:#569CD6;">long</span> totalCount, <span style="color:#569CD6;">string</span>? message = <span style="color:#569CD6;">null</span>)
+        =&gt; <span style="color:#569CD6;">new</span> ListQueryResult&lt;TRecord&gt; {Successful=<span style="color:#569CD6;">true</span>,  Items= Items, TotalCount = totalCount, Message= message ?? <span style="color:#569CD6;">string</span>.Empty };
 
-    public static ListQueryResult&lt;TRecord&gt; Failure(string message)
-        =&gt; new ListQueryResult&lt;TRecord&gt; { Message = message};
+    <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">static</span> ListQueryResult&lt;TRecord&gt; Failure(<span style="color:#569CD6;">string</span> message)
+        =&gt; <span style="color:#569CD6;">new</span> ListQueryResult&lt;TRecord&gt; { Message = message};
 }
-</code></pre>
-<h3 id="handlers">Handlers</h3>
+</pre></div><h3 id="handlers">Handlers</h3>
 <p>Handlers are small single purpose classes that handle requests and return results.  They abstract the nitty-gritty execution from the higher level Data Broker.</p>
 <h4 id="command-handlers">Command Handlers</h4>
 <p>The interface provides the abstraction.</p>
-<pre><code class="language-csharp">public interface ICreateRequestHandler
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+<span style="color:#569CD6;">public</span> <span style="color:#569CD6;">interface</span> ICreateRequestHandler
 {
-    public ValueTask&lt;CommandResult&gt; ExecuteAsync&lt;TRecord&gt;(CommandRequest&lt;TRecord&gt; request)
-        where TRecord : class, new();
+    <span style="color:#569CD6;">public</span> ValueTask&lt;CommandResult&gt; ExecuteAsync&lt;TRecord&gt;(CommandRequest&lt;TRecord&gt; request)
+        <span style="color:#569CD6;">where</span> TRecord : <span style="color:#569CD6;">class</span>, <span style="color:#569CD6;">new</span>();
 }
-</code></pre>
+</pre></div>
 <p>And the implementation does the real work.</p>
 <ol>
 <li>Injects the DBContext Factory.</li>
@@ -316,39 +323,41 @@ public async Task DBContextTest()
 <li>Calls <code>SaveChangesAsync</code>, passing in the Cancellation token, and expects a single change to be reported.</li>
 <li>Provides status information if things go wrong.</li>
 </ol>
-<pre><code class="language-csharp">public sealed class CreateRequestHandler&lt;TDbContext&gt;
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+<span style="color:#569CD6;">public</span> <span style="color:#569CD6;">sealed</span> <span style="color:#569CD6;">class</span> CreateRequestHandler&lt;TDbContext&gt;
     : ICreateRequestHandler
-    where TDbContext : DbContext
+    <span style="color:#569CD6;">where</span> TDbContext : DbContext
 {
-    private readonly IDbContextFactory&lt;TDbContext&gt; _factory;
+    <span style="color:#569CD6;">private</span> <span style="color:#569CD6;">readonly</span> IDbContextFactory&lt;TDbContext&gt; _factory;
 
-    public CreateRequestHandler(IDbContextFactory&lt;TDbContext&gt; factory)
+    <span style="color:#569CD6;">public</span> CreateRequestHandler(IDbContextFactory&lt;TDbContext&gt; factory)
         =&gt; _factory = factory;
 
-    public async ValueTask&lt;CommandResult&gt; ExecuteAsync&lt;TRecord&gt;(CommandRequest&lt;TRecord&gt; request)
-        where TRecord : class, new()
+    <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">async</span> ValueTask&lt;CommandResult&gt; ExecuteAsync&lt;TRecord&gt;(CommandRequest&lt;TRecord&gt; request)
+        <span style="color:#569CD6;">where</span> TRecord : <span style="color:#569CD6;">class</span>, <span style="color:#569CD6;">new</span>()
     {
-        if (request == null)
-            throw new DataPipelineException($&quot;No CommandRequest defined in {this.GetType().FullName}&quot;);
+        <span style="color:#569CD6;">if</span> (request == <span style="color:#569CD6;">null</span>)
+            <span style="color:#569CD6;">throw</span> <span style="color:#569CD6;">new</span> DataPipelineException($<span style="color:#D69D85;">&quot;No CommandRequest defined in {this.GetType().FullName}&quot;</span>);
 
-        using var dbContext = _factory.CreateDbContext();
+        <span style="color:#569CD6;">using</span> <span style="color:#569CD6;">var</span> dbContext = _factory.CreateDbContext();
 
         dbContext.Add&lt;TRecord&gt;(request.Item);
-        return await dbContext.SaveChangesAsync(request.Cancellation) == 1
-            ? CommandResult.Success(&quot;Record Updated&quot;)
-            : CommandResult.Failure(&quot;Error updating Record&quot;);
+        <span style="color:#569CD6;">return</span> <span style="color:#569CD6;">await</span> dbContext.SaveChangesAsync(request.Cancellation) == <span style="color:#B5CEA8;">1</span>
+            ? CommandResult.Success(<span style="color:#D69D85;">&quot;Record Updated&quot;</span>)
+            : CommandResult.Failure(<span style="color:#D69D85;">&quot;Error updating Record&quot;</span>);
     }
 }
-</code></pre>
+</pre></div>
 <p>The Update and Delete handlers are the same but use different <code>dbContext</code> methods: Update and Remove.</p>
 <h4 id="item-request-handler">Item Request Handler</h4>
 <p>The interface.</p>
-<pre><code class="language-csharp">public interface IItemRequestHandler
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+<span style="color:#569CD6;">public</span> <span style="color:#569CD6;">interface</span> IItemRequestHandler
 {
-    public ValueTask&lt;ItemQueryResult&lt;TRecord&gt;&gt; ExecuteAsync&lt;TRecord&gt;(ItemQueryRequest request)
-        where TRecord : class, new();
+    <span style="color:#569CD6;">public</span> ValueTask&lt;ItemQueryResult&lt;TRecord&gt;&gt; ExecuteAsync&lt;TRecord&gt;(ItemQueryRequest request)
+        <span style="color:#569CD6;">where</span> TRecord : <span style="color:#569CD6;">class</span>, <span style="color:#569CD6;">new</span>();
 }
-</code></pre>
+</pre></div>
 <p>And the server implementation. Note:</p>
 <ol>
 <li>Injects the DBContext Factory.</li>
@@ -358,108 +367,111 @@ public async Task DBContextTest()
 <li>If not, tries <code>FindAsync</code> which uses the inbuilt <code>Key</code> methodology to get the record.</li>
 <li>Provides status information if things go wrong.</li>
 </ol>
-<pre><code class="language-csharp">public sealed class ItemRequestHandler&lt;TDbContext&gt;
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+<span style="color:#569CD6;">public</span> <span style="color:#569CD6;">sealed</span> <span style="color:#569CD6;">class</span> ItemRequestHandler&lt;TDbContext&gt;
     : IItemRequestHandler
-    where TDbContext : DbContext
+    <span style="color:#569CD6;">where</span> TDbContext : DbContext
 {
-    private readonly IDbContextFactory&lt;TDbContext&gt; _factory;
+    <span style="color:#569CD6;">private</span> <span style="color:#569CD6;">readonly</span> IDbContextFactory&lt;TDbContext&gt; _factory;
 
-    public ItemRequestHandler(IDbContextFactory&lt;TDbContext&gt; factory)
+    <span style="color:#569CD6;">public</span> ItemRequestHandler(IDbContextFactory&lt;TDbContext&gt; factory)
         =&gt; _factory = factory;
 
-    public async ValueTask&lt;ItemQueryResult&lt;TRecord&gt;&gt; ExecuteAsync&lt;TRecord&gt;(ItemQueryRequest request)
-        where TRecord : class, new()
+    <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">async</span> ValueTask&lt;ItemQueryResult&lt;TRecord&gt;&gt; ExecuteAsync&lt;TRecord&gt;(ItemQueryRequest request)
+        <span style="color:#569CD6;">where</span> TRecord : <span style="color:#569CD6;">class</span>, <span style="color:#569CD6;">new</span>()
     {
-        if (request == null)
-            throw new DataPipelineException($&quot;No ListQueryRequest defined in {this.GetType().FullName}&quot;);
+        <span style="color:#569CD6;">if</span> (request == <span style="color:#569CD6;">null</span>)
+            <span style="color:#569CD6;">throw</span> <span style="color:#569CD6;">new</span> DataPipelineException($<span style="color:#D69D85;">&quot;No ListQueryRequest defined in {this.GetType().FullName}&quot;</span>);
 
-        using var dbContext = _factory.CreateDbContext();
+        <span style="color:#569CD6;">using</span> <span style="color:#569CD6;">var</span> dbContext = _factory.CreateDbContext();
         dbContext.ChangeTracker.QueryTrackingBehavior = QueryTrackingBehavior.NoTracking;
 
-        TRecord? record = null;
+        TRecord? record = <span style="color:#569CD6;">null</span>;
 
-        // first check if the record implements IGuidIdentity.  If so we can do a cast and then do the query via the Uid property directly 
-        if ((new TRecord()) is IGuidIdentity)
-            record = await dbContext.Set&lt;TRecord&gt;().SingleOrDefaultAsync(item =&gt; ((IGuidIdentity)item).Uid == request.Uid, request.Cancellation);
+        <span style="color:#57A64A;">// first check if the record implements IGuidIdentity.  If so we can do a cast and then do the query via the Uid property directly </span>
+        <span style="color:#569CD6;">if</span> ((<span style="color:#569CD6;">new</span> TRecord()) <span style="color:#569CD6;">is</span> IGuidIdentity)
+            record = <span style="color:#569CD6;">await</span> dbContext.Set&lt;TRecord&gt;().SingleOrDefaultAsync(item =&gt; ((IGuidIdentity)item).Uid == request.Uid, request.Cancellation);
 
-        // Try and use the EF FindAsync implementation
-        if (record is null)
-            record = await dbContext.FindAsync&lt;TRecord&gt;(request.Uid);
+        <span style="color:#57A64A;">// Try and use the EF FindAsync implementation</span>
+        <span style="color:#569CD6;">if</span> (record <span style="color:#569CD6;">is</span> <span style="color:#569CD6;">null</span>)
+            record = <span style="color:#569CD6;">await</span> dbContext.FindAsync&lt;TRecord&gt;(request.Uid);
 
-        if (record is null)
-            return ItemQueryResult&lt;TRecord&gt;.Failure(&quot;No record retrieved&quot;);
+        <span style="color:#569CD6;">if</span> (record <span style="color:#569CD6;">is</span> <span style="color:#569CD6;">null</span>)
+            <span style="color:#569CD6;">return</span> ItemQueryResult&lt;TRecord&gt;.Failure(<span style="color:#D69D85;">&quot;No record retrieved&quot;</span>);
 
-        return ItemQueryResult&lt;TRecord&gt;.Success(record);
+        <span style="color:#569CD6;">return</span> ItemQueryResult&lt;TRecord&gt;.Success(record);
     }
 }
-</code></pre>
-<h4 id="list-request-handler">List Request Handler</h4>
+</pre></div><h4 id="list-request-handler">List Request Handler</h4>
 <p>The interface.</p>
-<pre><code class="language-csharp">public interface IListRequestHandler
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+<span style="color:#569CD6;">public</span> <span style="color:#569CD6;">interface</span> IListRequestHandler
 {
-    public ValueTask&lt;ListQueryResult&lt;TRecord&gt;&gt; ExecuteAsync&lt;TRecord&gt;(ListQueryRequest&lt;TRecord&gt; request)
-        where TRecord : class, new();
+    <span style="color:#569CD6;">public</span> ValueTask&lt;ListQueryResult&lt;TRecord&gt;&gt; ExecuteAsync&lt;TRecord&gt;(ListQueryRequest&lt;TRecord&gt; request)
+        <span style="color:#569CD6;">where</span> TRecord : <span style="color:#569CD6;">class</span>, <span style="color:#569CD6;">new</span>();
 }
-</code></pre>
+</pre></div>
 <p>And implementation.</p>
 <p>Note there are two internal methods:</p>
 <ol>
 <li><code>_getItemsAsync</code> Gets the items.  This builds an <code>IQueryable</code> object and returns a materialized <code>IEnumerable</code>.  You must execute the query before the factory disposes the DbContext.</li>
 <li><code>_getCountAsync</code> Gets the count of all the records based on the filter.</li>
 </ol>
-<pre><code class="language-csharp">    private async ValueTask&lt;IEnumerable&lt;TRecord&gt;&gt; _getItemsAsync&lt;TRecord&gt;(ListQueryRequest&lt;TRecord&gt; request)
-        where TRecord : class, new()
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+    <span style="color:#569CD6;">private</span> <span style="color:#569CD6;">async</span> ValueTask&lt;IEnumerable&lt;TRecord&gt;&gt; _getItemsAsync&lt;TRecord&gt;(ListQueryRequest&lt;TRecord&gt; request)
+        <span style="color:#569CD6;">where</span> TRecord : <span style="color:#569CD6;">class</span>, <span style="color:#569CD6;">new</span>()
     {
-        if (request == null)
-            throw new DataPipelineException($&quot;No ListQueryRequest defined in {this.GetType().FullName}&quot;);
+        <span style="color:#569CD6;">if</span> (request == <span style="color:#569CD6;">null</span>)
+            <span style="color:#569CD6;">throw</span> <span style="color:#569CD6;">new</span> DataPipelineException($<span style="color:#D69D85;">&quot;No ListQueryRequest defined in {this.GetType().FullName}&quot;</span>);
 
-        using var dbContext = _factory.CreateDbContext();
+        <span style="color:#569CD6;">using</span> <span style="color:#569CD6;">var</span> dbContext = _factory.CreateDbContext();
         dbContext.ChangeTracker.QueryTrackingBehavior = QueryTrackingBehavior.NoTracking;
 
         IQueryable&lt;TRecord&gt; query = dbContext.Set&lt;TRecord&gt;();
-        if (request.FilterExpression is not null)
+        <span style="color:#569CD6;">if</span> (request.FilterExpression <span style="color:#569CD6;">is</span> not <span style="color:#569CD6;">null</span>)
             query = query
                 .Where(request.FilterExpression)
                 .AsQueryable();
 
-        if (request.SortExpression is not null)
+        <span style="color:#569CD6;">if</span> (request.SortExpression <span style="color:#569CD6;">is</span> not <span style="color:#569CD6;">null</span>)
 
             query = request.SortDescending
                 ? query.OrderByDescending(request.SortExpression)
                 : query.OrderBy(request.SortExpression);
 
-        if (request.PageSize &gt; 0)
+        <span style="color:#569CD6;">if</span> (request.PageSize &gt; <span style="color:#B5CEA8;">0</span>)
             query = query
                 .Skip(request.StartIndex)
                 .Take(request.PageSize);
 
-        return query is IAsyncEnumerable&lt;TRecord&gt;
-            ? await query.ToListAsync()
+        <span style="color:#569CD6;">return</span> query <span style="color:#569CD6;">is</span> IAsyncEnumerable&lt;TRecord&gt;
+            ? <span style="color:#569CD6;">await</span> query.ToListAsync()
             : query.ToList();
     }
-</code></pre>
-<h3 id="the-repository-class-replacement">The Repository Class Replacement</h3>
+</pre></div><h3 id="the-repository-class-replacement">The Repository Class Replacement</h3>
 <p>First the interface.</p>
 <p>The very important bit is the generic <code>TRecord</code> definition on each method, not on the interface.  This removes the need for entity specific implementations.</p>
-<pre><code class="language-csharp">public interface IDataBroker
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+<span style="color:#569CD6;">public</span> <span style="color:#569CD6;">interface</span> IDataBroker
 {
-    public ValueTask&lt;ListQueryResult&lt;TRecord&gt;&gt; GetItemsAsync&lt;TRecord&gt;(ListQueryRequest&lt;TRecord&gt; request) where TRecord : class, new();
-    public ValueTask&lt;ItemQueryResult&lt;TRecord&gt;&gt; GetItemAsync&lt;TRecord&gt;(ItemQueryRequest request) where TRecord : class, new();
-    public ValueTask&lt;CommandResult&gt; UpdateItemAsync&lt;TRecord&gt;(CommandRequest&lt;TRecord&gt; request) where TRecord : class, new();
-    public ValueTask&lt;CommandResult&gt; CreateItemAsync&lt;TRecord&gt;(CommandRequest&lt;TRecord&gt; request) where TRecord : class, new();
-    public ValueTask&lt;CommandResult&gt; DeleteItemAsync&lt;TRecord&gt;(CommandRequest&lt;TRecord&gt; request) where TRecord : class, new();
+    <span style="color:#569CD6;">public</span> ValueTask&lt;ListQueryResult&lt;TRecord&gt;&gt; GetItemsAsync&lt;TRecord&gt;(ListQueryRequest&lt;TRecord&gt; request) <span style="color:#569CD6;">where</span> TRecord : <span style="color:#569CD6;">class</span>, <span style="color:#569CD6;">new</span>();
+    <span style="color:#569CD6;">public</span> ValueTask&lt;ItemQueryResult&lt;TRecord&gt;&gt; GetItemAsync&lt;TRecord&gt;(ItemQueryRequest request) <span style="color:#569CD6;">where</span> TRecord : <span style="color:#569CD6;">class</span>, <span style="color:#569CD6;">new</span>();
+    <span style="color:#569CD6;">public</span> ValueTask&lt;CommandResult&gt; UpdateItemAsync&lt;TRecord&gt;(CommandRequest&lt;TRecord&gt; request) <span style="color:#569CD6;">where</span> TRecord : <span style="color:#569CD6;">class</span>, <span style="color:#569CD6;">new</span>();
+    <span style="color:#569CD6;">public</span> ValueTask&lt;CommandResult&gt; CreateItemAsync&lt;TRecord&gt;(CommandRequest&lt;TRecord&gt; request) <span style="color:#569CD6;">where</span> TRecord : <span style="color:#569CD6;">class</span>, <span style="color:#569CD6;">new</span>();
+    <span style="color:#569CD6;">public</span> ValueTask&lt;CommandResult&gt; DeleteItemAsync&lt;TRecord&gt;(CommandRequest&lt;TRecord&gt; request) <span style="color:#569CD6;">where</span> TRecord : <span style="color:#569CD6;">class</span>, <span style="color:#569CD6;">new</span>();
 }
-</code></pre>
+</pre></div>
 <p>And the implementation.  Each handler is registered in DI and injected into the broker.</p>
-<pre><code class="language-csharp">public sealed class RepositoryDataBroker : IDataBroker
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+<span style="color:#569CD6;">public</span> <span style="color:#569CD6;">sealed</span> <span style="color:#569CD6;">class</span> RepositoryDataBroker : IDataBroker
 {
-    private readonly IListRequestHandler _listRequestHandler;
-    private readonly IItemRequestHandler _itemRequestHandler;
-    private readonly IUpdateRequestHandler _updateRequestHandler;
-    private readonly ICreateRequestHandler _createRequestHandler;
-    private readonly IDeleteRequestHandler _deleteRequestHandler;
+    <span style="color:#569CD6;">private</span> <span style="color:#569CD6;">readonly</span> IListRequestHandler _listRequestHandler;
+    <span style="color:#569CD6;">private</span> <span style="color:#569CD6;">readonly</span> IItemRequestHandler _itemRequestHandler;
+    <span style="color:#569CD6;">private</span> <span style="color:#569CD6;">readonly</span> IUpdateRequestHandler _updateRequestHandler;
+    <span style="color:#569CD6;">private</span> <span style="color:#569CD6;">readonly</span> ICreateRequestHandler _createRequestHandler;
+    <span style="color:#569CD6;">private</span> <span style="color:#569CD6;">readonly</span> IDeleteRequestHandler _deleteRequestHandler;
 
-    public RepositoryDataBroker(
+    <span style="color:#569CD6;">public</span> RepositoryDataBroker(
         IListRequestHandler listRequestHandler,
         IItemRequestHandler itemRequestHandler,
         ICreateRequestHandler createRequestHandler,
@@ -473,33 +485,33 @@ public async Task DBContextTest()
         _deleteRequestHandler = deleteRequestHandler;
     }
 
-    public ValueTask&lt;ItemQueryResult&lt;TRecord&gt;&gt; GetItemAsync&lt;TRecord&gt;(ItemQueryRequest request) where TRecord : class, new()
+    <span style="color:#569CD6;">public</span> ValueTask&lt;ItemQueryResult&lt;TRecord&gt;&gt; GetItemAsync&lt;TRecord&gt;(ItemQueryRequest request) <span style="color:#569CD6;">where</span> TRecord : <span style="color:#569CD6;">class</span>, <span style="color:#569CD6;">new</span>()
         =&gt; _itemRequestHandler.ExecuteAsync&lt;TRecord&gt;(request);
 
-    public ValueTask&lt;ListQueryResult&lt;TRecord&gt;&gt; GetItemsAsync&lt;TRecord&gt;(ListQueryRequest&lt;TRecord&gt; request) where TRecord : class, new()
+    <span style="color:#569CD6;">public</span> ValueTask&lt;ListQueryResult&lt;TRecord&gt;&gt; GetItemsAsync&lt;TRecord&gt;(ListQueryRequest&lt;TRecord&gt; request) <span style="color:#569CD6;">where</span> TRecord : <span style="color:#569CD6;">class</span>, <span style="color:#569CD6;">new</span>()
         =&gt; _listRequestHandler.ExecuteAsync&lt;TRecord&gt;(request);
 
-    public ValueTask&lt;CommandResult&gt; CreateItemAsync&lt;TRecord&gt;(CommandRequest&lt;TRecord&gt; request) where TRecord : class, new()
+    <span style="color:#569CD6;">public</span> ValueTask&lt;CommandResult&gt; CreateItemAsync&lt;TRecord&gt;(CommandRequest&lt;TRecord&gt; request) <span style="color:#569CD6;">where</span> TRecord : <span style="color:#569CD6;">class</span>, <span style="color:#569CD6;">new</span>()
         =&gt; _createRequestHandler.ExecuteAsync&lt;TRecord&gt;(request);
 
-    public ValueTask&lt;CommandResult&gt; UpdateItemAsync&lt;TRecord&gt;(CommandRequest&lt;TRecord&gt; request) where TRecord : class, new()
+    <span style="color:#569CD6;">public</span> ValueTask&lt;CommandResult&gt; UpdateItemAsync&lt;TRecord&gt;(CommandRequest&lt;TRecord&gt; request) <span style="color:#569CD6;">where</span> TRecord : <span style="color:#569CD6;">class</span>, <span style="color:#569CD6;">new</span>()
         =&gt; _updateRequestHandler.ExecuteAsync&lt;TRecord&gt;(request);
 
-    public ValueTask&lt;CommandResult&gt; DeleteItemAsync&lt;TRecord&gt;(CommandRequest&lt;TRecord&gt; request) where TRecord : class, new()
+    <span style="color:#569CD6;">public</span> ValueTask&lt;CommandResult&gt; DeleteItemAsync&lt;TRecord&gt;(CommandRequest&lt;TRecord&gt; request) <span style="color:#569CD6;">where</span> TRecord : <span style="color:#569CD6;">class</span>, <span style="color:#569CD6;">new</span>()
         =&gt; _deleteRequestHandler.ExecuteAsync&lt;TRecord&gt;(request);
 }
-</code></pre>
-<h2 id="testing-the-data-broker">Testing the Data Broker</h2>
+</pre></div><h2 id="testing-the-data-broker">Testing the Data Broker</h2>
 <p>We can now define a set of tests for the data broker.  I've included two here.  The rest are in the Repo.</p>
 <p>First two methods to create our root DI container and populate the database.</p>
-<pre><code class="language-csharp">private ServiceProvider BuildRootContainer()
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+<span style="color:#569CD6;">private</span> ServiceProvider BuildRootContainer()
 {
-    var services = new ServiceCollection();
+    <span style="color:#569CD6;">var</span> services = <span style="color:#569CD6;">new</span> ServiceCollection();
 
-    // Define the DbSet and Server Type for the DbContext Factory
+    <span style="color:#57A64A;">// Define the DbSet and Server Type for the DbContext Factory</span>
     services.AddDbContextFactory&lt;InMemoryWeatherDbContext&gt;(options
-        =&gt; options.UseInMemoryDatabase($&quot;WeatherDatabase-{Guid.NewGuid().ToString()}&quot;));
-    // Define the Broker and Handlers
+        =&gt; options.UseInMemoryDatabase($<span style="color:#D69D85;">&quot;WeatherDatabase-{Guid.NewGuid().ToString()}&quot;</span>));
+    <span style="color:#57A64A;">// Define the Broker and Handlers</span>
     services.AddScoped&lt;IDataBroker, RepositoryDataBroker&gt;();
     services.AddScoped&lt;IListRequestHandler, ListRequestHandler&lt;InMemoryWeatherDbContext&gt;&gt;();
     services.AddScoped&lt;IItemRequestHandler, ItemRequestHandler&lt;InMemoryWeatherDbContext&gt;&gt;();
@@ -507,45 +519,46 @@ public async Task DBContextTest()
     services.AddScoped&lt;ICreateRequestHandler, CreateRequestHandler&lt;InMemoryWeatherDbContext&gt;&gt;();
     services.AddScoped&lt;IDeleteRequestHandler, DeleteRequestHandler&lt;InMemoryWeatherDbContext&gt;&gt;();
 
-    // Create the container
-    return services.BuildServiceProvider();
+    <span style="color:#57A64A;">// Create the container</span>
+    <span style="color:#569CD6;">return</span> services.BuildServiceProvider();
 }
 
-private IDbContextFactory&lt;InMemoryWeatherDbContext&gt; GetPopulatedFactory(IServiceProvider provider)
+<span style="color:#569CD6;">private</span> IDbContextFactory&lt;InMemoryWeatherDbContext&gt; GetPopulatedFactory(IServiceProvider provider)
 {
-    // get the DbContext factory and add the test data
-    var factory = provider.GetService&lt;IDbContextFactory&lt;InMemoryWeatherDbContext&gt;&gt;();
-    if (factory is not null)
+    <span style="color:#57A64A;">// get the DbContext factory and add the test data</span>
+    <span style="color:#569CD6;">var</span> factory = provider.GetService&lt;IDbContextFactory&lt;InMemoryWeatherDbContext&gt;&gt;();
+    <span style="color:#569CD6;">if</span> (factory <span style="color:#569CD6;">is</span> not <span style="color:#569CD6;">null</span>)
         WeatherTestDataProvider.Instance().LoadDbContext&lt;InMemoryWeatherDbContext&gt;(factory);
 
-    return factory!;
+    <span style="color:#569CD6;">return</span> factory!;
 }
-</code></pre>
+</pre></div>
 <p>The GetItems test:</p>
-<pre><code class="language-csharp">[Fact]
-public async Task GetItemsTest()
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+[Fact]
+<span style="color:#569CD6;">public</span> <span style="color:#569CD6;">async</span> Task GetItemsTest()
 {
-    // Get our test provider to use as our control
-    var testProvider = WeatherTestDataProvider.Instance();
+    <span style="color:#57A64A;">// Get our test provider to use as our control</span>
+    <span style="color:#569CD6;">var</span> testProvider = WeatherTestDataProvider.Instance();
 
-    // Build the root DI Container
-    var rootProvider = this.BuildRootContainer();
+    <span style="color:#57A64A;">// Build the root DI Container</span>
+    <span style="color:#569CD6;">var</span> rootProvider = <span style="color:#569CD6;">this</span>.BuildRootContainer();
 
-    //define a scoped container
-    var providerScope = rootProvider.CreateScope();
-    var provider = providerScope.ServiceProvider;
+    <span style="color:#57A64A;">//define a scoped container</span>
+    <span style="color:#569CD6;">var</span> providerScope = rootProvider.CreateScope();
+    <span style="color:#569CD6;">var</span> provider = providerScope.ServiceProvider;
 
-    // get the DbContext factory and add the test data
-    var factory = this.GetPopulatedFactory(provider);
+    <span style="color:#57A64A;">// get the DbContext factory and add the test data</span>
+    <span style="color:#569CD6;">var</span> factory = <span style="color:#569CD6;">this</span>.GetPopulatedFactory(provider);
 
-    // Check we can retrieve thw first 1000 records
-    var dbContext = factory!.CreateDbContext();
+    <span style="color:#57A64A;">// Check we can retrieve thw first 1000 records</span>
+    <span style="color:#569CD6;">var</span> dbContext = factory!.CreateDbContext();
     Assert.NotNull(dbContext);
 
-    var databroker = provider.GetRequiredService&lt;IDataBroker&gt;();
+    <span style="color:#569CD6;">var</span> databroker = provider.GetRequiredService&lt;IDataBroker&gt;();
 
-    var request = new ListQueryRequest&lt;WeatherForecast&gt;();
-    var result = await databroker.GetItemsAsync&lt;WeatherForecast&gt;(request);
+    <span style="color:#569CD6;">var</span> request = <span style="color:#569CD6;">new</span> ListQueryRequest&lt;WeatherForecast&gt;();
+    <span style="color:#569CD6;">var</span> result = <span style="color:#569CD6;">await</span> databroker.GetItemsAsync&lt;WeatherForecast&gt;(request);
 
     Assert.NotNull(result);
     Assert.Equal(testProvider.WeatherForecasts.Count(), result.TotalCount);
@@ -553,64 +566,64 @@ public async Task GetItemsTest()
     providerScope.Dispose();
     rootProvider.Dispose();
 }
-</code></pre>
+</pre></div>
 <p>The Add Item test:</p>
-<pre><code class="language-csharp">[Fact]
-public async Task AddItemTest()
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+[Fact]
+<span style="color:#569CD6;">public</span> <span style="color:#569CD6;">async</span> Task AddItemTest()
 {
-    // Get our test provider to use as our control
-    var testProvider = WeatherTestDataProvider.Instance();
+    <span style="color:#57A64A;">// Get our test provider to use as our control</span>
+    <span style="color:#569CD6;">var</span> testProvider = WeatherTestDataProvider.Instance();
 
-    // Build the root DI Container
-    var rootProvider = this.BuildRootContainer();
+    <span style="color:#57A64A;">// Build the root DI Container</span>
+    <span style="color:#569CD6;">var</span> rootProvider = <span style="color:#569CD6;">this</span>.BuildRootContainer();
 
-    //define a scoped container
-    var providerScope = rootProvider.CreateScope();
-    var provider = providerScope.ServiceProvider;
+    <span style="color:#57A64A;">//define a scoped container</span>
+    <span style="color:#569CD6;">var</span> providerScope = rootProvider.CreateScope();
+    <span style="color:#569CD6;">var</span> provider = providerScope.ServiceProvider;
 
-    // get the DbContext factory and add the test data
-    var factory = this.GetPopulatedFactory(provider);
+    <span style="color:#57A64A;">// get the DbContext factory and add the test data</span>
+    <span style="color:#569CD6;">var</span> factory = <span style="color:#569CD6;">this</span>.GetPopulatedFactory(provider);
 
-    // Check we can retrieve thw first 1000 records
-    var dbContext = factory!.CreateDbContext();
+    <span style="color:#57A64A;">// Check we can retrieve thw first 1000 records</span>
+    <span style="color:#569CD6;">var</span> dbContext = factory!.CreateDbContext();
     Assert.NotNull(dbContext);
 
-    var databroker = provider.GetRequiredService&lt;IDataBroker&gt;();
+    <span style="color:#569CD6;">var</span> databroker = provider.GetRequiredService&lt;IDataBroker&gt;();
 
-    // Create a Test record
-    var newRecord = new WeatherForecast { Uid = Guid.NewGuid(), Date = DateOnly.FromDateTime(DateTime.Now), TemperatureC = 50, Summary = &quot;Add Testing&quot; };
+    <span style="color:#57A64A;">// Create a Test record</span>
+    <span style="color:#569CD6;">var</span> newRecord = <span style="color:#569CD6;">new</span> WeatherForecast { Uid = Guid.NewGuid(), Date = DateOnly.FromDateTime(DateTime.Now), TemperatureC = <span style="color:#B5CEA8;">50</span>, Summary = <span style="color:#D69D85;">&quot;Add Testing&quot;</span> };
 
-    // Add the Record
+    <span style="color:#57A64A;">// Add the Record</span>
     {
-        var request = new CommandRequest&lt;WeatherForecast&gt;() { Item = newRecord };
-        var result = await databroker.CreateItemAsync&lt;WeatherForecast&gt;(request);
+        <span style="color:#569CD6;">var</span> request = <span style="color:#569CD6;">new</span> CommandRequest&lt;WeatherForecast&gt;() { Item = newRecord };
+        <span style="color:#569CD6;">var</span> result = <span style="color:#569CD6;">await</span> databroker.CreateItemAsync&lt;WeatherForecast&gt;(request);
 
         Assert.NotNull(result);
         Assert.True(result.Successful);
     }
 
-    // Get the new record
+    <span style="color:#57A64A;">// Get the new record</span>
     {
-        var request = new ItemQueryRequest() { Uid = newRecord.Uid };
-        var result = await databroker.GetItemAsync&lt;WeatherForecast&gt;(request);
+        <span style="color:#569CD6;">var</span> request = <span style="color:#569CD6;">new</span> ItemQueryRequest() { Uid = newRecord.Uid };
+        <span style="color:#569CD6;">var</span> result = <span style="color:#569CD6;">await</span> databroker.GetItemAsync&lt;WeatherForecast&gt;(request);
 
         Assert.Equal(newRecord, result.Item);
     }
 
-    // Check the record count has incremented
+    <span style="color:#57A64A;">// Check the record count has incremented</span>
     {
-        var request = new ListQueryRequest&lt;WeatherForecast&gt;();
-        var result = await databroker.GetItemsAsync&lt;WeatherForecast&gt;(request);
+        <span style="color:#569CD6;">var</span> request = <span style="color:#569CD6;">new</span> ListQueryRequest&lt;WeatherForecast&gt;();
+        <span style="color:#569CD6;">var</span> result = <span style="color:#569CD6;">await</span> databroker.GetItemsAsync&lt;WeatherForecast&gt;(request);
 
         Assert.NotNull(result);
-        Assert.Equal(testProvider.WeatherForecasts.Count() + 1, result.TotalCount);
+        Assert.Equal(testProvider.WeatherForecasts.Count() + <span style="color:#B5CEA8;">1</span>, result.TotalCount);
     }
 
     providerScope.Dispose();
     rootProvider.Dispose();
 }
-</code></pre>
-<h2 id="wrapping-up">Wrapping Up</h2>
+</pre></div><h2 id="wrapping-up">Wrapping Up</h2>
 <p>What I've presented here is a hybrid Repository Pattern.  It maintains the Repository Pattern's simplicity, and adds some of the best CQS Pattern features.</p>
 <p>Abstracting the nitty-gritty EF and Linq code to individual handlers keeps the classes small, succinct and single purpose.</p>
 <p>The single Data Broker simplifies data pipeline configuration for the Core and Presentation domains.</p>
@@ -619,117 +632,119 @@ public async Task AddItemTest()
 <h3 id="the-data-store-1">The Data Store</h3>
 <p>The test system implements an Entity Framework In-Memory database.</p>
 <p>I'm a Blazor developer so naturally my demo data class is <code>WeatherForecast</code>.  Here's my data class.  Note it is a record for immutability and I've set some arbitary default values for testing purposes.</p>
-<pre><code class="language-csharp">public sealed record WeatherForecast : IGuidIdentity
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+<span style="color:#569CD6;">public</span> <span style="color:#569CD6;">sealed</span> record WeatherForecast : IGuidIdentity
 {
-    [Key] public Guid Uid { get; init; } = Guid.Empty;
-    public DateOnly Date { get; init; } = DateOnly.FromDateTime(DateTime.Now);
-    public int TemperatureC { get; init; } = 60;
-    public string? Summary { get; init; } = &quot;Testing&quot;;
+    [Key] <span style="color:#569CD6;">public</span> Guid Uid { <span style="color:#569CD6;">get</span>; init; } = Guid.Empty;
+    <span style="color:#569CD6;">public</span> DateOnly Date { <span style="color:#569CD6;">get</span>; init; } = DateOnly.FromDateTime(DateTime.Now);
+    <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">int</span> TemperatureC { <span style="color:#569CD6;">get</span>; init; } = <span style="color:#B5CEA8;">60</span>;
+    <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">string</span>? Summary { <span style="color:#569CD6;">get</span>; init; } = <span style="color:#D69D85;">&quot;Testing&quot;</span>;
 }
-</code></pre>
+</pre></div>
 <p>First a class to generate a data set.  This is a <em>Singleton</em> pattern class (not a DI singleton).  Methods such as <code>GetRandomRecord</code> are for testing.</p>
-<pre><code class="language-csharp">public sealed class WeatherTestDataProvider
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+<span style="color:#569CD6;">public</span> <span style="color:#569CD6;">sealed</span> <span style="color:#569CD6;">class</span> WeatherTestDataProvider
 {
-    private int RecordsToGenerate;
+    <span style="color:#569CD6;">private</span> <span style="color:#569CD6;">int</span> RecordsToGenerate;
 
-    public IEnumerable&lt;WeatherForecast&gt; WeatherForecasts { get; private set; } = Enumerable.Empty&lt;WeatherForecast&gt;();
+    <span style="color:#569CD6;">public</span> IEnumerable&lt;WeatherForecast&gt; WeatherForecasts { <span style="color:#569CD6;">get</span>; <span style="color:#569CD6;">private</span> <span style="color:#569CD6;">set</span>; } = Enumerable.Empty&lt;WeatherForecast&gt;();
 
-    private WeatherTestDataProvider()
-        =&gt; this.Load();
+    <span style="color:#569CD6;">private</span> WeatherTestDataProvider()
+        =&gt; <span style="color:#569CD6;">this</span>.Load();
 
-    public void LoadDbContext&lt;TDbContext&gt;(IDbContextFactory&lt;TDbContext&gt; factory) where TDbContext : DbContext
+    <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">void</span> LoadDbContext&lt;TDbContext&gt;(IDbContextFactory&lt;TDbContext&gt; factory) <span style="color:#569CD6;">where</span> TDbContext : DbContext
     {
-        using var dbContext = factory.CreateDbContext();
+        <span style="color:#569CD6;">using</span> <span style="color:#569CD6;">var</span> dbContext = factory.CreateDbContext();
 
-        var weatherForcasts = dbContext.Set&lt;WeatherForecast&gt;();
+        <span style="color:#569CD6;">var</span> weatherForcasts = dbContext.Set&lt;WeatherForecast&gt;();
 
-        // Check if we already have a full data set
-        // If not clear down any existing data and start again
-        if (weatherForcasts.Count() == 0)
+        <span style="color:#57A64A;">// Check if we already have a full data set</span>
+        <span style="color:#57A64A;">// If not clear down any existing data and start again</span>
+        <span style="color:#569CD6;">if</span> (weatherForcasts.Count() == <span style="color:#B5CEA8;">0</span>)
         {
-            dbContext.AddRange(this.WeatherForecasts);
+            dbContext.AddRange(<span style="color:#569CD6;">this</span>.WeatherForecasts);
             dbContext.SaveChanges();
         }
     }
 
-    public void Load(int records = 100)
+    <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">void</span> Load(<span style="color:#569CD6;">int</span> records = <span style="color:#B5CEA8;">100</span>)
     {
         RecordsToGenerate = records;
 
-        if (WeatherForecasts.Count() == 0)
-            this.LoadForecasts();
+        <span style="color:#569CD6;">if</span> (WeatherForecasts.Count() == <span style="color:#B5CEA8;">0</span>)
+            <span style="color:#569CD6;">this</span>.LoadForecasts();
     }
 
-    private void LoadForecasts()
+    <span style="color:#569CD6;">private</span> <span style="color:#569CD6;">void</span> LoadForecasts()
     {
-        var forecasts = new List&lt;WeatherForecast&gt;();
+        <span style="color:#569CD6;">var</span> forecasts = <span style="color:#569CD6;">new</span> List&lt;WeatherForecast&gt;();
 
-        for (var index = 0; index &lt; RecordsToGenerate; index++)
+        <span style="color:#569CD6;">for</span> (<span style="color:#569CD6;">var</span> index = <span style="color:#B5CEA8;">0</span>; index &lt; RecordsToGenerate; index++)
         {
-            var rec = new WeatherForecast
+            <span style="color:#569CD6;">var</span> rec = <span style="color:#569CD6;">new</span> WeatherForecast
             {
                 Uid = Guid.NewGuid(),
                 Summary = Summaries[Random.Shared.Next(Summaries.Length)],
                 Date = DateOnly.FromDateTime(DateTime.Now.AddDays(index)),
-                TemperatureC = Random.Shared.Next(-20, 55),
+                TemperatureC = Random.Shared.Next(-<span style="color:#B5CEA8;">20</span>, <span style="color:#B5CEA8;">55</span>),
             };
             forecasts.Add(rec);
         }
 
-        this.WeatherForecasts = forecasts;
+        <span style="color:#569CD6;">this</span>.WeatherForecasts = forecasts;
     }
 
-    public WeatherForecast GetForecast()
+    <span style="color:#569CD6;">public</span> WeatherForecast GetForecast()
     {
-        return new WeatherForecast
+        <span style="color:#569CD6;">return</span> <span style="color:#569CD6;">new</span> WeatherForecast
         {
             Uid = Guid.NewGuid(),
             Summary = Summaries[Random.Shared.Next(Summaries.Length)],
-            Date = DateOnly.FromDateTime(DateTime.Now.AddDays(-1)),
-            TemperatureC = Random.Shared.Next(-20, 55),
+            Date = DateOnly.FromDateTime(DateTime.Now.AddDays(-<span style="color:#B5CEA8;">1</span>)),
+            TemperatureC = Random.Shared.Next(-<span style="color:#B5CEA8;">20</span>, <span style="color:#B5CEA8;">55</span>),
         };
     }
 
-    public WeatherForecast? GetRandomRecord()
+    <span style="color:#569CD6;">public</span> WeatherForecast? GetRandomRecord()
     {
-        var record = new WeatherForecast();
-        if (this.WeatherForecasts.Count() &gt; 0)
+        <span style="color:#569CD6;">var</span> record = <span style="color:#569CD6;">new</span> WeatherForecast();
+        <span style="color:#569CD6;">if</span> (<span style="color:#569CD6;">this</span>.WeatherForecasts.Count() &gt; <span style="color:#B5CEA8;">0</span>)
         {
-            var ran = new Random().Next(0, WeatherForecasts.Count());
-            return this.WeatherForecasts.Skip(ran).FirstOrDefault();
+            <span style="color:#569CD6;">var</span> ran = <span style="color:#569CD6;">new</span> Random().Next(<span style="color:#B5CEA8;">0</span>, WeatherForecasts.Count());
+            <span style="color:#569CD6;">return</span> <span style="color:#569CD6;">this</span>.WeatherForecasts.Skip(ran).FirstOrDefault();
         }
-        return null;
+        <span style="color:#569CD6;">return</span> <span style="color:#569CD6;">null</span>;
     }
 
-    private static WeatherTestDataProvider? _weatherTestData;
+    <span style="color:#569CD6;">private</span> <span style="color:#569CD6;">static</span> WeatherTestDataProvider? _weatherTestData;
 
-    public static WeatherTestDataProvider Instance()
+    <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">static</span> WeatherTestDataProvider Instance()
     {
-        if (_weatherTestData is null)
-            _weatherTestData = new WeatherTestDataProvider();
+        <span style="color:#569CD6;">if</span> (_weatherTestData <span style="color:#569CD6;">is</span> <span style="color:#569CD6;">null</span>)
+            _weatherTestData = <span style="color:#569CD6;">new</span> WeatherTestDataProvider();
 
-        return _weatherTestData;
+        <span style="color:#569CD6;">return</span> _weatherTestData;
     }
 
-    public static readonly string[] Summaries = new[]
+    <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">static</span> <span style="color:#569CD6;">readonly</span> <span style="color:#569CD6;">string</span>[] Summaries = <span style="color:#569CD6;">new</span>[]
     {
-        &quot;Freezing&quot;, &quot;Bracing&quot;, &quot;Chilly&quot;, &quot;Cool&quot;, &quot;Mild&quot;, &quot;Warm&quot;, &quot;Balmy&quot;, &quot;Hot&quot;, &quot;Sweltering&quot;, &quot;Scorching&quot;
+        <span style="color:#D69D85;">&quot;Freezing&quot;</span>, <span style="color:#D69D85;">&quot;Bracing&quot;</span>, <span style="color:#D69D85;">&quot;Chilly&quot;</span>, <span style="color:#D69D85;">&quot;Cool&quot;</span>, <span style="color:#D69D85;">&quot;Mild&quot;</span>, <span style="color:#D69D85;">&quot;Warm&quot;</span>, <span style="color:#D69D85;">&quot;Balmy&quot;</span>, <span style="color:#D69D85;">&quot;Hot&quot;</span>, <span style="color:#D69D85;">&quot;Sweltering&quot;</span>, <span style="color:#D69D85;">&quot;Scorching&quot;</span>
     };
 
 }
-</code></pre>
+</pre></div>
 <p>The <code>DbContext</code>.</p>
-<pre><code class="language-csharp">public sealed class InMemoryWeatherDbContext
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+<span style="color:#569CD6;">public</span> <span style="color:#569CD6;">sealed</span> <span style="color:#569CD6;">class</span> InMemoryWeatherDbContext
     : DbContext
 {
-    public DbSet&lt;WeatherForecast&gt; WeatherForecast { get; set; } = default!;
-    public InMemoryWeatherDbContext(DbContextOptions&lt;InMemoryWeatherDbContext&gt; options) : base(options) { }
+    <span style="color:#569CD6;">public</span> DbSet&lt;WeatherForecast&gt; WeatherForecast { <span style="color:#569CD6;">get</span>; <span style="color:#569CD6;">set</span>; } = <span style="color:#569CD6;">default</span>!;
+    <span style="color:#569CD6;">public</span> InMemoryWeatherDbContext(DbContextOptions&lt;InMemoryWeatherDbContext&gt; options) : <span style="color:#569CD6;">base</span>(options) { }
 
-    protected override void OnModelCreating(ModelBuilder modelBuilder)
-        =&gt; modelBuilder.Entity&lt;WeatherForecast&gt;().ToTable(&quot;WeatherForecast&quot;);
+    <span style="color:#569CD6;">protected</span> <span style="color:#569CD6;">override</span> <span style="color:#569CD6;">void</span> OnModelCreating(ModelBuilder modelBuilder)
+        =&gt; modelBuilder.Entity&lt;WeatherForecast&gt;().ToTable(<span style="color:#D69D85;">&quot;WeatherForecast&quot;</span>);
 }
-</code></pre>
-</div></div></div></body></html>
+</pre></div></div></div></div></body></html>
 
 
 

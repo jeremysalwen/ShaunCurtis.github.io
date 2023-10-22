@@ -170,19 +170,20 @@ info: Microsoft.Hosting.Lifetime[0]
 <p><img src="./assets/Blazor-App/Base-modified-Template-Run.png" alt="Base Template" /></p>
 <p>Hot reload is working. We have a running Razor web application.</p>
 <p>To wrap up this section, let's take a quick look at <code>Program</code>.</p>
-<pre><code class="language-csharp">// Initialise the WebApplication Builder
-var builder = WebApplication.CreateBuilder(args);
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+<span style="color:#57A64A;">// Initialise the WebApplication Builder</span>
+<span style="color:#569CD6;">var</span> builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
+<span style="color:#57A64A;">// Add services to the container.</span>
 builder.Services.AddRazorPages();
 
-// Build the App from the builder
-var app = builder.Build();
+<span style="color:#57A64A;">// Build the App from the builder</span>
+<span style="color:#569CD6;">var</span> app = builder.Build();
 
-// Configure the HTTP request pipeline.
-if (!app.Environment.IsDevelopment())
+<span style="color:#57A64A;">// Configure the HTTP request pipeline.</span>
+<span style="color:#569CD6;">if</span> (!app.Environment.IsDevelopment())
 {
-    app.UseExceptionHandler(&quot;/Error&quot;);
+    app.UseExceptionHandler(<span style="color:#D69D85;">&quot;/Error&quot;</span>);
     app.UseHsts();
 }
 app.UseHttpsRedirection();
@@ -191,9 +192,9 @@ app.UseRouting();
 app.UseAuthorization();
 app.MapRazorPages();
 
-// Run the Application
+<span style="color:#57A64A;">// Run the Application</span>
 app.Run();
-</code></pre>
+</pre></div>
 <p>This:</p>
 <ol>
 <li>Creates an instance of the <code>WebApplicationBuilder</code> class.</li>
@@ -205,31 +206,32 @@ app.Run();
 <h2 id="adding-a-blazor-component-to-a-razor-page">Adding a Blazor Component to a Razor Page</h2>
 <p>Add a <em>Components</em> folder and a <em>/Component/HelloBlazor.razor</em> component file.</p>
 <p>It just displays a message and the time.  We use the time so we can easily see if updates happen and when render events occur.</p>
-<pre><code class="language-csharp">@inherits ComponentBase
-@namespace Blazr
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+@inherits ComponentBase
+@<span style="color:#569CD6;">namespace</span> Blazr
 
 &lt;div&gt;
     &lt;h1&gt;Hello Blazor at @(time.ToLongTimeString())&lt;/h1&gt;
-    &lt;div class=&quot;m-3&quot;&gt;
-        Todays Message is : @Message
+    &lt;div <span style="color:#569CD6;">class</span>=<span style="color:#D69D85;">&quot;m-3&quot;</span>&gt;
+        Todays Message <span style="color:#569CD6;">is</span> : @Message
     &lt;/div&gt;
-    &lt;div class=&quot;m-3&quot;&gt;
-        &lt;button class=&quot;btn btn-primary&quot; @onclick=&quot;GetTime&quot;&gt;Set Time&lt;/button&gt;
+    &lt;div <span style="color:#569CD6;">class</span>=<span style="color:#D69D85;">&quot;m-3&quot;</span>&gt;
+        &lt;button <span style="color:#569CD6;">class</span>=<span style="color:#D69D85;">&quot;btn btn-primary&quot;</span> @onclick=<span style="color:#D69D85;">&quot;GetTime&quot;</span>&gt;Set Time&lt;/button&gt;
     &lt;/div&gt;
 &lt;/div&gt;
 
 @code {
-    [Parameter] public string Message {get; set;} = string.Empty;
+    [Parameter] <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">string</span> Message {<span style="color:#569CD6;">get</span>; <span style="color:#569CD6;">set</span>;} = <span style="color:#569CD6;">string</span>.Empty;
 
-    private DateTime time = DateTime.Now;
+    <span style="color:#569CD6;">private</span> DateTime time = DateTime.Now;
 
-    protected override void OnInitialized() 
+    <span style="color:#569CD6;">protected</span> <span style="color:#569CD6;">override</span> <span style="color:#569CD6;">void</span> OnInitialized() 
         =&gt;  time = DateTime.Now;
 
-    private void GetTime() 
+    <span style="color:#569CD6;">private</span> <span style="color:#569CD6;">void</span> GetTime() 
         =&gt; time = DateTime.Now;
 }
-</code></pre>
+</pre></div>
 <p>Add a <em>Component.cshtml</em> to <em>Pages</em>.</p>
 <pre><code>@page
 @{
@@ -244,20 +246,22 @@ app.Run();
 &lt;/div&gt;
 </code></pre>
 <p>In <em>_layout.cshtml</em> add a new top menu item:</p>
-<pre><code class="language-html">    &lt;li class=&quot;nav-item&quot;&gt;
-        &lt;a class=&quot;nav-link text-dark&quot; asp-area=&quot;&quot; asp-page=&quot;/Component&quot;&gt;Component&lt;/a&gt;
-    &lt;/li&gt;
-</code></pre>
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+    <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">li</span> <span style="color:#FF0000;">class</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;nav-item&quot;</span><span style="color:#569CD6;">&gt;</span>
+        <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">a</span> <span style="color:#FF0000;">class</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;nav-link text-dark&quot;</span> <span style="color:#FF0000;">asp-area</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;&quot; asp-page=&quot;/Component&quot;</span><span style="color:#569CD6;">&gt;</span>Component<span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">a</span><span style="color:#569CD6;">&gt;</span>
+    <span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">li</span><span style="color:#569CD6;">&gt;</span>
+</pre></div>
 <p>You should now be able to navigate to <em>Component</em> and see the page render.  Click on the button and,  nothing happens.</p>
 <p>We have a component that is statically rendered by the server.  However, there's no Blazor services configured.  Open Developer tools and you will see a JS error.</p>
 <p><img src="./assets/Blazor-App/blazor-server-js-error.png" alt="JS Error" /></p>
 <p>The Server has pre-rendered the component and then passed the generated markup to the browser.  What is failing is the Blazor Server JS code.  There's no <em>_framework/blazor.server.js</em> to download.</p>
 <h2 id="configuring-the-server-to-run-the-blazor-services">Configuring the Server to run the Blazor Services</h2>
 <p>First we add the Blazor server-side services.  Update <code>Program</code>:</p>
-<pre><code class="language-csharp">// Add services to the container.
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+<span style="color:#57A64A;">// Add services to the container.</span>
 builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
-</code></pre>
+</pre></div>
 <p>Now check the browser and you will see two errors.  <em>blazor.server.js</em> is now available to download, but it can't run because there's no Blazor Hub Middleware running on the server to service the SignalR requests.</p>
 <p>Now add the BlazorHub middleware to <code>Program</code>:</p>
 <pre><code>app.MapRazorPages();
@@ -267,10 +271,11 @@ app.MapBlazorHub();
 <p>Go to <em>HelloBlazor.razor</em> and note that VS Code is have trouble recognising <code>@onclick</code>.  We need <em>Microsoft.AspNetCore.Components.Web</em> to sort that.</p>
 <p><img src="./assets/Blazor-App/Component-No-Library.png" alt="onclick Error" /></p>
 <p>Update <em>HelloBlazor.razor</em> by adding a using to the top of the file.</p>
-<pre><code class="language-csharp">@inherits ComponentBase
-@namespace Components
-@using Microsoft.AspNetCore.Components.Web  // New
-</code></pre>
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+@inherits ComponentBase
+@<span style="color:#569CD6;">namespace</span> Components
+@<span style="color:#569CD6;">using</span> Microsoft.AspNetCore.Components.Web  <span style="color:#57A64A;">// New</span>
+</pre></div>
 <p><img src="./assets/Blazor-App/Component-With-Library.png" alt="onclick Error" /></p>
 <p>The button now works and updates the time.</p>
 <p><img src="./assets/Blazor-App/Blazor-Component.png" alt="Base Template" /></p>
@@ -279,119 +284,125 @@ app.MapBlazorHub();
 <p>Components running in a Razor page isn't a Single Page Application.  Or is it?</p>
 <p>Before we build the full version - as in the Blazor templates - we'll build a very simple SPA.</p>
 <p>Add a <em>_Imports.razor</em> file to the project root and add the following code.  This sets up the global assemblies for all razor components.</p>
-<pre><code class="language-csharp">@using System.Net.Http
-@using Microsoft.AspNetCore.Authorization
-@using Microsoft.AspNetCore.Components.Authorization
-@using Microsoft.AspNetCore.Components.Forms
-@using Microsoft.AspNetCore.Components.Routing
-@using Microsoft.AspNetCore.Components.Web
-@using Microsoft.AspNetCore.Components.Web.Virtualization
-@using Microsoft.JSInterop
-</code></pre>
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+@<span style="color:#569CD6;">using</span> System.Net.Http
+@<span style="color:#569CD6;">using</span> Microsoft.AspNetCore.Authorization
+@<span style="color:#569CD6;">using</span> Microsoft.AspNetCore.Components.Authorization
+@<span style="color:#569CD6;">using</span> Microsoft.AspNetCore.Components.Forms
+@<span style="color:#569CD6;">using</span> Microsoft.AspNetCore.Components.Routing
+@<span style="color:#569CD6;">using</span> Microsoft.AspNetCore.Components.Web
+@<span style="color:#569CD6;">using</span> Microsoft.AspNetCore.Components.Web.Virtualization
+@<span style="color:#569CD6;">using</span> Microsoft.JSInterop
+</pre></div>
 <p>Add a <em>Routes</em> folder to the project and add the following razor components:</p>
 <p><em>/Routes/Index.razor</em></p>
-<pre><code class="language-csharp">@namespace Blazr
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+@<span style="color:#569CD6;">namespace</span> Blazr
 
 &lt;PageTitle&gt;Index&lt;/PageTitle&gt;
 
 &lt;h1&gt;Hello, world!&lt;/h1&gt;
 
-Welcome to your new app.
-</code></pre>
+Welcome to your <span style="color:#569CD6;">new</span> app.
+</pre></div>
 <p><em>/Routes/Counter.razor</em></p>
-<pre><code class="language-csharp">@namespace Blazr
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+@<span style="color:#569CD6;">namespace</span> Blazr
 
 &lt;PageTitle&gt;Counter&lt;/PageTitle&gt;
 
 &lt;h1&gt;Counter&lt;/h1&gt;
 
-&lt;p role=&quot;status&quot;&gt;Current count: @currentCount&lt;/p&gt;
+&lt;p role=<span style="color:#D69D85;">&quot;status&quot;</span>&gt;Current count: @currentCount&lt;/p&gt;
 
-&lt;button class=&quot;btn btn-primary&quot; @onclick=&quot;IncrementCount&quot;&gt;Click me&lt;/button&gt;
+&lt;button <span style="color:#569CD6;">class</span>=<span style="color:#D69D85;">&quot;btn btn-primary&quot;</span> @onclick=<span style="color:#D69D85;">&quot;IncrementCount&quot;</span>&gt;Click me&lt;/button&gt;
 
 @code {
-    private int currentCount = 0;
+    <span style="color:#569CD6;">private</span> <span style="color:#569CD6;">int</span> currentCount = <span style="color:#B5CEA8;">0</span>;
 
-    private void IncrementCount()
+    <span style="color:#569CD6;">private</span> <span style="color:#569CD6;">void</span> IncrementCount()
      =&gt;  currentCount++;
 }
-</code></pre>
+</pre></div>
 <p><em>/Routes/Hello.razor</em></p>
-<pre><code class="language-csharp">@namespace Blazr
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+@<span style="color:#569CD6;">namespace</span> Blazr
 
 &lt;HelloBlazor&gt;&lt;/HelloBlazor&gt;
-</code></pre>
+</pre></div>
 <p>Add an <em>Apps</em> folder and add:</p>
 <p><em>/Apps/BaseApp.razor</em></p>
-<pre><code class="language-html">@using Microsoft.AspNetCore.Components;
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+@using Microsoft.AspNetCore.Components;
 @using Microsoft.AspNetCore.Components.Rendering;
 @using Microsoft.AspNetCore.Components.Web;
 
 @namespace Blazr
 
-&lt;nav class=&quot;navbar navbar-expand-lg navbar-light bg-light&quot;&gt;
-    &lt;div class=&quot;container-fluid&quot;&gt;
-        &lt;h2 class=&quot;navbar-brand&quot;&gt;Blazor Simple App&lt;/h2&gt;
-        &lt;div class=&quot;collapse navbar-collapse&quot; id=&quot;navbarSupportedContent&quot;&gt;
-            &lt;ul class=&quot;navbar-nav me-auto mb-2 mb-lg-0&quot;&gt;
-                &lt;li class=&quot;nav-item&quot;&gt;
-                    &lt;a class=&quot; btn nav-link&quot; @onclick='() =&gt; this.ChangeRootComponent(&quot;Index&quot;)'&gt;Index&lt;/a&gt;
-                &lt;/li&gt;
-                &lt;li class=&quot;nav-item&quot;&gt;
-                    &lt;a class=&quot;btn nav-link&quot; @onclick='() =&gt; this.ChangeRootComponent(&quot;Counter&quot;)'&gt;Counter&lt;/a&gt;
-                &lt;/li&gt;
-                &lt;li class=&quot;nav-item&quot;&gt;
-                    &lt;a class=&quot;btn nav-link&quot; @onclick='() =&gt; this.ChangeRootComponent(&quot;Hello&quot;)'&gt;Hello&lt;/a&gt;
-                &lt;/li&gt;
-                &lt;li class=&quot;nav-item&quot;&gt;
-                    &lt;a class=&quot;btn nav-link &quot; @onclick=&quot;this.GoServerIndex&quot;&gt;Server Home&lt;/a&gt;
-                &lt;/li&gt;
-            &lt;/ul&gt;
-        &lt;/div&gt;
-    &lt;/div&gt;
-&lt;/nav&gt;
-&lt;div class=&quot;ms-5&quot;&gt;
+<span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">nav</span> <span style="color:#FF0000;">class</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;navbar navbar-expand-lg navbar-light bg-light&quot;</span><span style="color:#569CD6;">&gt;</span>
+    <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">div</span> <span style="color:#FF0000;">class</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;container-fluid&quot;</span><span style="color:#569CD6;">&gt;</span>
+        <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">h2</span> <span style="color:#FF0000;">class</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;navbar-brand&quot;</span><span style="color:#569CD6;">&gt;</span>Blazor Simple App<span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">h2</span><span style="color:#569CD6;">&gt;</span>
+        <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">div</span> <span style="color:#FF0000;">class</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;collapse navbar-collapse&quot;</span> <span style="color:#FF0000;">id</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;navbarSupportedContent&quot;</span><span style="color:#569CD6;">&gt;</span>
+            <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">ul</span> <span style="color:#FF0000;">class</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;navbar-nav me-auto mb-2 mb-lg-0&quot;</span><span style="color:#569CD6;">&gt;</span>
+                <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">li</span> <span style="color:#FF0000;">class</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;nav-item&quot;</span><span style="color:#569CD6;">&gt;</span>
+                    &lt;a class=&quot; btn nav-link&quot; @onclick=&#39;() =&gt; this.ChangeRootComponent(&quot;Index&quot;)&#39;&gt;Index<span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">a</span><span style="color:#569CD6;">&gt;</span>
+                <span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">li</span><span style="color:#569CD6;">&gt;</span>
+                <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">li</span> <span style="color:#FF0000;">class</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;nav-item&quot;</span><span style="color:#569CD6;">&gt;</span>
+                    &lt;a class=&quot;btn nav-link&quot; @onclick=&#39;() =&gt; this.ChangeRootComponent(&quot;Counter&quot;)&#39;&gt;Counter<span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">a</span><span style="color:#569CD6;">&gt;</span>
+                <span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">li</span><span style="color:#569CD6;">&gt;</span>
+                <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">li</span> <span style="color:#FF0000;">class</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;nav-item&quot;</span><span style="color:#569CD6;">&gt;</span>
+                    &lt;a class=&quot;btn nav-link&quot; @onclick=&#39;() =&gt; this.ChangeRootComponent(&quot;Hello&quot;)&#39;&gt;Hello<span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">a</span><span style="color:#569CD6;">&gt;</span>
+                <span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">li</span><span style="color:#569CD6;">&gt;</span>
+                <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">li</span> <span style="color:#FF0000;">class</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;nav-item&quot;</span><span style="color:#569CD6;">&gt;</span>
+                    <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">a</span> <span style="color:#FF0000;">class</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;btn nav-link &quot; @onclick=&quot;this.GoServerIndex&quot;</span><span style="color:#569CD6;">&gt;</span>Server Home<span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">a</span><span style="color:#569CD6;">&gt;</span>
+                <span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">li</span><span style="color:#569CD6;">&gt;</span>
+            <span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">ul</span><span style="color:#569CD6;">&gt;</span>
+        <span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">div</span><span style="color:#569CD6;">&gt;</span>
+    <span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">div</span><span style="color:#569CD6;">&gt;</span>
+<span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">nav</span><span style="color:#569CD6;">&gt;</span>
+<span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">div</span> <span style="color:#FF0000;">class</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;ms-5&quot;</span><span style="color:#569CD6;">&gt;</span>
     @body
-&lt;/div&gt;
-</code></pre>
-<pre><code class="language-csharp">@code {
-    [Inject] private NavigationManager? NavManager { get; set; }
+<span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">div</span><span style="color:#569CD6;">&gt;</span>
+</pre></div><div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+@code {
+    [Inject] <span style="color:#569CD6;">private</span> NavigationManager? NavManager { <span style="color:#569CD6;">get</span>; <span style="color:#569CD6;">set</span>; }
 
-    private Dictionary&lt;string, Type&gt; Routes =&gt; new Dictionary&lt;string, Type&gt; {
-        {&quot;Index&quot;, typeof(Blazr.Index)},
-        {&quot;Counter&quot;, typeof(Blazr.Counter)},
-        {&quot;Hello&quot;, typeof(Blazr.Hello)}
+    <span style="color:#569CD6;">private</span> Dictionary&lt;<span style="color:#569CD6;">string</span>, Type&gt; Routes =&gt; <span style="color:#569CD6;">new</span> Dictionary&lt;<span style="color:#569CD6;">string</span>, Type&gt; {
+        {<span style="color:#D69D85;">&quot;Index&quot;</span>, <span style="color:#569CD6;">typeof</span>(Blazr.Index)},
+        {<span style="color:#D69D85;">&quot;Counter&quot;</span>, <span style="color:#569CD6;">typeof</span>(Blazr.Counter)},
+        {<span style="color:#D69D85;">&quot;Hello&quot;</span>, <span style="color:#569CD6;">typeof</span>(Blazr.Hello)}
     };
 
-    private Type rootComponent = typeof(Blazr.Index);
+    <span style="color:#569CD6;">private</span> Type rootComponent = <span style="color:#569CD6;">typeof</span>(Blazr.Index);
 
-    private RenderFragment body =&gt; (RenderTreeBuilder builder) =&gt;
+    <span style="color:#569CD6;">private</span> RenderFragment body =&gt; (RenderTreeBuilder builder) =&gt;
     {
-        builder.OpenComponent(0, rootComponent);
+        builder.OpenComponent(<span style="color:#B5CEA8;">0</span>, rootComponent);
         builder.CloseComponent();
     };
 
-    public void ChangeRootComponent(string route)
+    <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">void</span> ChangeRootComponent(<span style="color:#569CD6;">string</span> route)
     {
-        if (Routes.ContainsKey(route))
+        <span style="color:#569CD6;">if</span> (Routes.ContainsKey(route))
         {
             rootComponent = Routes[route];
             StateHasChanged();
         }
     }
 
-    public void GoServerIndex()
-    =&gt; this.NavManager?.NavigateTo(&quot;/Index&quot;, true);
+    <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">void</span> GoServerIndex()
+    =&gt; <span style="color:#569CD6;">this</span>.NavManager?.NavigateTo(<span style="color:#D69D85;">&quot;/Index&quot;</span>, <span style="color:#569CD6;">true</span>);
 }
-</code></pre>
+</pre></div>
 <p><code>rootComponent</code> is the <code>Type</code> of component to render: the default is <code>Index.razor</code>.  The Nav bar calls <code>ChangeRootComponent</code> which changes <code>rootComponent</code> and requests a component re-render by calling <code>StateHasChanged</code>.</p>
 <p><code>body</code> is a <code>RenderFragment</code> that simply adds <code>rootComponent</code> to the render tree and renders it.  In practice we would check that <code>rootComponent</code> implements <code>IComponent</code>: all components must implement <code>IComponent</code>.  I haven't implemented the code to keep things simple and easy to read.</p>
 <p><code>GoHome</code> uses the <code>NavigationManager</code> to trigger a full browser reload, and thus loads the default server page.</p>
 <p>Add a link to <em>_Layout.cshtml</em></p>
-<pre><code class="language-html">    &lt;li class=&quot;nav-item&quot;&gt;
-        &lt;a class=&quot;nav-link text-dark&quot; asp-area=&quot;&quot; asp-page=&quot;/SimpleBlazor&quot;&gt;Blazor Simple App&lt;/a&gt;
-    &lt;/li&gt;
-</code></pre>
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+    <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">li</span> <span style="color:#FF0000;">class</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;nav-item&quot;</span><span style="color:#569CD6;">&gt;</span>
+        <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">a</span> <span style="color:#FF0000;">class</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;nav-link text-dark&quot;</span> <span style="color:#FF0000;">asp-area</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;&quot; asp-page=&quot;/SimpleBlazor&quot;</span><span style="color:#569CD6;">&gt;</span>Blazor Simple App<span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">a</span><span style="color:#569CD6;">&gt;</span>
+    <span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">li</span><span style="color:#569CD6;">&gt;</span>
+</pre></div>
 <p>Add <em>/Pages/SimpleBlazor.cshtml</em></p>
 <pre><code>@page
 @{
@@ -436,109 +447,115 @@ Welcome to your new app.
 <p>This is the standard Blazor site file renamed.</p>
 <h3 id="app-component">App Component</h3>
 <p>Add <em>/Apps/App.razor</em> and add the out-of-the-box code.</p>
-<pre><code class="language-csharp">@namespace Blazr
-&lt;Router AppAssembly=&quot;@typeof(App).Assembly&quot;&gt;
-    &lt;Found Context=&quot;routeData&quot;&gt;
-        &lt;RouteView RouteData=&quot;@routeData&quot; DefaultLayout=&quot;@typeof(MainLayout)&quot; /&gt;
-        &lt;FocusOnNavigate RouteData=&quot;@routeData&quot; Selector=&quot;h1&quot; /&gt;
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+@<span style="color:#569CD6;">namespace</span> Blazr
+&lt;Router AppAssembly=<span style="color:#D69D85;">&quot;@typeof(App).Assembly&quot;</span>&gt;
+    &lt;Found Context=<span style="color:#D69D85;">&quot;routeData&quot;</span>&gt;
+        &lt;RouteView RouteData=<span style="color:#D69D85;">&quot;@routeData&quot;</span> DefaultLayout=<span style="color:#D69D85;">&quot;@typeof(MainLayout)&quot;</span> /&gt;
+        &lt;FocusOnNavigate RouteData=<span style="color:#D69D85;">&quot;@routeData&quot;</span> Selector=<span style="color:#D69D85;">&quot;h1&quot;</span> /&gt;
     &lt;/Found&gt;
     &lt;NotFound&gt;
         &lt;PageTitle&gt;Not found&lt;/PageTitle&gt;
-        &lt;LayoutView Layout=&quot;@typeof(MainLayout)&quot;&gt;
-            &lt;p role=&quot;alert&quot;&gt;Sorry, there's nothing at this address.&lt;/p&gt;
+        &lt;LayoutView Layout=<span style="color:#D69D85;">&quot;@typeof(MainLayout)&quot;</span>&gt;
+            &lt;p role=<span style="color:#D69D85;">&quot;alert&quot;</span>&gt;Sorry, there&#39;s nothing at <span style="color:#569CD6;">this</span> address.&lt;/p&gt;
         &lt;/LayoutView&gt;
     &lt;/NotFound&gt;
 &lt;/Router&gt;
-</code></pre>
-<h3 id="routing">Routing</h3>
+</pre></div><h3 id="routing">Routing</h3>
 <p>For routing to work, we need to add router page attributes to components we want the Router to treat as routes.</p>
 <p>Update the following components, adding a page route.  A component can have more than one route.</p>
 <p><em>Routes/Index.razor</em></p>
-<pre><code class="language-html">@page &quot;/&quot;
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+@page &quot;/&quot;
 @page &quot;/App&quot;
 ......
-</code></pre>
+</pre></div>
 <p><em>Routes/Counter.razor</em></p>
-<pre><code class="language-html">@page &quot;/Counter&quot;
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+@page &quot;/Counter&quot;
 ......
-</code></pre>
+</pre></div>
 <p><em>Routes/Hello.razor</em></p>
-<pre><code class="language-html">@page &quot;/Hello&quot;
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+@page &quot;/Hello&quot;
 ......
-</code></pre>
-<h3 id="razor-server-side-pages">Razor Server-Side Pages</h3>
+</pre></div><h3 id="razor-server-side-pages">Razor Server-Side Pages</h3>
 <p>Add <em>/Pages/Shared/_AppLayout.cshtml</em>.</p>
 <p>This is the Blazor Server launch page, with a tweeked stylesheet setup.</p>
-<pre><code class="language-html">@using Microsoft.AspNetCore.Components.Web
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+@using Microsoft.AspNetCore.Components.Web
 @namespace Layouts
 @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 
-&lt;!DOCTYPE html&gt;
-&lt;html lang=&quot;en&quot;&gt;
-&lt;head&gt;
-    &lt;meta charset=&quot;utf-8&quot; /&gt;
-    &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1.0&quot; /&gt;
-    &lt;base href=&quot;~/&quot; /&gt;
-    &lt;link rel=&quot;stylesheet&quot; href=&quot;~/lib/bootstrap/dist/css/bootstrap.min.css&quot; /&gt;
-    &lt;link href=&quot;css/blazor-site.css&quot; rel=&quot;stylesheet&quot; /&gt;
-    &lt;link href=&quot;BlazorServer.styles.css&quot; rel=&quot;stylesheet&quot; /&gt;
-    &lt;component type=&quot;typeof(HeadOutlet)&quot; render-mode=&quot;ServerPrerendered&quot; /&gt;
-&lt;/head&gt;
-&lt;body&gt;
+<span style="color:#569CD6;">&lt;!</span><span style="color:#A31515;">DOCTYPE</span> <span style="color:#FF0000;">html</span><span style="color:#569CD6;">&gt;</span>
+<span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">html</span> <span style="color:#FF0000;">lang</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;en&quot;</span><span style="color:#569CD6;">&gt;</span>
+<span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">head</span><span style="color:#569CD6;">&gt;</span>
+    <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">meta</span> <span style="color:#FF0000;">charset</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;utf-8&quot;</span> <span style="color:#569CD6;">/&gt;</span>
+    <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">meta</span> <span style="color:#FF0000;">name</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;viewport&quot;</span> <span style="color:#FF0000;">content</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;width=device-width, initial-scale=1.0&quot;</span> <span style="color:#569CD6;">/&gt;</span>
+    <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">base</span> <span style="color:#FF0000;">href</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;~/&quot;</span> <span style="color:#569CD6;">/&gt;</span>
+    <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">link</span> <span style="color:#FF0000;">rel</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;stylesheet&quot;</span> <span style="color:#FF0000;">href</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;~/lib/bootstrap/dist/css/bootstrap.min.css&quot;</span> <span style="color:#569CD6;">/&gt;</span>
+    <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">link</span> <span style="color:#FF0000;">href</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;css/blazor-site.css&quot;</span> <span style="color:#FF0000;">rel</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;stylesheet&quot;</span> <span style="color:#569CD6;">/&gt;</span>
+    <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">link</span> <span style="color:#FF0000;">href</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;BlazorServer.styles.css&quot;</span> <span style="color:#FF0000;">rel</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;stylesheet&quot;</span> <span style="color:#569CD6;">/&gt;</span>
+    <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">component</span> <span style="color:#FF0000;">type</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;typeof(HeadOutlet)&quot;</span> <span style="color:#FF0000;">render-mode</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;ServerPrerendered&quot;</span> <span style="color:#569CD6;">/&gt;</span>
+<span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">head</span><span style="color:#569CD6;">&gt;</span>
+<span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">body</span><span style="color:#569CD6;">&gt;</span>
     @RenderBody()
 
-    &lt;div id=&quot;blazor-error-ui&quot;&gt;
-        &lt;environment include=&quot;Staging,Production&quot;&gt;
+    <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">div</span> <span style="color:#FF0000;">id</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;blazor-error-ui&quot;</span><span style="color:#569CD6;">&gt;</span>
+        <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">environment</span> <span style="color:#FF0000;">include</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;Staging,Production&quot;</span><span style="color:#569CD6;">&gt;</span>
             An error has occurred. This application may no longer respond until reloaded.
-        &lt;/environment&gt;
-        &lt;environment include=&quot;Development&quot;&gt;
+        <span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">environment</span><span style="color:#569CD6;">&gt;</span>
+        <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">environment</span> <span style="color:#FF0000;">include</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;Development&quot;</span><span style="color:#569CD6;">&gt;</span>
             An unhandled exception has occurred. See browser dev tools for details.
-        &lt;/environment&gt;
-        &lt;a href=&quot;&quot; class=&quot;reload&quot;&gt;Reload&lt;/a&gt;
-        &lt;a class=&quot;dismiss&quot;&gt;🗙&lt;/a&gt;
-    &lt;/div&gt;
+        <span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">environment</span><span style="color:#569CD6;">&gt;</span>
+        <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">a</span> <span style="color:#FF0000;">href</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;&quot; class=&quot;reload&quot;</span><span style="color:#569CD6;">&gt;</span>Reload<span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">a</span><span style="color:#569CD6;">&gt;</span>
+        <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">a</span> <span style="color:#FF0000;">class</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;dismiss&quot;</span><span style="color:#569CD6;">&gt;</span>&#128473;<span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">a</span><span style="color:#569CD6;">&gt;</span>
+    <span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">div</span><span style="color:#569CD6;">&gt;</span>
 
-    &lt;script src=&quot;_framework/blazor.server.js&quot;&gt;&lt;/script&gt;
-&lt;/body&gt;
-&lt;/html&gt;
-</code></pre>
+    <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">script</span> <span style="color:#FF0000;">src</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;_framework/blazor.server.js&quot;</span><span style="color:#569CD6;">&gt;</span><span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">script</span><span style="color:#569CD6;">&gt;</span>
+<span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">body</span><span style="color:#569CD6;">&gt;</span>
+<span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">html</span><span style="color:#569CD6;">&gt;</span>
+</pre></div>
 <p>Add <em>/Pages/App.cshtml</em>.</p>
 <p>This is the Blazor App launch page.  We specify <code>Blazor.App</code> as the launch class i.e. <em>App.razor</em>.</p>
-<pre><code class="language-html">@page 
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+@page 
 @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 @{
     Layout = &quot;_AppLayout&quot;;
 }
 
-&lt;component type=&quot;typeof(Blazr.App)&quot; render-mode=&quot;ServerPrerendered&quot; /&gt;
+<span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">component</span> <span style="color:#FF0000;">type</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;typeof(Blazr.App)&quot;</span> <span style="color:#FF0000;">render-mode</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;ServerPrerendered&quot;</span> <span style="color:#569CD6;">/&gt;</span>
 
-</code></pre>
-<h3 id="navigation-changes">Navigation Changes</h3>
+</pre></div><h3 id="navigation-changes">Navigation Changes</h3>
 <p>Update <em>/Routes/Shared/NavMenu.razor</em></p>
 <p>Add a new NavLink.</p>
-<pre><code class="language-html">    &lt;div class=&quot;nav-item px-3&quot;&gt;
-        &lt;NavLink class=&quot;btn nav-link&quot; @onclick=&quot;GoServerIndex&quot;&gt;
-            &lt;span class=&quot;oi oi-list-rich&quot; aria-hidden=&quot;true&quot;&gt;&lt;/span&gt; Server Home
-        &lt;/NavLink&gt;
-    &lt;/div&gt;
-</code></pre>
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+    <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">div</span> <span style="color:#FF0000;">class</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;nav-item px-3&quot;</span><span style="color:#569CD6;">&gt;</span>
+        <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">NavLink</span> <span style="color:#FF0000;">class</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;btn nav-link&quot; @onclick=&quot;GoServerIndex&quot;</span><span style="color:#569CD6;">&gt;</span>
+            <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">span</span> <span style="color:#FF0000;">class</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;oi oi-list-rich&quot;</span> <span style="color:#FF0000;">aria-hidden</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;true&quot;</span><span style="color:#569CD6;">&gt;</span><span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">span</span><span style="color:#569CD6;">&gt;</span> Server Home
+        <span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">NavLink</span><span style="color:#569CD6;">&gt;</span>
+    <span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">div</span><span style="color:#569CD6;">&gt;</span>
+</pre></div>
 <p>And add the <code>GoServerIndex</code> method to &quot;hard&quot; navigate to the server-side home page.</p>
-<pre><code class="language-csharp">    public void GoServerIndex()
-        =&gt; this.NavManager?.NavigateTo(&quot;/Index&quot;, true);
-</code></pre>
-<h3 id="web-changes">Web Changes</h3>
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+    <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">void</span> GoServerIndex()
+        =&gt; <span style="color:#569CD6;">this</span>.NavManager?.NavigateTo(<span style="color:#D69D85;">&quot;/Index&quot;</span>, <span style="color:#569CD6;">true</span>);
+</pre></div><h3 id="web-changes">Web Changes</h3>
 <p>Add a new link to the main page navigation in <em>/Pages/Shared/_Layout.cshtml</em>.</p>
-<pre><code class="language-html">    &lt;li class=&quot;nav-item&quot;&gt;
-        &lt;a class=&quot;nav-link text-dark&quot; asp-area=&quot;&quot; asp-page=&quot;/App&quot;&gt;Blazor App&lt;/a&gt;
-    &lt;/li&gt;
-</code></pre>
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+    <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">li</span> <span style="color:#FF0000;">class</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;nav-item&quot;</span><span style="color:#569CD6;">&gt;</span>
+        <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">a</span> <span style="color:#FF0000;">class</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;nav-link text-dark&quot;</span> <span style="color:#FF0000;">asp-area</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;&quot; asp-page=&quot;/App&quot;</span><span style="color:#569CD6;">&gt;</span>Blazor App<span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">a</span><span style="color:#569CD6;">&gt;</span>
+    <span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">li</span><span style="color:#569CD6;">&gt;</span>
+</pre></div>
 <p>Add a Fallback page endpoint to <code>Program</code>.  All fallbacks are directed to the Blazor Application.</p>
-<pre><code class="language-csharp">//.....
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+<span style="color:#57A64A;">//.....</span>
 app.MapBlazorHub();
-app.MapFallbackToPage(&quot;/App&quot;);
+app.MapFallbackToPage(<span style="color:#D69D85;">&quot;/App&quot;</span>);
 
 app.Run();
-</code></pre>
+</pre></div>
 <p>You should now be able to navigate to the application and F5 to reload it.</p>
 <h3 id="section-summary-1">Section Summary</h3>
 <p>We now have a full blown Blazor Server application running with routing.  It's important to differentiate between Blazor Routing and Browser Navigation.  One way to physically detect the difference is to watch the &quot;Refresh&quot; button in the toolbar - the circle next to the forward button.  You can see it activate when you have a browser navigation event.</p>
@@ -547,31 +564,35 @@ app.Run();
 <p>The current setup has an <code>Index.cshtml</code> page with no <code>@page</code> set.  This is the default page for the site <em>https://localhost:nnnnn/</em>.</p>
 <p>If there is a Blazor route component set as <code>@page &quot;/&quot;</code> why doesn't it use it?  This is where calling Blazor components with a route attribute &quot;Pages&quot; causes confusion.  Don't call them anything but a page: Routes, RouteComponents or RouteViews.  The web server knows nothing about the Blazor Routes.  The request runs through the configured middleware pipeline in Program. In our setup <code>app.MapRazorPages()</code> maps the Razor pages in <em>Pages</em> to the web route.  If it finds an index or default web file it uses it.</p>
 <p>To understand what's happening look at the endpoint mapping in <code>Program</code></p>
-<pre><code class="language-csharp">
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+
 app.MapRazorPages();
 app.MapBlazorHub();
-app.MapFallbackToPage(&quot;/App&quot;);
+app.MapFallbackToPage(<span style="color:#D69D85;">&quot;/App&quot;</span>);
 
 app.Run();
-</code></pre>
+</pre></div>
 <p>The current <code>Index.cshtml</code> is considered a default page and MapRazorPages() returns it.</p>
 <p>To change our setup, set the page attribute on <em>Index.cshtml</em>.</p>
-<pre><code class="language-html">@page &quot;/index&quot;
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+@page &quot;/index&quot;
 @model IndexModel
-</code></pre>
+</pre></div>
 <p><code>MapRazorPages</code> now maps <code>Index.cshtml</code> to <em>https://localhost:nnnnn/Index</em> and no longer treats it as a default page.</p>
 <p>The request hits <code>app.MapFallbackToPage(&quot;/App&quot;)</code> which returns <code>App.cshtml</code> our Blazor App startup page.</p>
 <h3 id="navigation-within-a-blazor-app">Navigation within a Blazor App</h3>
 <p>So what happens if we have a link in the Blazor App that navigates to the web server <em>Index</em>?  We can see this <code>NavMenu</code>.</p>
 <p>If we were to code <code>GoServerIndex</code> like this:</p>
-<pre><code class="language-csharp">    public void GoServerIndex()
-        =&gt; this.NavManager?.NavigateTo(&quot;/Index&quot;);
-</code></pre>
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+    <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">void</span> GoServerIndex()
+        =&gt; <span style="color:#569CD6;">this</span>.NavManager?.NavigateTo(<span style="color:#D69D85;">&quot;/Index&quot;</span>);
+</pre></div>
 <p>Blazor treats the request as local so routes, rather than navigates.  The router can't find a route match so displays it's &quot;Sorry, there's nothing at this address.&quot; message.</p>
 <p>To &quot;hard&quot; navigate we need to do this:</p>
-<pre><code class="language-csharp">    public void GoServerIndex()
-        =&gt; this.NavManager?.NavigateTo(&quot;/Index&quot;, true);
-</code></pre>
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+    <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">void</span> GoServerIndex()
+        =&gt; <span style="color:#569CD6;">this</span>.NavManager?.NavigateTo(<span style="color:#D69D85;">&quot;/Index&quot;</span>, <span style="color:#569CD6;">true</span>);
+</pre></div>
 <p>This forces the <code>NavigationManager</code> to navigate, not route.</p>
 <h2 id="summary">Summary</h2>
 <p>There are a few tweeks I've made that make my implementation different from the out-of-the-box template.  These are:</p>

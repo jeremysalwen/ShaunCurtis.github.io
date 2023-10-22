@@ -130,87 +130,91 @@
 <ol>
 <li><code>AuthorizeButton</code> requires a policy.  This is the Add button at the top of the page.  We're just encapsulating specific <code>AuthorizeView</code> code into the button context.</li>
 </ol>
-<pre><code class="language-html">&lt;AuthorizeButton Policy=@AppPolicies.IsVisitor class=&quot;btn btn-success&quot; @onclick=&quot;AddRecord&quot;&gt;Add Record&lt;/AuthorizeButton&gt;
-</code></pre>
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+<span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">AuthorizeButton</span> <span style="color:#FF0000;">Policy</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">@AppPolicies.IsVisitor</span> <span style="color:#FF0000;">class</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;btn btn-success&quot; @onclick=&quot;AddRecord&quot;</span><span style="color:#569CD6;">&gt;</span>Add Record<span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">AuthorizeButton</span><span style="color:#569CD6;">&gt;</span>
+</pre></div>
 <ol start="2">
 <li><code>AuthorizeRecordButton</code> requires a policy and an <code>AppAuthFields</code> object built from a specific record.  This is the Edit button that appears in each row and uses the row record to populate the <code>AppAuthFields</code> instance.</li>
 </ol>
-<pre><code class="language-html">&lt;AuthorizeRecordButton Policy=@AppPolicies.IsEditorPolicy AuthFields=&quot;this.GetAuthFields(forecast)&quot; type=&quot;button&quot; class=&quot;btn-sm btn-primary&quot; ClickEvent=&quot;() =&gt; this.EditRecord(forecast.Id)&quot;&gt;Edit&lt;/AuthorizeRecordButton&gt;
-</code></pre>
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+<span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">AuthorizeRecordButton</span> <span style="color:#FF0000;">Policy</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">@AppPolicies.IsEditorPolicy</span> <span style="color:#FF0000;">AuthFields</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;this.GetAuthFields(forecast)&quot;</span> <span style="color:#FF0000;">type</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;button&quot;</span> <span style="color:#FF0000;">class</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;btn-sm btn-primary&quot;</span> <span style="color:#FF0000;">ClickEvent</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;() =&gt; this.EditRecord(forecast.Id)&quot;</span><span style="color:#569CD6;">&gt;</span>Edit<span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">AuthorizeRecordButton</span><span style="color:#569CD6;">&gt;</span>
+</pre></div>
 <p><code>AppAuthFields</code> provides a generic method to pass specific information into the authorization process.  We can add more fields to it as required.  We'll see how it works later.</p>
-<pre><code class="language-csharp">public record AppAuthFields
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+<span style="color:#569CD6;">public</span> record AppAuthFields
 {
-    public Guid OwnerId { get; init; }
+    <span style="color:#569CD6;">public</span> Guid OwnerId { <span style="color:#569CD6;">get</span>; init; }
 }
-</code></pre>
+</pre></div>
 <p><code>AuthorizeButton</code> looks like this.  Much of the code is pretty standard component fare, so I'll concentrate on just the authorization bit.</p>
 <p><code>OnInitialized</code> checks to ensure we have a <code>AuthTask</code> cascade i.e. we have the upstream authentication and authorization configured.  If not then it throws an exception.</p>
 <p><code>BuildRenderTree</code> calls <code>CheckPolicy()</code> to check if it should render the button.</p>
 <p><code>CheckPolicy</code> gets the authentication state and then calls <code>AuthorizeAsync</code> on the injected <code>IAuthorizationService</code>, passing in the <code>IdentityPrincipal</code> of the logging in identity, a null for the resource object (we'll come to resource objects shortly), and the policy name to apply.  If the result is <code>success</code>, it displays the button.</p>
-<pre><code class="language-csharp">public class AuthorizeButton : ComponentBase
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+<span style="color:#569CD6;">public</span> <span style="color:#569CD6;">class</span> AuthorizeButton : ComponentBase
 {
-    [Parameter] public bool Show { get; set; } = true;
-    [Parameter] public bool Disabled { get; set; } = false;
-    [Parameter] public string Policy { get; set; } = String.Empty;
-    [Parameter] public RenderFragment? ChildContent { get; set; }
-    [Parameter] public EventCallback&lt;MouseEventArgs&gt; ClickEvent { get; set; }
-    [Parameter(CaptureUnmatchedValues = true)] public IDictionary&lt;string, object&gt; SplatterAttributes { get; set; } = new Dictionary&lt;string, object&gt;();
-    [CascadingParameter] public Task&lt;AuthenticationState&gt;? AuthTask { get; set; }
+    [Parameter] <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">bool</span> Show { <span style="color:#569CD6;">get</span>; <span style="color:#569CD6;">set</span>; } = <span style="color:#569CD6;">true</span>;
+    [Parameter] <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">bool</span> Disabled { <span style="color:#569CD6;">get</span>; <span style="color:#569CD6;">set</span>; } = <span style="color:#569CD6;">false</span>;
+    [Parameter] <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">string</span> Policy { <span style="color:#569CD6;">get</span>; <span style="color:#569CD6;">set</span>; } = String.Empty;
+    [Parameter] <span style="color:#569CD6;">public</span> RenderFragment? ChildContent { <span style="color:#569CD6;">get</span>; <span style="color:#569CD6;">set</span>; }
+    [Parameter] <span style="color:#569CD6;">public</span> EventCallback&lt;MouseEventArgs&gt; ClickEvent { <span style="color:#569CD6;">get</span>; <span style="color:#569CD6;">set</span>; }
+    [Parameter(CaptureUnmatchedValues = <span style="color:#569CD6;">true</span>)] <span style="color:#569CD6;">public</span> IDictionary&lt;<span style="color:#569CD6;">string</span>, <span style="color:#569CD6;">object</span>&gt; SplatterAttributes { <span style="color:#569CD6;">get</span>; <span style="color:#569CD6;">set</span>; } = <span style="color:#569CD6;">new</span> Dictionary&lt;<span style="color:#569CD6;">string</span>, <span style="color:#569CD6;">object</span>&gt;();
+    [CascadingParameter] <span style="color:#569CD6;">public</span> Task&lt;AuthenticationState&gt;? AuthTask { <span style="color:#569CD6;">get</span>; <span style="color:#569CD6;">set</span>; }
 
-    [Inject] protected IAuthorizationService? _authorizationService { get; set; }
-    protected IAuthorizationService AuthorizationService =&gt; _authorizationService!;
+    [Inject] <span style="color:#569CD6;">protected</span> IAuthorizationService? _authorizationService { <span style="color:#569CD6;">get</span>; <span style="color:#569CD6;">set</span>; }
+    <span style="color:#569CD6;">protected</span> IAuthorizationService AuthorizationService =&gt; _authorizationService!;
 
-    protected CSSBuilder CssClass = new CSSBuilder(&quot;btn me-1&quot;);
+    <span style="color:#569CD6;">protected</span> CSSBuilder CssClass = <span style="color:#569CD6;">new</span> CSSBuilder(<span style="color:#D69D85;">&quot;btn me-1&quot;</span>);
 
-    protected override void OnInitialized()
+    <span style="color:#569CD6;">protected</span> <span style="color:#569CD6;">override</span> <span style="color:#569CD6;">void</span> OnInitialized()
     {
-        if (AuthTask is null)
-            throw new Exception($&quot;{this.GetType().FullName} must have access to cascading Paramater {nameof(AuthTask)}&quot;);
+        <span style="color:#569CD6;">if</span> (AuthTask <span style="color:#569CD6;">is</span> <span style="color:#569CD6;">null</span>)
+            <span style="color:#569CD6;">throw</span> <span style="color:#569CD6;">new</span> Exception($<span style="color:#D69D85;">&quot;{this.GetType().FullName} must have access to cascading Paramater {nameof(AuthTask)}&quot;</span>);
     }
 
-    protected override async void BuildRenderTree(RenderTreeBuilder builder)
+    <span style="color:#569CD6;">protected</span> <span style="color:#569CD6;">override</span> <span style="color:#569CD6;">async</span> <span style="color:#569CD6;">void</span> BuildRenderTree(RenderTreeBuilder builder)
     {
-        if (this.Show &amp;&amp; await this.CheckPolicy())
+        <span style="color:#569CD6;">if</span> (<span style="color:#569CD6;">this</span>.Show &amp;&amp; <span style="color:#569CD6;">await</span> <span style="color:#569CD6;">this</span>.CheckPolicy())
         {
             CssClass.AddClassFromAttributes(SplatterAttributes);
-            builder.OpenElement(0, &quot;button&quot;);
-            builder.AddMultipleAttributes(1, this.SplatterAttributes);
-            builder.AddAttribute(1, &quot;class&quot;, CssClass.Build());
+            builder.OpenElement(<span style="color:#B5CEA8;">0</span>, <span style="color:#D69D85;">&quot;button&quot;</span>);
+            builder.AddMultipleAttributes(<span style="color:#B5CEA8;">1</span>, <span style="color:#569CD6;">this</span>.SplatterAttributes);
+            builder.AddAttribute(<span style="color:#B5CEA8;">1</span>, <span style="color:#D69D85;">&quot;class&quot;</span>, CssClass.Build());
 
-            if (Disabled)
-                builder.AddAttribute(4, &quot;disabled&quot;);
+            <span style="color:#569CD6;">if</span> (Disabled)
+                builder.AddAttribute(<span style="color:#B5CEA8;">4</span>, <span style="color:#D69D85;">&quot;disabled&quot;</span>);
 
-            if (ClickEvent.HasDelegate)
-                builder.AddAttribute(5, &quot;onclick&quot;, EventCallback.Factory.Create&lt;MouseEventArgs&gt;(this, ClickEvent));
+            <span style="color:#569CD6;">if</span> (ClickEvent.HasDelegate)
+                builder.AddAttribute(<span style="color:#B5CEA8;">5</span>, <span style="color:#D69D85;">&quot;onclick&quot;</span>, EventCallback.Factory.Create&lt;MouseEventArgs&gt;(<span style="color:#569CD6;">this</span>, ClickEvent));
 
-            builder.AddContent(6, ChildContent);
+            builder.AddContent(<span style="color:#B5CEA8;">6</span>, ChildContent);
             builder.CloseElement();
         }
     }
 
-    protected virtual async Task&lt;bool&gt; CheckPolicy()
+    <span style="color:#569CD6;">protected</span> <span style="color:#569CD6;">virtual</span> <span style="color:#569CD6;">async</span> Task&lt;<span style="color:#569CD6;">bool</span>&gt; CheckPolicy()
     {
-        var state = await AuthTask!;
-        var result = await this.AuthorizationService.AuthorizeAsync(state.User, null, Policy);
-        return result.Succeeded;
+        <span style="color:#569CD6;">var</span> state = <span style="color:#569CD6;">await</span> AuthTask!;
+        <span style="color:#569CD6;">var</span> result = <span style="color:#569CD6;">await</span> <span style="color:#569CD6;">this</span>.AuthorizationService.AuthorizeAsync(state.User, <span style="color:#569CD6;">null</span>, Policy);
+        <span style="color:#569CD6;">return</span> result.Succeeded;
     }
 }
 
-</code></pre>
+</pre></div>
 <p><code>AuthorizeRecordButton</code> extends <code>AuthorizeButton</code>.  It passes an <code>AppAuthFields</code> obect to <code>AuthorizeAsync</code> as the resource object.  We'll see how the <code>AuthorizationService</code> uses this shortly.</p>
-<pre><code class="language-csharp">public class AuthorizeRecordButton : AuthorizeButton
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+<span style="color:#569CD6;">public</span> <span style="color:#569CD6;">class</span> AuthorizeRecordButton : AuthorizeButton
 {
-    [Parameter] public object? AuthFields { get; set; }
+    [Parameter] <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">object</span>? AuthFields { <span style="color:#569CD6;">get</span>; <span style="color:#569CD6;">set</span>; }
 
-    protected override async Task&lt;bool&gt; CheckPolicy()
+    <span style="color:#569CD6;">protected</span> <span style="color:#569CD6;">override</span> <span style="color:#569CD6;">async</span> Task&lt;<span style="color:#569CD6;">bool</span>&gt; CheckPolicy()
     {
-        var state = await AuthTask!;
-        var result = await this.AuthorizationService.AuthorizeAsync(state.User, AuthFields, Policy);
-        return result.Succeeded;
+        <span style="color:#569CD6;">var</span> state = <span style="color:#569CD6;">await</span> AuthTask!;
+        <span style="color:#569CD6;">var</span> result = <span style="color:#569CD6;">await</span> <span style="color:#569CD6;">this</span>.AuthorizationService.AuthorizeAsync(state.User, AuthFields, Policy);
+        <span style="color:#569CD6;">return</span> result.Succeeded;
     }
 }
-</code></pre>
-<h3 id="policies">Policies</h3>
+</pre></div><h3 id="policies">Policies</h3>
 <p>It's important to understand the difference between a policy name and a policy object.  The Authorization service holds a map of policy names to policy objects.  When we provide a &quot;policy&quot; to an authorization component or call <code>AuthorizeAsync</code> on the <code>IAuthorizationService</code> we are providing the policy name.  It maps and uses the policy object associated with the policy name. The map is defined when the authorization services are set up in the application services collection in <code>Program</code>/<code>StartUp</code>.</p>
 <p>Policy objects are defined as instances of the <code>AuthorizationPolicy</code> class and built using an <code>AuthorizationPolicyBuilder</code> instance.</p>
 <p>The application defines a static <code>AppPolicies</code> class to hold and manage all the policy code.</p>
@@ -221,65 +225,69 @@
 <li>Defines an <code>IServiceCollection</code> extension method to add all the <code>IAuthorizationHandlers</code> required by the policies.</li>
 </ol>
 <p>The constants:</p>
-<pre><code class="language-csharp">public static class StandardPolicies
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+<span style="color:#569CD6;">public</span> <span style="color:#569CD6;">static</span> <span style="color:#569CD6;">class</span> StandardPolicies
 {
-    public const string AdminRole = &quot;AdminRole&quot;;
-    public const string UserRole = &quot;UserRole&quot;;
-    public const string VisitorRole = &quot;VisitorRole&quot;;
+    <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">const</span> <span style="color:#569CD6;">string</span> AdminRole = <span style="color:#D69D85;">&quot;AdminRole&quot;</span>;
+    <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">const</span> <span style="color:#569CD6;">string</span> UserRole = <span style="color:#D69D85;">&quot;UserRole&quot;</span>;
+    <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">const</span> <span style="color:#569CD6;">string</span> VisitorRole = <span style="color:#D69D85;">&quot;VisitorRole&quot;</span>;
 
-    public const string IsEditorPolicy = &quot;IsEditorPolicy&quot;;
-    public const string IsViewerPolicy = &quot;IsViewerPolicy&quot;;
-    public const string IsManagerPolicy = &quot;IsManagerPolicy&quot;;
-    public const string IsAdminPolicy = &quot;IsAdminPolicy&quot;;
-    public const string IsUserPolicy = &quot;IsUserPolicy&quot;;
-    public const string IsVisitor = &quot;IsVisitor&quot;;
-</code></pre>
+    <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">const</span> <span style="color:#569CD6;">string</span> IsEditorPolicy = <span style="color:#D69D85;">&quot;IsEditorPolicy&quot;</span>;
+    <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">const</span> <span style="color:#569CD6;">string</span> IsViewerPolicy = <span style="color:#D69D85;">&quot;IsViewerPolicy&quot;</span>;
+    <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">const</span> <span style="color:#569CD6;">string</span> IsManagerPolicy = <span style="color:#D69D85;">&quot;IsManagerPolicy&quot;</span>;
+    <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">const</span> <span style="color:#569CD6;">string</span> IsAdminPolicy = <span style="color:#D69D85;">&quot;IsAdminPolicy&quot;</span>;
+    <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">const</span> <span style="color:#569CD6;">string</span> IsUserPolicy = <span style="color:#D69D85;">&quot;IsUserPolicy&quot;</span>;
+    <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">const</span> <span style="color:#569CD6;">string</span> IsVisitor = <span style="color:#D69D85;">&quot;IsVisitor&quot;</span>;
+</pre></div>
 <p>The basic Admin/User/Visitor site basded policy objects that check an identity is logged in and in one or more roles.</p>
 <p>Note that for user to pass a policy they must satisfy all the requirements (an AND in logic terms).</p>
-<pre><code class="language-csharp">    public static AuthorizationPolicy IsAdminAuthorizationPolicy
-        =&gt; new AuthorizationPolicyBuilder()
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+    <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">static</span> AuthorizationPolicy IsAdminAuthorizationPolicy
+        =&gt; <span style="color:#569CD6;">new</span> AuthorizationPolicyBuilder()
         .RequireAuthenticatedUser()
         .RequireRole(AdminRole)
         .Build();
 
-    public static AuthorizationPolicy IsUserAuthorizationPolicy
-        =&gt; new AuthorizationPolicyBuilder()
+    <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">static</span> AuthorizationPolicy IsUserAuthorizationPolicy
+        =&gt; <span style="color:#569CD6;">new</span> AuthorizationPolicyBuilder()
         .RequireAuthenticatedUser()
         .RequireRole(AdminRole, UserRole)
         .Build();
 
-    public static AuthorizationPolicy IsVisitorAuthorizationPolicy
-        =&gt; new AuthorizationPolicyBuilder()
+    <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">static</span> AuthorizationPolicy IsVisitorAuthorizationPolicy
+        =&gt; <span style="color:#569CD6;">new</span> AuthorizationPolicyBuilder()
         .RequireAuthenticatedUser()
         .RequireRole(AdminRole, UserRole, VisitorRole)
         .Build();
 
-</code></pre>
+</pre></div>
 <p>The record based policies.  These use requirements, defined in an <code>IAuthorizationRequirement</code> list.  We'll look at  <code>RecordEditorAuthorizationRequirement</code> and <code>RecordManagerAuthorizationRequirement</code> shortly.</p>
-<pre><code class="language-csharp">
-    public static AuthorizationPolicy IsEditorAuthorizationPolicy
-        =&gt; new AuthorizationPolicyBuilder()
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+
+    <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">static</span> AuthorizationPolicy IsEditorAuthorizationPolicy
+        =&gt; <span style="color:#569CD6;">new</span> AuthorizationPolicyBuilder()
         .RequireAuthenticatedUser()
-        .AddRequirements(new RecordEditorAuthorizationRequirement())
+        .AddRequirements(<span style="color:#569CD6;">new</span> RecordEditorAuthorizationRequirement())
         .Build();
     
-    public static AuthorizationPolicy IsManagerAuthorizationPolicy
-        =&gt; new AuthorizationPolicyBuilder()
+    <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">static</span> AuthorizationPolicy IsManagerAuthorizationPolicy
+        =&gt; <span style="color:#569CD6;">new</span> AuthorizationPolicyBuilder()
         .RequireAuthenticatedUser()
-        .AddRequirements(new RecordManagerAuthorizationRequirement())
+        .AddRequirements(<span style="color:#569CD6;">new</span> RecordManagerAuthorizationRequirement())
         .Build();
 
-    public static AuthorizationPolicy IsViewerAuthorizationPolicy
-        =&gt; new AuthorizationPolicyBuilder()
+    <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">static</span> AuthorizationPolicy IsViewerAuthorizationPolicy
+        =&gt; <span style="color:#569CD6;">new</span> AuthorizationPolicyBuilder()
         .RequireAuthenticatedUser()
         .Build();
-</code></pre>
+</pre></div>
 <p>The <code>Policies</code> dictionary provides a convenient mechanism for defining and managing the application policies  <code>AuthorizationService</code> uses.</p>
-<pre><code class="language-csharp">    public static Dictionary&lt;string, AuthorizationPolicy&gt; Policies
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+    <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">static</span> Dictionary&lt;<span style="color:#569CD6;">string</span>, AuthorizationPolicy&gt; Policies
     {
-        get
+        <span style="color:#569CD6;">get</span>
         {
-            var policies = new Dictionary&lt;string, AuthorizationPolicy&gt;();
+            <span style="color:#569CD6;">var</span> policies = <span style="color:#569CD6;">new</span> Dictionary&lt;<span style="color:#569CD6;">string</span>, AuthorizationPolicy&gt;();
 
             policies.Add(IsAdminPolicy, IsAdminAuthorizationPolicy);
             policies.Add(IsUserPolicy, IsUserAuthorizationPolicy);
@@ -288,39 +296,41 @@
             policies.Add(IsManagerPolicy, IsManagerAuthorizationPolicy);
             policies.Add(IsEditorPolicy, IsEditorAuthorizationPolicy);
             policies.Add(IsViewerPolicy, IsViewerAuthorizationPolicy);
-            return policies;
+            <span style="color:#569CD6;">return</span> policies;
         }
     }
-</code></pre>
+</pre></div>
 <p>Finally an <code>IServiceCollection</code> extension to add the policy handler services.  More on these below.</p>
-<pre><code class="language-csharp">    public static void AddAppPolicyServices(this IServiceCollection services)
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+    <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">static</span> <span style="color:#569CD6;">void</span> AddAppPolicyServices(<span style="color:#569CD6;">this</span> IServiceCollection services)
     {
         services.AddSingleton&lt;IAuthorizationHandler, RecordOwnerEditorAuthorizationHandler&gt;();
         services.AddSingleton&lt;IAuthorizationHandler, RecordEditorAuthorizationHandler&gt;();
         services.AddSingleton&lt;IAuthorizationHandler, RecordManagerAuthorizationHandler&gt;();
         services.AddSingleton&lt;IAuthorizationHandler, RecordOwnerManagerAuthorizationHandler&gt;();
     }
-</code></pre>
+</pre></div>
 <p>Using the <code>AppPolicies</code> class, we can now define our services in <code>Program</code> or an application <code>IServiceCollection</code> extension method like this:</p>
-<pre><code class="language-csharp">services.AddScoped&lt;AuthenticationStateProvider, VerySimpleAuthenticationStateProvider&gt;();
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+services.AddScoped&lt;AuthenticationStateProvider, VerySimpleAuthenticationStateProvider&gt;();
 services.AddAppPolicyServices();
 services.AddAuthorization(config =&gt;
 {
-    foreach (var policy in AppPolicies.Policies)
+    <span style="color:#569CD6;">foreach</span> (<span style="color:#569CD6;">var</span> policy <span style="color:#569CD6;">in</span> AppPolicies.Policies)
     {
         config.AddPolicy(policy.Key, policy.Value);
     }
 });
-</code></pre>
-<h3 id="authorization-requrements">Authorization Requrements</h3>
+</pre></div><h3 id="authorization-requrements">Authorization Requrements</h3>
 <p>Our policy object requirements are defined as classes implementing <code>IAuthorizationRequirement</code>.  <code>IAuthorizationRequirement</code> classes are empty reference classes.  We define two:</p>
 <ol>
 <li><code>RecordEditorAuthorizationRequirement</code> defines a record editor.</li>
 <li><code>RecordManagerAuthorizationRequirement</code> defines a record manager.</li>
 </ol>
-<pre><code class="language-csharp">public class RecordEditorAuthorizationRequirement : IAuthorizationRequirement { }
-public class RecordManagerAuthorizationRequirement : IAuthorizationRequirement { }
-</code></pre>
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+<span style="color:#569CD6;">public</span> <span style="color:#569CD6;">class</span> RecordEditorAuthorizationRequirement : IAuthorizationRequirement { }
+<span style="color:#569CD6;">public</span> <span style="color:#569CD6;">class</span> RecordManagerAuthorizationRequirement : IAuthorizationRequirement { }
+</pre></div>
 <p>They are used by <code>IAuthorizationHandler</code> classes.</p>
 <p>Requirements are assessed by the Policy on a OR logic basis.  An entity only needs satisfy one requirement of a collection to pass authorization.</p>
 <h3 id="authorization-handlers">Authorization Handlers</h3>
@@ -341,30 +351,32 @@ public class RecordManagerAuthorizationRequirement : IAuthorizationRequirement {
 <li>Checks the Id against the <code>OwnerId</code> provided in the <code>AppAuthFields</code> instance</li>
 <li>Sets success on the provided <code>AuthorizationHandlerContext</code> instance if the Ids match.</li>
 </ol>
-<pre><code class="language-csharp">public class RecordOwnerEditorAuthorizationHandler : AuthorizationHandler&lt;RecordEditorAuthorizationRequirement, AppAuthFields&gt;
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+<span style="color:#569CD6;">public</span> <span style="color:#569CD6;">class</span> RecordOwnerEditorAuthorizationHandler : AuthorizationHandler&lt;RecordEditorAuthorizationRequirement, AppAuthFields&gt;
 {
-    protected override Task HandleRequirementAsync(AuthorizationHandlerContext context, RecordEditorAuthorizationRequirement requirement, AppAuthFields data)
+    <span style="color:#569CD6;">protected</span> <span style="color:#569CD6;">override</span> Task HandleRequirementAsync(AuthorizationHandlerContext context, RecordEditorAuthorizationRequirement requirement, AppAuthFields data)
     {
-        var entityId = context.User.GetIdentityId();
-        if (entityId != Guid.Empty &amp;&amp; entityId == data.OwnerId)
+        <span style="color:#569CD6;">var</span> entityId = context.User.GetIdentityId();
+        <span style="color:#569CD6;">if</span> (entityId != Guid.Empty &amp;&amp; entityId == data.OwnerId)
             context.Succeed(requirement);
 
-        return Task.CompletedTask;
+        <span style="color:#569CD6;">return</span> Task.CompletedTask;
     }
 }
-</code></pre>
+</pre></div>
 <p><code>RecordEditorAuthorizationHandler</code> simply checks if the identity has the correct role.  We apply this check as an Authorization handler because it needs to be an OR.  The identity can be either the owner and/or have a User Role.</p>
-<pre><code class="language-csharp">public class RecordEditorAuthorizationHandler : AuthorizationHandler&lt;RecordEditorAuthorizationRequirement, AppAuthFields&gt;
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+<span style="color:#569CD6;">public</span> <span style="color:#569CD6;">class</span> RecordEditorAuthorizationHandler : AuthorizationHandler&lt;RecordEditorAuthorizationRequirement, AppAuthFields&gt;
 {
-    protected override Task HandleRequirementAsync(AuthorizationHandlerContext context, RecordEditorAuthorizationRequirement requirement, AppAuthFields data)
+    <span style="color:#569CD6;">protected</span> <span style="color:#569CD6;">override</span> Task HandleRequirementAsync(AuthorizationHandlerContext context, RecordEditorAuthorizationRequirement requirement, AppAuthFields data)
     {
-        if (context.User.IsInRole(AppPolicies.UserRole) || context.User.IsInRole(AppPolicies.AdminRole))
+        <span style="color:#569CD6;">if</span> (context.User.IsInRole(AppPolicies.UserRole) || context.User.IsInRole(AppPolicies.AdminRole))
             context.Succeed(requirement);
 
-        return Task.CompletedTask;
+        <span style="color:#569CD6;">return</span> Task.CompletedTask;
     }
 }
-</code></pre>
+</pre></div>
 <p><code>GetIdentityId</code> is an extension method on <code>ClaimsPrincipal</code></p>
 <pre><code>public static Guid GetIdentityId(this ClaimsPrincipal principal)
 {
@@ -380,80 +392,84 @@ public class RecordManagerAuthorizationRequirement : IAuthorizationRequirement {
 <h3 id="so-how-does-a-policy-work">So how does a policy work?</h3>
 <p>The services container defines a set of IAuthorizationHandlers.  Each is &quot;mapped&quot; by it's <code>TRequirement</code> to a specific requirement class.  A policy defines one or more requirements, and is mapped to a name in the <code>AuthorizationService</code>.</p>
 <p>So when we do this:</p>
-<pre><code class="language-csharp">var result = await this.AuthorizationService.AuthorizeAsync(state.User, AuthFields, Policy);
-</code></pre>
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+<span style="color:#569CD6;">var</span> result = <span style="color:#569CD6;">await</span> <span style="color:#569CD6;">this</span>.AuthorizationService.AuthorizeAsync(state.User, AuthFields, Policy);
+</pre></div>
 <p>We are telling the authorization service to check the user against the policy with the following <code>AuthFields</code> instance.  The service maps the policy name to an actual policy and calls the policy.  It gets a list of all the <code>IAuthorizationHandler</code> instances in the services container that handle the defined requirement class.  It runs <code>HandleRequirementsAsync</code> on each: the order doesn't matter it's an OR.  It returns on the first success.</p>
 <h2 id="service-based-authorization">Service based Authorization</h2>
 <p>In the application we use a <code>WeatherForecastViewService</code> to provide the data operations to <code>FetchData</code>.  You can see the full code in the project code.</p>
 <p>To apply authorization we need to inject <code>AuthenticationStateProvider</code> and <code>AuthorizationService</code>.</p>
-<pre><code class="language-csharp">private AuthenticationStateProvider AuthenticationStateProvider { get; set; }
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+<span style="color:#569CD6;">private</span> AuthenticationStateProvider AuthenticationStateProvider { <span style="color:#569CD6;">get</span>; <span style="color:#569CD6;">set</span>; }
 
-private IAuthorizationService AuthorizationService { get; set; }
+<span style="color:#569CD6;">private</span> IAuthorizationService AuthorizationService { <span style="color:#569CD6;">get</span>; <span style="color:#569CD6;">set</span>; }
 
-public string Message { get; set; } = string.Empty;
+<span style="color:#569CD6;">public</span> <span style="color:#569CD6;">string</span> Message { <span style="color:#569CD6;">get</span>; <span style="color:#569CD6;">set</span>; } = <span style="color:#569CD6;">string</span>.Empty;
 
-public WeatherForecastViewService(IWeatherForecastDataBroker weatherForecastDataBroker, AuthenticationStateProvider authenticationState, IAuthorizationService authorizationService)
+<span style="color:#569CD6;">public</span> WeatherForecastViewService(IWeatherForecastDataBroker weatherForecastDataBroker, AuthenticationStateProvider authenticationState, IAuthorizationService authorizationService)
 { 
-    this.weatherForecastDataBroker = weatherForecastDataBroker;
-    this.AuthenticationStateProvider = authenticationState;
-    this.AuthorizationService = authorizationService;
+    <span style="color:#569CD6;">this</span>.weatherForecastDataBroker = weatherForecastDataBroker;
+    <span style="color:#569CD6;">this</span>.AuthenticationStateProvider = authenticationState;
+    <span style="color:#569CD6;">this</span>.AuthorizationService = authorizationService;
 }
-</code></pre>
+</pre></div>
 <p>And then use these in our CRUD methods:</p>
-<pre><code class="language-csharp">public async ValueTask AddRecord(WeatherForecast record)
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+<span style="color:#569CD6;">public</span> <span style="color:#569CD6;">async</span> ValueTask AddRecord(WeatherForecast record)
 {
-    this.Message = string.Empty;
-    var authstate = await this.AuthenticationStateProvider.GetAuthenticationStateAsync();
-    var result = await this.AuthorizationService.AuthorizeAsync(authstate.User, null, AppPolicies.IsUserPolicy);
-    if (result.Succeeded)
+    <span style="color:#569CD6;">this</span>.Message = <span style="color:#569CD6;">string</span>.Empty;
+    <span style="color:#569CD6;">var</span> authstate = <span style="color:#569CD6;">await</span> <span style="color:#569CD6;">this</span>.AuthenticationStateProvider.GetAuthenticationStateAsync();
+    <span style="color:#569CD6;">var</span> result = <span style="color:#569CD6;">await</span> <span style="color:#569CD6;">this</span>.AuthorizationService.AuthorizeAsync(authstate.User, <span style="color:#569CD6;">null</span>, AppPolicies.IsUserPolicy);
+    <span style="color:#569CD6;">if</span> (result.Succeeded)
     {
-        await weatherForecastDataBroker!.AddForecastAsync(record);
-        await GetForecastsAsync();
+        <span style="color:#569CD6;">await</span> weatherForecastDataBroker!.AddForecastAsync(record);
+        <span style="color:#569CD6;">await</span> GetForecastsAsync();
     }
-    else
-        this.Message = &quot;That Ain't Allowed!&quot;;
+    <span style="color:#569CD6;">else</span>
+        <span style="color:#569CD6;">this</span>.Message = <span style="color:#D69D85;">&quot;That Ain&#39;t Allowed!&quot;</span>;
 }
-</code></pre>
-<h1 id="appendix">Appendix</h1>
+</pre></div><h1 id="appendix">Appendix</h1>
 <h2 id="authentication">Authentication</h2>
 <p>This article uses a very simple authentication provider that allows quick switching of the authentication context.  There's no passwords involved!</p>
 <h3 id="test-identities">Test Identities</h3>
 <p>Step one is to provide some test identities.</p>
 <p>First a class for our identities:</p>
-<pre><code class="language-csharp">public record TestIdentity
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+<span style="color:#569CD6;">public</span> record TestIdentity
 {
-    public string Name { get; set; } = string.Empty;
-    public Guid Id { get; set; } = Guid.Empty;
-    public string Role { get; set; } = string.Empty;
+    <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">string</span> Name { <span style="color:#569CD6;">get</span>; <span style="color:#569CD6;">set</span>; } = <span style="color:#569CD6;">string</span>.Empty;
+    <span style="color:#569CD6;">public</span> Guid Id { <span style="color:#569CD6;">get</span>; <span style="color:#569CD6;">set</span>; } = Guid.Empty;
+    <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">string</span> Role { <span style="color:#569CD6;">get</span>; <span style="color:#569CD6;">set</span>; } = <span style="color:#569CD6;">string</span>.Empty;
 
-    public Claim[] Claims
-        =&gt; new[]{
-            new Claim(ClaimTypes.Sid, this.Id.ToString()),
-            new Claim(ClaimTypes.Name, this.Name),
-            new Claim(ClaimTypes.Role, this.Role)
+    <span style="color:#569CD6;">public</span> Claim[] Claims
+        =&gt; <span style="color:#569CD6;">new</span>[]{
+            <span style="color:#569CD6;">new</span> Claim(ClaimTypes.Sid, <span style="color:#569CD6;">this</span>.Id.ToString()),
+            <span style="color:#569CD6;">new</span> Claim(ClaimTypes.Name, <span style="color:#569CD6;">this</span>.Name),
+            <span style="color:#569CD6;">new</span> Claim(ClaimTypes.Role, <span style="color:#569CD6;">this</span>.Role)
     };
 }
-</code></pre>
+</pre></div>
 <p>The identities are held in a static class used throughout the application.</p>
 <ol>
 <li>The primary method is <code>GetIdentity</code>.  Pass in a user name and get back a <code>ClaimsIdentity</code> object.</li>
 <li>The Guids used are simple made up ones: easy to reproduce in test weather records.</li>
 <li>A role is set for each identity.</li>
 </ol>
-<pre><code class="language-csharp">public static class TestIdentities
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+<span style="color:#569CD6;">public</span> <span style="color:#569CD6;">static</span> <span style="color:#569CD6;">class</span> TestIdentities
 {
-    public const string Provider = &quot;Dumb Provider&quot;;
+    <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">const</span> <span style="color:#569CD6;">string</span> Provider = <span style="color:#D69D85;">&quot;Dumb Provider&quot;</span>;
 
-    public static ClaimsIdentity GetIdentity(string userName)
+    <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">static</span> ClaimsIdentity GetIdentity(<span style="color:#569CD6;">string</span> userName)
     {
-        var identity = identities.FirstOrDefault(item =&gt; item.Name.Equals(userName, StringComparison.OrdinalIgnoreCase));
-        if (identity == null)
-            return new ClaimsIdentity();
+        <span style="color:#569CD6;">var</span> identity = identities.FirstOrDefault(item =&gt; item.Name.Equals(userName, StringComparison.OrdinalIgnoreCase));
+        <span style="color:#569CD6;">if</span> (identity == <span style="color:#569CD6;">null</span>)
+            <span style="color:#569CD6;">return</span> <span style="color:#569CD6;">new</span> ClaimsIdentity();
 
-        return new ClaimsIdentity(identity.Claims, Provider);
+        <span style="color:#569CD6;">return</span> <span style="color:#569CD6;">new</span> ClaimsIdentity(identity.Claims, Provider);
     }
 
-    private static List&lt;TestIdentity&gt; identities = new List&lt;TestIdentity&gt;()
+    <span style="color:#569CD6;">private</span> <span style="color:#569CD6;">static</span> List&lt;TestIdentity&gt; identities = <span style="color:#569CD6;">new</span> List&lt;TestIdentity&gt;()
         {
             Visitor1Identity, 
             Visitor2Identity, 
@@ -463,80 +479,82 @@ public WeatherForecastViewService(IWeatherForecastDataBroker weatherForecastData
             Admin2Identity
         };
 
-    public static List&lt;string&gt; GetTestIdentities()
+    <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">static</span> List&lt;<span style="color:#569CD6;">string</span>&gt; GetTestIdentities()
     {
-        var list = new List&lt;string&gt; { &quot;None&quot; };
+        <span style="color:#569CD6;">var</span> list = <span style="color:#569CD6;">new</span> List&lt;<span style="color:#569CD6;">string</span>&gt; { <span style="color:#D69D85;">&quot;None&quot;</span> };
         list.AddRange(identities.Select(identity =&gt; identity.Name!).ToList());
-        return list;
+        <span style="color:#569CD6;">return</span> list;
     }
 
-    public static Dictionary&lt;Guid, string&gt; TestIdentitiesDictionary()
+    <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">static</span> Dictionary&lt;Guid, <span style="color:#569CD6;">string</span>&gt; TestIdentitiesDictionary()
     {
-        var list = new Dictionary&lt;Guid, string&gt;();
+        <span style="color:#569CD6;">var</span> list = <span style="color:#569CD6;">new</span> Dictionary&lt;Guid, <span style="color:#569CD6;">string</span>&gt;();
         identities.ForEach(identity =&gt; list.Add(identity.Id, identity.Name));
-        return list;
+        <span style="color:#569CD6;">return</span> list;
     }
 
-    public static TestIdentity User1Identity
-        =&gt; new TestIdentity
+    <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">static</span> TestIdentity User1Identity
+        =&gt; <span style="color:#569CD6;">new</span> TestIdentity
         {
-            Id = new Guid(&quot;10000000-0000-0000-0000-100000000001&quot;),
-            Name = &quot;User-1&quot;,
-            Role = &quot;UserRole&quot;
+            Id = <span style="color:#569CD6;">new</span> Guid(<span style="color:#D69D85;">&quot;10000000-0000-0000-0000-100000000001&quot;</span>),
+            Name = <span style="color:#D69D85;">&quot;User-1&quot;</span>,
+            Role = <span style="color:#D69D85;">&quot;UserRole&quot;</span>
         };
 
 \\ .... more identities
 
-    public static TestIdentity Admin2Identity
-        =&gt; new TestIdentity
+    <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">static</span> TestIdentity Admin2Identity
+        =&gt; <span style="color:#569CD6;">new</span> TestIdentity
         {
-            Id = new Guid(&quot;10000000-0000-0000-0000-300000000002&quot;),
-            Name = &quot;Admin-2&quot;,
-            Role = &quot;AdminRole&quot;
+            Id = <span style="color:#569CD6;">new</span> Guid(<span style="color:#D69D85;">&quot;10000000-0000-0000-0000-300000000002&quot;</span>),
+            Name = <span style="color:#D69D85;">&quot;Admin-2&quot;</span>,
+            Role = <span style="color:#D69D85;">&quot;AdminRole&quot;</span>
         };
 }
-</code></pre>
+</pre></div>
 <p>The <code>AuthenticationStateProvider</code> looks like this.  <code>ChangeIdentityAsync</code> switches users based on the provided user name.</p>
-<pre><code class="language-csharp">public class VerySimpleAuthenticationStateProvider : AuthenticationStateProvider
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+<span style="color:#569CD6;">public</span> <span style="color:#569CD6;">class</span> VerySimpleAuthenticationStateProvider : AuthenticationStateProvider
 {
     ClaimsPrincipal? _user;
 
-    public override Task&lt;AuthenticationState&gt; GetAuthenticationStateAsync()
-        =&gt; Task.FromResult(new AuthenticationState(_user ?? new ClaimsPrincipal()));
+    <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">override</span> Task&lt;AuthenticationState&gt; GetAuthenticationStateAsync()
+        =&gt; Task.FromResult(<span style="color:#569CD6;">new</span> AuthenticationState(_user ?? <span style="color:#569CD6;">new</span> ClaimsPrincipal()));
 
-    public Task&lt;AuthenticationState&gt; ChangeIdentityAsync(string username)
+    <span style="color:#569CD6;">public</span> Task&lt;AuthenticationState&gt; ChangeIdentityAsync(<span style="color:#569CD6;">string</span> username)
     {
-        _user = new ClaimsPrincipal(TestIdentities.GetIdentity(username));
-        var task = this.GetAuthenticationStateAsync();
-        this.NotifyAuthenticationStateChanged(task);
-        return task;
+        _user = <span style="color:#569CD6;">new</span> ClaimsPrincipal(TestIdentities.GetIdentity(username));
+        <span style="color:#569CD6;">var</span> task = <span style="color:#569CD6;">this</span>.GetAuthenticationStateAsync();
+        <span style="color:#569CD6;">this</span>.NotifyAuthenticationStateChanged(task);
+        <span style="color:#569CD6;">return</span> task;
     }
 }
-</code></pre>
+</pre></div>
 <p>Finally the &quot;Log In Page&quot;.  In this case it's a simple select component in the top bar.  The select pulls the list of users from <code>TestIdentities</code> and calls <code>ChangeIdentityAsync</code> on the Authentication State Provider to switch users.</p>
-<pre><code class="language-csharp">@implements IDisposable
-@namespace Blazr.Demo.Authorization.UI
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+@implements IDisposable
+@<span style="color:#569CD6;">namespace</span> Blazr.Demo.Authorization.UI
 
-&lt;span class=&quot;me-2&quot;&gt;Change User:&lt;/span&gt;
-&lt;div class=&quot;w-25&quot;&gt;
-    &lt;select id=&quot;userselect&quot; class=&quot;form-control&quot; @onchange=&quot;ChangeUser&quot;&gt;
-        @foreach (var value in TestIdentities.GetTestIdentities())
+&lt;span <span style="color:#569CD6;">class</span>=<span style="color:#D69D85;">&quot;me-2&quot;</span>&gt;Change User:&lt;/span&gt;
+&lt;div <span style="color:#569CD6;">class</span>=<span style="color:#D69D85;">&quot;w-25&quot;</span>&gt;
+    &lt;<span style="color:#569CD6;">select</span> id=<span style="color:#D69D85;">&quot;userselect&quot;</span> <span style="color:#569CD6;">class</span>=<span style="color:#D69D85;">&quot;form-control&quot;</span> @onchange=<span style="color:#D69D85;">&quot;ChangeUser&quot;</span>&gt;
+        @<span style="color:#569CD6;">foreach</span> (<span style="color:#569CD6;">var</span> value <span style="color:#569CD6;">in</span> TestIdentities.GetTestIdentities())
         {
-            @if (value == _currentUserName)
+            @<span style="color:#569CD6;">if</span> (value == _currentUserName)
             {
-                 &lt;option value=&quot;@value&quot; selected&gt;@value&lt;/option&gt;
+                 &lt;option value=<span style="color:#D69D85;">&quot;@value&quot;</span> selected&gt;@value&lt;/option&gt;
             }
-            else
+            <span style="color:#569CD6;">else</span>
             {
-                &lt;option value=&quot;@value&quot;&gt;@value&lt;/option&gt;
+                &lt;option value=<span style="color:#D69D85;">&quot;@value&quot;</span>&gt;@value&lt;/option&gt;
             }
         }
-    &lt;/select&gt;
+    &lt;/<span style="color:#569CD6;">select</span>&gt;
 &lt;/div&gt;
-&lt;span class=&quot;text-nowrap ms-3&quot;&gt;
+&lt;span <span style="color:#569CD6;">class</span>=<span style="color:#D69D85;">&quot;text-nowrap ms-3&quot;</span>&gt;
     &lt;AuthorizeView&gt;
         &lt;Authorized&gt;
-            Hello, @(this.user.Identity?.Name ?? string.Empty)
+            Hello, @(<span style="color:#569CD6;">this</span>.user.Identity?.Name ?? <span style="color:#569CD6;">string</span>.Empty)
         &lt;/Authorized&gt;
         &lt;NotAuthorized&gt;
             Not Logged In
@@ -545,85 +563,86 @@ public WeatherForecastViewService(IWeatherForecastDataBroker weatherForecastData
 &lt;/span&gt;
 
 @code {
-    [CascadingParameter] private Task&lt;AuthenticationState&gt;? authTask { get; set; }
-    private Task&lt;AuthenticationState&gt; AuthTask =&gt; authTask!;
+    [CascadingParameter] <span style="color:#569CD6;">private</span> Task&lt;AuthenticationState&gt;? authTask { <span style="color:#569CD6;">get</span>; <span style="color:#569CD6;">set</span>; }
+    <span style="color:#569CD6;">private</span> Task&lt;AuthenticationState&gt; AuthTask =&gt; authTask!;
 
-    [Inject] private AuthenticationStateProvider? authState { get; set; }
-    private VerySimpleAuthenticationStateProvider AuthState =&gt; (VerySimpleAuthenticationStateProvider)authState!;
+    [Inject] <span style="color:#569CD6;">private</span> AuthenticationStateProvider? authState { <span style="color:#569CD6;">get</span>; <span style="color:#569CD6;">set</span>; }
+    <span style="color:#569CD6;">private</span> VerySimpleAuthenticationStateProvider AuthState =&gt; (VerySimpleAuthenticationStateProvider)authState!;
 
-    private ClaimsPrincipal user = new ClaimsPrincipal();
-    private string _currentUserName = &quot;None&quot;;
+    <span style="color:#569CD6;">private</span> ClaimsPrincipal user = <span style="color:#569CD6;">new</span> ClaimsPrincipal();
+    <span style="color:#569CD6;">private</span> <span style="color:#569CD6;">string</span> _currentUserName = <span style="color:#D69D85;">&quot;None&quot;</span>;
 
-    protected async override Task OnInitializedAsync()
+    <span style="color:#569CD6;">protected</span> <span style="color:#569CD6;">async</span> <span style="color:#569CD6;">override</span> Task OnInitializedAsync()
     {
-        var authState = await AuthTask;
-        this.user = authState.User;
-        AuthState.AuthenticationStateChanged += this.OnUserChanged;
+        <span style="color:#569CD6;">var</span> authState = <span style="color:#569CD6;">await</span> AuthTask;
+        <span style="color:#569CD6;">this</span>.user = authState.User;
+        AuthState.AuthenticationStateChanged += <span style="color:#569CD6;">this</span>.OnUserChanged;
     }
 
-    private async Task ChangeUser(ChangeEventArgs e)
-        =&gt;  await AuthState.ChangeIdentityAsync(e.Value?.ToString() ?? string.Empty);
+    <span style="color:#569CD6;">private</span> <span style="color:#569CD6;">async</span> Task ChangeUser(ChangeEventArgs e)
+        =&gt;  <span style="color:#569CD6;">await</span> AuthState.ChangeIdentityAsync(e.Value?.ToString() ?? <span style="color:#569CD6;">string</span>.Empty);
 
-    private async void OnUserChanged(Task&lt;AuthenticationState&gt; state)
-        =&gt; await this.GetUser(state);
+    <span style="color:#569CD6;">private</span> <span style="color:#569CD6;">async</span> <span style="color:#569CD6;">void</span> OnUserChanged(Task&lt;AuthenticationState&gt; state)
+        =&gt; <span style="color:#569CD6;">await</span> <span style="color:#569CD6;">this</span>.GetUser(state);
 
-    private async Task GetUser(Task&lt;AuthenticationState&gt; state)
+    <span style="color:#569CD6;">private</span> <span style="color:#569CD6;">async</span> Task GetUser(Task&lt;AuthenticationState&gt; state)
     {
-        var authState = await state;
-        this.user = authState.User;
+        <span style="color:#569CD6;">var</span> authState = <span style="color:#569CD6;">await</span> state;
+        <span style="color:#569CD6;">this</span>.user = authState.User;
     }
 
-    public void Dispose()
-        =&gt; AuthState.AuthenticationStateChanged -= this.OnUserChanged;
+    <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">void</span> Dispose()
+        =&gt; AuthState.AuthenticationStateChanged -= <span style="color:#569CD6;">this</span>.OnUserChanged;
     }
-</code></pre>
+</pre></div>
 <p>The component is used in <code>MainLayout</code>.</p>
-<pre><code class="language-csharp">@namespace Blazr.Demo.Authorization.UI
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+@<span style="color:#569CD6;">namespace</span> Blazr.Demo.Authorization.UI
 @inherits LayoutComponentBase
 
 &lt;PageTitle&gt;Blazr.Demo&lt;/PageTitle&gt;
 
-&lt;div class=&quot;page&quot;&gt;
-    &lt;div class=&quot;sidebar&quot;&gt;
+&lt;div <span style="color:#569CD6;">class</span>=<span style="color:#D69D85;">&quot;page&quot;</span>&gt;
+    &lt;div <span style="color:#569CD6;">class</span>=<span style="color:#D69D85;">&quot;sidebar&quot;</span>&gt;
         &lt;NavMenu /&gt;
     &lt;/div&gt;
 
     &lt;main&gt;
-        &lt;div class=&quot;top-row px-4&quot;&gt;
+        &lt;div <span style="color:#569CD6;">class</span>=<span style="color:#D69D85;">&quot;top-row px-4&quot;</span>&gt;
             &lt;UserBar /&gt;
-            &lt;a href=&quot;https://docs.microsoft.com/aspnet/&quot; target=&quot;_blank&quot;&gt;About&lt;/a&gt;
+            &lt;a href=<span style="color:#D69D85;">&quot;https://docs.microsoft.com/aspnet/&quot;</span> target=<span style="color:#D69D85;">&quot;_blank&quot;</span>&gt;About&lt;/a&gt;
         &lt;/div&gt;
 
-        &lt;article class=&quot;content px-4&quot;&gt;
+        &lt;article <span style="color:#569CD6;">class</span>=<span style="color:#D69D85;">&quot;content px-4&quot;</span>&gt;
             @Body
         &lt;/article&gt;
     &lt;/main&gt;
 &lt;/div&gt;
-</code></pre>
+</pre></div>
 <p>The control in action.</p>
 <p><img src="./assets/Policy-Based-Authentication/User-Select.png" alt="User Select" /></p>
 <h2 id="weather-forecast-ownership">Weather Forecast Ownership</h2>
 <p>The <code>OwnerID</code> field is added to<code>WeatherForecast</code> and populated with either the <code>Visitor-1</code> or <code>Visitor-2</code> Guid.</p>
-<pre><code class="language-csharp">public static List&lt;WeatherForecast&gt; CreateTestForecasts(int count)
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+<span style="color:#569CD6;">public</span> <span style="color:#569CD6;">static</span> List&lt;WeatherForecast&gt; CreateTestForecasts(<span style="color:#569CD6;">int</span> count)
 {
-    var list = new List&lt;WeatherForecast&gt;();
-    var rng = new Random();
-    for (var i = 1; i &lt;= count; i++)
+    <span style="color:#569CD6;">var</span> list = <span style="color:#569CD6;">new</span> List&lt;WeatherForecast&gt;();
+    <span style="color:#569CD6;">var</span> rng = <span style="color:#569CD6;">new</span> Random();
+    <span style="color:#569CD6;">for</span> (<span style="color:#569CD6;">var</span> i = <span style="color:#B5CEA8;">1</span>; i &lt;= count; i++)
     {
-        var c = rng.Next(1, 3);
-        list.Add(new WeatherForecast
+        <span style="color:#569CD6;">var</span> c = rng.Next(<span style="color:#B5CEA8;">1</span>, <span style="color:#B5CEA8;">3</span>);
+        list.Add(<span style="color:#569CD6;">new</span> WeatherForecast
         {
             Id = Guid.NewGuid(),
-            OwnerId = new Guid($&quot;10000000-0000-0000-0000-20000000000{c}&quot;),
+            OwnerId = <span style="color:#569CD6;">new</span> Guid($<span style="color:#D69D85;">&quot;10000000-0000-0000-0000-20000000000{c}&quot;</span>),
             Date = DateTime.Now.AddDays(i),
-            TemperatureC = rng.Next(-20, 55),
+            TemperatureC = rng.Next(-<span style="color:#B5CEA8;">20</span>, <span style="color:#B5CEA8;">55</span>),
             Summary = Summaries[rng.Next(Summaries.Length)]
         });
     }
-    return list;
+    <span style="color:#569CD6;">return</span> list;
 }
-</code></pre>
-</div></div></div></body></html>
+</pre></div></div></div></div></body></html>
 
 
 

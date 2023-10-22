@@ -106,51 +106,52 @@ This is the original with the following changes:</p>
 <h3 id="weatherforecastdatastore">WeatherForecastDataStore</h3>
 <p>Project: <em>Blazr.Template.Data</em>.</p>
 <p>The <code>WeatherForecastDataStore</code> class emulates a database.  It's a singleton service, and on initialization builds a data set thst it then copies in responsing to data requests. The three principal public methods are shown below.  Note the use of <code>ValueTask</code> instead of <code>Task</code>.</p>
-<pre><code class="language-csharp">public ValueTask&lt;List&lt;WeatherForecast&gt;&gt; GetRecordsAsync()
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+<span style="color:#569CD6;">public</span> ValueTask&lt;List&lt;WeatherForecast&gt;&gt; GetRecordsAsync()
     =&gt; ValueTask.FromResult(GetListCopy(_records));
 
-public ValueTask&lt;int&gt; GetRecordCountAsync()
+<span style="color:#569CD6;">public</span> ValueTask&lt;<span style="color:#569CD6;">int</span>&gt; GetRecordCountAsync()
     =&gt; ValueTask.FromResult(_records.Count);
 
-public ValueTask&lt;List&lt;WeatherForecast&gt;&gt; GetPagedRecordsAsync(PagingData pagingData)
+<span style="color:#569CD6;">public</span> ValueTask&lt;List&lt;WeatherForecast&gt;&gt; GetPagedRecordsAsync(PagingData pagingData)
 {
     pagingData.SetRecordCount( _records.Count);
-    var list = _records.Skip(pagingData.ReadStartRecord).Take(pagingData.PageSize).ToList();
-    return ValueTask.FromResult(GetListCopy(list));
+    <span style="color:#569CD6;">var</span> list = _records.Skip(pagingData.ReadStartRecord).Take(pagingData.PageSize).ToList();
+    <span style="color:#569CD6;">return</span> ValueTask.FromResult(GetListCopy(list));
 }
-</code></pre>
-<h3 id="iweatherforecastdatabroker">IWeatherForecastDataBroker</h3>
+</pre></div><h3 id="iweatherforecastdatabroker">IWeatherForecastDataBroker</h3>
 <p>Project: <em>Blazr.Template.Core</em>.</p>
 <p><code>IWeatherForecastDataBroker</code> defines the interface for the core domain to data domain data transfer.  Using an interface in DI decouples out two domains.</p>
-<pre><code class="language-csharp">public ValueTask&lt;List&lt;WeatherForecast&gt;&gt; GetRecordsAsync();
-public ValueTask&lt;int&gt; GetRecordCountAsync();
-public ValueTask&lt;List&lt;WeatherForecast&gt;&gt; GetPagedRecordsAsync(int page);
-</code></pre>
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+<span style="color:#569CD6;">public</span> ValueTask&lt;List&lt;WeatherForecast&gt;&gt; GetRecordsAsync();
+<span style="color:#569CD6;">public</span> ValueTask&lt;<span style="color:#569CD6;">int</span>&gt; GetRecordCountAsync();
+<span style="color:#569CD6;">public</span> ValueTask&lt;List&lt;WeatherForecast&gt;&gt; GetPagedRecordsAsync(<span style="color:#569CD6;">int</span> page);
+</pre></div>
 <p>There are two concrete implementations:</p>
 <h4 id="weatherforecastserverdatabroker">WeatherForecastServerDataBroker</h4>
 <p>Project: <em>Blazr.Template.Data</em>.</p>
 <p>The server version, used by Blazor Server and the API server for Blazor WASM.  It initializes with the singleton <code>WeatherForecastDataStore</code> DI instance, and accesses the <code>WeatherForecastDataStore</code> for it's data.  <code>GetPagedRecordsAsync</code> is shown below.</p>
-<pre><code class="language-csharp">public ValueTask&lt;List&lt;WeatherForecast&gt;&gt; GetPagedRecordsAsync(PagingData pagingData)
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+<span style="color:#569CD6;">public</span> ValueTask&lt;List&lt;WeatherForecast&gt;&gt; GetPagedRecordsAsync(PagingData pagingData)
     =&gt; _dataStore.GetPagedRecordsAsync(pagingData);
-</code></pre>
-<h4 id="weatherforecastapidatabroker">WeatherForecastAPIDataBroker</h4>
+</pre></div><h4 id="weatherforecastapidatabroker">WeatherForecastAPIDataBroker</h4>
 <p>Project: <em>Blazr.Template.Data</em>.</p>
 <p>The WASM version.  It makes API calls through an <code>HttpClient</code> instance it gets through DI.  <code>GetPagedRecordsAsync</code> is shown below.</p>
-<pre><code class="language-csharp">public async ValueTask&lt;List&lt;WeatherForecast&gt;&gt; GetPagedRecordsAsync(PagingData pagingData)
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+<span style="color:#569CD6;">public</span> <span style="color:#569CD6;">async</span> ValueTask&lt;List&lt;WeatherForecast&gt;&gt; GetPagedRecordsAsync(PagingData pagingData)
 {
-    var response = await this.HttpClient.PostAsJsonAsync($&quot;/api/weatherforecast/GetPagedRecordsAsync&quot;, pagingData);
-    return await response.Content.ReadFromJsonAsync&lt;List&lt;WeatherForecast&gt;&gt;();
+    <span style="color:#569CD6;">var</span> response = <span style="color:#569CD6;">await</span> <span style="color:#569CD6;">this</span>.HttpClient.PostAsJsonAsync($<span style="color:#D69D85;">&quot;/api/weatherforecast/GetPagedRecordsAsync&quot;</span>, pagingData);
+    <span style="color:#569CD6;">return</span> <span style="color:#569CD6;">await</span> response.Content.ReadFromJsonAsync&lt;List&lt;WeatherForecast&gt;&gt;();
 }
-</code></pre>
-<h2 id="api-controllers">API Controllers</h2>
+</pre></div><h2 id="api-controllers">API Controllers</h2>
 <p>Project: <em>Blazr.Template.APIControllers</em>.</p>
 <p>The controllers are separated into the <em>Blazr.Template.Controllers</em> project.</p>
 <p><code>WeatherForecastController</code> is a bulk standard controller.  <code>GetPagedRecordsAsync</code> is shown below.</p>
-<pre><code class="language-csharp">[Route(&quot;/api/weatherforecast/listpaged&quot;)]
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+[Route(<span style="color:#D69D85;">&quot;/api/weatherforecast/listpaged&quot;</span>)]
 [HttpPost]
-public async Task&lt;List&lt;WeatherForecast&gt;&gt; GetPagedRecordsAsync([FromBody] PagingData pagingData) =&gt; await _dataBroker.GetPagedRecordsAsync(pagingData);
-</code></pre>
-<h2 id="view-services">View Services</h2>
+<span style="color:#569CD6;">public</span> <span style="color:#569CD6;">async</span> Task&lt;List&lt;WeatherForecast&gt;&gt; GetPagedRecordsAsync([FromBody] PagingData pagingData) =&gt; <span style="color:#569CD6;">await</span> _dataBroker.GetPagedRecordsAsync(pagingData);
+</pre></div><h2 id="view-services">View Services</h2>
 <p>Project: <em>Blazr.Template.Core</em>.</p>
 <h3 id="weatherforecastviewservice">WeatherForecastViewService</h3>
 <p><code>WeatherForecastViewService</code> provides the data and state services for WeatherForecasts to the UI.  It's <code>Scoped</code>, one instance per SPA session.</p>
@@ -161,56 +162,56 @@ public async Task&lt;List&lt;WeatherForecast&gt;&gt; GetPagedRecordsAsync([FromB
 <li>Maintains the page being displayed within the SPA instance through page changes.</li>
 <li>Uses an interface to inject and interact with the data broker.</li>
 </ol>
-<pre><code class="language-csharp">public class WeatherForecastViewService
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+<span style="color:#569CD6;">public</span> <span style="color:#569CD6;">class</span> WeatherForecastViewService
 {
-    private readonly IWeatherForecastDataBroker _dataBroker;
-    public PagingData PagingData { get; init; } = new PagingData(0,10,0);
-    public bool IsLoaded =&gt; Records is not null;
-    public List&lt;WeatherForecast&gt;? Records { get; private set; } = null;
-    public event EventHandler? ListChanged;
+    <span style="color:#569CD6;">private</span> <span style="color:#569CD6;">readonly</span> IWeatherForecastDataBroker _dataBroker;
+    <span style="color:#569CD6;">public</span> PagingData PagingData { <span style="color:#569CD6;">get</span>; init; } = <span style="color:#569CD6;">new</span> PagingData(<span style="color:#B5CEA8;">0</span>,<span style="color:#B5CEA8;">10</span>,<span style="color:#B5CEA8;">0</span>);
+    <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">bool</span> IsLoaded =&gt; Records <span style="color:#569CD6;">is</span> not <span style="color:#569CD6;">null</span>;
+    <span style="color:#569CD6;">public</span> List&lt;WeatherForecast&gt;? Records { <span style="color:#569CD6;">get</span>; <span style="color:#569CD6;">private</span> <span style="color:#569CD6;">set</span>; } = <span style="color:#569CD6;">null</span>;
+    <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">event</span> EventHandler? ListChanged;
 
-    public WeatherForecastViewService(IWeatherForecastDataBroker weatherForecastDataBroker)
+    <span style="color:#569CD6;">public</span> WeatherForecastViewService(IWeatherForecastDataBroker weatherForecastDataBroker)
     { 
         _dataBroker = weatherForecastDataBroker;
-        this.PagingData.PagingChanged += this.OnPageChanged;
+        <span style="color:#569CD6;">this</span>.PagingData.PagingChanged += <span style="color:#569CD6;">this</span>.OnPageChanged;
     }
 
-    public async Task&lt;bool&gt; GetRecordsAsync()
+    <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">async</span> Task&lt;<span style="color:#569CD6;">bool</span>&gt; GetRecordsAsync()
     {
-        this.Records = await _dataBroker.GetRecordsAsync();
-        this.NotifyRecordChanged();
-        return true;
+        <span style="color:#569CD6;">this</span>.Records = <span style="color:#569CD6;">await</span> _dataBroker.GetRecordsAsync();
+        <span style="color:#569CD6;">this</span>.NotifyRecordChanged();
+        <span style="color:#569CD6;">return</span> <span style="color:#569CD6;">true</span>;
     }
 
-    public async Task&lt;bool&gt; GetRecordsAsync(int page)
+    <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">async</span> Task&lt;<span style="color:#569CD6;">bool</span>&gt; GetRecordsAsync(<span style="color:#569CD6;">int</span> page)
     {
-        var recordCount = await _dataBroker.GetRecordCountAsync();
-        page = page == int.MinValue ? this.PagingData.Page : page;
-        this.PagingData.Set(page, recordCount);
-        this.Records = await _dataBroker.GetPagedRecordsAsync(this.PagingData);
-        this.NotifyRecordChanged();
-        return true;
+        <span style="color:#569CD6;">var</span> recordCount = <span style="color:#569CD6;">await</span> _dataBroker.GetRecordCountAsync();
+        page = page == <span style="color:#569CD6;">int</span>.MinValue ? <span style="color:#569CD6;">this</span>.PagingData.Page : page;
+        <span style="color:#569CD6;">this</span>.PagingData.Set(page, recordCount);
+        <span style="color:#569CD6;">this</span>.Records = <span style="color:#569CD6;">await</span> _dataBroker.GetPagedRecordsAsync(<span style="color:#569CD6;">this</span>.PagingData);
+        <span style="color:#569CD6;">this</span>.NotifyRecordChanged();
+        <span style="color:#569CD6;">return</span> <span style="color:#569CD6;">true</span>;
     }
 
-    public async Task&lt;bool&gt; GetPagedRecordsAsync()
+    <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">async</span> Task&lt;<span style="color:#569CD6;">bool</span>&gt; GetPagedRecordsAsync()
     {
-        this.Records = await _dataBroker.GetPagedRecordsAsync(this.PagingData);
-        this.PagingData.SetRecordCountSilently(await _dataBroker.GetRecordCountAsync());
-        this.NotifyRecordChanged();
-        return true;
+        <span style="color:#569CD6;">this</span>.Records = <span style="color:#569CD6;">await</span> _dataBroker.GetPagedRecordsAsync(<span style="color:#569CD6;">this</span>.PagingData);
+        <span style="color:#569CD6;">this</span>.PagingData.SetRecordCountSilently(<span style="color:#569CD6;">await</span> _dataBroker.GetRecordCountAsync());
+        <span style="color:#569CD6;">this</span>.NotifyRecordChanged();
+        <span style="color:#569CD6;">return</span> <span style="color:#569CD6;">true</span>;
     }
 
-    public void NotifyRecordChanged(object? sender = null)
+    <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">void</span> NotifyRecordChanged(<span style="color:#569CD6;">object</span>? sender = <span style="color:#569CD6;">null</span>)
     {
-        sender ??= this;
-        this.ListChanged?.Invoke(sender, EventArgs.Empty);
+        sender ??= <span style="color:#569CD6;">this</span>;
+        <span style="color:#569CD6;">this</span>.ListChanged?.Invoke(sender, EventArgs.Empty);
     }
 
-    private async void OnPageChanged(object? sender, EventArgs e)
-        =&gt; await this.GetPagedRecordsAsync();
+    <span style="color:#569CD6;">private</span> <span style="color:#569CD6;">async</span> <span style="color:#569CD6;">void</span> OnPageChanged(<span style="color:#569CD6;">object</span>? sender, EventArgs e)
+        =&gt; <span style="color:#569CD6;">await</span> <span style="color:#569CD6;">this</span>.GetPagedRecordsAsync();
 }
-</code></pre>
-<h2 id="wrap-up">Wrap up</h2>
+</pre></div><h2 id="wrap-up">Wrap up</h2>
 <p>The code here is not Blazor.  It's standard dotNetCore, building classes and using the dotNetCore web server DI services.</p>
 </div></div></div></body></html>
 

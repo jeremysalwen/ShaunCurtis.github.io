@@ -93,71 +93,71 @@
 <li><code>ValidationFormState</code>- a form validator.</li>
 </ol>
 <p>The key bit of action is hooking up the <code>InlineDialog</code> control <code>Lock</code> to the form state.  <code>EditFormState</code> monitors the form state and invokes the  EventCallback <code>EditStateChanged</code> whenever a change takes place.  The page <code>EditStateChanged</code> event handler is registered with the <code>EditFormState.EditStateChanged</code> and updates <code>_isDirty</code> whenever the state changes.  If <code>EditFormState' is dirty, </code>InlineDialog` is locked.</p>
-<pre><code class="language-html">@using Blazor.Database.Data
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+@using Blazor.Database.Data
 @page &quot;/inlinedialogEditor&quot;
 
-    &lt;InlineDialog Lock=&quot;this._isDirty&quot; Transparent=&quot;false&quot;&gt;
-        &lt;EditForm Model=&quot;@Model&quot; OnValidSubmit=&quot;@HandleValidSubmit&quot; class=&quot;p-3&quot;&gt;
-            &lt;EditFormState @ref=&quot;editFormState&quot; EditStateChanged=&quot;this.EditStateChanged&quot;&gt;&lt;/EditFormState&gt;
-            &lt;ValidationFormState @ref=&quot;validationFormState&quot;&gt;&lt;/ValidationFormState&gt;
+    <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">InlineDialog</span> <span style="color:#FF0000;">Lock</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;this._isDirty&quot;</span> <span style="color:#FF0000;">Transparent</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;false&quot;</span><span style="color:#569CD6;">&gt;</span>
+        <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">EditForm</span> <span style="color:#FF0000;">Model</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;@Model&quot;</span> <span style="color:#FF0000;">OnValidSubmit</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;@HandleValidSubmit&quot;</span> <span style="color:#FF0000;">class</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;p-3&quot;</span><span style="color:#569CD6;">&gt;</span>
+            &lt;EditFormState @ref=&quot;editFormState&quot; EditStateChanged=&quot;this.EditStateChanged&quot;&gt;<span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">EditFormState</span><span style="color:#569CD6;">&gt;</span>
+            &lt;ValidationFormState @ref=&quot;validationFormState&quot;&gt;<span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">ValidationFormState</span><span style="color:#569CD6;">&gt;</span>
 
-            &lt;label class=&quot;form-label&quot;&gt;ID:&lt;/label&gt; 
-            &lt;InputNumber class=&quot;form-control&quot; @bind-Value=&quot;Model.ID&quot; /&gt;
-            &lt;label class=&quot;form-label&quot;&gt;Date:&lt;/label&gt; 
-            &lt;InputDate class=&quot;form-control&quot; @bind-Value=&quot;Model.Date&quot; /&gt;
-            &lt;ValidationMessage For=&quot;@(() =&gt; Model.Date)&quot; /&gt;
-            &lt;label class=&quot;form-label&quot;&gt;Temp C:&lt;/label&gt;
-            &lt;InputNumber class=&quot;form-control&quot; @bind-Value=&quot;Model.TemperatureC&quot; /&gt;
-            &lt;ValidationMessage For=&quot;@(() =&gt; Model.TemperatureC)&quot; /&gt;
-            &lt;label class=&quot;form-label&quot;&gt;Summary:&lt;/label&gt;
-            &lt;InputText class=&quot;form-control&quot; @bind-Value=&quot;Model.Summary&quot; /&gt;
-            &lt;ValidationMessage For=&quot;@(() =&gt; Model.Summary)&quot; /&gt;
+            <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">label</span> <span style="color:#FF0000;">class</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;form-label&quot;</span><span style="color:#569CD6;">&gt;</span>ID:<span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">label</span><span style="color:#569CD6;">&gt;</span> 
+            <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">InputNumber</span> <span style="color:#FF0000;">class</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;form-control&quot; @bind-Value=&quot;Model.ID&quot;</span> <span style="color:#569CD6;">/&gt;</span>
+            <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">label</span> <span style="color:#FF0000;">class</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;form-label&quot;</span><span style="color:#569CD6;">&gt;</span>Date:<span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">label</span><span style="color:#569CD6;">&gt;</span> 
+            <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">InputDate</span> <span style="color:#FF0000;">class</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;form-control&quot; @bind-Value=&quot;Model.Date&quot;</span> <span style="color:#569CD6;">/&gt;</span>
+            <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">ValidationMessage</span> <span style="color:#FF0000;">For</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;@(() =&gt; Model.Date)&quot;</span> <span style="color:#569CD6;">/&gt;</span>
+            <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">label</span> <span style="color:#FF0000;">class</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;form-label&quot;</span><span style="color:#569CD6;">&gt;</span>Temp C:<span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">label</span><span style="color:#569CD6;">&gt;</span>
+            <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">InputNumber</span> <span style="color:#FF0000;">class</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;form-control&quot; @bind-Value=&quot;Model.TemperatureC&quot;</span> <span style="color:#569CD6;">/&gt;</span>
+            <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">ValidationMessage</span> <span style="color:#FF0000;">For</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;@(() =&gt; Model.TemperatureC)&quot;</span> <span style="color:#569CD6;">/&gt;</span>
+            <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">label</span> <span style="color:#FF0000;">class</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;form-label&quot;</span><span style="color:#569CD6;">&gt;</span>Summary:<span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">label</span><span style="color:#569CD6;">&gt;</span>
+            <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">InputText</span> <span style="color:#FF0000;">class</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;form-control&quot; @bind-Value=&quot;Model.Summary&quot;</span> <span style="color:#569CD6;">/&gt;</span>
+            <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">ValidationMessage</span> <span style="color:#FF0000;">For</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;@(() =&gt; Model.Summary)&quot;</span> <span style="color:#569CD6;">/&gt;</span>
 
-            &lt;div class=&quot;mt-2&quot;&gt;
-                &lt;div&gt;Validation Messages:&lt;/div&gt;
-                &lt;ValidationSummary /&gt;
-            &lt;/div&gt;
+            <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">div</span> <span style="color:#FF0000;">class</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;mt-2&quot;</span><span style="color:#569CD6;">&gt;</span>
+                <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">div</span><span style="color:#569CD6;">&gt;</span>Validation Messages:<span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">div</span><span style="color:#569CD6;">&gt;</span>
+                <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">ValidationSummary</span> <span style="color:#569CD6;">/&gt;</span>
+            <span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">div</span><span style="color:#569CD6;">&gt;</span>
 
-            &lt;div class=&quot;text-right mt-2&quot;&gt;
-                &lt;button class=&quot;btn @btnStateColour&quot; disabled&gt;@btnStateText&lt;/button&gt;
-                &lt;button class=&quot;btn @btnValidColour&quot; disabled&gt;@btnValidText&lt;/button&gt;
-                &lt;button class=&quot;btn btn-primary&quot; type=&quot;submit&quot; disabled=&quot;@_btnSubmitDisabled&quot;&gt;Submit&lt;/button&gt;
-            &lt;/div&gt;
+            <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">div</span> <span style="color:#FF0000;">class</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;text-right mt-2&quot;</span><span style="color:#569CD6;">&gt;</span>
+                <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">button</span> <span style="color:#FF0000;">class</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;btn @btnStateColour&quot;</span> <span style="color:#FF0000;">disabled</span><span style="color:#569CD6;">&gt;</span>@btnStateText<span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">button</span><span style="color:#569CD6;">&gt;</span>
+                <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">button</span> <span style="color:#FF0000;">class</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;btn @btnValidColour&quot;</span> <span style="color:#FF0000;">disabled</span><span style="color:#569CD6;">&gt;</span>@btnValidText<span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">button</span><span style="color:#569CD6;">&gt;</span>
+                <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">button</span> <span style="color:#FF0000;">class</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;btn btn-primary&quot;</span> <span style="color:#FF0000;">type</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;submit&quot;</span> <span style="color:#FF0000;">disabled</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;@_btnSubmitDisabled&quot;</span><span style="color:#569CD6;">&gt;</span>Submit<span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">button</span><span style="color:#569CD6;">&gt;</span>
+            <span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">div</span><span style="color:#569CD6;">&gt;</span>
 
-        &lt;/EditForm&gt;
-    &lt;/InlineDialog&gt;
+        <span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">EditForm</span><span style="color:#569CD6;">&gt;</span>
+    <span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">InlineDialog</span><span style="color:#569CD6;">&gt;</span>
 }
-</code></pre>
-<pre><code class="language-csharp">    @code {
-        protected bool _isDirty = false;
-        protected bool _isValid =&gt; validationFormState?.IsValid ?? true;
-        protected string btnStateColour =&gt; _isDirty ? &quot;btn-danger&quot; : &quot;btn-success&quot;;
-        protected string btnStateText =&gt; _isDirty ? &quot;Dirty&quot; : &quot;Clean&quot;;
-        protected string btnValidColour =&gt; !_isValid ? &quot;btn-danger&quot; : &quot;btn-success&quot;;
-        protected string btnValidText =&gt; !_isValid ? &quot;Invalid&quot; : &quot;Valid&quot;;
-        protected bool _btnSubmitDisabled =&gt; !(_isValid &amp;&amp; _isDirty);
+</pre></div><div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+    @code {
+        <span style="color:#569CD6;">protected</span> <span style="color:#569CD6;">bool</span> _isDirty = <span style="color:#569CD6;">false</span>;
+        <span style="color:#569CD6;">protected</span> <span style="color:#569CD6;">bool</span> _isValid =&gt; validationFormState?.IsValid ?? <span style="color:#569CD6;">true</span>;
+        <span style="color:#569CD6;">protected</span> <span style="color:#569CD6;">string</span> btnStateColour =&gt; _isDirty ? <span style="color:#D69D85;">&quot;btn-danger&quot;</span> : <span style="color:#D69D85;">&quot;btn-success&quot;</span>;
+        <span style="color:#569CD6;">protected</span> <span style="color:#569CD6;">string</span> btnStateText =&gt; _isDirty ? <span style="color:#D69D85;">&quot;Dirty&quot;</span> : <span style="color:#D69D85;">&quot;Clean&quot;</span>;
+        <span style="color:#569CD6;">protected</span> <span style="color:#569CD6;">string</span> btnValidColour =&gt; !_isValid ? <span style="color:#D69D85;">&quot;btn-danger&quot;</span> : <span style="color:#D69D85;">&quot;btn-success&quot;</span>;
+        <span style="color:#569CD6;">protected</span> <span style="color:#569CD6;">string</span> btnValidText =&gt; !_isValid ? <span style="color:#D69D85;">&quot;Invalid&quot;</span> : <span style="color:#D69D85;">&quot;Valid&quot;</span>;
+        <span style="color:#569CD6;">protected</span> <span style="color:#569CD6;">bool</span> _btnSubmitDisabled =&gt; !(_isValid &amp;&amp; _isDirty);
 
-        protected EditFormState editFormState { get; set; }
-        protected ValidationFormState validationFormState { get; set; }
+        <span style="color:#569CD6;">protected</span> EditFormState editFormState { <span style="color:#569CD6;">get</span>; <span style="color:#569CD6;">set</span>; }
+        <span style="color:#569CD6;">protected</span> ValidationFormState validationFormState { <span style="color:#569CD6;">get</span>; <span style="color:#569CD6;">set</span>; }
 
-        private WeatherForecast Model = new WeatherForecast()
+        <span style="color:#569CD6;">private</span> WeatherForecast Model = <span style="color:#569CD6;">new</span> WeatherForecast()
         {
-            ID = 1,
+            ID = <span style="color:#B5CEA8;">1</span>,
             Date = DateTime.Now,
-            TemperatureC = 22,
-            Summary = &quot;Balmy&quot;
+            TemperatureC = <span style="color:#B5CEA8;">22</span>,
+            Summary = <span style="color:#D69D85;">&quot;Balmy&quot;</span>
         };
 
-        private void HandleValidSubmit()
+        <span style="color:#569CD6;">private</span> <span style="color:#569CD6;">void</span> HandleValidSubmit()
         {
-            this.editFormState.UpdateState();
+            <span style="color:#569CD6;">this</span>.editFormState.UpdateState();
         }
 
-        private void EditStateChanged(bool editstate)
-            =&gt; this._isDirty = editstate;
+        <span style="color:#569CD6;">private</span> <span style="color:#569CD6;">void</span> EditStateChanged(<span style="color:#569CD6;">bool</span> editstate)
+            =&gt; <span style="color:#569CD6;">this</span>._isDirty = editstate;
     }
-</code></pre>
-<h2 id="inlinedialog">InLineDialog</h2>
+</pre></div><h2 id="inlinedialog">InLineDialog</h2>
 <p>Lets look at the Parameters and public Properties first.</p>
 <ol>
 <li>We capture added attributes, though we only use <code>class</code>.</li>
@@ -166,12 +166,13 @@
 <li><code>ChildContent</code> is the content between <code>&lt;InlineDialog&gt;</code> and <code>&lt;/InlineDialog&gt;</code>.</li>
 <li><code>IsLocked</code> is a read only Property for checking the component state.</li>
 </ol>
-<pre><code class="language-csharp">[Parameter(CaptureUnmatchedValues = true)] public IDictionary&lt;string, object&gt; AdditionalAttributes { get; set; } = new Dictionary&lt;string, object&gt;();
-[Parameter] public bool Cascade { get; set; } = true;
-[Parameter] public bool Transparent { get; set; } = true;
-[Parameter] public RenderFragment ChildContent { get; set; }
-public bool IsLocked =&gt; this._isLocked;
-</code></pre>
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+[Parameter(CaptureUnmatchedValues = <span style="color:#569CD6;">true</span>)] <span style="color:#569CD6;">public</span> IDictionary&lt;<span style="color:#569CD6;">string</span>, <span style="color:#569CD6;">object</span>&gt; AdditionalAttributes { <span style="color:#569CD6;">get</span>; <span style="color:#569CD6;">set</span>; } = <span style="color:#569CD6;">new</span> Dictionary&lt;<span style="color:#569CD6;">string</span>, <span style="color:#569CD6;">object</span>&gt;();
+[Parameter] <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">bool</span> Cascade { <span style="color:#569CD6;">get</span>; <span style="color:#569CD6;">set</span>; } = <span style="color:#569CD6;">true</span>;
+[Parameter] <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">bool</span> Transparent { <span style="color:#569CD6;">get</span>; <span style="color:#569CD6;">set</span>; } = <span style="color:#569CD6;">true</span>;
+[Parameter] <span style="color:#569CD6;">public</span> RenderFragment ChildContent { <span style="color:#569CD6;">get</span>; <span style="color:#569CD6;">set</span>; }
+<span style="color:#569CD6;">public</span> <span style="color:#569CD6;">bool</span> IsLocked =&gt; <span style="color:#569CD6;">this</span>._isLocked;
+</pre></div>
 <p>The private properties:</p>
 <ol>
 <li>Inject <code>IJSRuntime</code> to give access to the Javascript Interop and set/unset the browser <code>BeforeUnload</code> event.</li>
@@ -179,117 +180,121 @@ public bool IsLocked =&gt; this._isLocked;
 <li>The Css properties define the various Css options for <code>class</code>.</li>
 <li><code>_isLocked</code> in the private field for controlling lock state.</li>
 </ol>
-<pre><code class="language-csharp">[Inject] private IJSRuntime _js { get; set; }
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+[Inject] <span style="color:#569CD6;">private</span> IJSRuntime _js { <span style="color:#569CD6;">get</span>; <span style="color:#569CD6;">set</span>; }
 
-private string CssClass =&gt; (AdditionalAttributes != null &amp;&amp; AdditionalAttributes.TryGetValue(&quot;class&quot;, out var obj))
-    ? $&quot;{this.frontcss} { Convert.ToString(obj, CultureInfo.InvariantCulture)}&quot;
-    : this.frontcss;
+<span style="color:#569CD6;">private</span> <span style="color:#569CD6;">string</span> CssClass =&gt; (AdditionalAttributes != <span style="color:#569CD6;">null</span> &amp;&amp; AdditionalAttributes.TryGetValue(<span style="color:#D69D85;">&quot;class&quot;</span>, <span style="color:#569CD6;">out</span> <span style="color:#569CD6;">var</span> obj))
+    ? $<span style="color:#D69D85;">&quot;{this.frontcss} { Convert.ToString(obj, CultureInfo.InvariantCulture)}&quot;</span>
+    : <span style="color:#569CD6;">this</span>.frontcss;
 
-private string backcss = string.Empty;
-private string frontcss = string.Empty;
-private string _backcss =&gt; this.Transparent ? &quot;back-block-transparent&quot; : &quot;back-block&quot;;
-private string _frontcss =&gt; this.Transparent ? &quot;fore-block-transparent&quot; : &quot;fore-block&quot;;
-private string __backcss =&gt; string.Empty;
-private string __frontcss =&gt; string.Empty;
-private bool _isLocked;
-</code></pre>
+<span style="color:#569CD6;">private</span> <span style="color:#569CD6;">string</span> backcss = <span style="color:#569CD6;">string</span>.Empty;
+<span style="color:#569CD6;">private</span> <span style="color:#569CD6;">string</span> frontcss = <span style="color:#569CD6;">string</span>.Empty;
+<span style="color:#569CD6;">private</span> <span style="color:#569CD6;">string</span> _backcss =&gt; <span style="color:#569CD6;">this</span>.Transparent ? <span style="color:#D69D85;">&quot;back-block-transparent&quot;</span> : <span style="color:#D69D85;">&quot;back-block&quot;</span>;
+<span style="color:#569CD6;">private</span> <span style="color:#569CD6;">string</span> _frontcss =&gt; <span style="color:#569CD6;">this</span>.Transparent ? <span style="color:#D69D85;">&quot;fore-block-transparent&quot;</span> : <span style="color:#D69D85;">&quot;fore-block&quot;</span>;
+<span style="color:#569CD6;">private</span> <span style="color:#569CD6;">string</span> __backcss =&gt; <span style="color:#569CD6;">string</span>.Empty;
+<span style="color:#569CD6;">private</span> <span style="color:#569CD6;">string</span> __frontcss =&gt; <span style="color:#569CD6;">string</span>.Empty;
+<span style="color:#569CD6;">private</span> <span style="color:#569CD6;">bool</span> _isLocked;
+</pre></div>
 <p>There are two public methods: <code>Lock</code> and <code>Unlock</code>.  These change the Css classes.  <code>SetPageExitCheck</code> interfaces with the Javascript functions to add or remove the <code>beforeunload</code> event on <code>Window</code>.  The code is show below.</p>
-<pre><code class="language-csharp">public void Lock()
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+<span style="color:#569CD6;">public</span> <span style="color:#569CD6;">void</span> Lock()
 {
-    this._isLocked = true;
-    this.backcss = this._backcss;
-    this.frontcss = this._frontcss;
-    this.SetPageExitCheck(true);
-    this.InvokeAsync(StateHasChanged);
+    <span style="color:#569CD6;">this</span>._isLocked = <span style="color:#569CD6;">true</span>;
+    <span style="color:#569CD6;">this</span>.backcss = <span style="color:#569CD6;">this</span>._backcss;
+    <span style="color:#569CD6;">this</span>.frontcss = <span style="color:#569CD6;">this</span>._frontcss;
+    <span style="color:#569CD6;">this</span>.SetPageExitCheck(<span style="color:#569CD6;">true</span>);
+    <span style="color:#569CD6;">this</span>.InvokeAsync(StateHasChanged);
 }
 
-public void Unlock()
+<span style="color:#569CD6;">public</span> <span style="color:#569CD6;">void</span> Unlock()
 {
-    this._isLocked = false;
-    this.backcss = this.__backcss;
-    this.frontcss = this.__frontcss;
-    this.SetPageExitCheck(false);
-    this.InvokeAsync(StateHasChanged);
+    <span style="color:#569CD6;">this</span>._isLocked = <span style="color:#569CD6;">false</span>;
+    <span style="color:#569CD6;">this</span>.backcss = <span style="color:#569CD6;">this</span>.__backcss;
+    <span style="color:#569CD6;">this</span>.frontcss = <span style="color:#569CD6;">this</span>.__frontcss;
+    <span style="color:#569CD6;">this</span>.SetPageExitCheck(<span style="color:#569CD6;">false</span>);
+    <span style="color:#569CD6;">this</span>.InvokeAsync(StateHasChanged);
 }
 
-private void SetPageExitCheck(bool action)
-    =&gt; _js.InvokeAsync&lt;bool&gt;(&quot;cecblazor_setEditorExitCheck&quot;, action);
-</code></pre>
+<span style="color:#569CD6;">private</span> <span style="color:#569CD6;">void</span> SetPageExitCheck(<span style="color:#569CD6;">bool</span> action)
+    =&gt; _js.InvokeAsync&lt;<span style="color:#569CD6;">bool</span>&gt;(<span style="color:#D69D85;">&quot;cecblazor_setEditorExitCheck&quot;</span>, action);
+</pre></div>
 <p>The Javascript in <em>site.js</em>:</p>
-<pre><code class="language-js">window.cecblazor_setEditorExitCheck = function (show) {
-    if (show) {
-        window.addEventListener(&quot;beforeunload&quot;, cecblazor_showExitDialog);
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+window.cecblazor_setEditorExitCheck = <span style="color:#569CD6;">function</span> (show) {
+    <span style="color:#569CD6;">if</span> (show) {
+        window.addEventListener(<span style="color:#D69D85;">&quot;beforeunload&quot;</span>, cecblazor_showExitDialog);
     }
-    else {
-        window.removeEventListener(&quot;beforeunload&quot;, cecblazor_showExitDialog);
+    <span style="color:#569CD6;">else</span> {
+        window.removeEventListener(<span style="color:#D69D85;">&quot;beforeunload&quot;</span>, cecblazor_showExitDialog);
     }
 }
 
-window.cecblazor_showExitDialog = function (event) {
+window.cecblazor_showExitDialog = <span style="color:#569CD6;">function</span> (event) {
     event.preventDefault();
-    event.returnValue = &quot;There are unsaved changes on this page.  Do you want to leave?&quot;;
+    event.returnValue = <span style="color:#D69D85;">&quot;There are unsaved changes on this page.  Do you want to leave?&quot;</span>;
 }
-</code></pre>
+</pre></div>
 <p>Moving on to the Razor for the component:</p>
 <ol>
 <li>We add a <code>div</code> with the Css class <code>_backcss</code>: this is either <em>back-block-transparent</em> or <em>back-block</em> when <code>Locked</code> or empty when <code>Unlocked</code>.</li>
 <li>We add a <code>div</code> with the Css class <code>_frontcss</code>: this is either <em>fore-block-transparent</em> or <em>fore-block</em> when <code>Locked</code> or empty when <code>Unlocked</code> combined with any <code>class</code> attribute value we have added to the component.</li>
 <li>We cascade <code>this</code> if <code>Cascade</code> is true.</li>
 </ol>
-<pre><code class="language-html">&lt;div class=&quot;@this.backcss&quot;&gt;&lt;/div&gt;
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+<span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">div</span> <span style="color:#FF0000;">class</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;@this.backcss&quot;</span><span style="color:#569CD6;">&gt;</span><span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">div</span><span style="color:#569CD6;">&gt;</span>
 
-&lt;div class=&quot;@this.CssClass&quot;&gt;
+<span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">div</span> <span style="color:#FF0000;">class</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;@this.CssClass&quot;</span><span style="color:#569CD6;">&gt;</span>
     @if (this.Cascade)
     {
-        &lt;CascadingValue Value=&quot;this&quot;&gt;
+        <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">CascadingValue</span> <span style="color:#FF0000;">Value</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;this&quot;</span><span style="color:#569CD6;">&gt;</span>
             @this.ChildContent
-        &lt;/CascadingValue&gt;
+        <span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">CascadingValue</span><span style="color:#569CD6;">&gt;</span>
     }
     else
     {
         @this.ChildContent
     }
-&lt;/div&gt;
-</code></pre>
+<span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">div</span><span style="color:#569CD6;">&gt;</span>
+</pre></div>
 <p>Moving on to the component Css, which is where the magic happens.  We implement a similar CSS technique to that used in modal dialogs, adding a transparent or translucent layer over the page content to <em>block</em> content below the layer, and place the contents of <code>InlineDialog</code> in front of that layer.  If you use a lot on z-index layers in your application, you may need to tweak the Z-index to make sure it sits on top.</p>
-<pre><code class="language-css">div.back-block {
-    display: block;
-    position: fixed;
-    z-index: 1; /* Sit on top */
-    left: 0;
-    top: 0;
-    width: 100%; /* Full width */
-    height: 100%; /* Full height */
-    overflow: auto; /* Enable scroll if needed */
-    background-color: RGBA(224, 224, 224, 0.4);/* the translucent effect*/
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+<span style="color:#A31515;">div.back-block </span>{
+    <span style="color:#FF0000;">display</span>: <span style="color:#569CD6;">block</span>;
+    <span style="color:#FF0000;">position</span>: <span style="color:#569CD6;">fixed</span>;
+    <span style="color:#FF0000;">z-index</span>: <span style="color:#569CD6;">1</span>;<span style="color:#57A64A;"> /* Sit on top */</span>
+    <span style="color:#FF0000;">left</span>: <span style="color:#569CD6;">0</span>;
+    <span style="color:#FF0000;">top</span>: <span style="color:#569CD6;">0</span>;
+    <span style="color:#FF0000;">width</span>: <span style="color:#569CD6;">100%</span>;<span style="color:#57A64A;"> /* Full width */</span>
+    <span style="color:#FF0000;">height</span>: <span style="color:#569CD6;">100%</span>;<span style="color:#57A64A;"> /* Full height */</span>
+    <span style="color:#FF0000;">overflow</span>: <span style="color:#569CD6;">auto</span>;<span style="color:#57A64A;"> /* Enable scroll if needed */</span>
+    <span style="color:#FF0000;">background-color</span>: <span style="color:#569CD6;">RGBA(224, 224, 224, 0.4)</span>;<span style="color:#57A64A;">/* the translucent effect*/</span>
 }
 
-div.back-block-transparent {
-    display: block;
-    position: fixed;
-    z-index: 1; /* Sit on top */
-    left: 0;
-    top: 0;
-    width: 100%; /* Full width */
-    height: 100%; /* Full height */
-    overflow: auto; /* Enable scroll if needed */
-    background-color: transparent; 
+<span style="color:#A31515;">div.back-block-transparent </span>{
+    <span style="color:#FF0000;">display</span>: <span style="color:#569CD6;">block</span>;
+    <span style="color:#FF0000;">position</span>: <span style="color:#569CD6;">fixed</span>;
+    <span style="color:#FF0000;">z-index</span>: <span style="color:#569CD6;">1</span>;<span style="color:#57A64A;"> /* Sit on top */</span>
+    <span style="color:#FF0000;">left</span>: <span style="color:#569CD6;">0</span>;
+    <span style="color:#FF0000;">top</span>: <span style="color:#569CD6;">0</span>;
+    <span style="color:#FF0000;">width</span>: <span style="color:#569CD6;">100%</span>;<span style="color:#57A64A;"> /* Full width */</span>
+    <span style="color:#FF0000;">height</span>: <span style="color:#569CD6;">100%</span>;<span style="color:#57A64A;"> /* Full height */</span>
+    <span style="color:#FF0000;">overflow</span>: <span style="color:#569CD6;">auto</span>;<span style="color:#57A64A;"> /* Enable scroll if needed */</span>
+    <span style="color:#FF0000;">background-color</span>: <span style="color:#569CD6;">transparent</span>; 
 }
 
-div.fore-block-transparent {
-    display: block;
-    position: relative;
-    z-index: 2; /* Sit on top */
+<span style="color:#A31515;">div.fore-block-transparent </span>{
+    <span style="color:#FF0000;">display</span>: <span style="color:#569CD6;">block</span>;
+    <span style="color:#FF0000;">position</span>: <span style="color:#569CD6;">relative</span>;
+    <span style="color:#FF0000;">z-index</span>: <span style="color:#569CD6;">2</span>;<span style="color:#57A64A;"> /* Sit on top */</span>
 }
 
-div.fore-block {
-    display: block;
-    position: relative;
-    z-index: 2; /* Sit on top */
-    background-color: RGB(255, 255, 255);/* need to set the colour, adjust as necessary */
+<span style="color:#A31515;">div.fore-block </span>{
+    <span style="color:#FF0000;">display</span>: <span style="color:#569CD6;">block</span>;
+    <span style="color:#FF0000;">position</span>: <span style="color:#569CD6;">relative</span>;
+    <span style="color:#FF0000;">z-index</span>: <span style="color:#569CD6;">2</span>;<span style="color:#57A64A;"> /* Sit on top */</span>
+    <span style="color:#FF0000;">background-color</span>: <span style="color:#569CD6;">RGB(255, 255, 255)</span>;<span style="color:#57A64A;">/* need to set the colour, adjust as necessary */</span>
 }
-</code></pre>
-<h2 id="wrap-up">Wrap Up</h2>
+</pre></div><h2 id="wrap-up">Wrap Up</h2>
 <p>This solution uses the same techniques used by modal dialogs in placing a barrier between the controls on the page and the contents of the control.  It's an <em>in place</em> modal dialog.  <code>Lock</code> inserts the barrier and <code>Unlock</code> removes it.  We add the Javascript Interop to turn on add off the <code>beforeunload</code> event on the browser.  Choose between a transparent or transluscent layer, or code your own CSS.</p>
 <p>Having developed many solutions to solve this problem, and written articles about them, I'm a little flabbergasted to finally find a solution that's this easy.  The best solutions are always the simplest!</p>
 </div></div></div></body></html>

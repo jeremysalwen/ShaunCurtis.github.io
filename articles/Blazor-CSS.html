@@ -101,23 +101,25 @@
 <li>This will add a <em>compilerconfig.json</em> file to the project.  This is the configuration file for <strong>Web Compiler</strong>.</li>
 </ol>
 <p><em>compilerconfig.json</em> will look like this:</p>
-<pre><code class="language-json">[
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+[
   {
-    &quot;outputFile&quot;: &quot;SASS/bootstrap-site.css&quot;,
-    &quot;inputFile&quot;: &quot;SASS/bootstrap-site.scss&quot;
+    <span style="color:#FF8700;">&quot;outputFile&quot;</span>: <span style="color:#008B8B;">&quot;SASS/bootstrap-site.css&quot;</span>,
+    <span style="color:#FF8700;">&quot;inputFile&quot;</span>: <span style="color:#008B8B;">&quot;SASS/bootstrap-site.scss&quot;</span>
   }
 ]
-</code></pre>
+</pre></div>
 <ol start="6">
 <li>Change this to output the compiled file into the web site:</li>
 </ol>
-<pre><code class="language-json">[
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+[
   {
-    &quot;outputFile&quot;: &quot;wwwroot/css/site.css&quot;,
-    &quot;inputFile&quot;: &quot;SASS/bootstrap-site.scss&quot;
+    <span style="color:#FF8700;">&quot;outputFile&quot;</span>: <span style="color:#008B8B;">&quot;wwwroot/css/site.css&quot;</span>,
+    <span style="color:#FF8700;">&quot;inputFile&quot;</span>: <span style="color:#008B8B;">&quot;SASS/bootstrap-site.scss&quot;</span>
   }
 ]
-</code></pre>
+</pre></div>
 <ol start="7">
 <li>A new <em>site.css</em> should appear in <em>wwwroot/css</em>.  There'll be nothing in it because the source file is empty.</li>
 </ol>
@@ -149,21 +151,22 @@
 <li><p>Edit <em>_Host.cshtml</em>, and remove the reference to <em>bootstrap.min.css</em> - all the css is now compiled into <em>site.css</em>.</p>
 </li>
 </ol>
-<pre><code class="language-html">&lt;head&gt;
-    &lt;meta charset=&quot;utf-8&quot; /&gt;
-    &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1.0&quot; /&gt;
-    &lt;title&gt;Blazor.CSS&lt;/title&gt;
-    &lt;base href=&quot;~/&quot; /&gt;
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+<span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">head</span><span style="color:#569CD6;">&gt;</span>
+    <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">meta</span> <span style="color:#FF0000;">charset</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;utf-8&quot;</span> <span style="color:#569CD6;">/&gt;</span>
+    <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">meta</span> <span style="color:#FF0000;">name</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;viewport&quot;</span> <span style="color:#FF0000;">content</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;width=device-width, initial-scale=1.0&quot;</span> <span style="color:#569CD6;">/&gt;</span>
+    <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">title</span><span style="color:#569CD6;">&gt;</span>Blazor.CSS<span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">title</span><span style="color:#569CD6;">&gt;</span>
+    <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">base</span> <span style="color:#FF0000;">href</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;~/&quot;</span> <span style="color:#569CD6;">/&gt;</span>
     \\ Remove bootstrap CSS reference
-    &lt;link rel=&quot;stylesheet&quot; href=&quot;css/bootstrap/bootstrap.min.css&quot; /&gt;
+    <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">link</span> <span style="color:#FF0000;">rel</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;stylesheet&quot;</span> <span style="color:#FF0000;">href</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;css/bootstrap/bootstrap.min.css&quot;</span> <span style="color:#569CD6;">/&gt;</span>
     \\
-    &lt;link href=&quot;css/site.css&quot; rel=&quot;stylesheet&quot; /&gt;
+    <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">link</span> <span style="color:#FF0000;">href</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;css/site.css&quot;</span> <span style="color:#FF0000;">rel</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;stylesheet&quot;</span> <span style="color:#569CD6;">/&gt;</span>
     \\ This is the new Net5 build generated Scoped CSS stylesheet
     \\ more later in this article
-    &lt;link href=&quot;Blazor.CSS.styles.css&quot; rel=&quot;stylesheet&quot; /&gt;
-&lt;/head&gt;
+    <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">link</span> <span style="color:#FF0000;">href</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;Blazor.CSS.styles.css&quot;</span> <span style="color:#FF0000;">rel</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;stylesheet&quot;</span> <span style="color:#569CD6;">/&gt;</span>
+<span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">head</span><span style="color:#569CD6;">&gt;</span>
 
-</code></pre>
+</pre></div>
 <ol start="7">
 <li>Run the project.  Everything should be the same as before.</li>
 </ol>
@@ -293,36 +296,38 @@ $dropdown-border-color: $border-color !default;
 $enable-rounded: false;
 </code></pre>
 <p>Add <em>_overrides.scss</em> to <em>SASS/custom</em> and add the following content.  This demonstrates the sort of changes you can make - we don't actually use it on the site.</p>
-<pre><code class="language-css">/* Reduce the default form-group bottom margin*/
-.form-group {
-    margin-bottom: .25rem;
-}
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+<span style="color:#57A64A;">/* Reduce the default form-group bottom margin*/</span>
+<span style="color:#A31515;">.form-group </span>{
+    <span style="color:#FF0000;">margin-bottom</span>: <span style="color:#569CD6;">.25rem</span>;
+}<span style="color:#57A64A;">
 
-/* set new margins and padding for small alerts*/
-div.alert-sm .alert {
-    padding: .25rem 1.25rem;
-    margin-bottom: 0rem;
+/* set new margins and padding for small alerts*/</span>
+<span style="color:#A31515;">div.alert-sm .alert </span>{
+    <span style="color:#FF0000;">padding</span>: <span style="color:#569CD6;">.25rem 1.25rem</span>;
+    <span style="color:#FF0000;">margin-bottom</span>: <span style="color:#569CD6;">0rem</span>;
 }
-</code></pre>
-<h3 id="build-the-customized-bootstrap">Build the Customized Bootstrap</h3>
+</pre></div><h3 id="build-the-customized-bootstrap">Build the Customized Bootstrap</h3>
 <p>To build the custom version of Bootstrap, we need to add the new SASS files into the compile process.</p>
 <p>Edit <em>SASS/bootstrap-site.scss</em></p>
-<pre><code class="language-css">/* Source SASS file to build custom Bootstrap site file */
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+<span style="color:#57A64A;">/* Source SASS file to build custom Bootstrap site file */</span>
 @import &quot;../wwwroot/css/open-iconic/font/css/open-iconic-bootstrap.min.css&quot;;
 @import &quot;Bootstrap/scss/_functions&quot;;
 @import &quot;Bootstrap/Custom/_variables&quot;;
 @import &quot;Bootstrap/scss/bootstrap&quot;;
-@import &quot;Bootstrap/Custom/_overrides&quot;;
-/* This is the original site.css file that contains the site specific customizations*/
+@import &quot;Bootstrap/Custom/_overrides&quot;;<span style="color:#57A64A;">
+/* This is the original site.css file that contains the site specific customizations*/</span>
 @import &quot;custom.scss&quot;;
-</code></pre>
+</pre></div>
 <p>Save and this should compile.</p>
 <p>To see the changes, edit <em>Pages/Counter.razor</em> and add a few extra buttons to the page.</p>
-<pre><code class="language-html">&lt;button class=&quot;btn btn-primary&quot; @onclick=&quot;IncrementCount&quot;&gt;Click me&lt;/button&gt;
-&lt;button class=&quot;btn btn-save&quot; @onclick=&quot;IncrementCount&quot;&gt;Save Styled Click me&lt;/button&gt;
-&lt;button class=&quot;btn btn-delete&quot; @onclick=&quot;IncrementCount&quot;&gt;Delete Styled Click me&lt;/button&gt;
-&lt;button class=&quot;btn btn-brand&quot; @onclick=&quot;IncrementCount&quot;&gt;Brand Styled Click me&lt;/button&gt;
-</code></pre>
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+<span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">button</span> <span style="color:#FF0000;">class</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;btn btn-primary&quot; @onclick=&quot;IncrementCount&quot;</span><span style="color:#569CD6;">&gt;</span>Click me<span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">button</span><span style="color:#569CD6;">&gt;</span>
+<span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">button</span> <span style="color:#FF0000;">class</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;btn btn-save&quot; @onclick=&quot;IncrementCount&quot;</span><span style="color:#569CD6;">&gt;</span>Save Styled Click me<span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">button</span><span style="color:#569CD6;">&gt;</span>
+<span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">button</span> <span style="color:#FF0000;">class</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;btn btn-delete&quot; @onclick=&quot;IncrementCount&quot;</span><span style="color:#569CD6;">&gt;</span>Delete Styled Click me<span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">button</span><span style="color:#569CD6;">&gt;</span>
+<span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">button</span> <span style="color:#FF0000;">class</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;btn btn-brand&quot; @onclick=&quot;IncrementCount&quot;</span><span style="color:#569CD6;">&gt;</span>Brand Styled Click me<span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">button</span><span style="color:#569CD6;">&gt;</span>
+</pre></div>
 <p>Run the site and navigate to the counter page to check the button customization.  They should look like this:</p>
 <p><img src="https://github.com/ShaunCurtis/Blazor.CSS/blob/master/images/custom-buttons.png?raw=true" alt="custom buttons" /></p>
 <h2 id="changing-css-frameworks">Changing CSS Frameworks</h2>
@@ -339,21 +344,22 @@ div.alert-sm .alert {
 <ol start="6">
 <li>Edit <em>compilerconfig.json</em></li>
 </ol>
-<pre><code class="language-json">[
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+[
   {
-    &quot;outputFile&quot;: &quot;wwwroot/css/site.css&quot;,
-    &quot;inputFile&quot;: &quot;SASS/site.scss&quot;
+    <span style="color:#FF8700;">&quot;outputFile&quot;</span>: <span style="color:#008B8B;">&quot;wwwroot/css/site.css&quot;</span>,
+    <span style="color:#FF8700;">&quot;inputFile&quot;</span>: <span style="color:#008B8B;">&quot;SASS/site.scss&quot;</span>
   },
   {
-    &quot;outputFile&quot;: &quot;wwwroot/css/spectre.css&quot;,
-    &quot;inputFile&quot;: &quot;SASS/site-spectre.scss&quot;
+    <span style="color:#FF8700;">&quot;outputFile&quot;</span>: <span style="color:#008B8B;">&quot;wwwroot/css/spectre.css&quot;</span>,
+    <span style="color:#FF8700;">&quot;inputFile&quot;</span>: <span style="color:#008B8B;">&quot;SASS/site-spectre.scss&quot;</span>
   },
   {
-    &quot;outputFile&quot;: &quot;wwwroot/css/spectre-icons.css&quot;,
-    &quot;inputFile&quot;: &quot;SASS/Spectre/scss/Spectre-icons.scss&quot;
+    <span style="color:#FF8700;">&quot;outputFile&quot;</span>: <span style="color:#008B8B;">&quot;wwwroot/css/spectre-icons.css&quot;</span>,
+    <span style="color:#FF8700;">&quot;inputFile&quot;</span>: <span style="color:#008B8B;">&quot;SASS/Spectre/scss/Spectre-icons.scss&quot;</span>
   }
 ]
-</code></pre>
+</pre></div>
 <p>Once you save this you should get a compiled *spectre.css in <em>wwwroot/css</em></p>
 <h3 id="customization">Customization</h3>
 <p>Add folder <em>custom</em> to <em>SASS/Spectre</em></p>
@@ -385,17 +391,18 @@ $delete-color: #e85600 !default;
 @import &quot;Spectre/custom/_buttons&quot;;
 </code></pre>
 <p>Finally change <em>_Host.cshtml</em> over to the new css.</p>
-<pre><code class="language-html">&lt;head&gt;
-    &lt;meta charset=&quot;utf-8&quot; /&gt;
-    &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1.0&quot; /&gt;
-    &lt;title&gt;Blazor.CSS&lt;/title&gt;
-    &lt;base href=&quot;~/&quot; /&gt;
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+<span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">head</span><span style="color:#569CD6;">&gt;</span>
+    <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">meta</span> <span style="color:#FF0000;">charset</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;utf-8&quot;</span> <span style="color:#569CD6;">/&gt;</span>
+    <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">meta</span> <span style="color:#FF0000;">name</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;viewport&quot;</span> <span style="color:#FF0000;">content</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;width=device-width, initial-scale=1.0&quot;</span> <span style="color:#569CD6;">/&gt;</span>
+    <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">title</span><span style="color:#569CD6;">&gt;</span>Blazor.CSS<span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">title</span><span style="color:#569CD6;">&gt;</span>
+    <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">base</span> <span style="color:#FF0000;">href</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;~/&quot;</span> <span style="color:#569CD6;">/&gt;</span>
     \\ Link to the new custom Spectre CSS
-    &lt;link href=&quot;css/spectre.css&quot; rel=&quot;stylesheet&quot; /&gt;
-    &lt;link href=&quot;Blazor.CSS.styles.css&quot; rel=&quot;stylesheet&quot; /&gt;
-&lt;/head&gt;
+    <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">link</span> <span style="color:#FF0000;">href</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;css/spectre.css&quot;</span> <span style="color:#FF0000;">rel</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;stylesheet&quot;</span> <span style="color:#569CD6;">/&gt;</span>
+    <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">link</span> <span style="color:#FF0000;">href</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;Blazor.CSS.styles.css&quot;</span> <span style="color:#FF0000;">rel</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;stylesheet&quot;</span> <span style="color:#569CD6;">/&gt;</span>
+<span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">head</span><span style="color:#569CD6;">&gt;</span>
 
-</code></pre>
+</pre></div>
 <p>Run the site.</p>
 <p>It will look a little different - it needs some work to fix small problems, but basically works.  Go to the Counter page to see the different buttons - Spectre and Bootstrap button class names are very similar so work.</p>
 <p><img src="https://github.com/ShaunCurtis/Blazor.CSS/blob/master/images/spectre-buttons.png?raw=true" alt="spectre buttons" /></p>
@@ -406,80 +413,83 @@ $delete-color: #e85600 !default;
 <ol>
 <li>Add a new Razor component DataGrid.razor to <em>Shared</em>, and add the following code - it's a modified version of the existing <em>fetchdata</em> code.</li>
 </ol>
-<pre><code class="language-html">@using Blazor.CSS.Data
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+@using Blazor.CSS.Data
 
 @if (forecasts == null)
 {
-    &lt;p&gt;&lt;em&gt;Loading...&lt;/em&gt;&lt;/p&gt;
+    <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">p</span><span style="color:#569CD6;">&gt;</span><span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">em</span><span style="color:#569CD6;">&gt;</span>Loading...<span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">em</span><span style="color:#569CD6;">&gt;</span><span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">p</span><span style="color:#569CD6;">&gt;</span>
 }
 else
 {
-    &lt;table class=&quot;table&quot;&gt;
-        &lt;thead&gt;
-            &lt;tr&gt;
-                &lt;th&gt;Date&lt;/th&gt;
-                &lt;th&gt;Temp. (C)&lt;/th&gt;
-                &lt;th&gt;Temp. (F)&lt;/th&gt;
-                &lt;th&gt;Summary&lt;/th&gt;
-                &lt;th class=&quot;max-column&quot;&gt;Detail&lt;/th&gt;
-            &lt;/tr&gt;
-        &lt;/thead&gt;
-        &lt;tbody&gt;
+    <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">table</span> <span style="color:#FF0000;">class</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;table&quot;</span><span style="color:#569CD6;">&gt;</span>
+        <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">thead</span><span style="color:#569CD6;">&gt;</span>
+            <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">tr</span><span style="color:#569CD6;">&gt;</span>
+                <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">th</span><span style="color:#569CD6;">&gt;</span>Date<span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">th</span><span style="color:#569CD6;">&gt;</span>
+                <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">th</span><span style="color:#569CD6;">&gt;</span>Temp. (C)<span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">th</span><span style="color:#569CD6;">&gt;</span>
+                <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">th</span><span style="color:#569CD6;">&gt;</span>Temp. (F)<span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">th</span><span style="color:#569CD6;">&gt;</span>
+                <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">th</span><span style="color:#569CD6;">&gt;</span>Summary<span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">th</span><span style="color:#569CD6;">&gt;</span>
+                <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">th</span> <span style="color:#FF0000;">class</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;max-column&quot;</span><span style="color:#569CD6;">&gt;</span>Detail<span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">th</span><span style="color:#569CD6;">&gt;</span>
+            <span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">tr</span><span style="color:#569CD6;">&gt;</span>
+        <span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">thead</span><span style="color:#569CD6;">&gt;</span>
+        <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">tbody</span><span style="color:#569CD6;">&gt;</span>
             @foreach (var forecast in forecasts)
             {
-                &lt;tr&gt;
-                    &lt;td&gt;@forecast.Date.ToShortDateString()&lt;/td&gt;
-                    &lt;td&gt;@forecast.TemperatureC&lt;/td&gt;
-                    &lt;td&gt;@forecast.TemperatureF&lt;/td&gt;
-                    &lt;td&gt;@forecast.Summary&lt;/td&gt;
-                    &lt;td class=&quot;max-column&quot;&gt;
-                        &lt;div class=&quot;grid-overflow&quot;&gt;
-                            &lt;div class=&quot;grid-overflowinner&quot;&gt;
+                <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">tr</span><span style="color:#569CD6;">&gt;</span>
+                    <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">td</span><span style="color:#569CD6;">&gt;</span>@forecast.Date.ToShortDateString()<span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">td</span><span style="color:#569CD6;">&gt;</span>
+                    <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">td</span><span style="color:#569CD6;">&gt;</span>@forecast.TemperatureC<span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">td</span><span style="color:#569CD6;">&gt;</span>
+                    <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">td</span><span style="color:#569CD6;">&gt;</span>@forecast.TemperatureF<span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">td</span><span style="color:#569CD6;">&gt;</span>
+                    <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">td</span><span style="color:#569CD6;">&gt;</span>@forecast.Summary<span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">td</span><span style="color:#569CD6;">&gt;</span>
+                    <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">td</span> <span style="color:#FF0000;">class</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;max-column&quot;</span><span style="color:#569CD6;">&gt;</span>
+                        <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">div</span> <span style="color:#FF0000;">class</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;grid-overflow&quot;</span><span style="color:#569CD6;">&gt;</span>
+                            <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">div</span> <span style="color:#FF0000;">class</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;grid-overflowinner&quot;</span><span style="color:#569CD6;">&gt;</span>
                                 @($&quot;The Weather Forecast for this {forecast.Date.DayOfWeek}, the {forecast.Date.Day} of the month {forecast.Date.Month} in the year of our Lord {forecast.Date.Year} is {forecast.Summary}&quot;)
-                            &lt;/div&gt;
-                        &lt;/div&gt;
-                    &lt;/td&gt;
-                &lt;/tr&gt;
+                            <span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">div</span><span style="color:#569CD6;">&gt;</span>
+                        <span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">div</span><span style="color:#569CD6;">&gt;</span>
+                    <span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">td</span><span style="color:#569CD6;">&gt;</span>
+                <span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">tr</span><span style="color:#569CD6;">&gt;</span>
             }
-        &lt;/tbody&gt;
-    &lt;/table&gt;
+        <span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">tbody</span><span style="color:#569CD6;">&gt;</span>
+    <span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">table</span><span style="color:#569CD6;">&gt;</span>
 }
 @code {
     [Parameter] public WeatherForecast[] forecasts { get; set; } = null;
 }
-</code></pre>
+</pre></div>
 <ol start="2">
 <li>Add <em>DataGrid.razor.css</em> to <em>Shared</em>.  It should associate with <em>DataGrid.razor</em>.  The component specific css goes here.  We're adding some css to format the max column and handle text overflow gracefully.</li>
 </ol>
-<pre><code class="language-css">.max-column {
-    width:50%;
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+<span style="color:#A31515;">.max-column </span>{
+    <span style="color:#FF0000;">width</span>:<span style="color:#569CD6;">50%</span>;
 }
 
-.grid-overflow {
-    display: flex;
+<span style="color:#A31515;">.grid-overflow </span>{
+    <span style="color:#FF0000;">display</span>: <span style="color:#569CD6;">flex</span>;
 }
 
-.grid-overflowinner {
-    flex: 1;
-    width: 1px;
-    overflow-x: hidden;
-    white-space: nowrap;
-    text-overflow: ellipsis;
+<span style="color:#A31515;">.grid-overflowinner </span>{
+    <span style="color:#FF0000;">flex</span>: <span style="color:#569CD6;">1</span>;
+    <span style="color:#FF0000;">width</span>: <span style="color:#569CD6;">1px</span>;
+    <span style="color:#FF0000;">overflow-x</span>: <span style="color:#569CD6;">hidden</span>;
+    <span style="color:#FF0000;">white-space</span>: <span style="color:#569CD6;">nowrap</span>;
+    <span style="color:#FF0000;">text-overflow</span>: <span style="color:#569CD6;">ellipsis</span>;
 }
-</code></pre>
+</pre></div>
 <ol start="3">
 <li>Modify <em>Fetchdata</em> to use the new component.</li>
 </ol>
-<pre><code class="language-html">@page &quot;/fetchdata&quot;
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+@page &quot;/fetchdata&quot;
 
 @using Blazor.CSS.Data
 @inject WeatherForecastService ForecastService
 
-&lt;h1&gt;Weather forecast&lt;/h1&gt;
+<span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">h1</span><span style="color:#569CD6;">&gt;</span>Weather forecast<span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">h1</span><span style="color:#569CD6;">&gt;</span>
 
-&lt;p&gt;This component demonstrates fetching data from a service and a data grid to displaying it.&lt;/p&gt;
+<span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">p</span><span style="color:#569CD6;">&gt;</span>This component demonstrates fetching data from a service and a data grid to displaying it.<span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">p</span><span style="color:#569CD6;">&gt;</span>
 
-&lt;DataGrid forecasts=&quot;this.forecasts&quot;&gt;&lt;/DataGrid&gt;
+<span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">DataGrid</span> <span style="color:#FF0000;">forecasts</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;this.forecasts&quot;</span><span style="color:#569CD6;">&gt;</span><span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">DataGrid</span><span style="color:#569CD6;">&gt;</span>
 
 @code {
     private WeatherForecast[] forecasts;
@@ -489,7 +499,7 @@ else
         forecasts = await ForecastService.GetForecastAsync(DateTime.Now);
     }
 }
-</code></pre>
+</pre></div>
 <ol start="4">
 <li>Run the site and <em>Fetchdata</em> should look like this:</li>
 </ol>

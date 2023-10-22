@@ -81,15 +81,15 @@
 <p>We'll build two versions of the control using Blazor's <code>InputBase</code> as the base class to fit into the existing edit form framework.  Along the way we delve into the inner workings of <code>InputBase</code> and explore control binding.</p>
 <h2 id="the-html-datalist">The Html DataList</h2>
 <p>When <code>Input</code> is linked to a <code>datalist</code>, it makes filtered suggestions as the user types based on the <code>datalist</code>.  Out-of-the-box, the user can select a suggestion or enter any text value.  The basic markup for the control is shown below.</p>
-<pre><code class="language-html">&lt;input type=&quot;text&quot; list=&quot;countrylist&quot; /&gt;
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+<span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">input</span> <span style="color:#FF0000;">type</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;text&quot;</span> <span style="color:#FF0000;">list</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;countrylist&quot;</span> <span style="color:#569CD6;">/&gt;</span>
 
-&lt;datalist id=&quot;countrylist&quot; /&gt;
-    &lt;option value=&quot;Algeria&quot; /&gt;
-    &lt;option value=&quot;Australia&quot; /&gt;
-    &lt;option value=&quot;Austria&quot; /&gt;
-&lt;datalist&gt;
-</code></pre>
-<h2 id="example-site-and-code-repository">Example Site and Code Repository</h2>
+<span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">datalist</span> <span style="color:#FF0000;">id</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;countrylist&quot;</span> <span style="color:#569CD6;">/&gt;</span>
+    <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">option</span> <span style="color:#FF0000;">value</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;Algeria&quot;</span> <span style="color:#569CD6;">/&gt;</span>
+    <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">option</span> <span style="color:#FF0000;">value</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;Australia&quot;</span> <span style="color:#569CD6;">/&gt;</span>
+    <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">option</span> <span style="color:#FF0000;">value</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;Austria&quot;</span> <span style="color:#569CD6;">/&gt;</span>
+<span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">datalist</span><span style="color:#569CD6;">&gt;</span>
+</pre></div><h2 id="example-site-and-code-repository">Example Site and Code Repository</h2>
 <p>The code is in a my <a href="https://github.com/ShaunCurtis/Blazor.Database/">Blazor.Database</a> repository <a href="https://github.com/ShaunCurtis/Blazor.Database/tree/master/Blazor.SPA/Components/FormControls">here in Blazor.SPA/Components/FormControls</a></p>
 <p>The controls can be seen in action <a href="https://cec-blazor-database.azurewebsites.net/editorcontrols">here on my Blazor.Database Demo Site</a>.</p>
 <h2 id="exploring-binding-in-a-test-control">Exploring binding in a Test Control</h2>
@@ -107,130 +107,134 @@
 <li><code>CurrentValue</code> is the control internal <em>Value</em>.  It updates <code>Value</code> and invokes <code>ValueChanged</code> when changed.</li>
 <li><code>AdditionalAttributes</code> is used to capture the class and other attributes added to the control.</li>
 </ol>
-<pre><code class="language-csharp">namespace MyNameSpace.Components
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+<span style="color:#569CD6;">namespace</span> MyNameSpace.Components
 {
-    public partial class MyInput
+    <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">partial</span> <span style="color:#569CD6;">class</span> MyInput
     {
-        [Parameter] public string Value { get; set; }
-        [Parameter] public EventCallback&lt;string&gt; ValueChanged { get; set; }
-        [Parameter] public Expression&lt;Func&lt;string&gt;&gt; ValueExpression { get; set; }
-        [Parameter(CaptureUnmatchedValues = true)] public IReadOnlyDictionary&lt;string, object&gt; AdditionalAttributes { get; set; }
+        [Parameter] <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">string</span> Value { <span style="color:#569CD6;">get</span>; <span style="color:#569CD6;">set</span>; }
+        [Parameter] <span style="color:#569CD6;">public</span> EventCallback&lt;<span style="color:#569CD6;">string</span>&gt; ValueChanged { <span style="color:#569CD6;">get</span>; <span style="color:#569CD6;">set</span>; }
+        [Parameter] <span style="color:#569CD6;">public</span> Expression&lt;Func&lt;<span style="color:#569CD6;">string</span>&gt;&gt; ValueExpression { <span style="color:#569CD6;">get</span>; <span style="color:#569CD6;">set</span>; }
+        [Parameter(CaptureUnmatchedValues = <span style="color:#569CD6;">true</span>)] <span style="color:#569CD6;">public</span> IReadOnlyDictionary&lt;<span style="color:#569CD6;">string</span>, <span style="color:#569CD6;">object</span>&gt; AdditionalAttributes { <span style="color:#569CD6;">get</span>; <span style="color:#569CD6;">set</span>; }
 
-        protected virtual string CurrentValue
+        <span style="color:#569CD6;">protected</span> <span style="color:#569CD6;">virtual</span> <span style="color:#569CD6;">string</span> CurrentValue
         {
-            get =&gt; Value;
-            set
+            <span style="color:#569CD6;">get</span> =&gt; Value;
+            <span style="color:#569CD6;">set</span>
             {
-                if (!value.Equals(this.Value))
+                <span style="color:#569CD6;">if</span> (!value.Equals(<span style="color:#569CD6;">this</span>.Value))
                 {
                     Value = value;
-                    if (ValueChanged.HasDelegate)
+                    <span style="color:#569CD6;">if</span> (ValueChanged.HasDelegate)
                         _ = ValueChanged.InvokeAsync(value);
                 }
             }
         }
     }
 }
-</code></pre>
+</pre></div>
 <p>Add a Text <code>input</code> html control to the razor file.</p>
 <ol>
 <li>Namespace is added so <em>Components</em> can be divided into subfolders as the number of source files grow.</li>
 <li><code>@bind-value</code> points to the controls <code>CurrentValue</code> property.</li>
 <li><code>@attributes</code> adds the control attributes to <code>input</code>.</li>
 </ol>
-<pre><code class="language-html">@namespace MyNameSpace.Components
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+@namespace MyNameSpace.Components
 
-&lt;input type=&quot;text&quot; @bind-value=&quot;this.CurrentValue&quot; @attributes=&quot;this.AdditionalAttributes&quot; /&gt;
-</code></pre>
-<h4 id="test-page">Test Page</h4>
+<span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">input</span> <span style="color:#FF0000;">type</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;text&quot; @bind-value=&quot;this.CurrentValue&quot; @attributes=&quot;this.AdditionalAttributes&quot;</span> <span style="color:#569CD6;">/&gt;</span>
+</pre></div><h4 id="test-page">Test Page</h4>
 <p>Add a Test page to <em>Pages</em> - or overwrite index if you're using a test site.  We'll use this for testing all the controls.</p>
 <p>This doesn't need much explanation.  Bootstrap for formatting, classic <code>EditForm</code>.  <code>CheckButton</code> gives us a easy breakpoint we can hit to check values and objects.</p>
 <p>You can see our <code>MyInput</code> in the form.</p>
-<pre><code class="language-html">@page &quot;/&quot;
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+@page &quot;/&quot;
 
 @using MyNameSpace.Components
 
-&lt;EditForm Model=&quot;this.model&quot; OnValidSubmit=&quot;this.ValidSubmit&quot;&gt;
-    &lt;div class=&quot;container m-5 p-4 border border-secondary&quot;&gt;
-        &lt;div class=&quot;row mb-2&quot;&gt;
-            &lt;div class=&quot;col-12&quot;&gt;
-                &lt;h2&gt;Test Editor&lt;/h2&gt;
-            &lt;/div&gt;
-        &lt;/div&gt;
-        &lt;div class=&quot;row mb-2&quot;&gt;
-            &lt;div class=&quot;col-4 form-label&quot; for=&quot;txtcountry&quot;&gt;
+<span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">EditForm</span> <span style="color:#FF0000;">Model</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;this.model&quot;</span> <span style="color:#FF0000;">OnValidSubmit</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;this.ValidSubmit&quot;</span><span style="color:#569CD6;">&gt;</span>
+    <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">div</span> <span style="color:#FF0000;">class</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;container m-5 p-4 border border-secondary&quot;</span><span style="color:#569CD6;">&gt;</span>
+        <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">div</span> <span style="color:#FF0000;">class</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;row mb-2&quot;</span><span style="color:#569CD6;">&gt;</span>
+            <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">div</span> <span style="color:#FF0000;">class</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;col-12&quot;</span><span style="color:#569CD6;">&gt;</span>
+                <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">h2</span><span style="color:#569CD6;">&gt;</span>Test Editor<span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">h2</span><span style="color:#569CD6;">&gt;</span>
+            <span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">div</span><span style="color:#569CD6;">&gt;</span>
+        <span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">div</span><span style="color:#569CD6;">&gt;</span>
+        <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">div</span> <span style="color:#FF0000;">class</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;row mb-2&quot;</span><span style="color:#569CD6;">&gt;</span>
+            <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">div</span> <span style="color:#FF0000;">class</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;col-4 form-label&quot;</span> <span style="color:#FF0000;">for</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;txtcountry&quot;</span><span style="color:#569CD6;">&gt;</span>
                 Country
-            &lt;/div&gt;
-            &lt;div class=&quot;col-4&quot;&gt;
-                &lt;MyInput id=&quot;txtcountry&quot; @bind-Value=&quot;model.Value&quot; class=&quot;form-control&quot;&gt;&lt;/MyInput&gt;
-            &lt;/div&gt;
-        &lt;/div&gt;
-        &lt;div class=&quot;row mb-2&quot;&gt;
-            &lt;div class=&quot;col-6&quot;&gt;
-            &lt;/div&gt;
-            &lt;div class=&quot;col-6 text-right&quot;&gt;
-                &lt;button class=&quot;btn btn-secondary&quot; @onclick=&quot;(e) =&gt; this.CheckButton()&quot;&gt;Check&lt;/button&gt;
-                &lt;button type=&quot;submit&quot; class=&quot;btn btn-primary&quot;&gt;Submit&lt;/button&gt;
-            &lt;/div&gt;
-        &lt;/div&gt;
-    &lt;/div&gt;
-&lt;/EditForm&gt;
+            <span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">div</span><span style="color:#569CD6;">&gt;</span>
+            <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">div</span> <span style="color:#FF0000;">class</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;col-4&quot;</span><span style="color:#569CD6;">&gt;</span>
+                <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">MyInput</span> <span style="color:#FF0000;">id</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;txtcountry&quot; @bind-Value=&quot;model.Value&quot;</span> <span style="color:#FF0000;">class</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;form-control&quot;</span><span style="color:#569CD6;">&gt;</span><span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">MyInput</span><span style="color:#569CD6;">&gt;</span>
+            <span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">div</span><span style="color:#569CD6;">&gt;</span>
+        <span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">div</span><span style="color:#569CD6;">&gt;</span>
+        <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">div</span> <span style="color:#FF0000;">class</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;row mb-2&quot;</span><span style="color:#569CD6;">&gt;</span>
+            <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">div</span> <span style="color:#FF0000;">class</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;col-6&quot;</span><span style="color:#569CD6;">&gt;</span>
+            <span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">div</span><span style="color:#569CD6;">&gt;</span>
+            <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">div</span> <span style="color:#FF0000;">class</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;col-6 text-right&quot;</span><span style="color:#569CD6;">&gt;</span>
+                <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">button</span> <span style="color:#FF0000;">class</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;btn btn-secondary&quot; @onclick=&quot;(e) =&gt; this.CheckButton()&quot;</span><span style="color:#569CD6;">&gt;</span>Check<span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">button</span><span style="color:#569CD6;">&gt;</span>
+                <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">button</span> <span style="color:#FF0000;">type</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;submit&quot;</span> <span style="color:#FF0000;">class</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;btn btn-primary&quot;</span><span style="color:#569CD6;">&gt;</span>Submit<span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">button</span><span style="color:#569CD6;">&gt;</span>
+            <span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">div</span><span style="color:#569CD6;">&gt;</span>
+        <span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">div</span><span style="color:#569CD6;">&gt;</span>
+    <span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">div</span><span style="color:#569CD6;">&gt;</span>
+<span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">EditForm</span><span style="color:#569CD6;">&gt;</span>
 
-&lt;div class=&quot;container&quot;&gt;
-    &lt;div class=&quot;row mb-2&quot;&gt;
-        &lt;div class=&quot;col-4 form-label&quot;&gt;
+<span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">div</span> <span style="color:#FF0000;">class</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;container&quot;</span><span style="color:#569CD6;">&gt;</span>
+    <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">div</span> <span style="color:#FF0000;">class</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;row mb-2&quot;</span><span style="color:#569CD6;">&gt;</span>
+        <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">div</span> <span style="color:#FF0000;">class</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;col-4 form-label&quot;</span><span style="color:#569CD6;">&gt;</span>
             Test Value
-        &lt;/div&gt;
-        &lt;div class=&quot;col-4 form-control&quot;&gt;
+        <span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">div</span><span style="color:#569CD6;">&gt;</span>
+        <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">div</span> <span style="color:#FF0000;">class</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;col-4 form-control&quot;</span><span style="color:#569CD6;">&gt;</span>
             @this.model.Value
-        &lt;/div&gt;
-    &lt;/div&gt;
-    &lt;div class=&quot;row mb-2&quot;&gt;
-        &lt;div class=&quot;col-4 form-label&quot;&gt;
+        <span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">div</span><span style="color:#569CD6;">&gt;</span>
+    <span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">div</span><span style="color:#569CD6;">&gt;</span>
+    <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">div</span> <span style="color:#FF0000;">class</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;row mb-2&quot;</span><span style="color:#569CD6;">&gt;</span>
+        <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">div</span> <span style="color:#FF0000;">class</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;col-4 form-label&quot;</span><span style="color:#569CD6;">&gt;</span>
             Test Index
-        &lt;/div&gt;
-        &lt;div class=&quot;col-4 form-control&quot;&gt;
+        <span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">div</span><span style="color:#569CD6;">&gt;</span>
+        <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">div</span> <span style="color:#FF0000;">class</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;col-4 form-control&quot;</span><span style="color:#569CD6;">&gt;</span>
             @this.model.index
-        &lt;/div&gt;
-    &lt;/div&gt;
-&lt;/div&gt;
-</code></pre>
-<pre><code class="language-csharp">@code {
+        <span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">div</span><span style="color:#569CD6;">&gt;</span>
+    <span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">div</span><span style="color:#569CD6;">&gt;</span>
+<span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">div</span><span style="color:#569CD6;">&gt;</span>
+</pre></div><div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+@code {
 
-    Model model = new Model() { Value = &quot;Australia&quot;, index = 2 };
+    Model model = <span style="color:#569CD6;">new</span> Model() { Value = <span style="color:#D69D85;">&quot;Australia&quot;</span>, index = <span style="color:#B5CEA8;">2</span> };
 
-    private void CheckButton()
+    <span style="color:#569CD6;">private</span> <span style="color:#569CD6;">void</span> CheckButton()
     {
-        var x = true;
+        <span style="color:#569CD6;">var</span> x = <span style="color:#569CD6;">true</span>;
     }
 
-    private void ValidSubmit()
+    <span style="color:#569CD6;">private</span> <span style="color:#569CD6;">void</span> ValidSubmit()
     {
-        var x = true;
+        <span style="color:#569CD6;">var</span> x = <span style="color:#569CD6;">true</span>;
     }
 
-    class Model
+    <span style="color:#569CD6;">class</span> Model
     {
-        public string Value { get; set; } = string.Empty;
-        public int index { get; set; } = 0;
+        <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">string</span> Value { <span style="color:#569CD6;">get</span>; <span style="color:#569CD6;">set</span>; } = <span style="color:#569CD6;">string</span>.Empty;
+        <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">int</span> index { <span style="color:#569CD6;">get</span>; <span style="color:#569CD6;">set</span>; } = <span style="color:#B5CEA8;">0</span>;
     }
 }
-</code></pre>
+</pre></div>
 <p>Note the value display update as you change the text in <code>MyInput</code>.</p>
 <p>Under the hood the Razor compiler builds the section containing <code>MyInput</code> into component code like this:</p>
-<pre><code class="language-csharp">__builder2.OpenComponent&lt;TestBlazorServer.Components.MyInput&gt;(12);
-__builder2.AddAttribute(13, &quot;id&quot;, &quot;txtcountry&quot;);
-__builder2.AddAttribute(14, &quot;class&quot;, &quot;form-control&quot;);
-__builder2.AddAttribute(15, &quot;Value&quot;, Microsoft.AspNetCore.Components.CompilerServices.RuntimeHelpers.TypeCheck&lt;System.String&gt;(model.Value));
-__builder2.AddAttribute(16, &quot;ValueChanged&quot;, Microsoft.AspNetCore.Components.CompilerServices.RuntimeHelpers.TypeCheck&lt;Microsoft.AspNetCore.Components.EventCallback&lt;System.String&gt;&gt;(Microsoft.AspNetCore.Components.EventCallback.Factory.Create&lt;System.String&gt;(this, Microsoft.AspNetCore.Components.CompilerServices.RuntimeHelpers.CreateInferredEventCallback(this, __value =&gt; model.Value = __value, model.Value))));
-__builder2.AddAttribute(17, &quot;ValueExpression&quot;, Microsoft.AspNetCore.Components.CompilerServices.RuntimeHelpers.TypeCheck&lt;System.Linq.Expressions.Expression&lt;System.Func&lt;System.String&gt;&gt;&gt;(() =&gt; model.Value));
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+__builder2.OpenComponent&lt;TestBlazorServer.Components.MyInput&gt;(<span style="color:#B5CEA8;">12</span>);
+__builder2.AddAttribute(<span style="color:#B5CEA8;">13</span>, <span style="color:#D69D85;">&quot;id&quot;</span>, <span style="color:#D69D85;">&quot;txtcountry&quot;</span>);
+__builder2.AddAttribute(<span style="color:#B5CEA8;">14</span>, <span style="color:#D69D85;">&quot;class&quot;</span>, <span style="color:#D69D85;">&quot;form-control&quot;</span>);
+__builder2.AddAttribute(<span style="color:#B5CEA8;">15</span>, <span style="color:#D69D85;">&quot;Value&quot;</span>, Microsoft.AspNetCore.Components.CompilerServices.RuntimeHelpers.TypeCheck&lt;System.String&gt;(model.Value));
+__builder2.AddAttribute(<span style="color:#B5CEA8;">16</span>, <span style="color:#D69D85;">&quot;ValueChanged&quot;</span>, Microsoft.AspNetCore.Components.CompilerServices.RuntimeHelpers.TypeCheck&lt;Microsoft.AspNetCore.Components.EventCallback&lt;System.String&gt;&gt;(Microsoft.AspNetCore.Components.EventCallback.Factory.Create&lt;System.String&gt;(<span style="color:#569CD6;">this</span>, Microsoft.AspNetCore.Components.CompilerServices.RuntimeHelpers.CreateInferredEventCallback(<span style="color:#569CD6;">this</span>, __value =&gt; model.Value = __value, model.Value))));
+__builder2.AddAttribute(<span style="color:#B5CEA8;">17</span>, <span style="color:#D69D85;">&quot;ValueExpression&quot;</span>, Microsoft.AspNetCore.Components.CompilerServices.RuntimeHelpers.TypeCheck&lt;System.Linq.Expressions.Expression&lt;System.Func&lt;System.String&gt;&gt;&gt;(() =&gt; model.Value));
 __builder2.CloseComponent();
-</code></pre>
+</pre></div>
 <p>You can see the compiled c# file in the <em>obj</em> folder.  On my project this is <em>\obj\Debug\net5.0\RazorDeclaration\Components\FormControls</em>.</p>
 <p><code>@bind-value</code> has translated into a full mapping to the <code>Value</code>, <code>ValueChanged</code> and <code>ValueExpression</code> triumvirate. The setting of <code>Value</code> and <code>ValueExpression</code> are self explanatory.  <code>ValueChanged</code> uses a code factory to generate a runtime method that maps to <code>ValueChanged</code> and sets model.Value to the value returned by <code>ValueChanged</code>.</p>
 <p>This explains a common misconception - you can attach an event handler to <code>@onchange</code> like this:</p>
-<pre><code class="language-html">&lt;input type=&quot;text&quot; @bind-value =&quot;model.Value&quot; @onchange=&quot;(e) =&gt; myonchangehandler()&quot;/&gt;
-</code></pre>
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+<span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">input</span> <span style="color:#FF0000;">type</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;text&quot; @bind-value =&quot;model.Value&quot; @onchange=&quot;(e) =&gt; myonchangehandler()&quot;</span><span style="color:#569CD6;">/&gt;</span>
+</pre></div>
 <p>There's no <code>@onchange</code> event on the control, and the one on the inner control is already bound so can't be bound a second time.  You get no error message, just no trigger.</p>
 <h2 id="inputbase">InputBase</h2>
 <p>Let's move on to <code>InputBase</code>.</p>
@@ -239,278 +243,282 @@ __builder2.CloseComponent();
 <li>The Html <em>input</em> <code>value</code> is bound to <code>CurrentValue</code> and <code>onchange</code> event to <code>CurrentValueAsString</code>.  Any change in the value calls the setter for <code>CurrentValueASsString</code>.</li>
 <li><code>TryParseValueFromString</code> just passes on <code>value</code> (the entered value) as <code>result</code>.  There's no string to other type conversion to do.</li>
 </ol>
-<pre><code class="language-csharp">public class InputText : InputBase&lt;string?&gt;
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+<span style="color:#569CD6;">public</span> <span style="color:#569CD6;">class</span> InputText : InputBase&lt;<span style="color:#569CD6;">string</span>?&gt;
 {
-    [DisallowNull] public ElementReference? Element { get; protected set; }
+    [DisallowNull] <span style="color:#569CD6;">public</span> ElementReference? Element { <span style="color:#569CD6;">get</span>; <span style="color:#569CD6;">protected</span> <span style="color:#569CD6;">set</span>; }
 
-    protected override void BuildRenderTree(RenderTreeBuilder builder)
+    <span style="color:#569CD6;">protected</span> <span style="color:#569CD6;">override</span> <span style="color:#569CD6;">void</span> BuildRenderTree(RenderTreeBuilder builder)
     {
-        builder.OpenElement(0, &quot;input&quot;);
-        builder.AddMultipleAttributes(1, AdditionalAttributes);
-        builder.AddAttribute(2, &quot;class&quot;, CssClass);
-        builder.AddAttribute(3, &quot;value&quot;, BindConverter.FormatValue(CurrentValue));
-        builder.AddAttribute(4, &quot;onchange&quot;, EventCallback.Factory.CreateBinder&lt;string?&gt;(this, __value =&gt; CurrentValueAsString = __value, CurrentValueAsString));
-        builder.AddElementReferenceCapture(5, __inputReference =&gt; Element = __inputReference);
+        builder.OpenElement(<span style="color:#B5CEA8;">0</span>, <span style="color:#D69D85;">&quot;input&quot;</span>);
+        builder.AddMultipleAttributes(<span style="color:#B5CEA8;">1</span>, AdditionalAttributes);
+        builder.AddAttribute(<span style="color:#B5CEA8;">2</span>, <span style="color:#D69D85;">&quot;class&quot;</span>, CssClass);
+        builder.AddAttribute(<span style="color:#B5CEA8;">3</span>, <span style="color:#D69D85;">&quot;value&quot;</span>, BindConverter.FormatValue(CurrentValue));
+        builder.AddAttribute(<span style="color:#B5CEA8;">4</span>, <span style="color:#D69D85;">&quot;onchange&quot;</span>, EventCallback.Factory.CreateBinder&lt;<span style="color:#569CD6;">string</span>?&gt;(<span style="color:#569CD6;">this</span>, __value =&gt; CurrentValueAsString = __value, CurrentValueAsString));
+        builder.AddElementReferenceCapture(<span style="color:#B5CEA8;">5</span>, __inputReference =&gt; Element = __inputReference);
         builder.CloseElement();
     }
 
-    protected override bool TryParseValueFromString(string? value, out string? result, [NotNullWhen(false)] out string? validationErrorMessage)
+    <span style="color:#569CD6;">protected</span> <span style="color:#569CD6;">override</span> <span style="color:#569CD6;">bool</span> TryParseValueFromString(<span style="color:#569CD6;">string</span>? value, <span style="color:#569CD6;">out</span> <span style="color:#569CD6;">string</span>? result, [NotNullWhen(<span style="color:#569CD6;">false</span>)] <span style="color:#569CD6;">out</span> <span style="color:#569CD6;">string</span>? validationErrorMessage)
     {
         result = value;
-        validationErrorMessage = null;
-        return true;
+        validationErrorMessage = <span style="color:#569CD6;">null</span>;
+        <span style="color:#569CD6;">return</span> <span style="color:#569CD6;">true</span>;
     }
 }
-</code></pre>
+</pre></div>
 <p>Let's delve into <code>InputBase</code>.</p>
 <p>The <code>onchange</code> event sets <code>CurrentValueAsString</code>. Note it's not virtual, so can't be overidden.</p>
-<pre><code class="language-csharp">protected string? CurrentValueAsString
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+<span style="color:#569CD6;">protected</span> <span style="color:#569CD6;">string</span>? CurrentValueAsString
 {
-    get =&gt; FormatValueAsString(CurrentValue);
-    set
+    <span style="color:#569CD6;">get</span> =&gt; FormatValueAsString(CurrentValue);
+    <span style="color:#569CD6;">set</span>
     {
-        // clear the ValidationMessageStore
+        <span style="color:#57A64A;">// clear the ValidationMessageStore</span>
         _parsingValidationMessages?.Clear();
 
-        bool parsingFailed;
+        <span style="color:#569CD6;">bool</span> parsingFailed;
 
-        // Error if can't be null and value is null. 
-        if (_nullableUnderlyingType != null &amp;&amp; string.IsNullOrEmpty(value))
+        <span style="color:#57A64A;">// Error if can&#39;t be null and value is null. </span>
+        <span style="color:#569CD6;">if</span> (_nullableUnderlyingType != <span style="color:#569CD6;">null</span> &amp;&amp; <span style="color:#569CD6;">string</span>.IsNullOrEmpty(value))
         {
-            parsingFailed = false;
-            CurrentValue = default!;
+            parsingFailed = <span style="color:#569CD6;">false</span>;
+            CurrentValue = <span style="color:#569CD6;">default</span>!;
         }
-        // Call TryParseValueFromString.  
-        else if (TryParseValueFromString(value, out var parsedValue, out var validationErrorMessage))
+        <span style="color:#57A64A;">// Call TryParseValueFromString.  </span>
+        <span style="color:#569CD6;">else</span> <span style="color:#569CD6;">if</span> (TryParseValueFromString(value, <span style="color:#569CD6;">out</span> <span style="color:#569CD6;">var</span> parsedValue, <span style="color:#569CD6;">out</span> <span style="color:#569CD6;">var</span> validationErrorMessage))
         {
-            // If we pass complete and set CurrentValue
-            parsingFailed = false;
+            <span style="color:#57A64A;">// If we pass complete and set CurrentValue</span>
+            parsingFailed = <span style="color:#569CD6;">false</span>;
             CurrentValue = parsedValue!;
         }
-        else
+        <span style="color:#569CD6;">else</span>
         {   
-            // We reach here if we fail parsing
-            // set flags and make sure we have a ValidationMessageStore
-            parsingFailed = true;
+            <span style="color:#57A64A;">// We reach here if we fail parsing</span>
+            <span style="color:#57A64A;">// set flags and make sure we have a ValidationMessageStore</span>
+            parsingFailed = <span style="color:#569CD6;">true</span>;
             
-            if (_parsingValidationMessages == null)
+            <span style="color:#569CD6;">if</span> (_parsingValidationMessages == <span style="color:#569CD6;">null</span>)
             {
-                _parsingValidationMessages = new ValidationMessageStore(EditContext);
+                _parsingValidationMessages = <span style="color:#569CD6;">new</span> ValidationMessageStore(EditContext);
             }
-            // Add a parsing error message to the store
+            <span style="color:#57A64A;">// Add a parsing error message to the store</span>
             _parsingValidationMessages.Add(FieldIdentifier, validationErrorMessage);
 
-            // Since we're not writing to CurrentValue, we'll need to notify about modification from here
+            <span style="color:#57A64A;">// Since we&#39;re not writing to CurrentValue, we&#39;ll need to notify about modification from here</span>
             EditContext.NotifyFieldChanged(FieldIdentifier);
         }
 
-        // skip the validation notification if we were previously valid and still are
-        // if we failed this time notify 
-        // if we failed last time but are ok now we need notify to get the validation controls cleared
-        if (parsingFailed || _previousParsingAttemptFailed)
+        <span style="color:#57A64A;">// skip the validation notification if we were previously valid and still are</span>
+        <span style="color:#57A64A;">// if we failed this time notify </span>
+        <span style="color:#57A64A;">// if we failed last time but are ok now we need notify to get the validation controls cleared</span>
+        <span style="color:#569CD6;">if</span> (parsingFailed || _previousParsingAttemptFailed)
         {
             EditContext.NotifyValidationStateChanged();
             _previousParsingAttemptFailed = parsingFailed;
         }
     }
 }
-</code></pre>
+</pre></div>
 <p>The input <code>value</code> binds to the <code>CurrentValue</code> getter, and <code>CurrentValueAsString</code> sets it.  Note again it's not <code>virtual</code> so no overide.</p>
-<pre><code class="language-csharp">    protected TValue? CurrentValue
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+    <span style="color:#569CD6;">protected</span> TValue? CurrentValue
     {
-        // straight getter from Value
-        get =&gt; Value;
-        set
+        <span style="color:#57A64A;">// straight getter from Value</span>
+        <span style="color:#569CD6;">get</span> =&gt; Value;
+        <span style="color:#569CD6;">set</span>
         {
-            // Checks for equality between submitted value and class Value
-            var hasChanged = !EqualityComparer&lt;TValue&gt;.Default.Equals(value, Value);
-            // and if it's changed
-            if (hasChanged)
+            <span style="color:#57A64A;">// Checks for equality between submitted value and class Value</span>
+            <span style="color:#569CD6;">var</span> hasChanged = !EqualityComparer&lt;TValue&gt;.Default.Equals(value, Value);
+            <span style="color:#57A64A;">// and if it&#39;s changed</span>
+            <span style="color:#569CD6;">if</span> (hasChanged)
             {
-                // sets the class Value
+                <span style="color:#57A64A;">// sets the class Value</span>
                 Value = value;
-                // calls the ValueChanged EventHandler to update the parent value
+                <span style="color:#57A64A;">// calls the ValueChanged EventHandler to update the parent value</span>
                 _ = ValueChanged.InvokeAsync(Value);
-                // Notifies the EditContext that the field has changed and passes the FieldIdentifier
+                <span style="color:#57A64A;">// Notifies the EditContext that the field has changed and passes the FieldIdentifier</span>
                 EditContext.NotifyFieldChanged(FieldIdentifier);
             }
         }
     }
-</code></pre>
+</pre></div>
 <p>Finally, <code>TryParseValueFromString</code> is abstract so must be implemented in inherited classes.  It's purpose is to validate and convert the submitted string to the correct <code>TValue</code>.</p>
-<pre><code class="language-csharp">protected abstract bool TryParseValueFromString(string? value, [MaybeNullWhen(false)] out TValue result, [NotNullWhen(false)] out string? validationErrorMessage);
-</code></pre>
-<h2 id="building-our-datalist-control">Building our DataList Control</h2>
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+<span style="color:#569CD6;">protected</span> <span style="color:#569CD6;">abstract</span> <span style="color:#569CD6;">bool</span> TryParseValueFromString(<span style="color:#569CD6;">string</span>? value, [MaybeNullWhen(<span style="color:#569CD6;">false</span>)] <span style="color:#569CD6;">out</span> TValue result, [NotNullWhen(<span style="color:#569CD6;">false</span>)] <span style="color:#569CD6;">out</span> <span style="color:#569CD6;">string</span>? validationErrorMessage);
+</pre></div><h2 id="building-our-datalist-control">Building our DataList Control</h2>
 <p>First we need a helper class to get the country list.  Get the full class from the Repo.</p>
-<pre><code class="language-csharp">using System.Collections.Generic;
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+<span style="color:#569CD6;">using</span> System.Collections.Generic;
 
-namespace MyNameSpace.Data
+<span style="color:#569CD6;">namespace</span> MyNameSpace.Data
 {
-    public static class Countries
+    <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">static</span> <span style="color:#569CD6;">class</span> Countries
     {
-        public static List&lt;KeyValuePair&lt;int, string&gt;&gt; CountryList
+        <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">static</span> List&lt;KeyValuePair&lt;<span style="color:#569CD6;">int</span>, <span style="color:#569CD6;">string</span>&gt;&gt; CountryList
         {
-            get
+            <span style="color:#569CD6;">get</span>
             {
-                List&lt;KeyValuePair&lt;int, string&gt;&gt; list = new List&lt;KeyValuePair&lt;int, string&gt;&gt;();
-                var x = 1;
-                foreach (var v in CountryArray)
+                List&lt;KeyValuePair&lt;<span style="color:#569CD6;">int</span>, <span style="color:#569CD6;">string</span>&gt;&gt; list = <span style="color:#569CD6;">new</span> List&lt;KeyValuePair&lt;<span style="color:#569CD6;">int</span>, <span style="color:#569CD6;">string</span>&gt;&gt;();
+                <span style="color:#569CD6;">var</span> x = <span style="color:#B5CEA8;">1</span>;
+                <span style="color:#569CD6;">foreach</span> (<span style="color:#569CD6;">var</span> v <span style="color:#569CD6;">in</span> CountryArray)
                 {
-                    list.Add(new KeyValuePair&lt;int, string&gt;(x, v));
+                    list.Add(<span style="color:#569CD6;">new</span> KeyValuePair&lt;<span style="color:#569CD6;">int</span>, <span style="color:#569CD6;">string</span>&gt;(x, v));
                     x++;
                 }
-                return list;
+                <span style="color:#569CD6;">return</span> list;
             }
         }
 
-        public static SortedDictionary&lt;int, string&gt; CountryDictionary
+        <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">static</span> SortedDictionary&lt;<span style="color:#569CD6;">int</span>, <span style="color:#569CD6;">string</span>&gt; CountryDictionary
         {
-            get
+            <span style="color:#569CD6;">get</span>
             {
-                SortedDictionary&lt;int, string&gt; list = new SortedDictionary&lt;int, string&gt;();
-                var x = 1;
-                foreach (var v in CountryArray)
+                SortedDictionary&lt;<span style="color:#569CD6;">int</span>, <span style="color:#569CD6;">string</span>&gt; list = <span style="color:#569CD6;">new</span> SortedDictionary&lt;<span style="color:#569CD6;">int</span>, <span style="color:#569CD6;">string</span>&gt;();
+                <span style="color:#569CD6;">var</span> x = <span style="color:#B5CEA8;">1</span>;
+                <span style="color:#569CD6;">foreach</span> (<span style="color:#569CD6;">var</span> v <span style="color:#569CD6;">in</span> CountryArray)
                 {
                     list.Add(x, v);
                     x++;
                 }
-                return list;
+                <span style="color:#569CD6;">return</span> list;
             }
         }
 
-        public static string[] CountryArray = new string[]
+        <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">static</span> <span style="color:#569CD6;">string</span>[] CountryArray = <span style="color:#569CD6;">new</span> <span style="color:#569CD6;">string</span>[]
         {
-            &quot;Afghanistan&quot;,
-            &quot;Albania&quot;,
-            &quot;Algeria&quot;,
+            <span style="color:#D69D85;">&quot;Afghanistan&quot;</span>,
+            <span style="color:#D69D85;">&quot;Albania&quot;</span>,
+            <span style="color:#D69D85;">&quot;Algeria&quot;</span>,
 .....
-            &quot;Zimbabwe&quot;,
+            <span style="color:#D69D85;">&quot;Zimbabwe&quot;</span>,
         };
     }
 }
-</code></pre>
-<h3 id="build-the-control">Build the control</h3>
+</pre></div><h3 id="build-the-control">Build the control</h3>
 <p>This is the partial class, setting <code>TValue</code> as a <code>string</code>.  There are inline explanation notes.</p>
-<pre><code class="language-csharp">public partial class InputDataList : InputBase&lt;string&gt;
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+<span style="color:#569CD6;">public</span> <span style="color:#569CD6;">partial</span> <span style="color:#569CD6;">class</span> InputDataList : InputBase&lt;<span style="color:#569CD6;">string</span>&gt;
 {
-    // List of values for datalist
-    [Parameter] public IEnumerable&lt;string&gt; DataList { get; set; }
+    <span style="color:#57A64A;">// List of values for datalist</span>
+    [Parameter] <span style="color:#569CD6;">public</span> IEnumerable&lt;<span style="color:#569CD6;">string</span>&gt; DataList { <span style="color:#569CD6;">get</span>; <span style="color:#569CD6;">set</span>; }
         
-    // parameter to restrict valid values to the list
-    [Parameter] public bool RestrictToList { get; set; }
+    <span style="color:#57A64A;">// parameter to restrict valid values to the list</span>
+    [Parameter] <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">bool</span> RestrictToList { <span style="color:#569CD6;">get</span>; <span style="color:#569CD6;">set</span>; }
 
-    // unique id for the datalist based on a guid - we may have more than one in a form
-    private string dataListId { get; set; } = Guid.NewGuid().ToString();
+    <span style="color:#57A64A;">// unique id for the datalist based on a guid - we may have more than one in a form</span>
+    <span style="color:#569CD6;">private</span> <span style="color:#569CD6;">string</span> dataListId { <span style="color:#569CD6;">get</span>; <span style="color:#569CD6;">set</span>; } = Guid.NewGuid().ToString();
 
-    // instruction to CurrentStringValue that we are in RestrictToList mode and the user has tabbed
-    private bool _valueSetByTab = false;
-    // current typed value in the input box - kept up to date by UpdateEnteredText
-    private string _typedText = string.Empty;
+    <span style="color:#57A64A;">// instruction to CurrentStringValue that we are in RestrictToList mode and the user has tabbed</span>
+    <span style="color:#569CD6;">private</span> <span style="color:#569CD6;">bool</span> _valueSetByTab = <span style="color:#569CD6;">false</span>;
+    <span style="color:#57A64A;">// current typed value in the input box - kept up to date by UpdateEnteredText</span>
+    <span style="color:#569CD6;">private</span> <span style="color:#569CD6;">string</span> _typedText = <span style="color:#569CD6;">string</span>.Empty;
 
-    // New method to parallel CurrentValueAsString
-    protected string CurrentStringValue
+    <span style="color:#57A64A;">// New method to parallel CurrentValueAsString</span>
+    <span style="color:#569CD6;">protected</span> <span style="color:#569CD6;">string</span> CurrentStringValue
     {
-        get
+        <span style="color:#569CD6;">get</span>
         {
-            // check if we have a match to the datalist and get the value from the list
-            if (DataList != null &amp;&amp; DataList.Any(item =&gt; item == this.Value))
-                return DataList.First(item =&gt; item == this.Value);
-            // if not return an empty string
-            else if (RestrictToList)
-                return string.Empty;
-            else
-                return _typedText;
+            <span style="color:#57A64A;">// check if we have a match to the datalist and get the value from the list</span>
+            <span style="color:#569CD6;">if</span> (DataList != <span style="color:#569CD6;">null</span> &amp;&amp; DataList.Any(item =&gt; item == <span style="color:#569CD6;">this</span>.Value))
+                <span style="color:#569CD6;">return</span> DataList.First(item =&gt; item == <span style="color:#569CD6;">this</span>.Value);
+            <span style="color:#57A64A;">// if not return an empty string</span>
+            <span style="color:#569CD6;">else</span> <span style="color:#569CD6;">if</span> (RestrictToList)
+                <span style="color:#569CD6;">return</span> <span style="color:#569CD6;">string</span>.Empty;
+            <span style="color:#569CD6;">else</span>
+                <span style="color:#569CD6;">return</span> _typedText;
         }
-        set
+        <span style="color:#569CD6;">set</span>
         {
-            // Check if we have a ValidationMessageStore
-            // Either get one or clear the existing one
-            if (_parsingValidationMessages == null)
-                _parsingValidationMessages = new ValidationMessageStore(EditContext);
-            else
+            <span style="color:#57A64A;">// Check if we have a ValidationMessageStore</span>
+            <span style="color:#57A64A;">// Either get one or clear the existing one</span>
+            <span style="color:#569CD6;">if</span> (_parsingValidationMessages == <span style="color:#569CD6;">null</span>)
+                _parsingValidationMessages = <span style="color:#569CD6;">new</span> ValidationMessageStore(EditContext);
+            <span style="color:#569CD6;">else</span>
                 _parsingValidationMessages?.Clear(FieldIdentifier);
 
-            // Set defaults
-            string val = string.Empty;
-            var _havevalue = false;
-            // check if we have a previous valid value - we'll stick with this is the current attempt to set the value is invalid
-            var _havepreviousvalue = DataList != null &amp;&amp; DataList.Contains(value);
+            <span style="color:#57A64A;">// Set defaults</span>
+            <span style="color:#569CD6;">string</span> val = <span style="color:#569CD6;">string</span>.Empty;
+            <span style="color:#569CD6;">var</span> _havevalue = <span style="color:#569CD6;">false</span>;
+            <span style="color:#57A64A;">// check if we have a previous valid value - we&#39;ll stick with this is the current attempt to set the value is invalid</span>
+            <span style="color:#569CD6;">var</span> _havepreviousvalue = DataList != <span style="color:#569CD6;">null</span> &amp;&amp; DataList.Contains(value);
 
-            // Set the value by tabbing in Strict mode.  We need to select the first entry in the DataList
-            if (_setValueByTab)
+            <span style="color:#57A64A;">// Set the value by tabbing in Strict mode.  We need to select the first entry in the DataList</span>
+            <span style="color:#569CD6;">if</span> (_setValueByTab)
             {
-                if (!string.IsNullOrWhiteSpace(this._typedText))
+                <span style="color:#569CD6;">if</span> (!<span style="color:#569CD6;">string</span>.IsNullOrWhiteSpace(<span style="color:#569CD6;">this</span>._typedText))
                 {
-                    // Check if we have at least one match in the filtered list
-                    _havevalue = DataList != null &amp;&amp; DataList.Any(item =&gt; item.Contains(_typedText, StringComparison.CurrentCultureIgnoreCase));
-                    if (_havevalue)
+                    <span style="color:#57A64A;">// Check if we have at least one match in the filtered list</span>
+                    _havevalue = DataList != <span style="color:#569CD6;">null</span> &amp;&amp; DataList.Any(item =&gt; item.Contains(_typedText, StringComparison.CurrentCultureIgnoreCase));
+                    <span style="color:#569CD6;">if</span> (_havevalue)
                     {
-                        // the the first value
-                        var filteredList = DataList.Where(item =&gt; item.Contains(_typedText, StringComparison.CurrentCultureIgnoreCase)).ToList();
-                        val = filteredList[0];
+                        <span style="color:#57A64A;">// the the first value</span>
+                        <span style="color:#569CD6;">var</span> filteredList = DataList.Where(item =&gt; item.Contains(_typedText, StringComparison.CurrentCultureIgnoreCase)).ToList();
+                        val = filteredList[<span style="color:#B5CEA8;">0</span>];
                     }
                 }
             }
-            // Normal set
-            else if (this.RestrictToList)
+            <span style="color:#57A64A;">// Normal set</span>
+            <span style="color:#569CD6;">else</span> <span style="color:#569CD6;">if</span> (<span style="color:#569CD6;">this</span>.RestrictToList)
             {
-                // Check if we have a match and set it if we do
-                _havevalue = DataList != null &amp;&amp; DataList.Contains(value);
-                if (_havevalue)
+                <span style="color:#57A64A;">// Check if we have a match and set it if we do</span>
+                _havevalue = DataList != <span style="color:#569CD6;">null</span> &amp;&amp; DataList.Contains(value);
+                <span style="color:#569CD6;">if</span> (_havevalue)
                     val = DataList.First(item =&gt; item.Equals(value));
             }
-            else
+            <span style="color:#569CD6;">else</span>
             {
-                _havevalue = true;
+                _havevalue = <span style="color:#569CD6;">true</span>;
                 val = value;
             }
 
-            // check if we have a valid value
-            if (_havevalue)
+            <span style="color:#57A64A;">// check if we have a valid value</span>
+            <span style="color:#569CD6;">if</span> (_havevalue)
             {
-                // assign it to current value - this will kick off a ValueChanged notification on the EditContext
-                this.CurrentValue = val;
-                // Check if the last entry failed validation.  If so notify the EditContext that validation has changed i.e. it's now clear
-                if (_previousParsingAttemptFailed)
+                <span style="color:#57A64A;">// assign it to current value - this will kick off a ValueChanged notification on the EditContext</span>
+                <span style="color:#569CD6;">this</span>.CurrentValue = val;
+                <span style="color:#57A64A;">// Check if the last entry failed validation.  If so notify the EditContext that validation has changed i.e. it&#39;s now clear</span>
+                <span style="color:#569CD6;">if</span> (_previousParsingAttemptFailed)
                 {
                     EditContext.NotifyValidationStateChanged();
-                    _previousParsingAttemptFailed = false;
+                    _previousParsingAttemptFailed = <span style="color:#569CD6;">false</span>;
                 }
             }
-            // We don't have a valid value
-            else
+            <span style="color:#57A64A;">// We don&#39;t have a valid value</span>
+            <span style="color:#569CD6;">else</span>
             {
-                // check if we're reverting to the last entry.  If we don't have one the generate error message
-                if (!_havepreviousvalue)
+                <span style="color:#57A64A;">// check if we&#39;re reverting to the last entry.  If we don&#39;t have one the generate error message</span>
+                <span style="color:#569CD6;">if</span> (!_havepreviousvalue)
                 {
-                    // No match so add a message to the message store
-                    _parsingValidationMessages?.Add(FieldIdentifier, &quot;You must choose a valid selection&quot;);
-                    // keep track of validation state for the next iteration
-                    _previousParsingAttemptFailed = true;
-                    // notify the EditContext whick will precipitate a Validation Message general update
+                    <span style="color:#57A64A;">// No match so add a message to the message store</span>
+                    _parsingValidationMessages?.Add(FieldIdentifier, <span style="color:#D69D85;">&quot;You must choose a valid selection&quot;</span>);
+                    <span style="color:#57A64A;">// keep track of validation state for the next iteration</span>
+                    _previousParsingAttemptFailed = <span style="color:#569CD6;">true</span>;
+                    <span style="color:#57A64A;">// notify the EditContext whick will precipitate a Validation Message general update</span>
                     EditContext.NotifyValidationStateChanged();
                 }
             }
-            // Clear the Tab notification flag
-            _setValueByTab = false;
+            <span style="color:#57A64A;">// Clear the Tab notification flag</span>
+            _setValueByTab = <span style="color:#569CD6;">false</span>;
         }
     }
 
-    // Keep _typedText up to date with typed entry
-    private void UpdateEnteredText(ChangeEventArgs e)
+    <span style="color:#57A64A;">// Keep _typedText up to date with typed entry</span>
+    <span style="color:#569CD6;">private</span> <span style="color:#569CD6;">void</span> UpdateEnteredText(ChangeEventArgs e)
         =&gt; _typedText = e.Value.ToString();
 
-    // Detector for Tabbing away from the input
-    private void OnKeyDown(KeyboardEventArgs e)
+    <span style="color:#57A64A;">// Detector for Tabbing away from the input</span>
+    <span style="color:#569CD6;">private</span> <span style="color:#569CD6;">void</span> OnKeyDown(KeyboardEventArgs e)
     {
-        // Check if we have a Tab with some text already typed and are in RestrictToList Mode
-        _setValueByTab = RestrictToList &amp;&amp; (!string.IsNullOrWhiteSpace(e.Key)) &amp;&amp; e.Key.Equals(&quot;Tab&quot;) &amp;&amp; !string.IsNullOrWhiteSpace(this._typedText);
+        <span style="color:#57A64A;">// Check if we have a Tab with some text already typed and are in RestrictToList Mode</span>
+        _setValueByTab = RestrictToList &amp;&amp; (!<span style="color:#569CD6;">string</span>.IsNullOrWhiteSpace(e.Key)) &amp;&amp; e.Key.Equals(<span style="color:#D69D85;">&quot;Tab&quot;</span>) &amp;&amp; !<span style="color:#569CD6;">string</span>.IsNullOrWhiteSpace(<span style="color:#569CD6;">this</span>._typedText);
     }
 
-    protected override bool TryParseValueFromString(string value, [MaybeNullWhen(false)] out string result, [NotNullWhen(false)] out string validationErrorMessage)
-        =&gt; throw new NotSupportedException($&quot;This component does not parse string inputs. Bind to the '{nameof(CurrentValue)}' property, not '{nameof(CurrentValueAsString)}'.&quot;);
+    <span style="color:#569CD6;">protected</span> <span style="color:#569CD6;">override</span> <span style="color:#569CD6;">bool</span> TryParseValueFromString(<span style="color:#569CD6;">string</span> value, [MaybeNullWhen(<span style="color:#569CD6;">false</span>)] <span style="color:#569CD6;">out</span> <span style="color:#569CD6;">string</span> result, [NotNullWhen(<span style="color:#569CD6;">false</span>)] <span style="color:#569CD6;">out</span> <span style="color:#569CD6;">string</span> validationErrorMessage)
+        =&gt; <span style="color:#569CD6;">throw</span> <span style="color:#569CD6;">new</span> NotSupportedException($<span style="color:#D69D85;">&quot;This component does not parse string inputs. Bind to the &#39;{nameof(CurrentValue)}&#39; property, not &#39;{nameof(CurrentValueAsString)}&#39;.&quot;</span>);
 }
-</code></pre>
+</pre></div>
 <p>And the Razor:</p>
 <ol>
 <li>Input uses the CSS generated by the control.</li>
@@ -520,57 +528,59 @@ namespace MyNameSpace.Data
 <li>Hooks up event handlers to <code>oninput</code> and <code>onkeydown</code>.</li>
 <li>Builds the <code>datalist</code> from the control <code>DataList</code> property.</li>
 </ol>
-<pre><code class="language-html">@namespace MyNameSpace.Components
-@inherits InputBase&lt;string&gt;
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+@namespace MyNameSpace.Components
+@inherits InputBase<span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">string</span><span style="color:#569CD6;">&gt;</span>
 
-&lt;input class=&quot;@CssClass&quot; type=&quot;text&quot; @bind-value=&quot;this.CurrentStringValue&quot; @attributes=&quot;this.AdditionalAttributes&quot; list=&quot;@dataListId&quot; @oninput=&quot;UpdateEnteredText&quot; @onkeydown=&quot;OnKeyDown&quot; /&gt;
+<span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">input</span> <span style="color:#FF0000;">class</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;@CssClass&quot;</span> <span style="color:#FF0000;">type</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;text&quot; @bind-value=&quot;this.CurrentStringValue&quot; @attributes=&quot;this.AdditionalAttributes&quot;</span> <span style="color:#FF0000;">list</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;@dataListId&quot; @oninput=&quot;UpdateEnteredText&quot; @onkeydown=&quot;OnKeyDown&quot;</span> <span style="color:#569CD6;">/&gt;</span>
 
-&lt;datalist id=&quot;@dataListId&quot;&gt;
+<span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">datalist</span> <span style="color:#FF0000;">id</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;@dataListId&quot;</span><span style="color:#569CD6;">&gt;</span>
     @foreach (var option in this.DataList)
     {
-        &lt;option value=&quot;@option&quot; /&gt;
+        <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">option</span> <span style="color:#FF0000;">value</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;@option&quot;</span> <span style="color:#569CD6;">/&gt;</span>
     }
-&lt;/datalist&gt;
-</code></pre>
+<span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">datalist</span><span style="color:#569CD6;">&gt;</span>
+</pre></div>
 <p>Test the control in the test page.</p>
-<pre><code class="language-html">&lt;div class=&quot;row mb-2&quot;&gt;
-    &lt;div class=&quot;col-4 form-label&quot; for=&quot;txtcountry&quot;&gt;
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+<span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">div</span> <span style="color:#FF0000;">class</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;row mb-2&quot;</span><span style="color:#569CD6;">&gt;</span>
+    <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">div</span> <span style="color:#FF0000;">class</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;col-4 form-label&quot;</span> <span style="color:#FF0000;">for</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;txtcountry&quot;</span><span style="color:#569CD6;">&gt;</span>
         Country (Any Value)
-    &lt;/div&gt;
-    &lt;div class=&quot;col-4&quot;&gt;
-        &lt;InputDataList @bind-Value=&quot;model.Value&quot; DataList=&quot;Countries.CountryArray&quot; class=&quot;form-control&quot; placeholder=&quot;Select a country&quot;&gt;&lt;/InputDataList&gt;
-    &lt;/div&gt;
-&lt;/div&gt;
-&lt;div class=&quot;row mb-2&quot;&gt;
-    &lt;div class=&quot;col-4 form-label&quot; for=&quot;txtcountry&quot;&gt;
+    <span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">div</span><span style="color:#569CD6;">&gt;</span>
+    <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">div</span> <span style="color:#FF0000;">class</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;col-4&quot;</span><span style="color:#569CD6;">&gt;</span>
+        &lt;InputDataList @bind-Value=&quot;model.Value&quot; DataList=&quot;Countries.CountryArray&quot; class=&quot;form-control&quot; placeholder=&quot;Select a country&quot;&gt;<span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">InputDataList</span><span style="color:#569CD6;">&gt;</span>
+    <span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">div</span><span style="color:#569CD6;">&gt;</span>
+<span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">div</span><span style="color:#569CD6;">&gt;</span>
+<span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">div</span> <span style="color:#FF0000;">class</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;row mb-2&quot;</span><span style="color:#569CD6;">&gt;</span>
+    <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">div</span> <span style="color:#FF0000;">class</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;col-4 form-label&quot;</span> <span style="color:#FF0000;">for</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;txtcountry&quot;</span><span style="color:#569CD6;">&gt;</span>
         Country (Strict)
-    &lt;/div&gt;
-    &lt;div class=&quot;col-4&quot;&gt;
-        &lt;InputDataList @bind-Value=&quot;model.StrictValue&quot; DataList=&quot;Countries.CountryArray&quot; RestrictToList=&quot;true&quot; class=&quot;form-control&quot; placeholder=&quot;Select a country&quot;&gt;&lt;/InputDataList&gt;
-    &lt;/div&gt;
-    &lt;div class=&quot;col-4&quot;&gt;
-        &lt;ValidationMessage For=&quot;(() =&gt; model.StrictValue)&quot;&gt;&lt;/ValidationMessage&gt;
-    &lt;/div&gt;
-&lt;/div&gt;
-</code></pre>
-<pre><code class="language-html">&lt;div class=&quot;row mb-2&quot;&gt;
-    &lt;div class=&quot;col-4 form-label&quot;&gt;
+    <span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">div</span><span style="color:#569CD6;">&gt;</span>
+    <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">div</span> <span style="color:#FF0000;">class</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;col-4&quot;</span><span style="color:#569CD6;">&gt;</span>
+        &lt;InputDataList @bind-Value=&quot;model.StrictValue&quot; DataList=&quot;Countries.CountryArray&quot; RestrictToList=&quot;true&quot; class=&quot;form-control&quot; placeholder=&quot;Select a country&quot;&gt;<span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">InputDataList</span><span style="color:#569CD6;">&gt;</span>
+    <span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">div</span><span style="color:#569CD6;">&gt;</span>
+    <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">div</span> <span style="color:#FF0000;">class</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;col-4&quot;</span><span style="color:#569CD6;">&gt;</span>
+        <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">ValidationMessage</span> <span style="color:#FF0000;">For</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;(() =&gt; model.StrictValue)&quot;</span><span style="color:#569CD6;">&gt;</span><span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">ValidationMessage</span><span style="color:#569CD6;">&gt;</span>
+    <span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">div</span><span style="color:#569CD6;">&gt;</span>
+<span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">div</span><span style="color:#569CD6;">&gt;</span>
+</pre></div><div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+<span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">div</span> <span style="color:#FF0000;">class</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;row mb-2&quot;</span><span style="color:#569CD6;">&gt;</span>
+    <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">div</span> <span style="color:#FF0000;">class</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;col-4 form-label&quot;</span><span style="color:#569CD6;">&gt;</span>
         Country Value
-    &lt;/div&gt;
-    &lt;div class=&quot;col-4 form-control&quot;&gt;
+    <span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">div</span><span style="color:#569CD6;">&gt;</span>
+    <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">div</span> <span style="color:#FF0000;">class</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;col-4 form-control&quot;</span><span style="color:#569CD6;">&gt;</span>
         @this.model.Value
-    &lt;/div&gt;
-&lt;/div&gt;
-&lt;div class=&quot;row mb-2&quot;&gt;
-    &lt;div class=&quot;col-4 form-label&quot;&gt;
+    <span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">div</span><span style="color:#569CD6;">&gt;</span>
+<span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">div</span><span style="color:#569CD6;">&gt;</span>
+<span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">div</span> <span style="color:#FF0000;">class</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;row mb-2&quot;</span><span style="color:#569CD6;">&gt;</span>
+    <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">div</span> <span style="color:#FF0000;">class</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;col-4 form-label&quot;</span><span style="color:#569CD6;">&gt;</span>
         Country Strict Value
-    &lt;/div&gt;
-    &lt;div class=&quot;col-4 form-control&quot;&gt;
+    <span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">div</span><span style="color:#569CD6;">&gt;</span>
+    <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">div</span> <span style="color:#FF0000;">class</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;col-4 form-control&quot;</span><span style="color:#569CD6;">&gt;</span>
         @this.model.StrictValue
-    &lt;/div&gt;
-&lt;/div&gt;
-</code></pre>
-<pre><code class="language-html">class Model
+    <span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">div</span><span style="color:#569CD6;">&gt;</span>
+<span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">div</span><span style="color:#569CD6;">&gt;</span>
+</pre></div><div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+class Model
 {
     public string Value { get; set; } = string.Empty;
     public string StrictValue { get; set; } = string.Empty;
@@ -578,7 +588,7 @@ namespace MyNameSpace.Data
     public int TIndex { get; set; } = 0;
     public int Opinion { get; set; } = 0;
 }
-</code></pre>
+</pre></div>
 <p>The control doesn't use <code>CurrentValueAsString</code> and <code>TryParseValueFromString</code>.  Instead We build a parallel <code>CurrentStringValue</code>,containing all the logic in both <code>CurrentValueAsString</code> and <code>TryParseValueFromString</code>, and wire the html input to it.  We don't use <code>TryParseValueFromString</code>, but as it's abstract we need to implement a blind version of it.</p>
 <h2 id="input-search-select-control">Input Search Select Control</h2>
 <p>The Select replacement version of the control builds on <code>InputDataList</code>.  We:</p>
@@ -589,163 +599,169 @@ namespace MyNameSpace.Data
 </ol>
 <p>Copy <code>InputDataList</code> and rename it to <code>InputDataListSelect</code>.</p>
 <p>Add the generic declaration.  The control will work with most obvious types as the Key - e.g. int, long, string.</p>
-<pre><code class="language-csharp">public partial class InputDataListSelect&lt;TValue&gt; : InputBase&lt;TValue&gt;
-</code></pre>
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+<span style="color:#569CD6;">public</span> <span style="color:#569CD6;">partial</span> <span style="color:#569CD6;">class</span> InputDataListSelect&lt;TValue&gt; : InputBase&lt;TValue&gt;
+</pre></div>
 <p>Change DataList to a <code>SortedDictionary</code>.</p>
-<pre><code class="language-csharp">[Parameter] public SortedDictionary&lt;TValue, string&gt; DataList { get; set; }
-</code></pre>
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+[Parameter] <span style="color:#569CD6;">public</span> SortedDictionary&lt;TValue, <span style="color:#569CD6;">string</span>&gt; DataList { <span style="color:#569CD6;">get</span>; <span style="color:#569CD6;">set</span>; }
+</pre></div>
 <p>The extra private properties are as follows.</p>
-<pre><code class="language-csharp">// the EditContext ValidationMessageStore
-private ValidationMessageStore? _parsingValidationMessages;
-// field to manage parsing failure
-private bool _previousParsingAttemptFailed = false;
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+<span style="color:#57A64A;">// the EditContext ValidationMessageStore</span>
+<span style="color:#569CD6;">private</span> ValidationMessageStore? _parsingValidationMessages;
+<span style="color:#57A64A;">// field to manage parsing failure</span>
+<span style="color:#569CD6;">private</span> <span style="color:#569CD6;">bool</span> _previousParsingAttemptFailed = <span style="color:#569CD6;">false</span>;
 
-</code></pre>
+</pre></div>
 <p><code>CurrentValue</code> has changed a little to handle K/V pairs and do K/V pair lookups.  Again the inline comments provide detail.</p>
-<pre><code class="language-csharp">protected string CurrentStringValue
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+<span style="color:#569CD6;">protected</span> <span style="color:#569CD6;">string</span> CurrentStringValue
 {
-    get
+    <span style="color:#569CD6;">get</span>
     {
-        // check if we have a match to the datalist and get the value from the K/V pair
-        if (DataList != null &amp;&amp; DataList.Any(item =&gt; item.Key.Equals(this.Value)))
-            return DataList.First(item =&gt; item.Key.Equals(this.Value)).Value;
-        // if not return an empty string
-        return string.Empty;
+        <span style="color:#57A64A;">// check if we have a match to the datalist and get the value from the K/V pair</span>
+        <span style="color:#569CD6;">if</span> (DataList != <span style="color:#569CD6;">null</span> &amp;&amp; DataList.Any(item =&gt; item.Key.Equals(<span style="color:#569CD6;">this</span>.Value)))
+            <span style="color:#569CD6;">return</span> DataList.First(item =&gt; item.Key.Equals(<span style="color:#569CD6;">this</span>.Value)).Value;
+        <span style="color:#57A64A;">// if not return an empty string</span>
+        <span style="color:#569CD6;">return</span> <span style="color:#569CD6;">string</span>.Empty;
     }
-    set
+    <span style="color:#569CD6;">set</span>
     {
-        // Check if we have a ValidationMessageStore
-        // Either get one or clear the existing one
-        if (_parsingValidationMessages == null)
-            _parsingValidationMessages = new ValidationMessageStore(EditContext);
-        else
+        <span style="color:#57A64A;">// Check if we have a ValidationMessageStore</span>
+        <span style="color:#57A64A;">// Either get one or clear the existing one</span>
+        <span style="color:#569CD6;">if</span> (_parsingValidationMessages == <span style="color:#569CD6;">null</span>)
+            _parsingValidationMessages = <span style="color:#569CD6;">new</span> ValidationMessageStore(EditContext);
+        <span style="color:#569CD6;">else</span>
             _parsingValidationMessages?.Clear(FieldIdentifier);
 
-        // Set defaults
-        TValue val = default;
-        var _havevalue = false;
-        // check if we have a previous valid value - we'll stick with this is the current attempt to set the value is invalid
-        var _havepreviousvalue = DataList != null &amp;&amp; DataList.ContainsKey(this.Value);
+        <span style="color:#57A64A;">// Set defaults</span>
+        TValue val = <span style="color:#569CD6;">default</span>;
+        <span style="color:#569CD6;">var</span> _havevalue = <span style="color:#569CD6;">false</span>;
+        <span style="color:#57A64A;">// check if we have a previous valid value - we&#39;ll stick with this is the current attempt to set the value is invalid</span>
+        <span style="color:#569CD6;">var</span> _havepreviousvalue = DataList != <span style="color:#569CD6;">null</span> &amp;&amp; DataList.ContainsKey(<span style="color:#569CD6;">this</span>.Value);
 
-        // Set the value by tabbing.  We need to select the first entry in the DataList
-        if (_setValueByTab)
+        <span style="color:#57A64A;">// Set the value by tabbing.  We need to select the first entry in the DataList</span>
+        <span style="color:#569CD6;">if</span> (_setValueByTab)
         {
-            if (!string.IsNullOrWhiteSpace(this._typedText))
+            <span style="color:#569CD6;">if</span> (!<span style="color:#569CD6;">string</span>.IsNullOrWhiteSpace(<span style="color:#569CD6;">this</span>._typedText))
             {
-                // Check if we have at least one K/V match in the filtered list
-                _havevalue = DataList != null &amp;&amp; DataList.Any(item =&gt; item.Value.Contains(_typedText, StringComparison.CurrentCultureIgnoreCase));
-                if (_havevalue)
+                <span style="color:#57A64A;">// Check if we have at least one K/V match in the filtered list</span>
+                _havevalue = DataList != <span style="color:#569CD6;">null</span> &amp;&amp; DataList.Any(item =&gt; item.Value.Contains(_typedText, StringComparison.CurrentCultureIgnoreCase));
+                <span style="color:#569CD6;">if</span> (_havevalue)
                 {
-                    // the the first K/V pair
-                    var filteredList = DataList.Where(item =&gt; item.Value.Contains(_typedText, StringComparison.CurrentCultureIgnoreCase)).ToList();
-                    val = filteredList[0].Key;
+                    <span style="color:#57A64A;">// the the first K/V pair</span>
+                    <span style="color:#569CD6;">var</span> filteredList = DataList.Where(item =&gt; item.Value.Contains(_typedText, StringComparison.CurrentCultureIgnoreCase)).ToList();
+                    val = filteredList[<span style="color:#B5CEA8;">0</span>].Key;
                 }
             }
         }
-        // Normal set
-        else
+        <span style="color:#57A64A;">// Normal set</span>
+        <span style="color:#569CD6;">else</span>
         {
-            // Check if we have a match and set it if we do
-            _havevalue = DataList != null &amp;&amp; DataList.ContainsValue(value);
-            if (_havevalue)
+            <span style="color:#57A64A;">// Check if we have a match and set it if we do</span>
+            _havevalue = DataList != <span style="color:#569CD6;">null</span> &amp;&amp; DataList.ContainsValue(value);
+            <span style="color:#569CD6;">if</span> (_havevalue)
                 val = DataList.First(item =&gt; item.Value.Equals(value)).Key;
         }
 
-        // check if we have a valid value
-        if (_havevalue)
+        <span style="color:#57A64A;">// check if we have a valid value</span>
+        <span style="color:#569CD6;">if</span> (_havevalue)
         {
-            // assign it to current value - this will kick off a ValueChanged notification on the EditContext
-            this.CurrentValue = val;
-            // Check if the last entry failed validation.  If so notify the EditContext that validation has changed i.e. it's now clear
-            if (_previousParsingAttemptFailed)
+            <span style="color:#57A64A;">// assign it to current value - this will kick off a ValueChanged notification on the EditContext</span>
+            <span style="color:#569CD6;">this</span>.CurrentValue = val;
+            <span style="color:#57A64A;">// Check if the last entry failed validation.  If so notify the EditContext that validation has changed i.e. it&#39;s now clear</span>
+            <span style="color:#569CD6;">if</span> (_previousParsingAttemptFailed)
             {
                 EditContext.NotifyValidationStateChanged();
-                _previousParsingAttemptFailed = false;
+                _previousParsingAttemptFailed = <span style="color:#569CD6;">false</span>;
             }
         }
-        // We don't have a valid value
-        else
+        <span style="color:#57A64A;">// We don&#39;t have a valid value</span>
+        <span style="color:#569CD6;">else</span>
         {
-            // check if we're reverting to the last entry.  If we don't have one the generate error message
-            if (!_havepreviousvalue)
+            <span style="color:#57A64A;">// check if we&#39;re reverting to the last entry.  If we don&#39;t have one the generate error message</span>
+            <span style="color:#569CD6;">if</span> (!_havepreviousvalue)
             {
-                // No K/V match so add a message to the message store
-                _parsingValidationMessages?.Add(FieldIdentifier, &quot;You must choose a valid selection&quot;);
-                // keep track of validation state for the next iteration
-                _previousParsingAttemptFailed = true;
-                // notify the EditContext whick will precipitate a Validation Message general update
+                <span style="color:#57A64A;">// No K/V match so add a message to the message store</span>
+                _parsingValidationMessages?.Add(FieldIdentifier, <span style="color:#D69D85;">&quot;You must choose a valid selection&quot;</span>);
+                <span style="color:#57A64A;">// keep track of validation state for the next iteration</span>
+                _previousParsingAttemptFailed = <span style="color:#569CD6;">true</span>;
+                <span style="color:#57A64A;">// notify the EditContext whick will precipitate a Validation Message general update</span>
                 EditContext.NotifyValidationStateChanged();
             }
         }
-        // Clear the Tab notification flag
-        _setValueByTab = false;
+        <span style="color:#57A64A;">// Clear the Tab notification flag</span>
+        _setValueByTab = <span style="color:#569CD6;">false</span>;
     }
 }
-</code></pre>
+</pre></div>
 <p><code>OnKeyDown</code> sets the <code>_setValueByTab</code> flag.</p>
-<pre><code class="language-csharp">private void UpdateEnteredText(ChangeEventArgs e)
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+<span style="color:#569CD6;">private</span> <span style="color:#569CD6;">void</span> UpdateEnteredText(ChangeEventArgs e)
     =&gt; _typedText = e.Value?.ToString();
 
-private void OnKeyDown(KeyboardEventArgs e)
+<span style="color:#569CD6;">private</span> <span style="color:#569CD6;">void</span> OnKeyDown(KeyboardEventArgs e)
 {
-    // Check if we have a Tab with some text already typed
-    _setValueByTab = ((!string.IsNullOrWhiteSpace(e.Key)) &amp;&amp; e.Key.Equals(&quot;Tab&quot;) &amp;&amp; !string.IsNullOrWhiteSpace(this._typedText));
+    <span style="color:#57A64A;">// Check if we have a Tab with some text already typed</span>
+    _setValueByTab = ((!<span style="color:#569CD6;">string</span>.IsNullOrWhiteSpace(e.Key)) &amp;&amp; e.Key.Equals(<span style="color:#D69D85;">&quot;Tab&quot;</span>) &amp;&amp; !<span style="color:#569CD6;">string</span>.IsNullOrWhiteSpace(<span style="color:#569CD6;">this</span>._typedText));
 }
 
-// set as blind
-protected override bool TryParseValueFromString(string? value, [MaybeNullWhen(false)] out TValue result, [NotNullWhen(false)] out string validationErrorMessage)
-    =&gt; throw new NotSupportedException($&quot;This component does not parse normal string inputs. Bind to the '{nameof(CurrentValue)}' property, not '{nameof(CurrentValueAsString)}'.&quot;);
-</code></pre>
+<span style="color:#57A64A;">// set as blind</span>
+<span style="color:#569CD6;">protected</span> <span style="color:#569CD6;">override</span> <span style="color:#569CD6;">bool</span> TryParseValueFromString(<span style="color:#569CD6;">string</span>? value, [MaybeNullWhen(<span style="color:#569CD6;">false</span>)] <span style="color:#569CD6;">out</span> TValue result, [NotNullWhen(<span style="color:#569CD6;">false</span>)] <span style="color:#569CD6;">out</span> <span style="color:#569CD6;">string</span> validationErrorMessage)
+    =&gt; <span style="color:#569CD6;">throw</span> <span style="color:#569CD6;">new</span> NotSupportedException($<span style="color:#D69D85;">&quot;This component does not parse normal string inputs. Bind to the &#39;{nameof(CurrentValue)}&#39; property, not &#39;{nameof(CurrentValueAsString)}&#39;.&quot;</span>);
+</pre></div>
 <p>The Razor is almost the same:</p>
 <ol>
 <li><code>datalist</code> changes to accommodate a K/V pair list.</li>
 <li>Add the <code>@typeparam</code>.</li>
 </ol>
-<pre><code class="language-html">@namespace Blazor.Database.Components
-@inherits InputBase&lt;TValue&gt;
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+@namespace Blazor.Database.Components
+@inherits InputBase<span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">TValue</span><span style="color:#569CD6;">&gt;</span>
 @typeparam TValue
 
-&lt;input class=&quot;@CssClass&quot; type=&quot;text&quot; @bind-value=&quot;this.CurrentStringValue&quot; @attributes=&quot;this.AdditionalAttributes&quot; list=&quot;@dataListId&quot; @oninput=&quot;UpdateEnteredText&quot; @onkeydown=&quot;OnKeyDown&quot; /&gt;
+<span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">input</span> <span style="color:#FF0000;">class</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;@CssClass&quot;</span> <span style="color:#FF0000;">type</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;text&quot; @bind-value=&quot;this.CurrentStringValue&quot; @attributes=&quot;this.AdditionalAttributes&quot;</span> <span style="color:#FF0000;">list</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;@dataListId&quot; @oninput=&quot;UpdateEnteredText&quot; @onkeydown=&quot;OnKeyDown&quot;</span> <span style="color:#569CD6;">/&gt;</span>
 
-&lt;datalist id=&quot;@dataListId&quot;&gt;
+<span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">datalist</span> <span style="color:#FF0000;">id</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;@dataListId&quot;</span><span style="color:#569CD6;">&gt;</span>
     @foreach (var kv in this.DataList)
     {
-        &lt;option value=&quot;@kv.Value&quot; /&gt;
+        <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">option</span> <span style="color:#FF0000;">value</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;@kv.Value&quot;</span> <span style="color:#569CD6;">/&gt;</span>
     }
-&lt;/datalist&gt;
-</code></pre>
+<span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">datalist</span><span style="color:#569CD6;">&gt;</span>
+</pre></div>
 <p>Test it by adding a row to the edit table in the test page.  Try entering an invalid string - something like &quot;xxxx&quot;.</p>
-<pre><code class="language-html">&lt;div class=&quot;row mb-2&quot;&gt;
-    &lt;div class=&quot;col-4 form-label&quot; for=&quot;txtcountry&quot;&gt;
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+<span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">div</span> <span style="color:#FF0000;">class</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;row mb-2&quot;</span><span style="color:#569CD6;">&gt;</span>
+    <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">div</span> <span style="color:#FF0000;">class</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;col-4 form-label&quot;</span> <span style="color:#FF0000;">for</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;txtcountry&quot;</span><span style="color:#569CD6;">&gt;</span>
         Country T Index
-    &lt;/div&gt;
-    &lt;div class=&quot;col-4&quot;&gt;
-        &lt;InputDataListSelect TValue=&quot;int&quot; @bind-Value=&quot;model.TIndex&quot; DataList=&quot;Countries.CountryDictionary&quot; class=&quot;form-control&quot; placeholder=&quot;Select a country&quot;&gt;&lt;/InputDataListSelect&gt;
-    &lt;/div&gt;
-    &lt;div class=&quot;col-4&quot;&gt;
-        &lt;ValidationMessage For=&quot;(() =&gt; model.TIndex)&quot;&gt;&lt;/ValidationMessage&gt;
-    &lt;/div&gt;
-&lt;/div&gt;
-</code></pre>
-<pre><code class="language-html">&lt;div class=&quot;row mb-2&quot;&gt;
-    &lt;div class=&quot;col-4 form-label&quot;&gt;
+    <span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">div</span><span style="color:#569CD6;">&gt;</span>
+    <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">div</span> <span style="color:#FF0000;">class</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;col-4&quot;</span><span style="color:#569CD6;">&gt;</span>
+        <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">InputDataListSelect</span> <span style="color:#FF0000;">TValue</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;int&quot; @bind-Value=&quot;model.TIndex&quot;</span> <span style="color:#FF0000;">DataList</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;Countries.CountryDictionary&quot;</span> <span style="color:#FF0000;">class</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;form-control&quot;</span> <span style="color:#FF0000;">placeholder</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;Select a country&quot;</span><span style="color:#569CD6;">&gt;</span><span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">InputDataListSelect</span><span style="color:#569CD6;">&gt;</span>
+    <span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">div</span><span style="color:#569CD6;">&gt;</span>
+    <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">div</span> <span style="color:#FF0000;">class</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;col-4&quot;</span><span style="color:#569CD6;">&gt;</span>
+        <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">ValidationMessage</span> <span style="color:#FF0000;">For</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;(() =&gt; model.TIndex)&quot;</span><span style="color:#569CD6;">&gt;</span><span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">ValidationMessage</span><span style="color:#569CD6;">&gt;</span>
+    <span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">div</span><span style="color:#569CD6;">&gt;</span>
+<span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">div</span><span style="color:#569CD6;">&gt;</span>
+</pre></div><div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+<span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">div</span> <span style="color:#FF0000;">class</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;row mb-2&quot;</span><span style="color:#569CD6;">&gt;</span>
+    <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">div</span> <span style="color:#FF0000;">class</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;col-4 form-label&quot;</span><span style="color:#569CD6;">&gt;</span>
         Country T Index
-    &lt;/div&gt;
-    &lt;div class=&quot;col-4 form-control&quot;&gt;
+    <span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">div</span><span style="color:#569CD6;">&gt;</span>
+    <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">div</span> <span style="color:#FF0000;">class</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;col-4 form-control&quot;</span><span style="color:#569CD6;">&gt;</span>
         @this.model.TIndex
-    &lt;/div&gt;
-&lt;/div&gt;
-</code></pre>
-<pre><code class="language-csharp">class Model
+    <span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">div</span><span style="color:#569CD6;">&gt;</span>
+<span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">div</span><span style="color:#569CD6;">&gt;</span>
+</pre></div><div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+<span style="color:#569CD6;">class</span> Model
 {
-    public string Value { get; set; } = string.Empty;
-    public string StrictValue { get; set; } = string.Empty;
-    public int Index { get; set; } = 0;
-    public int TIndex { get; set; } = 0;
-    public int Opinion { get; set; } = 0;
+    <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">string</span> Value { <span style="color:#569CD6;">get</span>; <span style="color:#569CD6;">set</span>; } = <span style="color:#569CD6;">string</span>.Empty;
+    <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">string</span> StrictValue { <span style="color:#569CD6;">get</span>; <span style="color:#569CD6;">set</span>; } = <span style="color:#569CD6;">string</span>.Empty;
+    <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">int</span> Index { <span style="color:#569CD6;">get</span>; <span style="color:#569CD6;">set</span>; } = <span style="color:#B5CEA8;">0</span>;
+    <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">int</span> TIndex { <span style="color:#569CD6;">get</span>; <span style="color:#569CD6;">set</span>; } = <span style="color:#B5CEA8;">0</span>;
+    <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">int</span> Opinion { <span style="color:#569CD6;">get</span>; <span style="color:#569CD6;">set</span>; } = <span style="color:#B5CEA8;">0</span>;
 }
-</code></pre>
-<h2 id="wrap-up">Wrap Up</h2>
+</pre></div><h2 id="wrap-up">Wrap Up</h2>
 <p>Building edit components is not trivial, but also should not be feared.</p>
 <p>The examples I've built are based on <code>InputBase</code>.  If you start building your own controls, I thoroughly recommend taking a little time and getting familiar with <code>InputBase</code> and it's siblings.  The code is <a href="https://github.com/dotnet/aspnetcore/blob/main/src/Components/Web/src/Forms/InputBase.cs">here</a>.</p>
 </div></div></div></body></html>

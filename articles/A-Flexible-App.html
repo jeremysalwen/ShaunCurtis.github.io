@@ -106,193 +106,209 @@
 <h2 id="the-blazor-application">The Blazor Application</h2>
 <p><code>App</code> is normally defined in <em>App.razor</em>.  The same component is used in both Web Assembly and Server contexts.</p>
 <p>In the Web Assembly context the SPA startup page contains an element placeholder which is replaced when <code>Program</code> starts in the Web Assembly context.</p>
-<pre><code class="language-html">....
-&lt;body&gt;
-    &lt;div id=&quot;app&quot;&gt;Loading...&lt;/div&gt;
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+....
+<span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">body</span><span style="color:#569CD6;">&gt;</span>
+    <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">div</span> <span style="color:#FF0000;">id</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;app&quot;</span><span style="color:#569CD6;">&gt;</span>Loading...<span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">div</span><span style="color:#569CD6;">&gt;</span>
     ...
-&lt;/body&gt;
-</code></pre>
+<span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">body</span><span style="color:#569CD6;">&gt;</span>
+</pre></div>
 <p>The code line that defines the replacement in <code>Program</code> is:</p>
-<pre><code class="language-csharp">    // Replace the app id element with the component App
-    builder.RootComponents.Add&lt;App&gt;(&quot;#app&quot;);
-</code></pre>
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+    <span style="color:#57A64A;">// Replace the app id element with the component App</span>
+    builder.RootComponents.Add&lt;App&gt;(<span style="color:#D69D85;">&quot;#app&quot;</span>);
+</pre></div>
 <p>In the Server context <code>App</code> is declared directly as a Razor component in the Razor markup.  It gets pre-rendered by the server and then updated by the Blazor Server client in the browser.</p>
-<pre><code class="language-html">...
-&lt;body&gt;
-    &lt;component type=&quot;typeof(Blazor.App)&quot; render-mode=&quot;ServerPrerendered&quot; /&gt;
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
 ...
-&lt;/body&gt;
-</code></pre>
-<h2 id="the-app-component">The App Component</h2>
+<span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">body</span><span style="color:#569CD6;">&gt;</span>
+    <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">component</span> <span style="color:#FF0000;">type</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;typeof(Blazor.App)&quot;</span> <span style="color:#FF0000;">render-mode</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;ServerPrerendered&quot;</span> <span style="color:#569CD6;">/&gt;</span>
+...
+<span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">body</span><span style="color:#569CD6;">&gt;</span>
+</pre></div><h2 id="the-app-component">The App Component</h2>
 <p>The <code>App</code> code is shown below.  It's a standard Razor component, inheriting from <code>ComponentBase</code>.</p>
 <p><code>Router</code> is the local root component and sets <code>AppAssembly</code> to the assembly containing <code>Program</code>.  On initialization it trawls <code>Assembly</code> for all classes with a Route attribute and registers with the <code>NavigationChanged</code> event on the NavigationManager Service.  On a navigation event it tries to match the navigation Url to a route.  If it finds one, it renders the <code>Found</code> render fragment, otherwise it renders <code>NotFound</code>.</p>
-<pre><code class="language-html">&lt;Router AppAssembly=&quot;@typeof(Program).Assembly&quot; PreferExactMatches=&quot;@true&quot;&gt;
-    &lt;Found Context=&quot;routeData&quot;&gt;
-        &lt;RouteView RouteData=&quot;@routeData&quot; DefaultLayout=&quot;@typeof(MainLayout)&quot; /&gt;
-    &lt;/Found&gt;
-    &lt;NotFound&gt;
-        &lt;LayoutView Layout=&quot;@typeof(MainLayout)&quot;&gt;
-            &lt;p&gt;Sorry, there's nothing at this address.&lt;/p&gt;
-        &lt;/LayoutView&gt;
-    &lt;/NotFound&gt;
-&lt;/Router&gt;
-</code></pre>
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+<span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">Router</span> <span style="color:#FF0000;">AppAssembly</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;@typeof(Program).Assembly&quot;</span> <span style="color:#FF0000;">PreferExactMatches</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;@true&quot;</span><span style="color:#569CD6;">&gt;</span>
+    <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">Found</span> <span style="color:#FF0000;">Context</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;routeData&quot;</span><span style="color:#569CD6;">&gt;</span>
+        <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">RouteView</span> <span style="color:#FF0000;">RouteData</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;@routeData&quot;</span> <span style="color:#FF0000;">DefaultLayout</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;@typeof(MainLayout)&quot;</span> <span style="color:#569CD6;">/&gt;</span>
+    <span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">Found</span><span style="color:#569CD6;">&gt;</span>
+    <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">NotFound</span><span style="color:#569CD6;">&gt;</span>
+        <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">LayoutView</span> <span style="color:#FF0000;">Layout</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;@typeof(MainLayout)&quot;</span><span style="color:#569CD6;">&gt;</span>
+            <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">p</span><span style="color:#569CD6;">&gt;</span>Sorry, there&#39;s nothing at this address.<span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">p</span><span style="color:#569CD6;">&gt;</span>
+        <span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">LayoutView</span><span style="color:#569CD6;">&gt;</span>
+    <span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">NotFound</span><span style="color:#569CD6;">&gt;</span>
+<span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">Router</span><span style="color:#569CD6;">&gt;</span>
+</pre></div>
 <p><code>RouteView</code> is declared within <code>Found</code>.  <code>RouteData</code> is set to the router's current <code>routeData</code> object and <code>DefaultLayout</code> set to an application Layout <code>Type</code>.  <code>RouteView</code> renders an instance of <code>RouteData.Type</code> as a component within either the a page specific layout or the default layout, and applies any parameters in <code>RouteData.RouteValues</code>.</p>
 <p><code>NotFound</code> contains a <code>LayoutView</code> component, specifying a layout to render any child content in.</p>
 <h2 id="routeviewservice">RouteViewService</h2>
 <p><code>RouteViewService</code> is the state management service for the new components.  It's registered in the WASM and Server Services.  The Server version can be either a Singleton or Scoped, depending on the application needs.  You could have two separate services to manage application and user contexts separately.</p>
-<pre><code class="language-csharp">public class RouteViewService 
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+<span style="color:#569CD6;">public</span> <span style="color:#569CD6;">class</span> RouteViewService 
 {
   ....
 }
-</code></pre>
+</pre></div>
 <p>In the Server it's added to <code>Startup</code> in <code>ConfigServices</code>.</p>
-<pre><code class="language-csharp">services.AddSingleton&lt;RouteViewService&gt;();
-</code></pre>
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+services.AddSingleton&lt;RouteViewService&gt;();
+</pre></div>
 <p>In the Web Assembly context it's added to <code>Program</code>.</p>
-<pre><code class="language-csharp">builder.Services.AddScoped&lt;RouteViewService&gt;();
-</code></pre>
-<h3 id="routeviewmanager">RouteViewManager</h3>
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+builder.Services.AddScoped&lt;RouteViewService&gt;();
+</pre></div><h3 id="routeviewmanager">RouteViewManager</h3>
 <p><code>RouteViewManager</code> replaces <code>RouteView</code>.</p>
 <p>It's implements <code>RouteView</code>'s functionality.  It's too large to show in it's entirety so We'll look at the key functionality in sections.</p>
 <p>When a routing event occurs, <code>RouteViewManager.RouteData</code> is updated and <code>Router</code> re-rendered.  The <code>Renderer</code> calls <code>SetParametersAsync</code> on  <code>RouteViewManager</code>, passing the updated <em>Parameters</em>.  <code>SetParametersAsync</code> checks it has a valid <code>RouteData</code>, sets <code>_ViewData</code> to null and renders the component.  <code>_ViewData</code> is set to null to ensure the component loads the route. A valid <code>ViewData</code> object has precedence over a valid <code>RouteData</code> object in the render process.</p>
-<pre><code class="language-csharp">public await Task SetParametersAsync(ParameterView parameters)
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+<span style="color:#569CD6;">public</span> <span style="color:#569CD6;">await</span> Task SetParametersAsync(ParameterView parameters)
 {
-    // Sets the component parameters
-    parameters.SetParameterProperties(this);
-    // Check if we have either RouteData or ViewData
-    if (RouteData == null)
+    <span style="color:#57A64A;">// Sets the component parameters</span>
+    parameters.SetParameterProperties(<span style="color:#569CD6;">this</span>);
+    <span style="color:#57A64A;">// Check if we have either RouteData or ViewData</span>
+    <span style="color:#569CD6;">if</span> (RouteData == <span style="color:#569CD6;">null</span>)
     {
-        throw new InvalidOperationException($&quot;The {nameof(RouteView)} component requires a non-null value for the parameter {nameof(RouteData)}.&quot;);
+        <span style="color:#569CD6;">throw</span> <span style="color:#569CD6;">new</span> InvalidOperationException($<span style="color:#D69D85;">&quot;The {nameof(RouteView)} component requires a non-null value for the parameter {nameof(RouteData)}.&quot;</span>);
     }
-    // we've routed and need to clear the ViewData
-    this._ViewData = null;
-    // Render the component
-    await this.RenderAsync();
+    <span style="color:#57A64A;">// we&#39;ve routed and need to clear the ViewData</span>
+    <span style="color:#569CD6;">this</span>._ViewData = <span style="color:#569CD6;">null</span>;
+    <span style="color:#57A64A;">// Render the component</span>
+    <span style="color:#569CD6;">await</span> <span style="color:#569CD6;">this</span>.RenderAsync();
 }
-</code></pre>
+</pre></div>
 <p><code>Render</code> uses InvokeAsync to ensure the render event is run on the correct thread context. <code>_RenderEventQueued</code> ensures there's only only one render event in the Renderer's queue.</p>
-<pre><code class="language-csharp">public async Task RenderAsync() =&gt; await InvokeAsync(() =&gt;
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+<span style="color:#569CD6;">public</span> <span style="color:#569CD6;">async</span> Task RenderAsync() =&gt; <span style="color:#569CD6;">await</span> InvokeAsync(() =&gt;
     {
-        if (!this._RenderEventQueued)
+        <span style="color:#569CD6;">if</span> (!<span style="color:#569CD6;">this</span>._RenderEventQueued)
         {
-            this._RenderEventQueued = true;
+            <span style="color:#569CD6;">this</span>._RenderEventQueued = <span style="color:#569CD6;">true</span>;
             _renderHandle.Render(_renderDelegate);
         }
     }
 );
-</code></pre>
+</pre></div>
 <p>For those curious, <code>InvokeAsync</code> looks like this.</p>
-<pre><code class="language-csharp">protected Task InvokeAsync(Action workItem) =&gt; _renderHandle.Dispatcher.InvokeAsync(workItem);
-</code></pre>
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+<span style="color:#569CD6;">protected</span> Task InvokeAsync(Action workItem) =&gt; _renderHandle.Dispatcher.InvokeAsync(workItem);
+</pre></div>
 <p><code>RouteViewManager</code>s content is built as a set of components, each defined within a <code>RenderFragment</code>.</p>
 <p><code>_renderDelegate</code> defines the local root component, cascading itself and adding the <code>_layoutViewFragment</code> fragment as it's <code>ChildContent</code>.</p>
-<pre><code class="language-csharp">private RenderFragment _renderDelegate =&gt; builder =&gt;
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+<span style="color:#569CD6;">private</span> RenderFragment _renderDelegate =&gt; builder =&gt;
 {
-    // We're being executed so no longer queued
-    _RenderEventQueued = false;
-    // Adds cascadingvalue for the ViewManager
-    builder.OpenComponent&lt;CascadingValue&lt;RouteViewManager&gt;&gt;(0);
-    builder.AddAttribute(1, &quot;Value&quot;, this);
-    // Get the layout render fragment
-    builder.AddAttribute(2, &quot;ChildContent&quot;, this._layoutViewFragment);
+    <span style="color:#57A64A;">// We&#39;re being executed so no longer queued</span>
+    _RenderEventQueued = <span style="color:#569CD6;">false</span>;
+    <span style="color:#57A64A;">// Adds cascadingvalue for the ViewManager</span>
+    builder.OpenComponent&lt;CascadingValue&lt;RouteViewManager&gt;&gt;(<span style="color:#B5CEA8;">0</span>);
+    builder.AddAttribute(<span style="color:#B5CEA8;">1</span>, <span style="color:#D69D85;">&quot;Value&quot;</span>, <span style="color:#569CD6;">this</span>);
+    <span style="color:#57A64A;">// Get the layout render fragment</span>
+    builder.AddAttribute(<span style="color:#B5CEA8;">2</span>, <span style="color:#D69D85;">&quot;ChildContent&quot;</span>, <span style="color:#569CD6;">this</span>._layoutViewFragment);
     builder.CloseComponent();
 };
-</code></pre>
+</pre></div>
 <p><code>_layoutViewFragment</code> selects the layout, adds it and sets <code>_renderComponentWithParameters</code> as it's <code>ChildContent</code>.</p>
-<pre><code class="language-csharp">private RenderFragment _layoutViewFragment =&gt; builder =&gt;
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+<span style="color:#569CD6;">private</span> RenderFragment _layoutViewFragment =&gt; builder =&gt;
 {
     Type _pageLayoutType = RouteData?.PageType.GetCustomAttribute&lt;LayoutAttribute&gt;()?.LayoutType
         ?? RouteViewService.Layout
         ?? DefaultLayout;
 
-    builder.OpenComponent&lt;LayoutView&gt;(0);
-    builder.AddAttribute(1, nameof(LayoutView.Layout), _pageLayoutType);
-    builder.AddAttribute(2, nameof(LayoutView.ChildContent), _renderComponentWithParameters);
+    builder.OpenComponent&lt;LayoutView&gt;(<span style="color:#B5CEA8;">0</span>);
+    builder.AddAttribute(<span style="color:#B5CEA8;">1</span>, nameof(LayoutView.Layout), _pageLayoutType);
+    builder.AddAttribute(<span style="color:#B5CEA8;">2</span>, nameof(LayoutView.ChildContent), _renderComponentWithParameters);
     builder.CloseComponent();
 };
-</code></pre>
+</pre></div>
 <p><code>_renderComponentWithParameters</code> selects the view/route component to render and adds it with the supplied parameters.  A valid view take precedence over a valid route.</p>
-<pre><code class="language-csharp">private RenderFragment _renderComponentWithParameters =&gt; builder =&gt;
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+<span style="color:#569CD6;">private</span> RenderFragment _renderComponentWithParameters =&gt; builder =&gt;
 {
-    Type componentType = null;
-    IReadOnlyDictionary&lt;string, object&gt; parameters = new Dictionary&lt;string, object&gt;();
+    Type componentType = <span style="color:#569CD6;">null</span>;
+    IReadOnlyDictionary&lt;<span style="color:#569CD6;">string</span>, <span style="color:#569CD6;">object</span>&gt; parameters = <span style="color:#569CD6;">new</span> Dictionary&lt;<span style="color:#569CD6;">string</span>, <span style="color:#569CD6;">object</span>&gt;();
 
-    if (_ViewData != null)
+    <span style="color:#569CD6;">if</span> (_ViewData != <span style="color:#569CD6;">null</span>)
     {
         componentType = _ViewData.ViewType;
         parameters = _ViewData.ViewParameters;
     }
-    else if (RouteData != null)
+    <span style="color:#569CD6;">else</span> <span style="color:#569CD6;">if</span> (RouteData != <span style="color:#569CD6;">null</span>)
     {
         componentType = RouteData.PageType;
         parameters = RouteData.RouteValues;
     }
 
-    if (componentType != null)
+    <span style="color:#569CD6;">if</span> (componentType != <span style="color:#569CD6;">null</span>)
     {
-        builder.OpenComponent(0, componentType);
-        foreach (var kvp in parameters)
+        builder.OpenComponent(<span style="color:#B5CEA8;">0</span>, componentType);
+        <span style="color:#569CD6;">foreach</span> (<span style="color:#569CD6;">var</span> kvp <span style="color:#569CD6;">in</span> parameters)
         {
-            builder.AddAttribute(1, kvp.Key, kvp.Value);
+            builder.AddAttribute(<span style="color:#B5CEA8;">1</span>, kvp.Key, kvp.Value);
         }
         builder.CloseComponent();
     }
-    else
+    <span style="color:#569CD6;">else</span>
     {
-        builder.OpenElement(0, &quot;div&quot;);
-        builder.AddContent(1, &quot;No Route or View Configured to Display&quot;);
+        builder.OpenElement(<span style="color:#B5CEA8;">0</span>, <span style="color:#D69D85;">&quot;div&quot;</span>);
+        builder.AddContent(<span style="color:#B5CEA8;">1</span>, <span style="color:#D69D85;">&quot;No Route or View Configured to Display&quot;</span>);
         builder.CloseElement();
     }
 };
-</code></pre>
-<h2 id="dynamic-layouts">Dynamic Layouts</h2>
+</pre></div><h2 id="dynamic-layouts">Dynamic Layouts</h2>
 <p>Out-of-the-box, Blazor layouts are defined and fixed at compile time.  <code>@Layout</code> is Razor talk that gets transposed when the Razor is pre-compiled to:</p>
-<pre><code class="language-csharp">[Microsoft.AspNetCore.Components.LayoutAttribute(typeof(MainLayout))]
-[Microsoft.AspNetCore.Components.RouteAttribute(&quot;/&quot;)]
-[Microsoft.AspNetCore.Components.RouteAttribute(&quot;/index&quot;)]
-public partial class Index : Microsoft.AspNetCore.Components.ComponentBase
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+[Microsoft.AspNetCore.Components.LayoutAttribute(<span style="color:#569CD6;">typeof</span>(MainLayout))]
+[Microsoft.AspNetCore.Components.RouteAttribute(<span style="color:#D69D85;">&quot;/&quot;</span>)]
+[Microsoft.AspNetCore.Components.RouteAttribute(<span style="color:#D69D85;">&quot;/index&quot;</span>)]
+<span style="color:#569CD6;">public</span> <span style="color:#569CD6;">partial</span> <span style="color:#569CD6;">class</span> Index : Microsoft.AspNetCore.Components.ComponentBase
 ....
-</code></pre>
+</pre></div>
 <p>To change Layouts dynamically we use <code>RouteViewService</code> to store the layout. It can be set from any component that injects the service.</p>
-<pre><code class="language-csharp">public class RouteViewService
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+<span style="color:#569CD6;">public</span> <span style="color:#569CD6;">class</span> RouteViewService
 {
-    public Type Layout { get; set; }
+    <span style="color:#569CD6;">public</span> Type Layout { <span style="color:#569CD6;">get</span>; <span style="color:#569CD6;">set</span>; }
     ....
 }
-</code></pre>
+</pre></div>
 <p><code>_layoutViewFragment</code> in <code>RouteViewManager</code> chooses the layout - <code>RouteViewService.Layout</code> is set above the default layout in precedence.</p>
-<pre><code class="language-csharp">private RenderFragment _layoutViewFragment =&gt; builder =&gt;
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+<span style="color:#569CD6;">private</span> RenderFragment _layoutViewFragment =&gt; builder =&gt;
 {
     Type _pageLayoutType = RouteData?.PageType.GetCustomAttribute&lt;LayoutAttribute&gt;()?.LayoutType
         ?? RouteViewService.Layout
         ?? DefaultLayout;
 
-    builder.OpenComponent&lt;LayoutView&gt;(0);
-    builder.AddAttribute(1, nameof(LayoutView.Layout), _pageLayoutType);
-    builder.AddAttribute(2, nameof(LayoutView.ChildContent), _renderComponentWithParameters);
+    builder.OpenComponent&lt;LayoutView&gt;(<span style="color:#B5CEA8;">0</span>);
+    builder.AddAttribute(<span style="color:#B5CEA8;">1</span>, nameof(LayoutView.Layout), _pageLayoutType);
+    builder.AddAttribute(<span style="color:#B5CEA8;">2</span>, nameof(LayoutView.ChildContent), _renderComponentWithParameters);
     builder.CloseComponent();
 };
-</code></pre>
+</pre></div>
 <p>Changing in the layout is demonstrated in the demo pages.</p>
 <h2 id="dynamic-routing">Dynamic Routing</h2>
 <p>Dynamic Routing is a little more complicated.  <code>Router</code> is a sealed box, so it's take it or re-write it.  Unless you must, don't re-write it.  We're not looking to change existing routes, just add and remove new dynamic routes.</p>
 <p>Routes are defined at compile time and are used internally within the <code>Router</code> Component.</p>
 <p>RouteView Razor Pages are labelled like this:</p>
-<pre><code class="language-html">@page &quot;/&quot;
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+@page &quot;/&quot;
 @page &quot;/index&quot;
-</code></pre>
+</pre></div>
 <p>This is Razor talk, and gets transposed into the following in the C# class when pre-compiled.</p>
-<pre><code class="language-csharp">[Microsoft.AspNetCore.Components.RouteAttribute(&quot;/&quot;)]
-[Microsoft.AspNetCore.Components.RouteAttribute(&quot;/index&quot;)]
-public partial class Index : Microsoft.AspNetCore.Components.ComponentBase
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+[Microsoft.AspNetCore.Components.RouteAttribute(<span style="color:#D69D85;">&quot;/&quot;</span>)]
+[Microsoft.AspNetCore.Components.RouteAttribute(<span style="color:#D69D85;">&quot;/index&quot;</span>)]
+<span style="color:#569CD6;">public</span> <span style="color:#569CD6;">partial</span> <span style="color:#569CD6;">class</span> Index : Microsoft.AspNetCore.Components.ComponentBase
 .....
-</code></pre>
+</pre></div>
 <p>When <code>Router</code> initializes it trawls any assemblies provided and builds a route dictionary of component/route pairs.</p>
 <p>You can get a list of route attribute components like this:</p>
-<pre><code class="language-csharp">static public IEnumerable&lt;Type&gt; GetTypeListWithCustomAttribute(Assembly assembly, Type attribute)
-    =&gt; assembly.GetTypes().Where(item =&gt; (item.GetCustomAttributes(attribute, true).Length &gt; 0));
-</code></pre>
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+<span style="color:#569CD6;">static</span> <span style="color:#569CD6;">public</span> IEnumerable&lt;Type&gt; GetTypeListWithCustomAttribute(Assembly assembly, Type attribute)
+    =&gt; assembly.GetTypes().Where(item =&gt; (item.GetCustomAttributes(attribute, <span style="color:#569CD6;">true</span>).Length &gt; <span style="color:#B5CEA8;">0</span>));
+</pre></div>
 <p>On initial render the Router register a delegate with the <code>NavigationManager.LocationChanged</code> event.  This delegate looks up routes and triggers render events on the <code>Router</code>. If it finds a route it renders <code>Found</code> which renders our new <code>RouteViewManager</code>.  <code>RouteViewManager</code> builds out the Layout and adds a new instance of the component defined in <code>RouteData</code>.</p>
 <p>When it doesn't find a route, what happens depends on the <code>IsNavigationIntercepted</code> property of the <code>LocationChangedEventArgs</code> provided by the event:</p>
 <ol>
@@ -303,60 +319,61 @@ public partial class Index : Microsoft.AspNetCore.Components.ComponentBase
 <p>If we can avoid causing a hard navigation events in <code>Router</code>, we can add a component in <code>NotFound</code> to handle additional dynamic routing.  Not too difficult, it is our code!  There's an enhanced <code>NavLink</code> control to help control navigation - covered later.  In the event of a hard navigation event, routing will still work, but the application reloads.  Any rogue navigation events should be detected and fixed during testing.</p>
 <h3 id="customroutedata">CustomRouteData</h3>
 <p><code>CustomRouteData</code> holds the information needed to make routing decisions.  The class looks like this with inline detailed explanations.</p>
-<pre><code class="language-csharp">    public class CustomRouteData
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+    <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">class</span> CustomRouteData
     {
-        /// The standard RouteData.
-        public RouteData RouteData { get; private set; }
-        /// The PageType to load on a match 
-        public Type PageType { get; set; }
-        /// The Regex String to define the route
-        public string RouteMatch { get; set; }
-        /// Parameter values to add to the Route when created name/defaultvalue
-        public SortedDictionary&lt;string, object&gt; ComponentParameters { get; set; } = new SortedDictionary&lt;string, object&gt;();
+        <span style="color:#608B4E;">///</span><span style="color:#608B4E;"> The standard RouteData.</span>
+        <span style="color:#569CD6;">public</span> RouteData RouteData { <span style="color:#569CD6;">get</span>; <span style="color:#569CD6;">private</span> <span style="color:#569CD6;">set</span>; }
+        <span style="color:#608B4E;">///</span><span style="color:#608B4E;"> The PageType to load on a match </span>
+        <span style="color:#569CD6;">public</span> Type PageType { <span style="color:#569CD6;">get</span>; <span style="color:#569CD6;">set</span>; }
+        <span style="color:#608B4E;">///</span><span style="color:#608B4E;"> The Regex String to define the route</span>
+        <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">string</span> RouteMatch { <span style="color:#569CD6;">get</span>; <span style="color:#569CD6;">set</span>; }
+        <span style="color:#608B4E;">///</span><span style="color:#608B4E;"> Parameter values to add to the Route when created name/defaultvalue</span>
+        <span style="color:#569CD6;">public</span> SortedDictionary&lt;<span style="color:#569CD6;">string</span>, <span style="color:#569CD6;">object</span>&gt; ComponentParameters { <span style="color:#569CD6;">get</span>; <span style="color:#569CD6;">set</span>; } = <span style="color:#569CD6;">new</span> SortedDictionary&lt;<span style="color:#569CD6;">string</span>, <span style="color:#569CD6;">object</span>&gt;();
 
-        /// Method to check if we have a route match
-        public bool IsMatch(string url)
+        <span style="color:#608B4E;">///</span><span style="color:#608B4E;"> Method to check if we have a route match</span>
+        <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">bool</span> IsMatch(<span style="color:#569CD6;">string</span> url)
         {
-            // get the match
-            var match = Regex.Match(url, this.RouteMatch,RegexOptions.IgnoreCase);
-            if (match.Success)
+            <span style="color:#57A64A;">// get the match</span>
+            <span style="color:#569CD6;">var</span> match = Regex.Match(url, <span style="color:#569CD6;">this</span>.RouteMatch,RegexOptions.IgnoreCase);
+            <span style="color:#569CD6;">if</span> (match.Success)
             {
-                // create new dictionary object to add to the RouteData
-                var dict = new Dictionary&lt;string, object&gt;();
-                //  check we have the same or fewer groups as parameters to map the to
-                if (match.Groups.Count &gt;= ComponentParameters.Count)
+                <span style="color:#57A64A;">// create new dictionary object to add to the RouteData</span>
+                <span style="color:#569CD6;">var</span> dict = <span style="color:#569CD6;">new</span> Dictionary&lt;<span style="color:#569CD6;">string</span>, <span style="color:#569CD6;">object</span>&gt;();
+                <span style="color:#57A64A;">//  check we have the same or fewer groups as parameters to map the to</span>
+                <span style="color:#569CD6;">if</span> (match.Groups.Count &gt;= ComponentParameters.Count)
                 {
-                    var i = 1;
-                    // iterate through the parameters and add the next match
-                    foreach (var pars in ComponentParameters)
+                    <span style="color:#569CD6;">var</span> i = <span style="color:#B5CEA8;">1</span>;
+                    <span style="color:#57A64A;">// iterate through the parameters and add the next match</span>
+                    <span style="color:#569CD6;">foreach</span> (<span style="color:#569CD6;">var</span> pars <span style="color:#569CD6;">in</span> ComponentParameters)
                     {
-                        string matchValue = string.Empty;
-                        if (i &lt; match.Groups.Count)
+                        <span style="color:#569CD6;">string</span> matchValue = <span style="color:#569CD6;">string</span>.Empty;
+                        <span style="color:#569CD6;">if</span> (i &lt; match.Groups.Count)
                             matchValue = match.Groups[i].Value;
-                        //  Use a StypeSwitch object to do the Type Matching and create the dictionary pair 
-                        var ts = new TypeSwitch()
-                            .Case((int x) =&gt;
+                        <span style="color:#57A64A;">//  Use a StypeSwitch object to do the Type Matching and create the dictionary pair </span>
+                        <span style="color:#569CD6;">var</span> ts = <span style="color:#569CD6;">new</span> TypeSwitch()
+                            .Case((<span style="color:#569CD6;">int</span> x) =&gt;
                             {
-                                if (int.TryParse(matchValue, out int value))
+                                <span style="color:#569CD6;">if</span> (<span style="color:#569CD6;">int</span>.TryParse(matchValue, <span style="color:#569CD6;">out</span> <span style="color:#569CD6;">int</span> value))
                                     dict.Add(pars.Key, value);
-                                else
+                                <span style="color:#569CD6;">else</span>
                                     dict.Add(pars.Key, pars.Value);
                             })
-                            .Case((float x) =&gt;
+                            .Case((<span style="color:#569CD6;">float</span> x) =&gt;
                             {
-                                if (float.TryParse(matchValue, out float value))
+                                <span style="color:#569CD6;">if</span> (<span style="color:#569CD6;">float</span>.TryParse(matchValue, <span style="color:#569CD6;">out</span> <span style="color:#569CD6;">float</span> value))
                                     dict.Add(pars.Key, value);
-                                else
+                                <span style="color:#569CD6;">else</span>
                                     dict.Add(pars.Key, pars.Value);
                             })
-                            .Case((decimal x) =&gt;
+                            .Case((<span style="color:#569CD6;">decimal</span> x) =&gt;
                             {
-                                if (decimal.TryParse(matchValue, out decimal value))
+                                <span style="color:#569CD6;">if</span> (<span style="color:#569CD6;">decimal</span>.TryParse(matchValue, <span style="color:#569CD6;">out</span> <span style="color:#569CD6;">decimal</span> value))
                                     dict.Add(pars.Key, value);
-                                else
+                                <span style="color:#569CD6;">else</span>
                                     dict.Add(pars.Key, pars.Value);
                             })
-                            .Case((string x) =&gt;
+                            .Case((<span style="color:#569CD6;">string</span> x) =&gt;
                             {
                                 dict.Add(pars.Key, matchValue);
                             });
@@ -365,84 +382,85 @@ public partial class Index : Microsoft.AspNetCore.Components.ComponentBase
                         i++;
                     }
                 }
-                // create a new RouteData object and assign it to the RouteData property. 
-                this.RouteData = new RouteData(this.PageType, dict);
+                <span style="color:#57A64A;">// create a new RouteData object and assign it to the RouteData property. </span>
+                <span style="color:#569CD6;">this</span>.RouteData = <span style="color:#569CD6;">new</span> RouteData(<span style="color:#569CD6;">this</span>.PageType, dict);
             }
-            return match.Success;
+            <span style="color:#569CD6;">return</span> match.Success;
         }
 
-        /// Method to check if we have a route match and return the RouteData
-        public bool IsMatch(string url, out RouteData routeData)
+        <span style="color:#608B4E;">///</span><span style="color:#608B4E;"> Method to check if we have a route match and return the RouteData</span>
+        <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">bool</span> IsMatch(<span style="color:#569CD6;">string</span> url, <span style="color:#569CD6;">out</span> RouteData routeData)
         {
-            routeData = this.RouteData;
-            return IsMatch(url);
+            routeData = <span style="color:#569CD6;">this</span>.RouteData;
+            <span style="color:#569CD6;">return</span> IsMatch(url);
         }
     }
-</code></pre>
+</pre></div>
 <p>For those interested, <code>TypeSwitch</code> looks like this (thanks to <em>cdiggins</em> on StackOverflow for the code):</p>
-<pre><code class="language-csharp">/// =================================
-/// Author: stackoverflow: cdiggins
-/// ==================================
-    public class TypeSwitch
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+<span style="color:#608B4E;">///</span><span style="color:#608B4E;"> =================================</span>
+<span style="color:#608B4E;">///</span><span style="color:#608B4E;"> Author: stackoverflow: cdiggins</span>
+<span style="color:#608B4E;">///</span><span style="color:#608B4E;"> ==================================</span>
+    <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">class</span> TypeSwitch
     {
-        public TypeSwitch Case&lt;T&gt;(Action&lt;T&gt; action) { matches.Add(typeof(T), (x) =&gt; action((T)x)); return this; }
-        private Dictionary&lt;Type, Action&lt;object&gt;&gt; matches = new Dictionary&lt;Type, Action&lt;object&gt;&gt;();
-        public void Switch(object x) { matches[x.GetType()](x); }
+        <span style="color:#569CD6;">public</span> TypeSwitch Case&lt;T&gt;(Action&lt;T&gt; action) { matches.Add(<span style="color:#569CD6;">typeof</span>(T), (x) =&gt; action((T)x)); <span style="color:#569CD6;">return</span> <span style="color:#569CD6;">this</span>; }
+        <span style="color:#569CD6;">private</span> Dictionary&lt;Type, Action&lt;<span style="color:#569CD6;">object</span>&gt;&gt; matches = <span style="color:#569CD6;">new</span> Dictionary&lt;Type, Action&lt;<span style="color:#569CD6;">object</span>&gt;&gt;();
+        <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">void</span> Switch(<span style="color:#569CD6;">object</span> x) { matches[x.GetType()](x); }
     }
-</code></pre>
-<h2 id="updates-to-the-routeviewservice">Updates to the RouteViewService</h2>
+</pre></div><h2 id="updates-to-the-routeviewservice">Updates to the RouteViewService</h2>
 <p>The updated sections in <code>RouteViewService</code> are shown below. <code>Routes</code> holds the list of custom routes - it's deliberately left open for customization.</p>
-<pre><code class="language-csharp">public List&lt;CustomRouteData&gt; Routes { get; private set; } = new List&lt;CustomRouteData&gt;();
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+<span style="color:#569CD6;">public</span> List&lt;CustomRouteData&gt; Routes { <span style="color:#569CD6;">get</span>; <span style="color:#569CD6;">private</span> <span style="color:#569CD6;">set</span>; } = <span style="color:#569CD6;">new</span> List&lt;CustomRouteData&gt;();
 
-public bool GetRouteMatch(string url, out RouteData routeData)
+<span style="color:#569CD6;">public</span> <span style="color:#569CD6;">bool</span> GetRouteMatch(<span style="color:#569CD6;">string</span> url, <span style="color:#569CD6;">out</span> RouteData routeData)
 {
-    var route = Routes?.FirstOrDefault(item =&gt; item.IsMatch(url)) ?? null;
-    routeData = route?.RouteData ?? null;
-    return route != null;
+    <span style="color:#569CD6;">var</span> route = Routes?.FirstOrDefault(item =&gt; item.IsMatch(url)) ?? <span style="color:#569CD6;">null</span>;
+    routeData = route?.RouteData ?? <span style="color:#569CD6;">null</span>;
+    <span style="color:#569CD6;">return</span> route != <span style="color:#569CD6;">null</span>;
 }
-</code></pre>
-<h2 id="the-routenotfoundmanager-component">The RouteNotFoundManager Component</h2>
+</pre></div><h2 id="the-routenotfoundmanager-component">The RouteNotFoundManager Component</h2>
 <p><code>RouteNotFoundManager</code> is a simple version of <code>RouteViewManager</code>.</p>
 <p><code>SetParametersAsync</code> is called when the component loads.  It gets the local Url, calls <code>GetRouteMatch</code> on <code>RouteViewService</code>, and renders the component.  If there's no layout, it just renders the <code>ChildContent</code>.</p>
-<pre><code class="language-csharp">public Task SetParametersAsync(ParameterView parameters)
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+<span style="color:#569CD6;">public</span> Task SetParametersAsync(ParameterView parameters)
 {
-    parameters.SetParameterProperties(this);
-    // Get the route url
-    var url = $&quot;/{NavManager.Uri.Replace(NavManager.BaseUri, &quot;&quot;)}&quot;;
-    // check if we have a custom route and if so use it
-    if (RouteViewService.GetRouteMatch(url, out var routedata))
+    parameters.SetParameterProperties(<span style="color:#569CD6;">this</span>);
+    <span style="color:#57A64A;">// Get the route url</span>
+    <span style="color:#569CD6;">var</span> url = $<span style="color:#D69D85;">&quot;/{NavManager.Uri.Replace(NavManager.BaseUri, &quot;</span><span style="color:#D69D85;">&quot;)}&quot;</span>;
+    <span style="color:#57A64A;">// check if we have a custom route and if so use it</span>
+    <span style="color:#569CD6;">if</span> (RouteViewService.GetRouteMatch(url, <span style="color:#569CD6;">out</span> <span style="color:#569CD6;">var</span> routedata))
         _routeData = routedata;
-    // if The layout is blank show the ChildContent without a layout 
-    if (_pageLayoutType == null)
+    <span style="color:#57A64A;">// if The layout is blank show the ChildContent without a layout </span>
+    <span style="color:#569CD6;">if</span> (_pageLayoutType == <span style="color:#569CD6;">null</span>)
         _renderHandle.Render(ChildContent);
-    // otherwise show the route or ChildContent inside the layout
-    else
+    <span style="color:#57A64A;">// otherwise show the route or ChildContent inside the layout</span>
+    <span style="color:#569CD6;">else</span>
         _renderHandle.Render(_ViewFragment);
-    return Task.CompletedTask;
+    <span style="color:#569CD6;">return</span> Task.CompletedTask;
 }
-</code></pre>
+</pre></div>
 <p><code>_ViewFragment</code> either renders a <code>RouteViewManager</code>, setting <code>RouteData</code> if it finds a custom route, or the contents of <code>RouteNotFoundManager</code>.</p>
-<pre><code class="language-csharp">/// Layouted Render Fragment
-private RenderFragment _ViewFragment =&gt; builder =&gt;
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+<span style="color:#608B4E;">///</span><span style="color:#608B4E;"> Layouted Render Fragment</span>
+<span style="color:#569CD6;">private</span> RenderFragment _ViewFragment =&gt; builder =&gt;
 {
-    // check if we have a RouteData object and if so load the RouteViewManager, otherwise the ChildContent
-    if (_routeData != null)
+    <span style="color:#57A64A;">// check if we have a RouteData object and if so load the RouteViewManager, otherwise the ChildContent</span>
+    <span style="color:#569CD6;">if</span> (_routeData != <span style="color:#569CD6;">null</span>)
     {
-        builder.OpenComponent&lt;RouteViewManager&gt;(0);
-        builder.AddAttribute(1, nameof(RouteViewManager.DefaultLayout), _pageLayoutType);
-        builder.AddAttribute(1, nameof(RouteViewManager.RouteData), _routeData);
+        builder.OpenComponent&lt;RouteViewManager&gt;(<span style="color:#B5CEA8;">0</span>);
+        builder.AddAttribute(<span style="color:#B5CEA8;">1</span>, nameof(RouteViewManager.DefaultLayout), _pageLayoutType);
+        builder.AddAttribute(<span style="color:#B5CEA8;">1</span>, nameof(RouteViewManager.RouteData), _routeData);
         builder.CloseComponent();
     }
-    else
+    <span style="color:#569CD6;">else</span>
     {
-        builder.OpenComponent&lt;LayoutView&gt;(0);
-        builder.AddAttribute(1, nameof(LayoutView.Layout), _pageLayoutType);
-        builder.AddAttribute(2, nameof(LayoutView.ChildContent), this.ChildContent);
+        builder.OpenComponent&lt;LayoutView&gt;(<span style="color:#B5CEA8;">0</span>);
+        builder.AddAttribute(<span style="color:#B5CEA8;">1</span>, nameof(LayoutView.Layout), _pageLayoutType);
+        builder.AddAttribute(<span style="color:#B5CEA8;">2</span>, nameof(LayoutView.ChildContent), <span style="color:#569CD6;">this</span>.ChildContent);
         builder.CloseComponent();
     }
 };
-</code></pre>
-<h2 id="switching-the-routeview-without-routing">Switching the RouteView Without Routing</h2>
+</pre></div><h2 id="switching-the-routeview-without-routing">Switching the RouteView Without Routing</h2>
 <p>Switching the RouteView without routing has several applications.  These are some I've used:</p>
 <ol>
 <li>Hide direct access to a page.  It can only be accessed within the application.</li>
@@ -451,119 +469,122 @@ private RenderFragment _ViewFragment =&gt; builder =&gt;
 </ol>
 <h3 id="viewdata">ViewData</h3>
 <p>The equivalent to <code>RouteData</code>.</p>
-<pre><code class="language-csharp">public class ViewData
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+<span style="color:#569CD6;">public</span> <span style="color:#569CD6;">class</span> ViewData
 {
-    /// Gets the type of the View.
-    public Type ViewType { get; set; }
+    <span style="color:#608B4E;">///</span><span style="color:#608B4E;"> Gets the type of the View.</span>
+    <span style="color:#569CD6;">public</span> Type ViewType { <span style="color:#569CD6;">get</span>; <span style="color:#569CD6;">set</span>; }
 
-    /// Gets the type of the page matching the route.
-    public Type LayoutType { get; set; }
+    <span style="color:#608B4E;">///</span><span style="color:#608B4E;"> Gets the type of the page matching the route.</span>
+    <span style="color:#569CD6;">public</span> Type LayoutType { <span style="color:#569CD6;">get</span>; <span style="color:#569CD6;">set</span>; }
 
-    /// Parameter values to add to the Route when created
-    public Dictionary&lt;string, object&gt; ViewParameters { get; private set; } = new Dictionary&lt;string, object&gt;();
+    <span style="color:#608B4E;">///</span><span style="color:#608B4E;"> Parameter values to add to the Route when created</span>
+    <span style="color:#569CD6;">public</span> Dictionary&lt;<span style="color:#569CD6;">string</span>, <span style="color:#569CD6;">object</span>&gt; ViewParameters { <span style="color:#569CD6;">get</span>; <span style="color:#569CD6;">private</span> <span style="color:#569CD6;">set</span>; } = <span style="color:#569CD6;">new</span> Dictionary&lt;<span style="color:#569CD6;">string</span>, <span style="color:#569CD6;">object</span>&gt;();
 
-    /// Constructs an instance of &lt;see cref=&quot;ViewData&quot;/&gt;.
-    public ViewData(Type viewType, Dictionary&lt;string, object&gt; viewValues = null)
+    <span style="color:#608B4E;">///</span><span style="color:#608B4E;"> Constructs an instance of &lt;see cref=&quot;ViewData&quot;/&gt;.</span>
+    <span style="color:#569CD6;">public</span> ViewData(Type viewType, Dictionary&lt;<span style="color:#569CD6;">string</span>, <span style="color:#569CD6;">object</span>&gt; viewValues = <span style="color:#569CD6;">null</span>)
     {
-        if (viewType == null) throw new ArgumentNullException(nameof(viewType));
-        this.ViewType = viewType;
-        if (viewValues != null) this.ViewParameters = viewValues;
+        <span style="color:#569CD6;">if</span> (viewType == <span style="color:#569CD6;">null</span>) <span style="color:#569CD6;">throw</span> <span style="color:#569CD6;">new</span> ArgumentNullException(nameof(viewType));
+        <span style="color:#569CD6;">this</span>.ViewType = viewType;
+        <span style="color:#569CD6;">if</span> (viewValues != <span style="color:#569CD6;">null</span>) <span style="color:#569CD6;">this</span>.ViewParameters = viewValues;
     }
 }
-</code></pre>
+</pre></div>
 <p>All functionality is implemented in <code>RouteViewManager</code>.</p>
 <h3 id="routeviewmanager-1">RouteViewManager</h3>
 <p>First some properties and fields.</p>
-<pre><code class="language-csharp">/// The size of the History list used for Views.
-[Parameter] public int ViewHistorySize { get; set; } = 10;
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+<span style="color:#608B4E;">///</span><span style="color:#608B4E;"> The size of the History list used for Views.</span>
+[Parameter] <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">int</span> ViewHistorySize { <span style="color:#569CD6;">get</span>; <span style="color:#569CD6;">set</span>; } = <span style="color:#B5CEA8;">10</span>;
 
-/// Gets and sets the view data.
-public ViewData ViewData
+<span style="color:#608B4E;">///</span><span style="color:#608B4E;"> Gets and sets the view data.</span>
+<span style="color:#569CD6;">public</span> ViewData ViewData
 {
-    get =&gt; this._ViewData;
-    protected set
+    <span style="color:#569CD6;">get</span> =&gt; <span style="color:#569CD6;">this</span>._ViewData;
+    <span style="color:#569CD6;">protected</span> <span style="color:#569CD6;">set</span>
     {
-        this.AddViewToHistory(this._ViewData);
-        this._ViewData = value;
+        <span style="color:#569CD6;">this</span>.AddViewToHistory(<span style="color:#569CD6;">this</span>._ViewData);
+        <span style="color:#569CD6;">this</span>._ViewData = value;
     }
 }
 
-/// Property that stores the View History.  It's size is controlled by ViewHistorySize
-public SortedList&lt;DateTime, ViewData&gt; ViewHistory { get; private set; } = new SortedList&lt;DateTime, ViewData&gt;();
+<span style="color:#608B4E;">///</span><span style="color:#608B4E;"> Property that stores the View History.  It&#39;s size is controlled by ViewHistorySize</span>
+<span style="color:#569CD6;">public</span> SortedList&lt;DateTime, ViewData&gt; ViewHistory { <span style="color:#569CD6;">get</span>; <span style="color:#569CD6;">private</span> <span style="color:#569CD6;">set</span>; } = <span style="color:#569CD6;">new</span> SortedList&lt;DateTime, ViewData&gt;();
 
-/// Gets the last view data.
-public ViewData LastViewData
+<span style="color:#608B4E;">///</span><span style="color:#608B4E;"> Gets the last view data.</span>
+<span style="color:#569CD6;">public</span> ViewData LastViewData
 {
-    get
+    <span style="color:#569CD6;">get</span>
     {
-        var newest = ViewHistory.Max(item =&gt; item.Key);
-        if (newest != default) return ViewHistory[newest];
-        else return null;
+        <span style="color:#569CD6;">var</span> newest = ViewHistory.Max(item =&gt; item.Key);
+        <span style="color:#569CD6;">if</span> (newest != <span style="color:#569CD6;">default</span>) <span style="color:#569CD6;">return</span> ViewHistory[newest];
+        <span style="color:#569CD6;">else</span> <span style="color:#569CD6;">return</span> <span style="color:#569CD6;">null</span>;
     }
 }
 
-/// Method to check if &lt;param name=&quot;view&quot;&gt; is the current View
-public bool IsCurrentView(Type view) =&gt; this.ViewData?.ViewType == view;
+<span style="color:#608B4E;">///</span><span style="color:#608B4E;"> Method to check if &lt;param name=&quot;view&quot;&gt; is the current View</span>
+<span style="color:#569CD6;">public</span> <span style="color:#569CD6;">bool</span> IsCurrentView(Type view) =&gt; <span style="color:#569CD6;">this</span>.ViewData?.ViewType == view;
 
-/// Boolean to check if we have a View set
-public bool HasView =&gt; this._ViewData?.ViewType != null;
+<span style="color:#608B4E;">///</span><span style="color:#608B4E;"> Boolean to check if we have a View set</span>
+<span style="color:#569CD6;">public</span> <span style="color:#569CD6;">bool</span> HasView =&gt; <span style="color:#569CD6;">this</span>._ViewData?.ViewType != <span style="color:#569CD6;">null</span>;
 
-/// Internal ViewData used by the component
-private ViewData _ViewData { get; set; }
-</code></pre>
+<span style="color:#608B4E;">///</span><span style="color:#608B4E;"> Internal ViewData used by the component</span>
+<span style="color:#569CD6;">private</span> ViewData _ViewData { <span style="color:#569CD6;">get</span>; <span style="color:#569CD6;">set</span>; }
+</pre></div>
 <p>Next a set of <code>LoadViewAsync</code> methods to provide a variety of ways to load a new view.  The main method sets the internal <code>viewData</code> field and calls <code>Render</code> to re-render the component.</p>
-<pre><code class="language-csharp">// The main method
-public await Task LoadViewAsync(ViewData viewData = null)
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+<span style="color:#57A64A;">// The main method</span>
+<span style="color:#569CD6;">public</span> <span style="color:#569CD6;">await</span> Task LoadViewAsync(ViewData viewData = <span style="color:#569CD6;">null</span>)
 {
-    if (viewData != null) this.ViewData = viewData;
-    if (ViewData == null)
+    <span style="color:#569CD6;">if</span> (viewData != <span style="color:#569CD6;">null</span>) <span style="color:#569CD6;">this</span>.ViewData = viewData;
+    <span style="color:#569CD6;">if</span> (ViewData == <span style="color:#569CD6;">null</span>)
     {
-        throw new InvalidOperationException($&quot;The {nameof(RouteViewManager)} component requires a non-null value for the parameter {nameof(ViewData)}.&quot;);
+        <span style="color:#569CD6;">throw</span> <span style="color:#569CD6;">new</span> InvalidOperationException($<span style="color:#D69D85;">&quot;The {nameof(RouteViewManager)} component requires a non-null value for the parameter {nameof(ViewData)}.&quot;</span>);
     }
-    await this.RenderAsync();
+    <span style="color:#569CD6;">await</span> <span style="color:#569CD6;">this</span>.RenderAsync();
 }
 
-public async Task LoadViewAsync(Type viewtype)
-    =&gt; await this.LoadViewAsync(new ViewData(viewtype, new Dictionary&lt;string, object&gt;()));
+<span style="color:#569CD6;">public</span> <span style="color:#569CD6;">async</span> Task LoadViewAsync(Type viewtype)
+    =&gt; <span style="color:#569CD6;">await</span> <span style="color:#569CD6;">this</span>.LoadViewAsync(<span style="color:#569CD6;">new</span> ViewData(viewtype, <span style="color:#569CD6;">new</span> Dictionary&lt;<span style="color:#569CD6;">string</span>, <span style="color:#569CD6;">object</span>&gt;()));
 
-public async Task LoadViewAsync&lt;TView&gt;(Dictionary&lt;string, object&gt; data = null)
-    =&gt; await this.LoadViewAsync(new ViewData(typeof(TView), data));
-</code></pre>
+<span style="color:#569CD6;">public</span> <span style="color:#569CD6;">async</span> Task LoadViewAsync&lt;TView&gt;(Dictionary&lt;<span style="color:#569CD6;">string</span>, <span style="color:#569CD6;">object</span>&gt; data = <span style="color:#569CD6;">null</span>)
+    =&gt; <span style="color:#569CD6;">await</span> <span style="color:#569CD6;">this</span>.LoadViewAsync(<span style="color:#569CD6;">new</span> ViewData(<span style="color:#569CD6;">typeof</span>(TView), data));
+</pre></div>
 <p>We have already seen <code>_renderComponentWithParameters</code>.  With a valid <code>_ViewData</code> object, it renders the component using <code>_ViewData</code>.</p>
-<pre><code class="language-csharp">private RenderFragment _renderComponentWithParameters =&gt; builder =&gt;
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+<span style="color:#569CD6;">private</span> RenderFragment _renderComponentWithParameters =&gt; builder =&gt;
 {
-    Type componentType = null;
-    IReadOnlyDictionary&lt;string, object&gt; parameters = new Dictionary&lt;string, object&gt;();
+    Type componentType = <span style="color:#569CD6;">null</span>;
+    IReadOnlyDictionary&lt;<span style="color:#569CD6;">string</span>, <span style="color:#569CD6;">object</span>&gt; parameters = <span style="color:#569CD6;">new</span> Dictionary&lt;<span style="color:#569CD6;">string</span>, <span style="color:#569CD6;">object</span>&gt;();
 
-    if (_ViewData != null)
+    <span style="color:#569CD6;">if</span> (_ViewData != <span style="color:#569CD6;">null</span>)
     {
         componentType = _ViewData.ViewType;
         parameters = _ViewData.ViewParameters;
     }
-    else if (RouteData != null)
+    <span style="color:#569CD6;">else</span> <span style="color:#569CD6;">if</span> (RouteData != <span style="color:#569CD6;">null</span>)
     {
         componentType = RouteData.PageType;
         parameters = RouteData.RouteValues;
     }
 
-    if (componentType != null)
+    <span style="color:#569CD6;">if</span> (componentType != <span style="color:#569CD6;">null</span>)
     {
-        builder.OpenComponent(0, componentType);
-        foreach (var kvp in parameters)
+        builder.OpenComponent(<span style="color:#B5CEA8;">0</span>, componentType);
+        <span style="color:#569CD6;">foreach</span> (<span style="color:#569CD6;">var</span> kvp <span style="color:#569CD6;">in</span> parameters)
         {
-            builder.AddAttribute(1, kvp.Key, kvp.Value);
+            builder.AddAttribute(<span style="color:#B5CEA8;">1</span>, kvp.Key, kvp.Value);
         }
         builder.CloseComponent();
     }
-    else
+    <span style="color:#569CD6;">else</span>
     {
-        builder.OpenElement(0, &quot;div&quot;);
-        builder.AddContent(1, &quot;No Route or View Configured to Display&quot;);
+        builder.OpenElement(<span style="color:#B5CEA8;">0</span>, <span style="color:#D69D85;">&quot;div&quot;</span>);
+        builder.AddContent(<span style="color:#B5CEA8;">1</span>, <span style="color:#D69D85;">&quot;No Route or View Configured to Display&quot;</span>);
         builder.CloseElement();
     }
 };
-</code></pre>
-<h3 id="routenavlink">RouteNavLink</h3>
+</pre></div><h3 id="routenavlink">RouteNavLink</h3>
 <p><code>RouteNavLink</code> is an enhanced <code>NavLink</code> control.  The code is a direct copy with a small amount of added code.  It doesn't inherit because <code>NavLink</code> is a black box.  It ensures navigation is through the NavigationManager rather than Html anchor links and provides direct access to RouteView loading.  The code is in the Repo - it's too long to reproduce here.</p>
 <h2 id="example-pages">Example Pages</h2>
 <p>The application has RouteViews/Pages to demonstrate the new components.  You can review the source code in the Repo.  You can also see the pages on the Demo Site.</p>

@@ -52,81 +52,87 @@
             <div><small>How to change Stylesheets out at run time.</small></div></div>
     <p>Some code snippets to change out CSS dynamically in Blazor.</p>
 <p>Set up the default link in the page as:</p>
-<pre><code class="language-html">    &lt;link id=&quot;dynamicCssLink&quot; rel=&quot;stylesheet&quot; href=&quot;/css/site.css&quot; /&gt;
-</code></pre>
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+    <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">link</span> <span style="color:#FF0000;">id</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;dynamicCssLink&quot;</span> <span style="color:#FF0000;">rel</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;stylesheet&quot;</span> <span style="color:#FF0000;">href</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;/css/site.css&quot;</span> <span style="color:#569CD6;">/&gt;</span>
+</pre></div>
 <p>In this case the <code>elementId</code> is <em>dynamicCssLink</em>.</p>
 <p>JS code to go into site.js.</p>
-<pre><code class="language-js">window.DynamicCss = {
-   setCss: function (elementId, url) {
-        var link = document.getElementById(elementId);
-        if (link === undefined) {
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+window.DynamicCss = {
+   setCss: <span style="color:#569CD6;">function</span> (elementId, url) {
+        <span style="color:#569CD6;">var</span> link = document.getElementById(elementId);
+        <span style="color:#569CD6;">if</span> (link === undefined) {
             link = document.createElement(elementId);
             link.id = elementId;
             document.head.insertBefore(link, document.head.firstChild);
-            link.type = 'text/css';
-            link.rel = 'stylesheet';
+            link.type = <span style="color:#D69D85;">&#39;text/css&#39;</span>;
+            link.rel = <span style="color:#D69D85;">&#39;stylesheet&#39;</span>;
         }
         link.href = url;
-        return true;
+        <span style="color:#569CD6;">return</span> <span style="color:#569CD6;">true</span>;
     }
 }
-</code></pre>
+</pre></div>
 <p>Interop libary code.</p>
-<pre><code class="language-csharp">public class InteropLibrary
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+<span style="color:#569CD6;">public</span> <span style="color:#569CD6;">class</span> InteropLibrary
 {
-    protected IJSRuntime JSRuntime { get; }
+    <span style="color:#569CD6;">protected</span> IJSRuntime JSRuntime { <span style="color:#569CD6;">get</span>; }
 
-    public InteropLibrary(IJSRuntime jsRuntime)
+    <span style="color:#569CD6;">public</span> InteropLibrary(IJSRuntime jsRuntime)
         =&gt; JSRuntime = jsRuntime;
 
-    public ValueTask&lt;bool&gt; SetDynamicCss(string elementId, string url)
-        =&gt; JSRuntime.InvokeAsync&lt;bool&gt;(&quot;DynamicCss.setCss&quot;, elementId, url);
+    <span style="color:#569CD6;">public</span> ValueTask&lt;<span style="color:#569CD6;">bool</span>&gt; SetDynamicCss(<span style="color:#569CD6;">string</span> elementId, <span style="color:#569CD6;">string</span> url)
+        =&gt; JSRuntime.InvokeAsync&lt;<span style="color:#569CD6;">bool</span>&gt;(<span style="color:#D69D85;">&quot;DynamicCss.setCss&quot;</span>, elementId, url);
 }
-</code></pre>
+</pre></div>
 <p>Register <code>InteropLibrary</code> as a scoped service.</p>
-<pre><code class="language-csharp">builder.Services.AddScoped&lt;InteropLibrary&gt;();
-</code></pre>
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+builder.Services.AddScoped&lt;InteropLibrary&gt;();
+</pre></div>
 <p>Add an alternative Css file - site-black.css</p>
-<pre><code class="language-css">@import url('open-iconic/font/css/open-iconic-bootstrap.min.css');
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+@import url(&#39;open-iconic/font/css/open-iconic-bootstrap.min.css&#39;);
 
-html, body {
-    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-    background-color:black !important;
-    color: white !important;
+<span style="color:#A31515;">html</span>, <span style="color:#A31515;">body </span>{
+    <span style="color:#FF0000;">font-family</span>: <span style="color:#569CD6;">&#39;Helvetica Neue&#39;, Helvetica, Arial, sans-serif</span>;
+    <span style="color:#FF0000;">background-color</span>:<span style="color:#569CD6;">black !important</span>;
+    <span style="color:#FF0000;">color</span>: <span style="color:#569CD6;">white !important</span>;
 }
 ....
-</code></pre>
+</pre></div>
 <p>Test index page to demo how to dynamically change out the stylesheet.</p>
-<pre><code class="language-csharp">@page &quot;/&quot;
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+@page <span style="color:#D69D85;">&quot;/&quot;</span>
 
 &lt;PageTitle&gt;Index&lt;/PageTitle&gt;
 
 &lt;h1&gt;Hello, world!&lt;/h1&gt;
 
-Welcome to your new app.
+Welcome to your <span style="color:#569CD6;">new</span> app.
 
-&lt;SurveyPrompt Title=&quot;How is Blazor working for you?&quot; /&gt;
+&lt;SurveyPrompt Title=<span style="color:#D69D85;">&quot;How is Blazor working for you?&quot;</span> /&gt;
 
-&lt;div class=&quot;m-2&quot;&gt;
-    &lt;button class=&quot;btn @this.buttonColour&quot; @onclick=&quot;SwitchCSS&quot;&gt;@this.buttonLabel&lt;/button&gt;
+&lt;div <span style="color:#569CD6;">class</span>=<span style="color:#D69D85;">&quot;m-2&quot;</span>&gt;
+    &lt;button <span style="color:#569CD6;">class</span>=<span style="color:#D69D85;">&quot;btn @this.buttonColour&quot;</span> @onclick=<span style="color:#D69D85;">&quot;SwitchCSS&quot;</span>&gt;@<span style="color:#569CD6;">this</span>.buttonLabel&lt;/button&gt;
 &lt;/div&gt;
 
 @code {
-    [Inject] private InteropLibrary? interopLibrary { get; set; }
+    [Inject] <span style="color:#569CD6;">private</span> InteropLibrary? interopLibrary { <span style="color:#569CD6;">get</span>; <span style="color:#569CD6;">set</span>; }
 
 
-    private bool isDark;
-    private string css =&gt; isDark ? &quot;/css/site-black.css&quot; : &quot;/css/site.css&quot;;
-    private string buttonLabel =&gt; isDark ? &quot;Switch To Light&quot; : &quot;Switch To Dark&quot; ;
-    private string buttonColour =&gt; isDark ? &quot;btn-light&quot; : &quot;btn-dark&quot; ;
+    <span style="color:#569CD6;">private</span> <span style="color:#569CD6;">bool</span> isDark;
+    <span style="color:#569CD6;">private</span> <span style="color:#569CD6;">string</span> css =&gt; isDark ? <span style="color:#D69D85;">&quot;/css/site-black.css&quot;</span> : <span style="color:#D69D85;">&quot;/css/site.css&quot;</span>;
+    <span style="color:#569CD6;">private</span> <span style="color:#569CD6;">string</span> buttonLabel =&gt; isDark ? <span style="color:#D69D85;">&quot;Switch To Light&quot;</span> : <span style="color:#D69D85;">&quot;Switch To Dark&quot;</span> ;
+    <span style="color:#569CD6;">private</span> <span style="color:#569CD6;">string</span> buttonColour =&gt; isDark ? <span style="color:#D69D85;">&quot;btn-light&quot;</span> : <span style="color:#D69D85;">&quot;btn-dark&quot;</span> ;
 
-    private async Task SwitchCSS()
+    <span style="color:#569CD6;">private</span> <span style="color:#569CD6;">async</span> Task SwitchCSS()
     {
-        this.isDark = !this.isDark;
-        await interopLibrary!.SetDynamicCss(&quot;dynamiccsslink&quot;, this.css);
+        <span style="color:#569CD6;">this</span>.isDark = !<span style="color:#569CD6;">this</span>.isDark;
+        <span style="color:#569CD6;">await</span> interopLibrary!.SetDynamicCss(<span style="color:#D69D85;">&quot;dynamiccsslink&quot;</span>, <span style="color:#569CD6;">this</span>.css);
     }
 }
-</code></pre>
+</pre></div>
 <p><a href="https://github.com/chanan/BlazorStrap">Source/Idea Material</a></p>
 </div></div></div></body></html>
 

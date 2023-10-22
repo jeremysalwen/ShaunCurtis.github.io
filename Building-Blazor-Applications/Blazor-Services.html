@@ -86,119 +86,121 @@
 <p>Add a Blazor Server template project.</p>
 <h3 id="services">Services</h3>
 <p>Add the following classes to a new <em>Services</em> folder:</p>
-<pre><code class="language-csharp">namespace Blazr;
-public class TransientService : IDisposable
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+<span style="color:#569CD6;">namespace</span> Blazr;
+<span style="color:#569CD6;">public</span> <span style="color:#569CD6;">class</span> TransientService : IDisposable
 {
-    public readonly Guid Id = Guid.NewGuid();
+    <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">readonly</span> Guid Id = Guid.NewGuid();
 
-    public TransientService()
+    <span style="color:#569CD6;">public</span> TransientService()
     {
-        Debug.WriteLine($&quot;New Instance {this.GetType().Name} - {Id.ToString()}&quot;);
+        Debug.WriteLine($<span style="color:#D69D85;">&quot;New Instance {this.GetType().Name} - {Id.ToString()}&quot;</span>);
     }
 
-    public void Dispose()
-    =&gt; Debug.WriteLine($&quot;Disposing {this.GetType().Name} - {Id.ToString()}&quot;);
+    <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">void</span> Dispose()
+    =&gt; Debug.WriteLine($<span style="color:#D69D85;">&quot;Disposing {this.GetType().Name} - {Id.ToString()}&quot;</span>);
 }
-</code></pre>
-<pre><code class="language-csharp">namespace Blazr;
-public class SingletonService : IDisposable
+</pre></div><div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+<span style="color:#569CD6;">namespace</span> Blazr;
+<span style="color:#569CD6;">public</span> <span style="color:#569CD6;">class</span> SingletonService : IDisposable
 {
-    public readonly Guid Id = Guid.NewGuid();
+    <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">readonly</span> Guid Id = Guid.NewGuid();
 
-    public SingletonService() 
+    <span style="color:#569CD6;">public</span> SingletonService() 
     {
-        Debug.WriteLine($&quot;New Instance {this.GetType().Name} - {Id.ToString()}&quot;);
+        Debug.WriteLine($<span style="color:#D69D85;">&quot;New Instance {this.GetType().Name} - {Id.ToString()}&quot;</span>);
     }
 
-    public void Dispose()
-    =&gt; Debug.WriteLine($&quot;Disposing {this.GetType().Name} - {Id.ToString()}&quot;);
+    <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">void</span> Dispose()
+    =&gt; Debug.WriteLine($<span style="color:#D69D85;">&quot;Disposing {this.GetType().Name} - {Id.ToString()}&quot;</span>);
 }
-</code></pre>
-<pre><code class="language-csharp">namespace Blazr;
-public class ScopedService : IDisposable
+</pre></div><div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+<span style="color:#569CD6;">namespace</span> Blazr;
+<span style="color:#569CD6;">public</span> <span style="color:#569CD6;">class</span> ScopedService : IDisposable
 {
-    public readonly Guid Id = Guid.NewGuid();
+    <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">readonly</span> Guid Id = Guid.NewGuid();
 
-    public readonly SingletonService SingletonService;
+    <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">readonly</span> SingletonService SingletonService;
 
-    public ScopedService(SingletonService singletonService)
+    <span style="color:#569CD6;">public</span> ScopedService(SingletonService singletonService)
     {
         SingletonService = singletonService;
-        Debug.WriteLine($&quot;New Instance {this.GetType().Name} - {Id.ToString()}&quot;);
+        Debug.WriteLine($<span style="color:#D69D85;">&quot;New Instance {this.GetType().Name} - {Id.ToString()}&quot;</span>);
     }
 
-    public void Dispose()
-    =&gt; Debug.WriteLine($&quot;Disposing {this.GetType().Name} - {Id.ToString()}&quot;);
+    <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">void</span> Dispose()
+    =&gt; Debug.WriteLine($<span style="color:#D69D85;">&quot;Disposing {this.GetType().Name} - {Id.ToString()}&quot;</span>);
 }
-</code></pre>
+</pre></div>
 <p>Add these services to the the application services:</p>
-<pre><code class="language-csharp">// Add services to the container.
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+<span style="color:#57A64A;">// Add services to the container.</span>
 builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
 builder.Services.AddSingleton&lt;WeatherForecastService&gt;();
 builder.Services.AddSingleton&lt;SingletonService&gt;();
 builder.Services.AddScoped&lt;ScopedService&gt;();
 builder.Services.AddTransient&lt;TransientService&gt;();
-</code></pre>
-<h3 id="component">Component</h3>
+</pre></div><h3 id="component">Component</h3>
 <p>Add <em>/Components/ServicesComponent.razor</em></p>
-<pre><code class="language-csharp">@inherits OwningComponentBase&lt;ScopedService&gt;
-@namespace Blazr
-@using Microsoft.AspNetCore.Components.Web;
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+@inherits OwningComponentBase&lt;ScopedService&gt;
+@<span style="color:#569CD6;">namespace</span> Blazr
+@<span style="color:#569CD6;">using</span> Microsoft.AspNetCore.Components.Web;
 
-&lt;div class=&quot;bg-light p-3&quot;&gt;
+&lt;div <span style="color:#569CD6;">class</span>=<span style="color:#D69D85;">&quot;bg-light p-3&quot;</span>&gt;
     &lt;h1&gt;Hello Blazor at @(time.ToLongTimeString())&lt;/h1&gt;
-    &lt;div class=&quot;m-3&quot;&gt;
-        Todays Message is : @Message
+    &lt;div <span style="color:#569CD6;">class</span>=<span style="color:#D69D85;">&quot;m-3&quot;</span>&gt;
+        Todays Message <span style="color:#569CD6;">is</span> : @Message
     &lt;/div&gt;
-    &lt;div class=&quot;m-3&quot;&gt;
-        &lt;button class=&quot;btn btn-primary&quot; @onclick=&quot;GetTime&quot;&gt;Set Time&lt;/button&gt;
+    &lt;div <span style="color:#569CD6;">class</span>=<span style="color:#D69D85;">&quot;m-3&quot;</span>&gt;
+        &lt;button <span style="color:#569CD6;">class</span>=<span style="color:#D69D85;">&quot;btn btn-primary&quot;</span> @onclick=<span style="color:#D69D85;">&quot;GetTime&quot;</span>&gt;Set Time&lt;/button&gt;
     &lt;/div&gt;
-    &lt;div class=&quot;Container-fluid&quot;&gt;
-        &lt;div class=&quot;row bg-secondary text-white&quot;&gt;
-            &lt;div class=&quot;col-6 text-start&quot;&gt;
-                Singleton Service Id : @this.singletonService!.Id.ToString()&lt;br /&gt;
-                Scoped Service Id : @this.scopedService!.Id.ToString()&lt;br /&gt;
-                Transient Service Id : @this.transientService!.Id.ToString()&lt;br /&gt;
+    &lt;div <span style="color:#569CD6;">class</span>=<span style="color:#D69D85;">&quot;Container-fluid&quot;</span>&gt;
+        &lt;div <span style="color:#569CD6;">class</span>=<span style="color:#D69D85;">&quot;row bg-secondary text-white&quot;</span>&gt;
+            &lt;div <span style="color:#569CD6;">class</span>=<span style="color:#D69D85;">&quot;col-6 text-start&quot;</span>&gt;
+                Singleton Service Id : @<span style="color:#569CD6;">this</span>.singletonService!.Id.ToString()&lt;br /&gt;
+                Scoped Service Id : @<span style="color:#569CD6;">this</span>.scopedService!.Id.ToString()&lt;br /&gt;
+                Transient Service Id : @<span style="color:#569CD6;">this</span>.transientService!.Id.ToString()&lt;br /&gt;
             &lt;/div&gt;
-            &lt;div class=&quot;col-6 text-start&quot;&gt;
-                Owned Scoped Singleton Service Id : @this.Service.SingletonService.Id.ToString()&lt;br /&gt;
-                Owned Scoped Service Id : @this.Service.Id.ToString()&lt;br /&gt;
+            &lt;div <span style="color:#569CD6;">class</span>=<span style="color:#D69D85;">&quot;col-6 text-start&quot;</span>&gt;
+                Owned Scoped Singleton Service Id : @<span style="color:#569CD6;">this</span>.Service.SingletonService.Id.ToString()&lt;br /&gt;
+                Owned Scoped Service Id : @<span style="color:#569CD6;">this</span>.Service.Id.ToString()&lt;br /&gt;
             &lt;/div&gt;
         &lt;/div&gt;
     &lt;/div&gt;
 &lt;/div&gt;
 
 @code {
-    [Parameter] public string Message { get; set; } = string.Empty;
+    [Parameter] <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">string</span> Message { <span style="color:#569CD6;">get</span>; <span style="color:#569CD6;">set</span>; } = <span style="color:#569CD6;">string</span>.Empty;
 
-    [Inject] private SingletonService? singletonService { get; set; }
+    [Inject] <span style="color:#569CD6;">private</span> SingletonService? singletonService { <span style="color:#569CD6;">get</span>; <span style="color:#569CD6;">set</span>; }
 
-    [Inject] private ScopedService? scopedService { get; set; }
+    [Inject] <span style="color:#569CD6;">private</span> ScopedService? scopedService { <span style="color:#569CD6;">get</span>; <span style="color:#569CD6;">set</span>; }
 
-    [Inject] private TransientService? transientService { get; set; }
+    [Inject] <span style="color:#569CD6;">private</span> TransientService? transientService { <span style="color:#569CD6;">get</span>; <span style="color:#569CD6;">set</span>; }
 
-    private DateTime time = DateTime.Now;
+    <span style="color:#569CD6;">private</span> DateTime time = DateTime.Now;
 
-    protected override void OnInitialized()
+    <span style="color:#569CD6;">protected</span> <span style="color:#569CD6;">override</span> <span style="color:#569CD6;">void</span> OnInitialized()
     =&gt; time = DateTime.Now;
 
-    private void GetTime()
+    <span style="color:#569CD6;">private</span> <span style="color:#569CD6;">void</span> GetTime()
     =&gt; time = DateTime.Now;
 }
-</code></pre>
+</pre></div>
 <p>Finally update <em>index.razor</em>: add the <code>ServicesComponent</code></p>
-<pre><code class="language-csharp">@page &quot;/&quot;
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+@page <span style="color:#D69D85;">&quot;/&quot;</span>
 
 &lt;PageTitle&gt;Index&lt;/PageTitle&gt;
 
 &lt;h1&gt;Hello, world!&lt;/h1&gt;
 
-Welcome to your new app.
+Welcome to your <span style="color:#569CD6;">new</span> app.
 
-&lt;ServicesComponent Message=&quot;This is a Test Blazor Component&quot; /&gt;
-</code></pre>
-<h2 id="testing">Testing</h2>
+&lt;ServicesComponent Message=<span style="color:#D69D85;">&quot;This is a Test Blazor Component&quot;</span> /&gt;
+</pre></div><h2 id="testing">Testing</h2>
 <p>Run the project and examine the Debug Console.</p>
 <h3 id="the-logs">The Logs</h3>
 <p>The first section is the pre-render of the page by the server - this is the Index page.</p>
@@ -280,28 +282,28 @@ Disposing TransientService - b2581dd9-abf4-4cdb-86e9-14cdf707550f
 <li>Only use such services in <code>OwningComponentBase</code> DI containers.  There's a little more work involved, but they are then disposed when the component is destroyed.</li>
 </ol>
 <p>Here's a slightly different implementation of <code>ServicesComponent</code>.  The <code>TransientService</code> instance is now running in the component DI container.</p>
-<pre><code class="language-csharp">@code {
-    [Parameter] public string Message { get; set; } = string.Empty;
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+@code {
+    [Parameter] <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">string</span> Message { <span style="color:#569CD6;">get</span>; <span style="color:#569CD6;">set</span>; } = <span style="color:#569CD6;">string</span>.Empty;
 
-    [Inject] private SingletonService? singletonService { get; set; }
+    [Inject] <span style="color:#569CD6;">private</span> SingletonService? singletonService { <span style="color:#569CD6;">get</span>; <span style="color:#569CD6;">set</span>; }
 
-    [Inject] private ScopedService? scopedService { get; set; }
+    [Inject] <span style="color:#569CD6;">private</span> ScopedService? scopedService { <span style="color:#569CD6;">get</span>; <span style="color:#569CD6;">set</span>; }
 
-    private TransientService? transientService { get; set; }
+    <span style="color:#569CD6;">private</span> TransientService? transientService { <span style="color:#569CD6;">get</span>; <span style="color:#569CD6;">set</span>; }
 
-    private DateTime time = DateTime.Now;
+    <span style="color:#569CD6;">private</span> DateTime time = DateTime.Now;
 
-    protected override void OnInitialized()
+    <span style="color:#569CD6;">protected</span> <span style="color:#569CD6;">override</span> <span style="color:#569CD6;">void</span> OnInitialized()
     {
         time = DateTime.Now;
         transientService = ScopedServices.GetRequiredService&lt;TransientService&gt;();
     }
 
-    private void GetTime()
+    <span style="color:#569CD6;">private</span> <span style="color:#569CD6;">void</span> GetTime()
     =&gt; time = DateTime.Now;
 }
-</code></pre>
-<h2 id="wrap-up">Wrap Up</h2>
+</pre></div><h2 id="wrap-up">Wrap Up</h2>
 <p>Hopefully you're a little more enlightened about Blazor and AspNetCore Dependency Injection and Services.</p>
 </div></div></div></body></html>
 

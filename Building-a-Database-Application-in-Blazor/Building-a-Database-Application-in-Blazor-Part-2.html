@@ -103,19 +103,21 @@
 <p>The demo site has changed now the Server and WASM have been combined.  The site starts in Server mode - <a href="https://cec-blazor-database.azurewebsites.net/">https://cec-blazor-database.azurewebsites.net/</a>.</p>
 <h2 id="objective">Objective</h2>
 <p>Our goal: build library code so declaring a standard UI View service is as simple as this:</p>
-<pre><code class="language-csharp">public class WeatherForecastViewService : BaseModelViewService&lt;WeatherForecast&gt;, IModelViewService&lt;WeatherForecast&gt;
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+<span style="color:#569CD6;">public</span> <span style="color:#569CD6;">class</span> WeatherForecastViewService : BaseModelViewService&lt;WeatherForecast&gt;, IModelViewService&lt;WeatherForecast&gt;
 {
-    public WeatherForecastViewService(IDataServiceConnector dataServiceConnector) : base(dataServiceConnector) { }
+    <span style="color:#569CD6;">public</span> WeatherForecastViewService(IDataServiceConnector dataServiceConnector) : <span style="color:#569CD6;">base</span>(dataServiceConnector) { }
 }
-</code></pre>
+</pre></div>
 <p>And declaring a database <code>DbContext</code> that looks like:</p>
-<pre><code class="language-csharp">    public class MSSQLWeatherDbContext : DbContext
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+    <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">class</span> MSSQLWeatherDbContext : DbContext
     {
-        public MSSQLWeatherDbContext(DbContextOptions&lt;MSSQLWeatherDbContext&gt; options) : base(options) {}
+        <span style="color:#569CD6;">public</span> MSSQLWeatherDbContext(DbContextOptions&lt;MSSQLWeatherDbContext&gt; options) : <span style="color:#569CD6;">base</span>(options) {}
 
-        public DbSet&lt;WeatherForecast&gt; WeatherForecast { get; set; }
+        <span style="color:#569CD6;">public</span> DbSet&lt;WeatherForecast&gt; WeatherForecast { <span style="color:#569CD6;">get</span>; <span style="color:#569CD6;">set</span>; }
     }
-</code></pre>
+</pre></div>
 <p>Our process for adding a new database entity is:</p>
 <ol>
 <li>Add the necessary table/view to the database.</li>
@@ -137,60 +139,62 @@
 <li>Blazor WASM in <code>Program.cs</code>.</li>
 </ol>
 <p>This solution uses a set of Service Collection extension methods such as <code>AddInMemoryApplicationServices</code> to logically organise the solution services.</p>
-<pre><code class="language-csharp">// Blazr.Database.Web/startup.cs
-public void ConfigureServices(IServiceCollection services)
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+<span style="color:#57A64A;">// Blazr.Database.Web/startup.cs</span>
+<span style="color:#569CD6;">public</span> <span style="color:#569CD6;">void</span> ConfigureServices(IServiceCollection services)
 {
     services.AddRazorPages();
     services.AddServerSideBlazor();
-    // the local application Services defined in ServiceCollectionExtensions.cs
-    // services.AddApplicationServices(this.Configuration);
-    services.AddInMemoryApplicationServices(this.Configuration);
+    <span style="color:#57A64A;">// the local application Services defined in ServiceCollectionExtensions.cs</span>
+    <span style="color:#57A64A;">// services.AddApplicationServices(this.Configuration);</span>
+    services.AddInMemoryApplicationServices(<span style="color:#569CD6;">this</span>.Configuration);
 }
-</code></pre>
+</pre></div>
 <p>Extensions are declared as a static extension methods in a static class.  Various methods are shown below.</p>
-<pre><code class="language-csharp">//Blazr.Database/Extensions/ServiceCollectionExtensions.cs
-public static class ServiceCollectionExtensions
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+<span style="color:#57A64A;">//Blazr.Database/Extensions/ServiceCollectionExtensions.cs</span>
+<span style="color:#569CD6;">public</span> <span style="color:#569CD6;">static</span> <span style="color:#569CD6;">class</span> ServiceCollectionExtensions
 {
-    public static IServiceCollection AddWASMApplicationServices(this IServiceCollection services)
+    <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">static</span> IServiceCollection AddWASMApplicationServices(<span style="color:#569CD6;">this</span> IServiceCollection services)
     {
         services.AddScoped&lt;IDataBroker, APIDataBroker&gt;();
         AddCommonServices(services);
 
-        return services;
+        <span style="color:#569CD6;">return</span> services;
     }
-    public static IServiceCollection AddSQLServerApplicationServices(this IServiceCollection services, IConfiguration configuration)
+    <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">static</span> IServiceCollection AddSQLServerApplicationServices(<span style="color:#569CD6;">this</span> IServiceCollection services, IConfiguration configuration)
     {
-        // Local MS SQL DB Setup
-        var dbContext = configuration.GetValue&lt;string&gt;(&quot;Configuration:DBContext&quot;);
+        <span style="color:#57A64A;">// Local MS SQL DB Setup</span>
+        <span style="color:#569CD6;">var</span> dbContext = configuration.GetValue&lt;<span style="color:#569CD6;">string</span>&gt;(<span style="color:#D69D85;">&quot;Configuration:DBContext&quot;</span>);
         services.AddDbContextFactory&lt;MSSQLWeatherDbContext&gt;(options =&gt; options.UseSqlServer(dbContext), ServiceLifetime.Singleton);
         services.AddSingleton&lt;IDataBroker, WeatherSQLDataBroker&gt;();
         AddCommonServices(services);
 
-        return services;
+        <span style="color:#569CD6;">return</span> services;
     }
 
-    public static IServiceCollection AddSQLiteServerApplicationServices(this IServiceCollection services, IConfiguration configuration)
+    <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">static</span> IServiceCollection AddSQLiteServerApplicationServices(<span style="color:#569CD6;">this</span> IServiceCollection services, IConfiguration configuration)
     {
-        // In Memory SQLite DB Setup
-        var memdbContext = &quot;Data Source=:memory:&quot;;
+        <span style="color:#57A64A;">// In Memory SQLite DB Setup</span>
+        <span style="color:#569CD6;">var</span> memdbContext = <span style="color:#D69D85;">&quot;Data Source=:memory:&quot;</span>;
         services.AddDbContextFactory&lt;SQLiteWeatherDbContext&gt;(options =&gt; options.UseSqlite(memdbContext), ServiceLifetime.Singleton);
         services.AddSingleton&lt;IDataBroker, WeatherSQLiteDataBroker&gt;();
         AddCommonServices(services);
 
-        return services;
+        <span style="color:#569CD6;">return</span> services;
     }
 
-    public static IServiceCollection AddInMemoryServerApplicationServices(this IServiceCollection services, IConfiguration configuration)
+    <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">static</span> IServiceCollection AddInMemoryServerApplicationServices(<span style="color:#569CD6;">this</span> IServiceCollection services, IConfiguration configuration)
     {
-        // In Memory Datastore Setup
+        <span style="color:#57A64A;">// In Memory Datastore Setup</span>
         services.AddSingleton&lt;IInMemoryDataStore, InMemoryWeatherDataStore&gt;();
         services.AddSingleton&lt;IDataBroker, WeatherInMemoryDataBroker&gt;();
         AddCommonServices(services);
 
-        return services;
+        <span style="color:#569CD6;">return</span> services;
     }
 
-    private static void AddCommonServices(this IServiceCollection services)
+    <span style="color:#569CD6;">private</span> <span style="color:#569CD6;">static</span> <span style="color:#569CD6;">void</span> AddCommonServices(<span style="color:#569CD6;">this</span> IServiceCollection services)
     {
         services.AddBlazorSPA();
         services.AddScoped&lt;ILogger, Logger&lt;LoggingBroker&gt;&gt;();
@@ -200,19 +204,20 @@ public static class ServiceCollectionExtensions
         services.AddScoped&lt;WeatherForecastViewService&gt;();
     }
 }
-</code></pre>
+</pre></div>
 <p>The WASM project <code>program.cs</code> setup looks like this:</p>
-<pre><code class="language-csharp">// program.cs
-public static async Task Main(string[] args)
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+<span style="color:#57A64A;">// program.cs</span>
+<span style="color:#569CD6;">public</span> <span style="color:#569CD6;">static</span> <span style="color:#569CD6;">async</span> Task Main(<span style="color:#569CD6;">string</span>[] args)
 {
     .....
-    // Added here as we don't have access to builder in AddApplicationServices
-    builder.Services.AddScoped(sp =&gt; new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
-    // the Services for the Application
+    <span style="color:#57A64A;">// Added here as we don&#39;t have access to builder in AddApplicationServices</span>
+    builder.Services.AddScoped(sp =&gt; <span style="color:#569CD6;">new</span> HttpClient { BaseAddress = <span style="color:#569CD6;">new</span> Uri(builder.HostEnvironment.BaseAddress) });
+    <span style="color:#57A64A;">// the Services for the Application</span>
     builder.Services.AddWASMApplicationServices();
     .....
 }
-</code></pre>
+</pre></div>
 <p>Points:</p>
 <ol>
 <li>There's an <code>IServiceCollection</code> extension method for each project/library to encapsulate the specific services needed for the project.</li>
@@ -228,17 +233,17 @@ public static async Task Main(string[] args)
 <li><code>TDbContext</code> is the database context. It must inherit from the <code>DbContext</code> class.</li>
 </ol>
 <p>Class declarations look like this:</p>
-<pre><code class="language-csharp">public class ServerDataBroker&lt;TDbContext&gt; :
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+<span style="color:#569CD6;">public</span> <span style="color:#569CD6;">class</span> ServerDataBroker&lt;TDbContext&gt; :
     BaseDataBroker,
     IDataBroker
-    where TDbContext : DbContext
+    <span style="color:#569CD6;">where</span> TDbContext : DbContext
 ......
-    // example method template  
-    public virtual ValueTask&lt;TRecord&gt; SelectRecordAsync&lt;TRecord&gt;(Guid id) where TRecord : class, IDbRecord&lt;TRecord&gt;, new()
-        =&gt; ValueTask.FromResult(new TRecord());
+    <span style="color:#57A64A;">// example method template  </span>
+    <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">virtual</span> ValueTask&lt;TRecord&gt; SelectRecordAsync&lt;TRecord&gt;(Guid id) <span style="color:#569CD6;">where</span> TRecord : <span style="color:#569CD6;">class</span>, IDbRecord&lt;TRecord&gt;, <span style="color:#569CD6;">new</span>()
+        =&gt; ValueTask.FromResult(<span style="color:#569CD6;">new</span> TRecord());
 
-</code></pre>
-<h2 id="data-access">Data Access</h2>
+</pre></div><h2 id="data-access">Data Access</h2>
 <p>Before diving into the detail, let's look at the main CRUD methods we implement:</p>
 <ol>
 <li><em>SelectAllRecords</em> - get a List of records in the dataset.</li>
@@ -252,52 +257,54 @@ public static async Task Main(string[] args)
 <p>Keep these in mind as we work through this article.</p>
 <h3 id="dbtaskresult">DbTaskResult</h3>
 <p>Data layer CUD operations return a <code>DbTaskResult</code> object.  Most properties are self-evident.  It's designed to be consumed by the UI to build CSS Framework entities such as Alerts and Toasts.</p>
-<pre><code class="language-csharp">public class DbTaskResult
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+<span style="color:#569CD6;">public</span> <span style="color:#569CD6;">class</span> DbTaskResult
 {
-    public string Message { get; set; } = null;
-    public MessageType Type { get; set; } = MessageType.None;
-    public bool IsOK { get; set; } = true;
-    public object Data { get; set; } = null;
+    <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">string</span> Message { <span style="color:#569CD6;">get</span>; <span style="color:#569CD6;">set</span>; } = <span style="color:#569CD6;">null</span>;
+    <span style="color:#569CD6;">public</span> MessageType Type { <span style="color:#569CD6;">get</span>; <span style="color:#569CD6;">set</span>; } = MessageType.None;
+    <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">bool</span> IsOK { <span style="color:#569CD6;">get</span>; <span style="color:#569CD6;">set</span>; } = <span style="color:#569CD6;">true</span>;
+    <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">object</span> Data { <span style="color:#569CD6;">get</span>; <span style="color:#569CD6;">set</span>; } = <span style="color:#569CD6;">null</span>;
 }
-</code></pre>
-<h2 id="data-classes">Data Classes</h2>
+</pre></div><h2 id="data-classes">Data Classes</h2>
 <p>Data classes implement <code>IDbRecord</code>.  All reside in the Core Domain - <em>Blazr.Database.Core</em>.</p>
 <ol>
 <li><code>ID</code> is a <code>Guid</code>, a unique Identity field for the record.</li>
 <li><code>DisplayName</code> provides a generic name for the record.  We use this in titles, lookup lists and other UI components.</li>
 <li><code>GetDbSetName()</code> provides a method of defining a <code>DbSet</code> name other that the record name.  By default it gets the set name.</li>
 </ol>
-<pre><code class="language-csharp">public interface IDbRecord&lt;TRecord&gt; 
-    where TRecord : class, IDbRecord&lt;TRecord&gt;, new()
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+<span style="color:#569CD6;">public</span> <span style="color:#569CD6;">interface</span> IDbRecord&lt;TRecord&gt; 
+    <span style="color:#569CD6;">where</span> TRecord : <span style="color:#569CD6;">class</span>, IDbRecord&lt;TRecord&gt;, <span style="color:#569CD6;">new</span>()
 {
-    public Guid ID { get; }
-    public string DisplayName { get; }
-    public string GetDbSetName() =&gt; new TRecord().GetType().Name;
+    <span style="color:#569CD6;">public</span> Guid ID { <span style="color:#569CD6;">get</span>; }
+    <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">string</span> DisplayName { <span style="color:#569CD6;">get</span>; }
+    <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">string</span> GetDbSetName() =&gt; <span style="color:#569CD6;">new</span> TRecord().GetType().Name;
 }
-</code></pre>
+</pre></div>
 <p>Edit classes implement <code>IEditRecord</code> and <code>IValidation</code></p>
 <ol>
 <li><code>ID</code> is a <code>Guid</code>, a unique Identity field for the record.</li>
 <li><code>Populate()</code> populates the instance from the provided <code>TRecord</code>.</li>
 <li><code>GetRecord()</code> gets a new <code>TRecord</code> from the class instance.</li>
 </ol>
-<pre><code class="language-csharp">public interface IEditRecord&lt;TRecord&gt;
-    where TRecord : class, IDbRecord&lt;TRecord&gt;, new()
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+<span style="color:#569CD6;">public</span> <span style="color:#569CD6;">interface</span> IEditRecord&lt;TRecord&gt;
+    <span style="color:#569CD6;">where</span> TRecord : <span style="color:#569CD6;">class</span>, IDbRecord&lt;TRecord&gt;, <span style="color:#569CD6;">new</span>()
 {
-    public Guid ID { get; }
+    <span style="color:#569CD6;">public</span> Guid ID { <span style="color:#569CD6;">get</span>; }
 
-    public void Populate(IDbRecord&lt;TRecord&gt; dbRecord);
+    <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">void</span> Populate(IDbRecord&lt;TRecord&gt; dbRecord);
 
-    public TRecord GetRecord();
+    <span style="color:#569CD6;">public</span> TRecord GetRecord();
 }
-</code></pre>
+</pre></div>
 <p>More about Validation later.</p>
-<pre><code class="language-csharp">public interface IValidation
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+<span style="color:#569CD6;">public</span> <span style="color:#569CD6;">interface</span> IValidation
 {
-    public bool Validate(ValidationMessageStore validationMessageStore, string fieldname, object model = null);
+    <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">bool</span> Validate(ValidationMessageStore validationMessageStore, <span style="color:#569CD6;">string</span> fieldname, <span style="color:#569CD6;">object</span> model = <span style="color:#569CD6;">null</span>);
 }
-</code></pre>
-<h3 id="weatherforecast">WeatherForecast</h3>
+</pre></div><h3 id="weatherforecast">WeatherForecast</h3>
 <p>Here's the dataclass for a WeatherForecast data entity.</p>
 <p>Points:</p>
 <ol>
@@ -305,24 +312,25 @@ public static async Task Main(string[] args)
 <li>Implementation of <code>IDbRecord</code>.</li>
 <li>Defined as a <code>record</code> with immutable properties.</li>
 </ol>
-<pre><code class="language-csharp">public record WeatherForecast : IDbRecord&lt;WeatherForecast&gt;
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+<span style="color:#569CD6;">public</span> record WeatherForecast : IDbRecord&lt;WeatherForecast&gt;
 {
-    [Key] public Guid ID { get; init; } = Guid.Empty;
+    [Key] <span style="color:#569CD6;">public</span> Guid ID { <span style="color:#569CD6;">get</span>; init; } = Guid.Empty;
 
-    public DateTimeOffset Date { get; init; } = DateTimeOffset.Now;
+    <span style="color:#569CD6;">public</span> DateTimeOffset Date { <span style="color:#569CD6;">get</span>; init; } = DateTimeOffset.Now;
 
-    public int TemperatureC { get; init; } = 0;
+    <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">int</span> TemperatureC { <span style="color:#569CD6;">get</span>; init; } = <span style="color:#B5CEA8;">0</span>;
 
-    public string Summary { get; init; } = string.Empty;
+    <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">string</span> Summary { <span style="color:#569CD6;">get</span>; init; } = <span style="color:#569CD6;">string</span>.Empty;
 
-    [NotMapped] public int TemperatureF =&gt; 32 + (int)(TemperatureC / 0.5556);
+    [NotMapped] <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">int</span> TemperatureF =&gt; <span style="color:#B5CEA8;">32</span> + (<span style="color:#569CD6;">int</span>)(TemperatureC / <span style="color:#B5CEA8;">0</span>.<span style="color:#B5CEA8;">5556</span>);
 
-    [NotMapped] public string DisplayName =&gt; $&quot;Weather Forecast for {this.Date.LocalDateTime.ToShortDateString()} &quot;;
+    [NotMapped] <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">string</span> DisplayName =&gt; $<span style="color:#D69D85;">&quot;Weather Forecast for {this.Date.LocalDateTime.ToShortDateString()} &quot;</span>;
 
-    // A long string field to demo using a max row in a data table
-    [NotMapped] public string Description =&gt; $&quot;The Weather Forecast for this {this.Date.DayOfWeek}, the {this.Date.Day} of the month {this.Date.Month} in the year of {this.Date.Year} is {this.Summary}.  From the font of all knowledge!&quot;;
+    <span style="color:#57A64A;">// A long string field to demo using a max row in a data table</span>
+    [NotMapped] <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">string</span> Description =&gt; $<span style="color:#D69D85;">&quot;The Weather Forecast for this {this.Date.DayOfWeek}, the {this.Date.Day} of the month {this.Date.Month} in the year of {this.Date.Year} is {this.Summary}.  From the font of all knowledge!&quot;</span>;
 }
-</code></pre>
+</pre></div>
 <p>And the editable version - <code>EditWeatherForecast</code>.</p>
 <p>Points:</p>
 <ol>
@@ -332,666 +340,666 @@ public static async Task Main(string[] args)
 <li><code>Populate</code> populates the current class with data from a <code>WeatherForecast</code>.</li>
 <li><code>Validate</code> runs the configured validations on the class properties. More later.</li>
 </ol>
-<pre><code class="language-csharp">public class EditWeatherForecast : IValidation, IEditRecord&lt;WeatherForecast&gt;
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+<span style="color:#569CD6;">public</span> <span style="color:#569CD6;">class</span> EditWeatherForecast : IValidation, IEditRecord&lt;WeatherForecast&gt;
 {
-    public Guid ID { get; set; } = Guid.Empty;
+    <span style="color:#569CD6;">public</span> Guid ID { <span style="color:#569CD6;">get</span>; <span style="color:#569CD6;">set</span>; } = Guid.Empty;
 
-    public DateTimeOffset Date { get; set; } = DateTimeOffset.Now;
+    <span style="color:#569CD6;">public</span> DateTimeOffset Date { <span style="color:#569CD6;">get</span>; <span style="color:#569CD6;">set</span>; } = DateTimeOffset.Now;
 
-    public int TemperatureC { get; set; } = 0;
+    <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">int</span> TemperatureC { <span style="color:#569CD6;">get</span>; <span style="color:#569CD6;">set</span>; } = <span style="color:#B5CEA8;">0</span>;
 
-    public int TemperatureF =&gt; 32 + (int)(TemperatureC / 0.5556);
+    <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">int</span> TemperatureF =&gt; <span style="color:#B5CEA8;">32</span> + (<span style="color:#569CD6;">int</span>)(TemperatureC / <span style="color:#B5CEA8;">0</span>.<span style="color:#B5CEA8;">5556</span>);
 
-    public string Summary { get; set; } = string.Empty;
+    <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">string</span> Summary { <span style="color:#569CD6;">get</span>; <span style="color:#569CD6;">set</span>; } = <span style="color:#569CD6;">string</span>.Empty;
 
-    public Guid GUID { get; init; } = Guid.NewGuid();
+    <span style="color:#569CD6;">public</span> Guid GUID { <span style="color:#569CD6;">get</span>; init; } = Guid.NewGuid();
 
-    public string DisplayName =&gt; $&quot;Weather Forecast for {this.Date.LocalDateTime.ToShortDateString()} &quot;;
+    <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">string</span> DisplayName =&gt; $<span style="color:#D69D85;">&quot;Weather Forecast for {this.Date.LocalDateTime.ToShortDateString()} &quot;</span>;
 
-    public WeatherForecast GetRecord() =&gt; new WeatherForecast
+    <span style="color:#569CD6;">public</span> WeatherForecast GetRecord() =&gt; <span style="color:#569CD6;">new</span> WeatherForecast
     {
-        ID = this.ID,
-        Date = this.Date,
-        TemperatureC = this.TemperatureC,
-        Summary = this.Summary
+        ID = <span style="color:#569CD6;">this</span>.ID,
+        Date = <span style="color:#569CD6;">this</span>.Date,
+        TemperatureC = <span style="color:#569CD6;">this</span>.TemperatureC,
+        Summary = <span style="color:#569CD6;">this</span>.Summary
     };
 
-    public void Populate(IDbRecord&lt;WeatherForecast&gt; dbRecord)
+    <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">void</span> Populate(IDbRecord&lt;WeatherForecast&gt; dbRecord)
     {
-        var rec = (WeatherForecast)dbRecord;
-        this.ID = rec.ID;
-        this.Date = rec.Date;
-        this.TemperatureC = rec.TemperatureC;
-        this.Summary = rec.Summary;
+        <span style="color:#569CD6;">var</span> rec = (WeatherForecast)dbRecord;
+        <span style="color:#569CD6;">this</span>.ID = rec.ID;
+        <span style="color:#569CD6;">this</span>.Date = rec.Date;
+        <span style="color:#569CD6;">this</span>.TemperatureC = rec.TemperatureC;
+        <span style="color:#569CD6;">this</span>.Summary = rec.Summary;
     }
 
-    public bool Validate(ValidationMessageStore validationMessageStore, string fieldname, object model = null)
+    <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">bool</span> Validate(ValidationMessageStore validationMessageStore, <span style="color:#569CD6;">string</span> fieldname, <span style="color:#569CD6;">object</span> model = <span style="color:#569CD6;">null</span>)
     {
-        model = model ?? this;
-        bool trip = false;
+        model = model ?? <span style="color:#569CD6;">this</span>;
+        <span style="color:#569CD6;">bool</span> trip = <span style="color:#569CD6;">false</span>;
 
-        this.Summary.Validation(&quot;Summary&quot;, model, validationMessageStore)
-            .LongerThan(2, &quot;Your description needs to be a little longer! 3 letters minimum&quot;)
-            .Validate(ref trip, fieldname);
+        <span style="color:#569CD6;">this</span>.Summary.Validation(<span style="color:#D69D85;">&quot;Summary&quot;</span>, model, validationMessageStore)
+            .LongerThan(<span style="color:#B5CEA8;">2</span>, <span style="color:#D69D85;">&quot;Your description needs to be a little longer! 3 letters minimum&quot;</span>)
+            .Validate(<span style="color:#569CD6;">ref</span> trip, fieldname);
 
-        this.Date.Validation(&quot;Date&quot;, model, validationMessageStore)
-            .NotDefault(&quot;You must select a date&quot;)
-            .LessThan(DateTime.Now.AddMonths(1), true, &quot;Date can only be up to 1 month ahead&quot;)
-            .Validate(ref trip, fieldname);
+        <span style="color:#569CD6;">this</span>.Date.Validation(<span style="color:#D69D85;">&quot;Date&quot;</span>, model, validationMessageStore)
+            .NotDefault(<span style="color:#D69D85;">&quot;You must select a date&quot;</span>)
+            .LessThan(DateTime.Now.AddMonths(<span style="color:#B5CEA8;">1</span>), <span style="color:#569CD6;">true</span>, <span style="color:#D69D85;">&quot;Date can only be up to 1 month ahead&quot;</span>)
+            .Validate(<span style="color:#569CD6;">ref</span> trip, fieldname);
 
-        this.TemperatureC.Validation(&quot;TemperatureC&quot;, model, validationMessageStore)
-            .LessThan(70, &quot;The temperature must be less than 70C&quot;)
-            .GreaterThan(-60, &quot;The temperature must be greater than -60C&quot;)
-            .Validate(ref trip, fieldname);
+        <span style="color:#569CD6;">this</span>.TemperatureC.Validation(<span style="color:#D69D85;">&quot;TemperatureC&quot;</span>, model, validationMessageStore)
+            .LessThan(<span style="color:#B5CEA8;">70</span>, <span style="color:#D69D85;">&quot;The temperature must be less than 70C&quot;</span>)
+            .GreaterThan(-<span style="color:#B5CEA8;">60</span>, <span style="color:#D69D85;">&quot;The temperature must be greater than -60C&quot;</span>)
+            .Validate(<span style="color:#569CD6;">ref</span> trip, fieldname);
 
-        return !trip;
+        <span style="color:#569CD6;">return</span> !trip;
     }
 
 }
-</code></pre>
-<h2 id="the-data-access-tier">The Data Access Tier</h2>
+</pre></div><h2 id="the-data-access-tier">The Data Access Tier</h2>
 <p>The application implements two Entity Framework <code>DBContext</code> classes and one <code>InMemoryDataStore</code>.  All reside in the Data Domain - <em>Blazr.Database.Data</em>.</p>
 <h4 id="mssqlweatherdbcontext">MSSQLWeatherDbContext</h4>
 <p>The class is  basic, creating a <code>DbSet</code> per dataclass.  The DBSet either must be the same name as the dataclass, or the record <code>GetDbSetName</code> must return the correct <code>DbSet</code> name.</p>
-<pre><code class="language-csharp">    public class MSSQLWeatherDbContext : DbContext
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+    <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">class</span> MSSQLWeatherDbContext : DbContext
     {
-        private readonly Guid _id;
+        <span style="color:#569CD6;">private</span> <span style="color:#569CD6;">readonly</span> Guid _id;
 
-        public LocalWeatherDbContext(DbContextOptions&lt;LocalWeatherDbContext&gt; options)
-            : base(options)
+        <span style="color:#569CD6;">public</span> LocalWeatherDbContext(DbContextOptions&lt;LocalWeatherDbContext&gt; options)
+            : <span style="color:#569CD6;">base</span>(options)
             =&gt; _id = Guid.NewGuid();
 
-        public DbSet&lt;WeatherForecast&gt; WeatherForecast { get; set; }
+        <span style="color:#569CD6;">public</span> DbSet&lt;WeatherForecast&gt; WeatherForecast { <span style="color:#569CD6;">get</span>; <span style="color:#569CD6;">set</span>; }
     }
-</code></pre>
-<h4 id="sqliteweatherdbcontext">SQLiteWeatherDBContext</h4>
+</pre></div><h4 id="sqliteweatherdbcontext">SQLiteWeatherDBContext</h4>
 <p>The application implements a single Entity Framework <code>DbContext</code>, and a builder to build out the datbase instance and populate with data.</p>
-<pre><code class="language-csharp">public class SQLiteWeatherDbContext : DbContext
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+<span style="color:#569CD6;">public</span> <span style="color:#569CD6;">class</span> SQLiteWeatherDbContext : DbContext
 {
-    /// &lt;summary&gt;
-    /// New Method - creates a guid in case we need to track it
-    /// &lt;/summary&gt;
-    /// &lt;param name=&quot;options&quot;&gt;&lt;/param&gt;
-    public SQLiteWeatherDbContext(DbContextOptions&lt;SQLiteWeatherDbContext&gt; options)
-        : base(options)
-          =&gt; this.BuildInMemoryDatabase();
+    <span style="color:#608B4E;">///</span> <span style="color:#608B4E;">&lt;summary&gt;</span>
+    <span style="color:#608B4E;">///</span><span style="color:#608B4E;"> New Method - creates a guid in case we need to track it</span>
+    <span style="color:#608B4E;">///</span> <span style="color:#608B4E;">&lt;/summary&gt;</span>
+    <span style="color:#608B4E;">///</span> <span style="color:#608B4E;">&lt;param name=&quot;options&quot;&gt;</span><span style="color:#608B4E;">&lt;/param&gt;</span>
+    <span style="color:#569CD6;">public</span> SQLiteWeatherDbContext(DbContextOptions&lt;SQLiteWeatherDbContext&gt; options)
+        : <span style="color:#569CD6;">base</span>(options)
+          =&gt; <span style="color:#569CD6;">this</span>.BuildInMemoryDatabase();
 
-    /// &lt;summary&gt;
-    /// DbSet for the &lt;see cref=&quot;DbWeatherForecast&quot;/&gt; record
-    /// &lt;/summary&gt;
-    public DbSet&lt;WeatherForecast&gt; WeatherForecast { get; set; }
+    <span style="color:#608B4E;">///</span> <span style="color:#608B4E;">&lt;summary&gt;</span>
+    <span style="color:#608B4E;">///</span><span style="color:#608B4E;"> DbSet for the &lt;see cref=&quot;DbWeatherForecast&quot;/&gt; record</span>
+    <span style="color:#608B4E;">///</span> <span style="color:#608B4E;">&lt;/summary&gt;</span>
+    <span style="color:#569CD6;">public</span> DbSet&lt;WeatherForecast&gt; WeatherForecast { <span style="color:#569CD6;">get</span>; <span style="color:#569CD6;">set</span>; }
 
-    private void BuildInMemoryDatabase()
+    <span style="color:#569CD6;">private</span> <span style="color:#569CD6;">void</span> BuildInMemoryDatabase()
     {
-        var conn = this.Database.GetDbConnection();
+        <span style="color:#569CD6;">var</span> conn = <span style="color:#569CD6;">this</span>.Database.GetDbConnection();
         conn.Open();
-        var cmd = conn.CreateCommand();
-        cmd.CommandText = &quot;CREATE TABLE [WeatherForecast]([ID] UNIQUEIDENTIFIER PRIMARY KEY, [Date] [smalldatetime] NOT NULL, [TemperatureC] [int] NOT NULL, [Summary] [varchar](255) NULL)&quot;;
+        <span style="color:#569CD6;">var</span> cmd = conn.CreateCommand();
+        cmd.CommandText = <span style="color:#D69D85;">&quot;CREATE TABLE [WeatherForecast]([ID] UNIQUEIDENTIFIER PRIMARY KEY, [Date] [smalldatetime] NOT NULL, [TemperatureC] [int] NOT NULL, [Summary] [varchar](255) NULL)&quot;</span>;
         cmd.ExecuteNonQuery();
-        foreach (var forecast in this.NewForecasts)
+        <span style="color:#569CD6;">foreach</span> (<span style="color:#569CD6;">var</span> forecast <span style="color:#569CD6;">in</span> <span style="color:#569CD6;">this</span>.NewForecasts)
         {
-            cmd.CommandText = $&quot;INSERT INTO WeatherForecast([ID], [Date], [TemperatureC], [Summary]) VALUES({Guid.NewGuid()} ,'{forecast.Date.LocalDateTime.ToLongDateString()}', {forecast.TemperatureC}, '{forecast.Summary}')&quot;;
+            cmd.CommandText = $<span style="color:#D69D85;">&quot;INSERT INTO WeatherForecast([ID], [Date], [TemperatureC], [Summary]) VALUES({Guid.NewGuid()} ,&#39;{forecast.Date.LocalDateTime.ToLongDateString()}&#39;, {forecast.TemperatureC}, &#39;{forecast.Summary}&#39;)&quot;</span>;
             cmd.ExecuteNonQuery();
         }
     }
 
-    private static readonly string[] Summaries = new[]
+    <span style="color:#569CD6;">private</span> <span style="color:#569CD6;">static</span> <span style="color:#569CD6;">readonly</span> <span style="color:#569CD6;">string</span>[] Summaries = <span style="color:#569CD6;">new</span>[]
     {
-        &quot;Freezing&quot;, &quot;Bracing&quot;, &quot;Chilly&quot;, &quot;Cool&quot;, &quot;Mild&quot;, &quot;Warm&quot;, &quot;Balmy&quot;, &quot;Hot&quot;, &quot;Sweltering&quot;, &quot;Scorching&quot;
+        <span style="color:#D69D85;">&quot;Freezing&quot;</span>, <span style="color:#D69D85;">&quot;Bracing&quot;</span>, <span style="color:#D69D85;">&quot;Chilly&quot;</span>, <span style="color:#D69D85;">&quot;Cool&quot;</span>, <span style="color:#D69D85;">&quot;Mild&quot;</span>, <span style="color:#D69D85;">&quot;Warm&quot;</span>, <span style="color:#D69D85;">&quot;Balmy&quot;</span>, <span style="color:#D69D85;">&quot;Hot&quot;</span>, <span style="color:#D69D85;">&quot;Sweltering&quot;</span>, <span style="color:#D69D85;">&quot;Scorching&quot;</span>
     };
 
-    private List&lt;WeatherForecast&gt; NewForecasts
+    <span style="color:#569CD6;">private</span> List&lt;WeatherForecast&gt; NewForecasts
     {
-        get
+        <span style="color:#569CD6;">get</span>
         {
-            var rng = new Random();
+            <span style="color:#569CD6;">var</span> rng = <span style="color:#569CD6;">new</span> Random();
 
-            return Enumerable.Range(1, 80).Select(index =&gt; new WeatherForecast
+            <span style="color:#569CD6;">return</span> Enumerable.Range(<span style="color:#B5CEA8;">1</span>, <span style="color:#B5CEA8;">80</span>).Select(index =&gt; <span style="color:#569CD6;">new</span> WeatherForecast
             {
-                //ID = index,
+                <span style="color:#57A64A;">//ID = index,</span>
                 Date = DateTime.Now.AddDays(index),
-                TemperatureC = rng.Next(-20, 55),
+                TemperatureC = rng.Next(-<span style="color:#B5CEA8;">20</span>, <span style="color:#B5CEA8;">55</span>),
                 Summary = Summaries[rng.Next(Summaries.Length)]
             }).ToList();
         }
     }
 }
-</code></pre>
-<h4 id="inmemoryweatherdbcontext">InMemoryWeatherDBContext</h4>
-<pre><code class="language-csharp">public class InMemoryWeatherDataStore : IInMemoryDataStore
+</pre></div><h4 id="inmemoryweatherdbcontext">InMemoryWeatherDBContext</h4>
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+<span style="color:#569CD6;">public</span> <span style="color:#569CD6;">class</span> InMemoryWeatherDataStore : IInMemoryDataStore
 {
-    public InMemoryDataSet&lt;WeatherForecast&gt; WeatherForecast { get; set; }
+    <span style="color:#569CD6;">public</span> InMemoryDataSet&lt;WeatherForecast&gt; WeatherForecast { <span style="color:#569CD6;">get</span>; <span style="color:#569CD6;">set</span>; }
 
-    public InMemoryWeatherDataStore()
+    <span style="color:#569CD6;">public</span> InMemoryWeatherDataStore()
     {
-        this.WeatherForecast = new InMemoryDataSet&lt;WeatherForecast&gt;();
+        <span style="color:#569CD6;">this</span>.WeatherForecast = <span style="color:#569CD6;">new</span> InMemoryDataSet&lt;WeatherForecast&gt;();
         WeatherForecast.LoadData(LoadWeatherForecastData());
     }
 
-    public List&lt;WeatherForecast&gt; LoadWeatherForecastData()
+    <span style="color:#569CD6;">public</span> List&lt;WeatherForecast&gt; LoadWeatherForecastData()
     {
-        var summaries = new[] {
-            &quot;Freezing&quot;, &quot;Bracing&quot;, &quot;Chilly&quot;, &quot;Cool&quot;, &quot;Mild&quot;, &quot;Warm&quot;, &quot;Balmy&quot;, &quot;Hot&quot;, &quot;Sweltering&quot;, &quot;Scorching&quot;
+        <span style="color:#569CD6;">var</span> summaries = <span style="color:#569CD6;">new</span>[] {
+            <span style="color:#D69D85;">&quot;Freezing&quot;</span>, <span style="color:#D69D85;">&quot;Bracing&quot;</span>, <span style="color:#D69D85;">&quot;Chilly&quot;</span>, <span style="color:#D69D85;">&quot;Cool&quot;</span>, <span style="color:#D69D85;">&quot;Mild&quot;</span>, <span style="color:#D69D85;">&quot;Warm&quot;</span>, <span style="color:#D69D85;">&quot;Balmy&quot;</span>, <span style="color:#D69D85;">&quot;Hot&quot;</span>, <span style="color:#D69D85;">&quot;Sweltering&quot;</span>, <span style="color:#D69D85;">&quot;Scorching&quot;</span>
         };
-        var rng = new Random();
+        <span style="color:#569CD6;">var</span> rng = <span style="color:#569CD6;">new</span> Random();
 
-        return Enumerable.Range(1, 80).Select(index =&gt; new WeatherForecast
+        <span style="color:#569CD6;">return</span> Enumerable.Range(<span style="color:#B5CEA8;">1</span>, <span style="color:#B5CEA8;">80</span>).Select(index =&gt; <span style="color:#569CD6;">new</span> WeatherForecast
         {
             ID = Guid.NewGuid(),
             Date = DateTime.Now.AddDays(index),
-            TemperatureC = rng.Next(-20, 55),
+            TemperatureC = rng.Next(-<span style="color:#B5CEA8;">20</span>, <span style="color:#B5CEA8;">55</span>),
             Summary = summaries[rng.Next(summaries.Length)]
         }).ToList();
     }
 
-    public InMemoryDataSet&lt;TRecord&gt; GetDataSet&lt;TRecord&gt;() where TRecord : class, IDbRecord&lt;TRecord&gt;, new()
+    <span style="color:#569CD6;">public</span> InMemoryDataSet&lt;TRecord&gt; GetDataSet&lt;TRecord&gt;() <span style="color:#569CD6;">where</span> TRecord : <span style="color:#569CD6;">class</span>, IDbRecord&lt;TRecord&gt;, <span style="color:#569CD6;">new</span>()
     {
-        var dbSetName = new TRecord().GetDbSetName();
-        // Get the property info object for the DbSet 
-        var pinfo = this.GetType().GetProperty(dbSetName);
-        InMemoryDataSet&lt;TRecord&gt; dbSet = null;
-        Debug.Assert(pinfo != null);
-        // Get the property DbSet
-        try
+        <span style="color:#569CD6;">var</span> dbSetName = <span style="color:#569CD6;">new</span> TRecord().GetDbSetName();
+        <span style="color:#57A64A;">// Get the property info object for the DbSet </span>
+        <span style="color:#569CD6;">var</span> pinfo = <span style="color:#569CD6;">this</span>.GetType().GetProperty(dbSetName);
+        InMemoryDataSet&lt;TRecord&gt; dbSet = <span style="color:#569CD6;">null</span>;
+        Debug.Assert(pinfo != <span style="color:#569CD6;">null</span>);
+        <span style="color:#57A64A;">// Get the property DbSet</span>
+        <span style="color:#569CD6;">try</span>
         {
-            dbSet = (InMemoryDataSet&lt;TRecord&gt;)pinfo.GetValue(this);
+            dbSet = (InMemoryDataSet&lt;TRecord&gt;)pinfo.GetValue(<span style="color:#569CD6;">this</span>);
         }
-        catch
+        <span style="color:#569CD6;">catch</span>
         {
-            throw new InvalidOperationException($&quot;{dbSetName} does not have a matching DBset &quot;);
+            <span style="color:#569CD6;">throw</span> <span style="color:#569CD6;">new</span> InvalidOperationException($<span style="color:#D69D85;">&quot;{dbSetName} does not have a matching DBset &quot;</span>);
         }
-        Debug.Assert(dbSet != null);
-        return dbSet;
+        Debug.Assert(dbSet != <span style="color:#569CD6;">null</span>);
+        <span style="color:#569CD6;">return</span> dbSet;
     }
 }
-</code></pre>
-<h4 id="dbcontextextensions">DbContextExtensions</h4>
+</pre></div><h4 id="dbcontextextensions">DbContextExtensions</h4>
 <p>We're using generics, so our methods only know about <code>TRecord</code> and the <code>IDbRecord</code> interface.  We therefore need a methodology to get the correct <code>DbSet</code>.  We use either a naming convention - the name of the record, the DbSet and the Table/View is the same - or declare the <code>DbSet</code> name in the record class through <code>GetDbSetName</code>.  We implement the method to get the <code>DbSet</code> as an extension method on <code>DbContext</code>.</p>
 <p>The method uses reflection to find the <code>DbSet</code> for <code>TRecord</code>.</p>
-<pre><code class="language-csharp">public static DbSet&lt;TRecord&gt; GetDbSet&lt;TRecord&gt;(this DbContext context) where TRecord : class, IDbRecord&lt;TRecord&gt;, new()
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+<span style="color:#569CD6;">public</span> <span style="color:#569CD6;">static</span> DbSet&lt;TRecord&gt; GetDbSet&lt;TRecord&gt;(<span style="color:#569CD6;">this</span> DbContext context) <span style="color:#569CD6;">where</span> TRecord : <span style="color:#569CD6;">class</span>, IDbRecord&lt;TRecord&gt;, <span style="color:#569CD6;">new</span>()
 {
-    var dbSetName = new TRecord().GetDbSetName();
-    // Get the property info object for the DbSet 
-    var pinfo = context.GetType().GetProperty(dbSetName);
-    DbSet&lt;TRecord&gt; dbSet = null;
-    Debug.Assert(pinfo != null);
-    // Get the property DbSet
-    try
+    <span style="color:#569CD6;">var</span> dbSetName = <span style="color:#569CD6;">new</span> TRecord().GetDbSetName();
+    <span style="color:#57A64A;">// Get the property info object for the DbSet </span>
+    <span style="color:#569CD6;">var</span> pinfo = context.GetType().GetProperty(dbSetName);
+    DbSet&lt;TRecord&gt; dbSet = <span style="color:#569CD6;">null</span>;
+    Debug.Assert(pinfo != <span style="color:#569CD6;">null</span>);
+    <span style="color:#57A64A;">// Get the property DbSet</span>
+    <span style="color:#569CD6;">try</span>
     {
         dbSet = (DbSet&lt;TRecord&gt;)pinfo.GetValue(context);
     }
-    catch
+    <span style="color:#569CD6;">catch</span>
     {
-        throw new InvalidOperationException($&quot;{dbSetName} does not have a matching DBset &quot;);
+        <span style="color:#569CD6;">throw</span> <span style="color:#569CD6;">new</span> InvalidOperationException($<span style="color:#D69D85;">&quot;{dbSetName} does not have a matching DBset &quot;</span>);
     }
-    Debug.Assert(dbSet != null);
-    return dbSet;
+    Debug.Assert(dbSet != <span style="color:#569CD6;">null</span>);
+    <span style="color:#569CD6;">return</span> dbSet;
 }
-</code></pre>
-<h3 id="data-brokers">Data Brokers</h3>
+</pre></div><h3 id="data-brokers">Data Brokers</h3>
 <p><code>IDataBroker</code> resides in the Core Domain - <em>Blazr.SPA.Core</em> - defining the interface the Core Domain Connectors use.  The implementations all reside in the Data Domain - <em>Blazr.SPA.Data</em>.</p>
 <h4 id="idatabroker">IDataBroker</h4>
 <p><code>IDataBroker</code> defines the base CRUD methods DataServices must implement.  Brokers are services defined in the Services container using the interface and consumed through the interface.  Note <code>TRecord</code> with it's constraints is defined at method level.  <code>SelectPagedRecordsAsync</code> uses a <code>RecordPagingData</code> object which we'll look at in article 5.</p>
-<pre><code class="language-csharp">    public interface IDataBroker
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+    <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">interface</span> IDataBroker
     {
-        public ValueTask&lt;List&lt;TRecord&gt;&gt; SelectAllRecordsAsync&lt;TRecord&gt;() where TRecord : class, IDbRecord&lt;TRecord&gt;, new();
+        <span style="color:#569CD6;">public</span> ValueTask&lt;List&lt;TRecord&gt;&gt; SelectAllRecordsAsync&lt;TRecord&gt;() <span style="color:#569CD6;">where</span> TRecord : <span style="color:#569CD6;">class</span>, IDbRecord&lt;TRecord&gt;, <span style="color:#569CD6;">new</span>();
         
-        public ValueTask&lt;List&lt;TRecord&gt;&gt; SelectPagedRecordsAsync&lt;TRecord&gt;(RecordPagingData pagingData) where TRecord : class, IDbRecord&lt;TRecord&gt;, new();
+        <span style="color:#569CD6;">public</span> ValueTask&lt;List&lt;TRecord&gt;&gt; SelectPagedRecordsAsync&lt;TRecord&gt;(RecordPagingData pagingData) <span style="color:#569CD6;">where</span> TRecord : <span style="color:#569CD6;">class</span>, IDbRecord&lt;TRecord&gt;, <span style="color:#569CD6;">new</span>();
         
-        public ValueTask&lt;TRecord&gt; SelectRecordAsync&lt;TRecord&gt;(Guid id) where TRecord : class, IDbRecord&lt;TRecord&gt;, new();
+        <span style="color:#569CD6;">public</span> ValueTask&lt;TRecord&gt; SelectRecordAsync&lt;TRecord&gt;(Guid id) <span style="color:#569CD6;">where</span> TRecord : <span style="color:#569CD6;">class</span>, IDbRecord&lt;TRecord&gt;, <span style="color:#569CD6;">new</span>();
         
-        public ValueTask&lt;int&gt; SelectRecordListCountAsync&lt;TRecord&gt;() where TRecord : class, IDbRecord&lt;TRecord&gt;, new();
+        <span style="color:#569CD6;">public</span> ValueTask&lt;<span style="color:#569CD6;">int</span>&gt; SelectRecordListCountAsync&lt;TRecord&gt;() <span style="color:#569CD6;">where</span> TRecord : <span style="color:#569CD6;">class</span>, IDbRecord&lt;TRecord&gt;, <span style="color:#569CD6;">new</span>();
         
-        public ValueTask&lt;DbTaskResult&gt; UpdateRecordAsync&lt;TRecord&gt;(TRecord record) where TRecord : class, IDbRecord&lt;TRecord&gt;, new();
+        <span style="color:#569CD6;">public</span> ValueTask&lt;DbTaskResult&gt; UpdateRecordAsync&lt;TRecord&gt;(TRecord record) <span style="color:#569CD6;">where</span> TRecord : <span style="color:#569CD6;">class</span>, IDbRecord&lt;TRecord&gt;, <span style="color:#569CD6;">new</span>();
         
-        public ValueTask&lt;DbTaskResult&gt; InsertRecordAsync&lt;TRecord&gt;(TRecord record) where TRecord : class, IDbRecord&lt;TRecord&gt;, new();
+        <span style="color:#569CD6;">public</span> ValueTask&lt;DbTaskResult&gt; InsertRecordAsync&lt;TRecord&gt;(TRecord record) <span style="color:#569CD6;">where</span> TRecord : <span style="color:#569CD6;">class</span>, IDbRecord&lt;TRecord&gt;, <span style="color:#569CD6;">new</span>();
         
-        public ValueTask&lt;DbTaskResult&gt; DeleteRecordAsync&lt;TRecord&gt;(TRecord record) where TRecord : class, IDbRecord&lt;TRecord&gt;, new();
+        <span style="color:#569CD6;">public</span> ValueTask&lt;DbTaskResult&gt; DeleteRecordAsync&lt;TRecord&gt;(TRecord record) <span style="color:#569CD6;">where</span> TRecord : <span style="color:#569CD6;">class</span>, IDbRecord&lt;TRecord&gt;, <span style="color:#569CD6;">new</span>();
     }
-</code></pre>
-<h4 id="basedatabroker">BaseDataBroker</h4>
+</pre></div><h4 id="basedatabroker">BaseDataBroker</h4>
 <p><code>BaseDataBroker</code> is abstract implementation of <code>IDataBroker</code>.  It provides default records, lists or <em>not implemented</em> <code>DBTaskResult</code> messages.</p>
-<pre><code class="language-csharp">    public abstract class BaseDataBroker: IDataBroker
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+    <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">abstract</span> <span style="color:#569CD6;">class</span> BaseDataBroker: IDataBroker
     {
-        public virtual ValueTask&lt;List&lt;TRecord&gt;&gt; SelectAllRecordsAsync&lt;TRecord&gt;() where TRecord : class, IDbRecord&lt;TRecord&gt;, new()
-            =&gt; ValueTask.FromResult(new List&lt;TRecord&gt;());
+        <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">virtual</span> ValueTask&lt;List&lt;TRecord&gt;&gt; SelectAllRecordsAsync&lt;TRecord&gt;() <span style="color:#569CD6;">where</span> TRecord : <span style="color:#569CD6;">class</span>, IDbRecord&lt;TRecord&gt;, <span style="color:#569CD6;">new</span>()
+            =&gt; ValueTask.FromResult(<span style="color:#569CD6;">new</span> List&lt;TRecord&gt;());
         
-        public virtual ValueTask&lt;List&lt;TRecord&gt;&gt; SelectPagedRecordsAsync&lt;TRecord&gt;(RecordPagingData paginatorData) where TRecord : class, IDbRecord&lt;TRecord&gt;, new()
-            =&gt; ValueTask.FromResult(new List&lt;TRecord&gt;());
+        <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">virtual</span> ValueTask&lt;List&lt;TRecord&gt;&gt; SelectPagedRecordsAsync&lt;TRecord&gt;(RecordPagingData paginatorData) <span style="color:#569CD6;">where</span> TRecord : <span style="color:#569CD6;">class</span>, IDbRecord&lt;TRecord&gt;, <span style="color:#569CD6;">new</span>()
+            =&gt; ValueTask.FromResult(<span style="color:#569CD6;">new</span> List&lt;TRecord&gt;());
         
-        public virtual ValueTask&lt;TRecord&gt; SelectRecordAsync&lt;TRecord&gt;(Guid id) where TRecord : class, IDbRecord&lt;TRecord&gt;, new()
-            =&gt; ValueTask.FromResult(new TRecord());
+        <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">virtual</span> ValueTask&lt;TRecord&gt; SelectRecordAsync&lt;TRecord&gt;(Guid id) <span style="color:#569CD6;">where</span> TRecord : <span style="color:#569CD6;">class</span>, IDbRecord&lt;TRecord&gt;, <span style="color:#569CD6;">new</span>()
+            =&gt; ValueTask.FromResult(<span style="color:#569CD6;">new</span> TRecord());
         
-        public virtual ValueTask&lt;int&gt; SelectRecordListCountAsync&lt;TRecord&gt;() where TRecord : class, IDbRecord&lt;TRecord&gt;, new()
-            =&gt; ValueTask.FromResult(0);
+        <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">virtual</span> ValueTask&lt;<span style="color:#569CD6;">int</span>&gt; SelectRecordListCountAsync&lt;TRecord&gt;() <span style="color:#569CD6;">where</span> TRecord : <span style="color:#569CD6;">class</span>, IDbRecord&lt;TRecord&gt;, <span style="color:#569CD6;">new</span>()
+            =&gt; ValueTask.FromResult(<span style="color:#B5CEA8;">0</span>);
         
-        public virtual ValueTask&lt;DbTaskResult&gt; UpdateRecordAsync&lt;TRecord&gt;(TRecord record) where TRecord : class, IDbRecord&lt;TRecord&gt;, new()
-            =&gt; ValueTask.FromResult(new DbTaskResult() { IsOK = false, Type = MessageType.NotImplemented, Message = &quot;Method not implemented&quot; });
+        <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">virtual</span> ValueTask&lt;DbTaskResult&gt; UpdateRecordAsync&lt;TRecord&gt;(TRecord record) <span style="color:#569CD6;">where</span> TRecord : <span style="color:#569CD6;">class</span>, IDbRecord&lt;TRecord&gt;, <span style="color:#569CD6;">new</span>()
+            =&gt; ValueTask.FromResult(<span style="color:#569CD6;">new</span> DbTaskResult() { IsOK = <span style="color:#569CD6;">false</span>, Type = MessageType.NotImplemented, Message = <span style="color:#D69D85;">&quot;Method not implemented&quot;</span> });
         
-        public virtual ValueTask&lt;DbTaskResult&gt; InsertRecordAsync&lt;TRecord&gt;(TRecord record) where TRecord : class, IDbRecord&lt;TRecord&gt;, new()
-            =&gt; ValueTask.FromResult(new DbTaskResult() { IsOK = false, Type = MessageType.NotImplemented, Message = &quot;Method not implemented&quot; });
+        <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">virtual</span> ValueTask&lt;DbTaskResult&gt; InsertRecordAsync&lt;TRecord&gt;(TRecord record) <span style="color:#569CD6;">where</span> TRecord : <span style="color:#569CD6;">class</span>, IDbRecord&lt;TRecord&gt;, <span style="color:#569CD6;">new</span>()
+            =&gt; ValueTask.FromResult(<span style="color:#569CD6;">new</span> DbTaskResult() { IsOK = <span style="color:#569CD6;">false</span>, Type = MessageType.NotImplemented, Message = <span style="color:#D69D85;">&quot;Method not implemented&quot;</span> });
         
-        public virtual ValueTask&lt;DbTaskResult&gt; DeleteRecordAsync&lt;TRecord&gt;(TRecord record) where TRecord : class, IDbRecord&lt;TRecord&gt;, new()
-            =&gt; ValueTask.FromResult(new DbTaskResult() { IsOK = false, Type = MessageType.NotImplemented, Message = &quot;Method not implemented&quot; });
+        <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">virtual</span> ValueTask&lt;DbTaskResult&gt; DeleteRecordAsync&lt;TRecord&gt;(TRecord record) <span style="color:#569CD6;">where</span> TRecord : <span style="color:#569CD6;">class</span>, IDbRecord&lt;TRecord&gt;, <span style="color:#569CD6;">new</span>()
+            =&gt; ValueTask.FromResult(<span style="color:#569CD6;">new</span> DbTaskResult() { IsOK = <span style="color:#569CD6;">false</span>, Type = MessageType.NotImplemented, Message = <span style="color:#D69D85;">&quot;Method not implemented&quot;</span> });
     }
-</code></pre>
-<h4 id="sqlserverdatabroker">SQLServerDataBroker</h4>
+</pre></div><h4 id="sqlserverdatabroker">SQLServerDataBroker</h4>
 <p>This is the concrete server-side implementation.  Each database operation is implemented using separate <code>DbContext</code> instances.  Note <code>GetDBSet</code> used to get the correct DBSet for <code>TRecord</code>.</p>
-<pre><code class="language-csharp">public class SQLServerDataBroker&lt;TDbContext&gt; :
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+<span style="color:#569CD6;">public</span> <span style="color:#569CD6;">class</span> SQLServerDataBroker&lt;TDbContext&gt; :
     BaseDataBroker,
     IDataBroker
-    where TDbContext : DbContext
+    <span style="color:#569CD6;">where</span> TDbContext : DbContext
 {
-    protected virtual IDbContextFactory&lt;TDbContext&gt; DBContext { get; set; } = null;
+    <span style="color:#569CD6;">protected</span> <span style="color:#569CD6;">virtual</span> IDbContextFactory&lt;TDbContext&gt; DBContext { <span style="color:#569CD6;">get</span>; <span style="color:#569CD6;">set</span>; } = <span style="color:#569CD6;">null</span>;
 
-    public SQLServerDataBroker(IConfiguration configuration, IDbContextFactory&lt;TDbContext&gt; dbContext)
-        =&gt; this.DBContext = dbContext;
+    <span style="color:#569CD6;">public</span> SQLServerDataBroker(IConfiguration configuration, IDbContextFactory&lt;TDbContext&gt; dbContext)
+        =&gt; <span style="color:#569CD6;">this</span>.DBContext = dbContext;
 
-    public override async ValueTask&lt;List&lt;TRecord&gt;&gt; SelectAllRecordsAsync&lt;TRecord&gt;()
+    <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">override</span> <span style="color:#569CD6;">async</span> ValueTask&lt;List&lt;TRecord&gt;&gt; SelectAllRecordsAsync&lt;TRecord&gt;()
     {
-        using var dbContext = this.DBContext.CreateDbContext();
-        var list = await dbContext
+        <span style="color:#569CD6;">using</span> <span style="color:#569CD6;">var</span> dbContext = <span style="color:#569CD6;">this</span>.DBContext.CreateDbContext();
+        <span style="color:#569CD6;">var</span> list = <span style="color:#569CD6;">await</span> dbContext
         .GetDbSet&lt;TRecord&gt;()
         .ToListAsync() 
-        ?? new List&lt;TRecord&gt;();
-        return list;
+        ?? <span style="color:#569CD6;">new</span> List&lt;TRecord&gt;();
+        <span style="color:#569CD6;">return</span> list;
     }
 
-    public override async ValueTask&lt;List&lt;TRecord&gt;&gt; SelectPagedRecordsAsync&lt;TRecord&gt;(RecordPagingData pagingData)
+    <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">override</span> <span style="color:#569CD6;">async</span> ValueTask&lt;List&lt;TRecord&gt;&gt; SelectPagedRecordsAsync&lt;TRecord&gt;(RecordPagingData pagingData)
     {
-        using var dbContext = this.DBContext.CreateDbContext();
-        var dbset = dbContext
+        <span style="color:#569CD6;">using</span> <span style="color:#569CD6;">var</span> dbContext = <span style="color:#569CD6;">this</span>.DBContext.CreateDbContext();
+        <span style="color:#569CD6;">var</span> dbset = dbContext
             .GetDbSet&lt;TRecord&gt;();
 
-        var isSortable = typeof(TRecord).GetProperty(pagingData.SortColumn) != null;
+        <span style="color:#569CD6;">var</span> isSortable = <span style="color:#569CD6;">typeof</span>(TRecord).GetProperty(pagingData.SortColumn) != <span style="color:#569CD6;">null</span>;
         List&lt;TRecord&gt; list;
-        if (pagingData.Sort &amp;&amp; isSortable)
+        <span style="color:#569CD6;">if</span> (pagingData.Sort &amp;&amp; isSortable)
         {
-            list = await dbset
-                .OrderBy(pagingData.SortDescending ? $&quot;{pagingData.SortColumn} descending&quot; : pagingData.SortColumn)
+            list = <span style="color:#569CD6;">await</span> dbset
+                .OrderBy(pagingData.SortDescending ? $<span style="color:#D69D85;">&quot;{pagingData.SortColumn} descending&quot;</span> : pagingData.SortColumn)
                 .Skip(pagingData.StartRecord)
                 .Take(pagingData.PageSize)
                 .ToListAsync() 
-                ?? new List&lt;TRecord&gt;();
+                ?? <span style="color:#569CD6;">new</span> List&lt;TRecord&gt;();
         }
-        else
+        <span style="color:#569CD6;">else</span>
         {
-            list = await dbset
+            list = <span style="color:#569CD6;">await</span> dbset
                 .Skip(pagingData.StartRecord)
                 .Take(pagingData.PageSize)
                 .ToListAsync() 
-                ?? new List&lt;TRecord&gt;();
+                ?? <span style="color:#569CD6;">new</span> List&lt;TRecord&gt;();
         }
-        return list;
+        <span style="color:#569CD6;">return</span> list;
     }
 
-    public override async ValueTask&lt;TRecord&gt; SelectRecordAsync&lt;TRecord&gt;(Guid id)
+    <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">override</span> <span style="color:#569CD6;">async</span> ValueTask&lt;TRecord&gt; SelectRecordAsync&lt;TRecord&gt;(Guid id)
     {
-        using var dbContext = this.DBContext.CreateDbContext();
-        var list = await dbContext
+        <span style="color:#569CD6;">using</span> <span style="color:#569CD6;">var</span> dbContext = <span style="color:#569CD6;">this</span>.DBContext.CreateDbContext();
+        <span style="color:#569CD6;">var</span> list = <span style="color:#569CD6;">await</span> dbContext
             .GetDbSet&lt;TRecord&gt;()
-            .FirstOrDefaultAsync(item =&gt; ((IDbRecord&lt;TRecord&gt;)item).ID == id) ?? default;
+            .FirstOrDefaultAsync(item =&gt; ((IDbRecord&lt;TRecord&gt;)item).ID == id) ?? <span style="color:#569CD6;">default</span>;
 
-        return list;
+        <span style="color:#569CD6;">return</span> list;
     }
 
-    public override async ValueTask&lt;int&gt; SelectRecordListCountAsync&lt;TRecord&gt;()
+    <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">override</span> <span style="color:#569CD6;">async</span> ValueTask&lt;<span style="color:#569CD6;">int</span>&gt; SelectRecordListCountAsync&lt;TRecord&gt;()
     {
-        using var dbContext = this.DBContext.CreateDbContext();
-        var count = await dbContext
+        <span style="color:#569CD6;">using</span> <span style="color:#569CD6;">var</span> dbContext = <span style="color:#569CD6;">this</span>.DBContext.CreateDbContext();
+        <span style="color:#569CD6;">var</span> count = <span style="color:#569CD6;">await</span> dbContext
             .GetDbSet&lt;TRecord&gt;()
             .CountAsync();
 
-        return count;
+        <span style="color:#569CD6;">return</span> count;
     }
 
-    public override async ValueTask&lt;DbTaskResult&gt; UpdateRecordAsync&lt;TRecord&gt;(TRecord record)
+    <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">override</span> <span style="color:#569CD6;">async</span> ValueTask&lt;DbTaskResult&gt; UpdateRecordAsync&lt;TRecord&gt;(TRecord record)
     {
-        using var context = this.DBContext.CreateDbContext();
+        <span style="color:#569CD6;">using</span> <span style="color:#569CD6;">var</span> context = <span style="color:#569CD6;">this</span>.DBContext.CreateDbContext();
         context.Entry(record).State = EntityState.Modified;
-        var result = await this.UpdateContext(context);
-        return result;
+        <span style="color:#569CD6;">var</span> result = <span style="color:#569CD6;">await</span> <span style="color:#569CD6;">this</span>.UpdateContext(context);
+        <span style="color:#569CD6;">return</span> result;
     }
 
-    public override async ValueTask&lt;DbTaskResult&gt; InsertRecordAsync&lt;TRecord&gt;(TRecord record)
+    <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">override</span> <span style="color:#569CD6;">async</span> ValueTask&lt;DbTaskResult&gt; InsertRecordAsync&lt;TRecord&gt;(TRecord record)
     {
-        using var context = this.DBContext.CreateDbContext();
+        <span style="color:#569CD6;">using</span> <span style="color:#569CD6;">var</span> context = <span style="color:#569CD6;">this</span>.DBContext.CreateDbContext();
         context.GetDbSet&lt;TRecord&gt;().Add(record);
-        var result = await this.UpdateContext(context);
-        return result;
+        <span style="color:#569CD6;">var</span> result = <span style="color:#569CD6;">await</span> <span style="color:#569CD6;">this</span>.UpdateContext(context);
+        <span style="color:#569CD6;">return</span> result;
     }
 
-    public override async ValueTask&lt;DbTaskResult&gt; DeleteRecordAsync&lt;TRecord&gt;(TRecord record)
+    <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">override</span> <span style="color:#569CD6;">async</span> ValueTask&lt;DbTaskResult&gt; DeleteRecordAsync&lt;TRecord&gt;(TRecord record)
     {
-        using var context = this.DBContext.CreateDbContext();
+        <span style="color:#569CD6;">using</span> <span style="color:#569CD6;">var</span> context = <span style="color:#569CD6;">this</span>.DBContext.CreateDbContext();
         context.Entry(record).State = EntityState.Deleted;
-        var result = await this.UpdateContext(context);
-        return result;
+        <span style="color:#569CD6;">var</span> result = <span style="color:#569CD6;">await</span> <span style="color:#569CD6;">this</span>.UpdateContext(context);
+        <span style="color:#569CD6;">return</span> result;
     }
 
-    /// Helper method to update the context and return a DBTaskResult
-    protected async Task&lt;DbTaskResult&gt; UpdateContext(DbContext context)
-        =&gt; await context.SaveChangesAsync() &gt; 0 ? DbTaskResult.OK() : DbTaskResult.NotOK();
+    <span style="color:#608B4E;">///</span><span style="color:#608B4E;"> Helper method to update the context and return a DBTaskResult</span>
+    <span style="color:#569CD6;">protected</span> <span style="color:#569CD6;">async</span> Task&lt;DbTaskResult&gt; UpdateContext(DbContext context)
+        =&gt; <span style="color:#569CD6;">await</span> context.SaveChangesAsync() &gt; <span style="color:#B5CEA8;">0</span> ? DbTaskResult.OK() : DbTaskResult.NotOK();
 }
-</code></pre>
-<h4 id="sqlitedatabroker">SQLiteDataBroker</h4>
+</pre></div><h4 id="sqlitedatabroker">SQLiteDataBroker</h4>
 <p>This is the concrete server-side implementation.  All database operations use a single <code>DbContext</code> instances.  Note <code>GetDBSet</code> gets the correct DBSet for <code>TRecord</code>.</p>
-<pre><code class="language-csharp">public class SQLiteDataBroker&lt;TDbContext&gt; :
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+<span style="color:#569CD6;">public</span> <span style="color:#569CD6;">class</span> SQLiteDataBroker&lt;TDbContext&gt; :
     BaseDataBroker,
     IDataBroker
-    where TDbContext : DbContext
+    <span style="color:#569CD6;">where</span> TDbContext : DbContext
 {
 
-    protected virtual IDbContextFactory&lt;TDbContext&gt; DBContext { get; set; } = null;
+    <span style="color:#569CD6;">protected</span> <span style="color:#569CD6;">virtual</span> IDbContextFactory&lt;TDbContext&gt; DBContext { <span style="color:#569CD6;">get</span>; <span style="color:#569CD6;">set</span>; } = <span style="color:#569CD6;">null</span>;
 
-    private DbContext _dbContext;
+    <span style="color:#569CD6;">private</span> DbContext _dbContext;
 
-    public SQLiteDataBroker(IConfiguration configuration, IDbContextFactory&lt;TDbContext&gt; dbContext)
+    <span style="color:#569CD6;">public</span> SQLiteDataBroker(IConfiguration configuration, IDbContextFactory&lt;TDbContext&gt; dbContext)
     {
-        this.DBContext = dbContext;
-        _dbContext = this.DBContext.CreateDbContext();
-        // Debug.WriteLine($&quot;==&gt; New Instance {this.ToString()} ID:{this.ServiceID.ToString()} &quot;);
+        <span style="color:#569CD6;">this</span>.DBContext = dbContext;
+        _dbContext = <span style="color:#569CD6;">this</span>.DBContext.CreateDbContext();
+        <span style="color:#57A64A;">// Debug.WriteLine($&quot;==&gt; New Instance {this.ToString()} ID:{this.ServiceID.ToString()} &quot;);</span>
     }
 
-    public override async ValueTask&lt;List&lt;TRecord&gt;&gt; SelectAllRecordsAsync&lt;TRecord&gt;()
+    <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">override</span> <span style="color:#569CD6;">async</span> ValueTask&lt;List&lt;TRecord&gt;&gt; SelectAllRecordsAsync&lt;TRecord&gt;()
     {
-        var dbset = _dbContext.GetDbSet&lt;TRecord&gt;();
-        return await dbset.ToListAsync() ?? new List&lt;TRecord&gt;();
+        <span style="color:#569CD6;">var</span> dbset = _dbContext.GetDbSet&lt;TRecord&gt;();
+        <span style="color:#569CD6;">return</span> <span style="color:#569CD6;">await</span> dbset.ToListAsync() ?? <span style="color:#569CD6;">new</span> List&lt;TRecord&gt;();
     }
 
-    public override async ValueTask&lt;List&lt;TRecord&gt;&gt; SelectPagedRecordsAsync&lt;TRecord&gt;(RecordPagingData paginatorData)
+    <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">override</span> <span style="color:#569CD6;">async</span> ValueTask&lt;List&lt;TRecord&gt;&gt; SelectPagedRecordsAsync&lt;TRecord&gt;(RecordPagingData paginatorData)
     {
-        var dbset = _dbContext.GetDbSet&lt;TRecord&gt;();
-        var isSortable = typeof(TRecord).GetProperty(pagingData.SortColumn) != null;
-        if (pagingData.Sort &amp;&amp; isSortable)
+        <span style="color:#569CD6;">var</span> dbset = _dbContext.GetDbSet&lt;TRecord&gt;();
+        <span style="color:#569CD6;">var</span> isSortable = <span style="color:#569CD6;">typeof</span>(TRecord).GetProperty(pagingData.SortColumn) != <span style="color:#569CD6;">null</span>;
+        <span style="color:#569CD6;">if</span> (pagingData.Sort &amp;&amp; isSortable)
         {
-            var list = await dbset
-                .OrderBy(pagingData.SortDescending ? $&quot;{pagingData.SortColumn} descending&quot; : pagingData.SortColumn)
+            <span style="color:#569CD6;">var</span> list = <span style="color:#569CD6;">await</span> dbset
+                .OrderBy(pagingData.SortDescending ? $<span style="color:#D69D85;">&quot;{pagingData.SortColumn} descending&quot;</span> : pagingData.SortColumn)
                 .Skip(pagingData.StartRecord)
-                .Take(pagingData.PageSize).ToListAsync() ?? new List&lt;TRecord&gt;();
-            return list;
+                .Take(pagingData.PageSize).ToListAsync() ?? <span style="color:#569CD6;">new</span> List&lt;TRecord&gt;();
+            <span style="color:#569CD6;">return</span> list;
         }
-        else
+        <span style="color:#569CD6;">else</span>
         {
-            var list = await dbset
+            <span style="color:#569CD6;">var</span> list = <span style="color:#569CD6;">await</span> dbset
                 .Skip(pagingData.StartRecord)
-                .Take(pagingData.PageSize).ToListAsync() ?? new List&lt;TRecord&gt;();
-            return list;
+                .Take(pagingData.PageSize).ToListAsync() ?? <span style="color:#569CD6;">new</span> List&lt;TRecord&gt;();
+            <span style="color:#569CD6;">return</span> list;
         }
     }
 
-    public override async ValueTask&lt;TRecord&gt; SelectRecordAsync&lt;TRecord&gt;(Guid id)
+    <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">override</span> <span style="color:#569CD6;">async</span> ValueTask&lt;TRecord&gt; SelectRecordAsync&lt;TRecord&gt;(Guid id)
     {
-        var dbset = _dbContext.GetDbSet&lt;TRecord&gt;();
-        return await dbset.FirstOrDefaultAsync(item =&gt; ((IDbRecord&lt;TRecord&gt;)item).ID == id) ?? default;
+        <span style="color:#569CD6;">var</span> dbset = _dbContext.GetDbSet&lt;TRecord&gt;();
+        <span style="color:#569CD6;">return</span> <span style="color:#569CD6;">await</span> dbset.FirstOrDefaultAsync(item =&gt; ((IDbRecord&lt;TRecord&gt;)item).ID == id) ?? <span style="color:#569CD6;">default</span>;
     }
 
-    public override async ValueTask&lt;int&gt; SelectRecordListCountAsync&lt;TRecord&gt;()
+    <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">override</span> <span style="color:#569CD6;">async</span> ValueTask&lt;<span style="color:#569CD6;">int</span>&gt; SelectRecordListCountAsync&lt;TRecord&gt;()
     {
-        var dbset = _dbContext.GetDbSet&lt;TRecord&gt;();
-        return await dbset.CountAsync();
+        <span style="color:#569CD6;">var</span> dbset = _dbContext.GetDbSet&lt;TRecord&gt;();
+        <span style="color:#569CD6;">return</span> <span style="color:#569CD6;">await</span> dbset.CountAsync();
     }
 
-    public override async ValueTask&lt;DbTaskResult&gt; UpdateRecordAsync&lt;TRecord&gt;(TRecord record)
+    <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">override</span> <span style="color:#569CD6;">async</span> ValueTask&lt;DbTaskResult&gt; UpdateRecordAsync&lt;TRecord&gt;(TRecord record)
     {
         _dbContext.Entry(record).State = EntityState.Modified;
-        var x = await _dbContext.SaveChangesAsync();
-        return new DbTaskResult() { IsOK = true, Type = MessageType.Success };
+        <span style="color:#569CD6;">var</span> x = <span style="color:#569CD6;">await</span> _dbContext.SaveChangesAsync();
+        <span style="color:#569CD6;">return</span> <span style="color:#569CD6;">new</span> DbTaskResult() { IsOK = <span style="color:#569CD6;">true</span>, Type = MessageType.Success };
     }
 
-    public override async ValueTask&lt;DbTaskResult&gt; InsertRecordAsync&lt;TRecord&gt;(TRecord record)
+    <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">override</span> <span style="color:#569CD6;">async</span> ValueTask&lt;DbTaskResult&gt; InsertRecordAsync&lt;TRecord&gt;(TRecord record)
     {
-        var dbset = _dbContext.GetDbSet&lt;TRecord&gt;();
+        <span style="color:#569CD6;">var</span> dbset = _dbContext.GetDbSet&lt;TRecord&gt;();
         dbset.Add(record);
-        var x = await _dbContext.SaveChangesAsync();
-        return new DbTaskResult() { IsOK = true, Type = MessageType.Success };
+        <span style="color:#569CD6;">var</span> x = <span style="color:#569CD6;">await</span> _dbContext.SaveChangesAsync();
+        <span style="color:#569CD6;">return</span> <span style="color:#569CD6;">new</span> DbTaskResult() { IsOK = <span style="color:#569CD6;">true</span>, Type = MessageType.Success };
     }
 
-    public override async ValueTask&lt;DbTaskResult&gt; DeleteRecordAsync&lt;TRecord&gt;(TRecord record)
+    <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">override</span> <span style="color:#569CD6;">async</span> ValueTask&lt;DbTaskResult&gt; DeleteRecordAsync&lt;TRecord&gt;(TRecord record)
     {
         _dbContext.Entry(record).State = EntityState.Deleted;
-        var x = await _dbContext.SaveChangesAsync();
-        return new DbTaskResult() { IsOK = true, Type = MessageType.Success };
+        <span style="color:#569CD6;">var</span> x = <span style="color:#569CD6;">await</span> _dbContext.SaveChangesAsync();
+        <span style="color:#569CD6;">return</span> <span style="color:#569CD6;">new</span> DbTaskResult() { IsOK = <span style="color:#569CD6;">true</span>, Type = MessageType.Success };
     }
 }
-</code></pre>
-<h4 id="inmemorydatastorebroker">InMemoryDataStoreBroker</h4>
+</pre></div><h4 id="inmemorydatastorebroker">InMemoryDataStoreBroker</h4>
 <p>This provides a datastore for demo sites and testing.</p>
-<pre><code class="language-csharp">public class InMemoryDataStoreBroker&lt;TContext&gt; :
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+<span style="color:#569CD6;">public</span> <span style="color:#569CD6;">class</span> InMemoryDataStoreBroker&lt;TContext&gt; :
     BaseDataBroker,
     IDataBroker
-    where TContext : IInMemoryDataStore
+    <span style="color:#569CD6;">where</span> TContext : IInMemoryDataStore
 {
-    protected virtual IInMemoryDataStore DataContext { get; set; } = null;
+    <span style="color:#569CD6;">protected</span> <span style="color:#569CD6;">virtual</span> IInMemoryDataStore DataContext { <span style="color:#569CD6;">get</span>; <span style="color:#569CD6;">set</span>; } = <span style="color:#569CD6;">null</span>;
 
-    public InMemoryDataStoreBroker(IInMemoryDataStore dataContext)
-        =&gt; this.DataContext = dataContext;
+    <span style="color:#569CD6;">public</span> InMemoryDataStoreBroker(IInMemoryDataStore dataContext)
+        =&gt; <span style="color:#569CD6;">this</span>.DataContext = dataContext;
 
-    public override ValueTask&lt;List&lt;TRecord&gt;&gt; SelectAllRecordsAsync&lt;TRecord&gt;()
+    <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">override</span> ValueTask&lt;List&lt;TRecord&gt;&gt; SelectAllRecordsAsync&lt;TRecord&gt;()
         =&gt; ValueTask.FromResult&lt;List&lt;TRecord&gt;&gt;(DataContext
         .GetDataSet&lt;TRecord&gt;()
         .ToList());
 
-    public override ValueTask&lt;List&lt;TRecord&gt;&gt; SelectPagedRecordsAsync&lt;TRecord&gt;(RecordPagingData paginatorData)
+    <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">override</span> ValueTask&lt;List&lt;TRecord&gt;&gt; SelectPagedRecordsAsync&lt;TRecord&gt;(RecordPagingData paginatorData)
     {
-        var dbSet = DataContext
+        <span style="color:#569CD6;">var</span> dbSet = DataContext
             .GetDataSet&lt;TRecord&gt;()
             .ToList();
-        if (pagingData.Sort)
+        <span style="color:#569CD6;">if</span> (pagingData.Sort)
         {
             dbSet = dbSet
                 .AsQueryable()
-                .OrderBy(pagingData.SortDescending ? $&quot;{pagingData.SortColumn} descending&quot; : pagingData.SortColumn)
+                .OrderBy(pagingData.SortDescending ? $<span style="color:#D69D85;">&quot;{pagingData.SortColumn} descending&quot;</span> : pagingData.SortColumn)
                 .ToList();
         }
-        return ValueTask.FromResult ( dbSet
+        <span style="color:#569CD6;">return</span> ValueTask.FromResult ( dbSet
             .Skip(pagingData.StartRecord)
             .Take(pagingData.PageSize)
             .ToList()
             );
     }
 
-    public override ValueTask&lt;TRecord&gt; SelectRecordAsync&lt;TRecord&gt;(Guid id)
+    <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">override</span> ValueTask&lt;TRecord&gt; SelectRecordAsync&lt;TRecord&gt;(Guid id)
         =&gt; ValueTask.FromResult&lt;TRecord&gt;(DataContext
             .GetDataSet&lt;TRecord&gt;()
             .FirstOrDefault(item =&gt; ((IDbRecord&lt;TRecord&gt;)item).ID == id));
 
-    public override ValueTask&lt;int&gt; SelectRecordListCountAsync&lt;TRecord&gt;()
-        =&gt; ValueTask.FromResult&lt;int&gt;(DataContext
+    <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">override</span> ValueTask&lt;<span style="color:#569CD6;">int</span>&gt; SelectRecordListCountAsync&lt;TRecord&gt;()
+        =&gt; ValueTask.FromResult&lt;<span style="color:#569CD6;">int</span>&gt;(DataContext
             .GetDataSet&lt;TRecord&gt;()
             .Count());
 
-    public override ValueTask&lt;DbTaskResult&gt; UpdateRecordAsync&lt;TRecord&gt;(TRecord record)
+    <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">override</span> ValueTask&lt;DbTaskResult&gt; UpdateRecordAsync&lt;TRecord&gt;(TRecord record)
     {
-        var result = this.DataContext.GetDataSet&lt;TRecord&gt;().Update(record);
-        var dbResult = new DbTaskResult() { IsOK = result, Message = &quot;Record Updated&quot; };
-        return ValueTask.FromResult&lt;DbTaskResult&gt;(dbResult);
+        <span style="color:#569CD6;">var</span> result = <span style="color:#569CD6;">this</span>.DataContext.GetDataSet&lt;TRecord&gt;().Update(record);
+        <span style="color:#569CD6;">var</span> dbResult = <span style="color:#569CD6;">new</span> DbTaskResult() { IsOK = result, Message = <span style="color:#D69D85;">&quot;Record Updated&quot;</span> };
+        <span style="color:#569CD6;">return</span> ValueTask.FromResult&lt;DbTaskResult&gt;(dbResult);
     }
 
-    public override ValueTask&lt;DbTaskResult&gt; InsertRecordAsync&lt;TRecord&gt;(TRecord record)
+    <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">override</span> ValueTask&lt;DbTaskResult&gt; InsertRecordAsync&lt;TRecord&gt;(TRecord record)
     {
-        var result = this.DataContext.GetDataSet&lt;TRecord&gt;().Insert(record);
-        var dbResult = new DbTaskResult() { IsOK = result, Message = &quot;Record Added&quot; };
-        return ValueTask.FromResult&lt;DbTaskResult&gt;(dbResult);
+        <span style="color:#569CD6;">var</span> result = <span style="color:#569CD6;">this</span>.DataContext.GetDataSet&lt;TRecord&gt;().Insert(record);
+        <span style="color:#569CD6;">var</span> dbResult = <span style="color:#569CD6;">new</span> DbTaskResult() { IsOK = result, Message = <span style="color:#D69D85;">&quot;Record Added&quot;</span> };
+        <span style="color:#569CD6;">return</span> ValueTask.FromResult&lt;DbTaskResult&gt;(dbResult);
     }
 
-    public override ValueTask&lt;DbTaskResult&gt; DeleteRecordAsync&lt;TRecord&gt;(TRecord record)
+    <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">override</span> ValueTask&lt;DbTaskResult&gt; DeleteRecordAsync&lt;TRecord&gt;(TRecord record)
     {
-        var result = this.DataContext.GetDataSet&lt;TRecord&gt;().Delete(record);
-        var dbResult = new DbTaskResult() { IsOK = result, Message = &quot;Record Deleted&quot; };
-        return ValueTask.FromResult&lt;DbTaskResult&gt;(dbResult);
+        <span style="color:#569CD6;">var</span> result = <span style="color:#569CD6;">this</span>.DataContext.GetDataSet&lt;TRecord&gt;().Delete(record);
+        <span style="color:#569CD6;">var</span> dbResult = <span style="color:#569CD6;">new</span> DbTaskResult() { IsOK = result, Message = <span style="color:#D69D85;">&quot;Record Deleted&quot;</span> };
+        <span style="color:#569CD6;">return</span> ValueTask.FromResult&lt;DbTaskResult&gt;(dbResult);
     }
 }
-</code></pre>
-<h4 id="apidatabroker">APIDataBroker</h4>
+</pre></div><h4 id="apidatabroker">APIDataBroker</h4>
 <p>The <code>APIDataBroker</code> looks a little different.  It implements the interface, but uses <code>HttpClient</code> to get/post requests to the API on the server.</p>
 <p>The service map looks like this:</p>
 <p>View Service =&gt; APIDataBroker =&gt; API Controller =&gt; ServerDataBroker =&gt; DBContext</p>
-<pre><code class="language-csharp">public class APIDataBroker : BaseDataBroker, IDataBroker
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+<span style="color:#569CD6;">public</span> <span style="color:#569CD6;">class</span> APIDataBroker : BaseDataBroker, IDataBroker
 {
-    protected HttpClient HttpClient { get; set; }
+    <span style="color:#569CD6;">protected</span> HttpClient HttpClient { <span style="color:#569CD6;">get</span>; <span style="color:#569CD6;">set</span>; }
 
-    public APIDataBroker(IConfiguration configuration, HttpClient httpClient)
-        =&gt; this.HttpClient = httpClient;
+    <span style="color:#569CD6;">public</span> APIDataBroker(IConfiguration configuration, HttpClient httpClient)
+        =&gt; <span style="color:#569CD6;">this</span>.HttpClient = httpClient;
 
-    public override async ValueTask&lt;List&lt;TRecord&gt;&gt; SelectAllRecordsAsync&lt;TRecord&gt;()
-        =&gt; await this.HttpClient.GetFromJsonAsync&lt;List&lt;TRecord&gt;&gt;($&quot;/api/{GetRecordName&lt;TRecord&gt;()}/list&quot;);
+    <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">override</span> <span style="color:#569CD6;">async</span> ValueTask&lt;List&lt;TRecord&gt;&gt; SelectAllRecordsAsync&lt;TRecord&gt;()
+        =&gt; <span style="color:#569CD6;">await</span> <span style="color:#569CD6;">this</span>.HttpClient.GetFromJsonAsync&lt;List&lt;TRecord&gt;&gt;($<span style="color:#D69D85;">&quot;/api/{GetRecordName&lt;TRecord&gt;()}/list&quot;</span>);
 
-    public override async ValueTask&lt;List&lt;TRecord&gt;&gt; SelectPagedRecordsAsync&lt;TRecord&gt;(RecordPagingData paginatorData)
+    <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">override</span> <span style="color:#569CD6;">async</span> ValueTask&lt;List&lt;TRecord&gt;&gt; SelectPagedRecordsAsync&lt;TRecord&gt;(RecordPagingData paginatorData)
     {
-        var response = await this.HttpClient.PostAsJsonAsync($&quot;/api/{GetRecordName&lt;TRecord&gt;()}/listpaged&quot;, paginatorData);
-        return await response.Content.ReadFromJsonAsync&lt;List&lt;TRecord&gt;&gt;();
+        <span style="color:#569CD6;">var</span> response = <span style="color:#569CD6;">await</span> <span style="color:#569CD6;">this</span>.HttpClient.PostAsJsonAsync($<span style="color:#D69D85;">&quot;/api/{GetRecordName&lt;TRecord&gt;()}/listpaged&quot;</span>, paginatorData);
+        <span style="color:#569CD6;">return</span> <span style="color:#569CD6;">await</span> response.Content.ReadFromJsonAsync&lt;List&lt;TRecord&gt;&gt;();
     }
 
-    public override async ValueTask&lt;TRecord&gt; SelectRecordAsync&lt;TRecord&gt;(Guid id)
+    <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">override</span> <span style="color:#569CD6;">async</span> ValueTask&lt;TRecord&gt; SelectRecordAsync&lt;TRecord&gt;(Guid id)
     {
-        var response = await this.HttpClient.PostAsJsonAsync($&quot;/api/{GetRecordName&lt;TRecord&gt;()}/read&quot;, id);
-        var result = await response.Content.ReadFromJsonAsync&lt;TRecord&gt;();
-        return result;
+        <span style="color:#569CD6;">var</span> response = <span style="color:#569CD6;">await</span> <span style="color:#569CD6;">this</span>.HttpClient.PostAsJsonAsync($<span style="color:#D69D85;">&quot;/api/{GetRecordName&lt;TRecord&gt;()}/read&quot;</span>, id);
+        <span style="color:#569CD6;">var</span> result = <span style="color:#569CD6;">await</span> response.Content.ReadFromJsonAsync&lt;TRecord&gt;();
+        <span style="color:#569CD6;">return</span> result;
     }
 
-    public override async ValueTask&lt;int&gt; SelectRecordListCountAsync&lt;TRecord&gt;()
-        =&gt; await this.HttpClient.GetFromJsonAsync&lt;int&gt;($&quot;/api/{GetRecordName&lt;TRecord&gt;()}/count&quot;);
+    <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">override</span> <span style="color:#569CD6;">async</span> ValueTask&lt;<span style="color:#569CD6;">int</span>&gt; SelectRecordListCountAsync&lt;TRecord&gt;()
+        =&gt; <span style="color:#569CD6;">await</span> <span style="color:#569CD6;">this</span>.HttpClient.GetFromJsonAsync&lt;<span style="color:#569CD6;">int</span>&gt;($<span style="color:#D69D85;">&quot;/api/{GetRecordName&lt;TRecord&gt;()}/count&quot;</span>);
 
-    public override async ValueTask&lt;DbTaskResult&gt; UpdateRecordAsync&lt;TRecord&gt;(TRecord record)
+    <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">override</span> <span style="color:#569CD6;">async</span> ValueTask&lt;DbTaskResult&gt; UpdateRecordAsync&lt;TRecord&gt;(TRecord record)
     {
-        var response = await this.HttpClient.PostAsJsonAsync&lt;TRecord&gt;($&quot;/api/{GetRecordName&lt;TRecord&gt;()}/update&quot;, record);
-        var result = await response.Content.ReadFromJsonAsync&lt;DbTaskResult&gt;();
-        return result;
+        <span style="color:#569CD6;">var</span> response = <span style="color:#569CD6;">await</span> <span style="color:#569CD6;">this</span>.HttpClient.PostAsJsonAsync&lt;TRecord&gt;($<span style="color:#D69D85;">&quot;/api/{GetRecordName&lt;TRecord&gt;()}/update&quot;</span>, record);
+        <span style="color:#569CD6;">var</span> result = <span style="color:#569CD6;">await</span> response.Content.ReadFromJsonAsync&lt;DbTaskResult&gt;();
+        <span style="color:#569CD6;">return</span> result;
     }
 
-    public override async ValueTask&lt;DbTaskResult&gt; InsertRecordAsync&lt;TRecord&gt;(TRecord record)
+    <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">override</span> <span style="color:#569CD6;">async</span> ValueTask&lt;DbTaskResult&gt; InsertRecordAsync&lt;TRecord&gt;(TRecord record)
     {
-        var response = await this.HttpClient.PostAsJsonAsync&lt;TRecord&gt;($&quot;/api/{GetRecordName&lt;TRecord&gt;()}/create&quot;, record);
-        var result = await response.Content.ReadFromJsonAsync&lt;DbTaskResult&gt;();
-        return result;
+        <span style="color:#569CD6;">var</span> response = <span style="color:#569CD6;">await</span> <span style="color:#569CD6;">this</span>.HttpClient.PostAsJsonAsync&lt;TRecord&gt;($<span style="color:#D69D85;">&quot;/api/{GetRecordName&lt;TRecord&gt;()}/create&quot;</span>, record);
+        <span style="color:#569CD6;">var</span> result = <span style="color:#569CD6;">await</span> response.Content.ReadFromJsonAsync&lt;DbTaskResult&gt;();
+        <span style="color:#569CD6;">return</span> result;
     }
 
-    public override async ValueTask&lt;DbTaskResult&gt; DeleteRecordAsync&lt;TRecord&gt;(TRecord record)
+    <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">override</span> <span style="color:#569CD6;">async</span> ValueTask&lt;DbTaskResult&gt; DeleteRecordAsync&lt;TRecord&gt;(TRecord record)
     {
-        var response = await this.HttpClient.PostAsJsonAsync&lt;TRecord&gt;($&quot;/api/{GetRecordName&lt;TRecord&gt;()}/update&quot;, record);
-        var result = await response.Content.ReadFromJsonAsync&lt;DbTaskResult&gt;();
-        return result;
+        <span style="color:#569CD6;">var</span> response = <span style="color:#569CD6;">await</span> <span style="color:#569CD6;">this</span>.HttpClient.PostAsJsonAsync&lt;TRecord&gt;($<span style="color:#D69D85;">&quot;/api/{GetRecordName&lt;TRecord&gt;()}/update&quot;</span>, record);
+        <span style="color:#569CD6;">var</span> result = <span style="color:#569CD6;">await</span> response.Content.ReadFromJsonAsync&lt;DbTaskResult&gt;();
+        <span style="color:#569CD6;">return</span> result;
     }
 
-    protected string GetRecordName&lt;TRecord&gt;() where TRecord : class, new()
-        =&gt; new TRecord().GetType().Name;
+    <span style="color:#569CD6;">protected</span> <span style="color:#569CD6;">string</span> GetRecordName&lt;TRecord&gt;() <span style="color:#569CD6;">where</span> TRecord : <span style="color:#569CD6;">class</span>, <span style="color:#569CD6;">new</span>()
+        =&gt; <span style="color:#569CD6;">new</span> TRecord().GetType().Name;
 
 }
-</code></pre>
-<h4 id="api-controllers">API Controllers</h4>
+</pre></div><h4 id="api-controllers">API Controllers</h4>
 <p>Controllers are implemented in a specific project - <em>Blazr.Database.Controllers</em>, one per DataClass.  They reside in the Data Domain, but can't reside in the project used to to build the WASM executables as they require the <code>Microsoft.AsnNetCore.App</code> framework.</p>
 <p>The WeatherForecast Controller is shown below.  It routes requests through the <code>IDataBroker</code> registered service.</p>
-<pre><code class="language-csharp">[ApiController]
-public class WeatherForecastController : ControllerBase
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+[ApiController]
+<span style="color:#569CD6;">public</span> <span style="color:#569CD6;">class</span> WeatherForecastController : ControllerBase
 {
-    protected IDataBroker DataService { get; set; }
-    private readonly ILogger&lt;WeatherForecastController&gt; logger;
+    <span style="color:#569CD6;">protected</span> IDataBroker DataService { <span style="color:#569CD6;">get</span>; <span style="color:#569CD6;">set</span>; }
+    <span style="color:#569CD6;">private</span> <span style="color:#569CD6;">readonly</span> ILogger&lt;WeatherForecastController&gt; logger;
 
-    public WeatherForecastController(ILogger&lt;WeatherForecastController&gt; logger, IDataBroker dataService)
+    <span style="color:#569CD6;">public</span> WeatherForecastController(ILogger&lt;WeatherForecastController&gt; logger, IDataBroker dataService)
     {
-        this.DataService = dataService;
-        this.logger = logger;
+        <span style="color:#569CD6;">this</span>.DataService = dataService;
+        <span style="color:#569CD6;">this</span>.logger = logger;
     }
 
-    [MVC.Route(&quot;/api/weatherforecast/list&quot;)]
+    [MVC.Route(<span style="color:#D69D85;">&quot;/api/weatherforecast/list&quot;</span>)]
     [HttpGet]
-    public async Task&lt;List&lt;WeatherForecast&gt;&gt; GetList() =&gt; await DataService.SelectAllRecordsAsync&lt;WeatherForecast&gt;();
+    <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">async</span> Task&lt;List&lt;WeatherForecast&gt;&gt; GetList() =&gt; <span style="color:#569CD6;">await</span> DataService.SelectAllRecordsAsync&lt;WeatherForecast&gt;();
 
-    [MVC.Route(&quot;/api/weatherforecast/listpaged&quot;)]
+    [MVC.Route(<span style="color:#D69D85;">&quot;/api/weatherforecast/listpaged&quot;</span>)]
     [HttpPost]
-    public async Task&lt;List&lt;WeatherForecast&gt;&gt; Read([FromBody] RecordPagingData data) =&gt; await DataService.SelectPagedRecordsAsync&lt;WeatherForecast&gt;(data);
+    <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">async</span> Task&lt;List&lt;WeatherForecast&gt;&gt; Read([FromBody] RecordPagingData data) =&gt; <span style="color:#569CD6;">await</span> DataService.SelectPagedRecordsAsync&lt;WeatherForecast&gt;(data);
 
-    [MVC.Route(&quot;/api/weatherforecast/count&quot;)]
+    [MVC.Route(<span style="color:#D69D85;">&quot;/api/weatherforecast/count&quot;</span>)]
     [HttpGet]
-    public async Task&lt;int&gt; Count() =&gt; await DataService.SelectRecordListCountAsync&lt;WeatherForecast&gt;();
+    <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">async</span> Task&lt;<span style="color:#569CD6;">int</span>&gt; Count() =&gt; <span style="color:#569CD6;">await</span> DataService.SelectRecordListCountAsync&lt;WeatherForecast&gt;();
 
-    [MVC.Route(&quot;/api/weatherforecast/get&quot;)]
+    [MVC.Route(<span style="color:#D69D85;">&quot;/api/weatherforecast/get&quot;</span>)]
     [HttpGet]
-    public async Task&lt;WeatherForecast&gt; GetRec(Guid id) =&gt; await DataService.SelectRecordAsync&lt;WeatherForecast&gt;(id);
+    <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">async</span> Task&lt;WeatherForecast&gt; GetRec(Guid id) =&gt; <span style="color:#569CD6;">await</span> DataService.SelectRecordAsync&lt;WeatherForecast&gt;(id);
 
-    [MVC.Route(&quot;/api/weatherforecast/read&quot;)]
+    [MVC.Route(<span style="color:#D69D85;">&quot;/api/weatherforecast/read&quot;</span>)]
     [HttpPost]
-    public async Task&lt;WeatherForecast&gt; Read([FromBody] Guid id) =&gt; await DataService.SelectRecordAsync&lt;WeatherForecast&gt;(id);
+    <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">async</span> Task&lt;WeatherForecast&gt; Read([FromBody] Guid id) =&gt; <span style="color:#569CD6;">await</span> DataService.SelectRecordAsync&lt;WeatherForecast&gt;(id);
 
-    [MVC.Route(&quot;weatherforecast/update&quot;)]
+    [MVC.Route(<span style="color:#D69D85;">&quot;weatherforecast/update&quot;</span>)]
     [HttpPost]
-    public async Task&lt;DbTaskResult&gt; Update([FromBody]WeatherForecast record) =&gt; await DataService.UpdateRecordAsync&lt;WeatherForecast&gt;(record);
+    <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">async</span> Task&lt;DbTaskResult&gt; Update([FromBody]WeatherForecast record) =&gt; <span style="color:#569CD6;">await</span> DataService.UpdateRecordAsync&lt;WeatherForecast&gt;(record);
 
-    [MVC.Route(&quot;weatherforecast/create&quot;)]
+    [MVC.Route(<span style="color:#D69D85;">&quot;weatherforecast/create&quot;</span>)]
     [HttpPost]
-    public async Task&lt;DbTaskResult&gt; Create([FromBody]WeatherForecast record) =&gt; await DataService.CreateRecordAsync&lt;WeatherForecast&gt;(record);
+    <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">async</span> Task&lt;DbTaskResult&gt; Create([FromBody]WeatherForecast record) =&gt; <span style="color:#569CD6;">await</span> DataService.CreateRecordAsync&lt;WeatherForecast&gt;(record);
 
-    [MVC.Route(&quot;weatherforecast/delete&quot;)]
+    [MVC.Route(<span style="color:#D69D85;">&quot;weatherforecast/delete&quot;</span>)]
     [HttpPost]
-    public async Task&lt;DbTaskResult&gt; Delete([FromBody] WeatherForecast record) =&gt; await DataService.DeleteRecordAsync&lt;WeatherForecast&gt;(record);
+    <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">async</span> Task&lt;DbTaskResult&gt; Delete([FromBody] WeatherForecast record) =&gt; <span style="color:#569CD6;">await</span> DataService.DeleteRecordAsync&lt;WeatherForecast&gt;(record);
     }
-</code></pre>
-<h2 id="connector-services">Connector Services</h2>
+</pre></div><h2 id="connector-services">Connector Services</h2>
 <p>Connectors are the Core Domain interface to the Data Domain.  They talk to Brokers.  All the code resides in <code>ModelDataServiceConnector</code>.</p>
 <h4 id="idataserviceconnector">IDataServiceConnector</h4>
 <p><code>IDataServiceConnector</code> defines the common interface.</p>
-<pre><code class="language-csharp">public interface IDataServiceConnector
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+<span style="color:#569CD6;">public</span> <span style="color:#569CD6;">interface</span> IDataServiceConnector
 {
-    ValueTask&lt;DbTaskResult&gt; AddRecordAsync&lt;TModel&gt;(TModel model) where TModel : class, IDbRecord&lt;TModel&gt;, new();
+    ValueTask&lt;DbTaskResult&gt; AddRecordAsync&lt;TModel&gt;(TModel model) <span style="color:#569CD6;">where</span> TModel : <span style="color:#569CD6;">class</span>, IDbRecord&lt;TModel&gt;, <span style="color:#569CD6;">new</span>();
 
-    ValueTask&lt;TModel&gt; GetRecordByIdAsync&lt;TModel&gt;(Guid ModelId) where TModel : class, IDbRecord&lt;TModel&gt;, new();
+    ValueTask&lt;TModel&gt; GetRecordByIdAsync&lt;TModel&gt;(Guid ModelId) <span style="color:#569CD6;">where</span> TModel : <span style="color:#569CD6;">class</span>, IDbRecord&lt;TModel&gt;, <span style="color:#569CD6;">new</span>();
 
-    ValueTask&lt;DbTaskResult&gt; ModifyRecordAsync&lt;TModel&gt;(TModel model) where TModel : class, IDbRecord&lt;TModel&gt;, new();
+    ValueTask&lt;DbTaskResult&gt; ModifyRecordAsync&lt;TModel&gt;(TModel model) <span style="color:#569CD6;">where</span> TModel : <span style="color:#569CD6;">class</span>, IDbRecord&lt;TModel&gt;, <span style="color:#569CD6;">new</span>();
 
-    ValueTask&lt;DbTaskResult&gt; RemoveRecordAsync&lt;TModel&gt;(TModel model) where TModel : class, IDbRecord&lt;TModel&gt;, new();
+    ValueTask&lt;DbTaskResult&gt; RemoveRecordAsync&lt;TModel&gt;(TModel model) <span style="color:#569CD6;">where</span> TModel : <span style="color:#569CD6;">class</span>, IDbRecord&lt;TModel&gt;, <span style="color:#569CD6;">new</span>();
 
-    ValueTask&lt;int&gt; GetRecordCountAsync&lt;TModel&gt;() where TModel : class, IDbRecord&lt;TModel&gt;, new();
+    ValueTask&lt;<span style="color:#569CD6;">int</span>&gt; GetRecordCountAsync&lt;TModel&gt;() <span style="color:#569CD6;">where</span> TModel : <span style="color:#569CD6;">class</span>, IDbRecord&lt;TModel&gt;, <span style="color:#569CD6;">new</span>();
 
-    ValueTask&lt;List&lt;TModel&gt;&gt; GetAllRecordsAsync&lt;TModel&gt;() where TModel : class, IDbRecord&lt;TModel&gt;, new();
+    ValueTask&lt;List&lt;TModel&gt;&gt; GetAllRecordsAsync&lt;TModel&gt;() <span style="color:#569CD6;">where</span> TModel : <span style="color:#569CD6;">class</span>, IDbRecord&lt;TModel&gt;, <span style="color:#569CD6;">new</span>();
 
-    ValueTask&lt;List&lt;TModel&gt;&gt; GetPagedRecordsAsync&lt;TModel&gt;(RecordPagingData paginatorData) where TModel : class, IDbRecord&lt;TModel&gt;, new();
+    ValueTask&lt;List&lt;TModel&gt;&gt; GetPagedRecordsAsync&lt;TModel&gt;(RecordPagingData paginatorData) <span style="color:#569CD6;">where</span> TModel : <span style="color:#569CD6;">class</span>, IDbRecord&lt;TModel&gt;, <span style="color:#569CD6;">new</span>();
 }
-</code></pre>
-<h4 id="modeldataserviceconnector">ModelDataServiceConnector</h4>
+</pre></div><h4 id="modeldataserviceconnector">ModelDataServiceConnector</h4>
 <p><code>ModelDataServiceConnector</code> implements the interface and connects to the defined <code>IDataBroker</code> defined service.</p>
-<pre><code class="language-csharp">public abstract class ModelDataServiceConnector : IDataServiceConnector
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+<span style="color:#569CD6;">public</span> <span style="color:#569CD6;">abstract</span> <span style="color:#569CD6;">class</span> ModelDataServiceConnector : IDataServiceConnector
 
 {
-    private readonly IDataBroker dataBroker;
-    private readonly ILoggingBroker loggingBroker;
+    <span style="color:#569CD6;">private</span> <span style="color:#569CD6;">readonly</span> IDataBroker dataBroker;
+    <span style="color:#569CD6;">private</span> <span style="color:#569CD6;">readonly</span> ILoggingBroker loggingBroker;
 
-    public ModelDataServiceConnector(IDataBroker dataBroker, ILoggingBroker loggingBroker)
+    <span style="color:#569CD6;">public</span> ModelDataServiceConnector(IDataBroker dataBroker, ILoggingBroker loggingBroker)
     {
-        this.dataBroker = dataBroker;
-        this.loggingBroker = loggingBroker;
+        <span style="color:#569CD6;">this</span>.dataBroker = dataBroker;
+        <span style="color:#569CD6;">this</span>.loggingBroker = loggingBroker;
     }
 
-    public async ValueTask&lt;DbTaskResult&gt; AddRecordAsync&lt;TModel&gt;(TModel model) where TModel : class, IDbRecord&lt;TModel&gt;, new()
-        =&gt; await this.dataBroker.InsertRecordAsync&lt;TModel&gt;(model);
+    <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">async</span> ValueTask&lt;DbTaskResult&gt; AddRecordAsync&lt;TModel&gt;(TModel model) <span style="color:#569CD6;">where</span> TModel : <span style="color:#569CD6;">class</span>, IDbRecord&lt;TModel&gt;, <span style="color:#569CD6;">new</span>()
+        =&gt; <span style="color:#569CD6;">await</span> <span style="color:#569CD6;">this</span>.dataBroker.InsertRecordAsync&lt;TModel&gt;(model);
 
-    public async ValueTask&lt;List&lt;TModel&gt;&gt; GetAllRecordsAsync&lt;TModel&gt;() where TModel : class, IDbRecord&lt;TModel&gt;, new()
-        =&gt; await this.dataBroker.SelectAllRecordsAsync&lt;TModel&gt;();
+    <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">async</span> ValueTask&lt;List&lt;TModel&gt;&gt; GetAllRecordsAsync&lt;TModel&gt;() <span style="color:#569CD6;">where</span> TModel : <span style="color:#569CD6;">class</span>, IDbRecord&lt;TModel&gt;, <span style="color:#569CD6;">new</span>()
+        =&gt; <span style="color:#569CD6;">await</span> <span style="color:#569CD6;">this</span>.dataBroker.SelectAllRecordsAsync&lt;TModel&gt;();
 
-    public async ValueTask&lt;List&lt;TModel&gt;&gt; GetPagedRecordsAsync&lt;TModel&gt;(RecordPagingData pagingData) where TModel : class, IDbRecord&lt;TModel&gt;, new()
-        =&gt; await this.dataBroker.SelectPagedRecordsAsync&lt;TModel&gt;(pagingData);
+    <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">async</span> ValueTask&lt;List&lt;TModel&gt;&gt; GetPagedRecordsAsync&lt;TModel&gt;(RecordPagingData pagingData) <span style="color:#569CD6;">where</span> TModel : <span style="color:#569CD6;">class</span>, IDbRecord&lt;TModel&gt;, <span style="color:#569CD6;">new</span>()
+        =&gt; <span style="color:#569CD6;">await</span> <span style="color:#569CD6;">this</span>.dataBroker.SelectPagedRecordsAsync&lt;TModel&gt;(pagingData);
 
-    public async ValueTask&lt;TModel&gt; GetRecordByIdAsync&lt;TModel&gt;(Guid modelId) where TModel : class, IDbRecord&lt;TModel&gt;, new()
-        =&gt; await this.dataBroker.SelectRecordAsync&lt;TModel&gt;(modelId);
+    <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">async</span> ValueTask&lt;TModel&gt; GetRecordByIdAsync&lt;TModel&gt;(Guid modelId) <span style="color:#569CD6;">where</span> TModel : <span style="color:#569CD6;">class</span>, IDbRecord&lt;TModel&gt;, <span style="color:#569CD6;">new</span>()
+        =&gt; <span style="color:#569CD6;">await</span> <span style="color:#569CD6;">this</span>.dataBroker.SelectRecordAsync&lt;TModel&gt;(modelId);
 
-    public async ValueTask&lt;DbTaskResult&gt; ModifyRecordAsync&lt;TModel&gt;(TModel model) where TModel : class, IDbRecord&lt;TModel&gt;, new()
-        =&gt; await this.dataBroker.UpdateRecordAsync&lt;TModel&gt;(model);
+    <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">async</span> ValueTask&lt;DbTaskResult&gt; ModifyRecordAsync&lt;TModel&gt;(TModel model) <span style="color:#569CD6;">where</span> TModel : <span style="color:#569CD6;">class</span>, IDbRecord&lt;TModel&gt;, <span style="color:#569CD6;">new</span>()
+        =&gt; <span style="color:#569CD6;">await</span> <span style="color:#569CD6;">this</span>.dataBroker.UpdateRecordAsync&lt;TModel&gt;(model);
 
-    public async ValueTask&lt;DbTaskResult&gt; RemoveRecordAsync&lt;TModel&gt;(TModel model) where TModel : class, IDbRecord&lt;TModel&gt;, new()
-        =&gt; await this.dataBroker.DeleteRecordAsync&lt;TModel&gt;(model);
+    <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">async</span> ValueTask&lt;DbTaskResult&gt; RemoveRecordAsync&lt;TModel&gt;(TModel model) <span style="color:#569CD6;">where</span> TModel : <span style="color:#569CD6;">class</span>, IDbRecord&lt;TModel&gt;, <span style="color:#569CD6;">new</span>()
+        =&gt; <span style="color:#569CD6;">await</span> <span style="color:#569CD6;">this</span>.dataBroker.DeleteRecordAsync&lt;TModel&gt;(model);
 
-    public async ValueTask&lt;int&gt; GetRecordCountAsync&lt;TModel&gt;() where TModel : class, IDbRecord&lt;TModel&gt;, new()
-        =&gt; await this.dataBroker.SelectRecordListCountAsync&lt;TModel&gt;();
+    <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">async</span> ValueTask&lt;<span style="color:#569CD6;">int</span>&gt; GetRecordCountAsync&lt;TModel&gt;() <span style="color:#569CD6;">where</span> TModel : <span style="color:#569CD6;">class</span>, IDbRecord&lt;TModel&gt;, <span style="color:#569CD6;">new</span>()
+        =&gt; <span style="color:#569CD6;">await</span> <span style="color:#569CD6;">this</span>.dataBroker.SelectRecordListCountAsync&lt;TModel&gt;();
 }
-</code></pre>
-<h4 id="weatherdataserviceconnector">WeatherDataServiceConnector</h4>
+</pre></div><h4 id="weatherdataserviceconnector">WeatherDataServiceConnector</h4>
 <p>The actual project implementation.</p>
-<pre><code class="language-csharp">public class WeatherDataServiceConnector : ModelDataServiceConnector
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+<span style="color:#569CD6;">public</span> <span style="color:#569CD6;">class</span> WeatherDataServiceConnector : ModelDataServiceConnector
 {
-    public WeatherDataServiceConnector(IDataBroker dataBroker, ILoggingBroker loggingBroker) : base(dataBroker, loggingBroker) { }
+    <span style="color:#569CD6;">public</span> WeatherDataServiceConnector(IDataBroker dataBroker, ILoggingBroker loggingBroker) : <span style="color:#569CD6;">base</span>(dataBroker, loggingBroker) { }
 }
-</code></pre>
-<h3 id="view-services">View Services</h3>
+</pre></div><h3 id="view-services">View Services</h3>
 <p>View Services are the classes that represent the application core logic.  The UI view uses view services to interact with data.  The key mindset is no data structures in the UI.  If the UI refers to some data, the data resides in a View Service, and the UI accesses that data through a view.</p>
 <p>In data driven applications View Services come in three basic flavours:</p>
 <ol>
@@ -1010,185 +1018,185 @@ public class WeatherForecastController : ControllerBase
 <li>Reset methods to reset the service/record/list.</li>
 <li>CRUDL methods that update/use the current record/list.</li>
 </ol>
-<pre><code class="language-csharp">public interface IModelViewService&lt;TRecord&gt;
-    where TRecord : class, new()
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+<span style="color:#569CD6;">public</span> <span style="color:#569CD6;">interface</span> IModelViewService&lt;TRecord&gt;
+    <span style="color:#569CD6;">where</span> TRecord : <span style="color:#569CD6;">class</span>, <span style="color:#569CD6;">new</span>()
 {
-    public Guid Id { get; }
-    public TRecord Record { get; }
-    public List&lt;TRecord&gt; Records { get; }
-    public int RecordCount { get; }
-    public DbTaskResult DbResult { get; }
-    public RecordPager RecordPager { get; }
-    public bool IsRecord { get; }
-    public bool HasRecords { get; }
-    public bool IsNewRecord { get; }
+    <span style="color:#569CD6;">public</span> Guid Id { <span style="color:#569CD6;">get</span>; }
+    <span style="color:#569CD6;">public</span> TRecord Record { <span style="color:#569CD6;">get</span>; }
+    <span style="color:#569CD6;">public</span> List&lt;TRecord&gt; Records { <span style="color:#569CD6;">get</span>; }
+    <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">int</span> RecordCount { <span style="color:#569CD6;">get</span>; }
+    <span style="color:#569CD6;">public</span> DbTaskResult DbResult { <span style="color:#569CD6;">get</span>; }
+    <span style="color:#569CD6;">public</span> RecordPager RecordPager { <span style="color:#569CD6;">get</span>; }
+    <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">bool</span> IsRecord { <span style="color:#569CD6;">get</span>; }
+    <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">bool</span> HasRecords { <span style="color:#569CD6;">get</span>; }
+    <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">bool</span> IsNewRecord { <span style="color:#569CD6;">get</span>; }
 
-    public event EventHandler RecordHasChanged;
-    public event EventHandler ListHasChanged;
+    <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">event</span> EventHandler RecordHasChanged;
+    <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">event</span> EventHandler ListHasChanged;
 
-    public ValueTask ResetServiceAsync();
-    public ValueTask ResetRecordAsync();
-    public ValueTask ResetListAsync();
-    public ValueTask GetRecordsAsync();
-    public ValueTask&lt;bool&gt; SaveRecordAsync(TRecord record);
-    public ValueTask&lt;bool&gt; GetRecordAsync(Guid id);
-    public ValueTask&lt;bool&gt; NewRecordAsync();
-    public ValueTask&lt;bool&gt; DeleteRecordAsync();
+    <span style="color:#569CD6;">public</span> ValueTask ResetServiceAsync();
+    <span style="color:#569CD6;">public</span> ValueTask ResetRecordAsync();
+    <span style="color:#569CD6;">public</span> ValueTask ResetListAsync();
+    <span style="color:#569CD6;">public</span> ValueTask GetRecordsAsync();
+    <span style="color:#569CD6;">public</span> ValueTask&lt;<span style="color:#569CD6;">bool</span>&gt; SaveRecordAsync(TRecord record);
+    <span style="color:#569CD6;">public</span> ValueTask&lt;<span style="color:#569CD6;">bool</span>&gt; GetRecordAsync(Guid id);
+    <span style="color:#569CD6;">public</span> ValueTask&lt;<span style="color:#569CD6;">bool</span>&gt; NewRecordAsync();
+    <span style="color:#569CD6;">public</span> ValueTask&lt;<span style="color:#569CD6;">bool</span>&gt; DeleteRecordAsync();
 }
-</code></pre>
-<h4 id="basemodelviewservice">BaseModelViewService</h4>
+</pre></div><h4 id="basemodelviewservice">BaseModelViewService</h4>
 <p><code>BaseModelViewService</code> implements <code>IModelViewService</code>.  It contains all the boilerplate code.</p>
-<pre><code class="language-csharp">public abstract class BaseModelViewService&lt;TRecord&gt; :
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+<span style="color:#569CD6;">public</span> <span style="color:#569CD6;">abstract</span> <span style="color:#569CD6;">class</span> BaseModelViewService&lt;TRecord&gt; :
     IDisposable,
     IModelViewService&lt;TRecord&gt;
-    where TRecord : class, IDbRecord&lt;TRecord&gt;, new()
+    <span style="color:#569CD6;">where</span> TRecord : <span style="color:#569CD6;">class</span>, IDbRecord&lt;TRecord&gt;, <span style="color:#569CD6;">new</span>()
 {
-    public Guid Id { get; } = Guid.NewGuid();
+    <span style="color:#569CD6;">public</span> Guid Id { <span style="color:#569CD6;">get</span>; } = Guid.NewGuid();
 
-    public TRecord Record
+    <span style="color:#569CD6;">public</span> TRecord Record
     {
-        get =&gt; _record;
-        private set
+        <span style="color:#569CD6;">get</span> =&gt; _record;
+        <span style="color:#569CD6;">private</span> <span style="color:#569CD6;">set</span>
         {
-            this._record = value;
-            this.RecordHasChanged?.Invoke(value, EventArgs.Empty);
+            <span style="color:#569CD6;">this</span>._record = value;
+            <span style="color:#569CD6;">this</span>.RecordHasChanged?.Invoke(value, EventArgs.Empty);
         }
     }
-    private TRecord _record = null;
+    <span style="color:#569CD6;">private</span> TRecord _record = <span style="color:#569CD6;">null</span>;
 
-    public List&lt;TRecord&gt; Records
+    <span style="color:#569CD6;">public</span> List&lt;TRecord&gt; Records
     {
-        get =&gt; _records;
-        private set
+        <span style="color:#569CD6;">get</span> =&gt; _records;
+        <span style="color:#569CD6;">private</span> <span style="color:#569CD6;">set</span>
         {
-            this._records = value;
-            this.ListHasChanged?.Invoke(value, EventArgs.Empty);
+            <span style="color:#569CD6;">this</span>._records = value;
+            <span style="color:#569CD6;">this</span>.ListHasChanged?.Invoke(value, EventArgs.Empty);
         }
     }
-    private List&lt;TRecord&gt; _records = null;
+    <span style="color:#569CD6;">private</span> List&lt;TRecord&gt; _records = <span style="color:#569CD6;">null</span>;
 
-    public DbTaskResult DbResult { get; set; } = new DbTaskResult();
+    <span style="color:#569CD6;">public</span> DbTaskResult DbResult { <span style="color:#569CD6;">get</span>; <span style="color:#569CD6;">set</span>; } = <span style="color:#569CD6;">new</span> DbTaskResult();
 
-    public RecordPager RecordPager { get; private set; }
+    <span style="color:#569CD6;">public</span> RecordPager RecordPager { <span style="color:#569CD6;">get</span>; <span style="color:#569CD6;">private</span> <span style="color:#569CD6;">set</span>; }
 
-    public bool HasRecord =&gt; this.Record != null;
+    <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">bool</span> HasRecord =&gt; <span style="color:#569CD6;">this</span>.Record != <span style="color:#569CD6;">null</span>;
 
-    public bool HasRecords =&gt; this.Records != null &amp;&amp; this.Records.Count &gt; 0;
+    <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">bool</span> HasRecords =&gt; <span style="color:#569CD6;">this</span>.Records != <span style="color:#569CD6;">null</span> &amp;&amp; <span style="color:#569CD6;">this</span>.Records.Count &gt; <span style="color:#B5CEA8;">0</span>;
 
-    public bool IsNewRecord { get; protected set; } = true;
+    <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">bool</span> IsNewRecord { <span style="color:#569CD6;">get</span>; <span style="color:#569CD6;">protected</span> <span style="color:#569CD6;">set</span>; } = <span style="color:#569CD6;">true</span>;
 
-    protected IDataServiceConnector DataServiceConnector { get; set; }
+    <span style="color:#569CD6;">protected</span> IDataServiceConnector DataServiceConnector { <span style="color:#569CD6;">get</span>; <span style="color:#569CD6;">set</span>; }
 
-    public int RecordCount =&gt; throw new NotImplementedException();
+    <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">int</span> RecordCount =&gt; <span style="color:#569CD6;">throw</span> <span style="color:#569CD6;">new</span> NotImplementedException();
 
-    public event EventHandler RecordHasChanged;
+    <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">event</span> EventHandler RecordHasChanged;
 
-    public event EventHandler ListHasChanged;
+    <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">event</span> EventHandler ListHasChanged;
 
-    public BaseModelViewService(IDataServiceConnector dataServiceConnector)
+    <span style="color:#569CD6;">public</span> BaseModelViewService(IDataServiceConnector dataServiceConnector)
     {
-        this.DataServiceConnector = dataServiceConnector;
-        this.RecordPager = new RecordPager(10, 5);
-        this.RecordPager.PageChanged += this.OnPageChanged;
+        <span style="color:#569CD6;">this</span>.DataServiceConnector = dataServiceConnector;
+        <span style="color:#569CD6;">this</span>.RecordPager = <span style="color:#569CD6;">new</span> RecordPager(<span style="color:#B5CEA8;">10</span>, <span style="color:#B5CEA8;">5</span>);
+        <span style="color:#569CD6;">this</span>.RecordPager.PageChanged += <span style="color:#569CD6;">this</span>.OnPageChanged;
     }
 
-    public void SetRecord(TRecord record)
+    <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">void</span> SetRecord(TRecord record)
     {
-        this.Record = record;
+        <span style="color:#569CD6;">this</span>.Record = record;
     }
 
-    public async ValueTask ResetServiceAsync()
+    <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">async</span> ValueTask ResetServiceAsync()
     {
-        await this.ResetListAsync();
-        await this.ResetRecordAsync();
+        <span style="color:#569CD6;">await</span> <span style="color:#569CD6;">this</span>.ResetListAsync();
+        <span style="color:#569CD6;">await</span> <span style="color:#569CD6;">this</span>.ResetRecordAsync();
     }
 
-    public ValueTask ResetListAsync()
+    <span style="color:#569CD6;">public</span> ValueTask ResetListAsync()
     {
-        this.Records = null;
-        return ValueTask.CompletedTask;
+        <span style="color:#569CD6;">this</span>.Records = <span style="color:#569CD6;">null</span>;
+        <span style="color:#569CD6;">return</span> ValueTask.CompletedTask;
     }
 
-    public ValueTask ResetRecordAsync()
+    <span style="color:#569CD6;">public</span> ValueTask ResetRecordAsync()
     {
-        this.Record = null;
-        this.IsNewRecord = false;
-        return ValueTask.CompletedTask;
+        <span style="color:#569CD6;">this</span>.Record = <span style="color:#569CD6;">null</span>;
+        <span style="color:#569CD6;">this</span>.IsNewRecord = <span style="color:#569CD6;">false</span>;
+        <span style="color:#569CD6;">return</span> ValueTask.CompletedTask;
     }
 
-    public async ValueTask GetRecordsAsync()
+    <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">async</span> ValueTask GetRecordsAsync()
     {
-        this.Records = await DataServiceConnector.GetPagedRecordsAsync&lt;TRecord&gt;(this.RecordPager.GetData);
-        this.RecordPager.RecordCount = await GetRecordListCountAsync();
-        this.ListHasChanged?.Invoke(null, EventArgs.Empty);
+        <span style="color:#569CD6;">this</span>.Records = <span style="color:#569CD6;">await</span> DataServiceConnector.GetPagedRecordsAsync&lt;TRecord&gt;(<span style="color:#569CD6;">this</span>.RecordPager.GetData);
+        <span style="color:#569CD6;">this</span>.RecordPager.RecordCount = <span style="color:#569CD6;">await</span> GetRecordListCountAsync();
+        <span style="color:#569CD6;">this</span>.ListHasChanged?.Invoke(<span style="color:#569CD6;">null</span>, EventArgs.Empty);
     }
 
-    public async ValueTask&lt;bool&gt; GetRecordAsync(Guid id)
+    <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">async</span> ValueTask&lt;<span style="color:#569CD6;">bool</span>&gt; GetRecordAsync(Guid id)
     {
-        if (!id.Equals(Guid.Empty))
+        <span style="color:#569CD6;">if</span> (!id.Equals(Guid.Empty))
         {
-            this.IsNewRecord = false;
-            this.Record = await DataServiceConnector.GetRecordByIdAsync&lt;TRecord&gt;(id);
+            <span style="color:#569CD6;">this</span>.IsNewRecord = <span style="color:#569CD6;">false</span>;
+            <span style="color:#569CD6;">this</span>.Record = <span style="color:#569CD6;">await</span> DataServiceConnector.GetRecordByIdAsync&lt;TRecord&gt;(id);
         }
-        else
+        <span style="color:#569CD6;">else</span>
         {
-            this.Record = new TRecord();
-            this.IsNewRecord = true;
+            <span style="color:#569CD6;">this</span>.Record = <span style="color:#569CD6;">new</span> TRecord();
+            <span style="color:#569CD6;">this</span>.IsNewRecord = <span style="color:#569CD6;">true</span>;
         }
-        return this.IsRecord;
+        <span style="color:#569CD6;">return</span> <span style="color:#569CD6;">this</span>.IsRecord;
     }
 
-    public async ValueTask&lt;int&gt; GetRecordListCountAsync()
-        =&gt; await DataServiceConnector.GetRecordCountAsync&lt;TRecord&gt;();
+    <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">async</span> ValueTask&lt;<span style="color:#569CD6;">int</span>&gt; GetRecordListCountAsync()
+        =&gt; <span style="color:#569CD6;">await</span> DataServiceConnector.GetRecordCountAsync&lt;TRecord&gt;();
 
-    public async ValueTask&lt;bool&gt; SaveRecordAsync(TRecord record)
+    <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">async</span> ValueTask&lt;<span style="color:#569CD6;">bool</span>&gt; SaveRecordAsync(TRecord record)
     {
-        if (this.IsNewRecord)
-            this.DbResult = await DataServiceConnector.AddRecordAsync&lt;TRecord&gt;(record);
-        else
-            this.DbResult = await DataServiceConnector.ModifyRecordAsync(record);
-        await this.GetRecordsAsync();
-        this.IsNewRecord = false;
-        return this.DbResult.IsOK;
+        <span style="color:#569CD6;">if</span> (<span style="color:#569CD6;">this</span>.IsNewRecord)
+            <span style="color:#569CD6;">this</span>.DbResult = <span style="color:#569CD6;">await</span> DataServiceConnector.AddRecordAsync&lt;TRecord&gt;(record);
+        <span style="color:#569CD6;">else</span>
+            <span style="color:#569CD6;">this</span>.DbResult = <span style="color:#569CD6;">await</span> DataServiceConnector.ModifyRecordAsync(record);
+        <span style="color:#569CD6;">await</span> <span style="color:#569CD6;">this</span>.GetRecordsAsync();
+        <span style="color:#569CD6;">this</span>.IsNewRecord = <span style="color:#569CD6;">false</span>;
+        <span style="color:#569CD6;">return</span> <span style="color:#569CD6;">this</span>.DbResult.IsOK;
     }
 
-    public async ValueTask&lt;bool&gt; DeleteRecordAsync()
+    <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">async</span> ValueTask&lt;<span style="color:#569CD6;">bool</span>&gt; DeleteRecordAsync()
     {
-        this.DbResult = await DataServiceConnector.RemoveRecordAsync&lt;TRecord&gt;(this.Record);
-        return this.DbResult.IsOK;
+        <span style="color:#569CD6;">this</span>.DbResult = <span style="color:#569CD6;">await</span> DataServiceConnector.RemoveRecordAsync&lt;TRecord&gt;(<span style="color:#569CD6;">this</span>.Record);
+        <span style="color:#569CD6;">return</span> <span style="color:#569CD6;">this</span>.DbResult.IsOK;
     }
 
-    protected async void OnPageChanged(object sender, EventArgs e)
-        =&gt; await this.GetRecordsAsync();
+    <span style="color:#569CD6;">protected</span> <span style="color:#569CD6;">async</span> <span style="color:#569CD6;">void</span> OnPageChanged(<span style="color:#569CD6;">object</span> sender, EventArgs e)
+        =&gt; <span style="color:#569CD6;">await</span> <span style="color:#569CD6;">this</span>.GetRecordsAsync();
 
-    protected void NotifyRecordChanged(object sender, EventArgs e)
-        =&gt; this.RecordHasChanged?.Invoke(sender, e);
+    <span style="color:#569CD6;">protected</span> <span style="color:#569CD6;">void</span> NotifyRecordChanged(<span style="color:#569CD6;">object</span> sender, EventArgs e)
+        =&gt; <span style="color:#569CD6;">this</span>.RecordHasChanged?.Invoke(sender, e);
 
-    protected void NotifyListChanged(object sender, EventArgs e)
-        =&gt; this.ListHasChanged?.Invoke(sender, e);
+    <span style="color:#569CD6;">protected</span> <span style="color:#569CD6;">void</span> NotifyListChanged(<span style="color:#569CD6;">object</span> sender, EventArgs e)
+        =&gt; <span style="color:#569CD6;">this</span>.ListHasChanged?.Invoke(sender, e);
 
-    public ValueTask&lt;bool&gt; NewRecordAsync()
+    <span style="color:#569CD6;">public</span> ValueTask&lt;<span style="color:#569CD6;">bool</span>&gt; NewRecordAsync()
     {
-        this.Record = new TRecord();
-        this.IsNewRecord = true;
-        return ValueTask.FromResult(false);
+        <span style="color:#569CD6;">this</span>.Record = <span style="color:#569CD6;">new</span> TRecord();
+        <span style="color:#569CD6;">this</span>.IsNewRecord = <span style="color:#569CD6;">true</span>;
+        <span style="color:#569CD6;">return</span> ValueTask.FromResult(<span style="color:#569CD6;">false</span>);
     }
 
-    public virtual void Dispose()
+    <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">virtual</span> <span style="color:#569CD6;">void</span> Dispose()
     {
     }
 }
-</code></pre>
-<h4 id="weatherforecastviewservice">WeatherForecastViewService</h4>
+</pre></div><h4 id="weatherforecastviewservice">WeatherForecastViewService</h4>
 <p>The boilerplating payback comes in the declaration of <code>WeatherForecastViewService</code>:</p>
-<pre><code class="language-csharp">public class WeatherForecastViewService : 
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+<span style="color:#569CD6;">public</span> <span style="color:#569CD6;">class</span> WeatherForecastViewService : 
     BaseModelViewService&lt;WeatherForecast&gt;, 
     IModelViewService&lt;WeatherForecast&gt;
 {
-    public WeatherForecastViewService(IDataServiceConnector dataServiceConnector) : base(dataServiceConnector) { }
+    <span style="color:#569CD6;">public</span> WeatherForecastViewService(IDataServiceConnector dataServiceConnector) : <span style="color:#569CD6;">base</span>(dataServiceConnector) { }
 }
-</code></pre>
-<h2 id="wrap-up">Wrap Up</h2>
+</pre></div><h2 id="wrap-up">Wrap Up</h2>
 <p>This article shows how the data services can be built using a set of abstract classes implementing boilerplate code for CRUDL operations.  I've purposely kept error checking in the code to a minimum, to make it much more readable.  You can implement as little or as much as you like.</p>
 <p>Some key points to note:</p>
 <ol>

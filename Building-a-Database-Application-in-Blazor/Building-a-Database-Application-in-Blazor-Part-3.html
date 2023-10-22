@@ -137,62 +137,62 @@
 </li>
 </ol>
 <p>Namespace : <em>Razr.SPA.Components</em></p>
-<pre><code class="language-csharp">// Namespace: *Razr.SPA.Components*
-// Domain: UI Domain
-// File: Blazr.SPA/Forms/RecordFormBase.cs
-public abstract class RecordFormBase&lt;TRecord&gt; :
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+<span style="color:#57A64A;">// Namespace: *Razr.SPA.Components*</span>
+<span style="color:#57A64A;">// Domain: UI Domain</span>
+<span style="color:#57A64A;">// File: Blazr.SPA/Forms/RecordFormBase.cs</span>
+<span style="color:#569CD6;">public</span> <span style="color:#569CD6;">abstract</span> <span style="color:#569CD6;">class</span> RecordFormBase&lt;TRecord&gt; :
     ComponentBase
-    where TRecord : class, IDbRecord&lt;TRecord&gt;, new()
+    <span style="color:#569CD6;">where</span> TRecord : <span style="color:#569CD6;">class</span>, IDbRecord&lt;TRecord&gt;, <span style="color:#569CD6;">new</span>()
 {
-    [CascadingParameter] public IModalDialog Modal { get; set; }
-    [Parameter] public Guid ID { get; set; } = Guid.Empty;
-    [Parameter] public EventCallback ExitAction { get; set; }
+    [CascadingParameter] <span style="color:#569CD6;">public</span> IModalDialog Modal { <span style="color:#569CD6;">get</span>; <span style="color:#569CD6;">set</span>; }
+    [Parameter] <span style="color:#569CD6;">public</span> Guid ID { <span style="color:#569CD6;">get</span>; <span style="color:#569CD6;">set</span>; } = Guid.Empty;
+    [Parameter] <span style="color:#569CD6;">public</span> EventCallback ExitAction { <span style="color:#569CD6;">get</span>; <span style="color:#569CD6;">set</span>; }
 
-    [Inject] protected NavigationManager NavManager { get; set; }
+    [Inject] <span style="color:#569CD6;">protected</span> NavigationManager NavManager { <span style="color:#569CD6;">get</span>; <span style="color:#569CD6;">set</span>; }
 
-    protected IModelViewService&lt;TRecord&gt; Service { get; set; }
-    protected virtual bool IsLoaded =&gt; this.Service != null &amp;&amp; this.Service.Record != null;
-    protected virtual ComponentState LoadState =&gt; IsLoaded ? ComponentState.Loaded : ComponentState.Loading;
-    protected virtual bool HasServices =&gt; this.Service != null;
-    protected bool IsModal =&gt; this.Modal != null;
-    protected Guid _modalId { get; set; } = Guid.Empty;
-    protected Guid _Id =&gt; TryGetModalID() ? _modalId : this.ID;
+    <span style="color:#569CD6;">protected</span> IModelViewService&lt;TRecord&gt; Service { <span style="color:#569CD6;">get</span>; <span style="color:#569CD6;">set</span>; }
+    <span style="color:#569CD6;">protected</span> <span style="color:#569CD6;">virtual</span> <span style="color:#569CD6;">bool</span> IsLoaded =&gt; <span style="color:#569CD6;">this</span>.Service != <span style="color:#569CD6;">null</span> &amp;&amp; <span style="color:#569CD6;">this</span>.Service.Record != <span style="color:#569CD6;">null</span>;
+    <span style="color:#569CD6;">protected</span> <span style="color:#569CD6;">virtual</span> ComponentState LoadState =&gt; IsLoaded ? ComponentState.Loaded : ComponentState.Loading;
+    <span style="color:#569CD6;">protected</span> <span style="color:#569CD6;">virtual</span> <span style="color:#569CD6;">bool</span> HasServices =&gt; <span style="color:#569CD6;">this</span>.Service != <span style="color:#569CD6;">null</span>;
+    <span style="color:#569CD6;">protected</span> <span style="color:#569CD6;">bool</span> IsModal =&gt; <span style="color:#569CD6;">this</span>.Modal != <span style="color:#569CD6;">null</span>;
+    <span style="color:#569CD6;">protected</span> Guid _modalId { <span style="color:#569CD6;">get</span>; <span style="color:#569CD6;">set</span>; } = Guid.Empty;
+    <span style="color:#569CD6;">protected</span> Guid _Id =&gt; TryGetModalID() ? _modalId : <span style="color:#569CD6;">this</span>.ID;
 
-    protected async override Task OnInitializedAsync()
+    <span style="color:#569CD6;">protected</span> <span style="color:#569CD6;">async</span> <span style="color:#569CD6;">override</span> Task OnInitializedAsync()
     {
-        // Get the record
-        await LoadRecordAsync();
-        await base.OnInitializedAsync();
+        <span style="color:#57A64A;">// Get the record</span>
+        <span style="color:#569CD6;">await</span> LoadRecordAsync();
+        <span style="color:#569CD6;">await</span> <span style="color:#569CD6;">base</span>.OnInitializedAsync();
     }
 
-    protected virtual async Task LoadRecordAsync()
-        =&gt; await this.Service.GetRecordAsync(this._Id);
+    <span style="color:#569CD6;">protected</span> <span style="color:#569CD6;">virtual</span> <span style="color:#569CD6;">async</span> Task LoadRecordAsync()
+        =&gt; <span style="color:#569CD6;">await</span> <span style="color:#569CD6;">this</span>.Service.GetRecordAsync(<span style="color:#569CD6;">this</span>._Id);
 
-    protected virtual bool TryGetModalID()
+    <span style="color:#569CD6;">protected</span> <span style="color:#569CD6;">virtual</span> <span style="color:#569CD6;">bool</span> TryGetModalID()
     {
-        if (this.IsModal &amp;&amp; this.Modal.Options.TryGet&lt;Guid&gt;(&quot;Id&quot;, out Guid value))
+        <span style="color:#569CD6;">if</span> (<span style="color:#569CD6;">this</span>.IsModal &amp;&amp; <span style="color:#569CD6;">this</span>.Modal.Options.TryGet&lt;Guid&gt;(<span style="color:#D69D85;">&quot;Id&quot;</span>, <span style="color:#569CD6;">out</span> Guid value))
         {
-            this._modalId = value;
-            return true;
+            <span style="color:#569CD6;">this</span>._modalId = value;
+            <span style="color:#569CD6;">return</span> <span style="color:#569CD6;">true</span>;
         }
-        return false;
+        <span style="color:#569CD6;">return</span> <span style="color:#569CD6;">false</span>;
     }
 
-    protected virtual async Task Exit()
+    <span style="color:#569CD6;">protected</span> <span style="color:#569CD6;">virtual</span> <span style="color:#569CD6;">async</span> Task Exit()
     {
-        // If we're in a modal context, call Close on the cascaded Modal object
-        if (this.IsModal)
-            this.Modal.Close(ModalResult.OK());
-        // If there's a delegate registered on the ExitAction, execute it. 
-        else if (ExitAction.HasDelegate)
-            await ExitAction.InvokeAsync();
-        // else fallback action is to navigate to root
-        else
-            this.NavManager.NavigateTo(&quot;/&quot;);
+        <span style="color:#57A64A;">// If we&#39;re in a modal context, call Close on the cascaded Modal object</span>
+        <span style="color:#569CD6;">if</span> (<span style="color:#569CD6;">this</span>.IsModal)
+            <span style="color:#569CD6;">this</span>.Modal.Close(ModalResult.OK());
+        <span style="color:#57A64A;">// If there&#39;s a delegate registered on the ExitAction, execute it. </span>
+        <span style="color:#569CD6;">else</span> <span style="color:#569CD6;">if</span> (ExitAction.HasDelegate)
+            <span style="color:#569CD6;">await</span> ExitAction.InvokeAsync();
+        <span style="color:#57A64A;">// else fallback action is to navigate to root</span>
+        <span style="color:#569CD6;">else</span>
+            <span style="color:#569CD6;">this</span>.NavManager.NavigateTo(<span style="color:#D69D85;">&quot;/&quot;</span>);
     }
 }
-</code></pre>
-<h3 id="editrecordformbase">EditRecordFormBase</h3>
+</pre></div><h3 id="editrecordformbase">EditRecordFormBase</h3>
 <p><code>EditRecordFormBase</code> is the base editor form. It inherits from <code>RecordFormBase</code> and implements editing functionality. <code>TEditRecord</code> is the editable class for <code>TRecord</code>.</p>
 <p>It:</p>
 <ol>
@@ -203,133 +203,133 @@ public abstract class RecordFormBase&lt;TRecord&gt; :
 <li>Saves the record.</li>
 </ol>
 <p>The form &quot;locks&quot; the browser page when the form is dirty.</p>
-<pre><code class="language-csharp">// Namespace: *Razr.SPA.Components*
-// Domain: UI Domain
-// File: Blazr.SPA/Forms/EditRecordFormBase.cs
-public abstract class EditRecordFormBase&lt;TRecord, TEditRecord&gt; :
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+<span style="color:#57A64A;">// Namespace: *Razr.SPA.Components*</span>
+<span style="color:#57A64A;">// Domain: UI Domain</span>
+<span style="color:#57A64A;">// File: Blazr.SPA/Forms/EditRecordFormBase.cs</span>
+<span style="color:#569CD6;">public</span> <span style="color:#569CD6;">abstract</span> <span style="color:#569CD6;">class</span> EditRecordFormBase&lt;TRecord, TEditRecord&gt; :
     RecordFormBase&lt;TRecord&gt;,
     IDisposable
-    where TRecord : class, IDbRecord&lt;TRecord&gt;, new()
-    where TEditRecord : class, IEditRecord&lt;TRecord&gt;, new()
+    <span style="color:#569CD6;">where</span> TRecord : <span style="color:#569CD6;">class</span>, IDbRecord&lt;TRecord&gt;, <span style="color:#569CD6;">new</span>()
+    <span style="color:#569CD6;">where</span> TEditRecord : <span style="color:#569CD6;">class</span>, IEditRecord&lt;TRecord&gt;, <span style="color:#569CD6;">new</span>()
 {
-    [Inject] private IJSRuntime _js { get; set; }
-    [Inject] protected EditStateService EditStateService { get; set; }
+    [Inject] <span style="color:#569CD6;">private</span> IJSRuntime _js { <span style="color:#569CD6;">get</span>; <span style="color:#569CD6;">set</span>; }
+    [Inject] <span style="color:#569CD6;">protected</span> EditStateService EditStateService { <span style="color:#569CD6;">get</span>; <span style="color:#569CD6;">set</span>; }
 
-    protected EditContext EditContext { get; set; }
-    protected bool IsDirty =&gt; this.EditStateService.IsDirty;
-    protected virtual string FormUrl { get; set; }
-    protected TEditRecord Model { get; set; }
+    <span style="color:#569CD6;">protected</span> EditContext EditContext { <span style="color:#569CD6;">get</span>; <span style="color:#569CD6;">set</span>; }
+    <span style="color:#569CD6;">protected</span> <span style="color:#569CD6;">bool</span> IsDirty =&gt; <span style="color:#569CD6;">this</span>.EditStateService.IsDirty;
+    <span style="color:#569CD6;">protected</span> <span style="color:#569CD6;">virtual</span> <span style="color:#569CD6;">string</span> FormUrl { <span style="color:#569CD6;">get</span>; <span style="color:#569CD6;">set</span>; }
+    <span style="color:#569CD6;">protected</span> TEditRecord Model { <span style="color:#569CD6;">get</span>; <span style="color:#569CD6;">set</span>; }
 
-    // Set of boolean properties/fields used in the razor code and methods to track 
-    // state in the form or disable/show/hide buttons.
-    protected bool _isNew =&gt; this.Service?.IsNewRecord ?? true;
-    protected bool _isValid { get; set; } = true;
-    protected bool _saveDisabled =&gt; !this.IsDirty || !this._isValid;
-    protected bool _deleteDisabled =&gt; this._isNew || this._confirmDelete || this.IsDirty;
-    protected bool _isLoaded { get; set; } = false;
-    protected bool _dirtyExit =&gt; this.IsDirty;
-    protected bool _confirmDelete { get; set; } = false;
-    protected bool _isInlineDirty =&gt; (!this.IsModal) &amp;&amp; this.IsDirty;
-    protected string _saveButtonText =&gt; this._isNew ? &quot;Save&quot; : &quot;Update&quot;;
-    protected override ComponentState LoadState =&gt; _isLoaded ? ComponentState.Loaded : ComponentState.Loading;
+    <span style="color:#57A64A;">// Set of boolean properties/fields used in the razor code and methods to track </span>
+    <span style="color:#57A64A;">// state in the form or disable/show/hide buttons.</span>
+    <span style="color:#569CD6;">protected</span> <span style="color:#569CD6;">bool</span> _isNew =&gt; <span style="color:#569CD6;">this</span>.Service?.IsNewRecord ?? <span style="color:#569CD6;">true</span>;
+    <span style="color:#569CD6;">protected</span> <span style="color:#569CD6;">bool</span> _isValid { <span style="color:#569CD6;">get</span>; <span style="color:#569CD6;">set</span>; } = <span style="color:#569CD6;">true</span>;
+    <span style="color:#569CD6;">protected</span> <span style="color:#569CD6;">bool</span> _saveDisabled =&gt; !<span style="color:#569CD6;">this</span>.IsDirty || !<span style="color:#569CD6;">this</span>._isValid;
+    <span style="color:#569CD6;">protected</span> <span style="color:#569CD6;">bool</span> _deleteDisabled =&gt; <span style="color:#569CD6;">this</span>._isNew || <span style="color:#569CD6;">this</span>._confirmDelete || <span style="color:#569CD6;">this</span>.IsDirty;
+    <span style="color:#569CD6;">protected</span> <span style="color:#569CD6;">bool</span> _isLoaded { <span style="color:#569CD6;">get</span>; <span style="color:#569CD6;">set</span>; } = <span style="color:#569CD6;">false</span>;
+    <span style="color:#569CD6;">protected</span> <span style="color:#569CD6;">bool</span> _dirtyExit =&gt; <span style="color:#569CD6;">this</span>.IsDirty;
+    <span style="color:#569CD6;">protected</span> <span style="color:#569CD6;">bool</span> _confirmDelete { <span style="color:#569CD6;">get</span>; <span style="color:#569CD6;">set</span>; } = <span style="color:#569CD6;">false</span>;
+    <span style="color:#569CD6;">protected</span> <span style="color:#569CD6;">bool</span> _isInlineDirty =&gt; (!<span style="color:#569CD6;">this</span>.IsModal) &amp;&amp; <span style="color:#569CD6;">this</span>.IsDirty;
+    <span style="color:#569CD6;">protected</span> <span style="color:#569CD6;">string</span> _saveButtonText =&gt; <span style="color:#569CD6;">this</span>._isNew ? <span style="color:#D69D85;">&quot;Save&quot;</span> : <span style="color:#D69D85;">&quot;Update&quot;</span>;
+    <span style="color:#569CD6;">protected</span> <span style="color:#569CD6;">override</span> ComponentState LoadState =&gt; _isLoaded ? ComponentState.Loaded : ComponentState.Loading;
 
-    protected override async Task LoadRecordAsync()
+    <span style="color:#569CD6;">protected</span> <span style="color:#569CD6;">override</span> <span style="color:#569CD6;">async</span> Task LoadRecordAsync()
     {
-        _isLoaded = false;
-        // Get the ID either from a ModalDialog Options or the Id Parameter and set the local id
-        var id = this._Id;
-        // Check if we have a dirty form reload and if so get the Id from the EditStateService
-        if (this.EditStateService.IsDirty)
-            id = (Guid)this.EditStateService.RecordID;
-        // Get the record
-        await this.Service.GetRecordAsync(id);
-        // Get a new Edit class instance, populate it from the record and assign it to the EditContext
-        this.Model = new TEditRecord();
-        this.Model.Populate(this.Service.Record);
-        this.EditContext = new EditContext(this.Model);
-        // Set up the EditStateService FirmUrl and Record Id
-        this.EditStateService.EditFormUrl = FormUrl ?? NavManager.Uri;
-        this.EditStateService.RecordID = id;
-        _isLoaded = true;
-        // wire up the events
-        this.EditContext.OnFieldChanged += FieldChanged;
-        this.EditStateService.EditStateChanged += OnEditStateChanged;
-        // if we have a dirty record or are editing an existing record, run validation
-        if (!this._isNew)
-            this.EditContext.Validate();
+        _isLoaded = <span style="color:#569CD6;">false</span>;
+        <span style="color:#57A64A;">// Get the ID either from a ModalDialog Options or the Id Parameter and set the local id</span>
+        <span style="color:#569CD6;">var</span> id = <span style="color:#569CD6;">this</span>._Id;
+        <span style="color:#57A64A;">// Check if we have a dirty form reload and if so get the Id from the EditStateService</span>
+        <span style="color:#569CD6;">if</span> (<span style="color:#569CD6;">this</span>.EditStateService.IsDirty)
+            id = (Guid)<span style="color:#569CD6;">this</span>.EditStateService.RecordID;
+        <span style="color:#57A64A;">// Get the record</span>
+        <span style="color:#569CD6;">await</span> <span style="color:#569CD6;">this</span>.Service.GetRecordAsync(id);
+        <span style="color:#57A64A;">// Get a new Edit class instance, populate it from the record and assign it to the EditContext</span>
+        <span style="color:#569CD6;">this</span>.Model = <span style="color:#569CD6;">new</span> TEditRecord();
+        <span style="color:#569CD6;">this</span>.Model.Populate(<span style="color:#569CD6;">this</span>.Service.Record);
+        <span style="color:#569CD6;">this</span>.EditContext = <span style="color:#569CD6;">new</span> EditContext(<span style="color:#569CD6;">this</span>.Model);
+        <span style="color:#57A64A;">// Set up the EditStateService FirmUrl and Record Id</span>
+        <span style="color:#569CD6;">this</span>.EditStateService.EditFormUrl = FormUrl ?? NavManager.Uri;
+        <span style="color:#569CD6;">this</span>.EditStateService.RecordID = id;
+        _isLoaded = <span style="color:#569CD6;">true</span>;
+        <span style="color:#57A64A;">// wire up the events</span>
+        <span style="color:#569CD6;">this</span>.EditContext.OnFieldChanged += FieldChanged;
+        <span style="color:#569CD6;">this</span>.EditStateService.EditStateChanged += OnEditStateChanged;
+        <span style="color:#57A64A;">// if we have a dirty record or are editing an existing record, run validation</span>
+        <span style="color:#569CD6;">if</span> (!<span style="color:#569CD6;">this</span>._isNew)
+            <span style="color:#569CD6;">this</span>.EditContext.Validate();
     }
 
-    protected void FieldChanged(object sender, FieldChangedEventArgs e)
-        =&gt;  this._confirmDelete = false;
+    <span style="color:#569CD6;">protected</span> <span style="color:#569CD6;">void</span> FieldChanged(<span style="color:#569CD6;">object</span> sender, FieldChangedEventArgs e)
+        =&gt;  <span style="color:#569CD6;">this</span>._confirmDelete = <span style="color:#569CD6;">false</span>;
 
-    private void OnEditStateChanged(object sender, EditStateEventArgs e)
+    <span style="color:#569CD6;">private</span> <span style="color:#569CD6;">void</span> OnEditStateChanged(<span style="color:#569CD6;">object</span> sender, EditStateEventArgs e)
     {
-        if (this.IsModal) this.Modal.Lock(e.IsDirty);
-        this.InvokeAsync(StateHasChanged);
+        <span style="color:#569CD6;">if</span> (<span style="color:#569CD6;">this</span>.IsModal) <span style="color:#569CD6;">this</span>.Modal.Lock(e.IsDirty);
+        <span style="color:#569CD6;">this</span>.InvokeAsync(StateHasChanged);
     }
 
-    protected void ValidStateChanged(bool valid)
-        =&gt; this._isValid = valid;
+    <span style="color:#569CD6;">protected</span> <span style="color:#569CD6;">void</span> ValidStateChanged(<span style="color:#569CD6;">bool</span> valid)
+        =&gt; <span style="color:#569CD6;">this</span>._isValid = valid;
 
-    protected async Task HandleValidSubmit()
+    <span style="color:#569CD6;">protected</span> <span style="color:#569CD6;">async</span> Task HandleValidSubmit()
     {
-        // Get the readonly record to submit
-        var rec = this.Model.GetRecord();
-        // Save the record
-        await this.Service.SaveRecordAsync(rec);
-        // Update the EditStateService to clean
-        this.EditStateService.NotifyRecordSaved();
-        // Render the component
-        await this.InvokeAsync(this.StateHasChanged);
+        <span style="color:#57A64A;">// Get the readonly record to submit</span>
+        <span style="color:#569CD6;">var</span> rec = <span style="color:#569CD6;">this</span>.Model.GetRecord();
+        <span style="color:#57A64A;">// Save the record</span>
+        <span style="color:#569CD6;">await</span> <span style="color:#569CD6;">this</span>.Service.SaveRecordAsync(rec);
+        <span style="color:#57A64A;">// Update the EditStateService to clean</span>
+        <span style="color:#569CD6;">this</span>.EditStateService.NotifyRecordSaved();
+        <span style="color:#57A64A;">// Render the component</span>
+        <span style="color:#569CD6;">await</span> <span style="color:#569CD6;">this</span>.InvokeAsync(<span style="color:#569CD6;">this</span>.StateHasChanged);
     }
 
-    protected void ResetToRecord()
-        =&gt;  this.Model.Populate(this.Service.Record);
+    <span style="color:#569CD6;">protected</span> <span style="color:#569CD6;">void</span> ResetToRecord()
+        =&gt;  <span style="color:#569CD6;">this</span>.Model.Populate(<span style="color:#569CD6;">this</span>.Service.Record);
 
-    protected void Delete()
+    <span style="color:#569CD6;">protected</span> <span style="color:#569CD6;">void</span> Delete()
     {
-        if (!this._isNew)
-            this._confirmDelete = true;
+        <span style="color:#569CD6;">if</span> (!<span style="color:#569CD6;">this</span>._isNew)
+            <span style="color:#569CD6;">this</span>._confirmDelete = <span style="color:#569CD6;">true</span>;
     }
 
-    protected async Task ConfirmDelete()
+    <span style="color:#569CD6;">protected</span> <span style="color:#569CD6;">async</span> Task ConfirmDelete()
     {
-        if (this._confirmDelete)
+        <span style="color:#569CD6;">if</span> (<span style="color:#569CD6;">this</span>._confirmDelete)
         {
-            await this.Service.DeleteRecordAsync();
-            await this.DoExit();
+            <span style="color:#569CD6;">await</span> <span style="color:#569CD6;">this</span>.Service.DeleteRecordAsync();
+            <span style="color:#569CD6;">await</span> <span style="color:#569CD6;">this</span>.DoExit();
         }
     }
 
-    protected async Task ConfirmExit()
+    <span style="color:#569CD6;">protected</span> <span style="color:#569CD6;">async</span> Task ConfirmExit()
     {
-        this.EditStateService.ResetEditState();
-        this.SetPageExitCheck(false);
-        await this.DoExit();
+        <span style="color:#569CD6;">this</span>.EditStateService.ResetEditState();
+        <span style="color:#569CD6;">this</span>.SetPageExitCheck(<span style="color:#569CD6;">false</span>);
+        <span style="color:#569CD6;">await</span> <span style="color:#569CD6;">this</span>.DoExit();
     }
 
-    protected async Task DoExit(ModalResult result = null)
+    <span style="color:#569CD6;">protected</span> <span style="color:#569CD6;">async</span> Task DoExit(ModalResult result = <span style="color:#569CD6;">null</span>)
     {
         result ??= ModalResult.OK();
-        if (this.IsModal)
-            this.Modal.Close(result);
-        if (ExitAction.HasDelegate)
-            await ExitAction.InvokeAsync();
-        else
-            this.NavManager.NavigateTo(&quot;/&quot;);
+        <span style="color:#569CD6;">if</span> (<span style="color:#569CD6;">this</span>.IsModal)
+            <span style="color:#569CD6;">this</span>.Modal.Close(result);
+        <span style="color:#569CD6;">if</span> (ExitAction.HasDelegate)
+            <span style="color:#569CD6;">await</span> ExitAction.InvokeAsync();
+        <span style="color:#569CD6;">else</span>
+            <span style="color:#569CD6;">this</span>.NavManager.NavigateTo(<span style="color:#D69D85;">&quot;/&quot;</span>);
     }
 
-    private void SetPageExitCheck(bool action)
-        =&gt; _js.InvokeAsync&lt;bool&gt;(&quot;cecblazor_setEditorExitCheck&quot;, action);
+    <span style="color:#569CD6;">private</span> <span style="color:#569CD6;">void</span> SetPageExitCheck(<span style="color:#569CD6;">bool</span> action)
+        =&gt; _js.InvokeAsync&lt;<span style="color:#569CD6;">bool</span>&gt;(<span style="color:#D69D85;">&quot;cecblazor_setEditorExitCheck&quot;</span>, action);
 
-    public void Dispose()
+    <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">void</span> Dispose()
     {
-        if (this.EditContext != null)
-            this.EditContext.OnFieldChanged -= FieldChanged;
+        <span style="color:#569CD6;">if</span> (<span style="color:#569CD6;">this</span>.EditContext != <span style="color:#569CD6;">null</span>)
+            <span style="color:#569CD6;">this</span>.EditContext.OnFieldChanged -= FieldChanged;
     }
 }
-</code></pre>
-<h3 id="edit-state-management">Edit State Management</h3>
+</pre></div><h3 id="edit-state-management">Edit State Management</h3>
 <p>The Edit state is managed through three classes:</p>
 <ol>
 <li><code>EditStateService</code> - a scoped State Service to hold information about a dirty form.</li>
@@ -337,50 +337,52 @@ public abstract class EditRecordFormBase&lt;TRecord, TEditRecord&gt; :
 <li><code>RouteViewManager</code> - a replace component for <code>RouteView</code> in <code>App</code>.  It injects <code>EditStateService</code> and loads a custom &quot;Are You Sure You want to Exit the Form&quot; form if <code>EditStateService</code> has a dirty form.</li>
 </ol>
 <p>There's also a Js script that's loaded in the base page <em>site.js</em>.</p>
-<pre><code class="language-js">// File: Blazr.SPA/wwwroot/site.js
-window.cecblazor_setEditorExitCheck = function (show) {
-    if (show) {
-        window.addEventListener(&quot;beforeunload&quot;, cecblazor_showExitDialog);
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+<span style="color:#57A64A;">// File: Blazr.SPA/wwwroot/site.js</span>
+window.cecblazor_setEditorExitCheck = <span style="color:#569CD6;">function</span> (show) {
+    <span style="color:#569CD6;">if</span> (show) {
+        window.addEventListener(<span style="color:#D69D85;">&quot;beforeunload&quot;</span>, cecblazor_showExitDialog);
     }
-    else {
-        window.removeEventListener(&quot;beforeunload&quot;, cecblazor_showExitDialog);
+    <span style="color:#569CD6;">else</span> {
+        window.removeEventListener(<span style="color:#D69D85;">&quot;beforeunload&quot;</span>, cecblazor_showExitDialog);
     }
 }
 
-window.cecblazor_showExitDialog = function (event) {
+window.cecblazor_showExitDialog = <span style="color:#569CD6;">function</span> (event) {
     event.preventDefault();
-    event.returnValue = &quot;There are unsaved changes on this page.  Do you want to leave?&quot;;
+    event.returnValue = <span style="color:#D69D85;">&quot;There are unsaved changes on this page.  Do you want to leave?&quot;</span>;
 }
-</code></pre>
+</pre></div>
 <p>You can see the C# interface method in <code>EditRecordFormBase</code> above and being called in <code>ConfirmExit</code>.</p>
-<pre><code class="language-csharp">protected async Task ConfirmExit()
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+<span style="color:#569CD6;">protected</span> <span style="color:#569CD6;">async</span> Task ConfirmExit()
 {
-    this.EditStateService.ResetEditState();
-    this.SetPageExitCheck(false);
-    await this.DoExit();
+    <span style="color:#569CD6;">this</span>.EditStateService.ResetEditState();
+    <span style="color:#569CD6;">this</span>.SetPageExitCheck(<span style="color:#569CD6;">false</span>);
+    <span style="color:#569CD6;">await</span> <span style="color:#569CD6;">this</span>.DoExit();
 }
 
-private void SetPageExitCheck(bool action)
-    =&gt; _js.InvokeAsync&lt;bool&gt;(&quot;cecblazor_setEditorExitCheck&quot;, action);
-</code></pre>
-<h2 id="implementing-forms">Implementing Forms</h2>
+<span style="color:#569CD6;">private</span> <span style="color:#569CD6;">void</span> SetPageExitCheck(<span style="color:#569CD6;">bool</span> action)
+    =&gt; _js.InvokeAsync&lt;<span style="color:#569CD6;">bool</span>&gt;(<span style="color:#D69D85;">&quot;cecblazor_setEditorExitCheck&quot;</span>, action);
+</pre></div><h2 id="implementing-forms">Implementing Forms</h2>
 <h3 id="weatherforecastviewerform">WeatherForecastViewerForm</h3>
 <p>The code for the <code>WeatherForecastViewerForm</code> is pretty simple.</p>
 <ol>
 <li>Inherit from <code>RecordFormBase</code> and set <code>TRecord</code> as <code>WeatherForecast</code>.</li>
 <li>Get the <code>WeatherForecastViewService</code> and assign it to the base <code>Service</code> property.</li>
 </ol>
-<pre><code class="language-csharp">public partial class WeatherForecastViewerForm : RecordFormBase&lt;WeatherForecast&gt;
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+<span style="color:#569CD6;">public</span> <span style="color:#569CD6;">partial</span> <span style="color:#569CD6;">class</span> WeatherForecastViewerForm : RecordFormBase&lt;WeatherForecast&gt;
 {
-    [Inject] private WeatherForecastViewService ViewService { get; set; }
+    [Inject] <span style="color:#569CD6;">private</span> WeatherForecastViewService ViewService { <span style="color:#569CD6;">get</span>; <span style="color:#569CD6;">set</span>; }
 
-    protected async override Task OnInitializedAsync()
+    <span style="color:#569CD6;">protected</span> <span style="color:#569CD6;">async</span> <span style="color:#569CD6;">override</span> Task OnInitializedAsync()
     {
-        this.Service = this.ViewService;
-        await base.OnInitializedAsync();
+        <span style="color:#569CD6;">this</span>.Service = <span style="color:#569CD6;">this</span>.ViewService;
+        <span style="color:#569CD6;">await</span> <span style="color:#569CD6;">base</span>.OnInitializedAsync();
     }
 }
-</code></pre>
+</pre></div>
 <p>The majority of the code is component markup in the Razor file.</p>
 <ol>
 <li>There's no Html code, it's all components.  We'll look at UI components in detail on the next article.</li>
@@ -388,52 +390,53 @@ private void SetPageExitCheck(bool action)
 <li>Column size dictated control size.</li>
 <li><code>UILoader</code> only loads it's content when we have a record to display.</li>
 </ol>
-<pre><code class="language-html">@namespace Blazr.Database.Forms
-@inherits RecordFormBase&lt;WeatherForecast&gt;
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+@namespace Blazr.Database.Forms
+@inherits RecordFormBase<span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">WeatherForecast</span><span style="color:#569CD6;">&gt;</span>
 
-&lt;UIContainer&gt;
-    &lt;UIFormRow&gt;
-        &lt;UIColumn&gt;
-            &lt;h2&gt;Weather Forecast Viewer&lt;/h2&gt;
-        &lt;/UIColumn&gt;
-    &lt;/UIFormRow&gt;
-&lt;/UIContainer&gt;
-&lt;UILoader State=&quot;this.LoadState&quot;&gt;
-    &lt;UIContainer&gt;
-        &lt;FormViewControl Label=&quot;Date&quot; Value=&quot;@this.ViewService.Record.Date.LocalDateTime.ToShortDateString()&quot; IsRow=&quot;true&quot; ControlCols=&quot;7&quot; /&gt;
-        &lt;FormViewControl Label=&quot;Temperature &amp;deg;C&quot; Value=&quot;@this.ViewService.Record.TemperatureC.ToString()&quot; IsRow=&quot;true&quot; ControlCols=&quot;7&quot; /&gt;
-        &lt;FormViewControl Label=&quot;Temperature &amp;deg;F&quot; Value=&quot;@this.ViewService.Record.TemperatureF.ToString()&quot; IsRow=&quot;true&quot; ControlCols=&quot;7&quot; /&gt;
-        &lt;FormViewControl Label=&quot;Summary&quot; Value=&quot;@this.ViewService.Record.Summary&quot; IsRow=&quot;true&quot; ControlCols=&quot;7&quot; /&gt;
-    &lt;/UIContainer&gt;
-&lt;/UILoader&gt;
-&lt;UIContainer&gt;
-    &lt;UIFormRow&gt;
-        &lt;UIButtonColumn&gt;
-            &lt;UIButton type=&quot;button&quot; class=&quot;btn-secondary&quot; ClickEvent=&quot;this.Exit&quot;&gt;Exit&lt;/UIButton&gt;
-        &lt;/UIButtonColumn&gt;
-    &lt;/UIFormRow&gt;
-&lt;/UIContainer&gt;
-</code></pre>
-<h3 id="weatherforecasteditorform">WeatherForecastEditorForm</h3>
+<span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">UIContainer</span><span style="color:#569CD6;">&gt;</span>
+    <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">UIFormRow</span><span style="color:#569CD6;">&gt;</span>
+        <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">UIColumn</span><span style="color:#569CD6;">&gt;</span>
+            <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">h2</span><span style="color:#569CD6;">&gt;</span>Weather Forecast Viewer<span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">h2</span><span style="color:#569CD6;">&gt;</span>
+        <span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">UIColumn</span><span style="color:#569CD6;">&gt;</span>
+    <span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">UIFormRow</span><span style="color:#569CD6;">&gt;</span>
+<span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">UIContainer</span><span style="color:#569CD6;">&gt;</span>
+<span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">UILoader</span> <span style="color:#FF0000;">State</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;this.LoadState&quot;</span><span style="color:#569CD6;">&gt;</span>
+    <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">UIContainer</span><span style="color:#569CD6;">&gt;</span>
+        <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">FormViewControl</span> <span style="color:#FF0000;">Label</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;Date&quot;</span> <span style="color:#FF0000;">Value</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;@this.ViewService.Record.Date.LocalDateTime.ToShortDateString()&quot;</span> <span style="color:#FF0000;">IsRow</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;true&quot;</span> <span style="color:#FF0000;">ControlCols</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;7&quot;</span> <span style="color:#569CD6;">/&gt;</span>
+        <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">FormViewControl</span> <span style="color:#FF0000;">Label</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;Temperature &amp;deg;C&quot;</span> <span style="color:#FF0000;">Value</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;@this.ViewService.Record.TemperatureC.ToString()&quot;</span> <span style="color:#FF0000;">IsRow</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;true&quot;</span> <span style="color:#FF0000;">ControlCols</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;7&quot;</span> <span style="color:#569CD6;">/&gt;</span>
+        <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">FormViewControl</span> <span style="color:#FF0000;">Label</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;Temperature &amp;deg;F&quot;</span> <span style="color:#FF0000;">Value</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;@this.ViewService.Record.TemperatureF.ToString()&quot;</span> <span style="color:#FF0000;">IsRow</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;true&quot;</span> <span style="color:#FF0000;">ControlCols</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;7&quot;</span> <span style="color:#569CD6;">/&gt;</span>
+        <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">FormViewControl</span> <span style="color:#FF0000;">Label</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;Summary&quot;</span> <span style="color:#FF0000;">Value</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;@this.ViewService.Record.Summary&quot;</span> <span style="color:#FF0000;">IsRow</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;true&quot;</span> <span style="color:#FF0000;">ControlCols</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;7&quot;</span> <span style="color:#569CD6;">/&gt;</span>
+    <span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">UIContainer</span><span style="color:#569CD6;">&gt;</span>
+<span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">UILoader</span><span style="color:#569CD6;">&gt;</span>
+<span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">UIContainer</span><span style="color:#569CD6;">&gt;</span>
+    <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">UIFormRow</span><span style="color:#569CD6;">&gt;</span>
+        <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">UIButtonColumn</span><span style="color:#569CD6;">&gt;</span>
+            <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">UIButton</span> <span style="color:#FF0000;">type</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;button&quot;</span> <span style="color:#FF0000;">class</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;btn-secondary&quot;</span> <span style="color:#FF0000;">ClickEvent</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;this.Exit&quot;</span><span style="color:#569CD6;">&gt;</span>Exit<span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">UIButton</span><span style="color:#569CD6;">&gt;</span>
+        <span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">UIButtonColumn</span><span style="color:#569CD6;">&gt;</span>
+    <span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">UIFormRow</span><span style="color:#569CD6;">&gt;</span>
+<span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">UIContainer</span><span style="color:#569CD6;">&gt;</span>
+</pre></div><h3 id="weatherforecasteditorform">WeatherForecastEditorForm</h3>
 <p><code>WeatherForecastEditorForm</code> is similar to <code>WeatherForecastViewerForm</code>.</p>
 <p>The code is again pretty simple.</p>
 <ol>
 <li>Inherit from <code>EditRecordFormBase</code> and set <code>TRecord</code> as <code>WeatherForecast</code> and <code>TEditRecord</code> as <code>EditWeatherForecast</code>.</li>
 <li>Get the <code>WeatherForecastViewService</code> and assign it to the base <code>Service</code> property.</li>
 </ol>
-<pre><code class="language-csharp">public partial class WeatherForecastEditorForm : EditRecordFormBase&lt;WeatherForecast, EditWeatherForecast&gt;
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+<span style="color:#569CD6;">public</span> <span style="color:#569CD6;">partial</span> <span style="color:#569CD6;">class</span> WeatherForecastEditorForm : EditRecordFormBase&lt;WeatherForecast, EditWeatherForecast&gt;
 {
 
-    [Inject] private WeatherForecastViewService ViewService { get; set; }
+    [Inject] <span style="color:#569CD6;">private</span> WeatherForecastViewService ViewService { <span style="color:#569CD6;">get</span>; <span style="color:#569CD6;">set</span>; }
 
-    protected async override Task OnInitializedAsync()
+    <span style="color:#569CD6;">protected</span> <span style="color:#569CD6;">async</span> <span style="color:#569CD6;">override</span> Task OnInitializedAsync()
     {
-        //this.FormUrl = &quot;/Weather/Edit&quot;;
-        this.Service = ViewService;
-        await LoadRecordAsync();
+        <span style="color:#57A64A;">//this.FormUrl = &quot;/Weather/Edit&quot;;</span>
+        <span style="color:#569CD6;">this</span>.Service = ViewService;
+        <span style="color:#569CD6;">await</span> LoadRecordAsync();
     }
 }
-</code></pre>
+</pre></div>
 <p>The Razor file is shown below.  It's based on the standard Blazor EditForm with some additional controls.  The same comments made on the Viewer apply here.  In addition:</p>
 <ol>
 <li><code>InlineDialog</code> is a form locking control.  It's enabled by the <code>_isInlineDirty</code> property.  Go to the demo site and edit a record to see it in action. It's only enabled when the form isn't in a modal context.</li>
@@ -442,57 +445,58 @@ private void SetPageExitCheck(bool action)
 <li>The buttons are tied to the boolean control properties to manage their state.</li>
 </ol>
 <p>The custom controls are covered in separate articles referenced in the Links section.</p>
-<pre><code class="language-html">@namespace Blazr.Database.Forms
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+@namespace Blazr.Database.Forms
 @inherits EditRecordFormBase&lt;WeatherForecast, EditWeatherForecast&gt;
 
-&lt;InlineDialog Lock=&quot;this._isInlineDirty&quot; Transparent=&quot;false&quot;&gt;
-    &lt;FormViewTitle&gt;
-        &lt;h2&gt;Weather Forecast Editor&lt;/h2&gt;
-    &lt;/FormViewTitle&gt;
-    &lt;UILoader State=&quot;this.LoadState&quot;&gt;
-        &lt;EditForm EditContext=&quot;this.EditContext&quot; OnValidSubmit=&quot;HandleValidSubmit&quot; class=&quot; px-2 py-3&quot;&gt;
-            &lt;EditFormState/&gt;
-            &lt;ValidationFormState ValidStateChanged=&quot;this.ValidStateChanged&quot;&gt;&lt;/ValidationFormState&gt;
-            &lt;UIContainer&gt;
-                &lt;FormViewRow Title=&quot;Unique ID&quot; Value=&quot;@this.Model.ID.ToString()&quot; /&gt;
-                &lt;UIFormRow&gt;
-                    &lt;UIColumn MediumColumns=&quot;6&quot; Columns=12&gt;
-                        &lt;FormEditControl Label=&quot;Date&quot; ShowLabel=&quot;true&quot; @bind-Value=&quot;this.Model.Date&quot; ControlType=&quot;typeof(InputDate&lt;DateTimeOffset&gt;)&quot; IsRequired=&quot;true&quot; ShowValidation=&quot;true&quot; HelperText=&quot;Enter the Forecast Date&quot;&gt;&lt;/FormEditControl&gt;
-                    &lt;/UIColumn&gt;
-                    &lt;UIColumn MediumColumns=&quot;6&quot; Columns=12&gt;
-                        &lt;FormEditControl Label=&quot;Temperature &amp;deg;C&quot; ShowLabel=&quot;true&quot; @bind-Value=&quot;this.Model.TemperatureC&quot; ControlType=&quot;typeof(InputNumber&lt;int&gt;)&quot; IsRequired=&quot;true&quot; ShowValidation=&quot;true&quot; HelperText=&quot;Enter the Temperature&quot;&gt;&lt;/FormEditControl&gt;
-                    &lt;/UIColumn&gt;
-                &lt;/UIFormRow&gt;
-                &lt;UIFormRow&gt;
-                    &lt;UIColumn MediumColumns=&quot;12&quot; Columns=12&gt;
-                        &lt;FormEditControl Label=&quot;Summary&quot; ShowLabel=&quot;true&quot; @bind-Value=&quot;this.Model.Summary&quot; IsRequired=&quot;true&quot; ShowValidation=&quot;true&quot; HelperText=&quot;Summarise the Weather&quot;&gt;&lt;/FormEditControl&gt;
-                    &lt;/UIColumn&gt;
-                &lt;/UIFormRow&gt;
-            &lt;/UIContainer&gt;
-            &lt;FormEditButtons ContainerSize=&quot;BootstrapSize.XLarge&quot;&gt;
-                &lt;UIButton type=&quot;button&quot; Show=&quot;true&quot; Disabled=&quot;this._deleteDisabled&quot; class=&quot;btn-outline-danger&quot; ClickEvent=&quot;() =&gt; Delete()&quot;&gt;Delete&lt;/UIButton&gt;
-                &lt;UIButton type=&quot;button&quot; Show=&quot;this._confirmDelete&quot; class=&quot;btn-danger&quot; ClickEvent=&quot;() =&gt; this.ConfirmDelete()&quot;&gt;Confirm Delete&lt;/UIButton&gt;
-                &lt;UIButton type=&quot;button&quot; Show=&quot;this.IsDirty&quot; class=&quot;btn-outline-warning&quot; ClickEvent=&quot;() =&gt; this.ResetToRecord()&quot;&gt;Reset&lt;/UIButton&gt;
-                &lt;UIButton type=&quot;submit&quot; Show=&quot;true&quot; Disabled=&quot;this._saveDisabled&quot; class=&quot;btn-success&quot;&gt;@this._saveButtonText&lt;/UIButton&gt;
-                &lt;UIButton type=&quot;button&quot; Show=&quot;this.IsDirty&quot; class=&quot;btn-danger&quot; ClickEvent=&quot;() =&gt; this.ConfirmExit()&quot;&gt;Exit Without Saving&lt;/UIButton&gt;
-                &lt;UIButton type=&quot;button&quot; Show=&quot;!this.IsDirty&quot; class=&quot;btn-dark&quot; ClickEvent=&quot;() =&gt; this.Exit()&quot;&gt;Exit&lt;/UIButton&gt;
-            &lt;/FormEditButtons&gt;
-        &lt;/EditForm&gt;
-    &lt;/UILoader&gt;
-&lt;/InlineDialog&gt;
-</code></pre>
-<h2 id="routeview-implementations">RouteView Implementations</h2>
+<span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">InlineDialog</span> <span style="color:#FF0000;">Lock</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;this._isInlineDirty&quot;</span> <span style="color:#FF0000;">Transparent</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;false&quot;</span><span style="color:#569CD6;">&gt;</span>
+    <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">FormViewTitle</span><span style="color:#569CD6;">&gt;</span>
+        <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">h2</span><span style="color:#569CD6;">&gt;</span>Weather Forecast Editor<span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">h2</span><span style="color:#569CD6;">&gt;</span>
+    <span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">FormViewTitle</span><span style="color:#569CD6;">&gt;</span>
+    <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">UILoader</span> <span style="color:#FF0000;">State</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;this.LoadState&quot;</span><span style="color:#569CD6;">&gt;</span>
+        <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">EditForm</span> <span style="color:#FF0000;">EditContext</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;this.EditContext&quot;</span> <span style="color:#FF0000;">OnValidSubmit</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;HandleValidSubmit&quot;</span> <span style="color:#FF0000;">class</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot; px-2 py-3&quot;</span><span style="color:#569CD6;">&gt;</span>
+            <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">EditFormState</span><span style="color:#569CD6;">/&gt;</span>
+            <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">ValidationFormState</span> <span style="color:#FF0000;">ValidStateChanged</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;this.ValidStateChanged&quot;</span><span style="color:#569CD6;">&gt;</span><span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">ValidationFormState</span><span style="color:#569CD6;">&gt;</span>
+            <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">UIContainer</span><span style="color:#569CD6;">&gt;</span>
+                <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">FormViewRow</span> <span style="color:#FF0000;">Title</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;Unique ID&quot;</span> <span style="color:#FF0000;">Value</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;@this.Model.ID.ToString()&quot;</span> <span style="color:#569CD6;">/&gt;</span>
+                <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">UIFormRow</span><span style="color:#569CD6;">&gt;</span>
+                    <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">UIColumn</span> <span style="color:#FF0000;">MediumColumns</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;6&quot;</span> <span style="color:#FF0000;">Columns</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">12</span><span style="color:#569CD6;">&gt;</span>
+                        <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">FormEditControl</span> <span style="color:#FF0000;">Label</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;Date&quot;</span> <span style="color:#FF0000;">ShowLabel</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;true&quot; @bind-Value=&quot;this.Model.Date&quot;</span> <span style="color:#FF0000;">ControlType</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;typeof(InputDate&lt;DateTimeOffset&gt;)&quot;</span> <span style="color:#FF0000;">IsRequired</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;true&quot;</span> <span style="color:#FF0000;">ShowValidation</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;true&quot;</span> <span style="color:#FF0000;">HelperText</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;Enter the Forecast Date&quot;</span><span style="color:#569CD6;">&gt;</span><span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">FormEditControl</span><span style="color:#569CD6;">&gt;</span>
+                    <span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">UIColumn</span><span style="color:#569CD6;">&gt;</span>
+                    <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">UIColumn</span> <span style="color:#FF0000;">MediumColumns</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;6&quot;</span> <span style="color:#FF0000;">Columns</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">12</span><span style="color:#569CD6;">&gt;</span>
+                        <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">FormEditControl</span> <span style="color:#FF0000;">Label</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;Temperature &amp;deg;C&quot;</span> <span style="color:#FF0000;">ShowLabel</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;true&quot; @bind-Value=&quot;this.Model.TemperatureC&quot;</span> <span style="color:#FF0000;">ControlType</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;typeof(InputNumber&lt;int&gt;)&quot;</span> <span style="color:#FF0000;">IsRequired</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;true&quot;</span> <span style="color:#FF0000;">ShowValidation</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;true&quot;</span> <span style="color:#FF0000;">HelperText</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;Enter the Temperature&quot;</span><span style="color:#569CD6;">&gt;</span><span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">FormEditControl</span><span style="color:#569CD6;">&gt;</span>
+                    <span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">UIColumn</span><span style="color:#569CD6;">&gt;</span>
+                <span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">UIFormRow</span><span style="color:#569CD6;">&gt;</span>
+                <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">UIFormRow</span><span style="color:#569CD6;">&gt;</span>
+                    <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">UIColumn</span> <span style="color:#FF0000;">MediumColumns</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;12&quot;</span> <span style="color:#FF0000;">Columns</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">12</span><span style="color:#569CD6;">&gt;</span>
+                        <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">FormEditControl</span> <span style="color:#FF0000;">Label</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;Summary&quot;</span> <span style="color:#FF0000;">ShowLabel</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;true&quot; @bind-Value=&quot;this.Model.Summary&quot;</span> <span style="color:#FF0000;">IsRequired</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;true&quot;</span> <span style="color:#FF0000;">ShowValidation</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;true&quot;</span> <span style="color:#FF0000;">HelperText</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;Summarise the Weather&quot;</span><span style="color:#569CD6;">&gt;</span><span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">FormEditControl</span><span style="color:#569CD6;">&gt;</span>
+                    <span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">UIColumn</span><span style="color:#569CD6;">&gt;</span>
+                <span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">UIFormRow</span><span style="color:#569CD6;">&gt;</span>
+            <span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">UIContainer</span><span style="color:#569CD6;">&gt;</span>
+            <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">FormEditButtons</span> <span style="color:#FF0000;">ContainerSize</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;BootstrapSize.XLarge&quot;</span><span style="color:#569CD6;">&gt;</span>
+                <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">UIButton</span> <span style="color:#FF0000;">type</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;button&quot;</span> <span style="color:#FF0000;">Show</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;true&quot;</span> <span style="color:#FF0000;">Disabled</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;this._deleteDisabled&quot;</span> <span style="color:#FF0000;">class</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;btn-outline-danger&quot;</span> <span style="color:#FF0000;">ClickEvent</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;() =&gt; Delete()&quot;</span><span style="color:#569CD6;">&gt;</span>Delete<span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">UIButton</span><span style="color:#569CD6;">&gt;</span>
+                <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">UIButton</span> <span style="color:#FF0000;">type</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;button&quot;</span> <span style="color:#FF0000;">Show</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;this._confirmDelete&quot;</span> <span style="color:#FF0000;">class</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;btn-danger&quot;</span> <span style="color:#FF0000;">ClickEvent</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;() =&gt; this.ConfirmDelete()&quot;</span><span style="color:#569CD6;">&gt;</span>Confirm Delete<span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">UIButton</span><span style="color:#569CD6;">&gt;</span>
+                <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">UIButton</span> <span style="color:#FF0000;">type</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;button&quot;</span> <span style="color:#FF0000;">Show</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;this.IsDirty&quot;</span> <span style="color:#FF0000;">class</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;btn-outline-warning&quot;</span> <span style="color:#FF0000;">ClickEvent</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;() =&gt; this.ResetToRecord()&quot;</span><span style="color:#569CD6;">&gt;</span>Reset<span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">UIButton</span><span style="color:#569CD6;">&gt;</span>
+                <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">UIButton</span> <span style="color:#FF0000;">type</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;submit&quot;</span> <span style="color:#FF0000;">Show</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;true&quot;</span> <span style="color:#FF0000;">Disabled</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;this._saveDisabled&quot;</span> <span style="color:#FF0000;">class</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;btn-success&quot;</span><span style="color:#569CD6;">&gt;</span>@this._saveButtonText<span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">UIButton</span><span style="color:#569CD6;">&gt;</span>
+                <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">UIButton</span> <span style="color:#FF0000;">type</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;button&quot;</span> <span style="color:#FF0000;">Show</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;this.IsDirty&quot;</span> <span style="color:#FF0000;">class</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;btn-danger&quot;</span> <span style="color:#FF0000;">ClickEvent</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;() =&gt; this.ConfirmExit()&quot;</span><span style="color:#569CD6;">&gt;</span>Exit Without Saving<span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">UIButton</span><span style="color:#569CD6;">&gt;</span>
+                <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">UIButton</span> <span style="color:#FF0000;">type</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;button&quot;</span> <span style="color:#FF0000;">Show</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;!this.IsDirty&quot;</span> <span style="color:#FF0000;">class</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;btn-dark&quot;</span> <span style="color:#FF0000;">ClickEvent</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;() =&gt; this.Exit()&quot;</span><span style="color:#569CD6;">&gt;</span>Exit<span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">UIButton</span><span style="color:#569CD6;">&gt;</span>
+            <span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">FormEditButtons</span><span style="color:#569CD6;">&gt;</span>
+        <span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">EditForm</span><span style="color:#569CD6;">&gt;</span>
+    <span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">UILoader</span><span style="color:#569CD6;">&gt;</span>
+<span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">InlineDialog</span><span style="color:#569CD6;">&gt;</span>
+</pre></div><h2 id="routeview-implementations">RouteView Implementations</h2>
 <p>The RouteView implementation of the viewer is shown below.</p>
 <ol>
 <li>Declares the <code>Route</code> with an ID <code>Parameter</code>.</li>
 <li>Declares the form <code>WeatherForecastViewerForm</code>.</li>
 <li>Passes the <code>ID</code> to the form and attaches a delegate to <code>ExitAction</code> which returns to the <em>fetchdata</em> view.</li>
 </ol>
-<pre><code class="language-html">// WeatherViewer.razor
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+// WeatherViewer.razor
 @page &quot;/weather/view/{ID:guid}&quot;
 @namespace Blazr.Database.RouteViews
 
-&lt;WeatherForecastViewerForm ID=&quot;this.ID&quot; ExitAction=&quot;this.ExitToList&quot;&gt;&lt;/WeatherForecastViewerForm&gt;
+<span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">WeatherForecastViewerForm</span> <span style="color:#FF0000;">ID</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;this.ID&quot;</span> <span style="color:#FF0000;">ExitAction</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;this.ExitToList&quot;</span><span style="color:#569CD6;">&gt;</span><span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">WeatherForecastViewerForm</span><span style="color:#569CD6;">&gt;</span>
 
 @code {
     [Parameter] public Guid ID { get; set; }
@@ -503,13 +507,14 @@ private void SetPageExitCheck(bool action)
         =&gt; this.NavManager.NavigateTo(&quot;/fetchdata&quot;);
 
 }
-</code></pre>
+</pre></div>
 <p>The editor is exactly the same, but declares the form <code>WeatherForecastEditorForm</code>.</p>
-<pre><code class="language-html">// WeatherEditor.razor
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+// WeatherEditor.razor
 @page &quot;/weather/edit/{ID:guid}&quot;
 @namespace Blazr.Database.RouteViews
 
-&lt;WeatherForecastEditorForm ID=&quot;this.ID&quot; ExitAction=&quot;this.ExitToList&quot;&gt;&lt;/WeatherForecastEditorForm&gt;
+<span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">WeatherForecastEditorForm</span> <span style="color:#FF0000;">ID</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;this.ID&quot;</span> <span style="color:#FF0000;">ExitAction</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;this.ExitToList&quot;</span><span style="color:#569CD6;">&gt;</span><span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">WeatherForecastEditorForm</span><span style="color:#569CD6;">&gt;</span>
 
 @code {
 
@@ -520,8 +525,7 @@ private void SetPageExitCheck(bool action)
     private void ExitToList()
         =&gt; this.NavManager.NavigateTo(&quot;/fetchdata&quot;);
 }
-</code></pre>
-<h2 id="wrap-up">Wrap Up</h2>
+</pre></div><h2 id="wrap-up">Wrap Up</h2>
 <p>That wraps up this article.  We've shown how to build boilerplate code into base forms and how to implement viewer and editor forms.  We'll look in more detail at the list forms and how the viewer and editors are called in a separate article.<br />
 Some key points to note:</p>
 <ol>

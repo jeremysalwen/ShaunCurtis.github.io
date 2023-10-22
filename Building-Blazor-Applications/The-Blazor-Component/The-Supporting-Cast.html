@@ -71,26 +71,28 @@
 <p>This section looks at the objects used in the render process.</p>
 <h2 id="interfaces">Interfaces</h2>
 <p>We've already seen <code>IComponent</code> which is defined as:</p>
-<pre><code class="language-csharp">public interface IComponent
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+<span style="color:#569CD6;">public</span> <span style="color:#569CD6;">interface</span> IComponent
 {
-    void Attach(RenderHandle renderHandle);
+    <span style="color:#569CD6;">void</span> Attach(RenderHandle renderHandle);
     Task SetParametersAsync(ParameterView parameters);
 }
-</code></pre>
+</pre></div>
 <p>Components can also implement two other Renderer related events.</p>
 <p><code>IHandleEvent</code> defines a custom event handler for all UI events.</p>
-<pre><code class="language-csharp">public interface IHandleEvent
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+<span style="color:#569CD6;">public</span> <span style="color:#569CD6;">interface</span> IHandleEvent
 {
-    Task HandleEventAsync(EventCallbackWorkItem item, object? arg);
+    Task HandleEventAsync(EventCallbackWorkItem item, <span style="color:#569CD6;">object</span>? arg);
 }
-</code></pre>
+</pre></div>
 <p><code>IHandleAfterRender</code> defines the after render handler.</p>
-<pre><code class="language-csharp">public interface IHandleAfterRender
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+<span style="color:#569CD6;">public</span> <span style="color:#569CD6;">interface</span> IHandleAfterRender
 {
     Task OnAfterRenderAsync();
 }
-</code></pre>
-<h2 id="the-renderhandle">The RenderHandle</h2>
+</pre></div><h2 id="the-renderhandle">The RenderHandle</h2>
 <p>The component receives a <code>RendleHandle</code> instance when the Renderer calls <code>Attach</code>.  It's designed to be stored locally by the component and used to communicate with the Renderer.</p>
 <p>To quote Microsoft:</p>
 <blockquote>
@@ -103,15 +105,17 @@
 </ol>
 <h2 id="the-renderfragment">The RenderFragment</h2>
 <p>It's not a block of UI code.  You can't do this:</p>
-<pre><code class="language-csharp">RenderFragment someUi = &quot;&lt;div&gt;Hello Blazor&lt;/div&gt;&quot;;
-</code></pre>
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+RenderFragment someUi = <span style="color:#D69D85;">&quot;&lt;div&gt;Hello Blazor&lt;/div&gt;&quot;</span>;
+</pre></div>
 <p>To quote the official Microsoft documentation.</p>
 <p><em>A RenderFragement represents a segment of UI content, implemented as a delegate that writes the content to a RenderTreeBuilder.</em></p>
 <p>The <code>RenderTreeBuilder</code> is even more succinct:</p>
 <p><em>Provides methods for building a collection of RenderTreeFrame entries.</em></p>
 <p>A <code>RenderFragment</code> is a delegate defined as follows:</p>
-<pre><code class="language-csharp">public delegate void RenderFragment(RenderTreeBuilder builder);
-</code></pre>
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+<span style="color:#569CD6;">public</span> <span style="color:#569CD6;">delegate</span> <span style="color:#569CD6;">void</span> RenderFragment(RenderTreeBuilder builder);
+</pre></div>
 <p>If you're new to delegates think of them as a pattern definition.  Any function that conforms to the pattern defined by the <code>RenderFragment</code> delegate can passed as a <code>RenderFragment</code>.</p>
 <p>The pattern dictates your method must:</p>
 <ol>
@@ -119,20 +123,21 @@
 <li>Return a <code>void</code>.</li>
 </ol>
 <p>This method conforms to the pattern:</p>
-<pre><code class="language-csharp">private void DoNothing(RenderTreeBuilder builder)
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+<span style="color:#569CD6;">private</span> <span style="color:#569CD6;">void</span> DoNothing(RenderTreeBuilder builder)
 {}
-</code></pre>
+</pre></div>
 <p>This is something a little more normal.  Note this defines an anonymous function that is assigned to the class field.</p>
-<pre><code class="language-csharp">    private RenderFragment _childContent =&gt; (builder) =&gt;
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+    <span style="color:#569CD6;">private</span> RenderFragment _childContent =&gt; (builder) =&gt;
     {
-        builder.OpenElement(0, &quot;button&quot;);
-        builder.AddAttribute(1, &quot;class&quot;, &quot;btn btn-primary&quot;);
-        builder.AddAttribute(2, &quot;onclick&quot;, EventCallback.Factory.Create&lt;MouseEventArgs&gt;(this, ButtonClick));
-        builder.AddContent(3, &quot;Click Me&quot;);
+        builder.OpenElement(<span style="color:#B5CEA8;">0</span>, <span style="color:#D69D85;">&quot;button&quot;</span>);
+        builder.AddAttribute(<span style="color:#B5CEA8;">1</span>, <span style="color:#D69D85;">&quot;class&quot;</span>, <span style="color:#D69D85;">&quot;btn btn-primary&quot;</span>);
+        builder.AddAttribute(<span style="color:#B5CEA8;">2</span>, <span style="color:#D69D85;">&quot;onclick&quot;</span>, EventCallback.Factory.Create&lt;MouseEventArgs&gt;(<span style="color:#569CD6;">this</span>, ButtonClick));
+        builder.AddContent(<span style="color:#B5CEA8;">3</span>, <span style="color:#D69D85;">&quot;Click Me&quot;</span>);
         builder.CloseElement();
     };
-</code></pre>
-</div></div></div></body></html>
+</pre></div></div></div></div></body></html>
 
 
 

@@ -67,57 +67,63 @@
     <p>Developers write most components in Razor.  There's plenty of reference material on writing in Razor, I'll not regurgitate what you can read elsewhere.  What I want to look at is the relationship between Razor Components, Blazor Components and <code>IComponent</code>?</p>
 <p>The truth is there isn't one.</p>
 <p>To demonstrate here's a base class that can be used as <code>@inherits</code> in a Razor component:</p>
-<pre><code class="language-csharp">public abstract class RazorBase
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+<span style="color:#569CD6;">public</span> <span style="color:#569CD6;">abstract</span> <span style="color:#569CD6;">class</span> RazorBase
 {
-    protected abstract void BuildRenderTree(RenderTreeBuilder builder);
+    <span style="color:#569CD6;">protected</span> <span style="color:#569CD6;">abstract</span> <span style="color:#569CD6;">void</span> BuildRenderTree(RenderTreeBuilder builder);
 
-    public RenderFragment Content =&gt; (builder) =&gt; BuildRenderTree(builder);
+    <span style="color:#569CD6;">public</span> RenderFragment Content =&gt; (builder) =&gt; BuildRenderTree(builder);
 }
-</code></pre>
+</pre></div>
 <p>And a test Razor component:</p>
-<pre><code class="language-csharp">// Div.razor
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+<span style="color:#57A64A;">// Div.razor</span>
 @inherits RazorBase
 
 &lt;h3&gt;My Razor Class Div&lt;/h3&gt;
-</code></pre>
+</pre></div>
 <p>It will compile and you can reference the class, but you can't use it as a component.</p>
 <p>You can however do this in a page:</p>
-<pre><code class="language-csharp">@(new Div().Content)
-</code></pre>
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+@(<span style="color:#569CD6;">new</span> Div().Content)
+</pre></div>
 <p>The only requirement for inheritance in a Razor component is that the inherited class implements:</p>
-<pre><code class="language-csharp">protected virtual void BuildRenderTree(RenderTreeBuilder builder);
-</code></pre>
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+<span style="color:#569CD6;">protected</span> <span style="color:#569CD6;">virtual</span> <span style="color:#569CD6;">void</span> BuildRenderTree(RenderTreeBuilder builder);
+</pre></div>
 <p>When the Razor compiler compiles the Razor markup, it overrides <code>BuilderRenderTree</code> with the Razor compiled RenderTreeBuilder instruction code.</p>
 <p>What normally happens is no inheritance is explicitly defined, so the compiler sets inheritance to <code>ComponentBase</code>.</p>
 <h2 id="building-render-fragments">Building Render Fragments</h2>
 <p>There are two ways to build render fragments.</p>
 <p>Firstly we can use the RenderTreeBuilder.  This is how the Razor compiler builds a class from a Razor component file.</p>
-<pre><code class="language-csharp">@inherits RazorClass
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+@inherits RazorClass
 
 @HelloWorld
 
 @code {
-    protected RenderFragment HelloWorld =&gt; (RenderTreeBuilder builder) =&gt;
+    <span style="color:#569CD6;">protected</span> RenderFragment HelloWorld =&gt; (RenderTreeBuilder builder) =&gt;
     {
-        builder.OpenElement(0, &quot;div&quot;);
-        builder.AddContent(1, &quot;Hello Razor 2&quot;);
+        builder.OpenElement(<span style="color:#B5CEA8;">0</span>, <span style="color:#D69D85;">&quot;div&quot;</span>);
+        builder.AddContent(<span style="color:#B5CEA8;">1</span>, <span style="color:#D69D85;">&quot;Hello Razor 2&quot;</span>);
         builder.CloseElement();
     };
 }
-</code></pre>
+</pre></div>
 <p>This defines a <code>RenderFragment</code> property and assigns to it a block of code in an anonymous method that conforms to the <code>RenderFragment</code> pattern.  It takes a  <code>RenderTreeBuilder</code> and has no return so returns a void.  It uses the provided <code>RenderTreeBuilder</code> object to build the content: a simple hello world html div.  Each call to the builder adds what is called a <code>RenderTreeFrame</code>.  Each frame is compile time sequentially numbered. Do not use run time counter to assign this number.</p>
 <p>Or like this:</p>
-<pre><code class="language-csharp">@inherits MinimalBase
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+@inherits MinimalBase
 
 @HelloWorld
 
 @code {
-    protected RenderFragment HelloWorld =&gt; (RenderTreeBuilder builder) =&gt;
+    <span style="color:#569CD6;">protected</span> RenderFragment HelloWorld =&gt; (RenderTreeBuilder builder) =&gt;
     {
-        &lt;div&gt;Hello Blazor 3&lt;/div&gt;
+        &lt;div&gt;Hello Blazor <span style="color:#B5CEA8;">3</span>&lt;/div&gt;
     };
 }
-</code></pre>
+</pre></div>
 <p>Here we're mixing C# code and markup.  The Razor compiler recognises this and compiles the code correctly.</p>
 <p>It's important to understand two points:</p>
 <ol>
@@ -125,48 +131,50 @@
 <li>Even though the <code>Renderer</code> invokes the code, the code is run in the context of the component, and uses the state of the component when it executes.</li>
 </ol>
 <p>The functionality above can be defined directly in a class.</p>
-<pre><code class="language-csharp">public class DivClass : MinimalBase
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+<span style="color:#569CD6;">public</span> <span style="color:#569CD6;">class</span> DivClass : MinimalBase
 {
-    protected override void BuildRenderTree(RenderTreeBuilder builder)
+    <span style="color:#569CD6;">protected</span> <span style="color:#569CD6;">override</span> <span style="color:#569CD6;">void</span> BuildRenderTree(RenderTreeBuilder builder)
     {
-        builder.OpenElement(0, &quot;div&quot;);
-        builder.AddContent(1, &quot;Hello Razor 2&quot;);
+        builder.OpenElement(<span style="color:#B5CEA8;">0</span>, <span style="color:#D69D85;">&quot;div&quot;</span>);
+        builder.AddContent(<span style="color:#B5CEA8;">1</span>, <span style="color:#D69D85;">&quot;Hello Razor 2&quot;</span>);
         builder.CloseElement();
     }
 }
-</code></pre>
-<h2 id="childcontent">ChildContent</h2>
+</pre></div><h2 id="childcontent">ChildContent</h2>
 <p>Consider the following markup:</p>
-<pre><code class="language-csharp">&lt;MinimalComponent&gt;
-    Value: @this.Value
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+&lt;MinimalComponent&gt;
+    Value: @<span style="color:#569CD6;">this</span>.Value
 &lt;/MinimalComponent&gt;
 @code {
-    private int Value = 4;
+    <span style="color:#569CD6;">private</span> <span style="color:#569CD6;">int</span> Value = <span style="color:#B5CEA8;">4</span>;
 }
-</code></pre>
+</pre></div>
 <p>There is content relating to the parent component within <code>MyControl</code>.  In the above code the Razor compiler will expect <code>MyControl</code> to have a <code>RenderFragment</code> parameter named <code>ChildContent</code> where it places the compiled fragment that represents the content.  If one doesn't exist, the runtime will throw an error.</p>
 <pre><code>Message	&quot;Object of type 'Blazr.Components.Components.MinimalComponent' does not have a property matching the name 'ChildContent'.&quot;
 </code></pre>
 <p>To understand this, here's the actual class the Razor compiler builds.  I've removed all the commenting and refactored it a little to make it more readable.</p>
-<pre><code class="language-csharp">[RouteAttribute(&quot;/&quot;)]
-public partial class Test : MinimalBase
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+[RouteAttribute(<span style="color:#D69D85;">&quot;/&quot;</span>)]
+<span style="color:#569CD6;">public</span> <span style="color:#569CD6;">partial</span> <span style="color:#569CD6;">class</span> Test : MinimalBase
 {
-    protected override void BuildRenderTree(RenderTreeBuilder __builder)
+    <span style="color:#569CD6;">protected</span> <span style="color:#569CD6;">override</span> <span style="color:#569CD6;">void</span> BuildRenderTree(RenderTreeBuilder __builder)
     {
-        __builder.AddMarkupContent(1, &quot;\r\n\r\n&quot;);
-        __builder.OpenComponent&lt;MinimalComponent&gt;(2);
-        __builder.AddAttribute(3, &quot;ChildContent&quot;, __content2);
+        __builder.AddMarkupContent(<span style="color:#B5CEA8;">1</span>, <span style="color:#D69D85;">&quot;\r\n\r\n&quot;</span>);
+        __builder.OpenComponent&lt;MinimalComponent&gt;(<span style="color:#B5CEA8;">2</span>);
+        __builder.AddAttribute(<span style="color:#B5CEA8;">3</span>, <span style="color:#D69D85;">&quot;ChildContent&quot;</span>, __content2);
     }
 
-    private RenderFragment __content2 =&gt; __builder2 =&gt;
+    <span style="color:#569CD6;">private</span> RenderFragment __content2 =&gt; __builder2 =&gt;
     {
-        __builder2.AddMarkupContent(4, &quot;\r\n    Value : &quot;);
-        __builder2.AddContent(5, this.Value);
+        __builder2.AddMarkupContent(<span style="color:#B5CEA8;">4</span>, <span style="color:#D69D85;">&quot;\r\n    Value : &quot;</span>);
+        __builder2.AddContent(<span style="color:#B5CEA8;">5</span>, <span style="color:#569CD6;">this</span>.Value);
     };
 
-    private int Value = 4;
+    <span style="color:#569CD6;">private</span> <span style="color:#569CD6;">int</span> Value = <span style="color:#B5CEA8;">4</span>;
 }
-</code></pre>
+</pre></div>
 <p>The compiler has:</p>
 <ol>
 <li>Compiled the markup into the parent's <code>BuildRenderTree</code> method as a set of <code>RenderTreeBuilder</code> methods.</li>
@@ -176,26 +184,27 @@ public partial class Test : MinimalBase
 </ol>
 <p>The reason why you get a runtime error and not a compiler error is that the compiler doesn't know that the <code>MinimalComponent</code> doesn't have a <code>ChildContent</code> attribute.  It can't differentiate correctly between attributes and parameters at compile time.</p>
 <p>You can also specify which <code>RenderFragment</code> to use like this:</p>
-<pre><code class="language-csharp">&lt;MinimalComponent&gt;
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+&lt;MinimalComponent&gt;
     &lt;ChildContent&gt;
-        Value: @this.Value
+        Value: @<span style="color:#569CD6;">this</span>.Value
     &lt;/ChildContent&gt;
 &lt;/MinimalComponent&gt;
-</code></pre>
+</pre></div>
 <p>A component is not limited to a single <code>RenderFragment</code>.  A table component could look like this:</p>
-<pre><code class="language-html">&lt;TableComponent&gt;
-    &lt;Header&gt;
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+<span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">TableComponent</span><span style="color:#569CD6;">&gt;</span>
+    <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">Header</span><span style="color:#569CD6;">&gt;</span>
         ...
-    &lt;/Header&gt;
-    &lt;Rows&gt;
+    <span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">Header</span><span style="color:#569CD6;">&gt;</span>
+    <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">Rows</span><span style="color:#569CD6;">&gt;</span>
         ...
-    &lt;/Rows&gt;
-    &lt;Footer&gt;
+    <span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">Rows</span><span style="color:#569CD6;">&gt;</span>
+    <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">Footer</span><span style="color:#569CD6;">&gt;</span>
         ...
-    &lt;/Footer&gt;
-&lt;/TableComponent&gt;
-</code></pre>
-</div></div></div></body></html>
+    <span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">Footer</span><span style="color:#569CD6;">&gt;</span>
+<span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">TableComponent</span><span style="color:#569CD6;">&gt;</span>
+</pre></div></div></div></div></body></html>
 
 
 

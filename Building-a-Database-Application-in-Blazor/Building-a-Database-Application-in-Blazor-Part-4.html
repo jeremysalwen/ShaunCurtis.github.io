@@ -99,194 +99,199 @@
 <p>RouteViews are application specific.  The only difference between a RouteView and a Form is a RouteView declares one or more routes through the <code>@Page</code> directive - or directly as a <code>[RouteAttribute]</code> on a class.  On the <code>Router</code> component declared in the root <code>App</code>,  <code>AppAssembly</code> specifies the assembly that <code>Router</code> trawls on initialization to find all the declared routes.</p>
 <p>In the application RouteViews are declared in the WASM application library and are common to both WASM and Server SPAs.</p>
 <p>The Weather Forecast Viewer and List Views are shown below.</p>
-<pre><code class="language-csharp">// Blazor.Database/RouteViews/Weather/WeatherViewer.cs
-@page &quot;/weather/view/{ID:Guid}&quot;
-@namespace Blazor.Database.RouteViews
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+<span style="color:#57A64A;">// Blazor.Database/RouteViews/Weather/WeatherViewer.cs</span>
+@page <span style="color:#D69D85;">&quot;/weather/view/{ID:Guid}&quot;</span>
+@<span style="color:#569CD6;">namespace</span> Blazor.Database.RouteViews
 
-&lt;WeatherForecastViewerForm ID=&quot;this.ID&quot; ExitAction=&quot;this.ExitToList&quot;&gt;&lt;/WeatherForecastViewerForm&gt;
+&lt;WeatherForecastViewerForm ID=<span style="color:#D69D85;">&quot;this.ID&quot;</span> ExitAction=<span style="color:#D69D85;">&quot;this.ExitToList&quot;</span>&gt;&lt;/WeatherForecastViewerForm&gt;
 
 @code {
-    [Parameter] public Guid ID { get; set; }
+    [Parameter] <span style="color:#569CD6;">public</span> Guid ID { <span style="color:#569CD6;">get</span>; <span style="color:#569CD6;">set</span>; }
 
-    [Inject] public NavigationManager NavManager { get; set; }
+    [Inject] <span style="color:#569CD6;">public</span> NavigationManager NavManager { <span style="color:#569CD6;">get</span>; <span style="color:#569CD6;">set</span>; }
 
-    private void ExitToList()
-        =&gt; this.NavManager.NavigateTo(&quot;/fetchdata&quot;);
+    <span style="color:#569CD6;">private</span> <span style="color:#569CD6;">void</span> ExitToList()
+        =&gt; <span style="color:#569CD6;">this</span>.NavManager.NavigateTo(<span style="color:#D69D85;">&quot;/fetchdata&quot;</span>);
 }
-</code></pre>
-<pre><code class="language-csharp">// Blazor.Database/RouteViews/Weather/FetchData.cs
-@page &quot;/fetchdata&quot;
-@namespace Blazor.Database.RouteViews
+</pre></div><div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+<span style="color:#57A64A;">// Blazor.Database/RouteViews/Weather/FetchData.cs</span>
+@page <span style="color:#D69D85;">&quot;/fetchdata&quot;</span>
+@<span style="color:#569CD6;">namespace</span> Blazor.Database.RouteViews
 
-&lt;WeatherForecastListForm EditRecord=&quot;this.GoToEditor&quot; ViewRecord=&quot;this.GoToViewer&quot; NewRecord=&quot;this.GoToNew&quot; ExitAction=&quot;Exit&quot;&gt;&lt;/WeatherForecastListForm&gt;
+&lt;WeatherForecastListForm EditRecord=<span style="color:#D69D85;">&quot;this.GoToEditor&quot;</span> ViewRecord=<span style="color:#D69D85;">&quot;this.GoToViewer&quot;</span> NewRecord=<span style="color:#D69D85;">&quot;this.GoToNew&quot;</span> ExitAction=<span style="color:#D69D85;">&quot;Exit&quot;</span>&gt;&lt;/WeatherForecastListForm&gt;
 
 @code {
 
-    [Inject] NavigationManager NavManager { get; set; }
+    [Inject] NavigationManager NavManager { <span style="color:#569CD6;">get</span>; <span style="color:#569CD6;">set</span>; }
 
-    private bool _isWasm =&gt; NavManager?.Uri.Contains(&quot;wasm&quot;, StringComparison.CurrentCultureIgnoreCase) ?? false;
+    <span style="color:#569CD6;">private</span> <span style="color:#569CD6;">bool</span> _isWasm =&gt; NavManager?.Uri.Contains(<span style="color:#D69D85;">&quot;wasm&quot;</span>, StringComparison.CurrentCultureIgnoreCase) ?? <span style="color:#569CD6;">false</span>;
 
-    public void GoToEditor(Guid id)
-    =&gt; this.NavManager.NavigateTo($&quot;weather/edit/{id}&quot;);
+    <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">void</span> GoToEditor(Guid id)
+    =&gt; <span style="color:#569CD6;">this</span>.NavManager.NavigateTo($<span style="color:#D69D85;">&quot;weather/edit/{id}&quot;</span>);
 
-    public void GoToNew()
-    =&gt; this.NavManager.NavigateTo($&quot;weather/edit/{Guid.Empty}&quot;);
+    <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">void</span> GoToNew()
+    =&gt; <span style="color:#569CD6;">this</span>.NavManager.NavigateTo($<span style="color:#D69D85;">&quot;weather/edit/{Guid.Empty}&quot;</span>);
 
-    public void GoToViewer(Guid id)
-    =&gt; this.NavManager.NavigateTo($&quot;weather/view/{id}&quot;);
+    <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">void</span> GoToViewer(Guid id)
+    =&gt; <span style="color:#569CD6;">this</span>.NavManager.NavigateTo($<span style="color:#D69D85;">&quot;weather/view/{id}&quot;</span>);
 
-    public void Exit()
+    <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">void</span> Exit()
     {
-        if (_isWasm)
-            this.NavManager.NavigateTo($&quot;/wasm&quot;);
-        else
-            this.NavManager.NavigateTo($&quot;/&quot;);
+        <span style="color:#569CD6;">if</span> (_isWasm)
+            <span style="color:#569CD6;">this</span>.NavManager.NavigateTo($<span style="color:#D69D85;">&quot;/wasm&quot;</span>);
+        <span style="color:#569CD6;">else</span>
+            <span style="color:#569CD6;">this</span>.NavManager.NavigateTo($<span style="color:#D69D85;">&quot;/&quot;</span>);
     }
 
 }
-</code></pre>
-<h3 id="forms">Forms</h3>
+</pre></div><h3 id="forms">Forms</h3>
 <p>We saw Forms in the last article.  They're specific to the application.</p>
 <p>The code below shows the Weather Viewer.  It's all UI Controls, no HTML markup.</p>
-<pre><code class="language-html">// Blazor.Database/Forms/WeatherForecast/WeatherForecastViewerForm.razor
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+// Blazor.Database/Forms/WeatherForecast/WeatherForecastViewerForm.razor
 @namespace Blazor.Database.Forms
-@inherits RecordFormBase&lt;WeatherForecast&gt;
+@inherits RecordFormBase<span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">WeatherForecast</span><span style="color:#569CD6;">&gt;</span>
 
-&lt;UIContainer&gt;
-    &lt;UIFormRow&gt;
-        &lt;UIColumn&gt;
-            &lt;h2&gt;Weather Forecast Viewer&lt;/h2&gt;
-        &lt;/UIColumn&gt;
-    &lt;/UIFormRow&gt;
-&lt;/UIContainer&gt;
-&lt;UILoader Loaded=&quot;this.IsLoaded&quot;&gt;
-    &lt;UIContainer&gt;
-        &lt;UIFormRow&gt;
-            &lt;UILabelColumn&gt;
+<span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">UIContainer</span><span style="color:#569CD6;">&gt;</span>
+    <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">UIFormRow</span><span style="color:#569CD6;">&gt;</span>
+        <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">UIColumn</span><span style="color:#569CD6;">&gt;</span>
+            <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">h2</span><span style="color:#569CD6;">&gt;</span>Weather Forecast Viewer<span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">h2</span><span style="color:#569CD6;">&gt;</span>
+        <span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">UIColumn</span><span style="color:#569CD6;">&gt;</span>
+    <span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">UIFormRow</span><span style="color:#569CD6;">&gt;</span>
+<span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">UIContainer</span><span style="color:#569CD6;">&gt;</span>
+<span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">UILoader</span> <span style="color:#FF0000;">Loaded</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;this.IsLoaded&quot;</span><span style="color:#569CD6;">&gt;</span>
+    <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">UIContainer</span><span style="color:#569CD6;">&gt;</span>
+        <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">UIFormRow</span><span style="color:#569CD6;">&gt;</span>
+            <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">UILabelColumn</span><span style="color:#569CD6;">&gt;</span>
                 Date
-            &lt;/UILabelColumn&gt;
-            &lt;UIInputColumn Cols=&quot;3&quot;&gt;
-                &lt;InputReadOnlyText Value=&quot;@this.ControllerService.Record.Date.ToShortDateString()&quot;&gt;&lt;/InputReadOnlyText&gt;
-            &lt;/UIInputColumn&gt;
-            &lt;UIColumn Cols=&quot;7&quot;&gt;&lt;/UIColumn&gt;
-        &lt;/UIFormRow&gt;
-        &lt;UIFormRow&gt;
-            &lt;UILabelColumn&gt;
-                Temperature &amp;deg;C
-            &lt;/UILabelColumn&gt;
-            &lt;UIInputColumn Cols=&quot;2&quot;&gt;
-                &lt;InputReadOnlyText Value=&quot;@this.ControllerService.Record.TemperatureC.ToString()&quot;&gt;&lt;/InputReadOnlyText&gt;
-            &lt;/UIInputColumn&gt;
-            &lt;UIColumn Cols=&quot;8&quot;&gt;&lt;/UIColumn&gt;
-        &lt;/UIFormRow&gt;
-        &lt;UIFormRow&gt;
-            &lt;UILabelColumn&gt;
-                Temperature &amp;deg;f
-            &lt;/UILabelColumn&gt;
-            &lt;UIInputColumn Cols=&quot;2&quot;&gt;
-                &lt;InputReadOnlyText Value=&quot;@this.ControllerService.Record.TemperatureF.ToString()&quot;&gt;&lt;/InputReadOnlyText&gt;
-            &lt;/UIInputColumn&gt;
-            &lt;UIColumn Cols=&quot;8&quot;&gt;&lt;/UIColumn&gt;
-        &lt;/UIFormRow&gt;
-        &lt;UIFormRow&gt;
-            &lt;UILabelColumn&gt;
+            <span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">UILabelColumn</span><span style="color:#569CD6;">&gt;</span>
+            <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">UIInputColumn</span> <span style="color:#FF0000;">Cols</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;3&quot;</span><span style="color:#569CD6;">&gt;</span>
+                <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">InputReadOnlyText</span> <span style="color:#FF0000;">Value</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;@this.ControllerService.Record.Date.ToShortDateString()&quot;</span><span style="color:#569CD6;">&gt;</span><span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">InputReadOnlyText</span><span style="color:#569CD6;">&gt;</span>
+            <span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">UIInputColumn</span><span style="color:#569CD6;">&gt;</span>
+            <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">UIColumn</span> <span style="color:#FF0000;">Cols</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;7&quot;</span><span style="color:#569CD6;">&gt;</span><span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">UIColumn</span><span style="color:#569CD6;">&gt;</span>
+        <span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">UIFormRow</span><span style="color:#569CD6;">&gt;</span>
+        <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">UIFormRow</span><span style="color:#569CD6;">&gt;</span>
+            <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">UILabelColumn</span><span style="color:#569CD6;">&gt;</span>
+                Temperature <span style="color:#FF0000;">&amp;deg;</span>C
+            <span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">UILabelColumn</span><span style="color:#569CD6;">&gt;</span>
+            <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">UIInputColumn</span> <span style="color:#FF0000;">Cols</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;2&quot;</span><span style="color:#569CD6;">&gt;</span>
+                <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">InputReadOnlyText</span> <span style="color:#FF0000;">Value</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;@this.ControllerService.Record.TemperatureC.ToString()&quot;</span><span style="color:#569CD6;">&gt;</span><span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">InputReadOnlyText</span><span style="color:#569CD6;">&gt;</span>
+            <span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">UIInputColumn</span><span style="color:#569CD6;">&gt;</span>
+            <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">UIColumn</span> <span style="color:#FF0000;">Cols</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;8&quot;</span><span style="color:#569CD6;">&gt;</span><span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">UIColumn</span><span style="color:#569CD6;">&gt;</span>
+        <span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">UIFormRow</span><span style="color:#569CD6;">&gt;</span>
+        <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">UIFormRow</span><span style="color:#569CD6;">&gt;</span>
+            <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">UILabelColumn</span><span style="color:#569CD6;">&gt;</span>
+                Temperature <span style="color:#FF0000;">&amp;deg;</span>f
+            <span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">UILabelColumn</span><span style="color:#569CD6;">&gt;</span>
+            <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">UIInputColumn</span> <span style="color:#FF0000;">Cols</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;2&quot;</span><span style="color:#569CD6;">&gt;</span>
+                <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">InputReadOnlyText</span> <span style="color:#FF0000;">Value</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;@this.ControllerService.Record.TemperatureF.ToString()&quot;</span><span style="color:#569CD6;">&gt;</span><span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">InputReadOnlyText</span><span style="color:#569CD6;">&gt;</span>
+            <span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">UIInputColumn</span><span style="color:#569CD6;">&gt;</span>
+            <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">UIColumn</span> <span style="color:#FF0000;">Cols</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;8&quot;</span><span style="color:#569CD6;">&gt;</span><span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">UIColumn</span><span style="color:#569CD6;">&gt;</span>
+        <span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">UIFormRow</span><span style="color:#569CD6;">&gt;</span>
+        <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">UIFormRow</span><span style="color:#569CD6;">&gt;</span>
+            <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">UILabelColumn</span><span style="color:#569CD6;">&gt;</span>
                 Summary
-            &lt;/UILabelColumn&gt;
-            &lt;UIInputColumn Cols=&quot;9&quot;&gt;
-                &lt;InputReadOnlyText Value=&quot;@this.ControllerService.Record.Summary&quot;&gt;&lt;/InputReadOnlyText&gt;
-            &lt;/UIInputColumn&gt;
-        &lt;/UIFormRow&gt;
-    &lt;/UIContainer&gt;
-&lt;/UILoader&gt;
-&lt;UIContainer&gt;
-    &lt;UIFormRow&gt;
-        &lt;UIButtonColumn&gt;
-            &lt;UIButton AdditionalClasses=&quot;btn-secondary&quot; ClickEvent=&quot;this.Exit&quot;&gt;Exit&lt;/UIButton&gt;
-        &lt;/UIButtonColumn&gt;
-    &lt;/UIFormRow&gt;
-&lt;/UIContainer&gt;
-</code></pre>
+            <span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">UILabelColumn</span><span style="color:#569CD6;">&gt;</span>
+            <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">UIInputColumn</span> <span style="color:#FF0000;">Cols</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;9&quot;</span><span style="color:#569CD6;">&gt;</span>
+                <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">InputReadOnlyText</span> <span style="color:#FF0000;">Value</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;@this.ControllerService.Record.Summary&quot;</span><span style="color:#569CD6;">&gt;</span><span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">InputReadOnlyText</span><span style="color:#569CD6;">&gt;</span>
+            <span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">UIInputColumn</span><span style="color:#569CD6;">&gt;</span>
+        <span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">UIFormRow</span><span style="color:#569CD6;">&gt;</span>
+    <span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">UIContainer</span><span style="color:#569CD6;">&gt;</span>
+<span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">UILoader</span><span style="color:#569CD6;">&gt;</span>
+<span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">UIContainer</span><span style="color:#569CD6;">&gt;</span>
+    <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">UIFormRow</span><span style="color:#569CD6;">&gt;</span>
+        <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">UIButtonColumn</span><span style="color:#569CD6;">&gt;</span>
+            <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">UIButton</span> <span style="color:#FF0000;">AdditionalClasses</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;btn-secondary&quot;</span> <span style="color:#FF0000;">ClickEvent</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;this.Exit&quot;</span><span style="color:#569CD6;">&gt;</span>Exit<span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">UIButton</span><span style="color:#569CD6;">&gt;</span>
+        <span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">UIButtonColumn</span><span style="color:#569CD6;">&gt;</span>
+    <span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">UIFormRow</span><span style="color:#569CD6;">&gt;</span>
+<span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">UIContainer</span><span style="color:#569CD6;">&gt;</span>
+</pre></div>
 <p>The code behind page is relatively simple - the complexity is in the boilerplate code in the parent classes.  It loads the record specific Controller service.</p>
-<pre><code class="language-csharp">// Blazor.Database/Forms/WeatherForecast/WeatherForecastViewerForm.razor.cs
-public partial class WeatherForecastViewerForm : RecordFormBase&lt;WeatherForecast&gt;
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+<span style="color:#57A64A;">// Blazor.Database/Forms/WeatherForecast/WeatherForecastViewerForm.razor.cs</span>
+<span style="color:#569CD6;">public</span> <span style="color:#569CD6;">partial</span> <span style="color:#569CD6;">class</span> WeatherForecastViewerForm : RecordFormBase&lt;WeatherForecast&gt;
 {
 
-    [Inject] private WeatherForecastViewService ViewService { get; set; }
+    [Inject] <span style="color:#569CD6;">private</span> WeatherForecastViewService ViewService { <span style="color:#569CD6;">get</span>; <span style="color:#569CD6;">set</span>; }
 
-    protected async override Task OnInitializedAsync()
+    <span style="color:#569CD6;">protected</span> <span style="color:#569CD6;">async</span> <span style="color:#569CD6;">override</span> Task OnInitializedAsync()
     {
-        this.Service = this.ViewService;
-        await base.OnInitializedAsync();
+        <span style="color:#569CD6;">this</span>.Service = <span style="color:#569CD6;">this</span>.ViewService;
+        <span style="color:#569CD6;">await</span> <span style="color:#569CD6;">base</span>.OnInitializedAsync();
     }
 }
-</code></pre>
-<h2 id="ui-controls">UI Controls</h2>
+</pre></div><h2 id="ui-controls">UI Controls</h2>
 <p>UI Controls emit HTML and CSS markup.  All the controls here are based on the Bootstrap CSS Framework.  All controls inherit from <code>ComponentBase</code> and UI Controls inherit from <code>UIComponent</code>.</p>
 <h4 id="appcomponentbase">AppComponentBase</h4>
 <p><code>AppComponentBase</code> inherits from <code>ComponentBase</code> and adds functionality to manage splatter attributes and the <code>Childcontent</code> render fragment.</p>
-<pre><code class="language-csharp">public class AppComponentBase : ComponentBase
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+<span style="color:#569CD6;">public</span> <span style="color:#569CD6;">class</span> AppComponentBase : ComponentBase
 {
-    [Parameter] public RenderFragment ChildContent { get; set; }
+    [Parameter] <span style="color:#569CD6;">public</span> RenderFragment ChildContent { <span style="color:#569CD6;">get</span>; <span style="color:#569CD6;">set</span>; }
 
-    [Parameter(CaptureUnmatchedValues = true)] public IDictionary&lt;string, object&gt; UserAttributes { get; set; } = new Dictionary&lt;string, object&gt;();
+    [Parameter(CaptureUnmatchedValues = <span style="color:#569CD6;">true</span>)] <span style="color:#569CD6;">public</span> IDictionary&lt;<span style="color:#569CD6;">string</span>, <span style="color:#569CD6;">object</span>&gt; UserAttributes { <span style="color:#569CD6;">get</span>; <span style="color:#569CD6;">set</span>; } = <span style="color:#569CD6;">new</span> Dictionary&lt;<span style="color:#569CD6;">string</span>, <span style="color:#569CD6;">object</span>&gt;();
 
-    protected virtual List&lt;string&gt; UnwantedAttributes { get; set; } = new List&lt;string&gt;();
+    <span style="color:#569CD6;">protected</span> <span style="color:#569CD6;">virtual</span> List&lt;<span style="color:#569CD6;">string</span>&gt; UnwantedAttributes { <span style="color:#569CD6;">get</span>; <span style="color:#569CD6;">set</span>; } = <span style="color:#569CD6;">new</span> List&lt;<span style="color:#569CD6;">string</span>&gt;();
 
-    protected Dictionary&lt;string, object&gt; SplatterAttributes
+    <span style="color:#569CD6;">protected</span> Dictionary&lt;<span style="color:#569CD6;">string</span>, <span style="color:#569CD6;">object</span>&gt; SplatterAttributes
     {
-        get
+        <span style="color:#569CD6;">get</span>
         {
-            var list = new Dictionary&lt;string, object&gt;();
-            foreach (var item in UserAttributes)
+            <span style="color:#569CD6;">var</span> list = <span style="color:#569CD6;">new</span> Dictionary&lt;<span style="color:#569CD6;">string</span>, <span style="color:#569CD6;">object</span>&gt;();
+            <span style="color:#569CD6;">foreach</span> (<span style="color:#569CD6;">var</span> item <span style="color:#569CD6;">in</span> UserAttributes)
             {
-                if (!UnwantedAttributes.Any(item1 =&gt; item1.Equals(item.Key)))
+                <span style="color:#569CD6;">if</span> (!UnwantedAttributes.Any(item1 =&gt; item1.Equals(item.Key)))
                     list.Add(item.Key, item.Value);
             }
-            return list;
+            <span style="color:#569CD6;">return</span> list;
         }
     }
 }
-</code></pre>
-<h4 id="uicomponent">UIComponent</h4>
+</pre></div><h4 id="uicomponent">UIComponent</h4>
 <p><code>UIComponent</code> inherits from <code>AppComponentBase</code>.  It builds an HTML DIV block that you can turn on or off.</p>
 <p>Lets look at some of <code>UIComponent</code> in detail.</p>
 <p>The HTML block tag can be set using the <code>Tag</code> parameter.  It can only be set by inherited classes.</p>
-<pre><code class="language-csharp">[Parameter] public string Tag { get; set; } = null;
-protected virtual string HtmlTag =&gt; this.Tag ?? &quot;div&quot;;
-</code></pre>
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+[Parameter] <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">string</span> Tag { <span style="color:#569CD6;">get</span>; <span style="color:#569CD6;">set</span>; } = <span style="color:#569CD6;">null</span>;
+<span style="color:#569CD6;">protected</span> <span style="color:#569CD6;">virtual</span> <span style="color:#569CD6;">string</span> HtmlTag =&gt; <span style="color:#569CD6;">this</span>.Tag ?? <span style="color:#D69D85;">&quot;div&quot;</span>;
+</pre></div>
 <p>The control Css class is built using a <code>CssBuilder</code> class.  Inheriting classes can add Css to the <code>CssClasses</code> collection.  External css can be set using the <code>class</code> attribute on the control.</p>
-<pre><code class="language-csharp">protected virtual List&lt;string&gt; CssClasses { get; private set; } = new List&lt;string&gt;();
-protected string CssClass
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+<span style="color:#569CD6;">protected</span> <span style="color:#569CD6;">virtual</span> List&lt;<span style="color:#569CD6;">string</span>&gt; CssClasses { <span style="color:#569CD6;">get</span>; <span style="color:#569CD6;">private</span> <span style="color:#569CD6;">set</span>; } = <span style="color:#569CD6;">new</span> List&lt;<span style="color:#569CD6;">string</span>&gt;();
+<span style="color:#569CD6;">protected</span> <span style="color:#569CD6;">string</span> CssClass
     =&gt; CSSBuilder.Class()
         .AddClass(CssClasses)
-        .AddClassFromAttributes(this.UserAttributes)
+        .AddClassFromAttributes(<span style="color:#569CD6;">this</span>.UserAttributes)
         .Build();
-</code></pre>
+</pre></div>
 <p>The control can be hidden or disabled with two parameters.  When <code>Show</code> is true <code>ChildContent</code> is displayed.  When <code>Show</code> is false <code>HideContent</code> is displayed if it isn't <code>null</code>, otherwise nothing is displayed.</p>
-<pre><code class="language-csharp">[Parameter] public bool Show { get; set; } = true;
-[Parameter] public bool Disabled { get; set; } = false;
-[Parameter] public EventCallback&lt;MouseEventArgs&gt; ClickEvent { get; set; }
-</code></pre>
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+[Parameter] <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">bool</span> Show { <span style="color:#569CD6;">get</span>; <span style="color:#569CD6;">set</span>; } = <span style="color:#569CD6;">true</span>;
+[Parameter] <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">bool</span> Disabled { <span style="color:#569CD6;">get</span>; <span style="color:#569CD6;">set</span>; } = <span style="color:#569CD6;">false</span>;
+[Parameter] <span style="color:#569CD6;">public</span> EventCallback&lt;MouseEventArgs&gt; ClickEvent { <span style="color:#569CD6;">get</span>; <span style="color:#569CD6;">set</span>; }
+</pre></div>
 <p>Finally the control sets the attributes to remove from the splatter attributes.</p>
-<pre><code class="language-csharp">protected override List&lt;string&gt; UnwantedAttributes { get; set; } = new List&lt;string&gt;() { &quot;class&quot; };
-</code></pre>
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+<span style="color:#569CD6;">protected</span> <span style="color:#569CD6;">override</span> List&lt;<span style="color:#569CD6;">string</span>&gt; UnwantedAttributes { <span style="color:#569CD6;">get</span>; <span style="color:#569CD6;">set</span>; } = <span style="color:#569CD6;">new</span> List&lt;<span style="color:#569CD6;">string</span>&gt;() { <span style="color:#D69D85;">&quot;class&quot;</span> };
+</pre></div>
 <p>The control builds the <code>RenderTree</code> in code.</p>
-<pre><code class="language-csharp">protected override void BuildRenderTree(RenderTreeBuilder builder)
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+<span style="color:#569CD6;">protected</span> <span style="color:#569CD6;">override</span> <span style="color:#569CD6;">void</span> BuildRenderTree(RenderTreeBuilder builder)
 {
-    if (this.Show)
+    <span style="color:#569CD6;">if</span> (<span style="color:#569CD6;">this</span>.Show)
     {
-        builder.OpenElement(0, this.HtmlTag);
-        if (!string.IsNullOrWhiteSpace(this.CssClass)) builder.AddAttribute(1, &quot;class&quot;, this.CssClass);
-        if (Disabled) builder.AddAttribute(2, &quot;disabled&quot;);
-        if (ClickEvent.HasDelegate)
-            builder.AddAttribute(3, &quot;onclick&quot;, EventCallback.Factory.Create&lt;MouseEventArgs&gt;(this, ClickEvent));
-        builder.AddMultipleAttributes(3, this.SplatterAttributes);
-        builder.AddContent(4, ChildContent);
+        builder.OpenElement(<span style="color:#B5CEA8;">0</span>, <span style="color:#569CD6;">this</span>.HtmlTag);
+        <span style="color:#569CD6;">if</span> (!<span style="color:#569CD6;">string</span>.IsNullOrWhiteSpace(<span style="color:#569CD6;">this</span>.CssClass)) builder.AddAttribute(<span style="color:#B5CEA8;">1</span>, <span style="color:#D69D85;">&quot;class&quot;</span>, <span style="color:#569CD6;">this</span>.CssClass);
+        <span style="color:#569CD6;">if</span> (Disabled) builder.AddAttribute(<span style="color:#B5CEA8;">2</span>, <span style="color:#D69D85;">&quot;disabled&quot;</span>);
+        <span style="color:#569CD6;">if</span> (ClickEvent.HasDelegate)
+            builder.AddAttribute(<span style="color:#B5CEA8;">3</span>, <span style="color:#D69D85;">&quot;onclick&quot;</span>, EventCallback.Factory.Create&lt;MouseEventArgs&gt;(<span style="color:#569CD6;">this</span>, ClickEvent));
+        builder.AddMultipleAttributes(<span style="color:#B5CEA8;">3</span>, <span style="color:#569CD6;">this</span>.SplatterAttributes);
+        builder.AddContent(<span style="color:#B5CEA8;">4</span>, ChildContent);
         builder.CloseElement();
     }
 }
-</code></pre>
-<h3 id="some-examples">Some Examples</h3>
+</pre></div><h3 id="some-examples">Some Examples</h3>
 <p>The rest of the article looks at a few of the UI controls in more detail.</p>
 <h4 id="uibutton">UIButton</h4>
 <p>This is a standard Bootstrap Button.</p>
@@ -297,101 +302,104 @@ protected string CssClass
 <li>The Tag is set to <code>button</code></li>
 <li><code>ButtonClick</code>, <code>Show</code> and <code>Disabled</code> are handled by the base component.</li>
 </ol>
-<pre><code class="language-csharp">// Blazor.SPA/Components/UIComponents/Forms/UIButtons.cs
-public class UIButton : UIComponent
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+<span style="color:#57A64A;">// Blazor.SPA/Components/UIComponents/Forms/UIButtons.cs</span>
+<span style="color:#569CD6;">public</span> <span style="color:#569CD6;">class</span> UIButton : UIComponent
 {
-    public UIButton()
-        =&gt; this.CssClasses.Add(&quot;btn mr-1&quot;);
+    <span style="color:#569CD6;">public</span> UIButton()
+        =&gt; <span style="color:#569CD6;">this</span>.CssClasses.Add(<span style="color:#D69D85;">&quot;btn mr-1&quot;</span>);
 
-    protected override string HtmlTag =&gt; &quot;button&quot;;
+    <span style="color:#569CD6;">protected</span> <span style="color:#569CD6;">override</span> <span style="color:#569CD6;">string</span> HtmlTag =&gt; <span style="color:#D69D85;">&quot;button&quot;</span>;
 }
-</code></pre>
+</pre></div>
 <p>Here's some code showing the control in use.</p>
-<pre><code class="language-html">&lt;UIButton Show=&quot;true&quot; Disabled=&quot;this._dirtyExit&quot; class=&quot;btn-dark&quot; ClickEvent=&quot;() =&gt; this.Exit()&quot;&gt;Exit&lt;/UIButton&gt;
-</code></pre>
-<h4 id="uiloader">UILoader</h4>
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+<span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">UIButton</span> <span style="color:#FF0000;">Show</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;true&quot;</span> <span style="color:#FF0000;">Disabled</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;this._dirtyExit&quot;</span> <span style="color:#FF0000;">class</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;btn-dark&quot;</span> <span style="color:#FF0000;">ClickEvent</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;() =&gt; this.Exit()&quot;</span><span style="color:#569CD6;">&gt;</span>Exit<span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">UIButton</span><span style="color:#569CD6;">&gt;</span>
+</pre></div><h4 id="uiloader">UILoader</h4>
 <p>This is a wrapper control designed to save implementing error checking in child content. It only renders child content when <code>State</code> is <code>Loaded</code>.  It displays alternative content when the view is loading or in error.</p>
-<pre><code class="language-csharp">@namespace Blazor.SPA.Components
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+@<span style="color:#569CD6;">namespace</span> Blazor.SPA.Components
 @inherits ComponentBase
-@if (this.State == ComponentState.Loaded)
+@<span style="color:#569CD6;">if</span> (<span style="color:#569CD6;">this</span>.State == ComponentState.Loaded)
 {
-    @this.ChildContent
+    @<span style="color:#569CD6;">this</span>.ChildContent
 }
-else if (this.State == ComponentState.InError)
+<span style="color:#569CD6;">else</span> <span style="color:#569CD6;">if</span> (<span style="color:#569CD6;">this</span>.State == ComponentState.InError)
 {
-    if (this.ErrorContent != null)
+    <span style="color:#569CD6;">if</span> (<span style="color:#569CD6;">this</span>.ErrorContent != <span style="color:#569CD6;">null</span>)
     {
-        @this.ErrorContent
+        @<span style="color:#569CD6;">this</span>.ErrorContent
     }
-    else
+    <span style="color:#569CD6;">else</span>
     {
-        &lt;div class=&quot;m-2 p-2&quot;&gt;Error Loading Content&lt;/div&gt;
+        &lt;div <span style="color:#569CD6;">class</span>=<span style="color:#D69D85;">&quot;m-2 p-2&quot;</span>&gt;Error Loading Content&lt;/div&gt;
     }
 }
-else
+<span style="color:#569CD6;">else</span>
 {
-    if (this.LoadingContent != null)
+    <span style="color:#569CD6;">if</span> (<span style="color:#569CD6;">this</span>.LoadingContent != <span style="color:#569CD6;">null</span>)
     {
-        @this.LoadingContent
+        @<span style="color:#569CD6;">this</span>.LoadingContent
     }
-    else
+    <span style="color:#569CD6;">else</span>
     {
-        &lt;div class=&quot;m-2 p-2&quot;&gt;Loading......&lt;/div&gt;
+        &lt;div <span style="color:#569CD6;">class</span>=<span style="color:#D69D85;">&quot;m-2 p-2&quot;</span>&gt;Loading......&lt;/div&gt;
     }
 }
 @code{
 
-    [Parameter] public RenderFragment ChildContent { get; set; }
-    [Parameter] public RenderFragment LoadingContent { get; set; }
-    [Parameter] public RenderFragment ErrorContent { get; set; }
-    [Parameter] public ComponentState State { get; set; } = ComponentState.Loaded;
+    [Parameter] <span style="color:#569CD6;">public</span> RenderFragment ChildContent { <span style="color:#569CD6;">get</span>; <span style="color:#569CD6;">set</span>; }
+    [Parameter] <span style="color:#569CD6;">public</span> RenderFragment LoadingContent { <span style="color:#569CD6;">get</span>; <span style="color:#569CD6;">set</span>; }
+    [Parameter] <span style="color:#569CD6;">public</span> RenderFragment ErrorContent { <span style="color:#569CD6;">get</span>; <span style="color:#569CD6;">set</span>; }
+    [Parameter] <span style="color:#569CD6;">public</span> ComponentState State { <span style="color:#569CD6;">get</span>; <span style="color:#569CD6;">set</span>; } = ComponentState.Loaded;
 
 }
-</code></pre>
+</pre></div>
 <p>You can see the control in use in the Edit and View forms.</p>
 <h4 id="uicontaineruirowuicolumn">UIContainer/UIRow/UIColumn</h4>
 <p>These controls create the BootStrap grid system - i.e. container, row and column - by building out DIVs with the correct Css.</p>
-<pre><code class="language-csharp">public class UIContainer : UIComponent
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+<span style="color:#569CD6;">public</span> <span style="color:#569CD6;">class</span> UIContainer : UIComponent
 {
-    public UIContainer()
-        =&gt; CssClasses.Add(&quot;container - fluid&quot;);
+    <span style="color:#569CD6;">public</span> UIContainer()
+        =&gt; CssClasses.Add(<span style="color:#D69D85;">&quot;container - fluid&quot;</span>);
 }
-</code></pre>
-<pre><code class="language-csharp">class UIRow : UIComponent
+</pre></div><div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+<span style="color:#569CD6;">class</span> UIRow : UIComponent
 {
-    public UIRow()
-        =&gt; CssClasses.Add(&quot;row&quot;);
+    <span style="color:#569CD6;">public</span> UIRow()
+        =&gt; CssClasses.Add(<span style="color:#D69D85;">&quot;row&quot;</span>);
 }
-</code></pre>
-<pre><code class="language-csharp">public class UIColumn : UIComponent
+</pre></div><div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+<span style="color:#569CD6;">public</span> <span style="color:#569CD6;">class</span> UIColumn : UIComponent
 {
-    [Parameter] public virtual int Cols { get; set; } = 0;
+    [Parameter] <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">virtual</span> <span style="color:#569CD6;">int</span> Cols { <span style="color:#569CD6;">get</span>; <span style="color:#569CD6;">set</span>; } = <span style="color:#B5CEA8;">0</span>;
 
-    public UIColumn()
-        =&gt; CssClasses.Add(this.Cols &gt; 0 ? $&quot;col-{this.Cols}&quot; : $&quot;col&quot;);
+    <span style="color:#569CD6;">public</span> UIColumn()
+        =&gt; CssClasses.Add(<span style="color:#569CD6;">this</span>.Cols &gt; <span style="color:#B5CEA8;">0</span> ? $<span style="color:#D69D85;">&quot;col-{this.Cols}&quot;</span> : $<span style="color:#D69D85;">&quot;col&quot;</span>);
 }
-</code></pre>
-<pre><code class="language-csharp">public class UILabelColumn : UIColumn
+</pre></div><div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+<span style="color:#569CD6;">public</span> <span style="color:#569CD6;">class</span> UILabelColumn : UIColumn
 {
-    [Parameter] public override int Cols { get; set; } = 2;
-    [Parameter] public string FormCss { get; set; } = &quot;form-label&quot;;
+    [Parameter] <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">override</span> <span style="color:#569CD6;">int</span> Cols { <span style="color:#569CD6;">get</span>; <span style="color:#569CD6;">set</span>; } = <span style="color:#B5CEA8;">2</span>;
+    [Parameter] <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">string</span> FormCss { <span style="color:#569CD6;">get</span>; <span style="color:#569CD6;">set</span>; } = <span style="color:#D69D85;">&quot;form-label&quot;</span>;
 
-    public UILabelColumn()
-        =&gt; this.CssClasses.Add(this.FormCss);
+    <span style="color:#569CD6;">public</span> UILabelColumn()
+        =&gt; <span style="color:#569CD6;">this</span>.CssClasses.Add(<span style="color:#569CD6;">this</span>.FormCss);
 }
-</code></pre>
+</pre></div>
 <p>Here's some code showing the controls in use.</p>
-<pre><code class="language-html">&lt;UIContainer&gt;
-    &lt;UIRow&gt;
-        &lt;UILabelColumn Columns=&quot;2&quot;&gt;
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+<span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">UIContainer</span><span style="color:#569CD6;">&gt;</span>
+    <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">UIRow</span><span style="color:#569CD6;">&gt;</span>
+        <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">UILabelColumn</span> <span style="color:#FF0000;">Columns</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;2&quot;</span><span style="color:#569CD6;">&gt;</span>
             Date
-        &lt;/UILabelColumn&gt;
+        <span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">UILabelColumn</span><span style="color:#569CD6;">&gt;</span>
         ............
-    &lt;/UIRow&gt;
+    <span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">UIRow</span><span style="color:#569CD6;">&gt;</span>
 ..........
-&lt;/UIContainer&gt;
-</code></pre>
-<h2 id="wrap-up">Wrap Up</h2>
+<span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">UIContainer</span><span style="color:#569CD6;">&gt;</span>
+</pre></div><h2 id="wrap-up">Wrap Up</h2>
 <p>This article provides an overview on how to build UI Controls with components, and examines some example components in detail.  You can see all the library UIControls in the GitHub Repository</p>
 <p>Some key points to note:</p>
 <ol>

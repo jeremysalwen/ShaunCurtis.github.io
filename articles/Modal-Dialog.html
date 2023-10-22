@@ -87,31 +87,32 @@
 </ol>
 <h3 id="imodal">IModal</h3>
 <p><code>IModalDialog</code> defines an interface that all modal dialogs must implementation.</p>
-<pre><code class="language-csharp">namespace Blazr.Modal
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+<span style="color:#569CD6;">namespace</span> Blazr.Modal
 {
-    public interface IModalDialog
+    <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">interface</span> IModalDialog
     {
-        ModalOptions Options { get; set; }
+        ModalOptions Options { <span style="color:#569CD6;">get</span>; <span style="color:#569CD6;">set</span>; }
 
-        //  Method to display a Modal Dialog
-        Task&lt;ModalResult&gt; ShowAsync&lt;TModal&gt;(ModalOptions options) where TModal : IComponent;
+        <span style="color:#57A64A;">//  Method to display a Modal Dialog</span>
+        Task&lt;ModalResult&gt; ShowAsync&lt;TModal&gt;(ModalOptions options) <span style="color:#569CD6;">where</span> TModal : IComponent;
 
-        // Method to update the Modal Dialog during display
-        void Update(ModalOptions options = null);
+        <span style="color:#57A64A;">// Method to update the Modal Dialog during display</span>
+        <span style="color:#569CD6;">void</span> Update(ModalOptions options = <span style="color:#569CD6;">null</span>);
 
-        // Method to dismiss - normally called by the dismiss button in the header bar
-        void Dismiss();
+        <span style="color:#57A64A;">// Method to dismiss - normally called by the dismiss button in the header bar</span>
+        <span style="color:#569CD6;">void</span> Dismiss();
 
-        // Method to close the dialog - normally called by the child component TModal
-        void Close(ModalResult result);
+        <span style="color:#57A64A;">// Method to close the dialog - normally called by the child component TModal</span>
+        <span style="color:#569CD6;">void</span> Close(ModalResult result);
     }
 }
-</code></pre>
-<h3 id="modalresulttype">ModalResultType</h3>
-<pre><code class="language-csharp">namespace Blazr.Modal
+</pre></div><h3 id="modalresulttype">ModalResultType</h3>
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+<span style="color:#569CD6;">namespace</span> Blazr.Modal
 {
-    // Defines the types for exiting the dialog
-    public enum ModalResultType
+    <span style="color:#57A64A;">// Defines the types for exiting the dialog</span>
+    <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">enum</span> ModalResultType
     {
         NoSet,
         OK,
@@ -119,111 +120,111 @@
         Exit
     }
 }
-</code></pre>
-<h3 id="modalresult">ModalResult</h3>
+</pre></div><h3 id="modalresult">ModalResult</h3>
 <p><code>ModalResult</code> is passed back to the <code>Show</code> caller as the <code>Task</code> completion result when the modal closes.</p>
-<pre><code class="language-csharp">namespace Blazr.Modal
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+<span style="color:#569CD6;">namespace</span> Blazr.Modal
 {
-    public class ModalResult
+    <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">class</span> ModalResult
     {
-        // The closing type
-        public BootstrapModalResultType ResultType { get; private set; } = ModalResultType.NoSet;
+        <span style="color:#57A64A;">// The closing type</span>
+        <span style="color:#569CD6;">public</span> BootstrapModalResultType ResultType { <span style="color:#569CD6;">get</span>; <span style="color:#569CD6;">private</span> <span style="color:#569CD6;">set</span>; } = ModalResultType.NoSet;
 
-        // Whatever object you wish to pass back
-        public object Data { get; set; } = null;
+        <span style="color:#57A64A;">// Whatever object you wish to pass back</span>
+        <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">object</span> Data { <span style="color:#569CD6;">get</span>; <span style="color:#569CD6;">set</span>; } = <span style="color:#569CD6;">null</span>;
 
-        // A set of static methods to build a BootstrapModalResult
+        <span style="color:#57A64A;">// A set of static methods to build a BootstrapModalResult</span>
 
-        public static ModalResult OK() =&gt; new ModalResult() {ResultType = ModalResultType.OK };
+        <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">static</span> ModalResult OK() =&gt; <span style="color:#569CD6;">new</span> ModalResult() {ResultType = ModalResultType.OK };
 
-        public static ModalResult Exit() =&gt; new ModalResult() {ResultType = ModalResultType.Exit};
+        <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">static</span> ModalResult Exit() =&gt; <span style="color:#569CD6;">new</span> ModalResult() {ResultType = ModalResultType.Exit};
 
-        public static ModalResult Cancel() =&gt; new ModalResult() {ResultType = ModalResultType.Cancel };
+        <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">static</span> ModalResult Cancel() =&gt; <span style="color:#569CD6;">new</span> ModalResult() {ResultType = ModalResultType.Cancel };
 
-        public static ModalResult OK(object data) =&gt; new ModalResult() { Data = data, ResultType = ModalResultType.OK };
+        <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">static</span> ModalResult OK(<span style="color:#569CD6;">object</span> data) =&gt; <span style="color:#569CD6;">new</span> ModalResult() { Data = data, ResultType = ModalResultType.OK };
 
-        public static ModalResult Exit(object data) =&gt; new ModalResult() { Data = data, ResultType = ModalResultType.Exit };
+        <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">static</span> ModalResult Exit(<span style="color:#569CD6;">object</span> data) =&gt; <span style="color:#569CD6;">new</span> ModalResult() { Data = data, ResultType = ModalResultType.Exit };
 
-        public static ModalResult Cancel(object data) =&gt; new ModalResult() { Data = data, ResultType = ModalResultType.Cancel };
+        <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">static</span> ModalResult Cancel(<span style="color:#569CD6;">object</span> data) =&gt; <span style="color:#569CD6;">new</span> ModalResult() { Data = data, ResultType = ModalResultType.Cancel };
     }
 }
-</code></pre>
-<h3 id="modaloptions">ModalOptions</h3>
+</pre></div><h3 id="modaloptions">ModalOptions</h3>
 <p><code>ModalOptions</code> is an <code>IEnumerable</code> collection of options passed to the Modal Dialog class when opening the Dialog.</p>
-<pre><code class="language-csharp">namespace Blazr.Modal
-{   public class ModalOptions :IEnumerable&lt;KeyValuePair&lt;string, object&gt;&gt;
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+<span style="color:#569CD6;">namespace</span> Blazr.Modal
+{   <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">class</span> ModalOptions :IEnumerable&lt;KeyValuePair&lt;<span style="color:#569CD6;">string</span>, <span style="color:#569CD6;">object</span>&gt;&gt;
     {
-        /// &lt;summary&gt;
-        /// List of options
-        /// &lt;/summary&gt;
-        public static readonly string __Width = &quot;Width&quot;;
-        public static readonly string __ID = &quot;ID&quot;;
-        public static readonly string __ExitOnBackGroundClick = &quot;ExitOnBackGroundClick&quot;;
+        <span style="color:#608B4E;">///</span> <span style="color:#608B4E;">&lt;summary&gt;</span>
+        <span style="color:#608B4E;">///</span><span style="color:#608B4E;"> List of options</span>
+        <span style="color:#608B4E;">///</span> <span style="color:#608B4E;">&lt;/summary&gt;</span>
+        <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">static</span> <span style="color:#569CD6;">readonly</span> <span style="color:#569CD6;">string</span> __Width = <span style="color:#D69D85;">&quot;Width&quot;</span>;
+        <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">static</span> <span style="color:#569CD6;">readonly</span> <span style="color:#569CD6;">string</span> __ID = <span style="color:#D69D85;">&quot;ID&quot;</span>;
+        <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">static</span> <span style="color:#569CD6;">readonly</span> <span style="color:#569CD6;">string</span> __ExitOnBackGroundClick = <span style="color:#D69D85;">&quot;ExitOnBackGroundClick&quot;</span>;
 
-        private Dictionary&lt;string, object&gt; Parameters { get; } = new Dictionary&lt;string, object&gt;();
+        <span style="color:#569CD6;">private</span> Dictionary&lt;<span style="color:#569CD6;">string</span>, <span style="color:#569CD6;">object</span>&gt; Parameters { <span style="color:#569CD6;">get</span>; } = <span style="color:#569CD6;">new</span> Dictionary&lt;<span style="color:#569CD6;">string</span>, <span style="color:#569CD6;">object</span>&gt;();
 
-        public IEnumerator&lt;KeyValuePair&lt;string, object&gt;&gt; GetEnumerator()
+        <span style="color:#569CD6;">public</span> IEnumerator&lt;KeyValuePair&lt;<span style="color:#569CD6;">string</span>, <span style="color:#569CD6;">object</span>&gt;&gt; GetEnumerator()
         {
-            foreach (var item in Parameters)
-                yield return item;
+            <span style="color:#569CD6;">foreach</span> (<span style="color:#569CD6;">var</span> item <span style="color:#569CD6;">in</span> Parameters)
+                <span style="color:#569CD6;">yield</span> <span style="color:#569CD6;">return</span> item;
         }
 
         IEnumerator IEnumerable.GetEnumerator()
-            =&gt; this.GetEnumerator();
+            =&gt; <span style="color:#569CD6;">this</span>.GetEnumerator();
 
-        public T Get&lt;T&gt;(string key)
+        <span style="color:#569CD6;">public</span> T Get&lt;T&gt;(<span style="color:#569CD6;">string</span> key)
         {
-            if (this.Parameters.ContainsKey(key))
+            <span style="color:#569CD6;">if</span> (<span style="color:#569CD6;">this</span>.Parameters.ContainsKey(key))
             {
-                if (this.Parameters[key] is T t) return t;
+                <span style="color:#569CD6;">if</span> (<span style="color:#569CD6;">this</span>.Parameters[key] <span style="color:#569CD6;">is</span> T t) <span style="color:#569CD6;">return</span> t;
             }
-            return default;
+            <span style="color:#569CD6;">return</span> <span style="color:#569CD6;">default</span>;
         }
 
-        public bool TryGet&lt;T&gt;(string key, out T value)
+        <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">bool</span> TryGet&lt;T&gt;(<span style="color:#569CD6;">string</span> key, <span style="color:#569CD6;">out</span> T value)
         {
-            value = default;
-            if (this.Parameters.ContainsKey(key))
+            value = <span style="color:#569CD6;">default</span>;
+            <span style="color:#569CD6;">if</span> (<span style="color:#569CD6;">this</span>.Parameters.ContainsKey(key))
             {
-                if (this.Parameters[key] is T t)
+                <span style="color:#569CD6;">if</span> (<span style="color:#569CD6;">this</span>.Parameters[key] <span style="color:#569CD6;">is</span> T t)
                 {
                     value = t;
-                    return true;
+                    <span style="color:#569CD6;">return</span> <span style="color:#569CD6;">true</span>;
                 }
             }
-            return false;
+            <span style="color:#569CD6;">return</span> <span style="color:#569CD6;">false</span>;
         }
 
-        public bool Set(string key, object value)
+        <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">bool</span> Set(<span style="color:#569CD6;">string</span> key, <span style="color:#569CD6;">object</span> value)
         {
-            if (this.Parameters.ContainsKey(key))
+            <span style="color:#569CD6;">if</span> (<span style="color:#569CD6;">this</span>.Parameters.ContainsKey(key))
             {
-                this.Parameters[key] = value;
-                return false;
+                <span style="color:#569CD6;">this</span>.Parameters[key] = value;
+                <span style="color:#569CD6;">return</span> <span style="color:#569CD6;">false</span>;
             }
-            this.Parameters.Add(key, value);
-            return true;
+            <span style="color:#569CD6;">this</span>.Parameters.Add(key, value);
+            <span style="color:#569CD6;">return</span> <span style="color:#569CD6;">true</span>;
         }
     }
 }
-</code></pre>
-<h3 id="basemodaldialog">BaseModalDialog</h3>
+</pre></div><h3 id="basemodaldialog">BaseModalDialog</h3>
 <p>The Razor Markup for <code>BaseModalDialog</code> implements the markup for a dialog.  A cascading value provides child form access to the <code>IModalDialog</code> instance.</p>
-<pre><code class="language-csharp">@namespace Blazr.Modal
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+@<span style="color:#569CD6;">namespace</span> Blazr.Modal
 @inherits ComponentBase
 @implements IModalDialog
 
-@if (this.Display)
+@<span style="color:#569CD6;">if</span> (<span style="color:#569CD6;">this</span>.Display)
 {
-    &lt;CascadingValue Value=&quot;(IModalDialog)this&quot;&gt;
-        &lt;div class=&quot;base-modal-background&quot; @onclick=&quot;OnBackClick&quot;&gt;
-            &lt;div class=&quot;base-modal-content&quot; style=&quot;@this.Width&quot; @onclick:stopPropagation=&quot;true&quot;&gt;
-                @this._Content
+    &lt;CascadingValue Value=<span style="color:#D69D85;">&quot;(IModalDialog)this&quot;</span>&gt;
+        &lt;div <span style="color:#569CD6;">class</span>=<span style="color:#D69D85;">&quot;base-modal-background&quot;</span> @onclick=<span style="color:#D69D85;">&quot;OnBackClick&quot;</span>&gt;
+            &lt;div <span style="color:#569CD6;">class</span>=<span style="color:#D69D85;">&quot;base-modal-content&quot;</span> style=<span style="color:#D69D85;">&quot;@this.Width&quot;</span> @onclick:stopPropagation=<span style="color:#D69D85;">&quot;true&quot;</span>&gt;
+                @<span style="color:#569CD6;">this</span>._Content
             &lt;/div&gt;
         &lt;/div&gt;
     &lt;/CascadingValue&gt;
 }
-</code></pre>
+</pre></div>
 <p>Some key points:</p>
 <ol>
 <li>The component is initialised when the View is created and added to the RenderTree.  At this point it empty and hidden.</li>
@@ -231,138 +232,141 @@
 <li>The component hides itself.  Either the child form calls <code>Close</code> on the cascaded <code>IModalDialog</code> instance, or the modal calls <code>Dismiss</code>.  Both actions set the Task to completed, <code>Display</code> to false,  clear the content, and call <code>Render</code> which renders an empty component.</li>
 <li>The component uses a <code>TaskCompletionSource</code> object to manage async behaviour and communicate task status to the caller.</li>
 </ol>
-<pre><code class="language-csharp">namespace Blazr.Modal
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+<span style="color:#569CD6;">namespace</span> Blazr.Modal
 {
-    public partial class BaseModalDialog : ComponentBase, IModalDialog
+    <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">partial</span> <span style="color:#569CD6;">class</span> BaseModalDialog : ComponentBase, IModalDialog
     {
-        [Inject] private IJSRuntime _js { get; set; }
+        [Inject] <span style="color:#569CD6;">private</span> IJSRuntime _js { <span style="color:#569CD6;">get</span>; <span style="color:#569CD6;">set</span>; }
 
-        public ModalOptions Options { get; protected set; } = new ModalOptions();
+        <span style="color:#569CD6;">public</span> ModalOptions Options { <span style="color:#569CD6;">get</span>; <span style="color:#569CD6;">protected</span> <span style="color:#569CD6;">set</span>; } = <span style="color:#569CD6;">new</span> ModalOptions();
 
-        public bool Display { get; protected set; }
+        <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">bool</span> Display { <span style="color:#569CD6;">get</span>; <span style="color:#569CD6;">protected</span> <span style="color:#569CD6;">set</span>; }
 
-        public bool IsLocked { get; protected set; }
+        <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">bool</span> IsLocked { <span style="color:#569CD6;">get</span>; <span style="color:#569CD6;">protected</span> <span style="color:#569CD6;">set</span>; }
 
-        protected RenderFragment _Content { get; set; }
+        <span style="color:#569CD6;">protected</span> RenderFragment _Content { <span style="color:#569CD6;">get</span>; <span style="color:#569CD6;">set</span>; }
 
-        protected string Width =&gt; this.Options.TryGet&lt;string&gt;(ModalOptions.__Width, out string value) ? $&quot;width:{value}&quot; : string.Empty;
+        <span style="color:#569CD6;">protected</span> <span style="color:#569CD6;">string</span> Width =&gt; <span style="color:#569CD6;">this</span>.Options.TryGet&lt;<span style="color:#569CD6;">string</span>&gt;(ModalOptions.__Width, <span style="color:#569CD6;">out</span> <span style="color:#569CD6;">string</span> value) ? $<span style="color:#D69D85;">&quot;width:{value}&quot;</span> : <span style="color:#569CD6;">string</span>.Empty;
 
-        protected bool ExitOnBackGroundClick =&gt; this.Options.TryGet&lt;bool&gt;(ModalOptions.__ExitOnBackGroundClick, out bool value) ? value : false;
+        <span style="color:#569CD6;">protected</span> <span style="color:#569CD6;">bool</span> ExitOnBackGroundClick =&gt; <span style="color:#569CD6;">this</span>.Options.TryGet&lt;<span style="color:#569CD6;">bool</span>&gt;(ModalOptions.__ExitOnBackGroundClick, <span style="color:#569CD6;">out</span> <span style="color:#569CD6;">bool</span> value) ? value : <span style="color:#569CD6;">false</span>;
 
-        protected TaskCompletionSource&lt;ModalResult&gt; _ModalTask { get; set; } = new TaskCompletionSource&lt;ModalResult&gt;();
+        <span style="color:#569CD6;">protected</span> TaskCompletionSource&lt;ModalResult&gt; _ModalTask { <span style="color:#569CD6;">get</span>; <span style="color:#569CD6;">set</span>; } = <span style="color:#569CD6;">new</span> TaskCompletionSource&lt;ModalResult&gt;();
 
-        public Task&lt;ModalResult&gt; ShowAsync&lt;TModal&gt;(ModalOptions options) where TModal : IComponent
+        <span style="color:#569CD6;">public</span> Task&lt;ModalResult&gt; ShowAsync&lt;TModal&gt;(ModalOptions options) <span style="color:#569CD6;">where</span> TModal : IComponent
         {
-            this.Options = options ??= this.Options;
-            this._ModalTask = new TaskCompletionSource&lt;ModalResult&gt;();
-            this._Content = new RenderFragment(builder =&gt;
+            <span style="color:#569CD6;">this</span>.Options = options ??= <span style="color:#569CD6;">this</span>.Options;
+            <span style="color:#569CD6;">this</span>._ModalTask = <span style="color:#569CD6;">new</span> TaskCompletionSource&lt;ModalResult&gt;();
+            <span style="color:#569CD6;">this</span>._Content = <span style="color:#569CD6;">new</span> RenderFragment(builder =&gt;
             {
-                builder.OpenComponent(1, typeof(TModal));
+                builder.OpenComponent(<span style="color:#B5CEA8;">1</span>, <span style="color:#569CD6;">typeof</span>(TModal));
                 builder.CloseComponent();
             });
-            this.Display = true;
+            <span style="color:#569CD6;">this</span>.Display = <span style="color:#569CD6;">true</span>;
             InvokeAsync(StateHasChanged);
-            return this._ModalTask.Task;
+            <span style="color:#569CD6;">return</span> <span style="color:#569CD6;">this</span>._ModalTask.Task;
         }
 
-        /// &lt;summary&gt;
-        /// Method to update the state of the display based on UIOptions
-        /// &lt;/summary&gt;
-        /// &lt;param name=&quot;options&quot;&gt;&lt;/param&gt;
-        public void Update(ModalOptions options = null)
+        <span style="color:#608B4E;">///</span> <span style="color:#608B4E;">&lt;summary&gt;</span>
+        <span style="color:#608B4E;">///</span><span style="color:#608B4E;"> Method to update the state of the display based on UIOptions</span>
+        <span style="color:#608B4E;">///</span> <span style="color:#608B4E;">&lt;/summary&gt;</span>
+        <span style="color:#608B4E;">///</span> <span style="color:#608B4E;">&lt;param name=&quot;options&quot;&gt;</span><span style="color:#608B4E;">&lt;/param&gt;</span>
+        <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">void</span> Update(ModalOptions options = <span style="color:#569CD6;">null</span>)
         {
-            this.Options = options ??= this.Options;
+            <span style="color:#569CD6;">this</span>.Options = options ??= <span style="color:#569CD6;">this</span>.Options;
             InvokeAsync(StateHasChanged);
         }
 
-        /// Method called by the dismiss button to close the dialog
-        /// sets the task to complete, show to false and renders the component (which hides it as show is false!)
-        public async void Dismiss()
+        <span style="color:#608B4E;">///</span><span style="color:#608B4E;"> Method called by the dismiss button to close the dialog</span>
+        <span style="color:#608B4E;">///</span><span style="color:#608B4E;"> sets the task to complete, show to false and renders the component (which hides it as show is false!)</span>
+        <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">async</span> <span style="color:#569CD6;">void</span> Dismiss()
         {
-            _ = this._ModalTask.TrySetResult(ModalResult.Cancel());
-            this.Display = false;
-            this._Content = null;
-            await InvokeAsync(StateHasChanged);
+            _ = <span style="color:#569CD6;">this</span>._ModalTask.TrySetResult(ModalResult.Cancel());
+            <span style="color:#569CD6;">this</span>.Display = <span style="color:#569CD6;">false</span>;
+            <span style="color:#569CD6;">this</span>._Content = <span style="color:#569CD6;">null</span>;
+            <span style="color:#569CD6;">await</span> InvokeAsync(StateHasChanged);
         }
 
-        /// Method called by child components through the cascade value of this component
-        /// sets the task to complete, show to false and renders the component (which hides it as show is false!)
-        public async void Close(ModalResult result)
+        <span style="color:#608B4E;">///</span><span style="color:#608B4E;"> Method called by child components through the cascade value of this component</span>
+        <span style="color:#608B4E;">///</span><span style="color:#608B4E;"> sets the task to complete, show to false and renders the component (which hides it as show is false!)</span>
+        <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">async</span> <span style="color:#569CD6;">void</span> Close(ModalResult result)
         {
-            _ = this._ModalTask.TrySetResult(result);
-            this.Display = false;
-            this._Content = null;
-            await InvokeAsync(StateHasChanged);
+            _ = <span style="color:#569CD6;">this</span>._ModalTask.TrySetResult(result);
+            <span style="color:#569CD6;">this</span>.Display = <span style="color:#569CD6;">false</span>;
+            <span style="color:#569CD6;">this</span>._Content = <span style="color:#569CD6;">null</span>;
+            <span style="color:#569CD6;">await</span> InvokeAsync(StateHasChanged);
         }
 
-        private void SetPageExitCheck(bool action)
+        <span style="color:#569CD6;">private</span> <span style="color:#569CD6;">void</span> SetPageExitCheck(<span style="color:#569CD6;">bool</span> action)
         {
-            _js.InvokeAsync&lt;bool&gt;(&quot;cecblazor_setEditorExitCheck&quot;, action);
+            _js.InvokeAsync&lt;<span style="color:#569CD6;">bool</span>&gt;(<span style="color:#D69D85;">&quot;cecblazor_setEditorExitCheck&quot;</span>, action);
         }
 
-        public void Lock(bool setlock)
+        <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">void</span> Lock(<span style="color:#569CD6;">bool</span> setlock)
         {
-            if (setlock &amp;&amp; !this.IsLocked)
+            <span style="color:#569CD6;">if</span> (setlock &amp;&amp; !<span style="color:#569CD6;">this</span>.IsLocked)
             {
-                this.IsLocked = true;
-                this.SetPageExitCheck(true);
+                <span style="color:#569CD6;">this</span>.IsLocked = <span style="color:#569CD6;">true</span>;
+                <span style="color:#569CD6;">this</span>.SetPageExitCheck(<span style="color:#569CD6;">true</span>);
             }
-            else if (this.IsLocked &amp;&amp; !setlock)
+            <span style="color:#569CD6;">else</span> <span style="color:#569CD6;">if</span> (<span style="color:#569CD6;">this</span>.IsLocked &amp;&amp; !setlock)
             {
-                this.IsLocked = false;
-                this.SetPageExitCheck(false);
+                <span style="color:#569CD6;">this</span>.IsLocked = <span style="color:#569CD6;">false</span>;
+                <span style="color:#569CD6;">this</span>.SetPageExitCheck(<span style="color:#569CD6;">false</span>);
             }
         }
 
-        private void OnBackClick(MouseEventArgs e)
+        <span style="color:#569CD6;">private</span> <span style="color:#569CD6;">void</span> OnBackClick(MouseEventArgs e)
         {
-            if (ExitOnBackGroundClick &amp;&amp; !IsLocked)
-                this.Close(ModalResult.Exit());
+            <span style="color:#569CD6;">if</span> (ExitOnBackGroundClick &amp;&amp; !IsLocked)
+                <span style="color:#569CD6;">this</span>.Close(ModalResult.Exit());
         }
     }
 }
-</code></pre>
+</pre></div>
 <p>Next we add some component Css as <em>BasModalDialog.razor.css</em>.</p>
-<pre><code class="language-css">div.base-modal-background {
-    display: block;
-    position: fixed;
-    z-index: 1; /* Sit on top */
-    left: 0;
-    top: 0;
-    width: 100%; /* Full width */
-    height: 100%; /* Full height */
-    overflow: auto; /* Enable scroll if needed */
-    background-color: rgb(0,0,0); /* Fallback color */
-    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+<span style="color:#A31515;">div.base-modal-background </span>{
+    <span style="color:#FF0000;">display</span>: <span style="color:#569CD6;">block</span>;
+    <span style="color:#FF0000;">position</span>: <span style="color:#569CD6;">fixed</span>;
+    <span style="color:#FF0000;">z-index</span>: <span style="color:#569CD6;">1</span>;<span style="color:#57A64A;"> /* Sit on top */</span>
+    <span style="color:#FF0000;">left</span>: <span style="color:#569CD6;">0</span>;
+    <span style="color:#FF0000;">top</span>: <span style="color:#569CD6;">0</span>;
+    <span style="color:#FF0000;">width</span>: <span style="color:#569CD6;">100%</span>;<span style="color:#57A64A;"> /* Full width */</span>
+    <span style="color:#FF0000;">height</span>: <span style="color:#569CD6;">100%</span>;<span style="color:#57A64A;"> /* Full height */</span>
+    <span style="color:#FF0000;">overflow</span>: <span style="color:#569CD6;">auto</span>;<span style="color:#57A64A;"> /* Enable scroll if needed */</span>
+    <span style="color:#FF0000;">background-color</span>: <span style="color:#569CD6;">rgb(0,0,0)</span>;<span style="color:#57A64A;"> /* Fallback color */</span>
+    <span style="color:#FF0000;">background-color</span>: <span style="color:#569CD6;">rgba(0,0,0,0.4)</span>;<span style="color:#57A64A;"> /* Black w/ opacity */</span>
 }
 
-div.base-modal-content {
-    background-color: #fefefe;
-    margin: 10% auto;
-    padding: 10px;
-    border: 2px solid #888;
-    width: 90%;
+<span style="color:#A31515;">div.base-modal-content </span>{
+    <span style="color:#FF0000;">background-color</span>: <span style="color:#569CD6;">#fefefe</span>;
+    <span style="color:#FF0000;">margin</span>: <span style="color:#569CD6;">10% auto</span>;
+    <span style="color:#FF0000;">padding</span>: <span style="color:#569CD6;">10px</span>;
+    <span style="color:#FF0000;">border</span>: <span style="color:#569CD6;">2px solid #888</span>;
+    <span style="color:#FF0000;">width</span>: <span style="color:#569CD6;">90%</span>;
 }
-</code></pre>
+</pre></div>
 <p>Finally we need to set up some JsInterop to handle browser exit locking.  Add a <em>site.js</em> file to <em>wwwroot</em></p>
-<pre><code class="language-js">window.cecblazor_setEditorExitCheck = function (show) {
-    if (show) {
-        window.addEventListener(&quot;beforeunload&quot;, cecblazor_showExitDialog);
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+window.cecblazor_setEditorExitCheck = <span style="color:#569CD6;">function</span> (show) {
+    <span style="color:#569CD6;">if</span> (show) {
+        window.addEventListener(<span style="color:#D69D85;">&quot;beforeunload&quot;</span>, cecblazor_showExitDialog);
     }
-    else {
-        window.removeEventListener(&quot;beforeunload&quot;, cecblazor_showExitDialog);
+    <span style="color:#569CD6;">else</span> {
+        window.removeEventListener(<span style="color:#D69D85;">&quot;beforeunload&quot;</span>, cecblazor_showExitDialog);
     }
 }
 
-window.cecblazor_showExitDialog = function (event) {
+window.cecblazor_showExitDialog = <span style="color:#569CD6;">function</span> (event) {
     event.preventDefault();
-    event.returnValue = &quot;There are unsaved changes on this page.  Do you want to leave?&quot;;
+    event.returnValue = <span style="color:#D69D85;">&quot;There are unsaved changes on this page.  Do you want to leave?&quot;</span>;
 }
-</code></pre>
+</pre></div>
 <p>And add a reference to the SPA startup page - _Host.cshtml or index.html:</p>
-<pre><code class="language-html">    &lt;script src=&quot;/site.js&quot;&gt;&lt;/script&gt;
-</code></pre>
-<h2 id="implementing-modals">Implementing Modals</h2>
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+    <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">script</span> <span style="color:#FF0000;">src</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;/site.js&quot;</span><span style="color:#569CD6;">&gt;</span><span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">script</span><span style="color:#569CD6;">&gt;</span>
+</pre></div><h2 id="implementing-modals">Implementing Modals</h2>
 <p>We will demonstrate using the modal dialog with two examples:</p>
 <ol>
 <li>Displaying the FetchData page in a modal dialog.</li>
@@ -375,57 +379,58 @@ window.cecblazor_showExitDialog = function (event) {
 <li>Add the <code>Blazr.Dialog</code> namespace to <code>_Imports.razor</code>.</li>
 </ol>
 <h3 id="modify-fetchdata">Modify FetchData</h3>
-<pre><code class="language-html">@page &quot;/fetchdata&quot;
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+@page &quot;/fetchdata&quot;
 
 .....
 
     @if (this.isDialog)
     {
-        &lt;div class=&quot;text-right&quot;&gt; &lt;button class=&quot;btn btn-dark&quot; @onclick=&quot;Exit&quot;&gt;Exit&lt;/button&gt;&lt;/div&gt;
+        <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">div</span> <span style="color:#FF0000;">class</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;text-right&quot;</span><span style="color:#569CD6;">&gt;</span> <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">button</span> <span style="color:#FF0000;">class</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;btn btn-dark&quot; @onclick=&quot;Exit&quot;</span><span style="color:#569CD6;">&gt;</span>Exit<span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">button</span><span style="color:#569CD6;">&gt;</span><span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">div</span><span style="color:#569CD6;">&gt;</span>
     }
 }
-</code></pre>
-<pre><code class="language-csharp">@code {
+</pre></div><div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+@code {
 
-    [CascadingParameter] IModalDialog Dialog { get; set; }
+    [CascadingParameter] IModalDialog Dialog { <span style="color:#569CD6;">get</span>; <span style="color:#569CD6;">set</span>; }
 
-    private bool isDialog =&gt; Dialog is not null;
+    <span style="color:#569CD6;">private</span> <span style="color:#569CD6;">bool</span> isDialog =&gt; Dialog <span style="color:#569CD6;">is</span> not <span style="color:#569CD6;">null</span>;
 
-    private List&lt;WeatherForecast&gt; forecasts;
+    <span style="color:#569CD6;">private</span> List&lt;WeatherForecast&gt; forecasts;
 
-    private void Exit()
+    <span style="color:#569CD6;">private</span> <span style="color:#569CD6;">void</span> Exit()
     {
-        this.Dialog.Dismiss();
+        <span style="color:#569CD6;">this</span>.Dialog.Dismiss();
     }
     .....
 }
-</code></pre>
-<h3 id="modify-index.razor">Modify Index.razor</h3>
-<pre><code class="language-html">@page &quot;/&quot;
+</pre></div><h3 id="modify-index.razor">Modify Index.razor</h3>
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+@page &quot;/&quot;
 
-&lt;button class=&quot;btn btn-primary&quot; @onclick=&quot;ShowModal&quot;&gt;Show FetchData&lt;/button&gt;
+<span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">button</span> <span style="color:#FF0000;">class</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;btn btn-primary&quot; @onclick=&quot;ShowModal&quot;</span><span style="color:#569CD6;">&gt;</span>Show FetchData<span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">button</span><span style="color:#569CD6;">&gt;</span>
 &lt;BaseModalDialog @ref=&quot;Dialog&quot; /&gt;
-</code></pre>
-<pre><code class="language-csharp">@code {
-    public IModalDialog Dialog { get; set; }
+</pre></div><div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+@code {
+    <span style="color:#569CD6;">public</span> IModalDialog Dialog { <span style="color:#569CD6;">get</span>; <span style="color:#569CD6;">set</span>; }
 
-    private void ShowModal()
-        =&gt; Dialog.ShowAsync&lt;FetchData&gt;( new Blazr.Modal.ModalOptions());
+    <span style="color:#569CD6;">private</span> <span style="color:#569CD6;">void</span> ShowModal()
+        =&gt; Dialog.ShowAsync&lt;FetchData&gt;( <span style="color:#569CD6;">new</span> Blazr.Modal.ModalOptions());
 }
-</code></pre>
-<h3 id="form-using-bootstrapmodal">Form using BootstrapModal</h3>
+</pre></div><h3 id="form-using-bootstrapmodal">Form using BootstrapModal</h3>
 <p>This demonstrates using an edit form in a dialog.</p>
 <p>First the component - <em>PseudoEditor.Razor</em></p>
 <p>Use the &quot;Set To Dirty&quot; button to emulate making edits in the form.</p>
-<pre><code class="language-html">&lt;h3&gt;PseudoEditor&lt;/h3&gt;
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+<span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">h3</span><span style="color:#569CD6;">&gt;</span>PseudoEditor<span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">h3</span><span style="color:#569CD6;">&gt;</span>
 
-&lt;div&gt; DATA&lt;/div&gt;
+<span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">div</span><span style="color:#569CD6;">&gt;</span> DATA<span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">div</span><span style="color:#569CD6;">&gt;</span>
 
-&lt;div class=&quot;p-2 m-2 text-right&quot;&gt;
-    &lt;button class=&quot;btn @this._editButtonColour&quot; @onclick=&quot;this.SetToEdit&quot;&gt;@this._editButtonText&lt;/button&gt;
-    &lt;button disabled=&quot;@(!this._isDirty)&quot; class=&quot;btn btn-success&quot; @onclick=&quot;this.Save&quot;&gt;Save&lt;/button&gt;
-    &lt;button disabled=&quot;@(this._isDirty)&quot; class=&quot;btn btn-dark&quot; @onclick=&quot;this.Close&quot;&gt;Close&lt;/button&gt;
-&lt;/div&gt;
+<span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">div</span> <span style="color:#FF0000;">class</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;p-2 m-2 text-right&quot;</span><span style="color:#569CD6;">&gt;</span>
+    <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">button</span> <span style="color:#FF0000;">class</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;btn @this._editButtonColour&quot; @onclick=&quot;this.SetToEdit&quot;</span><span style="color:#569CD6;">&gt;</span>@this._editButtonText<span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">button</span><span style="color:#569CD6;">&gt;</span>
+    <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">button</span> <span style="color:#FF0000;">disabled</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;@(!this._isDirty)&quot;</span> <span style="color:#FF0000;">class</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;btn btn-success&quot; @onclick=&quot;this.Save&quot;</span><span style="color:#569CD6;">&gt;</span>Save<span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">button</span><span style="color:#569CD6;">&gt;</span>
+    <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">button</span> <span style="color:#FF0000;">disabled</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;@(this._isDirty)&quot;</span> <span style="color:#FF0000;">class</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;btn btn-dark&quot; @onclick=&quot;this.Close&quot;</span><span style="color:#569CD6;">&gt;</span>Close<span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">button</span><span style="color:#569CD6;">&gt;</span>
+<span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">div</span><span style="color:#569CD6;">&gt;</span>
 
 @code {
     [CascadingParameter]
@@ -456,14 +461,15 @@ window.cecblazor_showExitDialog = function (event) {
         this.Modal.Close(ModalResult.OK());
     }
 }
-</code></pre>
+</pre></div>
 <p>The test page:</p>
-<pre><code class="language-html">@page &quot;/modal&quot;
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+@page &quot;/modal&quot;
 
-&lt;div&gt;
-    &lt;button class=&quot;btn btn-primary&quot; @onclick=&quot;GetYesNo&quot;&gt;Open&lt;/button&gt;
-&lt;/div&gt;
-&lt;BaseModalDialog @ref=&quot;this.Modal&quot;&gt;&lt;/BaseModalDialog&gt;
+<span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">div</span><span style="color:#569CD6;">&gt;</span>
+    <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">button</span> <span style="color:#FF0000;">class</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;btn btn-primary&quot; @onclick=&quot;GetYesNo&quot;</span><span style="color:#569CD6;">&gt;</span>Open<span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">button</span><span style="color:#569CD6;">&gt;</span>
+<span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">div</span><span style="color:#569CD6;">&gt;</span>
+&lt;BaseModalDialog @ref=&quot;this.Modal&quot;&gt;<span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">BaseModalDialog</span><span style="color:#569CD6;">&gt;</span>
 @code
 {
     private BaseModalDialog Modal { get; set; }
@@ -472,11 +478,10 @@ window.cecblazor_showExitDialog = function (event) {
     {
         var options = new ModalOptions();
         options.Set(ModalOptions.__ExitOnBackGroundClick, true);
-        Modal.ShowAsync&lt;PseudoEditor&gt;(options);
+        Modal.ShowAsync<span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">PseudoEditor</span><span style="color:#569CD6;">&gt;</span>(options);
     }
 }
-</code></pre>
-<h2 id="wrap-up">Wrap Up</h2>
+</pre></div><h2 id="wrap-up">Wrap Up</h2>
 <p>Modal dialogs are just CSS.  You implement them using layers.  The modal background is a full browser sized layer that covers and &quot;hides&quot; everything below it.  The modal content sits on top, and is the only &quot;live&quot; content.</p>
 <p>If your looking for a more complex Modal Dialog with more features, take a look at <a href="https://github.com/Blazored/Modal">Blazored Modal Dialog</a>.</p>
 </div></div></div></body></html>

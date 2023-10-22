@@ -77,28 +77,31 @@
 <p>Project: <em>Blazr.Template</em>.</p>
 <p>Service configurations are set up in a <code>ServiceCollection</code> extension class.</p>
 <p>There's a helper method to add the common services.</p>
-<pre><code class="language-csharp">private static void AddCommonServices(this IServiceCollection services)
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+<span style="color:#569CD6;">private</span> <span style="color:#569CD6;">static</span> <span style="color:#569CD6;">void</span> AddCommonServices(<span style="color:#569CD6;">this</span> IServiceCollection services)
 {
     services.AddSingleton&lt;WeatherForecastDataStore&gt;();
     services.AddScoped&lt;WeatherForecastViewService&gt;();
 }
-</code></pre>
+</pre></div>
 <p>The Server configuration adds the server specific data broker <code>WeatherForecastServerDataBroker</code>.</p>
-<pre><code class="language-csharp">public static IServiceCollection AddServerApplicationServices(this IServiceCollection services)
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+<span style="color:#569CD6;">public</span> <span style="color:#569CD6;">static</span> IServiceCollection AddServerApplicationServices(<span style="color:#569CD6;">this</span> IServiceCollection services)
 {
     services.AddSingleton&lt;IWeatherForecastDataBroker, WeatherForecastServerDataBroker&gt;();
     AddCommonServices(services);
-    return services;
+    <span style="color:#569CD6;">return</span> services;
 }
-</code></pre>
+</pre></div>
 <p>The WASM client configuration adds the WASM specific data broker <code>WeatherForecastAPIDataBroker</code>.</p>
-<pre><code class="language-csharp">public static IServiceCollection AddWASMApplicationServices(this IServiceCollection services)
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+<span style="color:#569CD6;">public</span> <span style="color:#569CD6;">static</span> IServiceCollection AddWASMApplicationServices(<span style="color:#569CD6;">this</span> IServiceCollection services)
 {
     services.AddScoped&lt;IWeatherForecastDataBroker, WeatherForecastAPIDataBroker&gt;();
     AddCommonServices(services);
-    return services;
+    <span style="color:#569CD6;">return</span> services;
 }
-</code></pre>
+</pre></div>
 <p>The final configuration is for the WASM (API) Server.  It adds the server data services and the controllers in the specified assembly.</p>
 <pre><code class="language-cshsrp">public static IServiceCollection AddWASMServerApplicationServices(this IServiceCollection services)
 {
@@ -111,170 +114,170 @@
 <p>The Blazor Server web site.</p>
 <p><img src="./assets/Clean-Design-Template-for-Blazor/Blazr.Template.Server.Web-File-Structure.png" alt="Blazr.Temlate.Server.Web File Structure" /></p>
 <h3 id="project-file">Project File</h3>
-<pre><code class="language-xml">&lt;Project Sdk=&quot;Microsoft.NET.Sdk.Web&quot;&gt;
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+<span style="color:#808080;">&lt;</span><span style="color:#E6E6E6;">Project</span> <span style="color:#92CAF4;">Sdk</span><span style="color:#808080;">=</span><span style="color:#569CD6;">&quot;</span><span style="color:#569CD6;">Microsoft.NET.Sdk.Web</span><span style="color:#569CD6;">&quot;</span><span style="color:#808080;">&gt;</span>
 
-  &lt;PropertyGroup&gt;
-    &lt;TargetFramework&gt;net5.0&lt;/TargetFramework&gt;
-    &lt;Nullable&gt;enable&lt;/Nullable&gt;
-  &lt;/PropertyGroup&gt;
+  <span style="color:#808080;">&lt;</span><span style="color:#E6E6E6;">PropertyGroup</span><span style="color:#808080;">&gt;</span>
+    <span style="color:#808080;">&lt;</span><span style="color:#E6E6E6;">TargetFramework</span><span style="color:#808080;">&gt;</span>net5.0<span style="color:#808080;">&lt;/</span><span style="color:#E6E6E6;">TargetFramework</span><span style="color:#808080;">&gt;</span>
+    <span style="color:#808080;">&lt;</span><span style="color:#E6E6E6;">Nullable</span><span style="color:#808080;">&gt;</span>enable<span style="color:#808080;">&lt;/</span><span style="color:#E6E6E6;">Nullable</span><span style="color:#808080;">&gt;</span>
+  <span style="color:#808080;">&lt;/</span><span style="color:#E6E6E6;">PropertyGroup</span><span style="color:#808080;">&gt;</span>
 
-  &lt;ItemGroup&gt;
-    &lt;ProjectReference Include=&quot;..\Blazr.Template.Core\Blazr.Template.Core.csproj&quot; /&gt;
-    &lt;ProjectReference Include=&quot;..\Blazr.Template.Data\Blazr.Template.Data.csproj&quot; /&gt;
-    &lt;ProjectReference Include=&quot;..\Blazr.Template.UI\Blazr.Template.UI.csproj&quot; /&gt;
-    &lt;ProjectReference Include=&quot;..\Blazr.Template\Blazr.Template.csproj&quot; /&gt;
-  &lt;/ItemGroup&gt;
+  <span style="color:#808080;">&lt;</span><span style="color:#E6E6E6;">ItemGroup</span><span style="color:#808080;">&gt;</span>
+    <span style="color:#808080;">&lt;</span><span style="color:#E6E6E6;">ProjectReference</span> <span style="color:#92CAF4;">Include</span><span style="color:#808080;">=</span><span style="color:#569CD6;">&quot;</span><span style="color:#569CD6;">..\Blazr.Template.Core\Blazr.Template.Core.csproj</span><span style="color:#569CD6;">&quot;</span> <span style="color:#808080;">/&gt;</span>
+    <span style="color:#808080;">&lt;</span><span style="color:#E6E6E6;">ProjectReference</span> <span style="color:#92CAF4;">Include</span><span style="color:#808080;">=</span><span style="color:#569CD6;">&quot;</span><span style="color:#569CD6;">..\Blazr.Template.Data\Blazr.Template.Data.csproj</span><span style="color:#569CD6;">&quot;</span> <span style="color:#808080;">/&gt;</span>
+    <span style="color:#808080;">&lt;</span><span style="color:#E6E6E6;">ProjectReference</span> <span style="color:#92CAF4;">Include</span><span style="color:#808080;">=</span><span style="color:#569CD6;">&quot;</span><span style="color:#569CD6;">..\Blazr.Template.UI\Blazr.Template.UI.csproj</span><span style="color:#569CD6;">&quot;</span> <span style="color:#808080;">/&gt;</span>
+    <span style="color:#808080;">&lt;</span><span style="color:#E6E6E6;">ProjectReference</span> <span style="color:#92CAF4;">Include</span><span style="color:#808080;">=</span><span style="color:#569CD6;">&quot;</span><span style="color:#569CD6;">..\Blazr.Template\Blazr.Template.csproj</span><span style="color:#569CD6;">&quot;</span> <span style="color:#808080;">/&gt;</span>
+  <span style="color:#808080;">&lt;/</span><span style="color:#E6E6E6;">ItemGroup</span><span style="color:#808080;">&gt;</span>
 
-&lt;/Project&gt;
-</code></pre>
-<h3 id="startup">Startup</h3>
-<pre><code class="language-csharp">public void ConfigureServices(IServiceCollection services)
+<span style="color:#808080;">&lt;/</span><span style="color:#E6E6E6;">Project</span><span style="color:#808080;">&gt;</span>
+</pre></div><h3 id="startup">Startup</h3>
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+<span style="color:#569CD6;">public</span> <span style="color:#569CD6;">void</span> ConfigureServices(IServiceCollection services)
 {
     services.AddRazorPages();
     services.AddServerSideBlazor();
     services.AddServerApplicationServices();
 }
-</code></pre>
-<h3 id="host.cshtml">_Host.cshtml</h3>
+</pre></div><h3 id="host.cshtml">_Host.cshtml</h3>
 <p>The standard Blazor server file, with a modified component definition providing the fully qualified source for <code>App</code>.</p>
-<pre><code class="language-csharp">    &lt;component type=&quot;typeof(Blazr.Template.UI.App)&quot; render-mode=&quot;ServerPrerendered&quot; /&gt;
-</code></pre>
-<h3 id="wwwroot">wwwroot</h3>
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+    &lt;component type=<span style="color:#D69D85;">&quot;typeof(Blazr.Template.UI.App)&quot;</span> render-mode=<span style="color:#D69D85;">&quot;ServerPrerendered&quot;</span> /&gt;
+</pre></div><h3 id="wwwroot">wwwroot</h3>
 <p>Thhe standard Blazor server files.</p>
 <h2 id="blazr.template.wasm">Blazr.Template.WASM</h2>
 <p>The project that builds the WASM specific compiled code.</p>
 <p><img src="./assets/Clean-Design-Template-for-Blazor/Blazr.Template.WASM-File-Structure.png" alt="Blazr.Temlate.WASM File Structure" /></p>
 <h3 id="project-file-1">Project File</h3>
-<pre><code class="language-xml">&lt;Project Sdk=&quot;Microsoft.NET.Sdk.BlazorWebAssembly&quot;&gt;
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+<span style="color:#808080;">&lt;</span><span style="color:#E6E6E6;">Project</span> <span style="color:#92CAF4;">Sdk</span><span style="color:#808080;">=</span><span style="color:#569CD6;">&quot;</span><span style="color:#569CD6;">Microsoft.NET.Sdk.BlazorWebAssembly</span><span style="color:#569CD6;">&quot;</span><span style="color:#808080;">&gt;</span>
 
-  &lt;PropertyGroup&gt;
-    &lt;TargetFramework&gt;net5.0&lt;/TargetFramework&gt;
-    &lt;Nullable&gt;enable&lt;/Nullable&gt;
-  &lt;/PropertyGroup&gt;
+  <span style="color:#808080;">&lt;</span><span style="color:#E6E6E6;">PropertyGroup</span><span style="color:#808080;">&gt;</span>
+    <span style="color:#808080;">&lt;</span><span style="color:#E6E6E6;">TargetFramework</span><span style="color:#808080;">&gt;</span>net5.0<span style="color:#808080;">&lt;/</span><span style="color:#E6E6E6;">TargetFramework</span><span style="color:#808080;">&gt;</span>
+    <span style="color:#808080;">&lt;</span><span style="color:#E6E6E6;">Nullable</span><span style="color:#808080;">&gt;</span>enable<span style="color:#808080;">&lt;/</span><span style="color:#E6E6E6;">Nullable</span><span style="color:#808080;">&gt;</span>
+  <span style="color:#808080;">&lt;/</span><span style="color:#E6E6E6;">PropertyGroup</span><span style="color:#808080;">&gt;</span>
 
-  &lt;ItemGroup&gt;
-    &lt;PackageReference Include=&quot;Microsoft.AspNetCore.Components.WebAssembly&quot; Version=&quot;5.0.12&quot; /&gt;
-    &lt;PackageReference Include=&quot;Microsoft.AspNetCore.Components.WebAssembly.DevServer&quot; Version=&quot;5.0.12&quot; PrivateAssets=&quot;all&quot; /&gt;
-    &lt;PackageReference Include=&quot;System.Net.Http.Json&quot; Version=&quot;5.0.0&quot; /&gt;
-  &lt;/ItemGroup&gt;
+  <span style="color:#808080;">&lt;</span><span style="color:#E6E6E6;">ItemGroup</span><span style="color:#808080;">&gt;</span>
+    <span style="color:#808080;">&lt;</span><span style="color:#E6E6E6;">PackageReference</span> <span style="color:#92CAF4;">Include</span><span style="color:#808080;">=</span><span style="color:#569CD6;">&quot;</span><span style="color:#569CD6;">Microsoft.AspNetCore.Components.WebAssembly</span><span style="color:#569CD6;">&quot;</span> <span style="color:#92CAF4;">Version</span><span style="color:#808080;">=</span><span style="color:#569CD6;">&quot;</span><span style="color:#569CD6;">5.0.12</span><span style="color:#569CD6;">&quot;</span> <span style="color:#808080;">/&gt;</span>
+    <span style="color:#808080;">&lt;</span><span style="color:#E6E6E6;">PackageReference</span> <span style="color:#92CAF4;">Include</span><span style="color:#808080;">=</span><span style="color:#569CD6;">&quot;</span><span style="color:#569CD6;">Microsoft.AspNetCore.Components.WebAssembly.DevServer</span><span style="color:#569CD6;">&quot;</span> <span style="color:#92CAF4;">Version</span><span style="color:#808080;">=</span><span style="color:#569CD6;">&quot;</span><span style="color:#569CD6;">5.0.12</span><span style="color:#569CD6;">&quot;</span> <span style="color:#92CAF4;">PrivateAssets</span><span style="color:#808080;">=</span><span style="color:#569CD6;">&quot;</span><span style="color:#569CD6;">all</span><span style="color:#569CD6;">&quot;</span> <span style="color:#808080;">/&gt;</span>
+    <span style="color:#808080;">&lt;</span><span style="color:#E6E6E6;">PackageReference</span> <span style="color:#92CAF4;">Include</span><span style="color:#808080;">=</span><span style="color:#569CD6;">&quot;</span><span style="color:#569CD6;">System.Net.Http.Json</span><span style="color:#569CD6;">&quot;</span> <span style="color:#92CAF4;">Version</span><span style="color:#808080;">=</span><span style="color:#569CD6;">&quot;</span><span style="color:#569CD6;">5.0.0</span><span style="color:#569CD6;">&quot;</span> <span style="color:#808080;">/&gt;</span>
+  <span style="color:#808080;">&lt;/</span><span style="color:#E6E6E6;">ItemGroup</span><span style="color:#808080;">&gt;</span>
 
-  &lt;ItemGroup&gt;
-    &lt;ProjectReference Include=&quot;..\Blazr.Template.Core\Blazr.Template.Core.csproj&quot; /&gt;
-    &lt;ProjectReference Include=&quot;..\Blazr.Template.Data\Blazr.Template.Data.csproj&quot; /&gt;
-    &lt;ProjectReference Include=&quot;..\Blazr.Template.UI\Blazr.Template.UI.csproj&quot; /&gt;
-    &lt;ProjectReference Include=&quot;..\Blazr.Template\Blazr.Template.csproj&quot; /&gt;
-  &lt;/ItemGroup&gt;
+  <span style="color:#808080;">&lt;</span><span style="color:#E6E6E6;">ItemGroup</span><span style="color:#808080;">&gt;</span>
+    <span style="color:#808080;">&lt;</span><span style="color:#E6E6E6;">ProjectReference</span> <span style="color:#92CAF4;">Include</span><span style="color:#808080;">=</span><span style="color:#569CD6;">&quot;</span><span style="color:#569CD6;">..\Blazr.Template.Core\Blazr.Template.Core.csproj</span><span style="color:#569CD6;">&quot;</span> <span style="color:#808080;">/&gt;</span>
+    <span style="color:#808080;">&lt;</span><span style="color:#E6E6E6;">ProjectReference</span> <span style="color:#92CAF4;">Include</span><span style="color:#808080;">=</span><span style="color:#569CD6;">&quot;</span><span style="color:#569CD6;">..\Blazr.Template.Data\Blazr.Template.Data.csproj</span><span style="color:#569CD6;">&quot;</span> <span style="color:#808080;">/&gt;</span>
+    <span style="color:#808080;">&lt;</span><span style="color:#E6E6E6;">ProjectReference</span> <span style="color:#92CAF4;">Include</span><span style="color:#808080;">=</span><span style="color:#569CD6;">&quot;</span><span style="color:#569CD6;">..\Blazr.Template.UI\Blazr.Template.UI.csproj</span><span style="color:#569CD6;">&quot;</span> <span style="color:#808080;">/&gt;</span>
+    <span style="color:#808080;">&lt;</span><span style="color:#E6E6E6;">ProjectReference</span> <span style="color:#92CAF4;">Include</span><span style="color:#808080;">=</span><span style="color:#569CD6;">&quot;</span><span style="color:#569CD6;">..\Blazr.Template\Blazr.Template.csproj</span><span style="color:#569CD6;">&quot;</span> <span style="color:#808080;">/&gt;</span>
+  <span style="color:#808080;">&lt;/</span><span style="color:#E6E6E6;">ItemGroup</span><span style="color:#808080;">&gt;</span>
 
-&lt;/Project&gt;
-</code></pre>
-<h3 id="program">Program</h3>
+<span style="color:#808080;">&lt;/</span><span style="color:#E6E6E6;">Project</span><span style="color:#808080;">&gt;</span>
+</pre></div><h3 id="program">Program</h3>
 <ol>
 <li>Sets the root component to <code>Blazr.Template.UI.App</code>.</li>
 <li>Adds the WASM services through the extension method.</li>
 </ol>
-<pre><code class="language-csharp">public static async Task Main(string[] args)
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+<span style="color:#569CD6;">public</span> <span style="color:#569CD6;">static</span> <span style="color:#569CD6;">async</span> Task Main(<span style="color:#569CD6;">string</span>[] args)
 {
-    var builder = WebAssemblyHostBuilder.CreateDefault(args);
-    var services = builder.Services;
-    builder.RootComponents.Add&lt;Blazr.Template.UI.App&gt;(&quot;#app&quot;);
+    <span style="color:#569CD6;">var</span> builder = WebAssemblyHostBuilder.CreateDefault(args);
+    <span style="color:#569CD6;">var</span> services = builder.Services;
+    builder.RootComponents.Add&lt;Blazr.Template.UI.App&gt;(<span style="color:#D69D85;">&quot;#app&quot;</span>);
 
-    services.AddScoped(sp =&gt; new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
+    services.AddScoped(sp =&gt; <span style="color:#569CD6;">new</span> HttpClient { BaseAddress = <span style="color:#569CD6;">new</span> Uri(builder.HostEnvironment.BaseAddress) });
     services.AddWASMApplicationServices();
 
-    await builder.Build().RunAsync();
+    <span style="color:#569CD6;">await</span> builder.Build().RunAsync();
 }
-</code></pre>
-<h3 id="wwwroot-1">wwwroot</h3>
+</pre></div><h3 id="wwwroot-1">wwwroot</h3>
 <p>The standard WASM project wwwroot files.</p>
 <h2 id="blazr.template.wasm.web">Blazr.Template.WASM.Web</h2>
 <p>The Blazor WASM SPA host site with the API controllers.</p>
 <p><img src="./assets/Clean-Design-Template-for-Blazor/Blazr.Template.WASM.Web-File-Structure.png" alt="Blazr.Template.WASM.Web File Structure" /></p>
 <h3 id="project-file-2">Project File</h3>
-<pre><code class="language-xml">&lt;Project Sdk=&quot;Microsoft.NET.Sdk.Web&quot;&gt;
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+<span style="color:#808080;">&lt;</span><span style="color:#E6E6E6;">Project</span> <span style="color:#92CAF4;">Sdk</span><span style="color:#808080;">=</span><span style="color:#569CD6;">&quot;</span><span style="color:#569CD6;">Microsoft.NET.Sdk.Web</span><span style="color:#569CD6;">&quot;</span><span style="color:#808080;">&gt;</span>
 
-  &lt;PropertyGroup&gt;
-    &lt;TargetFramework&gt;net5.0&lt;/TargetFramework&gt;
-    &lt;Nullable&gt;enable&lt;/Nullable&gt;
-  &lt;/PropertyGroup&gt;
+  <span style="color:#808080;">&lt;</span><span style="color:#E6E6E6;">PropertyGroup</span><span style="color:#808080;">&gt;</span>
+    <span style="color:#808080;">&lt;</span><span style="color:#E6E6E6;">TargetFramework</span><span style="color:#808080;">&gt;</span>net5.0<span style="color:#808080;">&lt;/</span><span style="color:#E6E6E6;">TargetFramework</span><span style="color:#808080;">&gt;</span>
+    <span style="color:#808080;">&lt;</span><span style="color:#E6E6E6;">Nullable</span><span style="color:#808080;">&gt;</span>enable<span style="color:#808080;">&lt;/</span><span style="color:#E6E6E6;">Nullable</span><span style="color:#808080;">&gt;</span>
+  <span style="color:#808080;">&lt;/</span><span style="color:#E6E6E6;">PropertyGroup</span><span style="color:#808080;">&gt;</span>
 
-  &lt;ItemGroup&gt;
-    &lt;PackageReference Include=&quot;Microsoft.AspNetCore.Components.WebAssembly.Server&quot; Version=&quot;5.0.12&quot; /&gt;
-  &lt;/ItemGroup&gt;
+  <span style="color:#808080;">&lt;</span><span style="color:#E6E6E6;">ItemGroup</span><span style="color:#808080;">&gt;</span>
+    <span style="color:#808080;">&lt;</span><span style="color:#E6E6E6;">PackageReference</span> <span style="color:#92CAF4;">Include</span><span style="color:#808080;">=</span><span style="color:#569CD6;">&quot;</span><span style="color:#569CD6;">Microsoft.AspNetCore.Components.WebAssembly.Server</span><span style="color:#569CD6;">&quot;</span> <span style="color:#92CAF4;">Version</span><span style="color:#808080;">=</span><span style="color:#569CD6;">&quot;</span><span style="color:#569CD6;">5.0.12</span><span style="color:#569CD6;">&quot;</span> <span style="color:#808080;">/&gt;</span>
+  <span style="color:#808080;">&lt;/</span><span style="color:#E6E6E6;">ItemGroup</span><span style="color:#808080;">&gt;</span>
 
-  &lt;ItemGroup&gt;
-    &lt;ProjectReference Include=&quot;..\Blazr.Template.Core\Blazr.Template.Core.csproj&quot; /&gt;
-    &lt;ProjectReference Include=&quot;..\Blazr.Template.Data\Blazr.Template.Data.csproj&quot; /&gt;
-    &lt;ProjectReference Include=&quot;..\Blazr.Template.UI\Blazr.Template.UI.csproj&quot; /&gt;
-    &lt;ProjectReference Include=&quot;..\Blazr.Template.WASM\Blazr.Template.WASM.csproj&quot; /&gt;
-    &lt;ProjectReference Include=&quot;..\Blazr.Template\Blazr.Template.csproj&quot; /&gt;
-  &lt;/ItemGroup&gt;
+  <span style="color:#808080;">&lt;</span><span style="color:#E6E6E6;">ItemGroup</span><span style="color:#808080;">&gt;</span>
+    <span style="color:#808080;">&lt;</span><span style="color:#E6E6E6;">ProjectReference</span> <span style="color:#92CAF4;">Include</span><span style="color:#808080;">=</span><span style="color:#569CD6;">&quot;</span><span style="color:#569CD6;">..\Blazr.Template.Core\Blazr.Template.Core.csproj</span><span style="color:#569CD6;">&quot;</span> <span style="color:#808080;">/&gt;</span>
+    <span style="color:#808080;">&lt;</span><span style="color:#E6E6E6;">ProjectReference</span> <span style="color:#92CAF4;">Include</span><span style="color:#808080;">=</span><span style="color:#569CD6;">&quot;</span><span style="color:#569CD6;">..\Blazr.Template.Data\Blazr.Template.Data.csproj</span><span style="color:#569CD6;">&quot;</span> <span style="color:#808080;">/&gt;</span>
+    <span style="color:#808080;">&lt;</span><span style="color:#E6E6E6;">ProjectReference</span> <span style="color:#92CAF4;">Include</span><span style="color:#808080;">=</span><span style="color:#569CD6;">&quot;</span><span style="color:#569CD6;">..\Blazr.Template.UI\Blazr.Template.UI.csproj</span><span style="color:#569CD6;">&quot;</span> <span style="color:#808080;">/&gt;</span>
+    <span style="color:#808080;">&lt;</span><span style="color:#E6E6E6;">ProjectReference</span> <span style="color:#92CAF4;">Include</span><span style="color:#808080;">=</span><span style="color:#569CD6;">&quot;</span><span style="color:#569CD6;">..\Blazr.Template.WASM\Blazr.Template.WASM.csproj</span><span style="color:#569CD6;">&quot;</span> <span style="color:#808080;">/&gt;</span>
+    <span style="color:#808080;">&lt;</span><span style="color:#E6E6E6;">ProjectReference</span> <span style="color:#92CAF4;">Include</span><span style="color:#808080;">=</span><span style="color:#569CD6;">&quot;</span><span style="color:#569CD6;">..\Blazr.Template\Blazr.Template.csproj</span><span style="color:#569CD6;">&quot;</span> <span style="color:#808080;">/&gt;</span>
+  <span style="color:#808080;">&lt;/</span><span style="color:#E6E6E6;">ItemGroup</span><span style="color:#808080;">&gt;</span>
 
-&lt;/Project&gt;
-</code></pre>
-<h3 id="startup-1">StartUp</h3>
-<pre><code class="language-csharp">services.AddRazorPages();
+<span style="color:#808080;">&lt;/</span><span style="color:#E6E6E6;">Project</span><span style="color:#808080;">&gt;</span>
+</pre></div><h3 id="startup-1">StartUp</h3>
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+services.AddRazorPages();
 services.AddWASMServerApplicationServices();
-services.AddControllers().PartManager.ApplicationParts.Add(new AssemblyPart(typeof(Blazr.Template.APIControllers.WeatherForecastController).Assembly));
-</code></pre>
-<h2 id="project-files">Project Files</h2>
+services.AddControllers().PartManager.ApplicationParts.Add(<span style="color:#569CD6;">new</span> AssemblyPart(<span style="color:#569CD6;">typeof</span>(Blazr.Template.APIControllers.WeatherForecastController).Assembly));
+</pre></div><h2 id="project-files">Project Files</h2>
 <h4 id="blazr.template.core-project-file">Blazr.Template.Core Project File</h4>
-<pre><code class="language-xml">&lt;Project Sdk=&quot;Microsoft.NET.Sdk.Razor&quot;&gt;
-  &lt;PropertyGroup&gt;
-    &lt;TargetFramework&gt;net5.0&lt;/TargetFramework&gt;
-	  &lt;Nullable&gt;enable&lt;/Nullable&gt;
-  &lt;/PropertyGroup&gt;
-  &lt;ItemGroup&gt;
-    &lt;SupportedPlatform Include=&quot;browser&quot; /&gt;
-  &lt;/ItemGroup&gt;
-  &lt;ItemGroup&gt;
-    &lt;PackageReference Include=&quot;Microsoft.AspNetCore.Components.Web&quot; Version=&quot;5.0.12&quot; /&gt;
-  &lt;/ItemGroup&gt;
-&lt;/Project&gt;
-</code></pre>
-<h4 id="blazr.template.data-project-file">Blazr.Template.Data Project File</h4>
-<pre><code class="language-xml">&lt;Project Sdk=&quot;Microsoft.NET.Sdk.Razor&quot;&gt;
-  &lt;PropertyGroup&gt;
-    &lt;TargetFramework&gt;net5.0&lt;/TargetFramework&gt;
-	  &lt;Nullable&gt;enable&lt;/Nullable&gt;
-  &lt;/PropertyGroup&gt;
-  &lt;ItemGroup&gt;
-    &lt;PackageReference Include=&quot;Microsoft.AspNetCore.Components.Web&quot; Version=&quot;5.0.12&quot; /&gt;
-  &lt;/ItemGroup&gt;
-  &lt;ItemGroup&gt;
-    &lt;ProjectReference Include=&quot;..\Blazr.Template.Core\Blazr.Template.Core.csproj&quot; /&gt;
-  &lt;/ItemGroup&gt;
-&lt;/Project&gt;
-</code></pre>
-<h4 id="blazr.template.ui-project-file">Blazr.Template.UI Project File</h4>
-<pre><code class="language-xml">&lt;Project Sdk=&quot;Microsoft.NET.Sdk.Razor&quot;&gt;
-  &lt;PropertyGroup&gt;
-    &lt;TargetFramework&gt;net5.0&lt;/TargetFramework&gt;
-	  &lt;Nullable&gt;enable&lt;/Nullable&gt;
-  &lt;/PropertyGroup&gt;
-  &lt;ItemGroup&gt;
-    &lt;PackageReference Include=&quot;Microsoft.AspNetCore.Components.Web&quot; Version=&quot;5.0.12&quot; /&gt;
-  &lt;/ItemGroup&gt;
-  &lt;ItemGroup&gt;
-    &lt;ProjectReference Include=&quot;..\Blazr.Template.Core\Blazr.Template.Core.csproj&quot; /&gt;
-  &lt;/ItemGroup&gt;
-&lt;/Project&gt;
-</code></pre>
-<h4 id="blazr.template-project-file">Blazr.Template Project File</h4>
-<pre><code class="language-xml">&lt;Project Sdk=&quot;Microsoft.NET.Sdk.Razor&quot;&gt;
-  &lt;PropertyGroup&gt;
-    &lt;TargetFramework&gt;net5.0&lt;/TargetFramework&gt;
-	  &lt;Nullable&gt;enable&lt;/Nullable&gt;
-  &lt;/PropertyGroup&gt;
-  &lt;ItemGroup&gt;
-    &lt;PackageReference Include=&quot;Microsoft.AspNetCore.Components.Web&quot; Version=&quot;5.0.12&quot; /&gt;
-  &lt;/ItemGroup&gt;
-  &lt;ItemGroup&gt;
-    &lt;ProjectReference Include=&quot;..\Blazr.Template.Core\Blazr.Template.Core.csproj&quot; /&gt;
-    &lt;ProjectReference Include=&quot;..\Blazr.Template.Data\Blazr.Template.Data.csproj&quot; /&gt;
-  &lt;/ItemGroup&gt;
-&lt;/Project&gt;
-</code></pre>
-</div></div></div></body></html>
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+<span style="color:#808080;">&lt;</span><span style="color:#E6E6E6;">Project</span> <span style="color:#92CAF4;">Sdk</span><span style="color:#808080;">=</span><span style="color:#569CD6;">&quot;</span><span style="color:#569CD6;">Microsoft.NET.Sdk.Razor</span><span style="color:#569CD6;">&quot;</span><span style="color:#808080;">&gt;</span>
+  <span style="color:#808080;">&lt;</span><span style="color:#E6E6E6;">PropertyGroup</span><span style="color:#808080;">&gt;</span>
+    <span style="color:#808080;">&lt;</span><span style="color:#E6E6E6;">TargetFramework</span><span style="color:#808080;">&gt;</span>net5.0<span style="color:#808080;">&lt;/</span><span style="color:#E6E6E6;">TargetFramework</span><span style="color:#808080;">&gt;</span>
+	  <span style="color:#808080;">&lt;</span><span style="color:#E6E6E6;">Nullable</span><span style="color:#808080;">&gt;</span>enable<span style="color:#808080;">&lt;/</span><span style="color:#E6E6E6;">Nullable</span><span style="color:#808080;">&gt;</span>
+  <span style="color:#808080;">&lt;/</span><span style="color:#E6E6E6;">PropertyGroup</span><span style="color:#808080;">&gt;</span>
+  <span style="color:#808080;">&lt;</span><span style="color:#E6E6E6;">ItemGroup</span><span style="color:#808080;">&gt;</span>
+    <span style="color:#808080;">&lt;</span><span style="color:#E6E6E6;">SupportedPlatform</span> <span style="color:#92CAF4;">Include</span><span style="color:#808080;">=</span><span style="color:#569CD6;">&quot;</span><span style="color:#569CD6;">browser</span><span style="color:#569CD6;">&quot;</span> <span style="color:#808080;">/&gt;</span>
+  <span style="color:#808080;">&lt;/</span><span style="color:#E6E6E6;">ItemGroup</span><span style="color:#808080;">&gt;</span>
+  <span style="color:#808080;">&lt;</span><span style="color:#E6E6E6;">ItemGroup</span><span style="color:#808080;">&gt;</span>
+    <span style="color:#808080;">&lt;</span><span style="color:#E6E6E6;">PackageReference</span> <span style="color:#92CAF4;">Include</span><span style="color:#808080;">=</span><span style="color:#569CD6;">&quot;</span><span style="color:#569CD6;">Microsoft.AspNetCore.Components.Web</span><span style="color:#569CD6;">&quot;</span> <span style="color:#92CAF4;">Version</span><span style="color:#808080;">=</span><span style="color:#569CD6;">&quot;</span><span style="color:#569CD6;">5.0.12</span><span style="color:#569CD6;">&quot;</span> <span style="color:#808080;">/&gt;</span>
+  <span style="color:#808080;">&lt;/</span><span style="color:#E6E6E6;">ItemGroup</span><span style="color:#808080;">&gt;</span>
+<span style="color:#808080;">&lt;/</span><span style="color:#E6E6E6;">Project</span><span style="color:#808080;">&gt;</span>
+</pre></div><h4 id="blazr.template.data-project-file">Blazr.Template.Data Project File</h4>
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+<span style="color:#808080;">&lt;</span><span style="color:#E6E6E6;">Project</span> <span style="color:#92CAF4;">Sdk</span><span style="color:#808080;">=</span><span style="color:#569CD6;">&quot;</span><span style="color:#569CD6;">Microsoft.NET.Sdk.Razor</span><span style="color:#569CD6;">&quot;</span><span style="color:#808080;">&gt;</span>
+  <span style="color:#808080;">&lt;</span><span style="color:#E6E6E6;">PropertyGroup</span><span style="color:#808080;">&gt;</span>
+    <span style="color:#808080;">&lt;</span><span style="color:#E6E6E6;">TargetFramework</span><span style="color:#808080;">&gt;</span>net5.0<span style="color:#808080;">&lt;/</span><span style="color:#E6E6E6;">TargetFramework</span><span style="color:#808080;">&gt;</span>
+	  <span style="color:#808080;">&lt;</span><span style="color:#E6E6E6;">Nullable</span><span style="color:#808080;">&gt;</span>enable<span style="color:#808080;">&lt;/</span><span style="color:#E6E6E6;">Nullable</span><span style="color:#808080;">&gt;</span>
+  <span style="color:#808080;">&lt;/</span><span style="color:#E6E6E6;">PropertyGroup</span><span style="color:#808080;">&gt;</span>
+  <span style="color:#808080;">&lt;</span><span style="color:#E6E6E6;">ItemGroup</span><span style="color:#808080;">&gt;</span>
+    <span style="color:#808080;">&lt;</span><span style="color:#E6E6E6;">PackageReference</span> <span style="color:#92CAF4;">Include</span><span style="color:#808080;">=</span><span style="color:#569CD6;">&quot;</span><span style="color:#569CD6;">Microsoft.AspNetCore.Components.Web</span><span style="color:#569CD6;">&quot;</span> <span style="color:#92CAF4;">Version</span><span style="color:#808080;">=</span><span style="color:#569CD6;">&quot;</span><span style="color:#569CD6;">5.0.12</span><span style="color:#569CD6;">&quot;</span> <span style="color:#808080;">/&gt;</span>
+  <span style="color:#808080;">&lt;/</span><span style="color:#E6E6E6;">ItemGroup</span><span style="color:#808080;">&gt;</span>
+  <span style="color:#808080;">&lt;</span><span style="color:#E6E6E6;">ItemGroup</span><span style="color:#808080;">&gt;</span>
+    <span style="color:#808080;">&lt;</span><span style="color:#E6E6E6;">ProjectReference</span> <span style="color:#92CAF4;">Include</span><span style="color:#808080;">=</span><span style="color:#569CD6;">&quot;</span><span style="color:#569CD6;">..\Blazr.Template.Core\Blazr.Template.Core.csproj</span><span style="color:#569CD6;">&quot;</span> <span style="color:#808080;">/&gt;</span>
+  <span style="color:#808080;">&lt;/</span><span style="color:#E6E6E6;">ItemGroup</span><span style="color:#808080;">&gt;</span>
+<span style="color:#808080;">&lt;/</span><span style="color:#E6E6E6;">Project</span><span style="color:#808080;">&gt;</span>
+</pre></div><h4 id="blazr.template.ui-project-file">Blazr.Template.UI Project File</h4>
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+<span style="color:#808080;">&lt;</span><span style="color:#E6E6E6;">Project</span> <span style="color:#92CAF4;">Sdk</span><span style="color:#808080;">=</span><span style="color:#569CD6;">&quot;</span><span style="color:#569CD6;">Microsoft.NET.Sdk.Razor</span><span style="color:#569CD6;">&quot;</span><span style="color:#808080;">&gt;</span>
+  <span style="color:#808080;">&lt;</span><span style="color:#E6E6E6;">PropertyGroup</span><span style="color:#808080;">&gt;</span>
+    <span style="color:#808080;">&lt;</span><span style="color:#E6E6E6;">TargetFramework</span><span style="color:#808080;">&gt;</span>net5.0<span style="color:#808080;">&lt;/</span><span style="color:#E6E6E6;">TargetFramework</span><span style="color:#808080;">&gt;</span>
+	  <span style="color:#808080;">&lt;</span><span style="color:#E6E6E6;">Nullable</span><span style="color:#808080;">&gt;</span>enable<span style="color:#808080;">&lt;/</span><span style="color:#E6E6E6;">Nullable</span><span style="color:#808080;">&gt;</span>
+  <span style="color:#808080;">&lt;/</span><span style="color:#E6E6E6;">PropertyGroup</span><span style="color:#808080;">&gt;</span>
+  <span style="color:#808080;">&lt;</span><span style="color:#E6E6E6;">ItemGroup</span><span style="color:#808080;">&gt;</span>
+    <span style="color:#808080;">&lt;</span><span style="color:#E6E6E6;">PackageReference</span> <span style="color:#92CAF4;">Include</span><span style="color:#808080;">=</span><span style="color:#569CD6;">&quot;</span><span style="color:#569CD6;">Microsoft.AspNetCore.Components.Web</span><span style="color:#569CD6;">&quot;</span> <span style="color:#92CAF4;">Version</span><span style="color:#808080;">=</span><span style="color:#569CD6;">&quot;</span><span style="color:#569CD6;">5.0.12</span><span style="color:#569CD6;">&quot;</span> <span style="color:#808080;">/&gt;</span>
+  <span style="color:#808080;">&lt;/</span><span style="color:#E6E6E6;">ItemGroup</span><span style="color:#808080;">&gt;</span>
+  <span style="color:#808080;">&lt;</span><span style="color:#E6E6E6;">ItemGroup</span><span style="color:#808080;">&gt;</span>
+    <span style="color:#808080;">&lt;</span><span style="color:#E6E6E6;">ProjectReference</span> <span style="color:#92CAF4;">Include</span><span style="color:#808080;">=</span><span style="color:#569CD6;">&quot;</span><span style="color:#569CD6;">..\Blazr.Template.Core\Blazr.Template.Core.csproj</span><span style="color:#569CD6;">&quot;</span> <span style="color:#808080;">/&gt;</span>
+  <span style="color:#808080;">&lt;/</span><span style="color:#E6E6E6;">ItemGroup</span><span style="color:#808080;">&gt;</span>
+<span style="color:#808080;">&lt;/</span><span style="color:#E6E6E6;">Project</span><span style="color:#808080;">&gt;</span>
+</pre></div><h4 id="blazr.template-project-file">Blazr.Template Project File</h4>
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+<span style="color:#808080;">&lt;</span><span style="color:#E6E6E6;">Project</span> <span style="color:#92CAF4;">Sdk</span><span style="color:#808080;">=</span><span style="color:#569CD6;">&quot;</span><span style="color:#569CD6;">Microsoft.NET.Sdk.Razor</span><span style="color:#569CD6;">&quot;</span><span style="color:#808080;">&gt;</span>
+  <span style="color:#808080;">&lt;</span><span style="color:#E6E6E6;">PropertyGroup</span><span style="color:#808080;">&gt;</span>
+    <span style="color:#808080;">&lt;</span><span style="color:#E6E6E6;">TargetFramework</span><span style="color:#808080;">&gt;</span>net5.0<span style="color:#808080;">&lt;/</span><span style="color:#E6E6E6;">TargetFramework</span><span style="color:#808080;">&gt;</span>
+	  <span style="color:#808080;">&lt;</span><span style="color:#E6E6E6;">Nullable</span><span style="color:#808080;">&gt;</span>enable<span style="color:#808080;">&lt;/</span><span style="color:#E6E6E6;">Nullable</span><span style="color:#808080;">&gt;</span>
+  <span style="color:#808080;">&lt;/</span><span style="color:#E6E6E6;">PropertyGroup</span><span style="color:#808080;">&gt;</span>
+  <span style="color:#808080;">&lt;</span><span style="color:#E6E6E6;">ItemGroup</span><span style="color:#808080;">&gt;</span>
+    <span style="color:#808080;">&lt;</span><span style="color:#E6E6E6;">PackageReference</span> <span style="color:#92CAF4;">Include</span><span style="color:#808080;">=</span><span style="color:#569CD6;">&quot;</span><span style="color:#569CD6;">Microsoft.AspNetCore.Components.Web</span><span style="color:#569CD6;">&quot;</span> <span style="color:#92CAF4;">Version</span><span style="color:#808080;">=</span><span style="color:#569CD6;">&quot;</span><span style="color:#569CD6;">5.0.12</span><span style="color:#569CD6;">&quot;</span> <span style="color:#808080;">/&gt;</span>
+  <span style="color:#808080;">&lt;/</span><span style="color:#E6E6E6;">ItemGroup</span><span style="color:#808080;">&gt;</span>
+  <span style="color:#808080;">&lt;</span><span style="color:#E6E6E6;">ItemGroup</span><span style="color:#808080;">&gt;</span>
+    <span style="color:#808080;">&lt;</span><span style="color:#E6E6E6;">ProjectReference</span> <span style="color:#92CAF4;">Include</span><span style="color:#808080;">=</span><span style="color:#569CD6;">&quot;</span><span style="color:#569CD6;">..\Blazr.Template.Core\Blazr.Template.Core.csproj</span><span style="color:#569CD6;">&quot;</span> <span style="color:#808080;">/&gt;</span>
+    <span style="color:#808080;">&lt;</span><span style="color:#E6E6E6;">ProjectReference</span> <span style="color:#92CAF4;">Include</span><span style="color:#808080;">=</span><span style="color:#569CD6;">&quot;</span><span style="color:#569CD6;">..\Blazr.Template.Data\Blazr.Template.Data.csproj</span><span style="color:#569CD6;">&quot;</span> <span style="color:#808080;">/&gt;</span>
+  <span style="color:#808080;">&lt;/</span><span style="color:#E6E6E6;">ItemGroup</span><span style="color:#808080;">&gt;</span>
+<span style="color:#808080;">&lt;/</span><span style="color:#E6E6E6;">Project</span><span style="color:#808080;">&gt;</span>
+</pre></div></div></div></div></body></html>
 
 
 

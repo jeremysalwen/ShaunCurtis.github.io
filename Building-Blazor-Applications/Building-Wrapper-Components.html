@@ -96,104 +96,106 @@ It's relatively easy to do this:</p>
 <li>The wrapper markup is defined in a separate <code>Wrapper</code> render fragment.</li>
 <li><code>@this.Content</code> is where the content from the child will be rendered.</li>
 </ol>
-<pre><code class="language-csharp">@inherits UIWrapperComponentBase
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+@inherits UIWrapperComponentBase
 
 @code {
-    protected override RenderFragment Wrapper =&gt; (__builder) =&gt;
+    <span style="color:#569CD6;">protected</span> <span style="color:#569CD6;">override</span> RenderFragment Wrapper =&gt; (__builder) =&gt;
     {
-        &lt;div class=&quot;bg-primary text-white p-3 b-2&quot;&gt;
-        @this.Content
+        &lt;div <span style="color:#569CD6;">class</span>=<span style="color:#D69D85;">&quot;bg-primary text-white p-3 b-2&quot;</span>&gt;
+        @<span style="color:#569CD6;">this</span>.Content
         &lt;/div&gt;
     };
 }
-</code></pre>
-<h3 id="uiwrappercomponentbase">UIWrapperComponentBase</h3>
+</pre></div><h3 id="uiwrappercomponentbase">UIWrapperComponentBase</h3>
 <p>Note:</p>
 <ol>
 <li><code>Wrapper</code> defined as abstract.  It must be implemented in child classes.</li>
 <li><code>this.BuildRenderTree(builder)</code> is assigned to <code>Content</code>.  <code>this.BuildRenderTree(builder)</code> contains the compiled Razor code that represents the child component's content.</li>
 <li>The CTor caches the component <code>renderFragment</code> for performance.  If not hidden it renders the contents of <code>Wrapper</code> if it's not null, or the child content directly.</li>
 </ol>
-<pre><code class="language-csharp">public abstract class UIWrapperComponentBase : UIComponentBase
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+<span style="color:#569CD6;">public</span> <span style="color:#569CD6;">abstract</span> <span style="color:#569CD6;">class</span> UIWrapperComponentBase : UIComponentBase
 {
-    protected virtual RenderFragment? Wrapper { get; }
-    protected RenderFragment? Content =&gt; (builder) =&gt; this.BuildRenderTree(builder);
+    <span style="color:#569CD6;">protected</span> <span style="color:#569CD6;">virtual</span> RenderFragment? Wrapper { <span style="color:#569CD6;">get</span>; }
+    <span style="color:#569CD6;">protected</span> RenderFragment? Content =&gt; (builder) =&gt; <span style="color:#569CD6;">this</span>.BuildRenderTree(builder);
 
-    public UIWrapperComponentBase()
+    <span style="color:#569CD6;">public</span> UIWrapperComponentBase()
     {
-        this.renderFragment = builder =&gt;
+        <span style="color:#569CD6;">this</span>.renderFragment = builder =&gt;
         {
-            hasPendingQueuedRender = false;
-            hasNeverRendered = false;
-            var hide = this.hide | this.Hidden;
+            hasPendingQueuedRender = <span style="color:#569CD6;">false</span>;
+            hasNeverRendered = <span style="color:#569CD6;">false</span>;
+            <span style="color:#569CD6;">var</span> hide = <span style="color:#569CD6;">this</span>.hide | <span style="color:#569CD6;">this</span>.Hidden;
 
-            if (hide)
-                return;
+            <span style="color:#569CD6;">if</span> (hide)
+                <span style="color:#569CD6;">return</span>;
 
-            if (this.Wrapper is not null)
+            <span style="color:#569CD6;">if</span> (<span style="color:#569CD6;">this</span>.Wrapper <span style="color:#569CD6;">is</span> not <span style="color:#569CD6;">null</span>)
             {
-                this.Wrapper.Invoke(builder);
-                return;
+                <span style="color:#569CD6;">this</span>.Wrapper.Invoke(builder);
+                <span style="color:#569CD6;">return</span>;
             }
 
             BuildRenderTree(builder);
         };
     }
 }
-</code></pre>
+</pre></div>
 <p><code>UIComponentBase</code> doesn't implement any automated UI Event Handling.  If you want <code>ComponentBase</code> type handling you need to implement it yourself.</p>
 <h3 id="adding-automated-ui-rendering">Adding Automated UI Rendering</h3>
 <p>If you need automated UI rendering, implement <code>IHandleEvent</code>.</p>
 <p>For a single render:</p>
-<pre><code class="language-csharp">@implements IHandleEvent
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+@implements IHandleEvent
 
-//...
+<span style="color:#57A64A;">//...</span>
 @code {
-    public async Task HandleEventAsync(EventCallbackWorkItem callback, object? arg)
+    <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">async</span> Task HandleEventAsync(EventCallbackWorkItem callback, <span style="color:#569CD6;">object</span>? arg)
     {
-        await callback.InvokeAsync(arg);
+        <span style="color:#569CD6;">await</span> callback.InvokeAsync(arg);
         StateHasChanged();
     }
 }
-</code></pre>
+</pre></div>
 <p>For the <code>ComponentBase</code> double event:</p>
-<pre><code class="language-csharp">@implements IHandleEvent
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+@implements IHandleEvent
 
-//...
+<span style="color:#57A64A;">//...</span>
 @code {
-    public async Task HandleEventAsync(EventCallbackWorkItem callback, object? arg)
+    <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">async</span> Task HandleEventAsync(EventCallbackWorkItem callback, <span style="color:#569CD6;">object</span>? arg)
     {
-        var task = callback.InvokeAsync(arg);
-        if (task.Status != TaskStatus.RanToCompletion &amp;&amp; task.Status != TaskStatus.Canceled)
+        <span style="color:#569CD6;">var</span> task = callback.InvokeAsync(arg);
+        <span style="color:#569CD6;">if</span> (task.Status != TaskStatus.RanToCompletion &amp;&amp; task.Status != TaskStatus.Canceled)
         {
             StateHasChanged();
-            await task;
+            <span style="color:#569CD6;">await</span> task;
         }
         StateHasChanged();
     }
 }
-</code></pre>
-<h3 id="adding-onafterrender">Adding OnAfterRender</h3>
+</pre></div><h3 id="adding-onafterrender">Adding OnAfterRender</h3>
 <p>If you need to implement the <code>OnAfterRender</code> event, implement <code>IHandleAfterRender</code>.</p>
-<pre><code class="language-csharp">@implements IHandleAfterRender
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+@implements IHandleAfterRender
 
-//...
+<span style="color:#57A64A;">//...</span>
 
 @code {
-    private bool _hasCalledOnAfterRender;
+    <span style="color:#569CD6;">private</span> <span style="color:#569CD6;">bool</span> _hasCalledOnAfterRender;
 
-    public Task OnAfterRenderAsync()
+    <span style="color:#569CD6;">public</span> Task OnAfterRenderAsync()
     {
-        var firstRender = !_hasCalledOnAfterRender;
-        _hasCalledOnAfterRender |= true;
+        <span style="color:#569CD6;">var</span> firstRender = !_hasCalledOnAfterRender;
+        _hasCalledOnAfterRender |= <span style="color:#569CD6;">true</span>;
 
-        // your code here
+        <span style="color:#57A64A;">// your code here</span>
 
-        return Task.CompletedTask;
+        <span style="color:#569CD6;">return</span> Task.CompletedTask;
     }
 }
-</code></pre>
-<h2 id="demo">Demo</h2>
+</pre></div><h2 id="demo">Demo</h2>
 <p>Here's a simple demo setting <code>Index</code> to inherit from <code>MyWrapper</code>.</p>
 <p>The result:</p>
 <p><img src="./assets/Wrapper-Components/wrapper-demo.png" alt="Wrapper Demo" /></p>

@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<base href="/">
+
+	
+
+	
+
+	
+	<link href="/resources/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+	<link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+
+	
+	<link href="/resources/css/sb-admin-2.css" rel="stylesheet" type="text/css">
+	<link href="/resources/css/site.css" rel="stylesheet" type="text/css">
+
+	
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/highlight.css">
+	<link rel="stylesheet" href="/resources/css/article.css" type="text/css">
+
+	
+	<link rel="icon" href="/images/favicon.png">
+
+	<title>One Way Street</title>
+        <meta property="author" content="Shaun Curtis" />
+        <meta property="description" content="One Way Street is a read only data pipeline loosely based on CQS [Command/Query Separation] pattern.  This article provides an introduction and demonstrates it&#x27;s usage using XUnit tests." />
+    <meta property="og:site_name" content="Cold Elm Coders" />
+        <meta property="og:site" content="https://shauncurtis.github.io/" />
+        <meta property="og:title" content="One Way Street" />
+        <meta property="og:description" content="One Way Street is a read only data pipeline loosely based on CQS [Command/Query Separation] pattern.  This article provides an introduction and demonstrates it&#x27;s usage using XUnit tests." /></head>
+<body><header class="navbar bg-dark p-2 text-large text-light"><section class="navbar-section  text-light"><a href="/" class="navbar-brand mr-2 text-large text-light p-2">Cold Elm Coders</a>
+			<a href="/Posts" class="btn btn-link text-light">Posts</a>
+			<a href="/Rants" class="btn btn-link text-light">Rants</a>
+			<a href="/Articles" class="btn btn-link text-light">Articles</a>
+			<a href="/Stories" class="btn btn-link text-light">Stories</a>
+			<a href="/about.html" class="btn btn-link text-light">About</a></section></header>
+
+	<div class="container-fluid"><div class="row"><div class="col-12 col-sm-3 col-lg-2 bg-light pt-2"><div class="article-info p-2"><div class="mb-2">Published: 22-Oct-2023</div>
+                <div class="mb-2">Updated: 22-Oct-2023</div>
+                <div class="mb-2">Author: Shaun Curtis</div></div>
+    <h4 class="p-2">Table of Contents</h4>
+<ul class="TOC" >
+<li class="TOC-item TOC-item-0" >
+<a class="TOC-link" href="#">Top</a>
+<ul class="TOC TOC-0" >
+<li class="TOC-item TOC-item-1" >
+<ul class="TOC TOC-1" >
+<li class="TOC-item TOC-item-2" >
+<a class="TOC-link" href="#service-definitions">Service Definitions</a>
+</li>
+<li class="TOC-item TOC-item-2" >
+<a class="TOC-link" href="#getaforecast-test">GetAForecast Test</a>
+</li>
+<li class="TOC-item TOC-item-2" >
+<a class="TOC-link" href="#getforecastlist">GetForecastList</a>
+</li>
+<li class="TOC-item TOC-item-2" >
+<a class="TOC-link" href="#filter">Filter</a>
+</li>
+<li class="TOC-item TOC-item-2" >
+<a class="TOC-link" href="#deleteaforecast-test">DeleteAForecast Test</a>
+</li>
+<li class="TOC-item TOC-item-2" >
+<a class="TOC-link" href="#editing-a-record">Editing a Record</a>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+			
+			<div class="col-12 col-sm-9 col-lg-10 p-2"><div class="pt-2 pb-2 border-bottom mb-4 text-primary"><h1>One Way Street</h1>
+            <div><small>One Way Street is a read only data pipeline loosely based on CQS [Command/Query Separation] pattern.  This article provides an introduction and demonstrates it&#x27;s usage using XUnit tests.</small></div></div>
+    <p>This first post shows the pattern and library used on a <em>simplistic</em> data model.  THe same data class <code>WeatherForecast</code> represents the domain object and the underlying persistence class in the infrastructure.</p>
+<p>In a second post, I'll cover a more realistic use case where we have different domain and infrastructure classes and need to provide mapping brokers.</p>
+<p>One Way Street is available as a Nuget Package - <a href="https://www.nuget.org/packages/Blazr.OneWayStreet">Blazr.OneWayStreet</a>.</p>
+<p>It separates out:</p>
+<ul>
+<li><em>Queries</em> - Requests for data</li>
+<li><em>Commands</em> - Requests to mutation data.</li>
+</ul>
+<p>The pattern is defined in the <code>IDataBroker</code> interface.</p>
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+<span style="color:#569CD6;">public</span> <span style="color:#569CD6;">interface</span> IDataBroker
+{
+    <span style="color:#569CD6;">public</span> ValueTask&lt;ListQueryResult&lt;TRecord&gt;&gt; ExecuteQueryAsync&lt;TRecord&gt;(ListQueryRequest request) <span style="color:#569CD6;">where</span> TRecord : <span style="color:#569CD6;">class</span>;
+
+    <span style="color:#569CD6;">public</span> ValueTask&lt;ItemQueryResult&lt;TRecord&gt;&gt; ExecuteQueryAsync&lt;TRecord&gt;(ItemQueryRequest request) <span style="color:#569CD6;">where</span> TRecord : <span style="color:#569CD6;">class</span>;
+
+    <span style="color:#569CD6;">public</span> ValueTask&lt;CommandResult&gt; ExecuteCommandAsync&lt;TRecord&gt;(CommandRequest&lt;TRecord&gt; request) <span style="color:#569CD6;">where</span> TRecord : <span style="color:#569CD6;">class</span>;
+}
+</pre></div>
+<p>Each method accepts a <em>Request</em> object that provides the data required, and returns a <em>Result</em> object.</p>
+<p><code>ExecuteQueryAsync</code> has two forms.  One returning a single <code>TRecord</code> item, and one a collection of <code>TRecord</code>'s.</p>
+<p><code>ExecuteCommandAsync</code> has a single form.  The command type [Add/Update/Delete] is defined in the <code>CommandRequest</code>.</p>
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+<span style="color:#569CD6;">public</span> record <span style="color:#569CD6;">struct</span> CommandRequest&lt;TRecord&gt;(TRecord Item, CommandState State, CancellationToken Cancellation = <span style="color:#569CD6;">new</span>());
+
+<span style="color:#569CD6;">public</span> <span style="color:#569CD6;">enum</span> CommandState
+{
+    None = <span style="color:#B5CEA8;">0</span>,
+    Add = <span style="color:#B5CEA8;">1</span>,
+    Update = <span style="color:#B5CEA8;">2</span>,
+    Delete = <span style="color:#569CD6;">int</span>.MaxValue
+}
+</pre></div>
+<p>The library provides a server based implementation of the pattern over Entity Framework Core.</p>
+<h2 id="service-definitions">Service Definitions</h2>
+<p>Each test builds a Service Collection [as you would in a normal application].  <code>IServiceCollection</code> extension methods are used to encapsulate service provision for the framework and specific entities.</p>
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+    <span style="color:#569CD6;">public</span> WeatherForecastTests()
+        =&gt; _testDataProvider = TestDataProvider.Instance();
+
+    <span style="color:#569CD6;">private</span> ServiceProvider GetServiceProvider()
+    {
+        <span style="color:#569CD6;">var</span> services = <span style="color:#569CD6;">new</span> ServiceCollection();
+        services.AddAppServerInfrastructureServices();
+        services.AddLogging(builder =&gt; builder.AddDebug());
+
+        <span style="color:#569CD6;">var</span> provider = services.BuildServiceProvider();
+
+        <span style="color:#57A64A;">// get the DbContext factory and add the test data</span>
+        <span style="color:#569CD6;">var</span> factory = provider.GetService&lt;IDbContextFactory&lt;InMemoryTestDbContext&gt;&gt;();
+        <span style="color:#569CD6;">if</span> (factory <span style="color:#569CD6;">is</span> not <span style="color:#569CD6;">null</span>)
+            TestDataProvider.Instance().LoadDbContext&lt;InMemoryTestDbContext&gt;(factory);
+
+        <span style="color:#569CD6;">return</span> provider!;
+    }
+</pre></div>
+<p><code>AddAppServerInfrastructureServices</code> is a <code>IServiceCollection</code> extension method.  It:</p>
+<ol>
+<li>Adds the DBContext Factory.</li>
+<li>Adds the Server Data Broker.</li>
+<li>Adds the generic data handlers.</li>
+<li>Calls the entity/feature specific extension methods.</li>
+</ol>
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+<span style="color:#569CD6;">public</span> <span style="color:#569CD6;">static</span> <span style="color:#569CD6;">void</span> AddAppServerInfrastructureServices(<span style="color:#569CD6;">this</span> IServiceCollection services)
+{
+    services.AddDbContextFactory&lt;InMemoryTestDbContext&gt;(options
+        =&gt; options.UseInMemoryDatabase($<span style="color:#D69D85;">&quot;TestDatabase-{Guid.NewGuid().ToString()}&quot;</span>));
+
+    services.AddScoped&lt;IDataBroker, ServerDataBroker&gt;();
+
+    <span style="color:#57A64A;">// Add the standard handlers</span>
+    services.AddScoped&lt;IListRequestHandler, ListRequestServerHandler&lt;InMemoryTestDbContext&gt;&gt;();
+    services.AddScoped&lt;IItemRequestHandler, ItemRequestServerHandler&lt;InMemoryTestDbContext&gt;&gt;();
+    services.AddScoped&lt;ICommandHandler, CommandServerHandler&lt;InMemoryTestDbContext&gt;&gt;();
+
+    <span style="color:#57A64A;">// Add any individual entity services</span>
+    services.AddWeatherForecastServerInfrastructureServices();
+}
+</pre></div>
+<p><code>AddWeatherForecastServerInfrastructureServices</code> adds the entity specific services.  In this case, just the filter and sorter handlers.</p>
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+<span style="color:#569CD6;">public</span> <span style="color:#569CD6;">static</span> <span style="color:#569CD6;">void</span> AddWeatherForecastServerInfrastructureServices(<span style="color:#569CD6;">this</span> IServiceCollection services)
+{
+    services.AddTransient&lt;IRecordFilterHandler&lt;WeatherForecast&gt;, WeatherForecastFilterHandler&gt;();
+    services.AddTransient&lt;IRecordSortHandler&lt;WeatherForecast&gt;, WeatherForecastSortHandler&gt;();
+}
+</pre></div><h2 id="getaforecast-test">GetAForecast Test</h2>
+<p><code>GetAForecast</code> demonstrates the basic data pipeline coding pattern.  The inline comments expain the detail.</p>
+<p>The test gets an Id from the test provider and requests the record through the <code>IDataBroker</code>.</p>
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+[Fact]
+<span style="color:#569CD6;">public</span> <span style="color:#569CD6;">async</span> <span style="color:#569CD6;">void</span> GetAForecast()
+{
+    <span style="color:#57A64A;">// Get a fully stocked DI container</span>
+    <span style="color:#569CD6;">var</span> provider = GetServiceProvider();
+
+    <span style="color:#57A64A;">//Injects the data broker</span>
+    <span style="color:#569CD6;">var</span> broker = provider.GetService&lt;IDataBroker&gt;()!;
+
+    <span style="color:#57A64A;">// Get the test item and it&#39;s Id from the Test Provider</span>
+    <span style="color:#569CD6;">var</span> testItem = _testDataProvider.WeatherForecasts.First();
+    <span style="color:#569CD6;">var</span> testUid = testItem.WeatherForecastUid;
+
+    <span style="color:#57A64A;">// Builds an item request instance and Executes the query against the broker</span>
+    <span style="color:#569CD6;">var</span> request = ItemQueryRequest.Create(testUid);
+    <span style="color:#569CD6;">var</span> loadResult = <span style="color:#569CD6;">await</span> broker.ExecuteQueryAsync&lt;WeatherForecast&gt;(request);
+
+    <span style="color:#57A64A;">// check the query was successful</span>
+    Assert.True(loadResult.Successful);
+    
+    <span style="color:#57A64A;">// get the returned record </span>
+    <span style="color:#569CD6;">var</span> dbItem = loadResult.Item;
+
+    <span style="color:#57A64A;">// check it matches the test record</span>
+    Assert.Equal(testItem, dbItem);
+}
+</pre></div><h2 id="getforecastlist">GetForecastList</h2>
+<p><code>GetForecastList</code> demonstrates a paged list request.</p>
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+[Theory]
+[InlineData(<span style="color:#B5CEA8;">0</span>, <span style="color:#B5CEA8;">10</span>)]
+[InlineData(<span style="color:#B5CEA8;">0</span>, <span style="color:#B5CEA8;">50</span>)]
+[InlineData(<span style="color:#B5CEA8;">5</span>, <span style="color:#B5CEA8;">10</span>)]
+<span style="color:#569CD6;">public</span> <span style="color:#569CD6;">async</span> <span style="color:#569CD6;">void</span> GetForecastList(<span style="color:#569CD6;">int</span> startIndex, <span style="color:#569CD6;">int</span> pageSize)
+{
+    <span style="color:#569CD6;">var</span> provider = GetServiceProvider();
+    <span style="color:#569CD6;">var</span> broker = provider.GetService&lt;IDataBroker&gt;()!;
+
+    <span style="color:#57A64A;">// Get the total expected count and the first record of the page</span>
+    <span style="color:#569CD6;">var</span> testCount = _testDataProvider.WeatherForecasts.Count();
+    <span style="color:#569CD6;">var</span> testFirstItem = _testDataProvider.WeatherForecasts.Skip(startIndex).First();
+
+    <span style="color:#57A64A;">// Create a request and execute it against the broker</span>
+    <span style="color:#569CD6;">var</span> request = <span style="color:#569CD6;">new</span> ListQueryRequest { PageSize = pageSize, StartIndex = startIndex };
+    <span style="color:#569CD6;">var</span> loadResult = <span style="color:#569CD6;">await</span> broker.ExecuteQueryAsync&lt;WeatherForecast&gt;(request);
+    Assert.True(loadResult.Successful);
+
+    <span style="color:#57A64A;">// Check the results are as expected</span>
+    Assert.Equal(testCount, loadResult.TotalCount);
+    Assert.Equal(pageSize, loadResult.Items.Count());
+    Assert.Equal(testFirstItem, loadResult.Items.First());
+}
+</pre></div><h2 id="filter">Filter</h2>
+<p><code>GetAFilteredForecastList</code> demonstrates filtering a paged list from the data provider.</p>
+<p>Filters are defined in classes using the <em>Specification</em> pattern and passed by theoir names.  This loose coupling works in both server and API's contexts.</p>
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+[Fact]
+<span style="color:#569CD6;">public</span> <span style="color:#569CD6;">async</span> <span style="color:#569CD6;">void</span> GetAFilteredForecastList()
+{
+    <span style="color:#569CD6;">var</span> provider = GetServiceProvider();
+    <span style="color:#569CD6;">var</span> broker = provider.GetService&lt;IDataBroker&gt;()!;
+
+    <span style="color:#57A64A;">// Set up the test data</span>
+    <span style="color:#569CD6;">var</span> pageSize = <span style="color:#B5CEA8;">2</span>;
+    <span style="color:#569CD6;">var</span> testSummary = <span style="color:#D69D85;">&quot;Warm&quot;</span>;
+    <span style="color:#569CD6;">var</span> testQuery = _testDataProvider.WeatherForecasts.Where(item =&gt; testSummary.Equals(item.Summary, StringComparison.CurrentCultureIgnoreCase));
+    <span style="color:#569CD6;">var</span> testCount = testQuery.Count();
+    <span style="color:#569CD6;">var</span> testFirstItem = testQuery.First();
+
+    <span style="color:#57A64A;">// define the filter to use</span>
+    <span style="color:#569CD6;">var</span> filterDefinition = <span style="color:#569CD6;">new</span> FilterDefinition(ApplicationConstants.WeatherForecast.FilterWeatherForecastsBySummary, <span style="color:#D69D85;">&quot;Warm&quot;</span>);
+    <span style="color:#569CD6;">var</span> filters = <span style="color:#569CD6;">new</span> List&lt;FilterDefinition&gt;() { filterDefinition };
+
+    <span style="color:#57A64A;">// Define the query and execute it against the broker</span>
+    <span style="color:#569CD6;">var</span> request = <span style="color:#569CD6;">new</span> ListQueryRequest { PageSize = pageSize, StartIndex = <span style="color:#B5CEA8;">0</span>, Filters = filters };
+    <span style="color:#569CD6;">var</span> loadResult = <span style="color:#569CD6;">await</span> broker.ExecuteQueryAsync&lt;WeatherForecast&gt;(request);
+    Assert.True(loadResult.Successful);
+
+    <span style="color:#57A64A;">// Test the results are as expected</span>
+    Assert.Equal(testCount, loadResult.TotalCount);
+    Assert.Equal(pageSize, loadResult.Items.Count());
+    Assert.Equal(testFirstItem, loadResult.Items.First());
+}
+</pre></div><h2 id="deleteaforecast-test">DeleteAForecast Test</h2>
+<p>The <code>UpdateAForecast</code> test method demonstrates the command pipeline: in this case a Delete.</p>
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+[Fact]
+<span style="color:#569CD6;">public</span> <span style="color:#569CD6;">async</span> <span style="color:#569CD6;">void</span> DeleteAForecast()
+{
+    <span style="color:#57A64A;">// Get a fully stocked DI container</span>
+    <span style="color:#569CD6;">var</span> provider = GetServiceProvider();
+    <span style="color:#569CD6;">var</span> broker = provider.GetService&lt;IDataBroker&gt;()!;
+
+    <span style="color:#57A64A;">// get the test record</span>
+    <span style="color:#569CD6;">var</span> testItem = _testDataProvider.WeatherForecasts.First();
+    <span style="color:#569CD6;">var</span> testUid = testItem.WeatherForecastUid;
+    <span style="color:#569CD6;">var</span> testCount = _testDataProvider.WeatherForecasts.Count() - <span style="color:#B5CEA8;">1</span>;
+
+    <span style="color:#57A64A;">// build a command and execute it against the database</span>
+    <span style="color:#569CD6;">var</span> command = <span style="color:#569CD6;">new</span> CommandRequest&lt;WeatherForecast&gt;(testItem, CommandState.Delete);
+    <span style="color:#569CD6;">var</span> commandResult = <span style="color:#569CD6;">await</span> broker.ExecuteCommandAsync&lt;WeatherForecast&gt;(command);
+    Assert.True(commandResult.Successful);
+
+    <span style="color:#57A64A;">// build a item request and ensure the record no longwer exists</span>
+    <span style="color:#569CD6;">var</span> request = ItemQueryRequest.Create(testUid);
+    <span style="color:#569CD6;">var</span> loadResult = <span style="color:#569CD6;">await</span> broker.ExecuteQueryAsync&lt;WeatherForecast&gt;(request);
+    Assert.False(loadResult.Successful);
+
+    <span style="color:#57A64A;">// build a list query and check we have one less rcord </span>
+    <span style="color:#569CD6;">var</span> queryRequest = <span style="color:#569CD6;">new</span> ListQueryRequest { PageSize = <span style="color:#B5CEA8;">10</span>, StartIndex = <span style="color:#B5CEA8;">0</span> };
+    <span style="color:#569CD6;">var</span> queryResult = <span style="color:#569CD6;">await</span> broker.ExecuteQueryAsync&lt;WeatherForecast&gt;(queryRequest);
+    Assert.True(queryResult.Successful);
+    Assert.Equal(testCount, queryResult.TotalCount);
+}
+</pre></div><h2 id="editing-a-record">Editing a Record</h2>
+<p>&quot;How do you edit a Record&quot;?</p>
+<p>This test demonstrates using a record edit context object, in this case <code>WeatherForecastEditContext</code>, to edit a record.  In a real world setting your edit form would plug into the record edit context, your validation would be on the record edit context, and you would create the <code>CommandRequest</code> object from <code>AsRecord</code>.</p>
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+[Fact]
+<span style="color:#569CD6;">public</span> <span style="color:#569CD6;">async</span> <span style="color:#569CD6;">void</span> UpdateAForecast()
+{
+    <span style="color:#57A64A;">// Get a fully stocked DI container</span>
+    <span style="color:#569CD6;">var</span> provider = GetServiceProvider();
+    <span style="color:#569CD6;">var</span> broker = provider.GetService&lt;IDataBroker&gt;()!;
+
+    <span style="color:#57A64A;">// Get a record id to edit</span>
+    <span style="color:#569CD6;">var</span> testItem = _testDataProvider.WeatherForecasts.First();
+    <span style="color:#569CD6;">var</span> testUid = testItem.WeatherForecastUid;
+
+    <span style="color:#57A64A;">// Build an item query and execute it against the broker to get the record to edit</span>
+    <span style="color:#569CD6;">var</span> request = ItemQueryRequest.Create(testUid);
+    <span style="color:#569CD6;">var</span> loadResult = <span style="color:#569CD6;">await</span> broker.ExecuteQueryAsync&lt;WeatherForecast&gt;(request);
+    Assert.True(loadResult.Successful);
+    <span style="color:#569CD6;">var</span> dbItem = loadResult.Item!;
+
+    <span style="color:#57A64A;">// construct a recordEditContext for the record</span>
+    <span style="color:#57A64A;">// Normally you would plug your edit form fields into this context</span>
+    <span style="color:#57A64A;">// We just update the temperature</span>
+    <span style="color:#569CD6;">var</span> recordEditContext = <span style="color:#569CD6;">new</span> WeatherForecastEditContext(dbItem);
+    recordEditContext.TemperatureC = recordEditContext.TemperatureC + <span style="color:#B5CEA8;">10</span>;
+
+    <span style="color:#57A64A;">// In a real edit setting, you would be doing validation to ensure the</span>
+    <span style="color:#57A64A;">// recordEditContext values are valid before attempting to save the record</span>
+    <span style="color:#57A64A;">// Note that the validation is on the WeatherForecastEditContext, not WeatherForecast!</span>
+    <span style="color:#569CD6;">var</span> newItem = recordEditContext.AsRecord;
+
+    <span style="color:#57A64A;">// Create an update command and execute it against the broker</span>
+    <span style="color:#569CD6;">var</span> command = <span style="color:#569CD6;">new</span> CommandRequest&lt;WeatherForecast&gt;(newItem, CommandState.Update);
+    <span style="color:#569CD6;">var</span> commandResult = <span style="color:#569CD6;">await</span> broker.ExecuteCommandAsync&lt;WeatherForecast&gt;(command);
+    Assert.True(commandResult.Successful);
+
+    <span style="color:#57A64A;">// Get the updated record from the broker and test they are the same</span>
+    request = ItemQueryRequest.Create(testUid);
+    loadResult = <span style="color:#569CD6;">await</span> broker.ExecuteQueryAsync&lt;WeatherForecast&gt;(request);
+    Assert.True(loadResult.Successful);
+    <span style="color:#569CD6;">var</span> dbNewItem = loadResult.Item!;
+    Assert.Equal(newItem, dbNewItem);
+
+    <span style="color:#57A64A;">// Execute a list query against the data broker and check the count is still the same</span>
+    <span style="color:#57A64A;">// i.e. we haven&#39;t added a record instead of updating one</span>
+    <span style="color:#569CD6;">var</span> queryRequest = <span style="color:#569CD6;">new</span> ListQueryRequest { PageSize = <span style="color:#B5CEA8;">10</span>, StartIndex = <span style="color:#B5CEA8;">0</span> };
+    <span style="color:#569CD6;">var</span> queryResult = <span style="color:#569CD6;">await</span> broker.ExecuteQueryAsync&lt;WeatherForecast&gt;(queryRequest);
+    Assert.True(queryResult.Successful);
+
+    <span style="color:#569CD6;">var</span> testCount = _testDataProvider.WeatherForecasts.Count();
+    Assert.Equal(testCount, queryResult.TotalCount);
+}
+</pre></div></div></div></div></body></html>
+
+
+
+
+

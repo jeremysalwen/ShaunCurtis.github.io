@@ -84,25 +84,27 @@
 <li>It will compile and work.</li>
 </ol>
 <p>Try it. You won't see anything because it has no visible html output.</p>
-<pre><code class="language-csharp">public class TotallyMinimal : IComponent
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+<span style="color:#569CD6;">public</span> <span style="color:#569CD6;">class</span> TotallyMinimal : IComponent
 {
-    public void Attach(RenderHandle handle)
+    <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">void</span> Attach(RenderHandle handle)
     { }
 
-    public Task SetParametersAsync(ParameterView parameters)
+    <span style="color:#569CD6;">public</span> Task SetParametersAsync(ParameterView parameters)
         =&gt;  Task.CompletedTask;
 }
-</code></pre>
+</pre></div>
 <p>To get output, add a line of code to <code>Attach</code>.</p>
-<pre><code class="language-csharp">public class Minimal : IComponent
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+<span style="color:#569CD6;">public</span> <span style="color:#569CD6;">class</span> Minimal : IComponent
 {
-    public void Attach(RenderHandle handle)
-        =&gt;  handle.Render( (builder) =&gt; builder.AddMarkupContent(0, &quot;&lt;h1&gt;Hello from Minimal&lt;/h1&gt;&quot;) );
+    <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">void</span> Attach(RenderHandle handle)
+        =&gt;  handle.Render( (builder) =&gt; builder.AddMarkupContent(<span style="color:#B5CEA8;">0</span>, <span style="color:#D69D85;">&quot;&lt;h1&gt;Hello from Minimal&lt;/h1&gt;&quot;</span>) );
 
-    public Task SetParametersAsync(ParameterView parameters)
+    <span style="color:#569CD6;">public</span> Task SetParametersAsync(ParameterView parameters)
         =&gt; Task.CompletedTask;
 }
-</code></pre>
+</pre></div>
 <p>Not very useful, but it demonstrates core component functionality.</p>
 <h2 id="the-blazor-ui">The Blazor UI</h2>
 <p>Blazor Server or Blazor WASM?  Regard them as two modes of deployment, not two different development paths.</p>
@@ -110,47 +112,53 @@
 <p>This section provides a quick look at the differences between the two and how those differences affect UI development.</p>
 <h3 id="blazor-server">Blazor Server</h3>
 <p>Blazor Server defines the <code>&lt;app&gt;</code> component in the initial server/html page.  It looks like this:</p>
-<pre><code class="language-html">&lt;app&gt;
-    &lt;component type=&quot;typeof(App)&quot; render-mode=&quot;ServerPrerendered&quot; /&gt;
-&lt;/app&gt;
-</code></pre>
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+<span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">app</span><span style="color:#569CD6;">&gt;</span>
+    <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">component</span> <span style="color:#FF0000;">type</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;typeof(App)&quot;</span> <span style="color:#FF0000;">render-mode</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;ServerPrerendered&quot;</span> <span style="color:#569CD6;">/&gt;</span>
+<span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">app</span><span style="color:#569CD6;">&gt;</span>
+</pre></div>
 <p><code>type</code> defines the root component class - in this case <code>App</code> and <code>render-mode</code> defines how the initial server-side render process runs.  You can read about that elsewhere.  The only important point to understand is: if it pre-renders, the load page will be rendered twice on initial load - once by the server to build a static version of the page, and then a second time by Hub Session when it builds the live page for the browser client code.  This only occurs for the intial load page: every page therafter is loaded once.</p>
 <p>The browser client code gets loaded by:</p>
-<pre><code class="language-html">&lt;script src=&quot;_framework/blazor.server.js&quot;&gt;&lt;/script&gt;
-</code></pre>
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+<span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">script</span> <span style="color:#FF0000;">src</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;_framework/blazor.server.js&quot;</span><span style="color:#569CD6;">&gt;</span><span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">script</span><span style="color:#569CD6;">&gt;</span>
+</pre></div>
 <p>This is not the WASM code.  It's JS code to interact with the browser DOM and Hub session over SignalR.</p>
 <p>Once <em>blazor.server.js</em> loads, the Blazor client JS application runs in the browser page and establishes a SignalR session with the server.  To complete the initial load, the Blazor Client Application calls the Blazor Hub Session and requests a complete server render of the root component.  It applies the resultant DOM changes to the browser DOM.</p>
 <p>The diagram below shows how a render request is passed to the displayed page.</p>
 <p><img src="./assets/The-Blazor-Component/Server-Render.png" alt="Server Rendering" /></p>
 <h3 id="blazor-web-assembly">Blazor Web Assembly</h3>
 <p>In Blazor Web Assembly the browser receives an Html page with a defined <code>div</code> placeholder where the root component should load:</p>
-<pre><code class="language-html">&lt;div id=&quot;app&quot;&gt;
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+<span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">div</span> <span style="color:#FF0000;">id</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;app&quot;</span><span style="color:#569CD6;">&gt;</span>
     ....
-&lt;/div&gt;
-</code></pre>
+<span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">div</span><span style="color:#569CD6;">&gt;</span>
+</pre></div>
 <p>The Client Application is loaded when this script is run:</p>
-<pre><code class="language-html">&lt;script src=&quot;_framework/blazor.webassembly.js&quot;&gt;&lt;/script&gt;
-</code></pre>
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+<span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">script</span> <span style="color:#FF0000;">src</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;_framework/blazor.webassembly.js&quot;</span><span style="color:#569CD6;">&gt;</span><span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">script</span><span style="color:#569CD6;">&gt;</span>
+</pre></div>
 <p>Once the WASM code is loaded, it runs <code>program</code>.</p>
-<pre><code class="language-csharp">builder.RootComponents.Add&lt;App&gt;(&quot;#app&quot;);
-</code></pre>
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+builder.RootComponents.Add&lt;App&gt;(<span style="color:#D69D85;">&quot;#app&quot;</span>);
+</pre></div>
 <p>The code tells the Renderer that the <code>App</code> class component is the root component for the <code>RenderTree</code> and to load it's DOM into the <code>app</code> element in the browser DOM.</p>
 <p><img src="./assets/The-Blazor-Component/Web-Assembly-Render.png" alt="Server Rendering" /></p>
 <p>Although the process by which the root component is defined and loaded is different, there's no difference between a WebAssembly and Server root component or any sub-component.  They are the same components.</p>
 <h3 id="app.razor">App.razor</h3>
 <p><em>App.razor</em> is the &quot;standard&quot; root component.  It can be any <code>IComponent</code> defined class.</p>
 <p><code>App</code> looks like this:</p>
-<pre><code class="language-html">&lt;Router AppAssembly=&quot;@typeof(Program).Assembly&quot;&gt;
-    &lt;Found Context=&quot;routeData&quot;&gt;
-        &lt;RouteView RouteData=&quot;@routeData&quot; DefaultLayout=&quot;@typeof(MainLayout)&quot; /&gt;
-    &lt;/Found&gt;
-    &lt;NotFound&gt;
-        &lt;LayoutView Layout=&quot;@typeof(MainLayout)&quot;&gt;
-            &lt;p&gt;Sorry, there's nothing at this address.&lt;/p&gt;
-        &lt;/LayoutView&gt;
-    &lt;/NotFound&gt;
-&lt;/Router&gt;
-</code></pre>
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+<span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">Router</span> <span style="color:#FF0000;">AppAssembly</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;@typeof(Program).Assembly&quot;</span><span style="color:#569CD6;">&gt;</span>
+    <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">Found</span> <span style="color:#FF0000;">Context</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;routeData&quot;</span><span style="color:#569CD6;">&gt;</span>
+        <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">RouteView</span> <span style="color:#FF0000;">RouteData</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;@routeData&quot;</span> <span style="color:#FF0000;">DefaultLayout</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;@typeof(MainLayout)&quot;</span> <span style="color:#569CD6;">/&gt;</span>
+    <span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">Found</span><span style="color:#569CD6;">&gt;</span>
+    <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">NotFound</span><span style="color:#569CD6;">&gt;</span>
+        <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">LayoutView</span> <span style="color:#FF0000;">Layout</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;@typeof(MainLayout)&quot;</span><span style="color:#569CD6;">&gt;</span>
+            <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">p</span><span style="color:#569CD6;">&gt;</span>Sorry, there&#39;s nothing at this address.<span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">p</span><span style="color:#569CD6;">&gt;</span>
+        <span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">LayoutView</span><span style="color:#569CD6;">&gt;</span>
+    <span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">NotFound</span><span style="color:#569CD6;">&gt;</span>
+<span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">Router</span><span style="color:#569CD6;">&gt;</span>
+</pre></div>
 <p>It's a Razor component defining one child component, <code>Router</code>.  <code>Router</code> has two <code>RenderFragments</code>, <code>Found</code> and <code>NotFound</code>.</p>
 <h4 id="found">Found</h4>
 <p>If <code>Router</code> finds a route, and therefore an <code>IComponent</code> class, it renders the <code>RouteView</code> component passing it the route class type along with the default <code>Layout</code> class.</p>
@@ -162,15 +170,17 @@
 <p>Routed Components contain <em>@page</em> routing directives and optionally a <em>@Layout</em> directive.</p>
 <p>When the <code>Route</code> component initializes, it builds it's routing table by searching the loaded assembly for all <code>IComponent</code> implementating class and a <code>@page</code> directive.</p>
 <p>Page and Layout directives are declared like this in Razor:</p>
-<pre><code class="language-html">@page &quot;/WeatherForecast&quot;
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+@page &quot;/WeatherForecast&quot;
 @page &quot;/WeatherForecasts&quot;
 @layout MainLayout
-</code></pre>
+</pre></div>
 <p>Or directly on classes like this:</p>
-<pre><code class="language-csharp">[LayoutAttribute(typeof(MainLayout))]
-[RouteAttribute(&quot;/helloworld&quot;)]
-public class RendererComponent : IComponent {}
-</code></pre>
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+[LayoutAttribute(<span style="color:#569CD6;">typeof</span>(MainLayout))]
+[RouteAttribute(<span style="color:#D69D85;">&quot;/helloworld&quot;</span>)]
+<span style="color:#569CD6;">public</span> <span style="color:#569CD6;">class</span> RendererComponent : IComponent {}
+</pre></div>
 <p>It's a serious misconception to think routed components are web pages. if you do you will:</p>
 <ul>
 <li>try and code the component logic as if it is a web page.</li>

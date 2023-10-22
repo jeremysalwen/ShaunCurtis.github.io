@@ -78,50 +78,51 @@
 <p>Let's look at various examples and see what happens.</p>
 <h2 id="test.razor">Test.razor</h2>
 <p>We need a test page with some supporting code:</p>
-<pre><code class="language-csharp">@page &quot;/Test&quot;
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+@page <span style="color:#D69D85;">&quot;/Test&quot;</span>
 
-// Our iteration code
+<span style="color:#57A64A;">// Our iteration code</span>
 
 &lt;div&gt;@_selected&lt;/div&gt;
 
 @code {
-    private string _selected = &quot;None&quot;;
+    <span style="color:#569CD6;">private</span> <span style="color:#569CD6;">string</span> _selected = <span style="color:#D69D85;">&quot;None&quot;</span>;
 
-    class Model
+    <span style="color:#569CD6;">class</span> Model
     {
-        public int Id { get; set; }
-        public string Country { get; set; }
+        <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">int</span> Id { <span style="color:#569CD6;">get</span>; <span style="color:#569CD6;">set</span>; }
+        <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">string</span> Country { <span style="color:#569CD6;">get</span>; <span style="color:#569CD6;">set</span>; }
     }
 
-    private Task OnClick(int id)
+    <span style="color:#569CD6;">private</span> Task OnClick(<span style="color:#569CD6;">int</span> id)
     {
-        var x = id;
-        _selected = $&quot;{id}&quot;;
-        return Task.CompletedTask;
+        <span style="color:#569CD6;">var</span> x = id;
+        _selected = $<span style="color:#D69D85;">&quot;{id}&quot;</span>;
+        <span style="color:#569CD6;">return</span> Task.CompletedTask;
     }
 
-    private Task OnClick(Model country)
+    <span style="color:#569CD6;">private</span> Task OnClick(Model country)
     {
-        _selected = $&quot;{country.Id}&quot;;
-        return Task.CompletedTask;
+        _selected = $<span style="color:#D69D85;">&quot;{country.Id}&quot;</span>;
+        <span style="color:#569CD6;">return</span> Task.CompletedTask;
     }
 
-    private List&lt;Model&gt; Countries =&gt; new List&lt;Model&gt;()
+    <span style="color:#569CD6;">private</span> List&lt;Model&gt; Countries =&gt; <span style="color:#569CD6;">new</span> List&lt;Model&gt;()
         {
-            new Model() { Id = 0, Country = &quot;UK&quot;},
-            new Model() { Id = 1, Country = &quot;Spain&quot;},
-            new Model() { Id = 2, Country = &quot;Portugal&quot;}
+            <span style="color:#569CD6;">new</span> Model() { Id = <span style="color:#B5CEA8;">0</span>, Country = <span style="color:#D69D85;">&quot;UK&quot;</span>},
+            <span style="color:#569CD6;">new</span> Model() { Id = <span style="color:#B5CEA8;">1</span>, Country = <span style="color:#D69D85;">&quot;Spain&quot;</span>},
+            <span style="color:#569CD6;">new</span> Model() { Id = <span style="color:#B5CEA8;">2</span>, Country = <span style="color:#D69D85;">&quot;Portugal&quot;</span>}
     };
 }
-</code></pre>
-<h2 id="the-straight-foreach">The Straight ForEach</h2>
+</pre></div><h2 id="the-straight-foreach">The Straight ForEach</h2>
 <p>This looks like:</p>
-<pre><code class="language-csharp">@foreach (var country in Countries)
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+@<span style="color:#569CD6;">foreach</span> (<span style="color:#569CD6;">var</span> country <span style="color:#569CD6;">in</span> Countries)
 {
-    &lt;div&gt;&lt;button class=&quot;btn btn-dark m-1&quot; @onclick=&quot;() =&gt; OnClick(country)&quot;&gt;Edit&lt;/button&gt;@country.Country&lt;/div&gt;
-    &lt;div&gt;&lt;button class=&quot;btn btn-secondary m-1&quot; @onclick=&quot;() =&gt; OnClick(country.Id)&quot;&gt;Edit&lt;/button&gt;@country.Country&lt;/div&gt;
+    &lt;div&gt;&lt;button <span style="color:#569CD6;">class</span>=<span style="color:#D69D85;">&quot;btn btn-dark m-1&quot;</span> @onclick=<span style="color:#D69D85;">&quot;() =&gt; OnClick(country)&quot;</span>&gt;Edit&lt;/button&gt;@country.Country&lt;/div&gt;
+    &lt;div&gt;&lt;button <span style="color:#569CD6;">class</span>=<span style="color:#D69D85;">&quot;btn btn-secondary m-1&quot;</span> @onclick=<span style="color:#D69D85;">&quot;() =&gt; OnClick(country.Id)&quot;</span>&gt;Edit&lt;/button&gt;@country.Country&lt;/div&gt;
 }
-</code></pre>
+</pre></div>
 <p>Each iteration points <code>OnClick</code> to the correct <code>country</code> object in <code>Countries</code>.</p>
 <ul>
 <li>When the first button is pressed the reference to the correct country object is passed to <code>OnClick</code> - and the correct <code>Id</code> is displayed.</li>
@@ -129,30 +130,33 @@
 </ul>
 <h2 id="the-indexed-foreach">The Indexed ForEach</h2>
 <p>This looks like:</p>
-<pre><code class="language-csharp">@{ int x = 0;}
-@foreach (var country in Countries)
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+@{ <span style="color:#569CD6;">int</span> x = <span style="color:#B5CEA8;">0</span>;}
+@<span style="color:#569CD6;">foreach</span> (<span style="color:#569CD6;">var</span> country <span style="color:#569CD6;">in</span> Countries)
 {
-    &lt;div&gt;&lt;button class=&quot;btn btn-danger m-1&quot; @onclick=&quot;() =&gt; OnClick(x)&quot;&gt;Edit&lt;/button&gt;@country.Country&lt;/div&gt;
+    &lt;div&gt;&lt;button <span style="color:#569CD6;">class</span>=<span style="color:#D69D85;">&quot;btn btn-danger m-1&quot;</span> @onclick=<span style="color:#D69D85;">&quot;() =&gt; OnClick(x)&quot;</span>&gt;Edit&lt;/button&gt;@country.Country&lt;/div&gt;
     x++;
 }
-</code></pre>
+</pre></div>
 <p>Now we're setting a counter which we increment and pass when the button is clicked.  As the loop is complete when we click on the button, <code>x</code> is at <code>Countries.Count</code> (one iteration after completion of foreach) - in our case 3. <code>OnClick</code> is passed 3.</p>
 <h2 id="the-for">The For</h2>
 <p>This looks like this:</p>
-<pre><code class="language-csharp">@for (var i = 0; i &lt; Countries.Count; i++)
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+@<span style="color:#569CD6;">for</span> (<span style="color:#569CD6;">var</span> i = <span style="color:#B5CEA8;">0</span>; i &lt; Countries.Count; i++)
 {
-    &lt;div&gt;&lt;button class=&quot;btn btn-danger m-1&quot; @onclick=&quot;() =&gt; OnClick(i)&quot;&gt;Edit&lt;/button&gt; @Countries[i].Country&lt;/div&gt;
+    &lt;div&gt;&lt;button <span style="color:#569CD6;">class</span>=<span style="color:#D69D85;">&quot;btn btn-danger m-1&quot;</span> @onclick=<span style="color:#D69D85;">&quot;() =&gt; OnClick(i)&quot;</span>&gt;Edit&lt;/button&gt; @Countries[i].Country&lt;/div&gt;
 }
-</code></pre>
+</pre></div>
 <p>Again we're passing the value of the counter when the button is clicked.  As the loop is complete when we click on the button, <code>x</code> is at <code>Countries.Count</code> (one iteration after completion of foreach) - in our case 3. <code>OnClick</code> is passed 3.</p>
 <h2 id="the-for-with-a-local-loop-variable">The For with a Local Loop Variable</h2>
 <p>This looks like this:</p>
-<pre><code class="language-csharp">@for (var i = 0; i &lt; Countries.Count; i++)
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+@<span style="color:#569CD6;">for</span> (<span style="color:#569CD6;">var</span> i = <span style="color:#B5CEA8;">0</span>; i &lt; Countries.Count; i++)
 {
-    var item = Countries[i];
-    &lt;div&gt;&lt;button class=&quot;btn btn-success m-1&quot; @onclick=&quot;() =&gt; OnClick(item.Id)&quot;&gt;Edit&lt;/button&gt; @item.Country&lt;/div&gt;
+    <span style="color:#569CD6;">var</span> item = Countries[i];
+    &lt;div&gt;&lt;button <span style="color:#569CD6;">class</span>=<span style="color:#D69D85;">&quot;btn btn-success m-1&quot;</span> @onclick=<span style="color:#D69D85;">&quot;() =&gt; OnClick(item.Id)&quot;</span>&gt;Edit&lt;/button&gt; @item.Country&lt;/div&gt;
 }
-</code></pre>
+</pre></div>
 <p>We now set a local loop variable and reference that within the loop.    When the button is pressed the reference to the correct value is passed to <code>OnClick</code> - and the correct <code>Id</code> is displayed.</p>
 <h2 id="wrap-up">Wrap Up</h2>
 <p>Hopefully you can see that you should either:</p>
