@@ -1,0 +1,796 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<base href="/">
+
+	
+
+	
+
+	
+	<link href="/resources/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+	<link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+
+	
+	<link href="/resources/css/sb-admin-2.css" rel="stylesheet" type="text/css">
+	<link href="/resources/css/site.css" rel="stylesheet" type="text/css">
+
+	
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/highlight.css">
+	<link rel="stylesheet" href="/resources/css/article.css" type="text/css">
+
+	
+	<link rel="icon" href="/assets/favicon.png">
+
+	<title>Building Blazor List Components and the Notification Pattern</title>
+        <meta property="author" content="Shaun Curtis" />
+        <meta property="description" content="This article looks at how to handle large lists in Blazor, decouple the data from the UI, and use the Notification Pattern to trigger updates in components." />
+    <meta property="og:site_name" content="Cold Elm Coders" />
+        <meta property="og:site" content="https://shauncurtis.github.io/" />
+        <meta property="og:title" content="Building Blazor List Components and the Notification Pattern" />
+        <meta property="og:description" content="This article looks at how to handle large lists in Blazor, decouple the data from the UI, and use the Notification Pattern to trigger updates in components." /></head>
+<body><header class="navbar bg-dark p-2 text-large text-light"><section class="navbar-section  text-light"><a href="/" class="navbar-brand mr-2 text-large text-light p-2">Cold Elm Coders</a>
+			<a href="/Posts" class="btn btn-link text-light">Posts</a>
+			<a href="/Rants" class="btn btn-link text-light">Rants</a>
+			<a href="/Articles" class="btn btn-link text-light">Articles</a>
+			<a href="/Stories" class="btn btn-link text-light">Stories</a>
+			<a href="/about.html" class="btn btn-link text-light">About</a></section></header>
+
+	<div class="container-fluid"><div class="row"><div class="col-12 col-sm-3 col-lg-2 bg-light pt-2"><div class="article-info p-2"><div class="mb-2">Published: 28-Feb-2022</div>
+                <div class="mb-2">Updated: 28-Feb-2022</div>
+                <div class="mb-2">Author: Shaun Curtis</div></div>
+    <h4 class="p-2">Table of Contents</h4>
+<ul class="TOC" >
+<li class="TOC-item TOC-item-0" >
+<a class="TOC-link" href="#">Top</a>
+<ul class="TOC TOC-0" >
+<li class="TOC-item TOC-item-1" >
+<ul class="TOC TOC-1" >
+<li class="TOC-item TOC-item-2" >
+<a class="TOC-link" href="#overview">Overview</a>
+</li>
+<li class="TOC-item TOC-item-2" >
+<a class="TOC-link" href="#repo">Repo</a>
+</li>
+<li class="TOC-item TOC-item-2" >
+<a class="TOC-link" href="#refactoring-the-project">Refactoring the Project</a>
+</li>
+<li class="TOC-item TOC-item-2" >
+<a class="TOC-link" href="#the-ui">The UI</a>
+</li>
+<li class="TOC-item TOC-item-2" >
+<a class="TOC-link" href="#paging">Paging</a>
+</li>
+<li class="TOC-item TOC-item-2" >
+<a class="TOC-link" href="#fetchpageddata">FetchPagedData</a>
+</li>
+<li class="TOC-item TOC-item-2" >
+<a class="TOC-link" href="#wrap-up">Wrap up</a>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+			
+			<div class="col-12 col-sm-9 col-lg-10 p-2"><div class="pt-2 pb-2 border-bottom mb-4 text-primary"><h1>Building Blazor List Components and the Notification Pattern</h1>
+            <div><small>This article looks at how to handle large lists in Blazor, decouple the data from the UI, and use the Notification Pattern to trigger updates in components.</small></div></div>
+    <h2 id="overview">Overview</h2>
+<p>This article looks at how to handle large lists in Blazor, decouple the data from the UI, and use the <em>Notification Pattern</em> to trigger updates in components.</p>
+<p>The starting solution for this article is the out-of-the-box Blazor Server template.</p>
+<h2 id="repo">Repo</h2>
+<p>The Github Repository for this project is <a href="https://github.com/ShaunCurtis/Blazr.Articles/tree/main/Blazr.Articles.Lists">Blazr.Articles.Lists</a></p>
+<h2 id="refactoring-the-project">Refactoring the Project</h2>
+<p>Our first step is to separate the code into three principle directory structures: Data, Core and UI.  Normally I would use three projects, but I'm keeping things simple in this article.  These represent the three primary domains in the simple Clean Design model.  We'll re-distribute the code as we progress.  Code in each domain resides in the domain namespace:  for example all <em>Core</em> code resides in <code>Blazr.Articles.Core</code>.</p>
+<h3 id="weatherforecast">WeatherForecast</h3>
+<p>Move to <em>Core</em> and:</p>
+<ol>
+<li>Change it to a <code>record</code> value object.</li>
+<li>Add a <code>WeatherForecastId</code> property as a <code>Guid</code>.</li>
+<li>Change all the properties to <code>{get; init;}</code>.</li>
+</ol>
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+<span style="color:#569CD6;">namespace</span> Blazr.Articles.Core;
+
+<span style="color:#569CD6;">public</span> record WeatherForecast
+{
+    <span style="color:#569CD6;">public</span> Guid WeatherForecastId {<span style="color:#569CD6;">get</span>; init;} = Guid.Empty;
+    <span style="color:#569CD6;">public</span> DateTime Date { <span style="color:#569CD6;">get</span>; init; }
+    <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">int</span> TemperatureC { <span style="color:#569CD6;">get</span>; init; }
+    <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">int</span> TemperatureF =&gt; <span style="color:#B5CEA8;">32</span> + (<span style="color:#569CD6;">int</span>)(TemperatureC / <span style="color:#B5CEA8;">0</span>.<span style="color:#B5CEA8;">5556</span>);
+    <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">string</span>? Summary { <span style="color:#569CD6;">get</span>; init; }
+}
+</pre></div><h3 id="listoptions">ListOptions</h3>
+<p>Add a <code>ListOptions</code> class to <em>Core</em>.  This class contains paging data: it's passed in any data pipeline request to define the dataset &quot;page&quot; to retrieve.  Code should never retrieve unconstrained lists from data sources - you never know how big the data set may grow.  Set the defaults to sensible maximum values.  The class has various constructors and setters we'll use later.</p>
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+<span style="color:#569CD6;">using</span> Microsoft.AspNetCore.Components.Web.Virtualization;
+<span style="color:#569CD6;">namespace</span> Blazr.Articles.Core;
+
+<span style="color:#569CD6;">public</span> <span style="color:#569CD6;">class</span> ListOptions
+{
+    <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">int</span> StartRecord { <span style="color:#569CD6;">get</span>; <span style="color:#569CD6;">set</span>; } = <span style="color:#B5CEA8;">0</span>;
+    <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">int</span> PageSize { <span style="color:#569CD6;">get</span>; <span style="color:#569CD6;">set</span>; } = <span style="color:#B5CEA8;">1000</span>;
+    <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">int</span> ListCount { <span style="color:#569CD6;">get</span>; <span style="color:#569CD6;">set</span>; }
+    <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">int</span> Page =&gt; <span style="color:#569CD6;">this</span>.StartRecord / <span style="color:#569CD6;">this</span>.PageSize;
+
+    <span style="color:#569CD6;">public</span> ListOptions() { }
+
+    <span style="color:#569CD6;">public</span> ListOptions(<span style="color:#569CD6;">int</span> startRecord, <span style="color:#569CD6;">int</span> pageSize)
+    {
+        <span style="color:#569CD6;">this</span>.StartRecord = startRecord;
+        <span style="color:#569CD6;">this</span>.PageSize = pageSize;
+    }
+
+    <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">void</span> Set(ListOptions options)
+    {
+        <span style="color:#569CD6;">this</span>.PageSize = options.PageSize;
+        <span style="color:#569CD6;">this</span>.StartRecord = options.StartRecord;
+    }
+
+    <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">void</span> Set(ItemsProviderRequest options)
+    {
+        <span style="color:#569CD6;">this</span>.PageSize = options.Count;
+        <span style="color:#569CD6;">this</span>.StartRecord = options.StartIndex;
+    }
+
+    <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">void</span> SetPage(<span style="color:#569CD6;">int</span> pageno)
+        =&gt;  <span style="color:#569CD6;">this</span>.StartRecord = pageno * <span style="color:#569CD6;">this</span>.PageSize;
+
+    <span style="color:#569CD6;">public</span> ListOptions Copy =&gt; <span style="color:#569CD6;">new</span> ListOptions { 
+        StartRecord = <span style="color:#569CD6;">this</span>.StartRecord, 
+        PageSize = <span style="color:#569CD6;">this</span>.PageSize, 
+        ListCount = <span style="color:#569CD6;">this</span>.ListCount
+    };
+}
+</pre></div><h3 id="weatherforecastdatastore">WeatherForecastDataStore</h3>
+<p>Rename the <code>WeatherForcastService</code> to <code>WeatherForecastDataStore</code> and restructure it as follows.</p>
+<p>We:</p>
+<ol>
+<li>Generate a large data set on instantiation and assign it to an internal field.</li>
+<li>Add various public methods for List and CRUD operations.</li>
+<li>Maintain an internally consistent data set: data requests are passed copies, not references to internal objects.</li>
+<li>The data pipeline methods are all <code>ValueTask</code> based because they emulate real world asynchronous database operations.</li>
+</ol>
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+<span style="color:#569CD6;">namespace</span> Blazr.Articles.Data;
+<span style="color:#569CD6;">using</span> Blazr.Articles.Core;
+
+<span style="color:#569CD6;">public</span> <span style="color:#569CD6;">class</span> WeatherForecastDataStore
+{
+    <span style="color:#57A64A;">// Internal list to hold the data set.</span>
+    <span style="color:#569CD6;">private</span> List&lt;WeatherForecast&gt; _records;
+
+    <span style="color:#569CD6;">public</span> WeatherForecastDataStore()
+    {
+        _records = GetForecasts();
+    }
+
+    <span style="color:#569CD6;">private</span> <span style="color:#569CD6;">static</span> <span style="color:#569CD6;">readonly</span> <span style="color:#569CD6;">string</span>[] Summaries = <span style="color:#569CD6;">new</span>[]
+    {
+        <span style="color:#D69D85;">&quot;Freezing&quot;</span>, <span style="color:#D69D85;">&quot;Bracing&quot;</span>, <span style="color:#D69D85;">&quot;Chilly&quot;</span>, <span style="color:#D69D85;">&quot;Cool&quot;</span>, <span style="color:#D69D85;">&quot;Mild&quot;</span>, <span style="color:#D69D85;">&quot;Warm&quot;</span>, <span style="color:#D69D85;">&quot;Balmy&quot;</span>, <span style="color:#D69D85;">&quot;Hot&quot;</span>, <span style="color:#D69D85;">&quot;Sweltering&quot;</span>, <span style="color:#D69D85;">&quot;Scorching&quot;</span>
+    };
+
+    <span style="color:#569CD6;">public</span> ValueTask&lt;<span style="color:#569CD6;">bool</span>&gt; DeleteForecastAsync(Guid Id) {
+        <span style="color:#569CD6;">var</span> record = _records.FirstOrDefault(item =&gt; item.WeatherForecastId == Id);
+        <span style="color:#569CD6;">if</span> (record <span style="color:#569CD6;">is</span> not <span style="color:#569CD6;">null</span>)
+            _records.Remove(record);
+        <span style="color:#569CD6;">return</span> ValueTask.FromResult(record <span style="color:#569CD6;">is</span> not <span style="color:#569CD6;">null</span>);
+    }
+
+    <span style="color:#569CD6;">public</span> ValueTask&lt;<span style="color:#569CD6;">bool</span>&gt; SaveForecastAsync(WeatherForecast record)
+    {
+        <span style="color:#569CD6;">var</span> isrecord = _records.Any(item =&gt; item.WeatherForecastId == record.WeatherForecastId);
+        <span style="color:#569CD6;">if</span> (isrecord)
+            _records.Remove(record);
+        _records.Add(record with { });
+        <span style="color:#569CD6;">return</span> ValueTask.FromResult(isrecord);
+    }
+
+    <span style="color:#569CD6;">public</span> ValueTask&lt;List&lt;WeatherForecast&gt;&gt; GetForecastsAsync(ListOptions options)
+    {
+        <span style="color:#569CD6;">var</span> list = _records
+            .OrderBy(item =&gt; item.Date)
+            .Skip(options.StartRecord)
+            .Take(options.PageSize)
+            .ToList();
+
+            <span style="color:#569CD6;">var</span> newList = <span style="color:#569CD6;">new</span>  List&lt;WeatherForecast&gt;();
+            list.ForEach(item =&gt; newList.Add(item with {}));
+
+            <span style="color:#569CD6;">return</span> ValueTask.FromResult(newList);
+    }
+
+    <span style="color:#569CD6;">public</span> ValueTask&lt;<span style="color:#569CD6;">int</span>&gt; GetForecastCountAsync()
+        =&gt; ValueTask.FromResult(_records.Count);
+
+    <span style="color:#569CD6;">private</span> List&lt;WeatherForecast&gt; GetForecasts()
+    {
+        <span style="color:#569CD6;">return</span> Enumerable.Range(<span style="color:#B5CEA8;">1</span>, <span style="color:#B5CEA8;">200</span>).Select(index =&gt; <span style="color:#569CD6;">new</span> WeatherForecast
+        {
+            WeatherForecastId = Guid.NewGuid(),
+            Date = DateTime.Now.AddDays(index),
+            TemperatureC = Random.Shared.Next(-<span style="color:#B5CEA8;">20</span>, <span style="color:#B5CEA8;">55</span>),
+            Summary = Summaries[Random.Shared.Next(Summaries.Length)]
+        }).ToList();
+    }
+}
+</pre></div><h3 id="iweatherforecastdatabroker">IWeatherForecastDataBroker</h3>
+<p><code>IWeatherForecastDataBroker</code> defines the interface for the data pipeline connection between Core and Data domain code.  Add <code>IWeatherForecastDataBroker</code> to <em>Core</em>.  It defines the basic List and CRUD operations we implement for this article:</p>
+<ol>
+<li>Delete a record.</li>
+<li>Save a record.</li>
+<li>Get a record list.</li>
+<li>Get the total number of records.</li>
+</ol>
+<p>Note the simularity with the classic Repository pattern.</p>
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+<span style="color:#569CD6;">namespace</span> Blazr.Articles.Core;
+
+<span style="color:#569CD6;">public</span> <span style="color:#569CD6;">interface</span> IWeatherForecastDataBroker
+{
+    <span style="color:#569CD6;">public</span> ValueTask&lt;List&lt;WeatherForecast&gt;&gt; GetForecastsAsync(ListOptions options);
+    <span style="color:#569CD6;">public</span> ValueTask&lt;<span style="color:#569CD6;">int</span>&gt; GetForecastCountAsync();
+    <span style="color:#569CD6;">public</span> ValueTask&lt;<span style="color:#569CD6;">bool</span>&gt; SaveForecastAsync(WeatherForecast record);
+    <span style="color:#569CD6;">public</span> ValueTask&lt;<span style="color:#569CD6;">bool</span>&gt; DeleteForecastAsync(Guid Id);
+}
+</pre></div><h3 id="weatherforecastserverdatabroker">WeatherForecastServerDataBroker</h3>
+<p><code>WeatherForecastServerDataBroker</code> is the concrete server based implementation of <code>IWeatherForecastDataBroker</code>.  It's commonly known as a &quot;shim&quot;: a thin call through layer into the data store.  Add <code>WeatherForecastServerDataBroker</code> to <em>Data</em>.</p>
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+<span style="color:#569CD6;">using</span> Blazr.Articles.Core;
+
+<span style="color:#569CD6;">namespace</span> Blazr.Articles.Data;
+
+<span style="color:#569CD6;">public</span> <span style="color:#569CD6;">class</span> WeatherForecastServerDataBroker : IWeatherForecastDataBroker
+{
+    <span style="color:#569CD6;">private</span> WeatherForecastDataStore _dataStore;
+
+    <span style="color:#569CD6;">public</span> WeatherForecastServerDataBroker(WeatherForecastDataStore weatherForecastDataStore)
+        =&gt; _dataStore = weatherForecastDataStore;
+
+    <span style="color:#569CD6;">public</span> ValueTask&lt;List&lt;WeatherForecast&gt;&gt; GetForecastsAsync(ListOptions options)
+        =&gt; _dataStore.GetForecastsAsync(options);
+
+    <span style="color:#569CD6;">public</span> ValueTask&lt;<span style="color:#569CD6;">int</span>&gt; GetForecastCountAsync()
+        =&gt; _dataStore.GetForecastCountAsync();
+
+    <span style="color:#569CD6;">public</span> ValueTask&lt;<span style="color:#569CD6;">bool</span>&gt; SaveForecastAsync(WeatherForecast record)
+        =&gt; _dataStore.SaveForecastAsync(record);
+
+    <span style="color:#569CD6;">public</span> ValueTask&lt;<span style="color:#569CD6;">bool</span>&gt; DeleteForecastAsync(Guid Id)
+        =&gt; _dataStore.DeleteForecastAsync(Id);
+}
+</pre></div><h3 id="weatherforecastnotificationservice">WeatherForecastNotificationService</h3>
+<p><code>WeatherForecastNotificationService</code> is a simple service used by the data services to manage notifications: list updates and page changes.  There are two events triggered by two public notify methods.</p>
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+<span style="color:#569CD6;">namespace</span> Blazr.Articles.Core;
+
+<span style="color:#569CD6;">public</span> <span style="color:#569CD6;">class</span> WeatherForecastNotificationService
+{
+    <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">event</span> EventHandler? ListUpdated;
+    <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">event</span> EventHandler? ListPaged;
+
+    <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">void</span> NotifyListUpdated(<span style="color:#569CD6;">object</span>? sender)
+        =&gt;  <span style="color:#569CD6;">this</span>.ListUpdated?.Invoke(<span style="color:#569CD6;">this</span>, EventArgs.Empty);
+
+    <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">void</span> NotifyListPaged(<span style="color:#569CD6;">object</span>? sender, <span style="color:#569CD6;">int</span> page)
+        =&gt;  <span style="color:#569CD6;">this</span>.ListPaged?.Invoke(sender, <span style="color:#569CD6;">new</span> PagingEventArgs(page));
+}
+</pre></div>
+<p><code>ListPagedEventArgs</code> is a derived <code>Eventargs</code> class:</p>
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+<span style="color:#569CD6;">namespace</span> Blazr.Articles.Core;
+
+<span style="color:#569CD6;">public</span> <span style="color:#569CD6;">class</span> ListPagedEventArgs : EventArgs
+{
+    <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">int</span> Page { <span style="color:#569CD6;">get</span>; <span style="color:#569CD6;">set</span>; }
+
+    <span style="color:#569CD6;">public</span> ListPagedEventArgs(<span style="color:#569CD6;">int</span> page)
+        =&gt; <span style="color:#569CD6;">this</span>.Page = page;
+}
+</pre></div><h3 id="weatherforecastlistservice">WeatherForecastListService</h3>
+<p>This provides list management for the UI. <code>Records</code> is the exposed paged record set.  There are two <code>GetRecordsAsync</code> public methods:</p>
+<ol>
+<li>The first is used by the paging control and updates <code>Records</code>.</li>
+<li>The second is used by the <code>Virtualize</code> component and implements the <code>ItemsProviderDelegate</code> pattern.</li>
+</ol>
+<p>Both update the local <code>ListOptions</code> field, get the data set and raise the <code>ListPaged</code> event on the notification service.</p>
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+<span style="color:#569CD6;">using</span> Microsoft.AspNetCore.Components.Web.Virtualization;
+<span style="color:#569CD6;">namespace</span> Blazr.Articles.Core;
+
+<span style="color:#569CD6;">public</span> <span style="color:#569CD6;">class</span> WeatherForecastListService
+{
+    <span style="color:#569CD6;">private</span> IWeatherForecastDataBroker _weatherForecastDataBroker;
+    <span style="color:#569CD6;">private</span> WeatherForecastNotificationService _notificationService;
+    <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">readonly</span> ListOptions ListOptions = <span style="color:#569CD6;">new</span> ListOptions();
+    <span style="color:#569CD6;">public</span> List&lt;WeatherForecast&gt;? Records { <span style="color:#569CD6;">get</span>; <span style="color:#569CD6;">private</span> <span style="color:#569CD6;">set</span>; }
+
+    <span style="color:#569CD6;">public</span> WeatherForecastListService(IWeatherForecastDataBroker weatherForecastDataBroker, WeatherForecastNotificationService weatherForecastNotificationService)
+    {
+        _weatherForecastDataBroker = weatherForecastDataBroker;
+        _notificationService = weatherForecastNotificationService;
+    }
+
+    <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">async</span> ValueTask&lt;ListOptions&gt; GetRecordsAsync(ListOptions options)
+    {
+        <span style="color:#569CD6;">this</span>.ListOptions.Set(options);
+        <span style="color:#569CD6;">await</span> <span style="color:#569CD6;">this</span>.GetRecordsAsync();
+        <span style="color:#569CD6;">return</span> <span style="color:#569CD6;">this</span>.ListOptions.Copy;
+    }
+
+    <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">async</span> ValueTask&lt;ItemsProviderResult&lt;WeatherForecast&gt;&gt; GetRecordsAsync(ItemsProviderRequest request)
+    {
+        <span style="color:#569CD6;">this</span>.ListOptions.Set(request);
+        <span style="color:#569CD6;">await</span> <span style="color:#569CD6;">this</span>.GetRecordsAsync();
+        <span style="color:#569CD6;">return</span> <span style="color:#569CD6;">new</span> ItemsProviderResult&lt;WeatherForecast&gt;(<span style="color:#569CD6;">this</span>.Records ?? <span style="color:#569CD6;">new</span> List&lt;WeatherForecast&gt;(), <span style="color:#569CD6;">this</span>.ListOptions.ListCount);
+    }
+
+    <span style="color:#569CD6;">private</span> <span style="color:#569CD6;">async</span> ValueTask GetRecordsAsync()
+    {
+        <span style="color:#569CD6;">this</span>.Records = <span style="color:#569CD6;">await</span> _weatherForecastDataBroker.GetForecastsAsync(<span style="color:#569CD6;">this</span>.ListOptions);
+        <span style="color:#569CD6;">this</span>.ListOptions.ListCount = <span style="color:#569CD6;">await</span> _weatherForecastDataBroker.GetForecastCountAsync();
+        _notificationService.NotifyListPaged(<span style="color:#569CD6;">this</span>, <span style="color:#569CD6;">this</span>.ListOptions.Page);
+    }
+}
+</pre></div><h3 id="weatherforecastcrudservice">WeatherForecastCrudService</h3>
+<p><code>WeatherForecastCrudService</code> contains the Crud services.</p>
+<p>Methods raise the appropriate events on the notification service.  This service is very simple here, but where the record is more complex and/or record editing is implemented, this class would maintain the working copy of the record.</p>
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+<span style="color:#569CD6;">namespace</span> Blazr.Articles.Core;
+
+<span style="color:#569CD6;">public</span> <span style="color:#569CD6;">class</span> WeatherForecastCrudService
+{
+    <span style="color:#569CD6;">private</span> IWeatherForecastDataBroker _weatherForecastDataBroker;
+    <span style="color:#569CD6;">private</span> WeatherForecastNotificationService _notificationService;
+
+    <span style="color:#569CD6;">public</span> WeatherForecastCrudService(IWeatherForecastDataBroker weatherForecastDataBroker, WeatherForecastNotificationService weatherForecastNotificationService)
+    {
+        _weatherForecastDataBroker = weatherForecastDataBroker;
+        _notificationService = weatherForecastNotificationService;
+    }
+
+    <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">async</span> ValueTask DeleteRecordAsync(Guid Id)
+    {
+        _ = <span style="color:#569CD6;">await</span> _weatherForecastDataBroker.DeleteForecastAsync(Id);
+        _notificationService.NotifyListUpdated(<span style="color:#569CD6;">this</span>);
+    }
+
+    <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">async</span> ValueTask AddRecordAsync(WeatherForecast record)
+    {
+        _ = <span style="color:#569CD6;">await</span> _weatherForecastDataBroker.SaveForecastAsync(record);
+        _notificationService.NotifyListUpdated(<span style="color:#569CD6;">this</span>);
+    }
+}
+</pre></div>
+<p>This completes the data pipeline.</p>
+<h2 id="the-ui">The UI</h2>
+<p>First make a copy of <code>FetchData</code>.  Call it <code>FetchPagedData</code>, change the <code>Page</code> directive to <code>FetchPagedData</code> and add a link to the new poage to <code>NavMenu</code>.</p>
+<pre><code>&lt;div class=&quot;nav-item px-3&quot;&gt;
+    &lt;NavLink class=&quot;nav-link&quot; href=&quot;fetchpageddata&quot;&gt;
+        &lt;span class=&quot;oi oi-list-rich&quot; aria-hidden=&quot;true&quot;&gt;&lt;/span&gt; Paged data
+    &lt;/NavLink&gt;
+&lt;/div&gt;
+</code></pre>
+<h3 id="fetchdata">FetchData</h3>
+<p>We'll look at this in stages.</p>
+<p>The page:</p>
+<ol>
+<li>Implements <code>IDisposable</code>: events need disposing correctly.  The Renderer manages <code>IDisposable</code>.</li>
+<li>Injects the View and Notification Services.</li>
+</ol>
+<pre><code>@page &quot;/fetchdata&quot;
+@implements IDisposable
+@using Blazr.Articles.Core
+@inject WeatherForecastListService ListService
+@inject WeatherForecastCrudService CrudService
+@inject WeatherForecastNotificationService NotificationService
+</code></pre>
+<ol start="3">
+<li>Provides a private field to reference the UI <code>Virtualize</code> component.</li>
+<li><code>OnListUpdated</code> handles any list update events.  It calls <code>RefreshDataAsync</code> on the <code>Virtualize</code> component and <code>StateHasChanged</code> on the page component.</li>
+<li>Implements <code>Dispose</code> to unregister event handlers.</li>
+</ol>
+<pre><code>@code {
+    private Virtualize&lt;WeatherForecast&gt;? virtualizeComponent;
+
+    protected override void OnInitialized()
+        =&gt; this.NotificationService.ListUpdated += this.OnListUpdated;
+
+    private void OnListUpdated(object? sender, EventArgs e)
+    {
+        this.virtualizeComponent?.RefreshDataAsync();
+        this.InvokeAsync(StateHasChanged);
+    }
+
+    public void Dispose()
+        =&gt; this.NotificationService.ListUpdated += this.OnListUpdated;
+}
+</code></pre>
+<ol start="6">
+<li>Add and Delete UI event handlers wired up to the <code>WeatherForecastCrudService</code>.</li>
+</ol>
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+    <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">async</span> Task AddRecord()
+    {
+        <span style="color:#569CD6;">var</span> record = <span style="color:#569CD6;">new</span> WeatherForecast
+            {
+                WeatherForecastId = Guid.NewGuid(),
+                Date = DateTime.Now,
+                TemperatureC = <span style="color:#B5CEA8;">20</span>,
+                Summary = <span style="color:#D69D85;">&quot;Testing&quot;</span>
+            };
+        <span style="color:#569CD6;">await</span> CrudService.AddRecordAsync(record);
+    }
+
+    <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">async</span> Task DeleteRecord(Guid Id)
+        =&gt; <span style="color:#569CD6;">await</span> CrudService.DeleteRecordAsync(Id);
+</pre></div>
+<p>On to the UI.</p>
+<p>We:</p>
+<ol>
+<li>Remove the list loading logic: this is handled by the <code>Virtualize</code> component.</li>
+<li>Add a delete button to the row template and a add record button at the top of the page.</li>
+<li>Add the <code>Virtualize</code> component as the row template, wired to the <code>WeatherForecastListService</code>method <code>GetRecordsAsync</code>.</li>
+</ol>
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+<span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">h1</span><span style="color:#569CD6;">&gt;</span>Weather forecast<span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">h1</span><span style="color:#569CD6;">&gt;</span>
+
+<span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">p</span><span style="color:#569CD6;">&gt;</span>This component demonstrates fetching data from a service.<span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">p</span><span style="color:#569CD6;">&gt;</span>
+<span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">div</span> <span style="color:#FF0000;">class</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;container-fluid&quot;</span><span style="color:#569CD6;">&gt;</span>
+    <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">div</span> <span style="color:#FF0000;">class</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;col-12 text-end&quot;</span><span style="color:#569CD6;">&gt;</span>
+        <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">button</span> <span style="color:#FF0000;">class</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;btn btn-sm btn-dark&quot; @onclick=&quot;this.AddRecord&quot;</span><span style="color:#569CD6;">&gt;</span>Add Record<span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">button</span><span style="color:#569CD6;">&gt;</span>
+    <span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">div</span><span style="color:#569CD6;">&gt;</span>
+<span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">div</span><span style="color:#569CD6;">&gt;</span>
+<span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">table</span> <span style="color:#FF0000;">class</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;table&quot;</span><span style="color:#569CD6;">&gt;</span>
+    <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">thead</span><span style="color:#569CD6;">&gt;</span>
+        <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">tr</span><span style="color:#569CD6;">&gt;</span>
+            <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">th</span><span style="color:#569CD6;">&gt;</span>Date<span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">th</span><span style="color:#569CD6;">&gt;</span>
+            <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">th</span><span style="color:#569CD6;">&gt;</span>Temp. (C)<span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">th</span><span style="color:#569CD6;">&gt;</span>
+            <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">th</span><span style="color:#569CD6;">&gt;</span>Temp. (F)<span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">th</span><span style="color:#569CD6;">&gt;</span>
+            <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">th</span><span style="color:#569CD6;">&gt;</span>Summary<span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">th</span><span style="color:#569CD6;">&gt;</span>
+            <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">th</span><span style="color:#569CD6;">&gt;</span>Actions<span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">th</span><span style="color:#569CD6;">&gt;</span>
+        <span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">tr</span><span style="color:#569CD6;">&gt;</span>
+    <span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">thead</span><span style="color:#569CD6;">&gt;</span>
+    <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">tbody</span><span style="color:#569CD6;">&gt;</span>
+        &lt;Virtualize TItem=WeatherForecast Context=forecast ItemsProvider=this.ListService.GetRecordsAsync @ref=this.virtualizeComponent&gt;
+            <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">tr</span><span style="color:#569CD6;">&gt;</span>
+                <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">td</span><span style="color:#569CD6;">&gt;</span>@forecast.Date.ToShortDateString()<span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">td</span><span style="color:#569CD6;">&gt;</span>
+                <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">td</span><span style="color:#569CD6;">&gt;</span>@forecast.TemperatureC<span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">td</span><span style="color:#569CD6;">&gt;</span>
+                <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">td</span><span style="color:#569CD6;">&gt;</span>@forecast.TemperatureF<span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">td</span><span style="color:#569CD6;">&gt;</span>
+                <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">td</span><span style="color:#569CD6;">&gt;</span>@forecast.Summary<span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">td</span><span style="color:#569CD6;">&gt;</span>
+                <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">td</span><span style="color:#569CD6;">&gt;</span>
+                    <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">button</span> <span style="color:#FF0000;">class</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;btn btn-sm btn-danger&quot; @onclick=&quot;() =&gt; this.DeleteRecord(forecast.WeatherForecastId)&quot;</span><span style="color:#569CD6;">&gt;</span>Delete<span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">button</span><span style="color:#569CD6;">&gt;</span>
+                <span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">td</span><span style="color:#569CD6;">&gt;</span>
+            <span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">tr</span><span style="color:#569CD6;">&gt;</span>
+        <span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">Virtualize</span><span style="color:#569CD6;">&gt;</span>
+    <span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">tbody</span><span style="color:#569CD6;">&gt;</span>
+<span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">table</span><span style="color:#569CD6;">&gt;</span>
+</pre></div><h2 id="paging">Paging</h2>
+<p>First, a paging component.</p>
+<h3 id="pagingcontrol">PagingControl</h3>
+<p>There's a lot of simple maths based fields to calculate and manage the page and block information the display components need.  We'll skip those.</p>
+<p>The control follows the same pattern as <code>Virtualize</code>:</p>
+<ol>
+<li>The <code>ListOptions</code> class is used to pass and receive paging data.</li>
+<li>Uses a <code>Func</code> delegate, defined as a required Parameter, to call the paging provider.</li>
+<li>Provides a notification method for the parent to notify that the list has changed.</li>
+</ol>
+<p>The main methods are:</p>
+<ol>
+<li><code>GotToPageAsync(int page)</code> sets the new page and calls <code>SetPageAsync</code>.</li>
+<li><code>GotToPageAsync()</code> calls <code>SetPageAsync</code> with the current <code>ListOptions</code> data.</li>
+<li><code>SetPageAsync()</code> calls the <code>PagingProvider</code> and updates the list count on the result.</li>
+</ol>
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+<span style="color:#569CD6;">private</span> <span style="color:#569CD6;">async</span> Task GotToPageAsync(<span style="color:#569CD6;">int</span> page)
+{
+    <span style="color:#569CD6;">if</span> (<span style="color:#569CD6;">this</span>.PagingProvider <span style="color:#569CD6;">is</span> not <span style="color:#569CD6;">null</span> &amp;&amp; page != <span style="color:#569CD6;">this</span>.Page)
+    {
+        <span style="color:#569CD6;">this</span>.Page = page;
+        <span style="color:#569CD6;">await</span> GotToPageAsync();
+    }
+}
+
+<span style="color:#569CD6;">private</span> <span style="color:#569CD6;">async</span> Task GotToPageAsync()
+{
+    <span style="color:#569CD6;">await</span> SetPageAsync();
+    <span style="color:#569CD6;">this</span>.StateHasChanged();
+}
+
+<span style="color:#569CD6;">private</span> <span style="color:#569CD6;">async</span> Task SetPageAsync()
+{
+    <span style="color:#569CD6;">if</span> (<span style="color:#569CD6;">this</span>.PagingProvider <span style="color:#569CD6;">is</span> not <span style="color:#569CD6;">null</span>)
+    {
+        <span style="color:#569CD6;">var</span> options = <span style="color:#569CD6;">await</span> PagingProvider(_listOptions);
+        <span style="color:#569CD6;">this</span>.Page = options.Page;
+        <span style="color:#569CD6;">this</span>.ListCount = options.ListCount;
+    }
+}
+</pre></div>
+<p><code>OnInitializedAsync</code> gets the current page.</p>
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+<span style="color:#569CD6;">protected</span> <span style="color:#569CD6;">async</span> <span style="color:#569CD6;">override</span> Task OnInitializedAsync()
+    =&gt;  <span style="color:#569CD6;">await</span> <span style="color:#569CD6;">this</span>.SetPageAsync();
+</pre></div>
+<p>The full partial class looks like this:</p>
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+<span style="color:#569CD6;">using</span> Blazr.Articles.Core;
+<span style="color:#569CD6;">using</span> Microsoft.AspNetCore.Components;
+
+<span style="color:#569CD6;">namespace</span> Blazr.Articles.UI;
+
+<span style="color:#569CD6;">public</span> <span style="color:#569CD6;">partial</span> <span style="color:#569CD6;">class</span> PagingControl
+    : ComponentBase
+{
+    <span style="color:#569CD6;">private</span> ListOptions _listOptions =&gt; <span style="color:#569CD6;">new</span> ListOptions() { PageSize = <span style="color:#569CD6;">this</span>.PageSize, StartRecord = <span style="color:#569CD6;">this</span>.ReadStartRecord };
+    <span style="color:#569CD6;">private</span> <span style="color:#569CD6;">int</span> Page = <span style="color:#B5CEA8;">0</span>;
+    <span style="color:#569CD6;">private</span> <span style="color:#569CD6;">int</span> ListCount = <span style="color:#B5CEA8;">0</span>;
+
+    [Parameter] <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">int</span> PageSize { <span style="color:#569CD6;">get</span>; <span style="color:#569CD6;">set</span>; } = <span style="color:#B5CEA8;">5</span>;
+
+    [Parameter] <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">int</span> BlockSize { <span style="color:#569CD6;">get</span>; <span style="color:#569CD6;">set</span>; } = <span style="color:#B5CEA8;">10</span>;
+
+    [Parameter][EditorRequired] <span style="color:#569CD6;">public</span> Func&lt;ListOptions, ValueTask&lt;ListOptions&gt;&gt;? PagingProvider { <span style="color:#569CD6;">get</span>; <span style="color:#569CD6;">set</span>; }
+
+    [Parameter] <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">bool</span> ShowPageOf { <span style="color:#569CD6;">get</span>; <span style="color:#569CD6;">set</span>; } = <span style="color:#569CD6;">true</span>;
+
+    <span style="color:#569CD6;">protected</span> <span style="color:#569CD6;">async</span> <span style="color:#569CD6;">override</span> Task OnInitializedAsync()
+        =&gt;  <span style="color:#569CD6;">await</span> <span style="color:#569CD6;">this</span>.SetPageAsync();
+
+    <span style="color:#569CD6;">private</span> <span style="color:#569CD6;">async</span> Task SetPageAsync()
+    {
+        <span style="color:#569CD6;">if</span> (<span style="color:#569CD6;">this</span>.PagingProvider <span style="color:#569CD6;">is</span> not <span style="color:#569CD6;">null</span>)
+        {
+            <span style="color:#569CD6;">var</span> options = <span style="color:#569CD6;">await</span> PagingProvider(_listOptions);
+            <span style="color:#569CD6;">this</span>.Page = options.Page;
+            <span style="color:#569CD6;">this</span>.ListCount = options.ListCount;
+        }
+    }
+
+    <span style="color:#569CD6;">private</span> <span style="color:#569CD6;">void</span> OnPagingReset(<span style="color:#569CD6;">object</span>? sender, PagingEventArgs e)
+    {
+        <span style="color:#569CD6;">this</span>.Page = e.Page;
+        <span style="color:#569CD6;">this</span>.InvokeAsync(StateHasChanged);
+    }
+
+    <span style="color:#569CD6;">private</span> <span style="color:#569CD6;">async</span> Task GotToPageAsync(<span style="color:#569CD6;">int</span> page)
+    {
+        <span style="color:#569CD6;">if</span> (<span style="color:#569CD6;">this</span>.PagingProvider <span style="color:#569CD6;">is</span> not <span style="color:#569CD6;">null</span> &amp;&amp; page != <span style="color:#569CD6;">this</span>.Page)
+        {
+            <span style="color:#569CD6;">this</span>.Page = page;
+            <span style="color:#569CD6;">await</span> GotToPageAsync();
+        }
+    }
+
+    <span style="color:#569CD6;">private</span> <span style="color:#569CD6;">async</span> Task GotToPageAsync()
+    {
+        <span style="color:#569CD6;">await</span> SetPageAsync();
+        <span style="color:#569CD6;">this</span>.StateHasChanged();
+    }
+
+    <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">async</span> ValueTask NotifyListChangedAsync()
+        =&gt; <span style="color:#569CD6;">await</span> GotToPageAsync();
+
+    <span style="color:#569CD6;">private</span> <span style="color:#569CD6;">int</span> DisplayPage =&gt; <span style="color:#569CD6;">this</span>.Page + <span style="color:#B5CEA8;">1</span>;
+
+    <span style="color:#569CD6;">private</span> <span style="color:#569CD6;">int</span> LastPage =&gt; PageSize == <span style="color:#B5CEA8;">0</span> || ListCount == <span style="color:#B5CEA8;">0</span>
+        ? <span style="color:#B5CEA8;">0</span>
+        : ((<span style="color:#569CD6;">int</span>)Math.Ceiling(Decimal.Divide(<span style="color:#569CD6;">this</span>.ListCount, <span style="color:#569CD6;">this</span>.PageSize))) - <span style="color:#B5CEA8;">1</span>;
+
+    <span style="color:#569CD6;">private</span> <span style="color:#569CD6;">int</span> LastDisplayPage =&gt; <span style="color:#569CD6;">this</span>.LastPage + <span style="color:#B5CEA8;">1</span>;
+
+    <span style="color:#569CD6;">private</span> <span style="color:#569CD6;">int</span> ReadStartRecord =&gt; <span style="color:#569CD6;">this</span>.Page * <span style="color:#569CD6;">this</span>.PageSize;
+
+    <span style="color:#569CD6;">private</span> <span style="color:#569CD6;">int</span> Block =&gt; (<span style="color:#569CD6;">int</span>)Math.Floor(Decimal.Divide(<span style="color:#569CD6;">this</span>.Page, <span style="color:#569CD6;">this</span>.BlockSize));
+
+    <span style="color:#569CD6;">private</span> <span style="color:#569CD6;">bool</span> AreBlocks =&gt; <span style="color:#569CD6;">this</span>.ListCount &gt; <span style="color:#569CD6;">this</span>.BlockSize * <span style="color:#569CD6;">this</span>.PageSize;
+
+    <span style="color:#569CD6;">private</span> <span style="color:#569CD6;">int</span> BlockStartPage =&gt; <span style="color:#569CD6;">this</span>.Block * <span style="color:#569CD6;">this</span>.BlockSize;
+
+    <span style="color:#569CD6;">private</span> <span style="color:#569CD6;">int</span> BlockEndPage =&gt; <span style="color:#569CD6;">this</span>.LastPage &gt; (<span style="color:#569CD6;">this</span>.BlockStartPage + (BlockSize)) - <span style="color:#B5CEA8;">1</span>
+        ? (<span style="color:#569CD6;">this</span>.BlockStartPage + BlockSize) - <span style="color:#B5CEA8;">1</span>
+        : <span style="color:#569CD6;">this</span>.LastPage;
+
+    <span style="color:#569CD6;">private</span> <span style="color:#569CD6;">int</span> LastBlock =&gt; (<span style="color:#569CD6;">int</span>)Math.Floor(Decimal.Divide(<span style="color:#569CD6;">this</span>.LastPage, <span style="color:#569CD6;">this</span>.BlockSize));
+
+    <span style="color:#569CD6;">private</span> <span style="color:#569CD6;">int</span> LastBlockStartPage =&gt; LastBlock * <span style="color:#569CD6;">this</span>.BlockSize;
+
+    <span style="color:#569CD6;">private</span> <span style="color:#569CD6;">string</span> GetCss(<span style="color:#569CD6;">int</span> page)
+        =&gt; page == <span style="color:#569CD6;">this</span>.Page ? <span style="color:#D69D85;">&quot;btn-primary&quot;</span> : <span style="color:#D69D85;">&quot;btn-secondary&quot;</span>;
+
+    <span style="color:#569CD6;">private</span> <span style="color:#569CD6;">async</span> Task MoveBlockAsync(<span style="color:#569CD6;">int</span> block)
+    {
+        <span style="color:#569CD6;">var</span> _page = block <span style="color:#569CD6;">switch</span>
+        {
+            <span style="color:#569CD6;">int</span>.MaxValue =&gt; <span style="color:#569CD6;">this</span>.LastBlockStartPage,
+            <span style="color:#B5CEA8;">1</span> =&gt; <span style="color:#569CD6;">this</span>.Block + <span style="color:#B5CEA8;">1</span> &gt; LastBlock ? LastBlock * <span style="color:#569CD6;">this</span>.BlockSize : <span style="color:#569CD6;">this</span>.BlockStartPage + BlockSize,
+            -<span style="color:#B5CEA8;">1</span> =&gt; <span style="color:#569CD6;">this</span>.Block - <span style="color:#B5CEA8;">1</span> &lt; <span style="color:#B5CEA8;">0</span> ? <span style="color:#B5CEA8;">0</span> : <span style="color:#569CD6;">this</span>.BlockStartPage - BlockSize,
+            _ =&gt; <span style="color:#B5CEA8;">0</span>
+        };
+        <span style="color:#569CD6;">await</span> <span style="color:#569CD6;">this</span>.GotToPageAsync(_page);
+    }
+
+    <span style="color:#569CD6;">private</span> <span style="color:#569CD6;">async</span> Task GoToBlockAsync(<span style="color:#569CD6;">int</span> block)
+        =&gt; <span style="color:#569CD6;">await</span> <span style="color:#569CD6;">this</span>.GotToPageAsync(block * <span style="color:#569CD6;">this</span>.PageSize);
+}
+</pre></div>
+<p>And the Razor markup</p>
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+@namespace Blazr.Articles.UI
+@implements IDisposable
+
+<span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">div</span> <span style="color:#FF0000;">class</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;m-2 p-2&quot;</span><span style="color:#569CD6;">&gt;</span>
+    @if (this.AreBlocks)
+    {
+        <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">div</span> <span style="color:#FF0000;">class</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;btn-group me-1&quot;</span> <span style="color:#FF0000;">role</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;group&quot;</span> <span style="color:#FF0000;">aria-label</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;Move Back Buttons&quot;</span><span style="color:#569CD6;">&gt;</span>
+            <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">button</span> <span style="color:#FF0000;">type</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;button&quot;</span> <span style="color:#FF0000;">class</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;btn btn-sm btn-dark&quot; @onclick=&quot;() =&gt; this.MoveBlockAsync(int.MinValue)&quot;</span><span style="color:#569CD6;">&gt;</span>|<span style="color:#FF0000;">&amp;lt;</span><span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">button</span><span style="color:#569CD6;">&gt;</span>
+            <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">button</span> <span style="color:#FF0000;">type</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;button&quot;</span> <span style="color:#FF0000;">class</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;btn btn-sm btn-dark&quot; @onclick=&quot;() =&gt; this.MoveBlockAsync(-1)&quot;</span><span style="color:#569CD6;">&gt;</span><span style="color:#FF0000;">&amp;lt;</span><span style="color:#FF0000;">&amp;lt;</span><span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">button</span><span style="color:#569CD6;">&gt;</span>
+        <span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">div</span><span style="color:#569CD6;">&gt;</span>
+    }
+    <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">div</span> <span style="color:#FF0000;">class</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;btn-group&quot;</span> <span style="color:#FF0000;">role</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;group&quot;</span> <span style="color:#FF0000;">aria-label</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;Page Buttons&quot;</span><span style="color:#569CD6;">&gt;</span>
+        @for (int page = this.BlockStartPage; page &lt;= this.BlockEndPage; page++)
+        {
+            var pageno = page;
+            var viewpageno = page + 1;
+            <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">button</span> <span style="color:#FF0000;">type</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;button&quot;</span> <span style="color:#FF0000;">class</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;btn btn-sm @GetCss(pageno)&quot; @onclick=&quot;() =&gt; this.GotToPageAsync(pageno)&quot;</span><span style="color:#569CD6;">&gt;</span>@viewpageno<span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">button</span><span style="color:#569CD6;">&gt;</span>
+        }
+    <span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">div</span><span style="color:#569CD6;">&gt;</span>
+    @if (this.AreBlocks)
+    {
+        <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">div</span> <span style="color:#FF0000;">class</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;btn-group ms-1&quot;</span> <span style="color:#FF0000;">role</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;group&quot;</span> <span style="color:#FF0000;">aria-label</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;Move Forward Buttons&quot;</span><span style="color:#569CD6;">&gt;</span>
+            <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">button</span> <span style="color:#FF0000;">type</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;button&quot;</span> <span style="color:#FF0000;">class</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;btn btn-sm btn-dark&quot; @onclick=&quot;() =&gt; this.MoveBlockAsync(1)&quot;</span><span style="color:#569CD6;">&gt;</span><span style="color:#FF0000;">&amp;gt;</span><span style="color:#FF0000;">&amp;gt;</span><span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">button</span><span style="color:#569CD6;">&gt;</span>
+            <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">button</span> <span style="color:#FF0000;">type</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;button&quot;</span> <span style="color:#FF0000;">class</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;btn btn-sm btn-dark&quot; @onclick=&quot;() =&gt; this.MoveBlockAsync(int.MaxValue)&quot;</span><span style="color:#569CD6;">&gt;</span><span style="color:#FF0000;">&amp;gt;</span>|<span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">button</span><span style="color:#569CD6;">&gt;</span>
+        <span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">div</span><span style="color:#569CD6;">&gt;</span>
+    }
+    @if (this.ShowPageOf)
+    {
+        <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">span</span> <span style="color:#FF0000;">class</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;mx-2&quot;</span><span style="color:#569CD6;">&gt;</span>Page @this.DisplayPage of @this.LastDisplayPage<span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">span</span><span style="color:#569CD6;">&gt;</span>
+    }
+<span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">div</span><span style="color:#569CD6;">&gt;</span>
+</pre></div><h2 id="fetchpageddata">FetchPagedData</h2>
+<p>We'll look at this in stages.</p>
+<ol>
+<li>Implements <code>IDisposable</code>: events need disposing correctly.  The Renderer manages <code>IDisposable</code>.</li>
+<li>Injects the View and Notification Services.</li>
+</ol>
+<pre><code>@using Blazr.Articles.Core
+@using Blazr.Articles.UI
+@inject WeatherForecastListService ListService
+@inject WeatherForecastCrudService CrudService
+@inject WeatherForecastNotificationService NotificationService
+</code></pre>
+<ol start="3">
+<li>Provides a private field to reference the UI <code>PageControl</code> component.</li>
+<li><code>OnListUpdated</code> handles any list update events.  It calls <code>NotifyListChangedAsync</code> on the <code>PagingControl</code> component and <code>StateHasChanged</code> on the page component.</li>
+<li><code>OnListPaged</code> handles any paging events.  It invokes <code>StateHasChanged</code> on the page component.</li>
+<li>Implements <code>Dispose</code> to unregister event handlers.</li>
+</ol>
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+<span style="color:#569CD6;">private</span> PagingControl? pagingControl;
+
+<span style="color:#569CD6;">protected</span> <span style="color:#569CD6;">override</span> <span style="color:#569CD6;">void</span> OnInitialized()
+{
+    <span style="color:#569CD6;">this</span>.NotificationService.ListUpdated += <span style="color:#569CD6;">this</span>.OnListChanged;
+    <span style="color:#569CD6;">this</span>.NotificationService.ListPaged += <span style="color:#569CD6;">this</span>.OnListPaged;
+}
+
+<span style="color:#569CD6;">private</span> <span style="color:#569CD6;">void</span> OnListChanged(<span style="color:#569CD6;">object</span>? sender, EventArgs e)
+{
+    <span style="color:#569CD6;">this</span>.pagingControl?.NotifyListChangedAsync();
+    <span style="color:#569CD6;">this</span>.InvokeAsync(StateHasChanged);
+}
+
+<span style="color:#569CD6;">private</span> <span style="color:#569CD6;">void</span> OnListPaged(<span style="color:#569CD6;">object</span>? sender, EventArgs e)
+    =&gt; <span style="color:#569CD6;">this</span>.InvokeAsync(StateHasChanged);
+
+<span style="color:#569CD6;">public</span> <span style="color:#569CD6;">void</span> Dispose()
+{
+    <span style="color:#569CD6;">this</span>.NotificationService.ListUpdated += <span style="color:#569CD6;">this</span>.OnListChanged;
+    <span style="color:#569CD6;">this</span>.NotificationService.ListPaged += <span style="color:#569CD6;">this</span>.OnListPaged;
+}
+</pre></div>
+<ol start="7">
+<li>Add and Delete UI event handlers wired up to the <code>WeatherForecastCrudService</code>.</li>
+</ol>
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+<span style="color:#569CD6;">public</span> <span style="color:#569CD6;">async</span> Task AddRecord()
+{
+    <span style="color:#569CD6;">var</span> record = <span style="color:#569CD6;">new</span> WeatherForecast
+        {
+            WeatherForecastId = Guid.NewGuid(),
+            Date = DateTime.Now,
+            TemperatureC = <span style="color:#B5CEA8;">20</span>,
+            Summary = <span style="color:#D69D85;">&quot;Testing&quot;</span>
+        };
+    <span style="color:#569CD6;">await</span> CrudService.AddRecordAsync(record);
+}
+
+<span style="color:#569CD6;">public</span> <span style="color:#569CD6;">async</span> Task DeleteRecord(Guid Id)
+    =&gt; <span style="color:#569CD6;">await</span> CrudService.DeleteRecordAsync(Id);
+</pre></div>
+<p>In the UI markup we:</p>
+<ol>
+<li>Add the paging control in a top bar along with the add button.</li>
+<li>Point the list loop to the service <code>Records</code> collection.</li>
+<li>Add the delete button to each row.</li>
+</ol>
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+
+<span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">h1</span><span style="color:#569CD6;">&gt;</span>Weather forecast<span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">h1</span><span style="color:#569CD6;">&gt;</span>
+
+<span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">p</span><span style="color:#569CD6;">&gt;</span>This component demonstrates fetching data from a service.<span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">p</span><span style="color:#569CD6;">&gt;</span>
+
+<span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">div</span> <span style="color:#FF0000;">class</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;container-fluid&quot;</span><span style="color:#569CD6;">&gt;</span>
+    <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">div</span> <span style="color:#FF0000;">class</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;row&quot;</span><span style="color:#569CD6;">&gt;</span>
+        <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">div</span> <span style="color:#FF0000;">class</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;col-10&quot;</span><span style="color:#569CD6;">&gt;</span>
+            &lt;PagingControl BlockSize=10 PageSize=10 PagingProvider=this.ListService.GetRecordsAsync @ref=this.pagingControl /&gt;
+        <span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">div</span><span style="color:#569CD6;">&gt;</span>
+        <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">div</span> <span style="color:#FF0000;">class</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;col-2 text-end&quot;</span><span style="color:#569CD6;">&gt;</span>
+            <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">button</span> <span style="color:#FF0000;">class</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;btn btn-sm btn-dark&quot; @onclick=&quot;this.AddRecord&quot;</span><span style="color:#569CD6;">&gt;</span>Add Record<span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">button</span><span style="color:#569CD6;">&gt;</span>
+        <span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">div</span><span style="color:#569CD6;">&gt;</span>
+    <span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">div</span><span style="color:#569CD6;">&gt;</span>
+<span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">div</span><span style="color:#569CD6;">&gt;</span>
+@if (this.ListService.Records == null)
+{
+    <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">p</span><span style="color:#569CD6;">&gt;</span><span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">em</span><span style="color:#569CD6;">&gt;</span>Loading...<span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">em</span><span style="color:#569CD6;">&gt;</span><span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">p</span><span style="color:#569CD6;">&gt;</span>
+}
+else
+{
+    <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">table</span> <span style="color:#FF0000;">class</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;table&quot;</span><span style="color:#569CD6;">&gt;</span>
+        <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">thead</span><span style="color:#569CD6;">&gt;</span>
+            <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">tr</span><span style="color:#569CD6;">&gt;</span>
+                <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">th</span><span style="color:#569CD6;">&gt;</span>Date<span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">th</span><span style="color:#569CD6;">&gt;</span>
+                <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">th</span><span style="color:#569CD6;">&gt;</span>Temp. (C)<span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">th</span><span style="color:#569CD6;">&gt;</span>
+                <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">th</span><span style="color:#569CD6;">&gt;</span>Temp. (F)<span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">th</span><span style="color:#569CD6;">&gt;</span>
+                <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">th</span><span style="color:#569CD6;">&gt;</span>Summary<span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">th</span><span style="color:#569CD6;">&gt;</span>
+                <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">th</span><span style="color:#569CD6;">&gt;</span>Actions<span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">th</span><span style="color:#569CD6;">&gt;</span>
+            <span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">tr</span><span style="color:#569CD6;">&gt;</span>
+        <span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">thead</span><span style="color:#569CD6;">&gt;</span>
+        <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">tbody</span><span style="color:#569CD6;">&gt;</span>
+            @foreach (var forecast in this.ListService.Records)
+            {
+                <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">tr</span><span style="color:#569CD6;">&gt;</span>
+                    <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">td</span><span style="color:#569CD6;">&gt;</span>@forecast.Date.ToShortDateString()<span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">td</span><span style="color:#569CD6;">&gt;</span>
+                    <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">td</span><span style="color:#569CD6;">&gt;</span>@forecast.TemperatureC<span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">td</span><span style="color:#569CD6;">&gt;</span>
+                    <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">td</span><span style="color:#569CD6;">&gt;</span>@forecast.TemperatureF<span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">td</span><span style="color:#569CD6;">&gt;</span>
+                    <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">td</span><span style="color:#569CD6;">&gt;</span>@forecast.Summary<span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">td</span><span style="color:#569CD6;">&gt;</span>
+                    <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">td</span><span style="color:#569CD6;">&gt;</span>
+                        <span style="color:#569CD6;">&lt;</span><span style="color:#A31515;">button</span> <span style="color:#FF0000;">class</span><span style="color:#569CD6;">=</span><span style="color:#569CD6;">&quot;btn btn-sm btn-danger&quot; @onclick=&quot;() =&gt; this.DeleteRecord(forecast.WeatherForecastId)&quot;</span><span style="color:#569CD6;">&gt;</span>Delete<span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">button</span><span style="color:#569CD6;">&gt;</span>
+                    <span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">td</span><span style="color:#569CD6;">&gt;</span>
+                <span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">tr</span><span style="color:#569CD6;">&gt;</span>
+            }
+        <span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">tbody</span><span style="color:#569CD6;">&gt;</span>
+    <span style="color:#569CD6;">&lt;/</span><span style="color:#A31515;">table</span><span style="color:#569CD6;">&gt;</span>
+}
+</pre></div><h3 id="how-it-works">How it Works</h3>
+<h4 id="paging-1">Paging</h4>
+<ol>
+<li>When the page loads, the initial state wil be &quot;loading&quot;:  <code>WeatherForecastListService.Records</code> will be null.</li>
+<li>The <code>PagingControl</code> initializes, calling <code>SetPageAsync</code> and loading the first page.</li>
+<li><code>WeatherForecastListService.GetRecordsAsync</code> loads the initial lage of data into <code>Records</code> and raises the <code>NotifyListPaged</code> event on the notifciation service.</li>
+<li><code>OnListPaged</code> on <code>FetchPagedData</code> is called, which triggers a re-render.  <code>WeatherForecastListService.Records</code> now contains a dataset and is rendered.</li>
+</ol>
+<h4 id="adddelete-records">Add/Delete Records.</h4>
+<ol>
+<li>Add/Delete methods on the Crud Service raise the <code>ListUpdated</code> event on the notification service.</li>
+<li><code>OnListChanged</code> is called on <code>FetchPagedData</code> which calls <code>NotifyListChangedAsync</code> on the <code>PagingControl</code>.</li>
+<li>This triggers a reload of the current page and the <code>ListChanged</code> event which re-renders the main page.</li>
+</ol>
+<h2 id="wrap-up">Wrap up</h2>
+<p>That's it for this article.  We've explored:</p>
+<ol>
+<li>How to build the data pipeline on a fundimentally sounder foundation.</li>
+<li>How to separate the data from the UI.</li>
+<li>How to use the <code>Virtualize</code> component, linked into the data pipeline to load paged data.</li>
+<li>How to build a simple paging control that uses th same paging data pipeline infrastructure.</li>
+<li>How to use the <em>Notification</em> pattern to drive the UI update process.</li>
+</ol>
+<p>In a future article I'll look at how to upgrade the data pipeline for sorting and filtering operations, and how to buid a set of generic UI components to handle such operations.</p>
+</div></div></div></body></html>
+
+
+
+
+
