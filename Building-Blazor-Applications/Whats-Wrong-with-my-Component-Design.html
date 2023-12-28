@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<base href="/">
+
+	
+
+	
+
+	
+	<link href="/resources/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+	<link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+
+	
+	<link href="/resources/css/sb-admin-2.css" rel="stylesheet" type="text/css">
+	<link href="/resources/css/site.css" rel="stylesheet" type="text/css">
+
+	
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/highlight.css">
+	<link rel="stylesheet" href="/resources/css/article.css" type="text/css">
+
+	
+	<link rel="icon" href="/assets/favicon.png">
+
+	<title>What&#x27;s Wrong with my Component Design?</title>
+        <meta property="author" content="Shaun Curtis" />
+        <meta property="description" content="Applying Separation of Concerns, SOLID and Patterns to your Blazor Components." />
+    <meta property="og:site_name" content="Cold Elm Coders" />
+        <meta property="og:site" content="https://shauncurtis.github.io/" />
+        <meta property="og:title" content="What&#x27;s Wrong with my Component Design?" />
+        <meta property="og:description" content="Applying Separation of Concerns, SOLID and Patterns to your Blazor Components." /></head>
+<body><header class="navbar bg-dark p-2 text-large text-light"><section class="navbar-section  text-light"><a href="/" class="navbar-brand mr-2 text-large text-light p-2">Cold Elm Coders</a>
+			<a href="/Posts" class="btn btn-link text-light">Posts</a>
+			<a href="/Rants" class="btn btn-link text-light">Rants</a>
+			<a href="/Articles" class="btn btn-link text-light">Articles</a>
+			<a href="/Stories" class="btn btn-link text-light">Stories</a>
+			<a href="/about.html" class="btn btn-link text-light">About</a></section></header>
+
+	<div class="container-fluid"><div class="row"><div class="col-12 col-sm-3 col-lg-2 bg-light pt-2"><div class="article-info p-2"><div class="mb-2">Published: 07-Nov-2022</div>
+                <div class="mb-2">Updated: 07-Nov-2022</div>
+                <div class="mb-2">Author: Shaun Curtis</div></div>
+    <h4 class="p-2">Table of Contents</h4>
+<ul class="TOC" >
+<li class="TOC-item TOC-item-0" >
+<a class="TOC-link" href="#">Top</a>
+<ul class="TOC TOC-0" >
+<li class="TOC-item TOC-item-1" >
+<ul class="TOC TOC-1" >
+<li class="TOC-item TOC-item-2" >
+<a class="TOC-link" href="#repo">Repo</a>
+</li>
+<li class="TOC-item TOC-item-2" >
+<a class="TOC-link" href="#separate-out-the-data">Separate Out the Data</a>
+</li>
+<li class="TOC-item TOC-item-2" >
+<a class="TOC-link" href="#state">State</a>
+</li>
+<li class="TOC-item TOC-item-2" >
+<a class="TOC-link" href="#services">Services</a>
+</li>
+<li class="TOC-item TOC-item-2" >
+<a class="TOC-link" href="#service-registration">Service Registration</a>
+</li>
+<li class="TOC-item TOC-item-2" >
+<a class="TOC-link" href="#updating-the-ui">Updating the UI</a>
+</li>
+<li class="TOC-item TOC-item-2" >
+<a class="TOC-link" href="#summary">Summary</a>
+</li>
+<li class="TOC-item TOC-item-2" >
+<a class="TOC-link" href="#appendix">Appendix</a>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+			
+			<div class="col-12 col-sm-9 col-lg-10 p-2"><div class="pt-2 pb-2 border-bottom mb-4 text-primary"><h1>What&#x27;s Wrong with my Component Design?</h1>
+            <div><small>Applying Separation of Concerns, SOLID and Patterns to your Blazor Components.</small></div></div>
+    <p>In any application it's all too easy to fall into the &quot;Quick&quot; solution trap.  What we forget is the &quot;and Dirty&quot; bit, which soon comes back to haunt us as we expand the functionality and scope of what we've coded.</p>
+<p>The right way seems too complicated, so we cut corners.  Blazor is no different: many of the simple code examples do just that.  In &quot;keeping it simple&quot; they promote a mode of coding that doesn't stand up to the complexities of real world applications.</p>
+<p>In this article I refactor the out-of-the-box template <code>Counter</code> page into something that appears far too complex for its purpose.  No one in their right mind would code it this way!  However, in the context of this article, it's a great start point: a simple requirement with a minimal data set.  We can concentrate on the coding techniques, practices and patterns that are applicable in more complex scenarios in a very simple setting.</p>
+<p>Here's the standard page:</p>
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+@page <span style="color:#D69D85;">&quot;/counter&quot;</span>
+&lt;PageTitle&gt;Counter&lt;/PageTitle&gt;
+
+&lt;h1&gt;Counter&lt;/h1&gt;
+&lt;p role=<span style="color:#D69D85;">&quot;status&quot;</span>&gt;Current count: @currentCount&lt;/p&gt;
+&lt;button <span style="color:#569CD6;">class</span>=<span style="color:#D69D85;">&quot;btn btn-primary&quot;</span> @onclick=<span style="color:#D69D85;">&quot;IncrementCount&quot;</span>&gt;Click me&lt;/button&gt;
+
+@code {
+    <span style="color:#569CD6;">private</span> <span style="color:#569CD6;">int</span> currentCount = <span style="color:#B5CEA8;">0</span>;
+
+    <span style="color:#569CD6;">private</span> <span style="color:#569CD6;">void</span> IncrementCount()
+        =&gt; currentCount++;
+}
+</pre></div>
+<p>So what's wrong?  Nothing, or an awful lot: it depends on your perspective.  There's data (<code>private int currentCount</code>), the state of that data and the presentation of that data all mixed up in a single class: the <code>Counter</code> component.  There's no &quot;separation of concerns&quot;: it breaks a lot of SOLID coding principles.</p>
+<h2 id="repo">Repo</h2>
+<p>The repo for this article is <a href="https://github.com/ShaunCurtis/Blazr.SeparationOfConcerns">here - Blazr.SeparationOfConcerns</a>.</p>
+<h2 id="separate-out-the-data">Separate Out the Data</h2>
+<p>We can separate the data by building a Counter class.</p>
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+<span style="color:#569CD6;">public</span> <span style="color:#569CD6;">class</span> CounterData
+{
+    <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">int</span> Counter { <span style="color:#569CD6;">get</span>; <span style="color:#569CD6;">set</span>; }
+}
+</pre></div>
+<p>A view service:</p>
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+<span style="color:#569CD6;">public</span> <span style="color:#569CD6;">class</span> CounterService
+{
+    <span style="color:#569CD6;">public</span> CounterData Data { <span style="color:#569CD6;">get</span>; <span style="color:#569CD6;">private</span> <span style="color:#569CD6;">set</span>; } = <span style="color:#569CD6;">new</span>();
+
+    <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">void</span> Increment()
+        =&gt; Data.Counter++;
+}
+</pre></div>
+<p>Registered in <code>Program</code>:</p>
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+builder.Services.AddScoped&lt;CounterService&gt;();
+</pre></div>
+<p>And the Counter route component:</p>
+<pre><code class="language-cssharp">@page &quot;/counter&quot;
+@inject CounterService Service
+
+&lt;PageTitle&gt;Counter&lt;/PageTitle&gt;
+
+&lt;h1&gt;Counter&lt;/h1&gt;
+
+&lt;p role=&quot;status&quot;&gt;Current count: @Service.Data.Counter&lt;/p&gt;
+
+&lt;button class=&quot;btn btn-primary&quot; @onclick=&quot;IncrementCount&quot;&gt;Click me&lt;/button&gt;
+
+@code {
+    private void IncrementCount()
+        =&gt; Service.Increment();
+}
+</code></pre>
+<h2 id="state">State</h2>
+<p>So far so good, but we haven't solved the state problem.  How do we know when a value has changed?  Is our object dirty - different from the original - or clean - the same as the original.</p>
+<p>First we define a record that represents our data (Dro = Data Record Object):</p>
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+<span style="color:#569CD6;">public</span> record CounterDro(
+    <span style="color:#569CD6;">int</span> Counter
+    );
+</pre></div>
+<p>It's immutable, no one can change it.  And we can compare two <code>CounterDro</code> objects where <code>Counter</code> is <code>2</code> and the comparator will return true.</p>
+<p>The counter has only one property, and it always increments, so its easy to track the changes.  That isn't normally the case.  Data objects have multiple properties that can change to new values or revert to original values.</p>
+<p>There are frameworks for managing state - Fluxor works well with Blazor.  This article demonstrates a relatively simple methodology which loosely implements the <em>Observer</em> pattern.</p>
+<h3 id="counterstate">CounterState</h3>
+<p><code>CounterState</code> replaces <code>CounterData</code>.</p>
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+<span style="color:#569CD6;">public</span> <span style="color:#569CD6;">class</span> CounterState
+</pre></div>
+<p>A property and private field for each editable property.</p>
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+    <span style="color:#569CD6;">private</span> <span style="color:#569CD6;">int</span> _counter;
+    <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">int</span> Counter
+    {
+        <span style="color:#569CD6;">get</span> =&gt; _counter;
+        <span style="color:#569CD6;">set</span> =&gt; SetAndNotifyIfChanged(<span style="color:#569CD6;">ref</span> _counter, value, <span style="color:#D69D85;">&quot;Counter&quot;</span>);
+    }
+</pre></div>
+<p>A field to hold the record provided in the Ctor new method and a method to load the data from the provided record.  The actual loading code is separated out as we use it in other methods.</p>
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+    <span style="color:#569CD6;">private</span> CounterDro BaseRecord = <span style="color:#569CD6;">default</span>!;
+
+    <span style="color:#569CD6;">public</span> CounterState1(CounterDro record)
+        =&gt; <span style="color:#569CD6;">this</span>.Load(record);
+
+    <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">void</span> Load(CounterDro record)
+    {
+        <span style="color:#57A64A;">// save a copy of the provided record, not the original</span>
+        <span style="color:#569CD6;">this</span>.BaseRecord = record with { };
+        Counter = record.Counter;
+        <span style="color:#569CD6;">this</span>.NotifyStateMayHaveChanged();
+    }
+</pre></div>
+<p>A method to build a record based on the current property values:</p>
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+    <span style="color:#569CD6;">public</span> CounterDro AsRecord() =&gt; <span style="color:#569CD6;">new</span>(
+        Counter: <span style="color:#569CD6;">this</span>.Counter
+        );
+</pre></div>
+<p>A Property to get the edit state using record equality checking.</p>
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+    <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">bool</span> IsDirty
+        =&gt; BaseRecord?.Equals(AsRecord())
+            ?? <span style="color:#569CD6;">this</span>.AsRecord() <span style="color:#569CD6;">is</span> not <span style="color:#569CD6;">null</span>;
+</pre></div>
+<p>Two events and notification methods for field and state change:</p>
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+    <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">event</span> EventHandler&lt;<span style="color:#569CD6;">string</span>&gt;? FieldChanged;
+    <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">event</span> EventHandler&lt;<span style="color:#569CD6;">bool</span>&gt;? StateChanged;
+
+    <span style="color:#569CD6;">protected</span> <span style="color:#569CD6;">void</span> NotifyFieldChanged(<span style="color:#569CD6;">string</span> fieldName)
+        =&gt; FieldChanged?.Invoke(<span style="color:#569CD6;">this</span>, fieldName);
+
+    <span style="color:#569CD6;">protected</span> <span style="color:#569CD6;">void</span> NotifyStateMayHaveChanged()
+        =&gt;  <span style="color:#569CD6;">this</span>.StateChanged?.Invoke(<span style="color:#569CD6;">this</span>, <span style="color:#569CD6;">this</span>.IsDirty);
+</pre></div>
+<p>A method to detect property change and notify as required:</p>
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+    <span style="color:#569CD6;">protected</span> <span style="color:#569CD6;">void</span> SetAndNotifyIfChanged&lt;TType&gt;(<span style="color:#569CD6;">ref</span> TType? currentValue, TType? value, <span style="color:#569CD6;">string</span> fieldName)
+    {
+        <span style="color:#569CD6;">if</span> (!currentValue?.Equals(value) ?? value <span style="color:#569CD6;">is</span> not <span style="color:#569CD6;">null</span>)
+        {
+            currentValue = value;
+            <span style="color:#569CD6;">this</span>.NotifyFieldChanged(fieldName);
+            <span style="color:#569CD6;">this</span>.NotifyStateMayHaveChanged();
+        }
+    }
+</pre></div>
+<p>A method to reset the context to the original data:</p>
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+    <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">void</span> Reset()
+        =&gt; <span style="color:#569CD6;">this</span>.Load(BaseRecord);
+</pre></div>
+<p>A method to set the context to the current state used when the state is saved:</p>
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+    <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">void</span> Update()
+        =&gt; <span style="color:#569CD6;">this</span>.Load(AsRecord());
+</pre></div><h5 id="null-coalescing-and-conditional-operators">Null Coalescing and Conditional Operators</h5>
+<p>The code above uses <em>Null Coalescing</em> and <em>Null Conditional</em> operators.  For those not fully conversant with the modern Null operators, the later versions of C# offer more concise language for dealing with null.  You no longer need to write <code>if (x == null) ....</code> very often.</p>
+<pre><code>!currentValue?.Equals(value)
+</code></pre>
+<p>checks if the two values are not equal.</p>
+<p>However, <code>currentValue</code> could be null and throw an exception.  The <code>?</code> - the <em>Null conditional operator</em> - returns <code>null</code> if the object tested is null.  Everything to the right of the operator - <code>.Equals(value)</code> - is not evaluated.</p>
+<p>That's solves the initial exception, but we are doing a boolean check and a return value of null with also throw an error.  We solve this by applying the <em>Null Coalescing</em> operator <code>??</code>.</p>
+<pre><code>?? value is not null
+</code></pre>
+<p>This returns the right side of the statement (after <code>??</code>) if the left side evaluates to null.</p>
+<p>In our case <code>currentValue</code> is null - we wouldn't be doing the evaluation if it wasn't - so if value is not null, it has changed and we return the result - <code>true</code>.</p>
+<p>You'll see this null checking language used throughout the code.</p>
+<h3 id="abstracting-common-functionality-into-statebase">Abstracting Common Functionality into StateBase</h3>
+<p>The above code provides a pattern that can be re-used.  We can abstract out most of the functionality into an abstract <code>StateBase</code> class.</p>
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+<span style="color:#569CD6;">public</span> <span style="color:#569CD6;">abstract</span> <span style="color:#569CD6;">class</span> StateBase&lt;TRecord&gt;
+{
+    <span style="color:#569CD6;">protected</span> TRecord BaseRecord = <span style="color:#569CD6;">default</span>!;
+
+    <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">event</span> EventHandler&lt;<span style="color:#569CD6;">string</span>&gt;? FieldChanged;
+    <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">event</span> EventHandler&lt;<span style="color:#569CD6;">bool</span>&gt;? StateChanged;
+
+    <span style="color:#569CD6;">public</span> StateBase(TRecord record)
+        =&gt; <span style="color:#569CD6;">this</span>.Load(record);
+
+    <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">abstract</span> TRecord AsRecord();
+    <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">abstract</span> <span style="color:#569CD6;">void</span> Reset();
+    <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">abstract</span> <span style="color:#569CD6;">void</span> Update();
+    <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">abstract</span> <span style="color:#569CD6;">void</span> Load(TRecord record);
+
+    <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">bool</span> IsDirty 
+        =&gt; BaseRecord?.Equals(AsRecord()) 
+            ?? <span style="color:#569CD6;">this</span>.AsRecord() <span style="color:#569CD6;">is</span> not <span style="color:#569CD6;">null</span>;
+
+    <span style="color:#569CD6;">protected</span> <span style="color:#569CD6;">void</span> SetAndNotifyIfChanged&lt;TType&gt;(<span style="color:#569CD6;">ref</span> TType? currentValue, TType? value, <span style="color:#569CD6;">string</span> fieldName)
+    {
+        <span style="color:#569CD6;">if</span> (!currentValue?.Equals(value) ?? value <span style="color:#569CD6;">is</span> not <span style="color:#569CD6;">null</span>)
+        {
+            currentValue = value;
+            <span style="color:#569CD6;">this</span>.NotifyFieldChanged(fieldName);
+            <span style="color:#569CD6;">this</span>.NotifyStateMayHaveChanged();
+        }
+    }
+
+    <span style="color:#569CD6;">protected</span> <span style="color:#569CD6;">void</span> NotifyFieldChanged(<span style="color:#569CD6;">string</span> fieldName)
+        =&gt; FieldChanged?.Invoke(<span style="color:#569CD6;">this</span>, fieldName);
+
+    <span style="color:#569CD6;">protected</span> <span style="color:#569CD6;">void</span> NotifyStateMayHaveChanged()
+        =&gt;  <span style="color:#569CD6;">this</span>.StateChanged?.Invoke(<span style="color:#569CD6;">this</span>, <span style="color:#569CD6;">this</span>.IsDirty);
+}
+</pre></div>
+<p>Our new CounterState class now looks like this:</p>
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+<span style="color:#569CD6;">public</span> <span style="color:#569CD6;">class</span> CounterState : StateBase&lt;CounterDro&gt;
+{
+    <span style="color:#569CD6;">private</span> <span style="color:#569CD6;">int</span> _counter;
+    <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">int</span> Counter
+    {
+        <span style="color:#569CD6;">get</span> =&gt; _counter;
+        <span style="color:#569CD6;">set</span> =&gt; SetAndNotifyIfChanged(<span style="color:#569CD6;">ref</span> _counter, value, <span style="color:#D69D85;">&quot;Counter&quot;</span>);
+    }
+
+    <span style="color:#569CD6;">public</span> CounterState(CounterDro record)
+        : <span style="color:#569CD6;">base</span>(record) { }
+
+    <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">override</span> <span style="color:#569CD6;">void</span> Load(CounterDro record)
+    {
+        <span style="color:#569CD6;">this</span>.BaseRecord = record with { };
+        Counter = record.Counter;
+        <span style="color:#569CD6;">this</span>.NotifyStateMayHaveChanged();
+    }
+
+    <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">override</span> CounterDro AsRecord() =&gt; <span style="color:#569CD6;">new</span>(Counter: <span style="color:#569CD6;">this</span>.Counter);
+
+    <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">override</span> <span style="color:#569CD6;">void</span> Reset()
+        =&gt; <span style="color:#569CD6;">this</span>.Load(BaseRecord);
+
+    <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">override</span> <span style="color:#569CD6;">void</span> Update()
+        =&gt; <span style="color:#569CD6;">this</span>.Load(AsRecord());
+}
+</pre></div><h2 id="services">Services</h2>
+<p>At this point we need to update our services.</p>
+<p><code>CounterViewService</code> is our new view service.  It provides two methods to get and save the counter data to/from an undefined store.</p>
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+<span style="color:#569CD6;">public</span> <span style="color:#569CD6;">class</span> CounterViewService
+{
+    <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">readonly</span> CounterState StateContext = <span style="color:#569CD6;">new</span> CounterState(<span style="color:#569CD6;">new</span> CounterDro(<span style="color:#B5CEA8;">0</span>));
+
+    <span style="color:#569CD6;">private</span> <span style="color:#569CD6;">readonly</span> IDataService _counterDataService;
+
+    <span style="color:#569CD6;">public</span> CounterViewService(IDataService counterDataService)
+        =&gt; _counterDataService = counterDataService;
+
+    <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">async</span> Task GetCounterAsync()
+    {
+        <span style="color:#569CD6;">var</span> result = <span style="color:#569CD6;">await</span> _counterDataService.ReadAsync&lt;CounterDro&gt;(<span style="color:#569CD6;">new</span> RecordQueryRequest&lt;CounterDro&gt;(<span style="color:#D69D85;">&quot;Counter&quot;</span>));
+        <span style="color:#569CD6;">this</span>.StateContext.Load(result.Record ?? <span style="color:#569CD6;">new</span> CounterDro(<span style="color:#B5CEA8;">0</span>));
+    }
+
+    <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">async</span> Task SaveCounterAsync()
+    {
+        <span style="color:#569CD6;">var</span> request = <span style="color:#569CD6;">new</span> CommandRequest&lt;CounterDro&gt;(
+            StorageName: <span style="color:#D69D85;">&quot;Counter&quot;</span>, 
+            Record: <span style="color:#569CD6;">this</span>.StateContext.AsRecord());
+
+        <span style="color:#569CD6;">var</span> result = <span style="color:#569CD6;">await</span> _counterDataService.SaveAsync&lt;CounterDro&gt;(request);
+
+        <span style="color:#569CD6;">if</span> (result.Successful)
+            <span style="color:#569CD6;">this</span>.StateContext.Update();
+    }
+
+    <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">async</span> Task Increment()
+    {
+        StateContext.Counter++;
+        <span style="color:#569CD6;">await</span> SaveCounterAsync();
+    }
+}
+</pre></div>
+<p>The <code>IDataService</code> is defined as follows.  We'll look at the actual implementation shortly.</p>
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+<span style="color:#569CD6;">public</span> <span style="color:#569CD6;">interface</span> IDataService
+{
+    <span style="color:#569CD6;">public</span> ValueTask&lt;CommandResult&gt; SaveAsync&lt;TRecord&gt;(CommandRequest&lt;TRecord&gt; request);
+    <span style="color:#569CD6;">public</span> ValueTask&lt;RecordQueryResult&lt;TRecord&gt;&gt; ReadAsync&lt;TRecord&gt;(RecordQueryRequest&lt;TRecord&gt; request);
+}
+</pre></div>
+<p>The class demonstrates some important concepts.</p>
+<p><strong>Abstraction</strong></p>
+<p>We separate the data persistance out though an interface.  <code>CounterViewService</code> injects the <code>IDataService</code> defined in the service container.  It doesn't care if the implementation loaded is session base storage, <code>LocalStorage</code>, a SQL database or a remote store.</p>
+<p><strong>Command/Query Separation</strong></p>
+<p>Operatons are either:</p>
+<ol>
+<li><p><em>Commands</em> - that change state.  A <em>CommandRequest</em> object defines what needs changing and a <em>CommandResult</em> object returns status information  - normally Success/Failure and a message.</p>
+</li>
+<li><p><em>Queries</em> - request data: they don't change it.  A <em>QueryRequest</em> defines the data to get and a <em>QueryResult</em> contains the requested data and status information - normally Success/Failure and a message.</p>
+</li>
+</ol>
+<p>Request and result objects are defined as immutable records.</p>
+<h3 id="data-persistance">Data Persistance</h3>
+<p>The application presists data to Browser Local Storage.</p>
+<p>Here's the <code>IDataService</code> implementation that uses the <code>ProtectedLocalStorage</code> package.  The code is self explanatory.</p>
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+<span style="color:#569CD6;">public</span> <span style="color:#569CD6;">class</span> LocalStorageDataService : IDataService
+{
+    <span style="color:#569CD6;">private</span> <span style="color:#569CD6;">readonly</span> ProtectedLocalStorage _storage;
+
+    <span style="color:#569CD6;">public</span> LocalStorageDataService(ProtectedLocalStorage storage)
+        =&gt; _storage = storage;
+
+    <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">async</span> ValueTask&lt;CommandResult&gt; SaveAsync&lt;TRecord&gt;(CommandRequest&lt;TRecord&gt; request)
+    {
+        <span style="color:#569CD6;">if</span> (request.Record <span style="color:#569CD6;">is</span> not <span style="color:#569CD6;">null</span>)
+            <span style="color:#569CD6;">await</span> _storage.SetAsync(request.StorageName, request.Record);
+
+        <span style="color:#57A64A;">// No return so we return success!</span>
+        <span style="color:#569CD6;">return</span> CommandResult.Success();
+    }
+
+    <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">async</span> ValueTask&lt;RecordQueryResult&lt;TRecord&gt;&gt; ReadAsync&lt;TRecord&gt;(RecordQueryRequest&lt;TRecord&gt; request)
+    {
+        <span style="color:#57A64A;">// We need to cover the situation were the component calling this is in the initial page</span>
+        <span style="color:#57A64A;">// and Blazor server is trying to statically render the page</span>
+        <span style="color:#569CD6;">try</span>
+        {
+            <span style="color:#569CD6;">var</span> result = <span style="color:#569CD6;">await</span> _storage.GetAsync&lt;TRecord&gt;(request.StorageName);
+            <span style="color:#569CD6;">return</span> <span style="color:#569CD6;">new</span> RecordQueryResult&lt;TRecord&gt; { Successful = result.Success, Record = result.Value, Message = $<span style="color:#D69D85;">&quot;Failed to retrieve a value for {request.StorageName}&quot;</span> };
+        }
+        <span style="color:#569CD6;">catch</span>
+        {
+            <span style="color:#569CD6;">return</span> <span style="color:#569CD6;">new</span> RecordQueryResult&lt;TRecord&gt; { Successful = <span style="color:#569CD6;">false</span>, Message = $<span style="color:#D69D85;">&quot;Failed to retrieve a value for {request.StorageName}&quot;</span> };
+        }
+    }
+}
+</pre></div><h2 id="service-registration">Service Registration</h2>
+<p>The new services are registered in <code>Program</code>:</p>
+<pre><code>builder.Services.AddScoped&lt;CounterViewService&gt;();
+builder.Services.AddScoped&lt;IDataService, LocalStorageDataService&gt;();
+</code></pre>
+<h2 id="updating-the-ui">Updating the UI</h2>
+<p>We can now update the UI components.</p>
+<p>First a Counter Viewer component to display the counter information</p>
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+@inject CounterViewService Service
+@implements IDisposable
+
+&lt;div <span style="color:#569CD6;">class</span>=<span style="color:#D69D85;">&quot;bg-light border-dark p-3 m-3&quot;</span>&gt;
+    &lt;h3&gt;Counter Viewer&lt;/h3&gt;
+    &lt;div&gt;Counter : @<span style="color:#569CD6;">this</span>.Service.StateContext.Counter&lt;/div&gt;
+&lt;/div&gt;
+
+@code {
+    <span style="color:#569CD6;">protected</span> <span style="color:#569CD6;">override</span> <span style="color:#569CD6;">void</span> OnInitialized()
+        =&gt; Service.StateContext.StateChanged += OnStateChanged;
+
+    <span style="color:#569CD6;">private</span> <span style="color:#569CD6;">void</span> OnStateChanged(<span style="color:#569CD6;">object</span>? sender, <span style="color:#569CD6;">bool</span> state)
+                =&gt; <span style="color:#569CD6;">this</span>.InvokeAsync(StateHasChanged);
+
+    <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">void</span> Dispose()
+        =&gt; Service.StateContext.StateChanged += OnStateChanged;
+}
+</pre></div>
+<p>An &quot;Editor&quot; for the increment button - we are editing the context:</p>
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+@inject CounterViewService Service
+
+&lt;div <span style="color:#569CD6;">class</span>=<span style="color:#D69D85;">&quot;bg-light p-3 m-3&quot;</span>&gt;
+    &lt;h3&gt;Counter Editor&lt;/h3&gt;
+    &lt;button <span style="color:#569CD6;">class</span>=<span style="color:#D69D85;">&quot;btn btn-primary&quot;</span> @onclick=<span style="color:#569CD6;">this</span>.IncrementCount&gt;Increment Counter&lt;/button&gt;
+&lt;/div&gt;
+
+@code {
+    <span style="color:#569CD6;">private</span> <span style="color:#569CD6;">async</span> Task IncrementCount()
+        =&gt; <span style="color:#569CD6;">await</span> <span style="color:#569CD6;">this</span>.Service.Increment();
+}
+</pre></div>
+<p>And the new Counter route:</p>
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+@page <span style="color:#D69D85;">&quot;/counter&quot;</span>
+@inject CounterViewService Service
+
+&lt;PageTitle&gt;Counter&lt;/PageTitle&gt;
+
+&lt;CounterViewer /&gt;
+
+&lt;CounterEditor /&gt;
+
+@code {
+    <span style="color:#569CD6;">protected</span> <span style="color:#569CD6;">override</span> <span style="color:#569CD6;">async</span> Task OnInitializedAsync()
+    {
+        <span style="color:#57A64A;">//ensures the component had initially rendered before attempt to read browser data</span>
+        <span style="color:#569CD6;">await</span> Task.Delay(<span style="color:#B5CEA8;">1</span>);
+        <span style="color:#569CD6;">await</span> <span style="color:#569CD6;">this</span>.Service.GetCounterAsync();
+    }
+}
+</pre></div><h2 id="summary">Summary</h2>
+<p>This implementation demonstrates:</p>
+<ol>
+<li>How to separate out functionality into single purpose objects.</li>
+<li>How to separate data and state from the UI.</li>
+<li>How to use abstraction to decouple Data from the core application code.</li>
+<li>How to build a simple state persistance implementation.</li>
+</ol>
+<h2 id="appendix">Appendix</h2>
+<h3 id="project-structure">Project Structure</h3>
+<p><img src="./assets/rebuilding-counter/core-domain.png" alt="Core Domain Code" /></p>
+<p><img src="./assets/rebuilding-counter/data-domain.png" alt="Data Domain Code" /></p>
+<p><img src="./assets/rebuilding-counter/ui-domain.png" alt="UI Domain Code" /></p>
+<h3 id="the-cqs-objects">The CQS objects</h3>
+<h4 id="command-objects">Command Objects</h4>
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+<span style="color:#569CD6;">public</span> record CommandRequest&lt;TRecord&gt;(<span style="color:#569CD6;">string</span> StorageName, TRecord Record);
+
+<span style="color:#569CD6;">public</span> record CommandResult
+{
+    <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">bool</span> Successful { <span style="color:#569CD6;">get</span>; init; }
+    <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">string</span> Message { <span style="color:#569CD6;">get</span>; init; } = <span style="color:#569CD6;">string</span>.Empty;
+
+    <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">static</span> CommandResult Success()
+        =&gt; <span style="color:#569CD6;">new</span> CommandResult { Successful = <span style="color:#569CD6;">true</span> };
+
+    <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">static</span> CommandResult Failure(<span style="color:#569CD6;">string</span> message)
+        =&gt; <span style="color:#569CD6;">new</span> CommandResult { Successful = <span style="color:#569CD6;">false</span> };
+}
+</pre></div><h4 id="query-objects">Query Objects</h4>
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+<span style="color:#569CD6;">public</span> record RecordQueryRequest&lt;TRecord&gt;(<span style="color:#569CD6;">string</span> StorageName);
+
+<span style="color:#569CD6;">public</span> record RecordQueryResult&lt;TRecord&gt;
+{
+    <span style="color:#569CD6;">public</span> TRecord? Record { <span style="color:#569CD6;">get</span>; init; }
+    <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">bool</span> Successful { <span style="color:#569CD6;">get</span>; init; }
+    <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">string</span> Message { <span style="color:#569CD6;">get</span>; init; } = <span style="color:#569CD6;">string</span>.Empty;
+
+    <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">static</span> RecordQueryResult&lt;TRecord&gt; Success(TRecord record)
+        =&gt; <span style="color:#569CD6;">new</span> RecordQueryResult&lt;TRecord&gt; { Record = record, Successful = <span style="color:#569CD6;">true</span> };
+
+    <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">static</span> RecordQueryResult&lt;TRecord&gt; Failure(<span style="color:#569CD6;">string</span> message)
+        =&gt; <span style="color:#569CD6;">new</span> RecordQueryResult&lt;TRecord&gt; { Successful = <span style="color:#569CD6;">false</span> };
+}
+</pre></div></div></div></div></body></html>
+
+
+
+
+

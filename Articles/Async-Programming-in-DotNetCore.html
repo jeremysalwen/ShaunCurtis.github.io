@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<base href="/">
+
+	
+
+	
+
+	
+	<link href="/resources/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+	<link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+
+	
+	<link href="/resources/css/sb-admin-2.css" rel="stylesheet" type="text/css">
+	<link href="/resources/css/site.css" rel="stylesheet" type="text/css">
+
+	
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/highlight.css">
+	<link rel="stylesheet" href="/resources/css/article.css" type="text/css">
+
+	
+	<link rel="icon" href="/assets/favicon.png">
+
+	<title>Async Programming in DotNetCore</title>
+        <meta property="author" content="Shaun Curtis" />
+        <meta property="description" content="A Practical Examination of Async Programming in DotNetCore.." />
+    <meta property="og:site_name" content="Cold Elm Coders" />
+        <meta property="og:site" content="https://shauncurtis.github.io/" />
+        <meta property="og:title" content="Async Programming in DotNetCore" />
+        <meta property="og:description" content="A Practical Examination of Async Programming in DotNetCore.." /></head>
+<body><header class="navbar bg-dark p-2 text-large text-light"><section class="navbar-section  text-light"><a href="/" class="navbar-brand mr-2 text-large text-light p-2">Cold Elm Coders</a>
+			<a href="/Posts" class="btn btn-link text-light">Posts</a>
+			<a href="/Rants" class="btn btn-link text-light">Rants</a>
+			<a href="/Articles" class="btn btn-link text-light">Articles</a>
+			<a href="/Stories" class="btn btn-link text-light">Stories</a>
+			<a href="/about.html" class="btn btn-link text-light">About</a></section></header>
+
+	<div class="container-fluid"><div class="row"><div class="col-12 col-sm-3 col-lg-2 bg-light pt-2"><div class="article-info p-2"><div class="mb-2">Published: 06-Feb-2021</div>
+                <div class="mb-2">Updated: 06-Feb-2021</div>
+                <div class="mb-2">Author: Shaun Curtis</div></div>
+    <h4 class="p-2">Table of Contents</h4>
+<ul class="TOC" >
+<li class="TOC-item TOC-item-0" >
+<a class="TOC-link" href="#">Top</a>
+<ul class="TOC TOC-0" >
+<li class="TOC-item TOC-item-1" >
+<ul class="TOC TOC-1" >
+<li class="TOC-item TOC-item-2" >
+<a class="TOC-link" href="#code-repository">Code Repository</a>
+</li>
+<li class="TOC-item TOC-item-2" >
+<a class="TOC-link" href="#library-classes">Library Classes</a>
+</li>
+<li class="TOC-item TOC-item-2" >
+<a class="TOC-link" href="#getting-started">Getting Started</a>
+</li>
+<li class="TOC-item TOC-item-2" >
+<a class="TOC-link" href="#more-complexity">More Complexity</a>
+</li>
+<li class="TOC-item TOC-item-2" >
+<a class="TOC-link" href="#conclusions-and-wrap-up">Conclusions and Wrap Up.</a>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+			
+			<div class="col-12 col-sm-9 col-lg-10 p-2"><div class="pt-2 pb-2 border-bottom mb-4 text-primary"><h1>Async Programming in DotNetCore</h1>
+            <div><small>A Practical Examination of Async Programming in DotNetCore..</small></div></div>
+    <p>My first article on this subject provided an overview of async programming in DotNetCore and explained some of the key concepts.  You'll find the article <a href="https://www.codeproject.com/Articles/5276310/Understanding-and-Using-Async-Programming-in-DotNe">here</a>.  This article takes a practical approach to demonstrating some of of those key concepts, and introducing more complex coding patterns.  The article is based around a DotNetCore console application.</p>
+<p>You'll need a DotNetCore compatible development environment, normally either either Visual Studio or Visual Code, and a copy of the Repo associated with this project to run the code.</p>
+<blockquote>
+<p><strong>DISCLAIMER</strong> - The code is <strong>Experimental</strong>, not <strong>Production</strong>.  Designed to be concise with minimal error trapping and handling to keep it easy to read and understand. Classes are kept simple for the same reason.</p>
+</blockquote>
+<h2 id="code-repository">Code Repository</h2>
+<p>The code in available in a GitHub Repo <a href="https://github.com/ShaunCurtis/Async-Demo">here</a>.  The code for this project is in <em>Async-Demo</em>.  Ignore any other projects - they are for a further Async Programming article.</p>
+<h2 id="library-classes">Library Classes</h2>
+<p>Before we start your need to be aware of two helper classses</p>
+<ol>
+<li><code>LongRunningTasks</code> - emulates work.
+<ol>
+<li><code>RunLongProcessorTaskAsync</code> and <code>RunLongProcessorTask</code> use prime number calculations to emulate a processor heavy task.</li>
+<li><code>RunYieldingLongProcessorTaskAsync</code> is a version that yields every 100 calculations.</li>
+<li><code>RunLongIOTaskAsync</code> uses <code>Task.Delay</code> to emulate a slow I/O operations.</li>
+</ol>
+</li>
+<li><code>UILogger</code> provides an abstraction layer for logging information to the UI.  You pass a delegate <code>Action</code> to the methods.  <code>UILogger</code> builds the message, and then calls the <code>Action</code> to actually write it to wherever the <code>Action</code> is configured to write to. In our case <code>LogToConsole</code> in <code>Program</code>,  which runs <code>Console.WriteLine</code>.  It could just as easily write to a text file.</li>
+</ol>
+<h2 id="getting-started">Getting Started</h2>
+<p>Our first challenge is the switch from sync to async.</p>
+<p>Make sure you're running the correct framework and latest language version. (C# 7.1 onwards supports a Task based <code>Main</code>).</p>
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+  <span style="color:#808080;">&lt;</span><span style="color:#E6E6E6;">PropertyGroup</span><span style="color:#808080;">&gt;</span>
+    <span style="color:#808080;">&lt;</span><span style="color:#E6E6E6;">OutputType</span><span style="color:#808080;">&gt;</span>Exe<span style="color:#808080;">&lt;/</span><span style="color:#E6E6E6;">OutputType</span><span style="color:#808080;">&gt;</span>
+    <span style="color:#808080;">&lt;</span><span style="color:#E6E6E6;">TargetFramework</span><span style="color:#808080;">&gt;</span>net5<span style="color:#808080;">&lt;/</span><span style="color:#E6E6E6;">TargetFramework</span><span style="color:#808080;">&gt;</span>
+    <span style="color:#808080;">&lt;</span><span style="color:#E6E6E6;">LangVersion</span><span style="color:#808080;">&gt;</span>latest<span style="color:#808080;">&lt;/</span><span style="color:#E6E6E6;">LangVersion</span><span style="color:#808080;">&gt;</span>
+    <span style="color:#808080;">&lt;</span><span style="color:#E6E6E6;">RootNamespace</span><span style="color:#808080;">&gt;</span>Async_Demo<span style="color:#808080;">&lt;/</span><span style="color:#E6E6E6;">RootNamespace</span><span style="color:#808080;">&gt;</span>
+  <span style="color:#808080;">&lt;/</span><span style="color:#E6E6E6;">PropertyGroup</span><span style="color:#808080;">&gt;</span>
+</pre></div>
+<p>Pre #7.1, <code>Main</code> could only run synchronously, and you needed a &quot;NONO&quot;, using <code>Wait</code>, to prevent <code>Main</code> dropping out the bottom and closing the program. Post #7.1, declare <code>Main</code> to return a <code>Task</code>.</p>
+<p>The <code>async</code> <code>Main</code> pattern is shown below.  Declaring <code>async</code> depends on whether on not there's an <code>await</code> in the code</p>
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+<span style="color:#57A64A;">// With await</span>
+<span style="color:#569CD6;">static</span> <span style="color:#569CD6;">async</span> Task Main(<span style="color:#569CD6;">string</span>[] args)
+{
+    <span style="color:#57A64A;">// code</span>
+    <span style="color:#57A64A;">// await somewhere in here</span>
+}
+
+<span style="color:#57A64A;">// No awaits</span>
+<span style="color:#569CD6;">static</span> Task Main(<span style="color:#569CD6;">string</span>[] args)
+{
+    <span style="color:#57A64A;">// code</span>
+    <span style="color:#57A64A;">// no awaits</span>
+    <span style="color:#569CD6;">return</span> Task.CompletedTask;
+}
+</pre></div>
+<p>Note:</p>
+<ol>
+<li>If you use the <code>async</code> keyword but don't have an <code>await</code>, the compiler warns, but then compiles anyway, treating the method as synchronous code.</li>
+<li>You can't declare a method as <code>async</code> and return a <code>Task</code>.  You simply return the correct value and the compiler will do all the donkey work.</li>
+</ol>
+<p>So let's run some code. Our first run:</p>
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+<span style="color:#569CD6;">static</span> Task Main(<span style="color:#569CD6;">string</span>[] args)
+{
+    <span style="color:#569CD6;">var</span> watch = <span style="color:#569CD6;">new</span> Stopwatch();
+    watch.Start();
+    UILogger.LogThreadType(LogToConsole, <span style="color:#D69D85;">&quot;Main&quot;</span>);
+    <span style="color:#569CD6;">var</span> millisecs = LongRunningTasks.RunLongProcessorTask(<span style="color:#B5CEA8;">5</span>);
+    watch.Stop();
+    UILogger.LogToUI(LogToConsole, $<span style="color:#D69D85;">&quot;Main ==&gt; Completed in { watch.ElapsedMilliseconds} milliseconds&quot;</span>, <span style="color:#D69D85;">&quot;Main&quot;</span>);
+    <span style="color:#569CD6;">return</span> Task.CompletedTask;
+}
+</pre></div>
+<p>The Task ran <em>synchronously</em> as expected. A bunch of synchronous code inside a <code>Task</code>. No yielding.</p>
+<pre><code>[11:35:32][Main Thread][Main] &gt;  running on Application Thread
+[11:35:32][Main Thread][LongRunningTasks] &gt; ProcessorTask started
+[11:35:36][Main Thread][LongRunningTasks] &gt; ProcessorTask completed in 3399 millisecs
+[11:35:36][Main Thread][Main] &gt; Main ==&gt; Completed in 3523 milliseconds
+Press any key to close this window . . .
+</code></pre>
+<p>Our second run:</p>
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+<span style="color:#569CD6;">static</span> <span style="color:#569CD6;">async</span> Task Main(<span style="color:#569CD6;">string</span>[] args)
+{
+    <span style="color:#569CD6;">var</span> watch = <span style="color:#569CD6;">new</span> Stopwatch();
+    watch.Start();
+    UILogger.LogThreadType(LogToConsole, <span style="color:#D69D85;">&quot;Main&quot;</span>);
+    <span style="color:#569CD6;">var</span> millisecs = <span style="color:#569CD6;">await</span> LongRunningTasks.RunLongProcessorTaskAsync(<span style="color:#B5CEA8;">5</span>, LogToConsole);
+    UILogger.LogToUI(LogToConsole, $<span style="color:#D69D85;">&quot;Yielded to Main&quot;</span>, <span style="color:#D69D85;">&quot;Main&quot;</span>);
+    watch.Stop();
+    UILogger.LogToUI(LogToConsole, $<span style="color:#D69D85;">&quot;Main ==&gt; Completed in { watch.ElapsedMilliseconds} milliseconds&quot;</span>, <span style="color:#D69D85;">&quot;Main&quot;</span>);
+}
+</pre></div>
+<p>The Task ran <em>synchronously</em> - no yielding.  Logical because there was no reason to yield. <code>RunLongProcessorTaskAsync</code> is a synchronous bunch of code inside a Task - calculating prime numbers - so it ran to completion.  The <code>await</code> is redundant, it may be a <code>Task</code> but it doesn't yield, so never gives up the thread until complete.</p>
+<pre><code>[11:42:43][Main Thread][Main] &gt;  running on Application Thread
+[11:42:43][Main Thread][LongRunningTasks] &gt; ProcessorTask started
+[11:42:46][Main Thread][LongRunningTasks] &gt; ProcessorTask completed in 3434 millisecs
+[11:42:46][Main Thread][Main] &gt; Yielded
+[11:42:46][Main Thread][Main] &gt; Main ==&gt; Completed in 3593 milliseconds
+</code></pre>
+<p>Our third run:</p>
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+<span style="color:#569CD6;">static</span> <span style="color:#569CD6;">async</span> Task Main(<span style="color:#569CD6;">string</span>[] args)
+{
+    <span style="color:#569CD6;">var</span> watch = <span style="color:#569CD6;">new</span> Stopwatch();
+    watch.Start();
+    UILogger.LogThreadType(LogToConsole, <span style="color:#D69D85;">&quot;Main&quot;</span>);
+    <span style="color:#569CD6;">var</span> millisecs = LongRunningTasks.RunYieldingLongProcessorTaskAsync(<span style="color:#B5CEA8;">5</span>, LogToConsole);
+    UILogger.LogToUI(LogToConsole, $<span style="color:#D69D85;">&quot;Yielded to Main&quot;</span>, <span style="color:#D69D85;">&quot;Main&quot;</span>);
+    watch.Stop();
+    UILogger.LogToUI(LogToConsole, $<span style="color:#D69D85;">&quot;Main ==&gt; Completed in { watch.ElapsedMilliseconds} milliseconds&quot;</span>, <span style="color:#D69D85;">&quot;Main&quot;</span>);
+}
+</pre></div>
+<p>Before we look at the result, let's look at the difference between <code>RunLongProcessorTaskAsync</code> and <code>RunYieldingLongProcessorTaskAsync</code>.  We've added a <code>Task.Yield()</code> to yield control every 100 primes.</p>
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+<span style="color:#569CD6;">if</span> (isPrime)
+{
+    counter++;
+    <span style="color:#57A64A;">// only present in Yielding version</span>
+    <span style="color:#569CD6;">if</span> (counter &gt; <span style="color:#B5CEA8;">100</span>)
+    {
+        <span style="color:#569CD6;">await</span> Task.Yield();
+        counter = <span style="color:#B5CEA8;">0</span>;
+    }
+}
+</pre></div>
+<p>The long running task didn't complete. <code>RunYieldingLongProcessorTaskAsync</code> yielded back to <code>Main</code> after the first 100 primes had been calculated - a little short of 173 millisecs - and <code>Main</code> ran to completion during the yield.</p>
+<pre><code>[12:13:56][Main Thread][Main] &gt;  running on Application Thread
+[12:13:56][Main Thread][LongRunningTasks] &gt; ProcessorTask started
+[12:13:57][Main Thread][Main] &gt; Yielded to Main
+[12:13:57][Main Thread][Main] &gt; Main ==&gt; Completed in 173 milliseconds
+</code></pre>
+<p>If we update <code>Main</code> to <code>await</code> the long processor task</p>
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+    <span style="color:#569CD6;">var</span> millisecs = <span style="color:#569CD6;">await</span> LongRunningTasks.RunYieldingLongProcessorTaskAsync(<span style="color:#B5CEA8;">5</span>, LogToConsole);
+</pre></div>
+<p>It runs to completion.  Although it yields, we <code>await</code> on the <code>RunYieldingLongProcessorTaskAsync</code> <code>Task</code> to complete, before moving on in <code>Main</code>.  There's another important point to note here.  Look at which thread the long running task ran on, and compare it to previous runs.  It jumped to a new thread <code>[LongRunningTasks Thread]</code> after starting on [Main Thread].</p>
+<pre><code>[12:45:10][Main Thread:1][Main] &gt;  running on Application Thread
+[12:45:11][Main Thread:1][LongRunningTasks] &gt; ProcessorTask started
+[12:45:14][LongRunningTasks Thread:7][LongRunningTasks] &gt; ProcessorTask completed in 3892 millisecs
+[12:45:14][LongRunningTasks Thread:7][Main] &gt; Yielded to Main
+[12:45:14][LongRunningTasks Thread:7][Main] &gt; Main ==&gt; Completed in 4037 milliseconds
+</code></pre>
+<p>Add a quick <code>Console.Write</code> in <code>RunYieldingLongProcessorTaskAsync</code> to see which thread each yielded iteration runs on - writing the <code>ManagedThreadId</code>.</p>
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+counter++;
+<span style="color:#569CD6;">if</span> (counter &gt; <span style="color:#B5CEA8;">100</span>)
+{
+    Console.WriteLine($<span style="color:#D69D85;">&quot;Thread ID:{Thread.CurrentThread.ManagedThreadId}&quot;</span>);
+    <span style="color:#569CD6;">await</span> Task.Yield();
+    counter = <span style="color:#B5CEA8;">0</span>;
+}
+</pre></div>
+<p>The result is shown below.  Notice the regular thread jumping.  Yield creates a new continuation <code>Task</code>, and schedules it to run asynchronously.  On the first <code>Task.Yield</code> the application thread scheduler passes the new <code>Task</code> to the application pool, and for then on the application pool Scheduler makes decisions on where to run Tasks.</p>
+<blockquote>
+<p><code>Task.Yield()</code>, to quote Microsoft &quot;Creates an awaitable task that asynchronously yields back to the current context when awaited.&quot; I translate that to mean it's syntactic sugar for yielding control up the tree and creating a continuation <code>Task</code> that gets posted back to the Scheduler to run when it schedules it. To quote further &quot;A context that, when awaited, will asynchronously transition back into the current context at the time of the await.&quot;  In other words, it doesn't <code>await</code> unless you tell it to.  Hit the first yield in the continuation and processing trucks on through to the code below <code>Task.Yield()</code>.  I've tested it.</p>
+</blockquote>
+<pre><code>[12:38:16][Main Thread:1][Main] &gt;  running on Application Thread
+[12:38:16][Main Thread:1][LongRunningTasks] &gt; ProcessorTask started
+Thread ID:1
+Thread ID:4
+Thread ID:4
+Thread ID:6
+Thread ID:6
+Thread ID:7
+</code></pre>
+<p>Finally, change over to the <code>RunLongIOTaskAsync</code> long running task.</p>
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+    <span style="color:#569CD6;">var</span> millisecs = <span style="color:#569CD6;">await</span> LongRunningTasks.RunLongIOTaskAsync(<span style="color:#B5CEA8;">5</span>, LogToConsole);
+</pre></div>
+<p>If you don't <code>await</code>, the same as before:</p>
+<pre><code>[14:26:46][Main Thread:1][Main] &gt;  running on Application Thread
+[14:26:47][Main Thread:1][LongRunningTasks] &gt; IOTask started
+[14:26:47][Main Thread:1][Main] &gt; Yielded to Main
+[14:26:47][Main Thread:1][Main] &gt; Main ==&gt; Completed in 322 milliseconds
+</code></pre>
+<p>And if you <code>await</code> it runs to completion, again with the thread switch.</p>
+<pre><code>[14:27:16][Main Thread:1][Main] &gt;  running on Application Thread
+[14:27:16][Main Thread:1][LongRunningTasks] &gt; IOTask started
+[14:27:21][LongRunningTasks Thread:4][LongRunningTasks] &gt; IOTask completed in 5092 millisecs
+[14:27:21][LongRunningTasks Thread:4][Main] &gt; Yielded to Main
+[14:27:21][LongRunningTasks Thread:4][Main] &gt; Main ==&gt; Completed in 5274 milliseconds
+
+</code></pre>
+<h2 id="more-complexity">More Complexity</h2>
+<p>Ok, now to move closer to reality and code doing something.</p>
+<h3 id="jobrunner">JobRunner</h3>
+<p><code>JobRunner</code> is a simple class to run and control asynchronous jobs.  For our purposes, it runs one of the long running tasks to simulate work, but you can use the basic pattern for real world situations.</p>
+<p>It's self-evident what most of the code does, but I'll introduce <code>TaskCompletionSource</code>.</p>
+<blockquote>
+<p>To quote MS &quot;Represents the producer side of a Task&lt;TResult&gt; unbound to a delegate, providing access to the consumer side through the Task property.&quot;  You get a <code>Task</code> exposed by <code>TaskCompletionSource.Task</code> that you control through the <code>TaskCompletionSource</code> instance - in other words, a manually controlled <code>Task</code> uncoupled from the method.</p>
+</blockquote>
+<p>The <code>Task</code> that represents the state of the <code>JobRunner</code> is exposed as the <code>JobTask</code> property.  If the underlying <code>TaskCompletionSource</code> isn't set it returns a simple <code>Task.CompletedTask</code> object, otherwise it returns the <code>Task</code> of <code>JobTaskController</code>.  The <code>Run</code> method uses the async event pattern - we need a block of code that runs asynchronously, yielding control with <code>await</code>.  <code>Run</code> controls the <code>Task</code> state, but the <code>Task</code> itself is independant of <code>Run</code>.  <code>IsRunning</code> ensures you can't start the job once it's running.</p>
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+<span style="color:#569CD6;">class</span> JobRunner
+{
+    <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">enum</span> JobType { IO, Processor, YieldingProcessor } 
+
+    <span style="color:#569CD6;">public</span> JobRunner(<span style="color:#569CD6;">string</span> name, <span style="color:#569CD6;">int</span> secs, JobType type = JobType.IO)
+    {
+        <span style="color:#569CD6;">this</span>.Name = name;
+        <span style="color:#569CD6;">this</span>.Seconds = secs;
+        <span style="color:#569CD6;">this</span>.Type = type;
+    }
+
+    <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">string</span> Name { <span style="color:#569CD6;">get</span>; <span style="color:#569CD6;">private</span> <span style="color:#569CD6;">set</span>; }
+    <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">int</span> Seconds { <span style="color:#569CD6;">get</span>; <span style="color:#569CD6;">private</span> <span style="color:#569CD6;">set</span>; }
+    <span style="color:#569CD6;">public</span> JobType Type { <span style="color:#569CD6;">get</span>; <span style="color:#569CD6;">set</span>; }
+    <span style="color:#569CD6;">private</span> <span style="color:#569CD6;">bool</span> IsRunning;
+
+    <span style="color:#569CD6;">public</span> Task JobTask =&gt; <span style="color:#569CD6;">this</span>.JobTaskController == <span style="color:#569CD6;">null</span> ? Task.CompletedTask : <span style="color:#569CD6;">this</span>.JobTaskController.Task;
+    <span style="color:#569CD6;">private</span> TaskCompletionSource JobTaskController { <span style="color:#569CD6;">get</span>; <span style="color:#569CD6;">set</span>; } = <span style="color:#569CD6;">new</span> TaskCompletionSource();
+
+    <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">async</span> <span style="color:#569CD6;">void</span> Run()
+    {
+        <span style="color:#569CD6;">if</span> (!<span style="color:#569CD6;">this</span>.IsRunning) {
+            <span style="color:#569CD6;">this</span>.IsRunning = <span style="color:#569CD6;">true</span>;
+            <span style="color:#569CD6;">this</span>.JobTaskController = <span style="color:#569CD6;">new</span> TaskCompletionSource();
+            <span style="color:#569CD6;">switch</span> (<span style="color:#569CD6;">this</span>.Type)
+            {
+                <span style="color:#569CD6;">case</span> JobType.Processor:
+                    <span style="color:#569CD6;">await</span> LongRunningTasks.RunLongProcessorTaskAsync(Seconds, Program.LogToConsole, Name);
+                    <span style="color:#569CD6;">break</span>;
+                    
+                <span style="color:#569CD6;">case</span> JobType.YieldingProcessor:
+                    <span style="color:#569CD6;">await</span> LongRunningTasks.RunYieldingLongProcessorTaskAsync(Seconds, Program.LogToConsole, Name);
+                    <span style="color:#569CD6;">break</span>;
+
+                <span style="color:#569CD6;">default</span>:
+                    <span style="color:#569CD6;">await</span> LongRunningTasks.RunLongIOTaskAsync(Seconds, Program.LogToConsole, Name);
+                    <span style="color:#569CD6;">break</span>;
+            }
+
+            <span style="color:#569CD6;">this</span>.JobTaskController.TrySetResult();
+            <span style="color:#569CD6;">this</span>.IsRunning = <span style="color:#569CD6;">false</span>;
+        }
+    }
+}
+</pre></div><h3 id="jobscheduler">JobScheduler</h3>
+<p><code>JobScheduler</code> is the method used to actually schedule the jobs.  It's separated from <code>Main</code> to demonstrate some key behaviours of async programming.</p>
+<ol>
+<li><code>Stopwatch</code> provides timing.</li>
+<li>Creates four different <em>IO</em> jobs.</li>
+<li>Starts the four jobs.</li>
+<li>Uses <code>Task.WhenAll</code> to wait on certain tasks before continuing.  Note the <code>Task</code>s are the <code>JobTask</code>s exposed by the <code>JobRunnner</code> instances.</li>
+</ol>
+<blockquote>
+<p><code>WhenAll</code> is one of several static <code>Task</code> methods.  <code>WhenAll</code> creates a single <code>Task</code> which <code>awaits</code> all the Tasks in the submitted array.  It's status will change to <em>Complete</em> when all the Tasks complete.  <code>WhenAny</code> is similar, but will be set to <em>Complete</em> when any are complete.  They could be named <em>AwaitAll</em> and <em>AwaitAny</em>.  <code>WaitAll</code> and <code>WaitAny</code> are blocking versions and similar to <code>Wait</code>.  Not sure about the reasons for the slightly confusing naming conversion - I'm sure there was one.</p>
+</blockquote>
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+<span style="color:#569CD6;">static</span> <span style="color:#569CD6;">async</span> Task JobScheduler()
+{
+    <span style="color:#569CD6;">var</span> watch = <span style="color:#569CD6;">new</span> Stopwatch();
+    watch.Start();
+    <span style="color:#569CD6;">var</span> name = <span style="color:#D69D85;">&quot;Job Scheduler&quot;</span>;
+    <span style="color:#569CD6;">var</span> quickjob = <span style="color:#569CD6;">new</span> JobRunner(<span style="color:#D69D85;">&quot;Quick Job&quot;</span>, <span style="color:#B5CEA8;">3</span>);
+    <span style="color:#569CD6;">var</span> veryslowjob = <span style="color:#569CD6;">new</span> JobRunner(<span style="color:#D69D85;">&quot;Very Slow Job&quot;</span>, <span style="color:#B5CEA8;">7</span>);
+    <span style="color:#569CD6;">var</span> slowjob = <span style="color:#569CD6;">new</span> JobRunner(<span style="color:#D69D85;">&quot;Slow Job&quot;</span>, <span style="color:#B5CEA8;">5</span>);
+    <span style="color:#569CD6;">var</span> veryquickjob = <span style="color:#569CD6;">new</span> JobRunner(<span style="color:#D69D85;">&quot;Very Quick Job&quot;</span>, <span style="color:#B5CEA8;">2</span>);
+    quickjob.Run();
+    veryslowjob.Run();
+    slowjob.Run();
+    veryquickjob.Run();
+    UILogger.LogToUI(LogToConsole, $<span style="color:#D69D85;">&quot;All Jobs Scheduled&quot;</span>, name);
+    <span style="color:#569CD6;">await</span> Task.WhenAll(<span style="color:#569CD6;">new</span> Task[] { quickjob.JobTask, veryquickjob.JobTask }); ;
+    UILogger.LogToUI(LogToConsole, $<span style="color:#D69D85;">&quot;Quick Jobs completed in {watch.ElapsedMilliseconds} milliseconds&quot;</span>, name);
+    <span style="color:#569CD6;">await</span> Task.WhenAll(<span style="color:#569CD6;">new</span> Task[] { slowjob.JobTask, quickjob.JobTask, veryquickjob.JobTask, veryslowjob.JobTask }); ;
+    UILogger.LogToUI(LogToConsole, $<span style="color:#D69D85;">&quot;All Jobs completed in {watch.ElapsedMilliseconds} milliseconds&quot;</span>, name);
+    watch.Stop();
+}
+</pre></div>
+<p>We now need to make some changes to <code>Main</code>:</p>
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+<span style="color:#569CD6;">static</span> <span style="color:#569CD6;">async</span> Task Main(<span style="color:#569CD6;">string</span>[] args)
+{
+    <span style="color:#569CD6;">var</span> watch = <span style="color:#569CD6;">new</span> Stopwatch();
+    watch.Start();
+    UILogger.LogThreadType(LogToConsole, <span style="color:#D69D85;">&quot;Main&quot;</span>);
+    <span style="color:#569CD6;">var</span> task = JobScheduler();
+    UILogger.LogToUI(LogToConsole, $<span style="color:#D69D85;">&quot;Job Scheduler yielded to Main&quot;</span>, <span style="color:#D69D85;">&quot;Main&quot;</span>);
+    <span style="color:#569CD6;">await</span> task;
+    UILogger.LogToUI(LogToConsole, $<span style="color:#D69D85;">&quot;final yield to Main&quot;</span>, <span style="color:#D69D85;">&quot;Main&quot;</span>);
+    watch.Stop();
+    UILogger.LogToUI(LogToConsole, $<span style="color:#D69D85;">&quot;Main ==&gt; Completed in { watch.ElapsedMilliseconds} milliseconds&quot;</span>, <span style="color:#D69D85;">&quot;Main&quot;</span>);
+
+    <span style="color:#57A64A;">//return Task.CompletedTask;</span>
+}
+
+</pre></div>
+<p>When you run this you get the output below.  The interesting bits to note are:</p>
+<ol>
+<li>Each of the jobs start, and then yield at their first await, passing control back to the caller - in this case <code>JobSchedular</code>.</li>
+<li><code>JobScheduler</code> runs to it's first <code>await</code> and yields back to <code>Main</code>.</li>
+<li>When the first two jobs finish their <code>JobTask</code> is set to complete and <code>JobScheduler</code> continues to the next <code>await</code>.</li>
+<li><code>JobScheduler</code> completes in a little over the time needed to run the longest Job.</li>
+</ol>
+<pre><code>[16:58:52][Main Thread:1][Main] &gt;  running on Application Thread
+[16:58:52][Main Thread:1][LongRunningTasks] &gt; Quick Job started
+[16:58:52][Main Thread:1][LongRunningTasks] &gt; Very Slow Job started
+[16:58:52][Main Thread:1][LongRunningTasks] &gt; Slow Job started
+[16:58:52][Main Thread:1][LongRunningTasks] &gt; Very Quick Job started
+[16:58:52][Main Thread:1][Job Scheduler] &gt; All Jobs Scheduled
+[16:58:52][Main Thread:1][Main] &gt; Job Scheduler yielded to Main
+[16:58:54][LongRunningTasks Thread:4][LongRunningTasks] &gt; Very Quick Job completed in 2022 millisecs
+[16:58:55][LongRunningTasks Thread:4][LongRunningTasks] &gt; Quick Job completed in 3073 millisecs
+[16:58:55][LongRunningTasks Thread:4][Job Scheduler] &gt; Quick Jobs completed in 3090 milliseconds
+[16:58:57][LongRunningTasks Thread:4][LongRunningTasks] &gt; Slow Job completed in 5003 millisecs
+[16:58:59][LongRunningTasks Thread:6][LongRunningTasks] &gt; Very Slow Job completed in 7014 millisecs
+[16:58:59][LongRunningTasks Thread:6][Job Scheduler] &gt; All Jobs completed in 7111 milliseconds
+[16:58:59][LongRunningTasks Thread:6][Main] &gt; final yield to Main
+[16:58:59][LongRunningTasks Thread:6][Main] &gt; Main ==&gt; Completed in 7262 milliseconds
+</code></pre>
+<p>Now change the job type over to <code>Processor</code> as below:</p>
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+<span style="color:#569CD6;">var</span> quickjob = <span style="color:#569CD6;">new</span> JobRunner(<span style="color:#D69D85;">&quot;Quick Job&quot;</span>, <span style="color:#B5CEA8;">3</span>, JobRunner.JobType.Processor);
+<span style="color:#569CD6;">var</span> veryslowjob = <span style="color:#569CD6;">new</span> JobRunner(<span style="color:#D69D85;">&quot;Very Slow Job&quot;</span>, <span style="color:#B5CEA8;">7</span>, JobRunner.JobType.Processor);
+<span style="color:#569CD6;">var</span> slowjob = <span style="color:#569CD6;">new</span> JobRunner(<span style="color:#D69D85;">&quot;Slow Job&quot;</span>, <span style="color:#B5CEA8;">5</span>, JobRunner.JobType.Processor);
+<span style="color:#569CD6;">var</span> veryquickjob = <span style="color:#569CD6;">new</span> JobRunner(<span style="color:#D69D85;">&quot;Very Quick Job&quot;</span>, <span style="color:#B5CEA8;">2</span>, JobRunner.JobType.Processor);
+</pre></div>
+<p>When you run this, you'll see everything is run sequentially on the <code>Main Thread</code>.  At first you think why?  We have more than one thread available and the Scheduler has demonstrated it's ability to switch tasks between threads. Why isn't it switching?</p>
+<p>The answer is very simple.  Once we initialise the JobRunnner object we run them in to the Scheduler one at a time.  As the code we run is sequential - calculating primes without breaks - we don't execute the next line of code (feeding in the second job) until the first job completes.</p>
+<pre><code>[17:59:48][Main Thread:1][Main] &gt;  running on Application Thread
+[17:59:48][Main Thread:1][LongRunningTasks] &gt; Quick Job started
+[17:59:53][Main Thread:1][LongRunningTasks] &gt; Quick Job completed in 4355 millisecs
+[17:59:53][Main Thread:1][LongRunningTasks] &gt; Very Slow Job started
+[17:59:59][Main Thread:1][LongRunningTasks] &gt; Very Slow Job completed in 6057 millisecs
+[17:59:59][Main Thread:1][LongRunningTasks] &gt; Slow Job started
+[18:00:03][Main Thread:1][LongRunningTasks] &gt; Slow Job completed in 4209 millisecs
+[18:00:03][Main Thread:1][LongRunningTasks] &gt; Very Quick Job started
+[18:00:05][Main Thread:1][LongRunningTasks] &gt; Very Quick Job completed in 1737 millisecs
+[18:00:05][Main Thread:1][Job Scheduler] &gt; All Jobs Scheduled
+[18:00:05][Main Thread:1][Job Scheduler] &gt; Quick Jobs completed in 16441 milliseconds
+[18:00:05][Main Thread:1][Job Scheduler] &gt; All Jobs completed in 16441 milliseconds
+[18:00:05][Main Thread:1][Main] &gt; Job Scheduler yielded to Main
+[18:00:05][Main Thread:1][Main] &gt; final yield to Main
+[18:00:05][Main Thread:1][Main] &gt; Main ==&gt; Completed in 16591 milliseconds
+</code></pre>
+<p>Now, change the jobs over to run <code>YieldingProcessor</code>.</p>
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+<span style="color:#569CD6;">var</span> quickjob = <span style="color:#569CD6;">new</span> JobRunner(<span style="color:#D69D85;">&quot;Quick Job&quot;</span>, <span style="color:#B5CEA8;">3</span>, JobRunner.JobType.YieldingProcessor);
+<span style="color:#569CD6;">var</span> veryslowjob = <span style="color:#569CD6;">new</span> JobRunner(<span style="color:#D69D85;">&quot;Very Slow Job&quot;</span>, <span style="color:#B5CEA8;">7</span>, JobRunner.JobType.YieldingProcessor);
+<span style="color:#569CD6;">var</span> slowjob = <span style="color:#569CD6;">new</span> JobRunner(<span style="color:#D69D85;">&quot;Slow Job&quot;</span>, <span style="color:#B5CEA8;">5</span>, JobRunner.JobType.YieldingProcessor);
+<span style="color:#569CD6;">var</span> veryquickjob = <span style="color:#569CD6;">new</span> JobRunner(<span style="color:#D69D85;">&quot;Very Quick Job&quot;</span>, <span style="color:#B5CEA8;">2</span>, JobRunner.JobType.YieldingProcessor);
+</pre></div>
+<p>The result is very different.  The time taken will depend on the number of processor cores and threads on your computer.  You can see all the jobs start quickly and completion in 11 seconds, with the slowest job taking 9 seconds.  The key difference here is that the processor long running job yields regularly.  This gives the Scheduler a chance to divy out out the work to other threads.</p>
+<p>Yielding Processor code</p>
+<pre><code>[17:50:12][Main Thread:1][Main] &gt;  running on Application Thread
+[17:50:12][Main Thread:1][LongRunningTasks] &gt; Quick Job started
+[17:50:12][Main Thread:1][LongRunningTasks] &gt; Very Slow Job started
+[17:50:12][Main Thread:1][LongRunningTasks] &gt; Slow Job started
+[17:50:12][Main Thread:1][LongRunningTasks] &gt; Very Quick Job started
+[17:50:12][Main Thread:1][Job Scheduler] &gt; All Jobs Scheduled
+[17:50:12][Main Thread:1][Main] &gt; Job Scheduler yielded to Main
+[17:50:16][LongRunningTasks Thread:7][LongRunningTasks] &gt; Very Quick Job completed in 4131 millisecs
+[17:50:18][LongRunningTasks Thread:7][LongRunningTasks] &gt; Quick Job completed in 6063 millisecs
+[17:50:18][LongRunningTasks Thread:7][Job Scheduler] &gt; Quick Jobs completed in 6158 milliseconds
+[17:50:21][LongRunningTasks Thread:6][LongRunningTasks] &gt; Slow Job completed in 9240 millisecs
+[17:50:23][LongRunningTasks Thread:9][LongRunningTasks] &gt; Very Slow Job completed in 11313 millisecs
+[17:50:23][LongRunningTasks Thread:9][Job Scheduler] &gt; All Jobs completed in 11411 milliseconds
+[17:50:23][LongRunningTasks Thread:9][Main] &gt; final yield to Main
+[17:50:23][LongRunningTasks Thread:9][Main] &gt; Main ==&gt; Completed in 11534 milliseconds
+</code></pre>
+<h2 id="conclusions-and-wrap-up">Conclusions and Wrap Up.</h2>
+<p>Hopefully helpful/informative?  Some of the key points that I've learned in my voyage down the async road, and are demonstrated here are:</p>
+<ol>
+<li><strong>Async and Await All The Way</strong>. Don't mix synchronous and asynchronous methods.  Start at the bottom - the data or process interface - and code async all the way up though the data and business/logic layers to the UI.</li>
+<li>You can't run asynchronously if you don't yield. You've got to give the task schedulers a chance!  Wrapping a few synchronous routines in <code>Task</code> is talking-the-talk not walking-the-walk.</li>
+<li>Fire and forget <code>void</code> return methods need to yield to pass control back to the caller.  They are no different to Task returning methods in their behaviour. They just don't return a Task for you to await or monitor progress.</li>
+<li>If you're writing processor intensive activities - modelling, big numbercrunching,..  make sure to make them async with plenty of yielding at appropriate places.</li>
+<li>ONLY use <code>Task.Run</code> in the UI, right up at the top of the call stack.  NEVER EVER use it in libraries.  And don't use it at all unless you have a solid reason.</li>
+<li>Use logging and breakpoints on <code>awaits</code> to see when you hit them.  How quickly your code falls back to the outside <code>await</code> is a  very good indicator of responsiveness.  Take out your outside <code>await</code> and see how quickly you drop out the bottom!</li>
+<li>You may have noticed no <code>ContinueWith</code>.  I don't often use it.  Normally a simple <code>await</code> followed by continuation code achieves the same result.  I've read commentary that it's heavier on processing, because it creates a new task whereas await/continuation reuses the same <code>Task</code>.  I haven't delved deeply enough into the code yet to check.</li>
+<li>Always use <em>Async</em> and <em>Await</em>, don't get fancy.</li>
+<li>If your library provides both async and sync calls, code them separately.  &quot;Code it once&quot; best practice doesn't apply here.  NEVER call one from the other if you don't want to shoot yourself in the foot at some point!</li>
+</ol>
+</div></div></div></body></html>
+
+
+
+
+

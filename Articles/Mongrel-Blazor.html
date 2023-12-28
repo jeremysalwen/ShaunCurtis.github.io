@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<base href="/">
+
+	
+
+	
+
+	
+	<link href="/resources/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+	<link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+
+	
+	<link href="/resources/css/sb-admin-2.css" rel="stylesheet" type="text/css">
+	<link href="/resources/css/site.css" rel="stylesheet" type="text/css">
+
+	
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/highlight.css">
+	<link rel="stylesheet" href="/resources/css/article.css" type="text/css">
+
+	
+	<link rel="icon" href="/assets/favicon.png">
+
+	<title>Mongrel Blazor</title>
+        <meta property="author" content="Shaun Curtis" />
+        <meta property="description" content="This article explains why Blazor&#x27;s InteractiveAuto and Per Page/Component mode is a rocky road to choose for your first Blazor project." />
+    <meta property="og:site_name" content="Cold Elm Coders" />
+        <meta property="og:site" content="https://shauncurtis.github.io/" />
+        <meta property="og:title" content="Mongrel Blazor" />
+        <meta property="og:description" content="This article explains why Blazor&#x27;s InteractiveAuto and Per Page/Component mode is a rocky road to choose for your first Blazor project." /></head>
+<body><header class="navbar bg-dark p-2 text-large text-light"><section class="navbar-section  text-light"><a href="/" class="navbar-brand mr-2 text-large text-light p-2">Cold Elm Coders</a>
+			<a href="/Posts" class="btn btn-link text-light">Posts</a>
+			<a href="/Rants" class="btn btn-link text-light">Rants</a>
+			<a href="/Articles" class="btn btn-link text-light">Articles</a>
+			<a href="/Stories" class="btn btn-link text-light">Stories</a>
+			<a href="/about.html" class="btn btn-link text-light">About</a></section></header>
+
+	<div class="container-fluid"><div class="row"><div class="col-12 col-sm-3 col-lg-2 bg-light pt-2"><div class="article-info p-2"><div class="mb-2">Published: 28-Dec-2023</div>
+                <div class="mb-2">Updated: 28-Dec-2023</div>
+                <div class="mb-2">Author: Shaun Curtis</div></div>
+    <h4 class="p-2">Table of Contents</h4>
+<ul class="TOC" >
+<li class="TOC-item TOC-item-0" >
+<a class="TOC-link" href="#">Top</a>
+<ul class="TOC TOC-0" >
+<li class="TOC-item TOC-item-1" >
+<ul class="TOC TOC-1" >
+<li class="TOC-item TOC-item-2" >
+<a class="TOC-link" href="#create-a-solution">Create a Solution</a>
+</li>
+<li class="TOC-item TOC-item-2" >
+<a class="TOC-link" href="#the-pagescomponents">The Pages/Components</a>
+</li>
+<li class="TOC-item TOC-item-2" >
+<a class="TOC-link" href="#behaviours">Behaviours</a>
+</li>
+<li class="TOC-item TOC-item-2" >
+<a class="TOC-link" href="#this-isnt-a-single-page-application">This isn't a Single Page Application</a>
+</li>
+<li class="TOC-item TOC-item-2" >
+<a class="TOC-link" href="#more-to-come">More to Come</a>
+</li>
+<li class="TOC-item TOC-item-2" >
+<a class="TOC-link" href="#my-personal-initial-conclusions-and-observations">My Personal Initial Conclusions and Observations</a>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+			
+			<div class="col-12 col-sm-9 col-lg-10 p-2"><div class="pt-2 pb-2 border-bottom mb-4 text-primary"><h1>Mongrel Blazor</h1>
+            <div><small>This article explains why Blazor&#x27;s InteractiveAuto and Per Page/Component mode is a rocky road to choose for your first Blazor project.</small></div></div>
+    <p>Everyone's favourite deployment mode for Blazor 8 seems to be <em>InteractiveAuto</em> and <em>Per Page/Component</em>.  The full works, freedom to choose.</p>
+<p>In this article I'll take a look at how this template option works, discuss  design and deployment issues and explain what I believe are the only two use cases for choosing this <em>modus operandi</em>.</p>
+<p>A word on acronyms and terminology.  I'll talk about three modes of rendering:</p>
+<ol>
+<li><strong>SSSR</strong> - classic Static Server Side Rendering.</li>
+<li><strong>ASSR</strong> - Active Server Side Rendering.  Blazor Server.</li>
+<li><strong>CSR</strong> - Client Side Rendering.  Blazor WASM/Web Assembly.</li>
+</ol>
+<p>I'll use these throughout the rest of this article.</p>
+<p>The Repo for this article is <a href="https://github.com/ShaunCurtis/Blazor.ExploreRendering">Blazr.ExploreRendering</a>.</p>
+<h2 id="create-a-solution">Create a Solution</h2>
+<p>Create a solution using the <em>Blazor Web Project</em> with the <em>InteractiveAuto</em> and <em>Per Page/Component</em> options.</p>
+<p>You get two projects:</p>
+<ol>
+<li>The Web Server/Interactive Server project.</li>
+<li>The Client project containing the Web Assembly project.</li>
+</ol>
+<p>Both of these are deployment projects: they create a deployable solution.</p>
+<h3 id="adding-the-renderstate-to-the-solution">Adding the RenderState to the Solution</h3>
+<p>The <em>RenderState</em> Nuget package provides some simple infrastructure to log and display the render mode of components.  See <a href="https://github.com/ShaunCurtis/Blazr.RenderState">Blazr.RenderState Repo on GitHub</a></p>
+<p>Add the following Nuget packages to the projects:</p>
+<p>Web Server :</p>
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+   <span style="color:#808080;">&lt;</span><span style="color:#E6E6E6;">PackageReference</span> <span style="color:#92CAF4;">Include</span><span style="color:#808080;">=</span><span style="color:#569CD6;">&quot;</span><span style="color:#569CD6;">Blazr.RenderState.Server</span><span style="color:#569CD6;">&quot;</span> <span style="color:#92CAF4;">Version</span><span style="color:#808080;">=</span><span style="color:#569CD6;">&quot;</span><span style="color:#569CD6;">0.9.1</span><span style="color:#569CD6;">&quot;</span> <span style="color:#808080;">/&gt;</span>
+</pre></div>
+<p>Client :</p>
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+   <span style="color:#808080;">&lt;</span><span style="color:#E6E6E6;">PackageReference</span> <span style="color:#92CAF4;">Include</span><span style="color:#808080;">=</span><span style="color:#569CD6;">&quot;</span><span style="color:#569CD6;">Blazr.RenderState.WASM</span><span style="color:#569CD6;">&quot;</span> <span style="color:#92CAF4;">Version</span><span style="color:#808080;">=</span><span style="color:#569CD6;">&quot;</span><span style="color:#569CD6;">0.9.1</span><span style="color:#569CD6;">&quot;</span> <span style="color:#808080;">/&gt;</span>
+</pre></div>
+<p>Add the following services to the Server <code>Program</code>:</p>
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+<span style="color:#569CD6;">using</span> Blazr.RenderState.Server;
+<span style="color:#57A64A;">//...</span>
+builder.AddBlazrRenderStateServerServices();
+</pre></div>
+<p>And the following services to the Client <code>Program</code>:</p>
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+<span style="color:#569CD6;">using</span> Blazr.RenderState.WASM;
+<span style="color:#57A64A;">//...</span>
+builder.AddBlazrRenderStateWASMServices();
+</pre></div>
+<p>And add the following <code>using</code> to both project's <code>_Imports.razor</code>.</p>
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+@<span style="color:#569CD6;">using</span> Blazr.RenderState
+</pre></div><h2 id="the-pagescomponents">The Pages/Components</h2>
+<p>Note most of the components are in the Server project.  Only  <code>Counter</code> is in Client Project.</p>
+<p>Add the following component to <code>Home</code>, <code>Counter</code> and <code>Weather</code> below the <code>Page Title</code> :</p>
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+@page <span style="color:#D69D85;">&quot;/&quot;</span>
+&lt;PageTitle&gt;Home&lt;/PageTitle&gt;
+&lt;RenderStateViewer Parent=<span style="color:#D69D85;">&quot;this&quot;</span> /&gt;
+<span style="color:#57A64A;">//...</span>
+</pre></div>
+<p>Add it to <code>MainLayout</code>:</p>
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+    &lt;main&gt;
+        &lt;div <span style="color:#569CD6;">class</span>=<span style="color:#D69D85;">&quot;top-row px-4&quot;</span>&gt;
+            &lt;RenderStateViewer Parent=<span style="color:#D69D85;">&quot;this&quot;</span> /&gt;
+            &lt;a href=<span style="color:#D69D85;">&quot;https://learn.microsoft.com/aspnet/core/&quot;</span> target=<span style="color:#D69D85;">&quot;_blank&quot;</span>&gt;About&lt;/a&gt;
+        &lt;/div&gt;
+
+        &lt;article <span style="color:#569CD6;">class</span>=<span style="color:#D69D85;">&quot;content px-4&quot;</span>&gt;
+            @Body
+        &lt;/article&gt;
+</pre></div>
+<p>And to <code>NavMenu</code> along with some extra navigation links:</p>
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+&lt;div <span style="color:#569CD6;">class</span>=<span style="color:#D69D85;">&quot;top-row ps-3 navbar navbar-dark&quot;</span>&gt;
+    &lt;div <span style="color:#569CD6;">class</span>=<span style="color:#D69D85;">&quot;container-fluid&quot;</span>&gt;
+        &lt;a <span style="color:#569CD6;">class</span>=<span style="color:#D69D85;">&quot;navbar-brand&quot;</span> href=<span style="color:#D69D85;">&quot;&quot;</span>&gt;Blazor.ExploreRendering&lt;/a&gt;
+    &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;input type=<span style="color:#D69D85;">&quot;checkbox&quot;</span> title=<span style="color:#D69D85;">&quot;Navigation menu&quot;</span> <span style="color:#569CD6;">class</span>=<span style="color:#D69D85;">&quot;navbar-toggler&quot;</span> /&gt;
+
+&lt;div <span style="color:#569CD6;">class</span>=<span style="color:#D69D85;">&quot;nav-scrollable&quot;</span> onclick=<span style="color:#D69D85;">&quot;document.querySelector(&#39;.navbar-toggler&#39;).click()&quot;</span>&gt;
+    &lt;nav <span style="color:#569CD6;">class</span>=<span style="color:#D69D85;">&quot;flex-column&quot;</span>&gt;
+        &lt;div <span style="color:#569CD6;">class</span>=<span style="color:#D69D85;">&quot;nav-item px-3&quot;</span>&gt;
+            &lt;NavLink <span style="color:#569CD6;">class</span>=<span style="color:#D69D85;">&quot;nav-link&quot;</span> href=<span style="color:#D69D85;">&quot;&quot;</span> Match=<span style="color:#D69D85;">&quot;NavLinkMatch.All&quot;</span>&gt;
+                &lt;span <span style="color:#569CD6;">class</span>=<span style="color:#D69D85;">&quot;bi bi-house-door-fill-nav-menu&quot;</span> aria-hidden=<span style="color:#D69D85;">&quot;true&quot;</span>&gt;&lt;/span&gt; Home
+            &lt;/NavLink&gt;
+        &lt;/div&gt;
+
+        &lt;div <span style="color:#569CD6;">class</span>=<span style="color:#D69D85;">&quot;nav-item px-3&quot;</span>&gt;
+            &lt;NavLink <span style="color:#569CD6;">class</span>=<span style="color:#D69D85;">&quot;nav-link&quot;</span> href=<span style="color:#D69D85;">&quot;counter&quot;</span>&gt;
+                &lt;span <span style="color:#569CD6;">class</span>=<span style="color:#D69D85;">&quot;bi bi-plus-square-fill-nav-menu&quot;</span> aria-hidden=<span style="color:#D69D85;">&quot;true&quot;</span>&gt;&lt;/span&gt; Counter
+            &lt;/NavLink&gt;
+        &lt;/div&gt;
+
+        &lt;div <span style="color:#569CD6;">class</span>=<span style="color:#D69D85;">&quot;nav-item px-3&quot;</span>&gt;
+            &lt;NavLink <span style="color:#569CD6;">class</span>=<span style="color:#D69D85;">&quot;nav-link&quot;</span> href=<span style="color:#D69D85;">&quot;sssr&quot;</span>&gt;
+                &lt;span <span style="color:#569CD6;">class</span>=<span style="color:#D69D85;">&quot;bi bi-plus-square-fill-nav-menu&quot;</span> aria-hidden=<span style="color:#D69D85;">&quot;true&quot;</span>&gt;&lt;/span&gt; SSSR
+            &lt;/NavLink&gt;
+        &lt;/div&gt;
+
+        &lt;div <span style="color:#569CD6;">class</span>=<span style="color:#D69D85;">&quot;nav-item px-3&quot;</span>&gt;
+            &lt;NavLink <span style="color:#569CD6;">class</span>=<span style="color:#D69D85;">&quot;nav-link&quot;</span> href=<span style="color:#D69D85;">&quot;assr&quot;</span>&gt;
+                &lt;span <span style="color:#569CD6;">class</span>=<span style="color:#D69D85;">&quot;bi bi-plus-square-fill-nav-menu&quot;</span> aria-hidden=<span style="color:#D69D85;">&quot;true&quot;</span>&gt;&lt;/span&gt; ASSR
+            &lt;/NavLink&gt;
+        &lt;/div&gt;
+
+        &lt;div <span style="color:#569CD6;">class</span>=<span style="color:#D69D85;">&quot;nav-item px-3&quot;</span>&gt;
+            &lt;NavLink <span style="color:#569CD6;">class</span>=<span style="color:#D69D85;">&quot;nav-link&quot;</span> href=<span style="color:#D69D85;">&quot;csr&quot;</span>&gt;
+                &lt;span <span style="color:#569CD6;">class</span>=<span style="color:#D69D85;">&quot;bi bi-plus-square-fill-nav-menu&quot;</span> aria-hidden=<span style="color:#D69D85;">&quot;true&quot;</span>&gt;&lt;/span&gt; CSR
+            &lt;/NavLink&gt;
+        &lt;/div&gt;
+
+        &lt;div <span style="color:#569CD6;">class</span>=<span style="color:#D69D85;">&quot;nav-item px-3&quot;</span>&gt;
+            &lt;NavLink <span style="color:#569CD6;">class</span>=<span style="color:#D69D85;">&quot;nav-link&quot;</span> href=<span style="color:#D69D85;">&quot;mongrel&quot;</span>&gt;
+                &lt;span <span style="color:#569CD6;">class</span>=<span style="color:#D69D85;">&quot;bi bi-plus-square-fill-nav-menu&quot;</span> aria-hidden=<span style="color:#D69D85;">&quot;true&quot;</span>&gt;&lt;/span&gt; Mongrel
+            &lt;/NavLink&gt;
+        &lt;/div&gt;
+
+        &lt;div <span style="color:#569CD6;">class</span>=<span style="color:#D69D85;">&quot;nav-item px-3&quot;</span>&gt;
+            &lt;NavLink <span style="color:#569CD6;">class</span>=<span style="color:#D69D85;">&quot;nav-link&quot;</span> href=<span style="color:#D69D85;">&quot;weather&quot;</span>&gt;
+                &lt;span <span style="color:#569CD6;">class</span>=<span style="color:#D69D85;">&quot;bi bi-list-nested-nav-menu&quot;</span> aria-hidden=<span style="color:#D69D85;">&quot;true&quot;</span>&gt;&lt;/span&gt; Weather
+            &lt;/NavLink&gt;
+        &lt;/div&gt;
+        &lt;RenderStateViewer Parent=<span style="color:#D69D85;">&quot;this&quot;</span> /&gt;
+    &lt;/nav&gt;
+&lt;/div&gt;
+</pre></div>
+<p>Create some new pages to the <em>Server</em> project:</p>
+<p><em>ASSR.razor</em></p>
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+@page <span style="color:#D69D85;">&quot;/assr&quot;</span>
+@rendermode InteractiveServer
+
+&lt;PageTitle&gt;Home&lt;/PageTitle&gt;
+
+&lt;RenderStateViewer Parent=<span style="color:#D69D85;">&quot;this&quot;</span> /&gt;
+
+&lt;h1&gt;Hello, world!&lt;/h1&gt;
+
+Welcome to your <span style="color:#569CD6;">new</span> app.
+</pre></div>
+<p><em>SSSR.razor</em></p>
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+@page <span style="color:#D69D85;">&quot;/sssr&quot;</span>
+
+&lt;PageTitle&gt;Home&lt;/PageTitle&gt;
+
+&lt;RenderStateViewer Parent=<span style="color:#D69D85;">&quot;this&quot;</span> /&gt;
+
+&lt;h1&gt;Hello, world!&lt;/h1&gt;
+
+Welcome to your <span style="color:#569CD6;">new</span> app.
+</pre></div>
+<p><em>CSR.razor</em></p>
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+@page <span style="color:#D69D85;">&quot;/CSR&quot;</span>
+@rendermode InteractiveWebAssembly
+
+&lt;PageTitle&gt;CSR&lt;/PageTitle&gt;
+
+&lt;RenderStateViewer Parent=<span style="color:#D69D85;">&quot;this&quot;</span> /&gt;
+
+&lt;h1&gt;Hello, world!&lt;/h1&gt;
+
+Welcome to your <span style="color:#569CD6;">new</span> app.
+</pre></div>
+<p><em>Mongrel.razor</em></p>
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+@page <span style="color:#D69D85;">&quot;/mongrel&quot;</span>
+
+&lt;PageTitle&gt;Home&lt;/PageTitle&gt;
+
+&lt;RenderStateViewer Parent=<span style="color:#D69D85;">&quot;this&quot;</span> /&gt;
+
+&lt;RenderStateViewer @rendermode=<span style="color:#D69D85;">&quot;InteractiveAuto&quot;</span> Parent=<span style="color:#D69D85;">&quot;this&quot;</span> /&gt;
+
+&lt;RenderStateViewer @rendermode=<span style="color:#D69D85;">&quot;InteractiveServer&quot;</span> Parent=<span style="color:#D69D85;">&quot;this&quot;</span> /&gt;
+
+&lt;RenderStateViewer @rendermode=<span style="color:#D69D85;">&quot;InteractiveWebAssembly&quot;</span> Parent=<span style="color:#D69D85;">&quot;this&quot;</span> /&gt;
+
+&lt;h1&gt;Hello, world!&lt;/h1&gt;
+
+Welcome to your <span style="color:#569CD6;">new</span> app.
+</pre></div><h3 id="run-the-solution">Run the Solution</h3>
+<p>You see this:</p>
+<p><img src="./assets/Mongrel-Blazor/Home-ServerRendered.png" alt="Home Server Rendered" /></p>
+<p><code>RenderStateViewer</code> displays three pieces of information:</p>
+<pre><code class="language-text">Parent Compoment Name =&gt; Unique ID of the Scoped Session Service =&gt; Render Mode of the Component
+</code></pre>
+<h2 id="behaviours">Behaviours</h2>
+<p>Switch between components and noting the render modes and the Id's of the Scoped conponent.  You will find various combinations that confuse.  I'll look at a few and explain.</p>
+<h3 id="everything-is-sssr-on-the-home-page">Everything is SSSR on the Home Page</h3>
+<p>Review <code>App.razor</code>.  The two top level components have no render mode set: default is therefore SSSR.  <code>Routes</code> is rendered SSSR, so <code>Router</code> and  <code>Layout</code> are also statically rendered.</p>
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+&lt;!DOCTYPE html&gt;
+&lt;html lang=<span style="color:#D69D85;">&quot;en&quot;</span>&gt;
+
+&lt;head&gt;
+<span style="color:#57A64A;">//..</span>
+    &lt;HeadOutlet /&gt;
+&lt;/head&gt;
+
+&lt;body&gt;
+    &lt;Routes /&gt;
+    &lt;script src=<span style="color:#D69D85;">&quot;_framework/blazor.web.js&quot;</span>&gt;&lt;/script&gt;
+&lt;/body&gt;
+
+&lt;/html&gt;
+</pre></div><h3 id="everything-causes-a-full-page-refresh">Everything causes a full page refresh</h3>
+<p><code>App</code>, <code>Route</code>, <code>Router</code>, <code>MainLayout</code> are all SSSR as described above.  The router runs on the server so it can make the correct render mode decision.</p>
+<p>It's interesting to note that although you make a trip to the server to route between two client side pages, CSR =&gt; Counter for example, the client side Blazor session is maintained.  The same is the case with the server Hub sessions.</p>
+<h3 id="different-components-have-different-scoped-session-instances">Different Components have different Scoped Session instances</h3>
+<p>Go to <em>Mongrel</em> and note the different Service Id's.</p>
+<ul>
+<li><p><em>Pre-Rendered</em> SSSR components all have the same ID.  This is the scoped service created for the lifetime of the Http Request.  Every page request creates a new <em>Scoped</em> container and <em>Scoped</em> services.</p>
+</li>
+<li><p>The SSR service is alive in the Blazor Hub session running on the server.  It's lifetime is scoped to the SPA session.  All SSSR components share this service instance.</p>
+</li>
+<li><p>The CSR service is alive in the Blazor SPA session running in the Web Assembly container on the Browser.  It's a different instance from the SSR instance.</p>
+</li>
+<li><p>The Auto component has rendered in CSR mode, so has the CST service instance.</p>
+</li>
+</ul>
+<p>Consider how this complicates application design.  How does a ASSR render component and a CSR component use the same notification service?  How do they share data?</p>
+<p>SSSR and ASSR share the same <em>Singleton</em> service, but ASSR and CSR have different instances.  They are totally separate applications.</p>
+<p>Blazor does provide a mechanism for passing pre-render data to active components, but doesn't help much.</p>
+<h3 id="interactiveauto-pages-dont-always-render-in-the-same-mode">InteractiveAuto Pages don't always render in the same mode</h3>
+<p>Go to <em>Home</em> and then to <em>Counter</em>.  <em>Counter</em> renders in CSR mode with the CSR service instance.</p>
+<p>Now go to <em>ASSR</em> and then back to <em>Counter</em>.  It's now rendered in ASSR mode, and uses the Blazor Hub service instance.</p>
+<p>Consider saving the state of the counter in a service.  You get different states depending on the render mode.</p>
+<h3 id="i-cant-set-the-rendermode-on-layouts">I can't set the RenderMode on Layouts</h3>
+<p><code>Layouts</code> would be a great place to set the render mode for a group of pages.</p>
+<p>Set the Render mode on the <code>MainLayout</code> or <code>RouteView</code>.</p>
+<p>You will get the following rather confusing runtime exception:</p>
+<p><img src="./assets/Mongrel-Blazor/RenderFragment-exception.png" alt="Render Fragment Exception" /></p>
+<p>You either set it at the top in <code>App</code> or individually on the pages or lower level components.</p>
+<p>But why not?</p>
+<p>You can't set the rendermode on a component that defines one or more <code>RenderFragment</code> Parameters.  <em>Layouts</em> define <code>Body</code>.  In most cases it's <code>ChildContent</code>.</p>
+<p>Consider this simple case:</p>
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+\\no render mode <span style="color:#569CD6;">set</span> so inherits SSSR
+
+&lt;MyDiv @rendermode=<span style="color:#D69D85;">&quot;InteractiveServer&quot;</span>&gt;
+    @_helloWorld
+&lt;/MyDiv&gt;
+@code
+{
+    <span style="color:#569CD6;">private</span> <span style="color:#569CD6;">string</span> _helloWorld = <span style="color:#D69D85;">&quot;Hello Blazor&quot;</span>;
+}
+</pre></div>
+<p><code>@_helloWorld</code> is a render fragment owned by the parent and passed to <code>MyDiv</code> as the <code>ChildContent</code> Parameter.  The parent is statically rendered so it tries to serialize the data it sends to the child component.   A <code>RenderFragment</code> is a  <code>delegate</code> which can't be serialized, so Bang!</p>
+<h2 id="this-isnt-a-single-page-application">This isn't a Single Page Application</h2>
+<p>Blazor was conceived as a Single Page Application, running either in a Server Hub environment or in a Web Assembly environment in the Browser.  An intial Http request trip to the server to get the page, a few side trips to get resources.  Run some JS and the application is up and running in the browser: no more Http requests.</p>
+<p>This hybrid isn't that.  The Router runs on the server.  Every page request is a Http request to the server.  The layout is statically rendered.</p>
+<p>Basically a static server rendered application with a JS front end.  I hesitate to say this but: What Microsoft have been trying to deliver for it's Asp.Net, Razor, MVC customer base for years!</p>
+<p>If you want old Blazor [seems quite a strange statement to make for a new technology], choose one of the pure modes with <code>Global</code> interactivity.</p>
+<h2 id="more-to-come">More to Come</h2>
+<p>I'll add some more detail as I discover new wrinkles.</p>
+<h2 id="my-personal-initial-conclusions-and-observations">My Personal Initial Conclusions and Observations</h2>
+<blockquote>
+<p>Note these are personal views and opinions.</p>
+</blockquote>
+<p>My gut feeling is that using <strong>Per Page/Component</strong> mode isn't hybrid, it's a mongrel.</p>
+<p>Most who came to old Blazor struggled with the component concept and were confused with the lifecycle and events.  Throwing in render modes adds another level of complexity. I can see so many scenarios where components are talking to the wrong instances or types of services.  Throw <code>Auto</code> to the mix and the complexity spirals [out of control].  Think of the exotic concoctions and black holes people will come up!</p>
+<p>My recommendation is go with either <em>Interactive Server</em> or <em>Interactive WebAssembly</em> and <em>Global</em> application.</p>
+<p>I see only two use cases for the <code>InteractiveAuto</code> and <code>Per page/component</code> deployment:</p>
+<ol>
+<li><p>You're coming from a classic server side rendered application that has been migrated to Net8.0 and you want a phased migration to Blazor.</p>
+</li>
+<li><p>You want freedom to choose but don't have the knowledge to know how bad that decision will turn out.</p>
+</li>
+</ol>
+<p>Hopefully I've disuaded you from choosing the second option.  The design will be complex. You will spend a lot of time debugging.  You will find yourself in some very deep dark holes.</p>
+</div></div></div></body></html>
+
+
+
+
+
