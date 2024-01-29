@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<base href="/">
+
+	
+
+	
+
+	
+	<link href="/resources/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+	<link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+
+	
+	<link href="/resources/css/sb-admin-2.css" rel="stylesheet" type="text/css">
+	<link href="/resources/css/site.css" rel="stylesheet" type="text/css">
+
+	
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/highlight.css">
+	<link rel="stylesheet" href="/resources/css/article.css" type="text/css">
+
+	
+	<link rel="icon" href="/assets/favicon.png">
+
+	<title>Async/Await</title>
+        <meta property="author" content="Shaun Curtis" />
+        <meta property="description" content="What Async/Await really does." />
+    <meta property="og:site_name" content="Cold Elm Coders" />
+        <meta property="og:site" content="https://shauncurtis.github.io/" />
+        <meta property="og:title" content="Async/Await" />
+        <meta property="og:description" content="What Async/Await really does." /></head>
+<body><header class="navbar bg-dark p-2 text-large text-light"><section class="navbar-section  text-light"><a href="/" class="navbar-brand mr-2 text-large text-light p-2">Cold Elm Coders</a>
+			<a href="/Posts/index.html" class="btn btn-link text-light">Posts</a>
+			<a href="/Rants/index.html" class="btn btn-link text-light">Rants</a>
+			<a href="/Articles/index.html" class="btn btn-link text-light">Articles</a>
+			<a href="/Stories/index.html" class="btn btn-link text-light">Stories</a>
+			<a href="/about.html" class="btn btn-link text-light">About</a></section></header>
+
+	<div class="container-fluid"><div class="row"><div class="col-12 col-sm-3 col-lg-2 bg-light pt-2"><div class="article-info p-2"><div class="mb-2">Published: 29-Jan-2023</div>
+                <div class="mb-2">Updated: 29-Jan-2023</div>
+                <div class="mb-2">Author: Shaun Curtis</div></div>
+    <h4 class="p-2">Table of Contents</h4>
+<ul class="TOC" >
+<li class="TOC-item TOC-item-0" >
+<a class="TOC-link" href="#">Top</a>
+<ul class="TOC TOC-0" >
+<li class="TOC-item TOC-item-1" >
+<ul class="TOC TOC-1" >
+<li class="TOC-item TOC-item-2" >
+<a class="TOC-link" href="#awaitables-and-awaiters">Awaitables and Awaiters</a>
+</li>
+<li class="TOC-item TOC-item-2" >
+<a class="TOC-link" href="#tasks">Tasks</a>
+</li>
+<li class="TOC-item TOC-item-2" >
+<a class="TOC-link" href="#asyncawait">Async/Await</a>
+</li>
+<li class="TOC-item TOC-item-2" >
+<a class="TOC-link" href="#takaways">Takaways</a>
+</li>
+<li class="TOC-item TOC-item-2" >
+<a class="TOC-link" href="#references">References</a>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+			
+			<div class="col-12 col-sm-9 col-lg-10 p-2"><div class="pt-2 pb-2 border-bottom mb-4 text-primary"><h1>Async/Await</h1>
+            <div><small>What Async/Await really does.</small></div></div>
+    <p>Async/Await is the fundamental building material of asynchronous operations in modern C#.</p>
+<p>On the plus side, it abstracts the programmer from the nitty gritty of the <em>Task Processing Library</em>.  On the downside is deception, what you see is not what you get below the surface.</p>
+<p>To quote Stephen Tomb, one of the authors of Async/Await:</p>
+<blockquote>
+<p>[It's] both viable and extremely common to utilize the functionality without understanding exactly what�s going on under the covers. You start with a synchronous method ...  sprinkle a few keywords, change a few method names, and you end up with [an] asynchronous method instead.</p>
+</blockquote>
+<p>There are several very good articles available on the subject, I've included references to those that were the source material for this article.  Unfortunately most assume a level of knowledge mortal programmers don't have.  In this short article I'll attempt to bring that required knowledge down to the level that most will understand.</p>
+<p><strong>Async</strong></p>
+<p>Async is a modifier.  It labels a method as containing one or more awaitable async calls.</p>
+<p><strong>Await</strong></p>
+<p>Defines an async call that should be awaited.  Any code following the call should only execute once the awaitable has completed.  Only methods implementing the <em>awaitable</em> pattern can be awaited.  <code>Task</code> is the most common awaitable, but there are others.</p>
+<p><strong>Yielding</strong></p>
+<p>Yielding occurs when the background operation behind an async call shifts to a different thread and frees the current context to continue processing it's queue. The process returns a reference to an awaitable object that the background operation updates when complete.</p>
+<p><strong>Continuation</strong></p>
+<p>A continuation is the block of code following an await statement.  It encapsulates the code to run after the await completes.  It may or may not consume the result of the await.</p>
+<h2 id="awaitables-and-awaiters">Awaitables and Awaiters</h2>
+<p>You can only <code>await</code> a method that implements the <em>awaitable</em> pattern: a <code>GetAwaiter</code> method that returns an object implementing the <em>awaiter</em> pattern.</p>
+<p>The <em>Awaiter</em> pattern.</p>
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+<span style="color:#569CD6;">public</span> <span style="color:#569CD6;">struct</span> MyAwaiter : INotifyCompletion
+{
+    <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">bool</span> IsCompleted;
+    <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">void</span> OnCompleted(Action continuation);
+    <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">void</span> GetResult();
+}
+</pre></div>
+<p>You can't await an <code>Int32</code>.  Or can you?</p>
+<p>Can:</p>
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+  <span style="color:#569CD6;">await</span> Task.Delay(<span style="color:#B5CEA8;">500</span>);
+</pre></div>
+<p>be coded as:</p>
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+   <span style="color:#569CD6;">await</span> <span style="color:#B5CEA8;">500</span>;
+</pre></div>
+<p>It's not particularly obvious what it does out of context, but it's certainly succinct.</p>
+<p>It turns out you can.  You just need to implement the awaitable pattern on <code>Int32</code>.</p>
+<p>It's this simple.</p>
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+<span style="color:#569CD6;">public</span> <span style="color:#569CD6;">static</span> TaskAwaiter GetAwaiter(<span style="color:#569CD6;">this</span> Int32 milliseconds)
+{
+    <span style="color:#569CD6;">return</span> Task.Delay(milliseconds).GetAwaiter();
+}
+</pre></div>
+<p>Add <code>GetAwaiter</code> as an extension method, call <code>Task.Delay(milliseconds)</code> and return it's awaiter.</p>
+<p>We'll look into <em>awaiters</em> and <em>awaitable</em> in more detail in the <em>Awaitable</em> article.</p>
+<h2 id="tasks">Tasks</h2>
+<p>Tasks are another fundimental <em>TPL</em> building block.</p>
+<p><code>Task</code>, in all it's guises, is an implementation of an awaitable.  It returns a <code>TaskAwaiter</code> that implements the <em>awaiter</em> pattern.</p>
+<p>A <code>Task</code> is a simple <code>struct</code> that represents an asynchronous operation. It's a handle that provides a communications channel between the caller and the asynchronous background operation.</p>
+<p>It's returned to the caller in one of four states:</p>
+<ol>
+<li>Completed - probably the most common.  It's safe to get the result.</li>
+<li>Not Completed - there's a background task running somewhere else that's in-process.  The Task's result isn't yet set.  If you try and get it, you will block your thread.</li>
+<li>Faulted - A exception has occured which the task returns.</li>
+<li>Cancelled - A cancellation token request was successful.  The operation was cancelled.</li>
+</ol>
+<p>It's important to understand that the state of the returned <code>Task</code> is unrelated to the state of the code block that returned it.  If your code block is handed a <code>Task</code>, the immediate code behind the call has completed.  Code may have been parcelled up as a continuation or as a block of code within the <em>Async State Machine</em>, but the thread your code is running on is free. The continuation or state machine code will be scheduled to run when appropriate.  We'll look at how this works shortly.</p>
+<p>The asyncronous background operation holds a reference to the task.  When it completes it:</p>
+<ol>
+<li>Sets the task's state to Completed</li>
+<li>Sets the task's result [if there is one].</li>
+<li>Schedules any registered continuations.</li>
+</ol>
+<p>You can attach a continuation to any task regardless of who created it.  That continuation will be executed immediately if the task has already completed, or added to the awaiter's continuation collection if not.</p>
+<p>Where continuations run is based on ConfigureAwait:</p>
+<ol>
+<li>false - on any threadpool thread.</li>
+<li>true - on the synchronisation context if one exists.</li>
+</ol>
+<p>The <code>public</code> side of <code>Task</code> is for consumers: there's no control mechanisms. The control side is <code>internal</code>.  The state machine accesses this functionality through <code>AsyncTaskMethodBuilder</code>.  We normally use a <code>TaskCompletionSource</code> object. You'll see this used in our example state machine shortly.</p>
+<h2 id="asyncawait">Async/Await</h2>
+<p>To demonstrate how opaque <em>Async/Await</em> really is, let's look at the code generated by the compiler.</p>
+<p>Go to <a href="https://sharplab.io/">SharpLab</a>.  Set the output to <em>C#</em> and enter the following code:</p>
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+<span style="color:#569CD6;">using</span> System;
+<span style="color:#569CD6;">using</span> System.Threading.Tasks;
+
+<span style="color:#569CD6;">public</span> <span style="color:#569CD6;">class</span> C {
+    <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">async</span> Task DoSomeWorkAsync() {
+        Console.WriteLine(<span style="color:#D69D85;">&quot;Starting&quot;</span>);
+        <span style="color:#569CD6;">await</span> DoSomethingAsync();
+        Console.WriteLine(<span style="color:#D69D85;">&quot;Finished&quot;</span>);
+    }
+    
+    <span style="color:#569CD6;">private</span> Task DoSomethingAsync()
+    {
+        <span style="color:#569CD6;">return</span> Task.Delay(<span style="color:#B5CEA8;">500</span>);
+    }
+}
+</pre></div>
+<p>The generated code is complex and unrecognisable.  Let's break it down.  You now have:</p>
+<ol>
+<li>A private <em>Async State Machine</em> within you parent class.</li>
+<li>A refactored <code>DoSomeWorkAsync</code>.</li>
+</ol>
+<p><code>Async</code> and <code>await</code> have disappeared.</p>
+<p>Look at the state machine.  The original code block has been split into <code>n+1</code> states and code blocks based on <code>awaits</code>.</p>
+<p>The state machine provides a public Task object [through the <code>AsyncTaskMethodBuilder</code>] which is returned to the caller when the state machine yields control.</p>
+<p>The refactored <code>DoSomeWorkAsync</code> creates and starts the state machine, and on a yield, returns the state machine's Task to the caller.</p>
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+    [AsyncStateMachine(<span style="color:#569CD6;">typeof</span>(&lt;DoSomeWorkAsync&gt;d__0))]
+    [DebuggerStepThrough]
+    <span style="color:#569CD6;">public</span> Task DoSomeWorkAsync()
+    {
+        &lt;DoSomeWorkAsync&gt;d__0 stateMachine = <span style="color:#569CD6;">new</span> &lt;DoSomeWorkAsync&gt;d__0();
+        stateMachine.&lt;&gt;t__builder = AsyncTaskMethodBuilder.Create();
+        stateMachine.&lt;&gt;4__this = <span style="color:#569CD6;">this</span>;
+        stateMachine.&lt;&gt;1__state = -<span style="color:#B5CEA8;">1</span>;
+        stateMachine.&lt;&gt;t__builder.Start(<span style="color:#569CD6;">ref</span> stateMachine);
+        <span style="color:#569CD6;">return</span> stateMachine.&lt;&gt;t__builder.Task;
+    }
+</pre></div>
+<p><code>__builder.Start</code> internally calls <code>MoveNext</code>,  the first block runs synchronously to the final async operation [the <em>await</em> line] and increments the state. The block either completes or yields control.</p>
+<p>If the async operation completes, then execution falls through to the next block, and so on... with everything executing synchronously on the same thread.</p>
+<p>If the async operation yields [returns a not complete awaitable such as a Task], the state machine adds a continuation to the awaitable to call <code>MoveNext</code> and completes.</p>
+<p>When the async operation completes on it's background thread it queues the continuation to run [normally on the synchronisation context].  The continuation &quot;re-enters&quot; the state machine and executes the next state code block.</p>
+<p>The final state block has no final async operation so falls through to the bottom where it sets the state machine's own Task result and state to completed.</p>
+<h3 id="our-own-state-machine">Our Own State Machine</h3>
+<p>We've seen what the compiler produces, but we can build our own state machine as a learning exercise.</p>
+<p>Consider this simple Blazor <code>Home</code> page:</p>
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+@page <span style="color:#D69D85;">&quot;/&quot;</span>
+
+&lt;PageTitle&gt;Home&lt;/PageTitle&gt;
+
+&lt;h1&gt;Hello, world!&lt;/h1&gt;
+
+Welcome to your <span style="color:#569CD6;">new</span> app.
+
+&lt;div <span style="color:#569CD6;">class</span>=<span style="color:#D69D85;">&quot;mb-3&quot;</span>&gt;
+    &lt;button <span style="color:#569CD6;">class</span>=<span style="color:#D69D85;">&quot;btn btn-success&quot;</span> @onclick=<span style="color:#D69D85;">&quot;Clicked&quot;</span>&gt;Click&lt;/button&gt;
+&lt;/div&gt;
+
+&lt;div <span style="color:#569CD6;">class</span>=<span style="color:#D69D85;">&quot;bg-dark text-white m-2 p-2&quot;</span>&gt;
+    @_message
+&lt;/div&gt;
+
+@code {
+    <span style="color:#569CD6;">private</span> <span style="color:#569CD6;">string</span>? _message;
+
+    <span style="color:#569CD6;">private</span> <span style="color:#569CD6;">async</span> Task Clicked()
+    {
+        _message = $<span style="color:#D69D85;">&quot;Processing at {DateTime.Now.ToLongTimeString()}&quot;</span>;
+        <span style="color:#569CD6;">await</span> TaskHelper.DoSomethingAsync();
+        _message = $<span style="color:#D69D85;">&quot;Completed Processing at {DateTime.Now.ToLongTimeString()}&quot;</span>;
+    }
+}
+</pre></div>
+<p><code>TaskHelper</code> looks like this:</p>
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+<span style="color:#569CD6;">public</span> <span style="color:#569CD6;">static</span> <span style="color:#569CD6;">class</span> TaskHelper
+{
+    <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">static</span> Task DoSomethingAsync()
+        =&gt; Task.Delay(<span style="color:#B5CEA8;">1000</span>);
+}
+</pre></div>
+<p>Here's the skeleton class.</p>
+<ol>
+<li>We capture a reference to the parent class so we have access to any class variables, properties and methods.  Being a class within the parent gives us access to all the privates.</li>
+<li><code>TaskCompletionSource</code> provides a <code>Task</code> that we control.  This is the <code>Task</code> we return to the caller.</li>
+<li><code>_state</code> holds the current state of the machine.  It gets incremented as we step through the states.</li>
+<li><code>Task</code> is the actual task the <code>TaskCompletionSource</code> provides.</li>
+<li><code>MoveNext</code> is the method we call to start and increment the state.</li>
+</ol>
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+<span style="color:#569CD6;">class</span> Clicked_StateMachine
+{
+    <span style="color:#569CD6;">private</span> <span style="color:#569CD6;">readonly</span> Home _parent;
+
+    <span style="color:#569CD6;">private</span> <span style="color:#569CD6;">readonly</span> TaskCompletionSource _tcs = <span style="color:#569CD6;">new</span>();
+    <span style="color:#569CD6;">private</span> <span style="color:#569CD6;">int</span> _state = <span style="color:#B5CEA8;">0</span>;
+    <span style="color:#569CD6;">private</span> TaskAwaiter _state1_Awaiter = <span style="color:#569CD6;">default</span>!;
+
+    <span style="color:#569CD6;">public</span> Task Task =&gt; _tcs.Task;
+
+    <span style="color:#569CD6;">public</span> Clicked_StateMachine(Home parent)
+    {
+        _parent = parent;
+    }
+
+    <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">void</span> MoveNext()
+    { }
+}
+</pre></div>
+<p>The <code>MoveNext</code> detail.</p>
+<p>Execution is wrapped in a <code>try</code> to capture exceptions and report them to the caller through the  <code>TaskCompletionSource</code> task.</p>
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+<span style="color:#569CD6;">public</span> <span style="color:#569CD6;">void</span> MoveNext()
+{
+    <span style="color:#569CD6;">try</span>
+    {
+        <span style="color:#57A64A;">//...</span>
+    }
+    <span style="color:#57A64A;">// Something went wrong.  Pass the error to the caller through the completion task</span>
+    <span style="color:#569CD6;">catch</span> (Exception e)
+    {
+        _tcs.SetException(e);
+    }
+}
+</pre></div>
+<p>The <em>State 0</em> step runs the first code block.</p>
+<p>It:</p>
+<ol>
+<li>Runs the sync code.</li>
+<li>Runs the awaitable and captures the returned <code>Task</code>.</li>
+<li>Increments the state.</li>
+</ol>
+<p>Finally it checks the state of <code>task</code>.</p>
+<ul>
+<li>If it's incomplete, it adds a continuation to the task to call <code>MoveNext</code> on completion.</li>
+<li>If it's complete, it falls through to the next state and execution continues synchronously on the same context.</li>
+</ul>
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+    <span style="color:#569CD6;">if</span> (_state == <span style="color:#B5CEA8;">0</span>)
+    {
+        <span style="color:#57A64A;">// The code from the start of the method to the first &#39;await&#39;.</span>
+        {
+            _parent._log.AppendLine($<span style="color:#D69D85;">&quot;State Machine Processing at {DateTime.Now.ToLongTimeString()}&quot;</span>);
+        }
+
+        <span style="color:#569CD6;">var</span> task = TaskHelper.DoSomethingAsync();
+
+        _state = <span style="color:#B5CEA8;">1</span>;
+
+        <span style="color:#569CD6;">if</span> (!task.IsCompleted)
+        {
+            task.ContinueWith(_ =&gt; MoveNext());
+            <span style="color:#569CD6;">return</span>;
+        }
+    }
+</pre></div>
+<p>Step 1 only runs once state 0's async operation has completed.  It runs state 1 code.  As there's no further awaits it falls out of the bottom to the finalization process.</p>
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+    <span style="color:#57A64A;">// Step 1 - the first await block</span>
+    <span style="color:#569CD6;">if</span> (_state == <span style="color:#B5CEA8;">1</span>)
+    {
+        <span style="color:#57A64A;">// The code from the first await to the next await or end of the method.</span>
+        {
+            _parent._log.AppendLine($<span style="color:#D69D85;">&quot;State Machine Processing completed at {DateTime.Now.ToLongTimeString()}&quot;</span>);
+        }
+
+        <span style="color:#57A64A;">//No more await tasks so fall thro to bottom</span>
+    }
+</pre></div>
+<p>The finalization process is to set the task manager to complete.</p>
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+<span style="color:#57A64A;">// No more steps, job done.  Set the Task to complete and finish.</span>
+_taskManager.SetResult();
+</pre></div>
+<p>Now we can refactor <code>Clicked</code> in <code>Home</code>. It's no longer <code>async</code> and just returns the state machine <code>Task</code> to the UI event handler.</p>
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+    <span style="color:#569CD6;">private</span> Task Clicked()
+    {
+        <span style="color:#569CD6;">var</span> stateMachine = <span style="color:#569CD6;">new</span> Clicked_StateMachine(<span style="color:#569CD6;">this</span>);
+        stateMachine.MoveNext();
+        <span style="color:#569CD6;">return</span> stateMachine.Task;
+    }
+</pre></div><h2 id="takaways">Takaways</h2>
+<p>My example state machine is a gross oversimplification of the real thing.  I've removed all the exception and cancellation code.</p>
+<p>In SharpLab toggle the mode from <em>Debug</em> to <em>Release</em>.  The state machine changes from a <code>class</code> to a <code>struct</code> for performance purposes.</p>
+<h2 id="references">References</h2>
+<p>The primary resources for this article were:</p>
+<p><a href="https://devblogs.microsoft.com/dotnet/how-async-await-really-works/">Stephen Toub's how await works</a></p>
+<p><a href="https://devblogs.microsoft.com/premier-developer/dissecting-the-async-methods-in-c/">Sergey Tepliakov's dissecting async</a></p>
+<p><a href="https://devblogs.microsoft.com/pfxteam/await-anything/">Stephen Toub's Blog await anything</a></p>
+<p><a href="https://blog.stephencleary.com/2023/11/configureawait-in-net-8.html">Stephen Cleary's various airings on the topic such as this one</a></p>
+<p>The code example is based on Sergey Tepliakov's code.</p>
+</div></div></div></body></html>
+
+
+
+
+

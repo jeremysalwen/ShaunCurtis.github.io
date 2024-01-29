@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<base href="/">
+
+	
+
+	
+
+	
+	<link href="/resources/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+	<link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+
+	
+	<link href="/resources/css/sb-admin-2.css" rel="stylesheet" type="text/css">
+	<link href="/resources/css/site.css" rel="stylesheet" type="text/css">
+
+	
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/highlight.css">
+	<link rel="stylesheet" href="/resources/css/article.css" type="text/css">
+
+	
+	<link rel="icon" href="/assets/favicon.png">
+
+	<title>The Blazor Component Registration Pattern</title>
+        <meta property="author" content="Shaun Curtis" />
+        <meta property="description" content="This article demonstrates the basics of the Blazor Component Registration pattern." />
+    <meta property="og:site_name" content="Cold Elm Coders" />
+        <meta property="og:site" content="https://shauncurtis.github.io/" />
+        <meta property="og:title" content="The Blazor Component Registration Pattern" />
+        <meta property="og:description" content="This article demonstrates the basics of the Blazor Component Registration pattern." /></head>
+<body><header class="navbar bg-dark p-2 text-large text-light"><section class="navbar-section  text-light"><a href="/" class="navbar-brand mr-2 text-large text-light p-2">Cold Elm Coders</a>
+			<a href="/Posts/index.html" class="btn btn-link text-light">Posts</a>
+			<a href="/Rants/index.html" class="btn btn-link text-light">Rants</a>
+			<a href="/Articles/index.html" class="btn btn-link text-light">Articles</a>
+			<a href="/Stories/index.html" class="btn btn-link text-light">Stories</a>
+			<a href="/about.html" class="btn btn-link text-light">About</a></section></header>
+
+	<div class="container-fluid"><div class="row"><div class="col-12 col-sm-3 col-lg-2 bg-light pt-2"><div class="article-info p-2"><div class="mb-2">Published: 21-Nov-2023</div>
+                <div class="mb-2">Updated: 21-Nov-2023</div>
+                <div class="mb-2">Author: Shaun Curtis</div></div>
+    <h4 class="p-2">Table of Contents</h4>
+<ul class="TOC" >
+<li class="TOC-item TOC-item-0" >
+<a class="TOC-link" href="#">Top</a>
+<ul class="TOC TOC-0" >
+<li class="TOC-item TOC-item-1" >
+<ul class="TOC TOC-1" >
+<li class="TOC-item TOC-item-2" >
+<a class="TOC-link" href="#using-renderfragments">Using RenderFragments</a>
+</li>
+<li class="TOC-item TOC-item-2" >
+<a class="TOC-link" href="#using-a-context">Using a Context.</a>
+</li>
+<li class="TOC-item TOC-item-2" >
+<a class="TOC-link" href="#the-blazroptioncontext">The BlazrOptionContext</a>
+</li>
+<li class="TOC-item TOC-item-2" >
+<a class="TOC-link" href="#blazroption-component">BlazrOption Component</a>
+</li>
+<li class="TOC-item TOC-item-2" >
+<a class="TOC-link" href="#blazrselect-component">BlazrSelect Component</a>
+</li>
+<li class="TOC-item TOC-item-2" >
+<a class="TOC-link" href="#index-demo">Index Demo</a>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+			
+			<div class="col-12 col-sm-9 col-lg-10 p-2"><div class="pt-2 pb-2 border-bottom mb-4 text-primary"><h1>The Blazor Component Registration Pattern</h1>
+            <div><small>This article demonstrates the basics of the Blazor Component Registration pattern.</small></div></div>
+    <p>Registration is the process by which a child component registers itself with a parent component.  The actual content is built out by the parent based on data provided by the child.</p>
+<p>I've used a <code>Select</code> edit control as a somewhat contrived example.  There's no real reason to register select options, but it provides a simple framework to demonstrate the principles.</p>
+<p>The Repo for this article is here - <a href="https://github.com/ShaunCurtis/Blazr.ComponentRegistration">Blazr.ComponentRegistration</a></p>
+<h3 id="loose-coupling">Loose Coupling</h3>
+<p>You will see similar examples of this pattern where the parent component cascades itself and the child components call a register method on the parent, often registering themselves.</p>
+<p>A personal view, but I don't believe this is good practice for the following reasons.</p>
+<ol>
+<li>You are tightly coupling components together.</li>
+<li>You are passing around references to objects you don't control or manage.</li>
+<li>You are passing around objects that expose functionality that shouldn't be used outside the context of the Renderer.</li>
+</ol>
+<h3 id="defer">Defer</h3>
+<p>The main component uses the <code>Defer</code> component to render it's content.</p>
+<p>It looks like:</p>
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+@ChildContent
+
+@code {
+   [Parameter] <span style="color:#569CD6;">public</span> RenderFragment? ChildContent { <span style="color:#569CD6;">get</span>; <span style="color:#569CD6;">set</span>; }
+}
+</pre></div>
+<p>It's purpose is to defer rendering of the actual content until after the <code>Option</code> components have registered.  <code>Defer</code> is at the same level in the Render Tree as the <code>Option</code> components, so renders in sequence with them.  As it's placed last, it renders it content - provided as a <code>RenderFragment</code> from the parent - last.</p>
+<h2 id="using-renderfragments">Using RenderFragments</h2>
+<p>Our definition looks like this:</p>
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+&lt;div <span style="color:#569CD6;">class</span>=<span style="color:#D69D85;">&quot;mb-3&quot;</span>&gt;
+    &lt;OptionSelect @bind-Value=<span style="color:#D69D85;">&quot;_country&quot;</span>&gt;
+        &lt;Option Id=<span style="color:#D69D85;">&quot;UK&quot;</span> Value=<span style="color:#D69D85;">&quot;UK&quot;</span> /&gt;
+        &lt;Option Id=<span style="color:#D69D85;">&quot;France&quot;</span> Value=<span style="color:#D69D85;">&quot;France&quot;</span> /&gt;
+        &lt;Option Id=<span style="color:#D69D85;">&quot;Spain&quot;</span> Value=<span style="color:#D69D85;">&quot;Spain&quot;</span> /&gt;
+        &lt;Option Id=<span style="color:#D69D85;">&quot;Portugal&quot;</span> Value=<span style="color:#D69D85;">&quot;Portugal&quot;</span> /&gt;
+    &lt;/OptionSelect&gt;
+&lt;/div&gt;
+</pre></div><h3 id="the-option-component">The Option Component</h3>
+<ol>
+<li>Everything happens in <code>SetParametersAsync</code> before any rendering takes place.</li>
+<li>The code within <code>SetParametersAsync</code> only runs once when <code>_hasRegistered</code> is <code>false</code>.</li>
+<li>Exceptions are raised if there's any missing data.</li>
+<li>The component registers the <code>OptionBuilder</code> method as the RenderFragment when it calls Register.</li>
+<li><code>SetParametersAsync</code> returns a completed Task.  It short circuits the lifecycle process: It does nothing so there's no point in running it.</li>
+</ol>
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+@<span style="color:#569CD6;">namespace</span> Blazr.ComponentRegistration.Components
+@<span style="color:#569CD6;">using</span> Microsoft.AspNetCore.Components.Rendering
+
+@code {
+    <span style="color:#569CD6;">private</span> <span style="color:#569CD6;">bool</span> _hasRegistered;
+
+    [Parameter, EditorRequired] <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">string</span>? Id { <span style="color:#569CD6;">get</span>; <span style="color:#569CD6;">set</span>; }
+    [Parameter, EditorRequired] <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">string</span>? Value { <span style="color:#569CD6;">get</span>; <span style="color:#569CD6;">set</span>; }
+    [CascadingParameter] <span style="color:#569CD6;">private</span> Action&lt;RenderFragment&gt;? Register { <span style="color:#569CD6;">get</span>; <span style="color:#569CD6;">set</span>; }
+
+    <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">override</span> Task SetParametersAsync(ParameterView parameters)
+    {
+        <span style="color:#57A64A;">// We only need to register once.</span>
+        <span style="color:#57A64A;">// We can ignore all subsequent parameter changes, short circuit the lifecycle processes</span>
+        <span style="color:#57A64A;">// and return a completed task.</span>
+        <span style="color:#569CD6;">if</span> (!_hasRegistered)
+        {
+            parameters.SetParameterProperties(<span style="color:#569CD6;">this</span>);
+
+            <span style="color:#57A64A;">// Check we have everything.  If not throw an exception.</span>
+            ArgumentNullException.ThrowIfNull(<span style="color:#569CD6;">this</span>.Id);
+            ArgumentNullException.ThrowIfNull(<span style="color:#569CD6;">this</span>.Value);
+            ArgumentNullException.ThrowIfNull(<span style="color:#569CD6;">this</span>.Register);
+
+            <span style="color:#57A64A;">// Register our render fragment</span>
+            <span style="color:#569CD6;">this</span>.Register.Invoke(OptionBuilder);
+            _hasRegistered = <span style="color:#569CD6;">true</span>;
+        }
+        <span style="color:#57A64A;">// Short circuit the life cycle process.  We waste processor time doing it for no purpose.</span>
+        <span style="color:#569CD6;">return</span> Task.CompletedTask;
+    }
+
+    <span style="color:#57A64A;">//Create the render fragment that is the rendered content</span>
+    <span style="color:#569CD6;">private</span> <span style="color:#569CD6;">void</span> OptionBuilder(RenderTreeBuilder __builder)
+    {
+        &lt;option value=<span style="color:#D69D85;">&quot;@this.Id&quot;</span>&gt;@<span style="color:#569CD6;">this</span>.Value&lt;/option&gt;
+    }
+}
+</pre></div><h3 id="the-optionselect-component">The OptionSelect Component</h3>
+<ol>
+<li>It cascades the Register method to the child content.</li>
+<li>If defers rendering the <code>select</code> with the registered <code>RenderFragments</code> until after all the child components have registered.</li>
+</ol>
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+@<span style="color:#569CD6;">namespace</span> Blazr.ComponentRegistration.Components
+
+&lt;CascadingValue Value=<span style="color:#D69D85;">&quot;Register&quot;</span> IsFixed&gt;
+    @ChildContent
+&lt;/CascadingValue&gt;
+
+&lt;Defer&gt;
+    &lt;<span style="color:#569CD6;">select</span> <span style="color:#569CD6;">class</span>=<span style="color:#D69D85;">&quot;form-select&quot;</span>
+            @bind:<span style="color:#569CD6;">get</span>=<span style="color:#D69D85;">&quot;@this.Value&quot;</span>
+            @bind:<span style="color:#569CD6;">set</span>=<span style="color:#D69D85;">&quot;this.SetValue&quot;</span>&gt;
+
+        @<span style="color:#569CD6;">if</span> (<span style="color:#569CD6;">this</span>.Value <span style="color:#569CD6;">is</span> <span style="color:#569CD6;">null</span>)
+        {
+            &lt;option selected disabled value=<span style="color:#D69D85;">&quot;&quot;</span>&gt; -- Select An Item -- &lt;/option&gt;
+        }
+
+        @<span style="color:#569CD6;">foreach</span> (<span style="color:#569CD6;">var</span> item <span style="color:#569CD6;">in</span> _items)
+        {
+            @item
+        }
+    &lt;/<span style="color:#569CD6;">select</span>&gt;
+
+&lt;/Defer&gt;
+
+@code {
+    [Parameter] <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">string</span>? Value { <span style="color:#569CD6;">get</span>; <span style="color:#569CD6;">set</span>; }
+    [Parameter] <span style="color:#569CD6;">public</span> EventCallback&lt;<span style="color:#569CD6;">string</span>?&gt; ValueChanged { <span style="color:#569CD6;">get</span>; <span style="color:#569CD6;">set</span>; }
+
+    [Parameter] <span style="color:#569CD6;">public</span> RenderFragment? ChildContent { <span style="color:#569CD6;">get</span>; <span style="color:#569CD6;">set</span>; }
+
+    <span style="color:#569CD6;">private</span> List&lt;RenderFragment&gt; _items = <span style="color:#569CD6;">new</span>();
+
+    <span style="color:#569CD6;">private</span> <span style="color:#569CD6;">void</span> Register(RenderFragment option)
+    {
+        <span style="color:#569CD6;">if</span> (!_items.Contains(option))
+            _items.Add(option);
+    }
+
+    <span style="color:#569CD6;">private</span> <span style="color:#569CD6;">async</span> Task SetValue(<span style="color:#569CD6;">string</span>? value)
+        =&gt; <span style="color:#569CD6;">await</span> <span style="color:#569CD6;">this</span>.ValueChanged.InvokeAsync(value);
+}
+</pre></div><h3 id="demo-page">Demo Page</h3>
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+@page <span style="color:#D69D85;">&quot;/&quot;</span>
+
+&lt;PageTitle&gt;Home&lt;/PageTitle&gt;
+
+&lt;div <span style="color:#569CD6;">class</span>=<span style="color:#D69D85;">&quot;mb-3&quot;</span>&gt;
+    &lt;OptionSelect @bind-Value=<span style="color:#D69D85;">&quot;_country&quot;</span>&gt;
+        &lt;Option Id=<span style="color:#D69D85;">&quot;UK&quot;</span> Value=<span style="color:#D69D85;">&quot;UK&quot;</span> /&gt;
+        &lt;Option Id=<span style="color:#D69D85;">&quot;France&quot;</span> Value=<span style="color:#D69D85;">&quot;France&quot;</span> /&gt;
+        &lt;Option Id=<span style="color:#D69D85;">&quot;Spain&quot;</span> Value=<span style="color:#D69D85;">&quot;Spain&quot;</span> /&gt;
+        &lt;Option Id=<span style="color:#D69D85;">&quot;Portugal&quot;</span> Value=<span style="color:#D69D85;">&quot;Portugal&quot;</span> /&gt;
+    &lt;/OptionSelect&gt;
+&lt;/div&gt;
+
+&lt;div <span style="color:#569CD6;">class</span>=<span style="color:#D69D85;">&quot;alert alert-primary&quot;</span>&gt;Country: @_country&lt;/div&gt;
+
+@code {
+    <span style="color:#569CD6;">private</span> <span style="color:#569CD6;">string</span>? _country;
+}
+</pre></div><h2 id="using-a-context">Using a Context.</h2>
+<p>In more complex situations we can use a data object for the data transfer and a context class to manage registration and collection management.</p>
+<h2 id="the-blazroptioncontext">The BlazrOptionContext</h2>
+<p>A simple <code>record</code> or <code>readonly struct</code> value object to hold the option data.</p>
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+<span style="color:#569CD6;">public</span> record OptionData(<span style="color:#569CD6;">string</span> Id, <span style="color:#569CD6;">string</span> Value);
+</pre></div>
+<p>The context, which in this case just provides the registration process method and exposes a public readonly collection of <code>OptionData</code> object.  It provides the functionality we need.</p>
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+<span style="color:#569CD6;">public</span> <span style="color:#569CD6;">class</span> OptionContext
+{
+    <span style="color:#569CD6;">private</span> List&lt;OptionData&gt; _items = <span style="color:#569CD6;">new</span> List&lt;OptionData&gt;();
+
+    <span style="color:#569CD6;">public</span> IEnumerable&lt;OptionData&gt; Items =&gt; _items.AsEnumerable();
+
+    <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">void</span> Register(OptionData option)
+    {
+        <span style="color:#569CD6;">if</span> (!_items.Contains(option))
+            _items.Add(option);
+    }
+}
+</pre></div><h2 id="blazroption-component">BlazrOption Component</h2>
+<p>The sole purpose of the component is to register its configuration data.  Nothing else.  There's no content to output to the DOM.</p>
+<ol>
+<li>Everything happens in <code>SetParametersAsync</code>.</li>
+<li>The code within <code>SetParametersAsync</code> only runs once when <code>_hasRegistered</code> is <code>false</code>.</li>
+<li>The Parameters are set manually.  It's much faster and relatively simple to code when you only have a few.</li>
+<li>Exceptions are raised if there's any missing data.</li>
+<li>The component registers an <code>OptionData</code> with the context: it's data, not itself.</li>
+<li><code>SetParametersAsync</code> returns a completed Task.  It short circuits the lifecycle process: there's no point in running it to do nothing.</li>
+</ol>
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+<span style="color:#569CD6;">using</span> Microsoft.AspNetCore.Components;
+
+<span style="color:#569CD6;">namespace</span> Blazr.ComponentRegistration.Components;
+
+<span style="color:#569CD6;">public</span> <span style="color:#569CD6;">class</span> BlazrOption : ComponentBase
+{
+    <span style="color:#569CD6;">private</span> <span style="color:#569CD6;">bool</span> _hasRegistered;
+
+    [Parameter, EditorRequired] <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">string</span>? Id { <span style="color:#569CD6;">get</span>; <span style="color:#569CD6;">set</span>; }
+    [Parameter, EditorRequired] <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">string</span>? Value { <span style="color:#569CD6;">get</span>; <span style="color:#569CD6;">set</span>; }
+    [CascadingParameter] <span style="color:#569CD6;">private</span> BlazrOptionContext? Context { <span style="color:#569CD6;">get</span>; <span style="color:#569CD6;">set</span>; }
+
+    <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">override</span> Task SetParametersAsync(ParameterView parameters)
+    {
+        <span style="color:#57A64A;">// We only need to do anything if we haven&#39;t yet registered</span>
+        <span style="color:#569CD6;">if</span> (!_hasRegistered)
+        {
+            <span style="color:#57A64A;">// Manually get our parameters from the ParameterView</span>
+            <span style="color:#569CD6;">var</span> id = parameters.GetValueOrDefault&lt;<span style="color:#569CD6;">string</span>&gt;(<span style="color:#D69D85;">&quot;Id&quot;</span>);
+            <span style="color:#569CD6;">var</span> value = parameters.GetValueOrDefault&lt;<span style="color:#569CD6;">string</span>&gt;(<span style="color:#D69D85;">&quot;Value&quot;</span>);
+            <span style="color:#569CD6;">this</span>.Context = parameters.GetValueOrDefault&lt;BlazrOptionContext&gt;(<span style="color:#D69D85;">&quot;Context&quot;</span>);
+
+            <span style="color:#57A64A;">// Check we have everything.  If hot throw an exception</span>
+            ArgumentNullException.ThrowIfNull(id);
+            ArgumentNullException.ThrowIfNull(value);
+            ArgumentNullException.ThrowIfNull(Context);
+
+            <span style="color:#57A64A;">// Register</span>
+            <span style="color:#569CD6;">this</span>.Context.Register(<span style="color:#569CD6;">new</span>(id, value));
+            _hasRegistered = <span style="color:#569CD6;">true</span>;
+        }
+        <span style="color:#57A64A;">// Short circuit the Lifecycle process.  We&#39;re wasting processor time doing it for no purpose.</span>
+        <span style="color:#569CD6;">return</span> Task.CompletedTask;
+    }
+}
+</pre></div><h2 id="blazrselect-component">BlazrSelect Component</h2>
+<p>The main component creates an instance of the <code>OptionContext</code> and cascades it to the <code>ChildContent</code> - the <code>BlazorOption</code> components.  It only does this on the first render.  Their only purpose is to register their data.</p>
+<p>The <code>Defer</code> component is used as before to defer rendering of the main component content.  This time the component builds the <code>option</code> code directly.</p>
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+@<span style="color:#569CD6;">namespace</span> Blazr.ComponentRegistration.Components
+
+@<span style="color:#569CD6;">if</span> (_firstRender)
+{
+    &lt;CascadingValue Value=<span style="color:#D69D85;">&quot;_optionContext&quot;</span> IsFixed&gt;
+     @ChildContent
+    &lt;/CascadingValue&gt;
+}
+
+&lt;Defer&gt;
+    &lt;<span style="color:#569CD6;">select</span> <span style="color:#569CD6;">class</span>=<span style="color:#D69D85;">&quot;form-select&quot;</span>
+            @bind:<span style="color:#569CD6;">get</span>=<span style="color:#D69D85;">&quot;@this.Value&quot;</span>
+            @bind:<span style="color:#569CD6;">set</span>=<span style="color:#D69D85;">&quot;this.SetValue&quot;</span>&gt;
+
+        @<span style="color:#569CD6;">if</span> (<span style="color:#569CD6;">this</span>.Value <span style="color:#569CD6;">is</span> <span style="color:#569CD6;">null</span>)
+        {
+            &lt;option selected disabled value=<span style="color:#D69D85;">&quot;&quot;</span>&gt; -- Select An Item -- &lt;/option&gt;
+        }
+
+        @<span style="color:#569CD6;">foreach</span> (<span style="color:#569CD6;">var</span> item <span style="color:#569CD6;">in</span> _optionContext.Items)
+        {
+            &lt;option value=<span style="color:#D69D85;">&quot;@item.Id&quot;</span>&gt;@item.Value&lt;/option&gt;
+        }
+    &lt;/<span style="color:#569CD6;">select</span>&gt;
+
+&lt;/Defer&gt;
+
+@code {
+    [Parameter] <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">string</span>? Value { <span style="color:#569CD6;">get</span>; <span style="color:#569CD6;">set</span>; }
+    [Parameter] <span style="color:#569CD6;">public</span> EventCallback&lt;<span style="color:#569CD6;">string</span>?&gt; ValueChanged { <span style="color:#569CD6;">get</span>; <span style="color:#569CD6;">set</span>; }
+
+    [Parameter] <span style="color:#569CD6;">public</span> RenderFragment? ChildContent { <span style="color:#569CD6;">get</span>; <span style="color:#569CD6;">set</span>; }
+
+    <span style="color:#569CD6;">private</span> <span style="color:#569CD6;">readonly</span> BlazrOptionContext _optionContext = <span style="color:#569CD6;">new</span>();
+    <span style="color:#569CD6;">private</span> <span style="color:#569CD6;">bool</span> _firstRender = <span style="color:#569CD6;">true</span>;
+
+    <span style="color:#569CD6;">private</span> <span style="color:#569CD6;">async</span> Task SetValue(<span style="color:#569CD6;">string</span>? value)
+        =&gt; <span style="color:#569CD6;">await</span> <span style="color:#569CD6;">this</span>.ValueChanged.InvokeAsync(value);
+}
+</pre></div><h2 id="index-demo">Index Demo</h2>
+<p>And here's the demo page:</p>
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+@page <span style="color:#D69D85;">&quot;/&quot;</span>
+
+&lt;PageTitle&gt;Home&lt;/PageTitle&gt;
+
+&lt;div <span style="color:#569CD6;">class</span>=<span style="color:#D69D85;">&quot;mb-3&quot;</span>&gt;
+    &lt;BlazrSelect @bind-Value=<span style="color:#D69D85;">&quot;_country&quot;</span>&gt;
+        &lt;BlazrOption Id=<span style="color:#D69D85;">&quot;UK&quot;</span> Value=<span style="color:#D69D85;">&quot;UK&quot;</span>/&gt;
+        &lt;BlazrOption Id=<span style="color:#D69D85;">&quot;France&quot;</span> Value=<span style="color:#D69D85;">&quot;France&quot;</span> /&gt;
+        &lt;BlazrOption Id=<span style="color:#D69D85;">&quot;Spain&quot;</span> Value=<span style="color:#D69D85;">&quot;Spain&quot;</span> /&gt;
+        &lt;BlazrOption Id=<span style="color:#D69D85;">&quot;Portugal&quot;</span> Value=<span style="color:#D69D85;">&quot;Portugal&quot;</span> /&gt;
+    &lt;/BlazrSelect&gt;
+&lt;/div&gt;
+
+&lt;div <span style="color:#569CD6;">class</span>=<span style="color:#D69D85;">&quot;alert alert-primary&quot;</span>&gt;Country: @_country&lt;/div&gt;
+
+@code {
+    <span style="color:#569CD6;">private</span> <span style="color:#569CD6;">string</span>? _country;
+}
+</pre></div></div></div></div></body></html>
+
+
+
+
+

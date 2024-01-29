@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<base href="/">
+
+	
+
+	
+
+	
+	<link href="/resources/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+	<link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+
+	
+	<link href="/resources/css/sb-admin-2.css" rel="stylesheet" type="text/css">
+	<link href="/resources/css/site.css" rel="stylesheet" type="text/css">
+
+	
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/highlight.css">
+	<link rel="stylesheet" href="/resources/css/article.css" type="text/css">
+
+	
+	<link rel="icon" href="/assets/favicon.png">
+
+	<title>Adding Range Checking To InputNumber</title>
+        <meta property="author" content="Shaun Curtis" />
+        <meta property="description" content="This post shows how to modify the InputNumber component to integrate range checking." />
+    <meta property="og:site_name" content="Cold Elm Coders" />
+        <meta property="og:site" content="https://shauncurtis.github.io/" />
+        <meta property="og:title" content="Adding Range Checking To InputNumber" />
+        <meta property="og:description" content="This post shows how to modify the InputNumber component to integrate range checking." /></head>
+<body><header class="navbar bg-dark p-2 text-large text-light"><section class="navbar-section  text-light"><a href="/" class="navbar-brand mr-2 text-large text-light p-2">Cold Elm Coders</a>
+			<a href="/Posts/index.html" class="btn btn-link text-light">Posts</a>
+			<a href="/Rants/index.html" class="btn btn-link text-light">Rants</a>
+			<a href="/Articles/index.html" class="btn btn-link text-light">Articles</a>
+			<a href="/Stories/index.html" class="btn btn-link text-light">Stories</a>
+			<a href="/about.html" class="btn btn-link text-light">About</a></section></header>
+
+	<div class="container-fluid"><div class="row"><div class="col-12 col-sm-3 col-lg-2 bg-light pt-2"><div class="article-info p-2"><div class="mb-2">Published: 22-Nov-2023</div>
+                <div class="mb-2">Updated: 22-Nov-2023</div>
+                <div class="mb-2">Author: Shaun Curtis</div></div>
+    <h4 class="p-2">Table of Contents</h4>
+<ul class="TOC" >
+<li class="TOC-item TOC-item-0" >
+<a class="TOC-link" href="#">Top</a>
+</li>
+</ul>
+</div>
+			
+			<div class="col-12 col-sm-9 col-lg-10 p-2"><div class="pt-2 pb-2 border-bottom mb-4 text-primary"><h1>Adding Range Checking To InputNumber</h1>
+            <div><small>This post shows how to modify the InputNumber component to integrate range checking.</small></div></div>
+    <p>How often have you needed to tweak one of Blazor's input controls?</p>
+<p>In this post I'll show how to add maximum and minimum value validation checking.</p>
+<p>The key to tweaking is inheriting from the original code.  Don't create a new component and try and incorporate the original into it.</p>
+<p>Here's my base new input component.</p>
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+<span style="color:#569CD6;">public</span> <span style="color:#569CD6;">class</span> InputIntegerConstrained: InputNumber&lt;<span style="color:#569CD6;">int</span>&gt;
+{
+}
+</pre></div>
+<p>This will do exactly the same as the base <code>InputNumber&lt;int&gt;</code>.</p>
+<p>All we want to do is check the input value and add validation messages if the value falls outside the set range.</p>
+<p>First we add <code>Max</code> and <code>Min</code> Parameters.  Note they are nullable: if we don't set them they aren't checked.</p>
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+    [Parameter] <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">int</span>? Min { <span style="color:#569CD6;">get</span>; <span style="color:#569CD6;">set</span>; }
+    [Parameter] <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">int</span>? Max { <span style="color:#569CD6;">get</span>; <span style="color:#569CD6;">set</span>; }
+</pre></div>
+<p>All <code>InputBase</code> components provide the <code>TryParseValueFromString</code> protected method that we can override.</p>
+<p>This is the base implementation which checks to see that the submitted string value can be parsed to <code>TValue</code>.</p>
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+    <span style="color:#569CD6;">protected</span> <span style="color:#569CD6;">override</span> <span style="color:#569CD6;">bool</span> TryParseValueFromString(<span style="color:#569CD6;">string</span>? value, [MaybeNullWhen(<span style="color:#569CD6;">false</span>)] <span style="color:#569CD6;">out</span> TValue result, [NotNullWhen(<span style="color:#569CD6;">false</span>)] <span style="color:#569CD6;">out</span> <span style="color:#569CD6;">string</span>? validationErrorMessage)
+    {
+        <span style="color:#569CD6;">if</span> (BindConverter.TryConvertTo&lt;TValue&gt;(value, CultureInfo.InvariantCulture, <span style="color:#569CD6;">out</span> result))
+        {
+            validationErrorMessage = <span style="color:#569CD6;">null</span>;
+            <span style="color:#569CD6;">return</span> <span style="color:#569CD6;">true</span>;
+        }
+        <span style="color:#569CD6;">else</span>
+        {
+            validationErrorMessage = <span style="color:#569CD6;">string</span>.Format(CultureInfo.InvariantCulture, ParsingErrorMessage, DisplayName ?? FieldIdentifier.FieldName);
+            <span style="color:#569CD6;">return</span> <span style="color:#569CD6;">false</span>;
+        }
+    }
+</pre></div>
+<p>We can use this and add some extra range checking.</p>
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+    <span style="color:#569CD6;">protected</span> <span style="color:#569CD6;">override</span> <span style="color:#569CD6;">bool</span> TryParseValueFromString(<span style="color:#569CD6;">string</span>? value, [MaybeNullWhen(<span style="color:#569CD6;">false</span>)] <span style="color:#569CD6;">out</span> <span style="color:#569CD6;">int</span> result, [NotNullWhen(<span style="color:#569CD6;">false</span>)] <span style="color:#569CD6;">out</span> <span style="color:#569CD6;">string</span>? validationErrorMessage)
+    {
+        <span style="color:#569CD6;">if</span> (BindConverter.TryConvertTo&lt;<span style="color:#569CD6;">int</span>&gt;(value, CultureInfo.InvariantCulture, <span style="color:#569CD6;">out</span> result))
+        {
+            <span style="color:#569CD6;">if</span> ( <span style="color:#569CD6;">this</span>.Min <span style="color:#569CD6;">is</span> not <span style="color:#569CD6;">null</span> &amp;&amp; result &lt; <span style="color:#569CD6;">this</span>.Min)
+            {
+                validationErrorMessage = $<span style="color:#D69D85;">&quot;{DisplayName ?? FieldIdentifier.FieldName} must be greater than {this.Min} &quot;</span>;
+                <span style="color:#569CD6;">return</span> <span style="color:#569CD6;">false</span>;
+            }
+
+            <span style="color:#569CD6;">if</span> (<span style="color:#569CD6;">this</span>.Max <span style="color:#569CD6;">is</span> not <span style="color:#569CD6;">null</span> &amp;&amp; result &gt; <span style="color:#569CD6;">this</span>.Max)
+            {
+                validationErrorMessage = $<span style="color:#D69D85;">&quot;{DisplayName ?? FieldIdentifier.FieldName} must be less than {this.Max} &quot;</span>;
+                <span style="color:#569CD6;">return</span> <span style="color:#569CD6;">false</span>;
+            }
+
+            validationErrorMessage = <span style="color:#569CD6;">null</span>;
+            <span style="color:#569CD6;">return</span> <span style="color:#569CD6;">true</span>;
+        }
+        <span style="color:#569CD6;">else</span>
+        {
+            validationErrorMessage = <span style="color:#569CD6;">string</span>.Format(CultureInfo.InvariantCulture, ParsingErrorMessage, DisplayName ?? FieldIdentifier.FieldName);
+            <span style="color:#569CD6;">return</span> <span style="color:#569CD6;">false</span>;
+        }
+    }
+</pre></div>
+<p>And that's it.  Our finished component looks like this:</p>
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+<span style="color:#569CD6;">public</span> <span style="color:#569CD6;">class</span> InputIntegerConstrained: InputNumber&lt;<span style="color:#569CD6;">int</span>&gt;
+{
+    [Parameter] <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">int</span>? Min { <span style="color:#569CD6;">get</span>; <span style="color:#569CD6;">set</span>; }
+    [Parameter] <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">int</span>? Max { <span style="color:#569CD6;">get</span>; <span style="color:#569CD6;">set</span>; }
+
+    <span style="color:#569CD6;">protected</span> <span style="color:#569CD6;">override</span> <span style="color:#569CD6;">bool</span> TryParseValueFromString(<span style="color:#569CD6;">string</span>? value, [MaybeNullWhen(<span style="color:#569CD6;">false</span>)] <span style="color:#569CD6;">out</span> <span style="color:#569CD6;">int</span> result, [NotNullWhen(<span style="color:#569CD6;">false</span>)] <span style="color:#569CD6;">out</span> <span style="color:#569CD6;">string</span>? validationErrorMessage)
+    {
+        <span style="color:#569CD6;">if</span> (BindConverter.TryConvertTo&lt;<span style="color:#569CD6;">int</span>&gt;(value, CultureInfo.InvariantCulture, <span style="color:#569CD6;">out</span> result))
+        {
+            <span style="color:#569CD6;">if</span> ( <span style="color:#569CD6;">this</span>.Min <span style="color:#569CD6;">is</span> not <span style="color:#569CD6;">null</span> &amp;&amp; result &lt; <span style="color:#569CD6;">this</span>.Min)
+            {
+                validationErrorMessage = $<span style="color:#D69D85;">&quot;{DisplayName ?? FieldIdentifier.FieldName} must be greater than {this.Min} &quot;</span>;
+                <span style="color:#569CD6;">return</span> <span style="color:#569CD6;">false</span>;
+            }
+
+            <span style="color:#569CD6;">if</span> (<span style="color:#569CD6;">this</span>.Max <span style="color:#569CD6;">is</span> not <span style="color:#569CD6;">null</span> &amp;&amp; result &gt; <span style="color:#569CD6;">this</span>.Max)
+            {
+                validationErrorMessage = $<span style="color:#D69D85;">&quot;{DisplayName ?? FieldIdentifier.FieldName} must be less than {this.Max} &quot;</span>;
+                <span style="color:#569CD6;">return</span> <span style="color:#569CD6;">false</span>;
+            }
+
+            validationErrorMessage = <span style="color:#569CD6;">null</span>;
+            <span style="color:#569CD6;">return</span> <span style="color:#569CD6;">true</span>;
+        }
+        <span style="color:#569CD6;">else</span>
+        {
+            validationErrorMessage = <span style="color:#569CD6;">string</span>.Format(CultureInfo.InvariantCulture, ParsingErrorMessage, DisplayName ?? FieldIdentifier.FieldName);
+            <span style="color:#569CD6;">return</span> <span style="color:#569CD6;">false</span>;
+        }
+    }
+}
+</pre></div>
+<p>Which we can use in a demo page:</p>
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+@page <span style="color:#D69D85;">&quot;/&quot;</span>
+
+&lt;PageTitle&gt;Home&lt;/PageTitle&gt;
+
+&lt;h1&gt;Hello, world!&lt;/h1&gt;
+
+&lt;EditForm EditContext=<span style="color:#D69D85;">&quot;_editContext&quot;</span>&gt;
+    &lt;InputIntegerConstrained <span style="color:#569CD6;">class</span>=<span style="color:#D69D85;">&quot;form-control&quot;</span> @bind-Value=_model.IntValue Max=<span style="color:#D69D85;">&quot;100&quot;</span>/&gt;
+    &lt;ValidationMessage For=<span style="color:#D69D85;">&quot;() =&gt; _model.IntValue&quot;</span> /&gt;
+&lt;/EditForm&gt;
+
+@code {
+    <span style="color:#569CD6;">private</span> Model _model = <span style="color:#569CD6;">new</span>();
+    <span style="color:#569CD6;">private</span> EditContext? _editContext;
+
+    <span style="color:#569CD6;">protected</span> <span style="color:#569CD6;">override</span> <span style="color:#569CD6;">void</span> OnInitialized()
+    {
+        _editContext = <span style="color:#569CD6;">new</span>(_model);
+    }
+
+    <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">class</span> Model
+    {
+        <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">int</span> IntValue { <span style="color:#569CD6;">get</span>; <span style="color:#569CD6;">set</span>; }
+    }
+}
+</pre></div></div></div></div></body></html>
+
+
+
+
+

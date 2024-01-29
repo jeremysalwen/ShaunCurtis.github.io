@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<base href="/">
+
+	
+
+	
+
+	
+	<link href="/resources/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+	<link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+
+	
+	<link href="/resources/css/sb-admin-2.css" rel="stylesheet" type="text/css">
+	<link href="/resources/css/site.css" rel="stylesheet" type="text/css">
+
+	
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/highlight.css">
+	<link rel="stylesheet" href="/resources/css/article.css" type="text/css">
+
+	
+	<link rel="icon" href="/assets/favicon.png">
+
+	<title>Blazor Loading Overlay</title>
+        <meta property="author" content="Shaun Curtis" />
+        <meta property="description" content="This post shows how to build a simple overlay you can apply to any page while the page is loading." />
+    <meta property="og:site_name" content="Cold Elm Coders" />
+        <meta property="og:site" content="https://shauncurtis.github.io/" />
+        <meta property="og:title" content="Blazor Loading Overlay" />
+        <meta property="og:description" content="This post shows how to build a simple overlay you can apply to any page while the page is loading." /></head>
+<body><header class="navbar bg-dark p-2 text-large text-light"><section class="navbar-section  text-light"><a href="/" class="navbar-brand mr-2 text-large text-light p-2">Cold Elm Coders</a>
+			<a href="/Posts/index.html" class="btn btn-link text-light">Posts</a>
+			<a href="/Rants/index.html" class="btn btn-link text-light">Rants</a>
+			<a href="/Articles/index.html" class="btn btn-link text-light">Articles</a>
+			<a href="/Stories/index.html" class="btn btn-link text-light">Stories</a>
+			<a href="/about.html" class="btn btn-link text-light">About</a></section></header>
+
+	<div class="container-fluid"><div class="row"><div class="col-12 col-sm-3 col-lg-2 bg-light pt-2"><div class="article-info p-2"><div class="mb-2">Published: 30-Oct-2023</div>
+                <div class="mb-2">Updated: 30-Oct-2023</div>
+                <div class="mb-2">Author: Shaun Curtis</div></div>
+    <h4 class="p-2">Table of Contents</h4>
+<ul class="TOC" >
+<li class="TOC-item TOC-item-0" >
+<a class="TOC-link" href="#">Top</a>
+<ul class="TOC TOC-0" >
+<li class="TOC-item TOC-item-1" >
+<ul class="TOC TOC-1" >
+<li class="TOC-item TOC-item-2" >
+<a class="TOC-link" href="#the-overlay-component">The Overlay Component</a>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+			
+			<div class="col-12 col-sm-9 col-lg-10 p-2"><div class="pt-2 pb-2 border-bottom mb-4 text-primary"><h1>Blazor Loading Overlay</h1>
+            <div><small>This post shows how to build a simple overlay you can apply to any page while the page is loading.</small></div></div>
+    <p>The main applicable for this component is where pages load slowly.  I'll demonstrate it use in the <code>FetchData</code> page.</p>
+<p><img src="./assets/Posts/Blazor-Loading-Overlay.png" alt="Overlay image" /></p>
+<h2 id="the-overlay-component">The Overlay Component</h2>
+<p><em>LoadingOverlay.razor</em> adds a <code>div</code> to the page with a loading message.  It's state [whether it's displayed] is controlled through CSS.</p>
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+&lt;div <span style="color:#569CD6;">class</span>=<span style="color:#D69D85;">&quot;@_css&quot;</span>&gt;
+    &lt;div <span style="color:#569CD6;">class</span>=<span style="color:#D69D85;">&quot;container text-center&quot;</span>&gt;
+        &lt;div <span style="color:#569CD6;">class</span>=<span style="color:#D69D85;">&quot;alert alert-warning m-5 p-5&quot;</span>&gt;We&#39;re experiencing very high call volumes today [nothing <span style="color:#569CD6;">out</span> of the norm now]. 
+            You<span style="color:#D69D85;">&#39;re at call position 199.  You&#39;</span>re business, not you, <span style="color:#569CD6;">is</span> important to us!&lt;/div&gt;
+    &lt;/div&gt;
+&lt;/div&gt;
+@<span style="color:#569CD6;">if</span>(<span style="color:#569CD6;">this</span>.ChildContent <span style="color:#569CD6;">is</span> not <span style="color:#569CD6;">null</span>)
+{
+    @<span style="color:#569CD6;">this</span>.ChildContent
+}
+@code {
+    <span style="color:#569CD6;">private</span> <span style="color:#569CD6;">string</span> _css =&gt; <span style="color:#569CD6;">this</span>.IsLoading ? <span style="color:#D69D85;">&quot;loading&quot;</span> : <span style="color:#D69D85;">&quot;loaded&quot;</span>;
+
+    [Parameter] <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">bool</span> IsLoading { <span style="color:#569CD6;">get</span>; <span style="color:#569CD6;">set</span>; }
+    [Parameter] <span style="color:#569CD6;">public</span> RenderFragment? ChildContent { <span style="color:#569CD6;">get</span>; <span style="color:#569CD6;">set</span>; }
+}
+</pre></div>
+<p>The associated Css file <em>LoadingOverlay.razor.css</em>.</p>
+<p><em>loading</em> sets the <code>div</code> to fill the page with a high <code>z-index</code>.  You can choose the opacity based on whether you want to bleed the underlying page through.  <em>loaded</em> hides the <code>div</code>.</p>
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+﻿<span style="color:#A31515;">div.loading </span>{
+    <span style="color:#FF0000;">display</span>: <span style="color:#569CD6;">block</span>;
+    <span style="color:#FF0000;">position</span>: <span style="color:#569CD6;">fixed</span>;
+    <span style="color:#FF0000;">z-index</span>: <span style="color:#569CD6;">101</span>;<span style="color:#57A64A;"> /* Sit on top */</span>
+    <span style="color:#FF0000;">left</span>: <span style="color:#569CD6;">0</span>;
+    <span style="color:#FF0000;">top</span>: <span style="color:#569CD6;">0</span>;
+    <span style="color:#FF0000;">width</span>: <span style="color:#569CD6;">100%</span>;<span style="color:#57A64A;"> /* Full width */</span>
+    <span style="color:#FF0000;">height</span>: <span style="color:#569CD6;">100%</span>;<span style="color:#57A64A;"> /* Full height */</span>
+    <span style="color:#FF0000;">overflow</span>: <span style="color:#569CD6;">auto</span>;<span style="color:#57A64A;"> /* Enable scroll if needed */</span>
+    <span style="color:#FF0000;">background-color</span>: <span style="color:#569CD6;">rgba(0,0,0,0.95)</span>;<span style="color:#57A64A;"> /* Black w/ opacity */</span>
+}
+
+<span style="color:#A31515;">div.loaded </span>{
+    <span style="color:#FF0000;">display</span>: <span style="color:#569CD6;">none</span>;
+}
+</pre></div>
+<p>You can then use it in a page such as <code>FetchData</code>:</p>
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+@page <span style="color:#D69D85;">&quot;/weather&quot;</span>
+@attribute [StreamRendering(<span style="color:#569CD6;">true</span>)]
+
+&lt;PageTitle&gt;Weather&lt;/PageTitle&gt;
+&lt;LoadingOverlay IsLoading=<span style="color:#D69D85;">&quot;_loading&quot;</span> /&gt;
+
+    &lt;h1&gt;Weather&lt;/h1&gt;
+
+    &lt;p&gt;This component demonstrates showing data.&lt;/p&gt;
+
+    @<span style="color:#569CD6;">if</span> (_loading)
+    {
+        &lt;p&gt;&lt;em&gt;Loading...&lt;/em&gt;&lt;/p&gt;
+    }
+    <span style="color:#569CD6;">else</span>
+    {
+        &lt;table <span style="color:#569CD6;">class</span>=<span style="color:#D69D85;">&quot;table&quot;</span>&gt;
+            &lt;thead&gt;
+                &lt;tr&gt;
+                    &lt;th&gt;Date&lt;/th&gt;
+                    &lt;th&gt;Temp. (C)&lt;/th&gt;
+                    &lt;th&gt;Temp. (F)&lt;/th&gt;
+                    &lt;th&gt;Summary&lt;/th&gt;
+                &lt;/tr&gt;
+            &lt;/thead&gt;
+            &lt;tbody&gt;
+                @<span style="color:#569CD6;">foreach</span> (<span style="color:#569CD6;">var</span> forecast <span style="color:#569CD6;">in</span> forecasts!)
+                {
+                    &lt;tr&gt;
+                        &lt;td&gt;@forecast.Date.ToShortDateString()&lt;/td&gt;
+                        &lt;td&gt;@forecast.TemperatureC&lt;/td&gt;
+                        &lt;td&gt;@forecast.TemperatureF&lt;/td&gt;
+                        &lt;td&gt;@forecast.Summary&lt;/td&gt;
+                    &lt;/tr&gt;
+                }
+            &lt;/tbody&gt;
+        &lt;/table&gt;
+    }
+
+@code {
+    <span style="color:#569CD6;">private</span> WeatherForecast[]? forecasts;
+    <span style="color:#569CD6;">private</span> <span style="color:#569CD6;">bool</span> _loading =&gt; forecasts == <span style="color:#569CD6;">null</span>;
+
+    <span style="color:#569CD6;">protected</span> <span style="color:#569CD6;">override</span> <span style="color:#569CD6;">async</span> Task OnInitializedAsync()
+    {
+        <span style="color:#57A64A;">// Simulate asynchronous loading to demonstrate streaming rendering</span>
+        <span style="color:#569CD6;">await</span> Task.Delay(<span style="color:#B5CEA8;">2000</span>);
+
+        <span style="color:#569CD6;">var</span> startDate = DateOnly.FromDateTime(DateTime.Now);
+        <span style="color:#569CD6;">var</span> summaries = <span style="color:#569CD6;">new</span>[] { <span style="color:#D69D85;">&quot;Freezing&quot;</span>, <span style="color:#D69D85;">&quot;Bracing&quot;</span>, <span style="color:#D69D85;">&quot;Chilly&quot;</span>, <span style="color:#D69D85;">&quot;Cool&quot;</span>, <span style="color:#D69D85;">&quot;Mild&quot;</span>, <span style="color:#D69D85;">&quot;Warm&quot;</span>, <span style="color:#D69D85;">&quot;Balmy&quot;</span>, <span style="color:#D69D85;">&quot;Hot&quot;</span>, <span style="color:#D69D85;">&quot;Sweltering&quot;</span>, <span style="color:#D69D85;">&quot;Scorching&quot;</span> };
+        forecasts = Enumerable.Range(<span style="color:#B5CEA8;">1</span>, <span style="color:#B5CEA8;">5</span>).Select(index =&gt; <span style="color:#569CD6;">new</span> WeatherForecast
+            {
+                Date = startDate.AddDays(index),
+                TemperatureC = Random.Shared.Next(-<span style="color:#B5CEA8;">20</span>, <span style="color:#B5CEA8;">55</span>),
+                Summary = summaries[Random.Shared.Next(summaries.Length)]
+            }).ToArray();
+    }
+
+    <span style="color:#569CD6;">private</span> <span style="color:#569CD6;">class</span> WeatherForecast
+    {
+        <span style="color:#569CD6;">public</span> DateOnly Date { <span style="color:#569CD6;">get</span>; <span style="color:#569CD6;">set</span>; }
+        <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">int</span> TemperatureC { <span style="color:#569CD6;">get</span>; <span style="color:#569CD6;">set</span>; }
+        <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">string</span>? Summary { <span style="color:#569CD6;">get</span>; <span style="color:#569CD6;">set</span>; }
+        <span style="color:#569CD6;">public</span> <span style="color:#569CD6;">int</span> TemperatureF =&gt; <span style="color:#B5CEA8;">32</span> + (<span style="color:#569CD6;">int</span>)(TemperatureC / <span style="color:#B5CEA8;">0</span>.<span style="color:#B5CEA8;">5556</span>);
+    }
+}
+</pre></div>
+<p>You can also implement it like this:</p>
+<div style="color:#DADADA;background-color:#1E1E1E;"><pre>
+@page <span style="color:#D69D85;">&quot;/weather&quot;</span>
+@attribute [StreamRendering(<span style="color:#569CD6;">true</span>)]
+
+&lt;PageTitle&gt;Weather&lt;/PageTitle&gt;
+&lt;LoadingOverlay IsLoading=<span style="color:#D69D85;">&quot;_loading&quot;</span>&gt;
+
+    &lt;h1&gt;Weather&lt;/h1&gt;
+
+    &lt;p&gt;This component demonstrates showing data.&lt;/p&gt;
+
+    @<span style="color:#569CD6;">if</span> (_loading)
+    {
+        &lt;p&gt;&lt;em&gt;Loading...&lt;/em&gt;&lt;/p&gt;
+    }
+    <span style="color:#569CD6;">else</span>
+    {
+      <span style="color:#57A64A;">//....</span>
+    }
+&lt;/LoadingOverlay&gt;
+</pre></div></div></div></div></body></html>
+
+
+
+
+
